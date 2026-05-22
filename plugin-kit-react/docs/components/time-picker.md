@@ -1,0 +1,25 @@
+# TimePicker
+
+Time pickers provide a compact controlled input for choosing one time value.
+
+## Basic Usage
+
+Use a controlled value when the selected time needs to stay in sync with broader form state.
+
+<ComponentPreview src="./examples/time-picker-basic.preview.tsx" />
+
+## Empty State
+
+An empty placeholder is useful when the time should be chosen explicitly rather than prefilled.
+
+<ComponentPreview src="./examples/time-picker-empty.preview.tsx" />
+
+## States
+
+Show invalid and disabled states when the picker is used inside forms.
+
+<ComponentPreview src="./examples/time-picker-states.preview.tsx" />
+
+## API reference
+
+`TimePicker` uses this package's `Select`, which wraps [Base UI Select](https://base-ui.com/react/components/select/). Use the Base UI API reference for item behavior, controlled state, keyboard behavior, and popup positioning details.

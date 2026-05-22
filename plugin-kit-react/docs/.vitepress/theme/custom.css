@@ -1,0 +1,234 @@
+/*
+  These docs pages use a custom code-block renderer for live previews.
+  The shared VitePress shell styles in `@verbb/vitepress-theme` only target
+  native fenced code blocks (`div.language-*`), so we style the component
+  code block explicitly to keep it visually consistent and readable.
+*/
+
+.component-preview {
+  margin: 1.25rem 0 1.5rem;
+}
+
+.component-preview__preview {
+  border: 1px solid #d7dfe9;
+  border-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: #ffffff;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.component-code-block {
+  --code-block-inline-padding: 1rem;
+  --code-block-line-number-width: 1.25rem;
+  --code-block-line-number-gap: 0.75rem;
+
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #d7dfe9;
+  border-radius: 0.5rem;
+  background: #ffffff;
+}
+
+.component-code-block--joined {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.component-code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.component-code-block__tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.component-code-block__tab {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  padding: 0 0.625rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.component-code-block__tab:hover {
+  background: #eef2f7;
+  color: #0f172a;
+}
+
+.component-code-block__tab.is-active {
+  background: #ffffff;
+  border-color: #d7dfe9;
+  color: #0f172a;
+}
+
+.component-code-block__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #334155;
+  font-size: 13px;
+}
+
+.component-code-block__meta-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+}
+
+.component-code-block__actions,
+.component-code-block__overlay-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.component-code-block__overlay-actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+}
+
+.component-code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d7dfe9;
+  background: #ffffff;
+  color: #334155;
+}
+
+.component-code-block__copy:hover {
+  background: #f1f5f9;
+}
+
+.component-code-block__copy-icon--copied {
+  display: none;
+}
+
+.component-code-block__copy.is-copied .component-code-block__copy-icon {
+  display: none;
+}
+
+.component-code-block__copy.is-copied .component-code-block__copy-icon--copied {
+  display: inline;
+}
+
+.component-code-block__body {
+  position: relative;
+}
+
+.component-code-block__body--collapsed {
+  max-height: 9rem;
+  overflow: hidden;
+}
+
+.component-code-block__reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.82) 48%,
+    #ffffff 100%
+  );
+}
+
+.component-code-block__reveal-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.375rem;
+  padding: 0 1.125rem;
+  border-radius: 999px;
+  border: 1px solid #d7dfe9;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.component-code-block__reveal-button:hover {
+  background: #f8fafc;
+}
+
+/* Core code presentation: mirror the light fenced-block look from the shared theme. */
+.component-code-block__code,
+.component-code-block__code code {
+  direction: ltr;
+  text-align: left;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+
+.component-code-block__code {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 1rem 0 1.125rem;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.component-code-block__code code {
+  display: block;
+  width: fit-content;
+  min-width: 100%;
+  padding: 0 var(--code-block-inline-padding);
+  color: #334155;
+  line-height: 1.7;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.component-code-block__code code .line {
+  display: block;
+  width: 100%;
+  min-height: 1.7em;
+  white-space: pre;
+}
+
+/* Shiki wraps blank lines as <span class="line"><span></span></span>, so :empty never matches. */
+.component-code-block__code code .line:empty::before,
+.component-code-block__code code .line:has(> span:only-child:empty)::before {
+  content: '\00a0';
+}
+
+.component-code-block__notice {
+  border-top: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  color: #334155;
+  background: #f8fafc;
+  font-size: 14px;
+}
+

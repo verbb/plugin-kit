@@ -1,0 +1,18 @@
+@import '/css/tailwind_reset.css';
+@import '/css/selectize.css';
+@import '/css/cp.css';
+@import '/css/cp-2.css';
+@import '/css/visual-tests.css';
+
+/* Overrides just for the visual-tests harness */
+
+#global-container {
+    min-height: 100% !important;
+    width: 100% !important;
+    inset-inline-start: 0 !important;
+}
+
+#header,
+#main-content {
+    width: 100% !important;
+}

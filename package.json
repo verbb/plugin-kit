@@ -1,0 +1,8 @@
+{
+  "name": "plugin-kit-workspace",
+  "private": true,
+  "workspaces": [
+    "plugin-kit",
+    "plugin-kit-react"
+  ]
+}
