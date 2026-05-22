@@ -149,6 +149,7 @@ const themeConfig: DocsThemeConfig = {
     logo: '/plugin-kit-react-logo.svg',
     siteTitle: 'Plugin Kit React',
     docsTheme: {
+        homeLink: '/plugin-kit/',
         primary: '#e64d4c',
     },
     nav: [],
@@ -206,6 +207,10 @@ export default defineConfig({
                 {
                     find: 'mark.js/src/vanilla.js',
                     replacement: fileURLToPath(new URL('../../../../node_modules/mark.js/dist/mark.es6.js', import.meta.url)),
+                },
+                {
+                    find: /^@verbb\/vitepress-theme$/,
+                    replacement: fileURLToPath(new URL('../../../../verbb-vitepress-theme/src/index.ts', import.meta.url)),
                 },
                 {
                     find: /^@verbb\/plugin-kit-react$/,

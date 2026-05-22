@@ -57,6 +57,10 @@ run('git', ['add', 'package-lock.json', 'plugin-kit/package.json', 'plugin-kit-r
 run('git', ['commit', '-m', `version ${version}`]);
 run('git', ['tag', `${version}`]);
 
+run('npm', ['run', 'deploy', '--', 'plugin-kit'], {
+    cwd: new URL('../../../verbb-docs', import.meta.url),
+});
+
 console.log(`Released Plugin Kit ${version}. Push with:`);
 console.log('  git push origin main');
 console.log(`  git push origin ${version}`);

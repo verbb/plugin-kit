@@ -1,0 +1,5 @@
+import{c as t}from"./schema-form-preview-harness.BXJXZRNZ.js";import"./ToggleGroup.0MtzUVUT.js";import"./index.TP8L79fr.js";import"./theme.DNhug3om.js";import"./framework.DV0oQ0OM.js";import"./SchemaFormEngine.BZBZYJl3.js";import"./docsPreviewHostBridge.DL_aMpn6.js";import"./TiptapEditor.BkQMn9wJ.js";import"./Dialog.7YRbI8Nr.js";import"./EditableTable.WvIa4PmD.js";import"./CheckboxSelect.B4xyaC-0.js";import"./CheckboxInput.D4xOurOK.js";import"./RadioGroup.D1T2rZCi.js";import"./ModalTabs.CYkjLOVM.js";import"./TabsList.DCtVYInX.js";const e=[{$field:"richText",name:"body",label:"Body",buttons:["bold","italic","bulletList"],placeholder:"Write the message..."}],u=t({code:`{
+  "$field": "richText",
+  "name": "body",
+  "label": "Body"
+}`,schema:e,fieldEntries:[{path:"body",field:{$field:"richText",name:"body",label:"Body",buttons:["bold","italic","bulletList"],placeholder:"Write the message..."}}],defaultValues:{body:[{type:"paragraph",attrs:{textAlign:"start"},content:[{type:"text",text:"Welcome message"}]}]},showValues:!0});export{u as default};
