@@ -12,7 +12,8 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/verbb/plugin-kit.git"
+        "url": "git+https://github.com/verbb/plugin-kit.git",
+        "directory": "plugin-kit"
     },
     "bugs": {
         "url": "https://github.com/verbb/plugin-kit/issues"

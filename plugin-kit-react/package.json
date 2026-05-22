@@ -13,10 +13,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/verbb/plugin-kit-react.git"
+        "url": "git+https://github.com/verbb/plugin-kit.git",
+        "directory": "plugin-kit-react"
     },
     "bugs": {
-        "url": "https://github.com/verbb/plugin-kit-react/issues"
+        "url": "https://github.com/verbb/plugin-kit/issues"
     },
     "homepage": "https://docs.verbb.io/plugin-kit",
     "engines": {
