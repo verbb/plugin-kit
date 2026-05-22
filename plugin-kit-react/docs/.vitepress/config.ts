@@ -155,9 +155,9 @@ const themeConfig: DocsThemeConfig = {
     nav: [],
     outline: [2, 3],
     sidebar: sidebar as DefaultTheme.SidebarItem[],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/verbb/plugin-kit-react' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/verbb/plugin-kit' }],
     editLink: {
-        pattern: 'https://github.com/verbb/plugin-kit-react/edit/main/docs/:path',
+        pattern: 'https://github.com/verbb/plugin-kit/edit/main/plugin-kit-react/docs/:path',
         text: 'Edit this page',
     },
     lastUpdatedText: 'Last updated',
@@ -234,7 +234,7 @@ export default defineConfig({
         ],
     },
     head: [
-        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/plugin-kit/favicon.svg' }],
     ],
     themeConfig: themeConfig as DefaultTheme.Config,
 });

@@ -25,12 +25,20 @@ function getRouteDirectory(routePath: string) {
     return `${sanitizedPath.slice(0, sanitizedPath.lastIndexOf('/') + 1)}`;
 }
 
-function resolveDocPath(src: string, routePath: string) {
+function stripSiteBase(docPath: string, siteBase = '/') {
+    if (siteBase === '/' || !docPath.startsWith(siteBase)) {
+        return docPath;
+    }
+
+    return `/${docPath.slice(siteBase.length)}`;
+}
+
+function resolveDocPath(src: string, routePath: string, siteBase = '/') {
     if (src.startsWith('@/')) {
         return `/${src.slice(2)}`;
     }
 
-    return new URL(src, `https://docs.local${getRouteDirectory(routePath)}`).pathname;
+    return stripSiteBase(new URL(src, `https://docs.local${getRouteDirectory(routePath)}`).pathname, siteBase);
 }
 
 function toModuleKey(docPath: string) {
@@ -78,8 +86,8 @@ function resolveDefinitionCode(definition: PreviewSourceDefinition, rawSource?: 
     return definition.code || '';
 }
 
-async function loadPreviewSource(src: string, routePath: string, index: number) {
-    const docPath = resolveDocPath(src, routePath);
+async function loadPreviewSource(src: string, routePath: string, siteBase: string, index: number) {
+    const docPath = resolveDocPath(src, routePath, siteBase);
     const moduleKey = toModuleKey(docPath);
     const loader = previewModules[moduleKey];
 
@@ -97,9 +105,9 @@ async function loadPreviewSource(src: string, routePath: string, index: number) 
     return normalizeModuleExport(exportedValue, keyBase, rawSource);
 }
 
-export async function resolvePreviewBlocks(src: string | string[], routePath: string) {
+export async function resolvePreviewBlocks(src: string | string[], routePath: string, siteBase = '/') {
     const sources = Array.isArray(src) ? src : [src];
-    const groups = await Promise.all(sources.map((source, index) => loadPreviewSource(source, routePath, index)));
+    const groups = await Promise.all(sources.map((source, index) => loadPreviewSource(source, routePath, siteBase, index)));
 
     return groups.flat();
 }

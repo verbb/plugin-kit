@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vitepress';
+import { useData, useRoute } from 'vitepress';
 import ComponentCodeBlock from './ComponentCodeBlock.vue';
 import type { NormalizedCodeBlock } from './codeBlocks';
 import { resolvePreviewBlocks } from './previewSources';
@@ -10,6 +10,7 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
+const { site } = useData();
 const blocks = ref<NormalizedCodeBlock[]>([]);
 const activeIndex = ref(0);
 const activeBlock = computed(() => blocks.value[activeIndex.value] ?? null);
@@ -22,7 +23,7 @@ let requestId = 0;
 
 async function refreshPreviewBlocks() {
     const nextRequestId = ++requestId;
-    const nextBlocks = await resolvePreviewBlocks(props.src, route.path);
+    const nextBlocks = await resolvePreviewBlocks(props.src, route.path, site.value.base);
 
     if (nextRequestId !== requestId) {
         return;
@@ -35,7 +36,7 @@ async function refreshPreviewBlocks() {
 onMounted(() => {
     // Preview modules are React apps with browser-only dependencies. Keep them out of
     // VitePress SSR so the docs build only evaluates the markdown/Vue shell.
-    watch(() => [route.path, props.src], () => {
+    watch(() => [route.path, props.src, site.value.base], () => {
         void refreshPreviewBlocks();
     }, { immediate: true });
 });

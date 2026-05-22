@@ -1,0 +1,5 @@
+import{c as e}from"./schema-form-preview-harness.doCr_Hty.js";import"./ToggleGroup.CDbN-DRa.js";import"./index.f8jfD1G1.js";import"./theme.B18BPMll.js";import"./framework.DV0oQ0OM.js";import"./SchemaFormEngine.0OoSM8ns.js";import"./docsPreviewHostBridge.By8Jgv1J.js";import"./TiptapEditor.ddjMhkE_.js";import"./Dialog.C1h8B7to.js";import"./EditableTable.ClatKWwp.js";import"./CheckboxSelect.D4awVaao.js";import"./CheckboxInput.CCf2-wBQ.js";import"./RadioGroup.CBqIFkYR.js";import"./ModalTabs.Ca9cfBnW.js";import"./TabsList.Ik3_m_yG.js";const t=[{$field:"elementSelect",name:"relatedEntry",label:"Related entry",elementType:"craftelementsEntry",elementSelectStorageKeyPrefix:"plugin-kit-react.docs",limit:1}],u=e({code:`{
+  "$field": "elementSelect",
+  "name": "relatedEntry",
+  "label": "Related entry"
+}`,schema:t,fieldEntries:[{path:"relatedEntry",field:{$field:"elementSelect",name:"relatedEntry",label:"Related entry",elementType:"craftelementsEntry",elementSelectStorageKeyPrefix:"plugin-kit-react.docs",limit:1}}],defaultValues:{relatedEntry:[]},showValues:!0});export{u as default};
