@@ -17,7 +17,9 @@ import { parseTokenWithDefault } from './variableSerialization';
 
 type VariableMeta = VariableOption & {
     compatibleWith?: string[];
+    types?: string[];
     transformValueTypes?: string[];
+    allowTransforms?: boolean;
 };
 
 export default (props) => {
@@ -83,22 +85,30 @@ export default (props) => {
     }, [pickerContext?.variableCategories, node?.attrs?.value]);
 
     const transformOptions = useMemo(() => {
+        if (selectedVariableMeta?.allowTransforms === false) {
+            return [];
+        }
+
         const registry = pickerContext?.variableTransformerRegistry ?? {};
         const compatibleWith = Array.isArray(selectedVariableMeta?.compatibleWith)
             ? selectedVariableMeta.compatibleWith
             : [];
+        const sourceTypes = Array.isArray(selectedVariableMeta?.types)
+            ? selectedVariableMeta.types
+            : [];
 
         const allowedTypes = new Set<string>();
         const hasCompatibilityHints = compatibleWith.length > 0;
-        const explicitTransformTypes = Array.isArray(selectedVariableMeta?.transformValueTypes)
+        const hasExplicitTransformTypes = Object.prototype.hasOwnProperty.call(selectedVariableMeta ?? {}, 'transformValueTypes');
+        const explicitTransformTypes = hasExplicitTransformTypes && Array.isArray(selectedVariableMeta?.transformValueTypes)
             ? selectedVariableMeta.transformValueTypes
-            : [];
+            : sourceTypes;
         explicitTransformTypes.forEach((type) => {
             if (typeof type === 'string' && type.trim() !== '') {
                 allowedTypes.add(type);
             }
         });
-        const hasTransformHints = hasCompatibilityHints || allowedTypes.size > 0;
+        const hasTransformHints = hasCompatibilityHints || hasExplicitTransformTypes || sourceTypes.length > 0;
         if (compatibleWith.includes('plainText') || compatibleWith.includes('email')) {
             allowedTypes.add('text');
         }
@@ -116,6 +126,10 @@ export default (props) => {
         }
         if (compatibleWith.includes('array')) {
             allowedTypes.add('array');
+        }
+
+        if (hasTransformHints && allowedTypes.size === 0) {
+            return [];
         }
 
         const byId = new Map();

@@ -57,20 +57,24 @@ var VariableTagView_default = (props) => {
 		return null;
 	}, [pickerContext?.variableCategories, node?.attrs?.value]);
 	const transformOptions = useMemo(() => {
+		if (selectedVariableMeta?.allowTransforms === false) return [];
 		const registry = pickerContext?.variableTransformerRegistry ?? {};
 		const compatibleWith = Array.isArray(selectedVariableMeta?.compatibleWith) ? selectedVariableMeta.compatibleWith : [];
+		const sourceTypes = Array.isArray(selectedVariableMeta?.types) ? selectedVariableMeta.types : [];
 		const allowedTypes = /* @__PURE__ */ new Set();
 		const hasCompatibilityHints = compatibleWith.length > 0;
-		(Array.isArray(selectedVariableMeta?.transformValueTypes) ? selectedVariableMeta.transformValueTypes : []).forEach((type) => {
+		const hasExplicitTransformTypes = Object.prototype.hasOwnProperty.call(selectedVariableMeta ?? {}, "transformValueTypes");
+		(hasExplicitTransformTypes && Array.isArray(selectedVariableMeta?.transformValueTypes) ? selectedVariableMeta.transformValueTypes : sourceTypes).forEach((type) => {
 			if (typeof type === "string" && type.trim() !== "") allowedTypes.add(type);
 		});
-		const hasTransformHints = hasCompatibilityHints || allowedTypes.size > 0;
+		const hasTransformHints = hasCompatibilityHints || hasExplicitTransformTypes || sourceTypes.length > 0;
 		if (compatibleWith.includes("plainText") || compatibleWith.includes("email")) allowedTypes.add("text");
 		if (compatibleWith.includes("number") || compatibleWith.includes("calculations")) allowedTypes.add("number");
 		if (compatibleWith.includes("url")) allowedTypes.add("url");
 		if (compatibleWith.includes("date")) allowedTypes.add("date");
 		if (compatibleWith.includes("boolean")) allowedTypes.add("boolean");
 		if (compatibleWith.includes("array")) allowedTypes.add("array");
+		if (hasTransformHints && allowedTypes.size === 0) return [];
 		const byId = /* @__PURE__ */ new Map();
 		Object.entries(registry).forEach(([valueType, transformers]) => {
 			if (hasTransformHints && allowedTypes.size > 0 && !allowedTypes.has(valueType)) return;

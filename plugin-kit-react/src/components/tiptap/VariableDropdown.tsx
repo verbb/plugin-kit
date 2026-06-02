@@ -21,8 +21,12 @@ export type VariableOption = {
     pageLabel?: string;
     /** For child items: selector | format | value. Used by variableSerialization. */
     group?: string;
+    /** Raw variable source value types from the server (e.g. text, number, date, url). */
+    types?: string[];
     /** Supported transform value types for this variable (e.g. text, number, date, url). */
     transformValueTypes?: string[];
+    /** Explicitly disables transforms for aggregate/content variables such as field summaries. */
+    allowTransforms?: boolean;
 };
 
 export type VariableCategories = {
