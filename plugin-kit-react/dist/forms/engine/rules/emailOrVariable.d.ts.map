@@ -1,1 +1,1 @@
-{"version":3,"file":"emailOrVariable.d.ts","sourceRoot":"","sources":["../../../../src/forms/engine/rules/emailOrVariable.ts"],"names":[],"mappings":"AAKA,eAAO,MAAM,mBAAmB,GAAI,OAAO,OAAO,EAAE,OAAO,MAAM,kBAMhE,CAAC"}
+{"version":3,"file":"emailOrVariable.d.ts","sourceRoot":"","sources":["../../../../src/forms/engine/rules/emailOrVariable.ts"],"names":[],"mappings":"AAUA,eAAO,MAAM,mBAAmB,GAAI,OAAO,OAAO,EAAE,OAAO,MAAM,kBAehE,CAAC"}

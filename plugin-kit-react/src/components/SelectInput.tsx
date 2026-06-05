@@ -144,7 +144,7 @@ export const SelectInput = forwardRef<HTMLButtonElement, SelectProps>(({
     });
 
     const selectedOption = flatOptions.find((option) => {
-        return option.value === value;
+        return String(option.value) === String(value);
     });
     const resolvedPlaceholder = placeholder || '';
     const resolvedIsInvalid = Boolean(isInvalid || ariaInvalid === true || ariaInvalid === 'true');

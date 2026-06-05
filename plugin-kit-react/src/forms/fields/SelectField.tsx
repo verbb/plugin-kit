@@ -72,7 +72,7 @@ export const SelectField = ({ form, field }: SelectFieldProps) => {
         }
 
         const hasCurrentValue = filteredOptions.some((option) => {
-            return option?.value === value;
+            return String(option?.value) === String(value);
         });
 
         if (hasCurrentValue) {
