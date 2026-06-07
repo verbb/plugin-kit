@@ -8,7 +8,7 @@ import { jsx } from "react/jsx-runtime";
 //#region src/forms/fields/VariablePickerField.tsx
 var VariablePickerField = ({ form, field }) => {
 	const { value, setValue, errors } = useEngineField(form, field.name);
-	const { getVariableCategories, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry } = useVariableCategoriesContext();
+	const { getVariableCategories, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, renderVariableConfigureSection, resolveVariableTagLabel } = useVariableCategoriesContext();
 	const { variableCategories, variableConfig } = field;
 	const resolvedVariableCategories = useMemo(() => {
 		if (variableCategories) return variableCategories;
@@ -39,6 +39,8 @@ var VariablePickerField = ({ form, field }) => {
 			variableCategoryLabels,
 			variableCategoryOrder,
 			variableTransformerRegistry,
+			renderVariableConfigureSection,
+			resolveVariableTagLabel,
 			variablePickerTriggerCharacters: field.variablePickerTriggerCharacters
 		})
 	});

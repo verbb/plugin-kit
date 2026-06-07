@@ -37,7 +37,7 @@ var SelectField = ({ form, field }) => {
 	useEffect(() => {
 		if (value === void 0 || value === null || value === "") return;
 		if (filteredOptions.some((option) => {
-			return option?.value === value;
+			return String(option?.value) === String(value);
 		})) return;
 		const fallback = filteredOptions.find((option) => {
 			return option?.value !== void 0 && option?.disabled !== true;

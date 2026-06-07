@@ -21,18 +21,26 @@ function parseTokenMetadata(tokenValue) {
 	const cleanSegments = [];
 	let transformerId;
 	let transformerParams;
+	const referenceParams = {};
+	let isTransformerParam = false;
 	segments.forEach((segment) => {
 		if (segment.startsWith(TRANSFORMER_ID_PREFIX)) {
 			transformerId = decodeURIComponent(segment.slice(10)).trim() || void 0;
+			isTransformerParam = true;
 			return;
 		}
 		if (segment.includes("=")) {
 			const [keyRaw, ...valueParts] = segment.split("=");
-			const key = (keyRaw ?? "").trim();
+			const key = (keyRaw ?? "").trim().toLowerCase();
 			if (!key) return;
 			const value = decodeURIComponent(valueParts.join("=").trim());
-			if (!transformerParams) transformerParams = {};
-			transformerParams[key] = value;
+			if (isTransformerParam) {
+				if (!transformerParams) transformerParams = {};
+				transformerParams[key] = value;
+				return;
+			}
+			referenceParams[key] = value;
+			cleanSegments.push(`${key}=${encodeURIComponent(value)}`);
 			return;
 		}
 		cleanSegments.push(segment);
@@ -41,7 +49,8 @@ function parseTokenMetadata(tokenValue) {
 		tokenWithoutDefault: `{${cleanSegments.join(";")}}`,
 		defaultIfEmpty,
 		transformerId,
-		transformerParams
+		transformerParams,
+		referenceParams
 	};
 }
 function isVariableLikeToken(tokenValue) {
@@ -53,9 +62,15 @@ function toTitleWords(value) {
 	});
 }
 function buildFallbackLabelForUnknownToken(tokenWithoutDefault) {
+	const fieldMatch = tokenWithoutDefault.match(/^\{field:([^}]+)\}$/);
+	if (fieldMatch) {
+		const segments = (fieldMatch[1].split(";")[0]?.trim() ?? "").split(":").filter(Boolean);
+		if (segments.length >= 2) return toTitleWords(segments[segments.length - 1] ?? "") || "Field";
+		if (segments.length === 1) return toTitleWords(segments[0] ?? "") || "Field";
+		return "Field";
+	}
 	const [target = "", identifier = "", selector = ""] = tokenWithoutDefault.replace(/^\{|\}$/g, "").split(":");
-	if (target === "field") return "Field";
-	if (target) return toTitleWords(selector || identifier || target) || tokenWithoutDefault;
+	if (target) return toTitleWords(String(selector || identifier || target).split(";")[0]?.trim() ?? "") || tokenWithoutDefault;
 	return tokenWithoutDefault;
 }
 function serializeTokenMetadata(baseToken, metadata) {
@@ -63,9 +78,10 @@ function serializeTokenMetadata(baseToken, metadata) {
 	if (!baseMatch) return baseToken;
 	const parts = [baseMatch[1]];
 	const transformerId = metadata.transformerId?.trim();
+	const params = metadata.transformerParams && typeof metadata.transformerParams === "object" ? Object.entries(metadata.transformerParams) : [];
 	if (transformerId) {
 		parts.push(`${TRANSFORMER_ID_PREFIX}${encodeURIComponent(transformerId)}`);
-		(metadata.transformerParams && typeof metadata.transformerParams === "object" ? Object.entries(metadata.transformerParams) : []).forEach(([key, value]) => {
+		params.forEach(([key, value]) => {
 			const normalizedKey = String(key ?? "").trim();
 			if (!normalizedKey || normalizedKey === "transform") return;
 			const normalizedValue = value == null ? "" : String(value);
@@ -103,8 +119,8 @@ function flattenVariableOptions(items) {
 * Optional defaultIfEmpty is used when the resolved value is empty (e.g. "Guest" for {user:firstName|Guest}).
 */
 function buildVariableTagAttrs(baseVariable, selectedVariable = baseVariable, options = {}) {
-	const selectedLabel = selectedVariable?.label ?? baseVariable?.label ?? "";
-	const value = selectedVariable?.value ?? baseVariable?.value ?? "";
+	const selectedLabel = options.label ?? selectedVariable?.label ?? baseVariable?.label ?? "";
+	const value = options.value ?? selectedVariable?.value ?? baseVariable?.value ?? "";
 	const defaultIfEmpty = options.defaultIfEmpty?.trim();
 	const attrs = {
 		label: selectedLabel,
@@ -124,39 +140,64 @@ function parseTokenWithDefault(tokenValue) {
 	const parsed = parseTokenMetadata(tokenValue);
 	return [parsed.tokenWithoutDefault, parsed.defaultIfEmpty];
 }
+function getReferenceBaseToken(tokenValue) {
+	const [tokenWithoutDefault] = parseTokenWithDefault(tokenValue);
+	const match = tokenWithoutDefault.match(/^\{([^}]*)\}$/);
+	if (!match) return tokenWithoutDefault;
+	const body = match[1].split(";")[0]?.trim() ?? "";
+	return body ? `{${body}}` : tokenWithoutDefault;
+}
+function variableValuesMatchReference(tokenValue, optionValue) {
+	if (!tokenValue || !optionValue) return false;
+	if (tokenValue === optionValue) return true;
+	return getReferenceBaseToken(tokenValue) === getReferenceBaseToken(optionValue);
+}
+function resolveVariableTagLabel(tokenValue, option) {
+	const { tokenWithoutDefault } = parseTokenMetadata(String(tokenValue || ""));
+	if (option?.label) return option.label;
+	return buildFallbackLabelForUnknownToken(tokenWithoutDefault);
+}
+function findMatchingVariableOption(items, tokenWithoutDefault) {
+	let fallbackMatch = null;
+	for (const item of items) {
+		const children = Array.isArray(item.children) ? item.children : [];
+		const itemValue = String(item.value ?? "");
+		if (itemValue === tokenWithoutDefault) return item;
+		if (children.length) {
+			const childMatch = findMatchingVariableOption(children, tokenWithoutDefault);
+			if (childMatch?.value === tokenWithoutDefault) return childMatch;
+			if (childMatch && !fallbackMatch) fallbackMatch = childMatch;
+		}
+		if (variableValuesMatchReference(tokenWithoutDefault, itemValue)) {
+			if (!fallbackMatch) fallbackMatch = item;
+		}
+	}
+	return fallbackMatch;
+}
 /**
 * Resolve variable tag attrs from a token string (e.g. '{form:name}' or '{user:firstName|Guest}').
 */
 function resolveVariableTagByValue(tokenValue, topLevelVariables, allVariables) {
 	const { tokenWithoutDefault, defaultIfEmpty, transformerId, transformerParams } = parseTokenMetadata(tokenValue);
-	const exactTopLevel = topLevelVariables.find((v) => {
-		return v.value === tokenWithoutDefault;
-	});
-	if (exactTopLevel) return buildVariableTagAttrs(exactTopLevel, exactTopLevel, {
+	const resolvedValue = tokenWithoutDefault;
+	const topLevelMatch = findMatchingVariableOption(topLevelVariables, tokenWithoutDefault);
+	if (topLevelMatch) return buildVariableTagAttrs(topLevelMatch, topLevelMatch, {
 		defaultIfEmpty,
 		transformerId,
-		transformerParams
+		transformerParams,
+		label: resolveVariableTagLabel(resolvedValue, topLevelMatch),
+		value: resolvedValue
 	});
-	for (const variable of topLevelVariables) {
-		const matchedChild = (Array.isArray(variable.children) ? variable.children : []).find((c) => {
-			return c.value === tokenWithoutDefault;
-		});
-		if (matchedChild) return buildVariableTagAttrs(variable, matchedChild, {
-			defaultIfEmpty,
-			transformerId,
-			transformerParams
-		});
-	}
-	const fallback = allVariables.find((v) => {
-		return v.value === tokenWithoutDefault;
-	});
+	const fallback = findMatchingVariableOption(allVariables, tokenWithoutDefault);
 	if (fallback) return buildVariableTagAttrs(fallback, fallback, {
 		defaultIfEmpty,
 		transformerId,
-		transformerParams
+		transformerParams,
+		label: resolveVariableTagLabel(resolvedValue, fallback),
+		value: resolvedValue
 	});
 	if (isVariableLikeToken(tokenWithoutDefault)) return {
-		label: buildFallbackLabelForUnknownToken(tokenWithoutDefault),
+		label: resolveVariableTagLabel(tokenWithoutDefault, null),
 		value: tokenWithoutDefault,
 		openOnInsert: false,
 		...defaultIfEmpty ? { default: defaultIfEmpty } : {},
@@ -245,6 +286,6 @@ function replaceTokenWithVariable(editor, attrs, from, to) {
 	editor.view.dispatch(tr);
 }
 //#endregion
-export { buildVariableTagAttrs, contentToValue, dedupeVariableOptions, flattenVariableOptions, parseTokenWithDefault, replaceTokenWithVariable, resolveVariableTagByValue, valueToContent };
+export { buildVariableTagAttrs, contentToValue, dedupeVariableOptions, flattenVariableOptions, getReferenceBaseToken, parseTokenWithDefault, replaceTokenWithVariable, resolveVariableTagByValue, resolveVariableTagLabel, valueToContent };
 
 //# sourceMappingURL=variableSerialization.js.map

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { VariableTransformerRegistry } from '@verbb/plugin-kit-react/components/tiptap/VariablePickerContext';
+import type { VariableTransformerRegistry, VariableConfigureSectionProps, VariableTagLabelResolver } from '@verbb/plugin-kit-react/components/tiptap/VariablePickerContext';
 
 export type VariableConfig = Record<string, unknown>;
 
@@ -13,6 +13,8 @@ export type VariableCategoriesContextValue = {
     variableCategoryLabels?: Record<string, string>;
     variableCategoryOrder?: string[];
     variableTransformerRegistry?: VariableTransformerRegistry;
+    renderVariableConfigureSection?: (props: VariableConfigureSectionProps) => React.ReactNode;
+    resolveVariableTagLabel?: VariableTagLabelResolver;
 };
 
 const VariableCategoriesContext = createContext<VariableCategoriesContextValue | null>(null);
@@ -30,5 +32,7 @@ export const useVariableCategoriesContext = (): VariableCategoriesContextValue =
         variableCategoryLabels: value.variableCategoryLabels,
         variableCategoryOrder: value.variableCategoryOrder,
         variableTransformerRegistry: value.variableTransformerRegistry,
+        renderVariableConfigureSection: value.renderVariableConfigureSection,
+        resolveVariableTagLabel: value.resolveVariableTagLabel,
     };
 };

@@ -9,7 +9,7 @@ import { jsx } from "react/jsx-runtime";
 var RichTextField = ({ form, field }) => {
 	const { value, setValue, errors } = useEngineField(form, field.name);
 	const buttons = field.buttons ?? ["bold", "italic"];
-	const { getVariableCategories, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry } = useVariableCategoriesContext();
+	const { getVariableCategories, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, renderVariableConfigureSection, resolveVariableTagLabel } = useVariableCategoriesContext();
 	const { variableConfig } = field;
 	const variableCategories = useMemo(() => {
 		if (!variableConfig || !getVariableCategories) return;
@@ -37,6 +37,8 @@ var RichTextField = ({ form, field }) => {
 			...variableCategoryLabels && { variableCategoryLabels },
 			...variableCategoryOrder && { variableCategoryOrder },
 			...variableTransformerRegistry && { variableTransformerRegistry },
+			...renderVariableConfigureSection && { renderVariableConfigureSection },
+			...resolveVariableTagLabel && { resolveVariableTagLabel },
 			...field.linkOptions && { linkOptions: field.linkOptions },
 			...field.linkSelectorStorageKeyPrefix && { linkSelectorStorageKeyPrefix: field.linkSelectorStorageKeyPrefix },
 			disabled: field.disabled,

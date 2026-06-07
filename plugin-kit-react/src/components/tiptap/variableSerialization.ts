@@ -24,6 +24,7 @@ type ParsedTokenMetadata = {
     defaultIfEmpty?: string;
     transformerId?: string;
     transformerParams?: Record<string, unknown>;
+    referenceParams?: Record<string, unknown>;
 };
 
 const TRANSFORMER_ID_PREFIX = 'transform=';
@@ -53,25 +54,35 @@ function parseTokenMetadata(tokenValue: string): ParsedTokenMetadata {
     const cleanSegments: string[] = [];
     let transformerId: string | undefined;
     let transformerParams: Record<string, unknown> | undefined;
+    const referenceParams: Record<string, unknown> = {};
+    let isTransformerParam = false;
 
     segments.forEach((segment) => {
         if (segment.startsWith(TRANSFORMER_ID_PREFIX)) {
             transformerId = decodeURIComponent(segment.slice(TRANSFORMER_ID_PREFIX.length)).trim() || undefined;
+            isTransformerParam = true;
             return;
         }
 
         if (segment.includes('=')) {
             const [keyRaw, ...valueParts] = segment.split('=');
-            const key = (keyRaw ?? '').trim();
+            const key = (keyRaw ?? '').trim().toLowerCase();
             if (!key) {
                 return;
             }
 
             const value = decodeURIComponent(valueParts.join('=').trim());
-            if (!transformerParams) {
-                transformerParams = {};
+
+            if (isTransformerParam) {
+                if (!transformerParams) {
+                    transformerParams = {};
+                }
+                transformerParams[key] = value;
+                return;
             }
-            transformerParams[key] = value;
+
+            referenceParams[key] = value;
+            cleanSegments.push(`${key}=${encodeURIComponent(value)}`);
             return;
         }
 
@@ -85,6 +96,7 @@ function parseTokenMetadata(tokenValue: string): ParsedTokenMetadata {
         defaultIfEmpty,
         transformerId,
         transformerParams,
+        referenceParams,
     };
 }
 
@@ -104,15 +116,27 @@ function toTitleWords(value: string): string {
 }
 
 function buildFallbackLabelForUnknownToken(tokenWithoutDefault: string): string {
-    const inner = tokenWithoutDefault.replace(/^\{|\}$/g, '');
-    const [target = '', identifier = '', selector = ''] = inner.split(':');
+    const fieldMatch = tokenWithoutDefault.match(/^\{field:([^}]+)\}$/);
+    if (fieldMatch) {
+        const fieldBody = fieldMatch[1].split(';')[0]?.trim() ?? '';
+        const segments = fieldBody.split(':').filter(Boolean);
 
-    if (target === 'field') {
+        if (segments.length >= 2) {
+            return toTitleWords(segments[segments.length - 1] ?? '') || 'Field';
+        }
+
+        if (segments.length === 1) {
+            return toTitleWords(segments[0] ?? '') || 'Field';
+        }
+
         return 'Field';
     }
 
+    const inner = tokenWithoutDefault.replace(/^\{|\}$/g, '');
+    const [target = '', identifier = '', selector = ''] = inner.split(':');
+
     if (target) {
-        const reference = selector || identifier || target;
+        const reference = String(selector || identifier || target).split(';')[0]?.trim() ?? '';
         return toTitleWords(reference) || tokenWithoutDefault;
     }
 
@@ -135,12 +159,13 @@ function serializeTokenMetadata(
     const parts = [baseMatch[1]];
     const transformerId = metadata.transformerId?.trim();
 
+    const params = metadata.transformerParams && typeof metadata.transformerParams === 'object'
+        ? Object.entries(metadata.transformerParams)
+        : [];
+
     if (transformerId) {
         parts.push(`${TRANSFORMER_ID_PREFIX}${encodeURIComponent(transformerId)}`);
 
-        const params = metadata.transformerParams && typeof metadata.transformerParams === 'object'
-            ? Object.entries(metadata.transformerParams)
-            : [];
         params.forEach(([key, value]) => {
             const normalizedKey = String(key ?? '').trim();
             if (!normalizedKey || normalizedKey === 'transform') {
@@ -204,10 +229,12 @@ export function buildVariableTagAttrs(
         defaultIfEmpty?: string;
         transformerId?: string;
         transformerParams?: Record<string, unknown>;
+        label?: string;
+        value?: string;
     } = {},
 ): VariableTagAttrs {
-    const selectedLabel = selectedVariable?.label ?? baseVariable?.label ?? '';
-    const value = selectedVariable?.value ?? baseVariable?.value ?? '';
+    const selectedLabel = options.label ?? selectedVariable?.label ?? baseVariable?.label ?? '';
+    const value = options.value ?? selectedVariable?.value ?? baseVariable?.value ?? '';
     const defaultIfEmpty = options.defaultIfEmpty?.trim();
 
     const attrs: VariableTagAttrs = {
@@ -236,6 +263,78 @@ export function parseTokenWithDefault(tokenValue: string): [string, string | und
     return [parsed.tokenWithoutDefault, parsed.defaultIfEmpty];
 }
 
+export function getReferenceBaseToken(tokenValue: string): string {
+    const [tokenWithoutDefault] = parseTokenWithDefault(tokenValue);
+    const match = tokenWithoutDefault.match(/^\{([^}]*)\}$/);
+
+    if (!match) {
+        return tokenWithoutDefault;
+    }
+
+    const body = match[1].split(';')[0]?.trim() ?? '';
+
+    return body ? `{${body}}` : tokenWithoutDefault;
+}
+
+function variableValuesMatchReference(tokenValue: string, optionValue: string): boolean {
+    if (!tokenValue || !optionValue) {
+        return false;
+    }
+
+    if (tokenValue === optionValue) {
+        return true;
+    }
+
+    return getReferenceBaseToken(tokenValue) === getReferenceBaseToken(optionValue);
+}
+
+export function resolveVariableTagLabel(
+    tokenValue: string,
+    option: VariableOption | null,
+): string {
+    const { tokenWithoutDefault } = parseTokenMetadata(String(tokenValue || ''));
+
+    if (option?.label) {
+        return option.label;
+    }
+
+    return buildFallbackLabelForUnknownToken(tokenWithoutDefault);
+}
+
+function findMatchingVariableOption(
+    items: VariableOption[],
+    tokenWithoutDefault: string,
+): VariableOption | null {
+    let fallbackMatch: VariableOption | null = null;
+
+    for (const item of items) {
+        const children = Array.isArray(item.children) ? item.children : [];
+        const itemValue = String(item.value ?? '');
+        if (itemValue === tokenWithoutDefault) {
+            return item;
+        }
+
+        if (children.length) {
+            const childMatch = findMatchingVariableOption(children, tokenWithoutDefault);
+            if (childMatch?.value === tokenWithoutDefault) {
+                return childMatch;
+            }
+
+            if (childMatch && !fallbackMatch) {
+                fallbackMatch = childMatch;
+            }
+        }
+
+        if (variableValuesMatchReference(tokenWithoutDefault, itemValue)) {
+            if (!fallbackMatch) {
+                fallbackMatch = item;
+            }
+        }
+    }
+
+    return fallbackMatch;
+}
+
 /**
  * Resolve variable tag attrs from a token string (e.g. '{form:name}' or '{user:firstName|Guest}').
  */
@@ -250,40 +349,27 @@ export function resolveVariableTagByValue(
         transformerId,
         transformerParams,
     } = parseTokenMetadata(tokenValue);
+    const resolvedValue = tokenWithoutDefault;
 
-    const exactTopLevel = topLevelVariables.find(v => {
-        return v.value === tokenWithoutDefault;
-    });
-    if (exactTopLevel) {
-        return buildVariableTagAttrs(exactTopLevel, exactTopLevel, {
+    const topLevelMatch = findMatchingVariableOption(topLevelVariables, tokenWithoutDefault);
+    if (topLevelMatch) {
+        return buildVariableTagAttrs(topLevelMatch, topLevelMatch, {
             defaultIfEmpty,
             transformerId,
             transformerParams,
+            label: resolveVariableTagLabel(resolvedValue, topLevelMatch),
+            value: resolvedValue,
         });
     }
 
-    for (const variable of topLevelVariables) {
-        const children = Array.isArray(variable.children) ? variable.children : [];
-        const matchedChild = children.find(c => {
-            return c.value === tokenWithoutDefault;
-        });
-        if (matchedChild) {
-            return buildVariableTagAttrs(variable, matchedChild, {
-                defaultIfEmpty,
-                transformerId,
-                transformerParams,
-            });
-        }
-    }
-
-    const fallback = allVariables.find(v => {
-        return v.value === tokenWithoutDefault;
-    });
+    const fallback = findMatchingVariableOption(allVariables, tokenWithoutDefault);
     if (fallback) {
         return buildVariableTagAttrs(fallback, fallback, {
             defaultIfEmpty,
             transformerId,
             transformerParams,
+            label: resolveVariableTagLabel(resolvedValue, fallback),
+            value: resolvedValue,
         });
     }
 
@@ -291,7 +377,7 @@ export function resolveVariableTagByValue(
     // should still render as variable tags instead of disappearing while categories load.
     if (isVariableLikeToken(tokenWithoutDefault)) {
         return {
-            label: buildFallbackLabelForUnknownToken(tokenWithoutDefault),
+            label: resolveVariableTagLabel(tokenWithoutDefault, null),
             value: tokenWithoutDefault,
             openOnInsert: false,
             ...(defaultIfEmpty ? { default: defaultIfEmpty } : {}),

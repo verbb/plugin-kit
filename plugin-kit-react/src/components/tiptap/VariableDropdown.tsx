@@ -27,6 +27,9 @@ export type VariableOption = {
     transformValueTypes?: string[];
     /** Explicitly disables transforms for aggregate/content variables such as field summaries. */
     allowTransforms?: boolean;
+    /** Application-specific metadata consumed by custom configure/label resolvers. */
+    meta?: Record<string, unknown>;
+    [key: string]: unknown;
 };
 
 export type VariableCategories = {

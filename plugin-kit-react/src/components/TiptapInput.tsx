@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 
 import Document from '@tiptap/extension-document';
@@ -6,7 +7,8 @@ import Text from '@tiptap/extension-text';
 
 import VariableTag from '@verbb/plugin-kit-react/components/tiptap/VariableTag';
 import { VariableDropdown } from '@verbb/plugin-kit-react/components/tiptap/VariableDropdown';
-import type { VariableTransformerRegistry } from '@verbb/plugin-kit-react/components/tiptap/VariablePickerContext';
+import type { VariableCategories } from '@verbb/plugin-kit-react/components/tiptap/VariableDropdown';
+import type { VariableConfigureSectionProps, VariableTransformerRegistry, VariableTagLabelResolver } from '@verbb/plugin-kit-react/components/tiptap/VariablePickerContext';
 import { VariablePickerProvider } from '@verbb/plugin-kit-react/components/tiptap/VariablePickerContext';
 import { InlineVariablePickerPopover } from '@verbb/plugin-kit-react/components/tiptap/InlineVariablePickerPopover';
 import { useInlineVariablePicker } from '@verbb/plugin-kit-react/components/tiptap/useInlineVariablePicker';
@@ -35,7 +37,24 @@ export const TiptapInput = ({
     variableCategoryOrder,
     variableTransformerRegistry,
     variablePickerTriggerCharacters = ['@'],
+    renderVariableConfigureSection,
+    resolveVariableTagLabel,
     ...props
+}: {
+    value?: string;
+    onChange?: (value: string) => void;
+    className?: string;
+    isInvalid?: boolean;
+    disabled?: boolean;
+    readOnly?: boolean;
+    variableCategories?: VariableCategories;
+    variableCategoryLabels?: Record<string, string>;
+    variableCategoryOrder?: string[];
+    variableTransformerRegistry?: VariableTransformerRegistry;
+    variablePickerTriggerCharacters?: string[];
+    renderVariableConfigureSection?: (props: VariableConfigureSectionProps) => ReactNode;
+    resolveVariableTagLabel?: VariableTagLabelResolver;
+    [key: string]: unknown;
 }) => {
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const [isVariablePickerOpen, setIsVariablePickerOpen] = useState(false);
@@ -119,6 +138,8 @@ export const TiptapInput = ({
             variableCategoryLabels={variableCategoryLabels}
             variableCategoryOrder={variableCategoryOrder}
             variableTransformerRegistry={variableTransformerRegistry as VariableTransformerRegistry | undefined}
+            renderVariableConfigureSection={renderVariableConfigureSection}
+            resolveVariableTagLabel={resolveVariableTagLabel}
         >
             <div ref={wrapperRef} className={cn('relative', className)}>
                 <EditorContent

@@ -10,7 +10,7 @@ import { LinkDropdown } from './tiptap/LinkDropdown';
 import type { LinkOptions, LinkOptionsInput } from './tiptap/LinkDropdown';
 import { VariableDropdown } from './tiptap/VariableDropdown';
 import type { VariableOption, VariableCategories } from './tiptap/VariableDropdown';
-import type { VariableTransformerRegistry } from './tiptap/VariablePickerContext';
+import type { VariableTransformerRegistry, VariableConfigureSectionProps, VariableTagLabelResolver } from './tiptap/VariablePickerContext';
 import { VariablePickerProvider } from './tiptap/VariablePickerContext';
 import { InlineVariablePickerPopover } from './tiptap/InlineVariablePickerPopover';
 import { useInlineVariablePicker } from './tiptap/useInlineVariablePicker';
@@ -387,6 +387,8 @@ type TiptapEditorProps = {
     variableCategoryOrder?: string[];
     variableTransformerRegistry?: VariableTransformerRegistry;
     variablePickerTriggerCharacters?: string[];
+    renderVariableConfigureSection?: (props: VariableConfigureSectionProps) => ReactNode;
+    resolveVariableTagLabel?: VariableTagLabelResolver;
     toolbarContent?: (params: {
         editor: TiptapEditorInstance | null;
         variableCategories: VariableCategories;
@@ -416,6 +418,8 @@ export const TiptapEditor = ({
     variableCategoryOrder,
     variableTransformerRegistry,
     variablePickerTriggerCharacters = ['@'],
+    renderVariableConfigureSection,
+    resolveVariableTagLabel,
     toolbarContent,
     rows,
     className,
@@ -431,6 +435,7 @@ export const TiptapEditor = ({
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const handleKeyDownRef = useRef<import('./tiptap/useInlineVariablePicker').InlineVariablePickerHandleKeyDown | null>(null);
+    const lastEmittedContentRef = useRef<string | null>(null);
 
     const extensions = useMemo(() => {
         return createTiptapExtensions({ trailingCursorText: '\u2060' });
@@ -453,6 +458,10 @@ export const TiptapEditor = ({
         return normalizeContentArray(content);
     };
 
+    const serializeEditorDocument = useCallback((editorInstance: NonNullable<ReturnType<typeof useEditor>>) => {
+        return JSON.stringify(serializeContent(editorInstance.getJSON().content));
+    }, []);
+
     const editor = useEditor({
         extensions,
         content: contentError ? null : editorContent,
@@ -462,9 +471,12 @@ export const TiptapEditor = ({
                 return handleKeyDownRef.current?.(view, event) ?? false;
             },
         },
-        onUpdate: ({ editor }) => {
+        onUpdate: ({ editor: editorInstance }) => {
+            const serialized = serializeContent(editorInstance.getJSON().content);
+            lastEmittedContentRef.current = JSON.stringify(serialized);
+
             if (onChange) {
-                onChange(serializeContent(editor.getJSON().content));
+                onChange(serialized);
             }
         },
     });
@@ -549,16 +561,43 @@ export const TiptapEditor = ({
 
     // Watch for value changes and update editor content
     useEffect(() => {
-        if (editor) {
-            const newContent = contentError ? null : editorContent;
-            const currentContent = editor.getJSON();
-
-            // Only update if content has actually changed
-            if (JSON.stringify(newContent) !== JSON.stringify(currentContent)) {
-                editor.commands.setContent(newContent);
-            }
+        if (!editor) {
+            return;
         }
-    }, [contentError, editor, editorContent]);
+
+        const incomingContent = contentError ? null : editorContent;
+        const incomingSerialized = JSON.stringify(incomingContent?.content ?? []);
+        const currentSerialized = serializeEditorDocument(editor);
+        const isVariableConfigActive = Boolean(
+            document.activeElement?.closest('[data-variable-config-popover]'),
+        );
+
+        if (incomingSerialized === currentSerialized) {
+            return;
+        }
+
+        if (lastEmittedContentRef.current === incomingSerialized) {
+            return;
+        }
+
+        if (
+            !readOnly
+            && (
+                editor.isFocused
+                || isVariableConfigActive
+                || (
+                    lastEmittedContentRef.current
+                    && currentSerialized === lastEmittedContentRef.current
+                    && incomingSerialized !== lastEmittedContentRef.current
+                )
+            )
+        ) {
+            return;
+        }
+
+        editor.commands.setContent(incomingContent ?? { type: 'doc', content: [] });
+        lastEmittedContentRef.current = incomingSerialized;
+    }, [contentError, editor, editorContent, readOnly, serializeEditorDocument]);
 
     const handleLinkBubbleEdit = useCallback(() => {
         if (!editor) { return; }
@@ -588,6 +627,8 @@ export const TiptapEditor = ({
                 variableCategoryLabels={variableCategoryLabels}
                 variableCategoryOrder={variableCategoryOrder}
                 variableTransformerRegistry={variableTransformerRegistry}
+                renderVariableConfigureSection={renderVariableConfigureSection}
+                resolveVariableTagLabel={resolveVariableTagLabel}
             >
                 <EditorContext.Provider value={{ editor }}>
                     {toolbarContent ? (

@@ -13,7 +13,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { EditorContent, useEditor } from "@tiptap/react";
 //#region src/components/TiptapInput.tsx
 var OneLinerDocument = Document.extend({ content: "inline*" });
-var TiptapInput = ({ value = "", onChange, className, isInvalid, disabled = false, readOnly = false, variableCategories = {}, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, variablePickerTriggerCharacters = ["@"], ...props }) => {
+var TiptapInput = ({ value = "", onChange, className, isInvalid, disabled = false, readOnly = false, variableCategories = {}, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, variablePickerTriggerCharacters = ["@"], renderVariableConfigureSection, resolveVariableTagLabel, ...props }) => {
 	const wrapperRef = useRef(null);
 	const [isVariablePickerOpen, setIsVariablePickerOpen] = useState(false);
 	const handleKeyDownRef = useRef(null);
@@ -82,6 +82,8 @@ var TiptapInput = ({ value = "", onChange, className, isInvalid, disabled = fals
 		variableCategoryLabels,
 		variableCategoryOrder,
 		variableTransformerRegistry,
+		renderVariableConfigureSection,
+		resolveVariableTagLabel,
 		children: /* @__PURE__ */ jsxs("div", {
 			ref: wrapperRef,
 			className: cn("relative", className),

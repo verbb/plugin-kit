@@ -9,7 +9,9 @@ var useVariableCategoriesContext = () => {
 		getVariableCategories: value.getVariableCategories ?? null,
 		variableCategoryLabels: value.variableCategoryLabels,
 		variableCategoryOrder: value.variableCategoryOrder,
-		variableTransformerRegistry: value.variableTransformerRegistry
+		variableTransformerRegistry: value.variableTransformerRegistry,
+		renderVariableConfigureSection: value.renderVariableConfigureSection,
+		resolveVariableTagLabel: value.resolveVariableTagLabel
 	};
 };
 //#endregion

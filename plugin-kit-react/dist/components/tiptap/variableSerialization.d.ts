@@ -22,12 +22,16 @@ export declare function buildVariableTagAttrs(baseVariable: VariableOption, sele
     defaultIfEmpty?: string;
     transformerId?: string;
     transformerParams?: Record<string, unknown>;
+    label?: string;
+    value?: string;
 }): VariableTagAttrs;
 /**
  * Strip optional inline default from token for lookup: {user:firstName|Guest} -> {user:firstName}.
  * Returns [tokenWithoutDefault, defaultText].
  */
 export declare function parseTokenWithDefault(tokenValue: string): [string, string | undefined];
+export declare function getReferenceBaseToken(tokenValue: string): string;
+export declare function resolveVariableTagLabel(tokenValue: string, option: VariableOption | null): string;
 /**
  * Resolve variable tag attrs from a token string (e.g. '{form:name}' or '{user:firstName|Guest}').
  */

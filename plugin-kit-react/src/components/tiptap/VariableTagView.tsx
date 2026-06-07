@@ -12,7 +12,7 @@ import { VariableCommandList } from './VariableCommandList';
 import { useVariablePickerContext } from './VariablePickerContext';
 import { VariableTransformControls } from './VariableTransformControls';
 import { useVariablePicker } from './useVariablePicker';
-import { buildVariableTagAttrs } from './variableSerialization';
+import { buildVariableTagAttrs, getReferenceBaseToken, resolveVariableTagLabel } from './variableSerialization';
 import { parseTokenWithDefault } from './variableSerialization';
 
 type VariableMeta = VariableOption & {
@@ -48,30 +48,52 @@ export default (props) => {
             return acc;
         }, {} as Record<string, string>);
     });
+    const [pendingTokenValue, setPendingTokenValue] = useState(String(node?.attrs?.value ?? ''));
+    const pendingTokenValueRef = useRef(String(node?.attrs?.value ?? ''));
+    const configureStateRef = useRef(null);
+    const prepareSaveRef = useRef(null);
+    const onPendingTokenChangeRef = useRef<(token: string) => void>(() => {});
+    const originalTagAttrsRef = useRef<Record<string, unknown> | null>(null);
+    const [configureSessionKey, setConfigureSessionKey] = useState(0);
     const openOnInsertHandled = useRef(false);
     const popoverContentRef = useRef<HTMLDivElement | null>(null);
     const pickerContext = useVariablePickerContext();
 
-    const selectedVariableMeta = useMemo(() => {
-        const [token] = parseTokenWithDefault(String(node?.attrs?.value ?? ''));
+    const resolveVariableMetaForToken = useCallback((lookupValue = '') => {
+        const [token] = parseTokenWithDefault(String(lookupValue || ''));
+        const tokenBase = getReferenceBaseToken(token);
         const groups = Object.values(pickerContext?.variableCategories ?? {});
 
         const visit = (items: VariableOption[]): VariableMeta | null => {
+            let fallbackMatch: VariableMeta | null = null;
+
             for (const item of items) {
-                if (item?.value === token) {
+                const children = Array.isArray(item?.children) ? item.children : [];
+                const itemValue = String(item?.value ?? '');
+
+                if (itemValue === token) {
                     return item as VariableMeta;
                 }
 
-                const children = Array.isArray(item?.children) ? item.children : [];
-                const childMatch = children.find((child) => {
-                    return child?.value === token;
-                });
-                if (childMatch) {
-                    return childMatch as VariableMeta;
+                if (children.length) {
+                    const childMatch = visit(children);
+                    if (childMatch?.value === token) {
+                        return childMatch;
+                    }
+
+                    if (childMatch && !fallbackMatch) {
+                        fallbackMatch = childMatch;
+                    }
+                }
+
+                if (getReferenceBaseToken(itemValue) === tokenBase) {
+                    if (!fallbackMatch) {
+                        fallbackMatch = item as VariableMeta;
+                    }
                 }
             }
 
-            return null;
+            return fallbackMatch;
         };
 
         for (const groupItems of groups) {
@@ -82,7 +104,15 @@ export default (props) => {
         }
 
         return null;
-    }, [pickerContext?.variableCategories, node?.attrs?.value]);
+    }, [pickerContext?.variableCategories]);
+
+    const selectedVariableMeta = useMemo(() => {
+        const lookupValue = isConfigOpen
+            ? String(pendingTokenValueRef.current || node?.attrs?.value || '')
+            : String(node?.attrs?.value ?? '');
+
+        return resolveVariableMetaForToken(lookupValue);
+    }, [isConfigOpen, node?.attrs?.value, pendingTokenValue, resolveVariableMetaForToken]);
 
     const transformOptions = useMemo(() => {
         if (selectedVariableMeta?.allowTransforms === false) {
@@ -243,11 +273,26 @@ export default (props) => {
             return;
         }
         openOnInsertHandled.current = true;
+        originalTagAttrsRef.current = {
+            value: node?.attrs?.value ?? null,
+            label: node?.attrs?.label ?? null,
+            default: node?.attrs?.default ?? null,
+            transformerId: node?.attrs?.transformerId ?? null,
+            transformerParams: node?.attrs?.transformerParams ?? null,
+        };
         setIsConfigOpen(true);
         queueMicrotask(() => {
             updateAttributes?.({ openOnInsert: false });
         });
-    }, [openOnInsert, updateAttributes]);
+    }, [
+        node?.attrs?.default,
+        node?.attrs?.label,
+        node?.attrs?.transformerId,
+        node?.attrs?.transformerParams,
+        node?.attrs?.value,
+        openOnInsert,
+        updateAttributes,
+    ]);
 
     const handleDelete = () => {
         if (!isReadOnly) {
@@ -255,7 +300,50 @@ export default (props) => {
         }
     };
 
-    function closeConfig() {
+    const commitPendingToken = useCallback((nextToken: string) => {
+        const normalizedToken = String(nextToken || '');
+        const meta = resolveVariableMetaForToken(normalizedToken);
+        const defaultLabel = resolveVariableTagLabel(normalizedToken, meta);
+        const label = pickerContext?.resolveVariableTagLabel?.({
+            tokenValue: normalizedToken,
+            variableOption: meta,
+            defaultLabel,
+            storedLabel: String(node?.attrs?.label ?? ''),
+        }) || defaultLabel;
+
+        pendingTokenValueRef.current = normalizedToken;
+        setPendingTokenValue(normalizedToken);
+
+        updateAttributes?.({
+            value: normalizedToken,
+            label,
+            default: node?.attrs?.default ?? null,
+            transformerId: node?.attrs?.transformerId ?? null,
+            transformerParams: node?.attrs?.transformerParams ?? null,
+        });
+    }, [
+        node?.attrs?.default,
+        node?.attrs?.label,
+        node?.attrs?.transformerId,
+        node?.attrs?.transformerParams,
+        pickerContext,
+        resolveVariableMetaForToken,
+        updateAttributes,
+    ]);
+
+    function closeConfig(preservedValue: string | null = null) {
+        const nextValue = preservedValue != null
+            ? String(preservedValue)
+            : String(node?.attrs?.value ?? '');
+
+        pendingTokenValueRef.current = nextValue;
+        setPendingTokenValue(nextValue);
+
+        if (preservedValue == null && originalTagAttrsRef.current) {
+            updateAttributes?.(originalTagAttrsRef.current);
+        }
+
+        originalTagAttrsRef.current = null;
         setIsConfigOpen(false);
         setIsPickerMode(false);
         picker.reset();
@@ -270,8 +358,27 @@ export default (props) => {
             return;
         }
 
+        const attrValue = String(node?.attrs?.value ?? '');
+        const nextValue = attrValue;
+        originalTagAttrsRef.current = {
+            value: node?.attrs?.value ?? null,
+            label: node?.attrs?.label ?? null,
+            default: node?.attrs?.default ?? null,
+            transformerId: node?.attrs?.transformerId ?? null,
+            transformerParams: node?.attrs?.transformerParams ?? null,
+        };
+        pendingTokenValueRef.current = nextValue;
+        setPendingTokenValue(nextValue);
+        setConfigureSessionKey((current) => current + 1);
         setIsConfigOpen(true);
-    }, [isConfigurable]);
+    }, [
+        isConfigurable,
+        node?.attrs?.default,
+        node?.attrs?.label,
+        node?.attrs?.transformerId,
+        node?.attrs?.transformerParams,
+        node?.attrs?.value,
+    ]);
 
     useEffect(() => {
         const editorDom = editor?.view?.dom;
@@ -308,6 +415,8 @@ export default (props) => {
     }, [editor, isActive, isConfigurable, handleOpenConfig]);
 
     const handleSaveOptions = () => {
+        prepareSaveRef.current?.();
+
         const trimmedDefault = defaultIfEmpty.trim();
         const trimmedTransformerId = transformerId.trim();
         const normalizedParams = trimmedTransformerId
@@ -319,24 +428,34 @@ export default (props) => {
                 return acc;
             }, {} as Record<string, string>)
             : null;
+        const savedValue = pendingTokenValueRef.current || String(node?.attrs?.value ?? '');
+        const savedMeta = resolveVariableMetaForToken(savedValue);
+        const defaultSavedLabel = resolveVariableTagLabel(savedValue, savedMeta);
+        const savedLabel = pickerContext?.resolveVariableTagLabel?.({
+            tokenValue: savedValue,
+            variableOption: savedMeta,
+            defaultLabel: defaultSavedLabel,
+            storedLabel: String(node?.attrs?.label ?? ''),
+        }) || defaultSavedLabel;
 
         updateAttributes?.({
+            value: savedValue,
+            label: savedLabel,
             default: trimmedDefault || null,
             transformerId: trimmedTransformerId || null,
             transformerParams: trimmedTransformerId ? normalizedParams : null,
         });
-        closeConfig();
+        closeConfig(savedValue);
     };
 
     const handleConfigOpenChange = (nextOpen: boolean) => {
-        setIsConfigOpen(nextOpen);
-
-        // Always reopen on the options view.
-        setIsPickerMode(false);
-
-        if (!nextOpen) {
-            picker.reset();
+        if (nextOpen) {
+            setIsConfigOpen(true);
+            setIsPickerMode(false);
+            return;
         }
+
+        closeConfig();
     };
 
     const handleTagKeyDown = (event) => {
@@ -352,6 +471,10 @@ export default (props) => {
     };
 
     useEffect(() => {
+        if (!isConfigOpen) {
+            return;
+        }
+
         setDefaultIfEmpty(node?.attrs?.default ?? '');
         setTransformerId(node?.attrs?.transformerId ?? '');
         const raw = node?.attrs?.transformerParams;
@@ -431,9 +554,38 @@ export default (props) => {
     } else if (appliedTransformerId) {
         transformPreview = appliedTransformerId;
     }
-    const tokenValue = String(node?.attrs?.value ?? '');
-    const tagLabel = selectedVariableMeta?.label ?? (node?.attrs?.label ?? '');
+    const tokenValue = String(
+        isConfigOpen
+            ? (pendingTokenValueRef.current || pendingTokenValue || node?.attrs?.value || '')
+            : (node?.attrs?.value || pendingTokenValue || ''),
+    );
+    const tagLabel = useMemo(() => {
+        const resolvedMeta = selectedVariableMeta || resolveVariableMetaForToken(tokenValue);
+        const defaultLabel = resolveVariableTagLabel(tokenValue, resolvedMeta);
+
+        return pickerContext?.resolveVariableTagLabel?.({
+            tokenValue,
+            variableOption: resolvedMeta,
+            defaultLabel,
+            storedLabel: String(node?.attrs?.label ?? ''),
+        }) || defaultLabel;
+    }, [node?.attrs?.label, pickerContext, resolveVariableMetaForToken, selectedVariableMeta, tokenValue]);
     const tagTitle = tagLabel;
+    const configureResetKey = isConfigOpen ? String(configureSessionKey) : 'closed';
+
+    onPendingTokenChangeRef.current = commitPendingToken;
+
+    const configureSection = pickerContext?.renderVariableConfigureSection?.({
+        tokenValue,
+        variableOption: selectedVariableMeta,
+        configureResetKey,
+        configureStateRef,
+        prepareSaveRef,
+        getPendingTokenValue: () => pendingTokenValueRef.current || String(node?.attrs?.value ?? ''),
+        onPendingTokenChange: (nextToken) => {
+            onPendingTokenChangeRef.current(nextToken);
+        },
+    });
     const useCornerBadge = true;
 
     return (
@@ -502,6 +654,7 @@ export default (props) => {
 
                         <PopoverContent
                             ref={popoverContentRef}
+                            data-variable-config-popover=""
                             align="start"
                             side="bottom"
                             sideOffset={6}
@@ -539,6 +692,7 @@ export default (props) => {
                                 )
                             ) : (
                                 <div className="p-2">
+                                    {configureSection}
                                     <label className="text-[11px] text-gray-500 block mb-1">
                                         {t('Default if empty (optional)')}
                                     </label>

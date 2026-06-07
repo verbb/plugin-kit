@@ -32,6 +32,8 @@ export const RichTextField = ({ form, field }: RichTextFieldProps) => {
         variableCategoryLabels,
         variableCategoryOrder,
         variableTransformerRegistry,
+        renderVariableConfigureSection,
+        resolveVariableTagLabel,
     } = useVariableCategoriesContext();
     const { variableConfig } = field;
 
@@ -62,6 +64,8 @@ export const RichTextField = ({ form, field }: RichTextFieldProps) => {
                 {...(variableCategoryLabels && { variableCategoryLabels })}
                 {...(variableCategoryOrder && { variableCategoryOrder })}
                 {...(variableTransformerRegistry && { variableTransformerRegistry })}
+                {...(renderVariableConfigureSection && { renderVariableConfigureSection })}
+                {...(resolveVariableTagLabel && { resolveVariableTagLabel })}
                 {...(field.linkOptions && { linkOptions: field.linkOptions })}
                 {...(field.linkSelectorStorageKeyPrefix && { linkSelectorStorageKeyPrefix: field.linkSelectorStorageKeyPrefix })}
                 disabled={field.disabled}

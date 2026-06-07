@@ -30,6 +30,8 @@ export const VariablePickerField = ({ form, field }: VariablePickerFieldProps) =
         variableCategoryLabels,
         variableCategoryOrder,
         variableTransformerRegistry,
+        renderVariableConfigureSection,
+        resolveVariableTagLabel,
     } = useVariableCategoriesContext();
     const { variableCategories, variableConfig } = field;
 
@@ -66,6 +68,8 @@ export const VariablePickerField = ({ form, field }: VariablePickerFieldProps) =
                 variableCategoryLabels={variableCategoryLabels}
                 variableCategoryOrder={variableCategoryOrder}
                 variableTransformerRegistry={variableTransformerRegistry}
+                renderVariableConfigureSection={renderVariableConfigureSection}
+                resolveVariableTagLabel={resolveVariableTagLabel}
                 variablePickerTriggerCharacters={field.variablePickerTriggerCharacters}
             />
         </FieldLayout>

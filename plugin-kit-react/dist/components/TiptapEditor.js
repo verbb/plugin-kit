@@ -345,10 +345,11 @@ var MenuBar = ({ editor, buttons = ["bold", "italic"], linkOptions, linkSelector
 		children: renderedButtons
 	});
 };
-var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableOptions = [], linkOptions, linkSelectorStorageKeyPrefix, variableCategories = {}, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, variablePickerTriggerCharacters = ["@"], toolbarContent, rows, className, isInvalid, disabled = false, readOnly = false, invalidContentMessage, ...props }) => {
+var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableOptions = [], linkOptions, linkSelectorStorageKeyPrefix, variableCategories = {}, variableCategoryLabels, variableCategoryOrder, variableTransformerRegistry, variablePickerTriggerCharacters = ["@"], renderVariableConfigureSection, resolveVariableTagLabel, toolbarContent, rows, className, isInvalid, disabled = false, readOnly = false, invalidContentMessage, ...props }) => {
 	useTranslation();
 	const wrapperRef = useRef(null);
 	const handleKeyDownRef = useRef(null);
+	const lastEmittedContentRef = useRef(null);
 	const extensions = useMemo(() => {
 		return createTiptapExtensions({ trailingCursorText: "⁠" });
 	}, []);
@@ -368,6 +369,9 @@ var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableO
 	const serializeContent = (content) => {
 		return normalizeContentArray(content);
 	};
+	const serializeEditorDocument = useCallback((editorInstance) => {
+		return JSON.stringify(serializeContent(editorInstance.getJSON().content));
+	}, []);
 	const editor = useEditor({
 		extensions,
 		content: contentError ? null : editorContent,
@@ -375,8 +379,10 @@ var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableO
 		editorProps: { handleKeyDown: (view, event) => {
 			return handleKeyDownRef.current?.(view, event) ?? false;
 		} },
-		onUpdate: ({ editor }) => {
-			if (onChange) onChange(serializeContent(editor.getJSON().content));
+		onUpdate: ({ editor: editorInstance }) => {
+			const serialized = serializeContent(editorInstance.getJSON().content);
+			lastEmittedContentRef.current = JSON.stringify(serialized);
+			if (onChange) onChange(serialized);
 		}
 	});
 	const inlinePicker = useInlineVariablePicker(editor, {
@@ -438,15 +444,25 @@ var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableO
 		}
 	}, [editor]);
 	useEffect(() => {
-		if (editor) {
-			const newContent = contentError ? null : editorContent;
-			const currentContent = editor.getJSON();
-			if (JSON.stringify(newContent) !== JSON.stringify(currentContent)) editor.commands.setContent(newContent);
-		}
+		if (!editor) return;
+		const incomingContent = contentError ? null : editorContent;
+		const incomingSerialized = JSON.stringify(incomingContent?.content ?? []);
+		const currentSerialized = serializeEditorDocument(editor);
+		const isVariableConfigActive = Boolean(document.activeElement?.closest("[data-variable-config-popover]"));
+		if (incomingSerialized === currentSerialized) return;
+		if (lastEmittedContentRef.current === incomingSerialized) return;
+		if (!readOnly && (editor.isFocused || isVariableConfigActive || lastEmittedContentRef.current && currentSerialized === lastEmittedContentRef.current && incomingSerialized !== lastEmittedContentRef.current)) return;
+		editor.commands.setContent(incomingContent ?? {
+			type: "doc",
+			content: []
+		});
+		lastEmittedContentRef.current = incomingSerialized;
 	}, [
 		contentError,
 		editor,
-		editorContent
+		editorContent,
+		readOnly,
+		serializeEditorDocument
 	]);
 	const handleLinkBubbleEdit = useCallback(() => {
 		if (!editor) return;
@@ -470,6 +486,8 @@ var TiptapEditor = ({ value = "", onChange, buttons = ["bold", "italic"], tableO
 			variableCategoryLabels,
 			variableCategoryOrder,
 			variableTransformerRegistry,
+			renderVariableConfigureSection,
+			resolveVariableTagLabel,
 			children: [/* @__PURE__ */ jsxs(EditorContext.Provider, {
 				value: { editor },
 				children: [
