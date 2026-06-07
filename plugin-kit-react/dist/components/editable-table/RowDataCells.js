@@ -6,13 +6,13 @@ import "../index.js";
 import React from "react";
 import { jsx } from "react/jsx-runtime";
 //#region src/components/editable-table/RowDataCells.jsx
-var isThinColumn = (column) => {
-	return Boolean(column?.thin || column?.type === "checkbox" || column?.type === "lightswitch" || column?.type === "radio");
-};
-var RowDataCells = React.memo(({ row, rowIndex, columns, columnsSignature, modifyColumn, getCellErrors, onUpdateCell }) => {
+var RowDataCells = React.memo(({ row, rowIndex, columns, columnsSignature, modifyColumn, modifyRow, getCellErrors, onUpdateCell }) => {
+	const rowModifications = modifyRow ? modifyRow(row, rowIndex) : null;
 	return columns.map((column) => {
+		const columnModifications = modifyColumn ? modifyColumn(row, column.name) : null;
 		return /* @__PURE__ */ jsx(TableCell$1, {
-			className: cn(column.className, isThinColumn(column) && "w-[1%] whitespace-nowrap"),
+			className: cn(column.className, rowModifications?.cellClassName, columnModifications?.cellClassName),
+			title: rowModifications?.title ?? columnModifications?.title,
 			children: /* @__PURE__ */ jsx(TableCell, {
 				row,
 				rowIndex,
@@ -25,7 +25,7 @@ var RowDataCells = React.memo(({ row, rowIndex, columns, columnsSignature, modif
 		}, column.name);
 	});
 }, (prevProps, nextProps) => {
-	return prevProps.row === nextProps.row && prevProps.rowIndex === nextProps.rowIndex && prevProps.columnsSignature === nextProps.columnsSignature && prevProps.getCellErrors === nextProps.getCellErrors;
+	return prevProps.row === nextProps.row && prevProps.rowIndex === nextProps.rowIndex && prevProps.columnsSignature === nextProps.columnsSignature && prevProps.getCellErrors === nextProps.getCellErrors && prevProps.modifyRow === nextProps.modifyRow;
 });
 //#endregion
 export { RowDataCells };

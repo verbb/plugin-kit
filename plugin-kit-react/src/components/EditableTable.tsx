@@ -21,6 +21,17 @@ import { useEditableTableCellChange } from './editable-table/useEditableTableCel
 import type {
     EditableTableColumn,
     EditableTableModifyColumn,
+    EditableTableModifyRow,
+    EditableTableOnCellChange,
+    EditableTableRow,
+    EditableTableRowActionArgs,
+} from './editable-table/types';
+
+export type {
+    EditableTableColumn,
+    EditableTableModifyColumn,
+    EditableTableModifyColumnResult,
+    EditableTableModifyRow,
     EditableTableOnCellChange,
     EditableTableRow,
     EditableTableRowActionArgs,
@@ -37,6 +48,7 @@ export type EditableTableProps = {
     allowDelete?: boolean;
     className?: string;
     modifyColumn?: EditableTableModifyColumn;
+    modifyRow?: EditableTableModifyRow;
     fieldName?: string;
     cellErrors?: Record<string, unknown>;
     newRowDefaults?: Record<string, unknown>;
@@ -58,6 +70,7 @@ type TableRowComponentProps = {
     showReorderControls: boolean;
     allowDelete: boolean;
     modifyColumn?: EditableTableModifyColumn;
+    modifyRow?: EditableTableModifyRow;
     getCellErrors: (rowIndex: number, columnName: string) => unknown[];
     onUpdateCell: (rowIndex: number, row: EditableTableRow, column: EditableTableColumn, newValue: unknown) => void;
     moveRow: (row: EditableTableRow, direction: number) => void;
@@ -80,6 +93,7 @@ export function EditableTable({
     allowDelete = true,
     className = '',
     modifyColumn = undefined,
+    modifyRow = undefined,
     fieldName = undefined,
     cellErrors = {},
     newRowDefaults = {},
@@ -233,6 +247,7 @@ export function EditableTable({
                                     showReorderControls={allowReorder}
                                     allowDelete={allowDelete}
                                     modifyColumn={modifyColumn}
+                                    modifyRow={modifyRow}
                                     getCellErrors={getCellErrors}
                                     onUpdateCell={handleCellValueChange}
                                     moveRow={moveRow}

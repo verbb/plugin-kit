@@ -25,6 +25,10 @@ export type EditableTableColumn = {
     [key: string]: unknown;
 };
 export type EditableTableModifyColumn = (row: EditableTableRow, columnName: string) => Partial<EditableTableColumn> | null | undefined;
+export type EditableTableModifyRow = (row: EditableTableRow, rowIndex: number) => {
+    cellClassName?: string;
+    title?: string;
+} | null | undefined;
 export type EditableTableRowActionArgs = {
     row: EditableTableRow;
     rowIndex: number;

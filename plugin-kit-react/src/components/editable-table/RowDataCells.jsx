@@ -13,17 +13,24 @@ export const RowDataCells = React.memo(({
     columns,
     columnsSignature,
     modifyColumn,
+    modifyRow,
     getCellErrors,
     onUpdateCell,
 }) => {
+    const rowModifications = modifyRow ? modifyRow(row, rowIndex) : null;
+
     return columns.map((column) => {
+        const columnModifications = modifyColumn ? modifyColumn(row, column.name) : null;
+
         return (
             <UITableCell
                 key={column.name}
                 className={cn(
                     column.className,
-                    isThinColumn(column) && 'w-[1%] whitespace-nowrap',
+                    rowModifications?.cellClassName,
+                    columnModifications?.cellClassName,
                 )}
+                title={rowModifications?.title ?? columnModifications?.title}
             >
                 <TableCell
                     row={row}
@@ -43,5 +50,6 @@ export const RowDataCells = React.memo(({
         && prevProps.rowIndex === nextProps.rowIndex
         && prevProps.columnsSignature === nextProps.columnsSignature
         && prevProps.getCellErrors === nextProps.getCellErrors
+        && prevProps.modifyRow === nextProps.modifyRow
     );
 });

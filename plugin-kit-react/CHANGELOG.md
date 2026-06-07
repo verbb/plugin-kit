@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 - 2026-06-07
+
+### Added
+- Added `modifyRow` to `EditableTable`, a row-level companion to `modifyColumn`. Host apps can return optional `cellClassName` and `title` values based on row data; these are applied to all data cells in the row and the actions cell when present.
+- Added support for `cellClassName` and `title` return values from `modifyColumn`, applied to individual table cell wrappers alongside existing column overrides.
+
 ## 1.0.1 - 2026-06-07
 
 ### Added

@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-import { EditableTableColumn, EditableTableModifyColumn, EditableTableOnCellChange, EditableTableRow, EditableTableRowActionArgs } from './editable-table/types';
+import { EditableTableColumn, EditableTableModifyColumn, EditableTableModifyRow, EditableTableOnCellChange, EditableTableRow, EditableTableRowActionArgs } from './editable-table/types';
 export type EditableTableProps = {
     columns: EditableTableColumn[];
     rows: EditableTableRow[];
@@ -11,6 +11,7 @@ export type EditableTableProps = {
     allowDelete?: boolean;
     className?: string;
     modifyColumn?: EditableTableModifyColumn;
+    modifyRow?: EditableTableModifyRow;
     fieldName?: string;
     cellErrors?: Record<string, unknown>;
     newRowDefaults?: Record<string, unknown>;
@@ -24,5 +25,5 @@ export type EditableTableProps = {
     renderRowMenuItemsAfterCore?: (args: EditableTableRowActionArgs) => React.ReactNode;
     renderRowMenuItems?: (args: EditableTableRowActionArgs) => React.ReactNode;
 };
-export declare function EditableTable({ columns, rows, onChange, onCellChange, addRowLabel, allowReorder, allowAdd, allowDelete, className, modifyColumn, fieldName, cellErrors, newRowDefaults, renderActions, renderRowActions, renderRowMenuItemsBeforeCore, renderRowMenuItemsAfterCore, renderRowMenuItems, }: EditableTableProps): import("react/jsx-runtime").JSX.Element;
+export declare function EditableTable({ columns, rows, onChange, onCellChange, addRowLabel, allowReorder, allowAdd, allowDelete, className, modifyColumn, modifyRow, fieldName, cellErrors, newRowDefaults, renderActions, renderRowActions, renderRowMenuItemsBeforeCore, renderRowMenuItemsAfterCore, renderRowMenuItems, }: EditableTableProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=EditableTable.d.ts.map

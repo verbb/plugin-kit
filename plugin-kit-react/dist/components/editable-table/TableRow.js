@@ -34,7 +34,7 @@ var PlainRow = ({ className, children }) => {
 		children: typeof children === "function" ? children({ handleRef: void 0 }) : children
 	});
 };
-var TableRow = React.memo(({ row, rowIndex, rowCount, columns, columnsSignature, useDnd, allowReorder, showReorderControls, allowDelete, modifyColumn, getCellErrors, onUpdateCell, moveRow, removeRow, t, renderRowActions, renderRowMenuItemsBeforeCore, renderRowMenuItemsAfterCore, renderRowMenuItems }) => {
+var TableRow = React.memo(({ row, rowIndex, rowCount, columns, columnsSignature, useDnd, allowReorder, showReorderControls, allowDelete, modifyColumn, modifyRow, getCellErrors, onUpdateCell, moveRow, removeRow, t, renderRowActions, renderRowMenuItemsBeforeCore, renderRowMenuItemsAfterCore, renderRowMenuItems }) => {
 	return /* @__PURE__ */ jsx(useDnd ? SortableRow : PlainRow, {
 		row,
 		rowIndex,
@@ -42,6 +42,7 @@ var TableRow = React.memo(({ row, rowIndex, rowCount, columns, columnsSignature,
 		className: "bg-white",
 		children: ({ handleRef }) => {
 			const dragHandleRef = useDnd ? handleRef : void 0;
+			const rowModifications = modifyRow ? modifyRow(row, rowIndex) : null;
 			const legacyBeforeRowMenuItems = renderRowMenuItems?.({
 				row,
 				rowIndex,
@@ -67,10 +68,12 @@ var TableRow = React.memo(({ row, rowIndex, rowCount, columns, columnsSignature,
 				columns,
 				columnsSignature,
 				modifyColumn,
+				modifyRow,
 				getCellErrors,
 				onUpdateCell
 			}), (showReorderControls || allowDelete) && /* @__PURE__ */ jsx(TableCell, {
-				className: cn("bg-[#fbfcfe]"),
+				className: cn(rowModifications?.cellClassName ?? "bg-[#fbfcfe]"),
+				title: rowModifications?.title,
 				children: /* @__PURE__ */ jsxs("div", {
 					className: "flex items-center px-1",
 					children: [
@@ -155,7 +158,7 @@ var TableRow = React.memo(({ row, rowIndex, rowCount, columns, columnsSignature,
 		}
 	});
 }, (prevProps, nextProps) => {
-	return prevProps.row === nextProps.row && prevProps.rowIndex === nextProps.rowIndex && prevProps.rowCount === nextProps.rowCount && prevProps.columnsSignature === nextProps.columnsSignature && prevProps.getCellErrors === nextProps.getCellErrors && prevProps.useDnd === nextProps.useDnd && prevProps.allowReorder === nextProps.allowReorder && prevProps.showReorderControls === nextProps.showReorderControls && prevProps.allowDelete === nextProps.allowDelete && prevProps.renderRowActions === nextProps.renderRowActions && prevProps.renderRowMenuItemsBeforeCore === nextProps.renderRowMenuItemsBeforeCore && prevProps.renderRowMenuItemsAfterCore === nextProps.renderRowMenuItemsAfterCore && prevProps.renderRowMenuItems === nextProps.renderRowMenuItems;
+	return prevProps.row === nextProps.row && prevProps.rowIndex === nextProps.rowIndex && prevProps.rowCount === nextProps.rowCount && prevProps.columnsSignature === nextProps.columnsSignature && prevProps.getCellErrors === nextProps.getCellErrors && prevProps.useDnd === nextProps.useDnd && prevProps.allowReorder === nextProps.allowReorder && prevProps.showReorderControls === nextProps.showReorderControls && prevProps.allowDelete === nextProps.allowDelete && prevProps.modifyRow === nextProps.modifyRow && prevProps.renderRowActions === nextProps.renderRowActions && prevProps.renderRowMenuItemsBeforeCore === nextProps.renderRowMenuItemsBeforeCore && prevProps.renderRowMenuItemsAfterCore === nextProps.renderRowMenuItemsAfterCore && prevProps.renderRowMenuItems === nextProps.renderRowMenuItems;
 });
 //#endregion
 export { TableRow };

@@ -17,7 +17,7 @@ import { faPlus } from "@fortawesome/pro-solid-svg-icons";
 import { DragDropProvider } from "@dnd-kit/react";
 import { AutoScroller } from "@dnd-kit/dom";
 //#region src/components/EditableTable.tsx
-function EditableTable({ columns, rows, onChange, onCellChange = void 0, addRowLabel, allowReorder = true, allowAdd = true, allowDelete = true, className = "", modifyColumn = void 0, fieldName = void 0, cellErrors = {}, newRowDefaults = {}, renderActions = void 0, renderRowActions = void 0, renderRowMenuItemsBeforeCore = void 0, renderRowMenuItemsAfterCore = void 0, renderRowMenuItems = void 0 }) {
+function EditableTable({ columns, rows, onChange, onCellChange = void 0, addRowLabel, allowReorder = true, allowAdd = true, allowDelete = true, className = "", modifyColumn = void 0, modifyRow = void 0, fieldName = void 0, cellErrors = {}, newRowDefaults = {}, renderActions = void 0, renderRowActions = void 0, renderRowMenuItemsBeforeCore = void 0, renderRowMenuItemsAfterCore = void 0, renderRowMenuItems = void 0 }) {
 	const TableRowComponent = TableRow;
 	const t = useTranslation();
 	const normalizedColumns = useMemo(() => {
@@ -114,6 +114,7 @@ function EditableTable({ columns, rows, onChange, onCellChange = void 0, addRowL
 						showReorderControls: allowReorder,
 						allowDelete,
 						modifyColumn,
+						modifyRow,
 						getCellErrors,
 						onUpdateCell: handleCellValueChange,
 						moveRow,

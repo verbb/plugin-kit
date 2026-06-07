@@ -30,7 +30,24 @@ export type EditableTableColumn = {
 export type EditableTableModifyColumn = (
     row: EditableTableRow,
     columnName: string,
-) => Partial<EditableTableColumn> | null | undefined;
+) => EditableTableModifyColumnResult | null | undefined;
+
+export type EditableTableModifyColumnResult = Partial<EditableTableColumn> & {
+    /** Applied to the table cell wrapper for this column. */
+    cellClassName?: string;
+    /** Native title attribute for the table cell wrapper. */
+    title?: string;
+};
+
+export type EditableTableModifyRow = (
+    row: EditableTableRow,
+    rowIndex: number,
+) => {
+    /** Applied to every data cell in the row, and the actions cell when present. */
+    cellClassName?: string;
+    /** Native title attribute for affected cells. */
+    title?: string;
+} | null | undefined;
 
 export type EditableTableRowActionArgs = {
     row: EditableTableRow;

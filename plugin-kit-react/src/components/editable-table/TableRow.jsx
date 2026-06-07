@@ -69,6 +69,7 @@ export const TableRow = React.memo(({
     showReorderControls,
     allowDelete,
     modifyColumn,
+    modifyRow,
     getCellErrors,
     onUpdateCell,
     moveRow,
@@ -90,6 +91,7 @@ export const TableRow = React.memo(({
         >
             {({ handleRef }) => {
                 const dragHandleRef = useDnd ? handleRef : undefined;
+                const rowModifications = modifyRow ? modifyRow(row, rowIndex) : null;
                 const legacyBeforeRowMenuItems = renderRowMenuItems?.({
                     row,
                     rowIndex,
@@ -118,13 +120,17 @@ export const TableRow = React.memo(({
                             columns={columns}
                             columnsSignature={columnsSignature}
                             modifyColumn={modifyColumn}
+                            modifyRow={modifyRow}
                             getCellErrors={getCellErrors}
                             onUpdateCell={onUpdateCell}
                         />
                         {(showReorderControls || allowDelete) && (
-                            <TableCell className={cn(
-                                'bg-[#fbfcfe]',
-                            )}>
+                            <TableCell
+                                className={cn(
+                                    rowModifications?.cellClassName ?? 'bg-[#fbfcfe]',
+                                )}
+                                title={rowModifications?.title}
+                            >
                                 <div className="flex items-center px-1">
                                     {showReorderControls && (
                                         <span ref={dragHandleRef}>
@@ -233,6 +239,7 @@ export const TableRow = React.memo(({
         && prevProps.allowReorder === nextProps.allowReorder
         && prevProps.showReorderControls === nextProps.showReorderControls
         && prevProps.allowDelete === nextProps.allowDelete
+        && prevProps.modifyRow === nextProps.modifyRow
         && prevProps.renderRowActions === nextProps.renderRowActions
         && prevProps.renderRowMenuItemsBeforeCore === nextProps.renderRowMenuItemsBeforeCore
         && prevProps.renderRowMenuItemsAfterCore === nextProps.renderRowMenuItemsAfterCore
