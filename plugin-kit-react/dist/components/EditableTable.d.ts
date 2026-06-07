@@ -1,5 +1,6 @@
 import { default as React } from 'react';
 import { EditableTableColumn, EditableTableModifyColumn, EditableTableModifyRow, EditableTableOnCellChange, EditableTableRow, EditableTableRowActionArgs } from './editable-table/types';
+export type { EditableTableColumn, EditableTableModifyColumn, EditableTableModifyColumnResult, EditableTableModifyRow, EditableTableOnCellChange, EditableTableRow, EditableTableRowActionArgs, } from './editable-table/types';
 export type EditableTableProps = {
     columns: EditableTableColumn[];
     rows: EditableTableRow[];
