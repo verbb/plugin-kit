@@ -17,18 +17,17 @@ const dropdownMenuItemVariants = cva([
     // Disabled
     'data-disabled:pointer-events-none data-disabled:opacity-50',
 
-    // SVG
-    '[&_svg:not([class*="size-"])]:[width:var(--icon-size)]',
-    '[&_svg:not([class*="size-"])]:[height:var(--icon-size)]',
+    // SVG — use single-quoted attribute selectors so Tailwind emits
+    // svg:not([class*=size-]) rather than a broken escaped form.
     '[&_svg]:pointer-events-none [&_svg]:shrink-0',
 ], {
     variants: {
         size: {
-            xs: 'py-[3px] px-[8px] gap-1.5 text-[12px] [--icon-size:10px]',
-            sm: 'py-[4px] px-[10px] gap-1.75 text-[13px] [--icon-size:11px]',
-            default: 'py-[8px] px-[12px] gap-2.5 text-sm [--icon-size:12px]',
-            lg: 'py-[10px] px-[14px] gap-3 text-base [--icon-size:12px]',
-            xl: 'py-[12px] px-[16px] gap-3 text-lg [--icon-size:12px]',
+            xs: 'py-[3px] px-[8px] gap-1.5 text-[12px] [&_svg:not([class*=\'size-\'])]:size-2.5',
+            sm: 'py-[4px] px-[10px] gap-1.75 text-[13px] [&_svg:not([class*=\'size-\'])]:size-3',
+            default: 'py-[8px] px-[12px] gap-2.5 text-sm [&_svg:not([class*=\'size-\'])]:size-3',
+            lg: 'py-[10px] px-[14px] gap-3 text-base [&_svg:not([class*=\'size-\'])]:size-3.5',
+            xl: 'py-[12px] px-[16px] gap-3 text-lg [&_svg:not([class*=\'size-\'])]:size-4',
         },
         variant: {
             default: '',
