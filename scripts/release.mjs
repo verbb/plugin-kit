@@ -24,6 +24,14 @@ const paths = {
     pluginKitPackageJson: new URL('../plugin-kit/package.json', import.meta.url),
 };
 
+const rollbackPaths = [
+    'plugin-kit/package.json',
+    'plugin-kit-react/package.json',
+    'plugin-kit/CHANGELOG.md',
+    'plugin-kit-react/CHANGELOG.md',
+    'package-lock.json',
+];
+
 if (!validBumps.has(bump)) {
     console.error('Usage: npm run release -- <patch|minor|major>');
     process.exit(1);
@@ -40,6 +48,14 @@ const output = (command, args) => execFileSync(command, args, {
     encoding: 'utf8',
 }).trim();
 
+const tryOutput = (command, args) => {
+    try {
+        return output(command, args);
+    } catch {
+        return null;
+    }
+};
+
 const ensureCleanWorkingTree = () => {
     const status = output('git', ['status', '--porcelain']);
 
@@ -47,6 +63,29 @@ const ensureCleanWorkingTree = () => {
         console.error('Release aborted: commit or stash current changes first.');
         console.error(status);
         process.exit(1);
+    }
+};
+
+const verifyNpmAuth = () => {
+    const user = tryOutput('npm', ['whoami']);
+
+    if (!user) {
+        throw new Error(
+            'Not logged in to npm. Run `npm login` in this terminal, or add a publish token to ~/.npmrc.',
+        );
+    }
+
+    console.log(`npm publish identity: ${user}`);
+
+    for (const packageName of packages) {
+        const access = tryOutput('npm', ['access', 'get', 'status', packageName]);
+
+        if (!access) {
+            throw new Error(
+                `Cannot verify publish access for ${packageName}. `
+                + 'Ensure your npm user or token can publish to the @verbb scope.',
+            );
+        }
     }
 };
 
@@ -109,57 +148,106 @@ const finalizeChangelogContent = (content, version, date, { requireContent = tru
     return `# Changelog\n\n## Unreleased\n\n## ${version} - ${date}\n\n${releaseBody}\n\n${previousSections}`.trimEnd();
 };
 
+const rollbackReleaseChanges = () => {
+    try {
+        execFileSync('git', ['checkout', '--', ...rollbackPaths], {
+            stdio: 'inherit',
+        });
+        console.error('Release failed. Restored package versions and changelogs.');
+    } catch {
+        console.error('Release failed and automatic rollback did not work.');
+        console.error(`Run: git checkout -- ${rollbackPaths.join(' ')}`);
+    }
+};
+
+const publishPackages = () => {
+    for (const packageName of packages) {
+        try {
+            run('npm', ['publish', '-w', packageName, '--access', 'public']);
+        } catch (error) {
+            throw new Error(
+                `npm publish failed for ${packageName}.\n`
+                + 'If you see E404, npm auth is usually the cause even when install works.\n'
+                + 'Run `npm login` in this terminal, or refresh your publish token in ~/.npmrc.\n'
+                + 'Granular tokens need Publish permission for the @verbb scope.',
+                { cause: error },
+            );
+        }
+    }
+};
+
 ensureCleanWorkingTree();
-
-for (const packageName of packages) {
-    run('npm', ['version', bump, '-w', packageName, '--no-git-tag-version']);
-}
-
-run('npm', ['install', '--package-lock-only', '--ignore-scripts']);
-
-const version = packageVersion();
-const date = releaseDate();
+verifyNpmAuth();
 
 const pluginKitReactChangelog = readChangelog(paths.pluginKitReactChangelog);
 const pluginKitChangelog = readChangelog(paths.pluginKitChangelog);
 
-writeChangelog(
-    paths.pluginKitReactChangelog,
-    finalizeChangelogContent(pluginKitReactChangelog, version, date, { requireContent: true }),
-);
-writeChangelog(
-    paths.pluginKitChangelog,
-    finalizeChangelogContent(pluginKitChangelog, version, date, { requireContent: false }),
-);
-
-run('npm', ['run', 'build', '-w', '@verbb/plugin-kit']);
-run('npm', ['run', 'build', '-w', '@verbb/plugin-kit-react']);
-run('npm', ['pack', '--dry-run', '-w', '@verbb/plugin-kit']);
-run('npm', ['pack', '--dry-run', '-w', '@verbb/plugin-kit-react']);
-
-for (const packageName of packages) {
-    run('npm', ['publish', '-w', packageName, '--access', 'public']);
+if (!hasMeaningfulChangelogBody(extractUnreleasedBody(pluginKitReactChangelog))) {
+    console.error('Release aborted: add entries under `## Unreleased` in plugin-kit-react/CHANGELOG.md first.');
+    process.exit(1);
 }
 
-run('git', [
-    'add',
-    'package-lock.json',
-    'plugin-kit/package.json',
-    'plugin-kit-react/package.json',
-    'plugin-kit/CHANGELOG.md',
-    'plugin-kit-react/CHANGELOG.md',
-]);
-run('git', ['commit', '-m', `Release ${version}`]);
+const currentVersion = packageVersion();
+let releaseStarted = false;
 
 try {
-    execFileSync('npm', ['run', 'deploy', '--', 'plugin-kit'], {
-        cwd: new URL('../../../verbb-docs', import.meta.url),
-        stdio: 'inherit',
-    });
-} catch {
-    console.warn('Docs deploy skipped (verbb-docs workspace not available).');
-}
+    for (const packageName of packages) {
+        run('npm', ['version', bump, '-w', packageName, '--no-git-tag-version']);
+    }
 
-console.log(`Released Plugin Kit ${version} to npm.`);
-console.log('Push the release commit with:');
-console.log('  git push origin main');
+    run('npm', ['install', '--package-lock-only', '--ignore-scripts']);
+
+    const version = packageVersion();
+
+    if (version === currentVersion) {
+        throw new Error(`Version did not change after ${bump} bump (still ${currentVersion}).`);
+    }
+
+    releaseStarted = true;
+
+    writeChangelog(
+        paths.pluginKitReactChangelog,
+        finalizeChangelogContent(pluginKitReactChangelog, version, releaseDate(), { requireContent: true }),
+    );
+    writeChangelog(
+        paths.pluginKitChangelog,
+        finalizeChangelogContent(pluginKitChangelog, version, releaseDate(), { requireContent: false }),
+    );
+
+    run('npm', ['run', 'build', '-w', '@verbb/plugin-kit']);
+    run('npm', ['run', 'build', '-w', '@verbb/plugin-kit-react']);
+    run('npm', ['pack', '--dry-run', '-w', '@verbb/plugin-kit']);
+    run('npm', ['pack', '--dry-run', '-w', '@verbb/plugin-kit-react']);
+
+    publishPackages();
+
+    run('git', [
+        'add',
+        'package-lock.json',
+        'plugin-kit/package.json',
+        'plugin-kit-react/package.json',
+        'plugin-kit/CHANGELOG.md',
+        'plugin-kit-react/CHANGELOG.md',
+    ]);
+    run('git', ['commit', '-m', `Release ${version}`]);
+
+    try {
+        execFileSync('npm', ['run', 'deploy', '--', 'plugin-kit'], {
+            cwd: new URL('../../../verbb-docs', import.meta.url),
+            stdio: 'inherit',
+        });
+    } catch {
+        console.warn('Docs deploy skipped (verbb-docs workspace not available).');
+    }
+
+    console.log(`Released Plugin Kit ${version} to npm.`);
+    console.log('Push the release commit with:');
+    console.log('  git push origin main');
+} catch (error) {
+    if (releaseStarted) {
+        rollbackReleaseChanges();
+    }
+
+    console.error(error.message ?? error);
+    process.exit(1);
+}
