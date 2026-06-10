@@ -1,11 +1,15 @@
 # Changelog
 
-## 1.0.3 - 2026-06-10
+## Unreleased
 
 ### Added
 - Added `CodeEditor`, a CodeMirror 6-based code surface for HTML and plain text with line numbers, tab sizing, and validation styling.
 - Added `CodeEditorField` (`codeEditor`) for SchemaForm string fields that need syntax-aware editing.
 - Added `TiptapContent`, a read-only TipTap renderer for previews and summaries that accepts the same value shapes as `RichTextField`.
+
+### Fixed
+- Add icon support to Combobox.
+- Fix dropdown menu icon handling.
 
 ## 1.0.2 - 2026-06-07
 
