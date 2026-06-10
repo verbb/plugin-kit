@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.4 - 2026-06-10
+
 ### Added
 - Added `CodeEditor`, a CodeMirror 6-based code surface for HTML and plain text with line numbers, tab sizing, and validation styling.
 - Added `CodeEditorField` (`codeEditor`) for SchemaForm string fields that need syntax-aware editing.
