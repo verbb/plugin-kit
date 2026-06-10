@@ -8,6 +8,14 @@ var optionsCache = /* @__PURE__ */ new Map();
 var toStringValue = (value) => {
 	return String(value ?? "");
 };
+var OptionIcon = ({ icon }) => {
+	if (!icon || typeof icon !== "string") return null;
+	return /* @__PURE__ */ jsx("span", {
+		className: "text-slate-500 [&_svg]:size-4 [&_svg]:shrink-0",
+		"aria-hidden": "true",
+		dangerouslySetInnerHTML: { __html: icon }
+	});
+};
 var ComboboxInput = ({ options, fetchOptions, value = null, onValueChange, multiple = false, disabled = false, placeholder = "Select an option", emptyMessage = "No options found.", className, contentClassName, withLoadingIndicator = true, showClear = true, open, defaultOpen, onOpenChange, onInputValueChange, cacheKey, cacheTtlMs = 300 * 1e3, disableCache = false }) => {
 	const [fetchedOptions, setFetchedOptions] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -135,7 +143,7 @@ var ComboboxInput = ({ options, fetchOptions, value = null, onValueChange, multi
 				className,
 				children: /* @__PURE__ */ jsx(ComboboxValue, { children: (items) => {
 					return /* @__PURE__ */ jsxs(Fragment, { children: [items.map((item) => {
-						return /* @__PURE__ */ jsx(ComboboxChip, { children: item.label }, toStringValue(item.value));
+						return /* @__PURE__ */ jsxs(ComboboxChip, { children: [/* @__PURE__ */ jsx(OptionIcon, { icon: item.icon }), item.label] }, toStringValue(item.value));
 					}), /* @__PURE__ */ jsx(ComboboxChipsInput, { placeholder })] });
 				} })
 			}) : /* @__PURE__ */ jsx(ComboboxPrimitiveInput, {
@@ -149,9 +157,12 @@ var ComboboxInput = ({ options, fetchOptions, value = null, onValueChange, multi
 				children: [/* @__PURE__ */ jsx(ComboboxEmpty, { children: emptyMessage }), /* @__PURE__ */ jsx(ComboboxList, { children: (item) => {
 					return /* @__PURE__ */ jsx(ComboboxItem, {
 						value: item,
-						children: /* @__PURE__ */ jsx(ComboboxHighlightedText, {
-							text: item.label,
-							search: searchValue
+						children: /* @__PURE__ */ jsxs("span", {
+							className: "flex items-center gap-2",
+							children: [/* @__PURE__ */ jsx(OptionIcon, { icon: item.icon }), /* @__PURE__ */ jsx(ComboboxHighlightedText, {
+								text: item.label,
+								search: searchValue
+							})]
 						})
 					}, toStringValue(item.value));
 				} })]

@@ -1,6 +1,7 @@
 export type ComboboxInputOption = {
     label: string;
     value: string | number;
+    icon?: string | null;
     [key: string]: unknown;
 };
 export type ComboboxInputProps = {

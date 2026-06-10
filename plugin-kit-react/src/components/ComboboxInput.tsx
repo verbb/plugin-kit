@@ -22,6 +22,7 @@ import {
 export type ComboboxInputOption = {
     label: string;
     value: string | number;
+    icon?: string | null;
     [key: string]: unknown;
 };
 
@@ -56,6 +57,20 @@ const optionsCache = new Map<string, CacheEntry>();
 
 const toStringValue = (value: unknown): string => {
     return String(value ?? '');
+};
+
+const OptionIcon = ({ icon }: { icon?: string | null }) => {
+    if (!icon || typeof icon !== 'string') {
+        return null;
+    }
+
+    return (
+        <span
+            className="text-slate-500 [&_svg]:size-4 [&_svg]:shrink-0"
+            aria-hidden="true"
+            dangerouslySetInnerHTML={{ __html: icon }}
+        />
+    );
 };
 
 export const ComboboxInput = ({
@@ -224,6 +239,7 @@ export const ComboboxInput = ({
                                         {items.map((item) => {
                                             return (
                                                 <ComboboxChip key={toStringValue(item.value)}>
+                                                    <OptionIcon icon={item.icon} />
                                                     {item.label}
                                                 </ComboboxChip>
                                             );
@@ -252,7 +268,10 @@ export const ComboboxInput = ({
                         {(item) => {
                             return (
                                 <ComboboxItem key={toStringValue(item.value)} value={item}>
-                                    <ComboboxHighlightedText text={item.label} search={searchValue} />
+                                    <span className="flex items-center gap-2">
+                                        <OptionIcon icon={item.icon} />
+                                        <ComboboxHighlightedText text={item.label} search={searchValue} />
+                                    </span>
                                 </ComboboxItem>
                             );
                         }}
