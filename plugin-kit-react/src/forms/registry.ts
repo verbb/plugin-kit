@@ -9,6 +9,7 @@ import { ListField } from './fields/ListField';
 import { EditableTableField } from './fields/EditableTableField';
 import { DateTimeField } from './fields/DateTimeField';
 import { RichTextField } from './fields/RichTextField';
+import { CodeEditorField } from './fields/CodeEditorField';
 import { VariablePickerField } from './fields/VariablePickerField';
 import { CalculationsField } from './fields/CalculationsField';
 import { ElementSelectField } from './fields/ElementSelectField';
@@ -45,6 +46,7 @@ const formFieldRegistry: Record<string, SchemaFormFieldComponent> = {
     table: EditableTableField,
     date: DateTimeField,
     richText: RichTextField,
+    codeEditor: CodeEditorField,
     variablePicker: VariablePickerField,
     calculations: CalculationsField,
     elementSelect: ElementSelectField,

@@ -39,6 +39,7 @@ const componentItems = [
     { text: 'Checkbox', link: '/components/checkbox' },
     { text: 'CheckboxInput', link: '/components/checkbox-input' },
     { text: 'CheckboxSelect', link: '/components/checkbox-select' },
+    { text: 'CodeEditor', link: '/components/code-editor' },
     { text: 'ColorInput', link: '/components/color-input' },
     { text: 'Combobox', link: '/components/combobox' },
     { text: 'CopyButton', link: '/components/copy-button' },
@@ -60,6 +61,7 @@ const componentItems = [
     { text: 'Textarea', link: '/components/textarea' },
     { text: 'TimePicker', link: '/components/time-picker' },
     { text: 'TiptapEditor', link: '/components/tiptap-editor' },
+    { text: 'TiptapContent', link: '/components/tiptap-content' },
     { text: 'TiptapInput', link: '/components/tiptap-input' },
     { text: 'Toggle', link: '/components/toggle' },
     { text: 'ToggleGroup', link: '/components/toggle-group' },
@@ -90,6 +92,7 @@ const formsItems = [
         items: [
             { text: 'CalculationsField', link: '/forms/schema-fields/calculations-field' },
             { text: 'CheckboxSelectField', link: '/forms/schema-fields/checkbox-select-field' },
+            { text: 'CodeEditorField', link: '/forms/schema-fields/code-editor-field' },
             { text: 'ColorField', link: '/forms/schema-fields/color-field' },
             { text: 'ComboboxField', link: '/forms/schema-fields/combobox-field' },
             { text: 'DateTimeField', link: '/forms/schema-fields/date-time-field' },

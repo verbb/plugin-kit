@@ -28,4 +28,5 @@ Use `RichTextField` when the schema needs rich text content stored in the form s
 ## Related
 
 - Plain component docs: [TiptapEditor](../../components/tiptap-editor.md)
+- Read-only previews: [TiptapContent](../../components/tiptap-content.md)
 - `getRichTextHtml` / `getRichTextText` in `@verbb/plugin-kit-react/utils` for serialization helpers

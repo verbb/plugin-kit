@@ -1,6 +1,7 @@
 export * from './Button';
 export * from './ButtonGroup';
 export * from './Calendar';
+export * from './CodeEditor';
 export * from './Checkbox';
 export * from './CheckboxInput';
 export * from './CheckboxSelect';

@@ -38,7 +38,7 @@ import {
 
 The default field registry includes:
 
-`text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `handle`, `list`, `table`, `date`, `richText`, `variablePicker`, `calculations`, `elementSelect`, `color`, `checkboxSelect`, `combobox`, `group`, `staticTable`
+`text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `handle`, `list`, `table`, `date`, `richText`, `codeEditor`, `variablePicker`, `calculations`, `elementSelect`, `color`, `checkboxSelect`, `combobox`, `group`, `staticTable`
 
 ## Built-in component keys
 

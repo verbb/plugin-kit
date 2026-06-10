@@ -39,6 +39,7 @@ SchemaForm includes built-in fields for common UI patterns, such as:
 - [`EditableTableField`](./schema-fields/editable-table-field.md)
 - [`GroupField`](./schema-fields/group-field.md)
 - [`RichTextField`](./schema-fields/rich-text-field.md)
+- [`CodeEditorField`](./schema-fields/code-editor-field.md)
 - [`CheckboxSelectField`](./schema-fields/checkbox-select-field.md)
 - [`ColorField`](./schema-fields/color-field.md)
 - [`ComboboxField`](./schema-fields/combobox-field.md)

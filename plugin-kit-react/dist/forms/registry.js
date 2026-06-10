@@ -8,6 +8,7 @@ import { ListField } from "./fields/ListField.js";
 import { EditableTableField } from "./fields/EditableTableField.js";
 import { DateTimeField } from "./fields/DateTimeField.js";
 import { RichTextField } from "./fields/RichTextField.js";
+import { CodeEditorField } from "./fields/CodeEditorField.js";
 import { VariablePickerField } from "./fields/VariablePickerField.js";
 import { CalculationsField } from "./fields/CalculationsField.js";
 import { ElementSelectField } from "./fields/ElementSelectField.js";
@@ -33,6 +34,7 @@ var formFieldRegistry = {
 	table: EditableTableField,
 	date: DateTimeField,
 	richText: RichTextField,
+	codeEditor: CodeEditorField,
 	variablePicker: VariablePickerField,
 	calculations: CalculationsField,
 	elementSelect: ElementSelectField,

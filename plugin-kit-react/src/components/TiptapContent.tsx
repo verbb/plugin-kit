@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { EditorContent, useEditor } from '@tiptap/react';
 import type { ComponentProps } from 'react';
 import { cn } from '@verbb/plugin-kit-react/utils';
@@ -9,16 +9,48 @@ type TiptapContentProps = Omit<ComponentProps<typeof EditorContent>, 'editor'> &
     className?: string;
 };
 
+const serializeDocContent = (content: ReturnType<typeof valueToContent>) => {
+    if (!content) {
+        return '[]';
+    }
+
+    if (Array.isArray(content.content)) {
+        return JSON.stringify(content.content);
+    }
+
+    return JSON.stringify(content);
+};
+
 export const TiptapContent = ({ value = '', className, ...props }: TiptapContentProps) => {
     const extensions = useMemo(() => {
         return createTiptapExtensions();
     }, []);
 
+    const editorContent = useMemo(() => {
+        return valueToContent(value);
+    }, [value]);
+
     const editor = useEditor({
         extensions,
-        content: valueToContent(value),
+        content: editorContent,
         editable: false,
     });
+
+    useEffect(() => {
+        if (!editor) {
+            return;
+        }
+
+        const incomingContent = editorContent ?? { type: 'doc', content: [] };
+        const incomingSerialized = serializeDocContent(editorContent);
+        const currentSerialized = serializeDocContent(editor.getJSON() as ReturnType<typeof valueToContent>);
+
+        if (incomingSerialized === currentSerialized) {
+            return;
+        }
+
+        editor.commands.setContent(incomingContent);
+    }, [editor, editorContent]);
 
     return (
         <EditorContent
