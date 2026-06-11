@@ -462,7 +462,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
             className={cn(
                 // Layout
                 'max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))]',
-                'overflow-y-auto overscroll-contain',
+                'overflow-x-clip overflow-y-auto overscroll-contain',
 
                 // Utilities
                 'no-scrollbar',

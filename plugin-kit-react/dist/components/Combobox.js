@@ -258,7 +258,7 @@ function ComboboxContent({ className, side = "bottom", sideOffset = 6, align = "
 function ComboboxList({ className, ...props }) {
 	return /* @__PURE__ */ jsx(Combobox$1.List, {
 		"data-slot": "combobox-list",
-		className: cn("max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))]", "overflow-y-auto overscroll-contain", "no-scrollbar", "data-empty:p-0", className),
+		className: cn("max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))]", "overflow-x-clip overflow-y-auto overscroll-contain", "no-scrollbar", "data-empty:p-0", className),
 		...props
 	});
 }
