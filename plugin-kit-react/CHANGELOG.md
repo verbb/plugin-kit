@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.5 - 2026-06-12
+
 ### Fixed
 - Fix Combobox overflow-x handling.
 
