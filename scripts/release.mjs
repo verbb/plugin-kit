@@ -281,8 +281,6 @@ try {
         finalizeChangelogContent(pluginKitChangelog, version, releaseDate(), { requireContent: false }),
     );
 
-    buildPackages();
-    packDryRunAll();
     publishPackages();
 
     run('git', [
