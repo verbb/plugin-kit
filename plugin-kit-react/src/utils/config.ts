@@ -1,6 +1,7 @@
 import { setPortalClassName, setPortalContainer, setShadowRootSelectors } from './portal';
 import { setTranslationCategory, setTranslateFunction, type TranslateParams } from './translation';
 import { setHostBridge, type PluginKitReactHostBridge } from './hostBridge';
+import { ensureDocumentScrollStability } from './documentScrollStability';
 
 type TranslateFunction = (category: string, message: string, params?: TranslateParams) => string;
 
@@ -20,6 +21,10 @@ export const configurePluginKitReact = (config: PluginKitReactConfig): void => {
 
     if (config.portalContainer) {
         setPortalContainer(config.portalContainer);
+
+        if (config.portalContainer instanceof ShadowRoot) {
+            ensureDocumentScrollStability();
+        }
     }
 
     if (config.shadowRootSelectors) {

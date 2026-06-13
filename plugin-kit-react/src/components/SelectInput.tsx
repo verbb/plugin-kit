@@ -72,6 +72,7 @@ interface SelectProps<T = unknown>
     onBlur?: React.FocusEventHandler<HTMLButtonElement>;
     triggerClassName?: string;
     contentClassName?: string;
+    alignItemWithTrigger?: boolean;
     id?: string;
     'aria-invalid'?: boolean | 'true' | 'false';
     'aria-describedby'?: string;
@@ -88,8 +89,10 @@ export const SelectInput = forwardRef<HTMLButtonElement, SelectProps>(({
     value,
     triggerClassName,
     contentClassName,
+    alignItemWithTrigger = false,
     isInvalid,
     id,
+    modal = true,
     'aria-invalid': ariaInvalid,
     'aria-describedby': ariaDescribedBy,
     'aria-errormessage': ariaErrorMessage,
@@ -155,6 +158,7 @@ export const SelectInput = forwardRef<HTMLButtonElement, SelectProps>(({
             onValueChange={handleValueChange}
             size={size}
             items={flatOptions as ComponentProps<typeof Select>['items']}
+            modal={modal}
             {...selectProps}
         >
             <SelectTrigger
@@ -191,7 +195,10 @@ export const SelectInput = forwardRef<HTMLButtonElement, SelectProps>(({
             </SelectTrigger>
 
             {options?.length > 0 && (
-                <SelectContent className={contentClassName}>
+                <SelectContent
+                    className={contentClassName}
+                    alignItemWithTrigger={alignItemWithTrigger}
+                >
                     {groupedOptions.map((group) => {
                         return (
                             <SelectGroup key={group.group ?? group._key}>

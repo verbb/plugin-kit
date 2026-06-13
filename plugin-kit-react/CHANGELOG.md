@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Added
+- Added `ensureDocumentScrollStability()` and wire it into `configurePluginKitReact()` for Shadow DOM apps, reserving document scrollbar space so Base UI modal scroll lock does not shift Craft CP layouts.
+
+### Changed
+- Changed `SelectInput` to default to `modal={true}` for outside pointer isolation while keeping `alignItemWithTrigger={false}` to avoid the extra scroll-lock path that caused layout jumps in embedded CP panes.
+- Added an `alignItemWithTrigger` prop to `SelectInput` for cases that need the expand-to-trigger animation.
+
 ## 1.0.5 - 2026-06-12
 
 ### Fixed

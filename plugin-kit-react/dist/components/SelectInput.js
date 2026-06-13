@@ -6,7 +6,7 @@ import "./index.js";
 import { forwardRef } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 //#region src/components/SelectInput.tsx
-var SelectInput = forwardRef(({ options, placeholder, size, onChange, value, triggerClassName, contentClassName, isInvalid, id, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, "aria-errormessage": ariaErrorMessage, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...selectProps }, ref) => {
+var SelectInput = forwardRef(({ options, placeholder, size, onChange, value, triggerClassName, contentClassName, alignItemWithTrigger = false, isInvalid, id, modal = true, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, "aria-errormessage": ariaErrorMessage, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...selectProps }, ref) => {
 	const handleValueChange = (nextValue) => {
 		if (onChange) onChange(nextValue);
 	};
@@ -35,6 +35,7 @@ var SelectInput = forwardRef(({ options, placeholder, size, onChange, value, tri
 		onValueChange: handleValueChange,
 		size,
 		items: flatOptions,
+		modal,
 		...selectProps,
 		children: [/* @__PURE__ */ jsxs(SelectTrigger, {
 			ref,
@@ -62,6 +63,7 @@ var SelectInput = forwardRef(({ options, placeholder, size, onChange, value, tri
 			})]
 		}), options?.length > 0 && /* @__PURE__ */ jsx(SelectContent, {
 			className: contentClassName,
+			alignItemWithTrigger,
 			children: groupedOptions.map((group) => {
 				return /* @__PURE__ */ jsxs(SelectGroup, { children: [group.group && /* @__PURE__ */ jsx(SelectLabel, { children: group.group }), group.options?.map((option) => {
 					return /* @__PURE__ */ jsxs(SelectItem, {

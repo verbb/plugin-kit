@@ -20,6 +20,7 @@ interface SelectProps<T = unknown> extends Omit<SelectBaseProps, 'children' | 'v
     onBlur?: React.FocusEventHandler<HTMLButtonElement>;
     triggerClassName?: string;
     contentClassName?: string;
+    alignItemWithTrigger?: boolean;
     id?: string;
     'aria-invalid'?: boolean | 'true' | 'false';
     'aria-describedby'?: string;

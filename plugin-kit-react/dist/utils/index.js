@@ -3,6 +3,7 @@ import { cn } from "./classes.js";
 import { getPortalClassName, getPortalContainer, getPortalTargetForAppend, getShadowRootSelectors, setPortalClassName, setPortalContainer, setShadowRootSelectors } from "./portal.js";
 import { setTranslateFunction, setTranslationCategory, translate } from "./translation.js";
 import { getHostBridge, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, setHostBridge } from "./hostBridge.js";
+import { ensureDocumentScrollStability } from "./documentScrollStability.js";
 import { configurePluginKitReact } from "./config.js";
 import { createCraftHostBridge } from "./craftHostBridge.js";
 import { buildUniqueHandleFromSource, getDynamicReservedHandles } from "./handle.js";
@@ -24,6 +25,7 @@ var utils_exports = /* @__PURE__ */ __exportAll({
 	configurePluginKitReact: () => configurePluginKitReact,
 	createCraftHostBridge: () => createCraftHostBridge,
 	createSchemaFieldIndex: () => createSchemaFieldIndex,
+	ensureDocumentScrollStability: () => ensureDocumentScrollStability,
 	evaluateCondition: () => evaluateCondition,
 	extractFieldNames: () => extractFieldNames,
 	extractFields: () => extractFields,
@@ -61,6 +63,6 @@ var utils_exports = /* @__PURE__ */ __exportAll({
 import * as import__verbb_plugin_kit from "@verbb/plugin-kit";
 __reExport(utils_exports, import__verbb_plugin_kit);
 //#endregion
-export { buildUniqueHandleFromSource, clearTimeOptionsCache, cn, configurePluginKitReact, createCraftHostBridge, createSchemaFieldIndex, evaluateCondition, extractFieldNames, extractFields, generateTimeOptions, getDynamicReservedHandles, getHostBridge, getPortalClassName, getPortalContainer, getPortalTargetForAppend, getRichTextHtml, getRichTextText, getSchemaFieldIndex, getSchemaFieldNames, getShadowRootSelectors, hasSchemaErrors, hasSchemaErrorsCached, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, normalizeAttrs, normalizeSchemaNode, setHostBridge, setPortalClassName, setPortalContainer, setShadowRootSelectors, setTranslateFunction, setTranslationCategory, translate, traverseSchema, utils_exports, validateFormValues, zustandHmrFix };
+export { buildUniqueHandleFromSource, clearTimeOptionsCache, cn, configurePluginKitReact, createCraftHostBridge, createSchemaFieldIndex, ensureDocumentScrollStability, evaluateCondition, extractFieldNames, extractFields, generateTimeOptions, getDynamicReservedHandles, getHostBridge, getPortalClassName, getPortalContainer, getPortalTargetForAppend, getRichTextHtml, getRichTextText, getSchemaFieldIndex, getSchemaFieldNames, getShadowRootSelectors, hasSchemaErrors, hasSchemaErrorsCached, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, normalizeAttrs, normalizeSchemaNode, setHostBridge, setPortalClassName, setPortalContainer, setShadowRootSelectors, setTranslateFunction, setTranslationCategory, translate, traverseSchema, utils_exports, validateFormValues, zustandHmrFix };
 
 //# sourceMappingURL=index.js.map
