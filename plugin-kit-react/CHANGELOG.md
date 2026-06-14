@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.6 - 2026-06-14
+
 ### Added
 - Added `ensureDocumentScrollStability()` and wire it into `configurePluginKitReact()` for Shadow DOM apps, reserving document scrollbar space so Base UI modal scroll lock does not shift Craft CP layouts.
 
