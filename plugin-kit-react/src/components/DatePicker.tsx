@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/pro-solid-svg-icons';
@@ -12,6 +12,11 @@ import {
 } from '@verbb/plugin-kit-react/components';
 
 import { cn, hostFormatDate } from '@verbb/plugin-kit-react/utils';
+import { parseLocalDate, resolveCalendarMonth } from '@verbb/plugin-kit-react/utils/datetime';
+
+const toDate = (value: Date | string | null | undefined): Date | undefined => {
+    return parseLocalDate(value);
+};
 
 export function DatePicker({
     value,
@@ -30,9 +35,22 @@ export function DatePicker({
     isInvalid?: boolean;
 }) {
     const [open, setOpen] = useState(false);
+    const date = useMemo(() => toDate(value), [value]);
+    const [month, setMonth] = useState(() => resolveCalendarMonth(date));
 
-    // Convert ISO date string to Date object for Calendar
-    const date = value ? new Date(value) : undefined;
+    useEffect(() => {
+        if (date) {
+            setMonth(resolveCalendarMonth(date));
+        }
+    }, [date]);
+
+    const handleOpenChange = (nextOpen: boolean) => {
+        if (nextOpen) {
+            setMonth(resolveCalendarMonth(date));
+        }
+
+        setOpen(nextOpen);
+    };
 
     const handleSelect = (selectedDate?: Date) => {
         onValueChange?.(selectedDate);
@@ -40,7 +58,7 @@ export function DatePicker({
     };
 
     return (
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger
                 render={
                     <Button
@@ -84,6 +102,8 @@ export function DatePicker({
                 <Calendar
                     mode="single"
                     selected={date}
+                    month={month}
+                    onMonthChange={setMonth}
                     captionLayout="dropdown"
                     onSelect={handleSelect}
                 />

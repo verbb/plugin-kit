@@ -42,6 +42,9 @@ function PopoverContent({
     }) {
     const resolvedPortalClassName = getPortalClassName(portalClassName);
     const resolvedPortalContainer = getPortalContainer(portalContainer);
+    const resolvedPositionMethod = positionMethod ?? (
+        resolvedPortalContainer instanceof ShadowRoot ? 'fixed' : undefined
+    );
 
     return (
         <PopoverPrimitive.Portal
@@ -54,7 +57,7 @@ function PopoverContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
-                positionMethod={positionMethod}
+                positionMethod={resolvedPositionMethod}
                 collisionBoundary={collisionBoundary}
                 collisionPadding={collisionPadding}
                 sticky={sticky}

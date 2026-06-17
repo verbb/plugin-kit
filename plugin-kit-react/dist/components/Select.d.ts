@@ -13,7 +13,7 @@ declare function SelectValue({ className, ...props }: SelectPrimitive.Value.Prop
 declare function SelectTrigger({ className, size, children, ...props }: SelectPrimitive.Trigger.Props & {
     size?: SelectSize;
 }): import("react/jsx-runtime").JSX.Element;
-declare function SelectContent({ className, children, side, sideOffset, align, alignOffset, alignItemWithTrigger, ...props }: SelectPrimitive.Popup.Props & Pick<SelectPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger'>): import("react/jsx-runtime").JSX.Element;
+declare function SelectContent({ className, children, side, sideOffset, align, alignOffset, alignItemWithTrigger, positionMethod, ...props }: SelectPrimitive.Popup.Props & Pick<SelectPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger' | 'positionMethod'>): import("react/jsx-runtime").JSX.Element;
 declare function SelectLabel({ className, ...props }: SelectPrimitive.GroupLabel.Props): import("react/jsx-runtime").JSX.Element;
 declare function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Props): import("react/jsx-runtime").JSX.Element;
 declare function SelectSeparator({ className, ...props }: SelectPrimitive.Separator.Props): import("react/jsx-runtime").JSX.Element;

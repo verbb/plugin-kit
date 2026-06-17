@@ -117,9 +117,10 @@ function SelectTrigger({ className, size, children, ...props }) {
 		}) })]
 	});
 }
-function SelectContent({ className, children, side = "bottom", sideOffset = 4, align = "center", alignOffset = 0, alignItemWithTrigger = true, ...props }) {
+function SelectContent({ className, children, side = "bottom", sideOffset = 4, align = "center", alignOffset = 0, alignItemWithTrigger = true, positionMethod, ...props }) {
 	const resolvedPortalClassName = getPortalClassName();
 	const resolvedPortalContainer = getPortalContainer();
+	const resolvedPositionMethod = positionMethod ?? (resolvedPortalContainer instanceof ShadowRoot ? "fixed" : void 0);
 	return /* @__PURE__ */ jsx(Select$1.Portal, {
 		className: resolvedPortalClassName,
 		container: resolvedPortalContainer,
@@ -129,6 +130,7 @@ function SelectContent({ className, children, side = "bottom", sideOffset = 4, a
 			align,
 			alignOffset,
 			alignItemWithTrigger,
+			positionMethod: resolvedPositionMethod,
 			className: "isolate z-50",
 			children: /* @__PURE__ */ jsxs(Select$1.Popup, {
 				"data-slot": "select-content",

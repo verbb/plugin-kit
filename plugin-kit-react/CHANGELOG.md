@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Added
+- Added datetime helpers (`parseDateTimeValue`, `parseLocalDate`, `formatDateTimeValue`, `resolveCalendarMonth`, and `startOfMonth`) for wall-clock `Y-m-d H:i:s` values without timezone conversion.
+- Exported the datetime helpers from `@verbb/plugin-kit-react/utils`.
+
+### Changed
+- Changed `DatePicker` to parse values with `parseLocalDate`, keep the visible calendar month in sync with the selected date, and reopen on that month when the popover opens.
+- Changed `DateTimeField` to read and write Craft-style wall-clock datetime strings through the form engine instead of maintaining mirrored local state or emitting ISO UTC values.
+- Changed `PopoverContent` and `SelectContent` to default to `positionMethod="fixed"` when portaling into a Shadow DOM container.
+- Changed `SelectContent` to accept an optional `positionMethod` prop.
+- Changed `TimePicker` to use `alignItemWithTrigger={false}` so its dropdown stays aligned in scrollable embedded CP panes.
+
+### Fixed
+- Fixed `DatePicker` opening on the current month instead of the selected date’s month.
+- Fixed `DateTimeField` shifting dates and times when values were formatted with `toISOString()`.
+- Fixed `DateTimeField` causing a React maximum update depth error while saving forms.
+- Fixed `TimePicker` and other select popovers rendering with a large positional offset inside Shadow DOM apps such as the Formie form builder.
+
 ## 1.0.6 - 2026-06-14
 
 ### Added

@@ -57,6 +57,7 @@ export function TimePicker({
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent
+                alignItemWithTrigger={false}
                 className={cn(
                     'max-h-[15rem] min-w-[8rem]',
                 )}

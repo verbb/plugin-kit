@@ -227,14 +227,18 @@ function SelectContent({
     align = 'center',
     alignOffset = 0,
     alignItemWithTrigger = true,
+    positionMethod,
     ...props
 }: SelectPrimitive.Popup.Props &
     Pick<
         SelectPrimitive.Positioner.Props,
-        'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger'
+        'align' | 'alignOffset' | 'side' | 'sideOffset' | 'alignItemWithTrigger' | 'positionMethod'
     >) {
     const resolvedPortalClassName = getPortalClassName();
     const resolvedPortalContainer = getPortalContainer();
+    const resolvedPositionMethod = positionMethod ?? (
+        resolvedPortalContainer instanceof ShadowRoot ? 'fixed' : undefined
+    );
 
     return (
         <SelectPrimitive.Portal className={resolvedPortalClassName} container={resolvedPortalContainer}>
@@ -244,6 +248,7 @@ function SelectContent({
                 align={align}
                 alignOffset={alignOffset}
                 alignItemWithTrigger={alignItemWithTrigger}
+                positionMethod={resolvedPositionMethod}
                 className="isolate z-50"
             >
                 <SelectPrimitive.Popup

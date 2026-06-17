@@ -24,6 +24,7 @@ function TimePicker({ value, onValueChange, placeholder = "", className, disable
 				className: cn("mr-1 text-gray-400")
 			}), /* @__PURE__ */ jsx(SelectValue, { placeholder })]
 		}), /* @__PURE__ */ jsx(SelectContent, {
+			alignItemWithTrigger: false,
 			className: cn("max-h-[15rem] min-w-[8rem]"),
 			children: timeOptions.map((option) => {
 				return /* @__PURE__ */ jsx(SelectItem, {

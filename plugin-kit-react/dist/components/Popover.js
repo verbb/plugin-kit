@@ -20,6 +20,7 @@ function PopoverTrigger({ ...props }) {
 function PopoverContent({ className, align = "center", alignOffset = 0, side = "bottom", sideOffset = 4, positionMethod, collisionBoundary, collisionPadding, sticky, collisionAvoidance, portalClassName, portalContainer, ...props }) {
 	const resolvedPortalClassName = getPortalClassName(portalClassName);
 	const resolvedPortalContainer = getPortalContainer(portalContainer);
+	const resolvedPositionMethod = positionMethod ?? (resolvedPortalContainer instanceof ShadowRoot ? "fixed" : void 0);
 	return /* @__PURE__ */ jsx(Popover$1.Portal, {
 		"data-slot": "popover-portal",
 		className: resolvedPortalClassName,
@@ -29,7 +30,7 @@ function PopoverContent({ className, align = "center", alignOffset = 0, side = "
 			alignOffset,
 			side,
 			sideOffset,
-			positionMethod,
+			positionMethod: resolvedPositionMethod,
 			collisionBoundary,
 			collisionPadding,
 			sticky,

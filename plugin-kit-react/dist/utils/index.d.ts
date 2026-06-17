@@ -1,6 +1,7 @@
 export * from '@verbb/plugin-kit';
 export * from './classes';
 export * from './config';
+export * from './datetime';
 export * from './documentScrollStability';
 export * from './craftHostBridge';
 export * from './handle';
