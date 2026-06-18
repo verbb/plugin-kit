@@ -1,7 +1,0 @@
-import{c as l}from"./schema-form-preview-harness.BJm_7L5v.js";import"./ToggleGroup.CbXzrbf8.js";import"./index.D7EAvD9_.js";import"./theme.WRvqWW7S.js";import"./framework.DV0oQ0OM.js";import"./SchemaFormEngine.DLfv9yq2.js";import"./docsPreviewHostBridge.Ciw0LMoz.js";import"./TiptapEditor.DLdBbQOf.js";import"./Dialog.NzRojvFD.js";import"./editorConfig.D5J106ci.js";import"./EditableTable.BR55jdkh.js";import"./CheckboxSelect.CiPTn6Qq.js";import"./CheckboxInput.CS8vLSA1.js";import"./RadioGroup.DGwgqqDM.js";import"./ModalTabs.BYVj2zdJ.js";import"./TabsList.CaFkzZ-V.js";const a=[{$field:"calculations",name:"formula",label:"Calculation",instructions:"Use field variables to build the result.",validationAction:"plugin-kit-react/docs/validate-calculation",variableCategories:{fields:[{label:"Email",value:"{email}"},{label:"Full Name",value:"{fullName}"}]}}],g=l({code:`{
-  "$field": "calculations",
-  "name": "formula",
-  "label": "Calculation",
-  "instructions": "Use field variables to build the result.",
-  "validationAction": "plugin-kit-react/docs/validate-calculation"
-}`,schema:a,fieldEntries:[{path:"formula",field:{$field:"calculations",name:"formula",label:"Calculation",instructions:"Use field variables to build the result.",validationAction:"plugin-kit-react/docs/validate-calculation",variableCategories:{fields:[{label:"Email",value:"{email}"},{label:"Full Name",value:"{fullName}"}]}}}],defaultValues:{formula:"{email}"},showValues:!0});export{g as default};
