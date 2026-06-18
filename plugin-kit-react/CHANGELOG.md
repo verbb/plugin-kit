@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.7 - 2026-06-18
+
 ### Added
 - Added datetime helpers (`parseDateTimeValue`, `parseLocalDate`, `formatDateTimeValue`, `resolveCalendarMonth`, and `startOfMonth`) for wall-clock `Y-m-d H:i:s` values without timezone conversion.
 - Exported the datetime helpers from `@verbb/plugin-kit-react/utils`.
