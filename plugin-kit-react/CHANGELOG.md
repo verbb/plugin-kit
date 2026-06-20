@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fixed `SelectField` ignoring the schema `disabled` property and leaving the select interactive when it should be read-only.
+
 ## 1.0.7 - 2026-06-18
 
 ### Added

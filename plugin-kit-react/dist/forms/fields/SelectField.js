@@ -63,7 +63,8 @@ var SelectField = ({ form, field }) => {
 				return setValue(nextValue);
 			},
 			isInvalid,
-			onBlur: setTouched
+			onBlur: setTouched,
+			disabled: field.disabled
 		})
 	});
 };

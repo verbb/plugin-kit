@@ -102,6 +102,7 @@ export const SelectField = ({ form, field }: SelectFieldProps) => {
                 onChange={(nextValue) => { return setValue(nextValue); }}
                 isInvalid={isInvalid}
                 onBlur={setTouched as SelectInputProps['onBlur']}
+                disabled={field.disabled}
             />
         </FieldLayout>
     );
