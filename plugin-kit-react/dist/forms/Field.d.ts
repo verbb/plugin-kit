@@ -31,7 +31,8 @@ type FieldLayoutProps = ComponentProps<'div'> & {
     errors?: string[];
     withControl?: boolean;
     showInlineErrors?: boolean;
+    translatable?: boolean;
 };
-declare const FieldLayout: ({ name, label, instructions, headerEnd, required, warning, errors, withControl, showInlineErrors, className, children, ...props }: FieldLayoutProps) => import("react/jsx-runtime").JSX.Element;
+declare const FieldLayout: ({ name, label, instructions, headerEnd, required, warning, errors, withControl, showInlineErrors, translatable, className, children, ...props }: FieldLayoutProps) => import("react/jsx-runtime").JSX.Element;
 export { FieldRoot, FieldHeader, FieldLabel, FieldInstructions, FieldControl, FieldErrors, FieldLayout, InlineFieldErrorVisibilityContext, useFieldContext, };
 //# sourceMappingURL=Field.d.ts.map

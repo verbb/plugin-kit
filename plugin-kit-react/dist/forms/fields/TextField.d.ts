@@ -9,6 +9,7 @@ type TextFieldProps = {
         placeholder?: string;
         required?: boolean;
         disabled?: boolean;
+        translatable?: boolean;
     };
 };
 export declare const TextField: ({ form, field }: TextFieldProps) => import("react/jsx-runtime").JSX.Element;

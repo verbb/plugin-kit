@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAsterisk, faTriangleExclamation } from '@fortawesome/pro-solid-svg-icons';
 import { useTranslation } from '@verbb/plugin-kit-react/hooks';
 
+import { TranslationIcon } from './TranslationIcon';
+
 type FieldContextValue = {
     id: string;
     name: string;
@@ -147,6 +149,7 @@ type FieldLayoutProps = ComponentProps<'div'> & {
     errors?: string[];
     withControl?: boolean;
     showInlineErrors?: boolean;
+    translatable?: boolean;
 };
 
 const FieldLayout = ({
@@ -159,6 +162,7 @@ const FieldLayout = ({
     errors = [],
     withControl = true,
     showInlineErrors,
+    translatable = false,
     className,
     children,
     ...props
@@ -185,6 +189,15 @@ const FieldLayout = ({
                                         </span>
                                     </>
                                 )}
+                                {translatable ? (
+                                    <span
+                                        className="inline-flex"
+                                        title={t('Translatable')}
+                                    >
+                                        <TranslationIcon />
+                                        <span className="sr-only">{t('Translatable')}</span>
+                                    </span>
+                                ) : null}
                             </FieldLabel>
                         )}
                         {instructions && (

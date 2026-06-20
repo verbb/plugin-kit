@@ -21,6 +21,7 @@ type RichTextFieldProps = {
         rows?: number;
         linkOptions?: LinkOptionsInput;
         linkSelectorStorageKeyPrefix?: string;
+        translatable?: boolean;
     };
 };
 
@@ -51,6 +52,7 @@ export const RichTextField = ({ form, field }: RichTextFieldProps) => {
             instructions={field.instructions}
             warning={field.warning}
             required={field.required}
+            translatable={field.translatable}
             errors={errors}
             withControl={false}
         >

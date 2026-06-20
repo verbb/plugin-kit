@@ -14,6 +14,7 @@ type TextareaFieldProps = {
         rows?: number;
         required?: boolean;
         disabled?: boolean;
+        translatable?: boolean;
     };
 };
 
@@ -29,6 +30,7 @@ export const TextareaField = ({ form, field }: TextareaFieldProps) => {
             instructions={field.instructions}
             warning={field.warning}
             required={field.required}
+            translatable={field.translatable}
             errors={errors}
         >
             <Textarea

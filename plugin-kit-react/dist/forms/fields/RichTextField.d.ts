@@ -16,6 +16,7 @@ type RichTextFieldProps = {
         rows?: number;
         linkOptions?: LinkOptionsInput;
         linkSelectorStorageKeyPrefix?: string;
+        translatable?: boolean;
     };
 };
 export declare const RichTextField: ({ form, field }: RichTextFieldProps) => import("react/jsx-runtime").JSX.Element;

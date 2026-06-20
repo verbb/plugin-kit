@@ -13,6 +13,7 @@ type TextFieldProps = {
         placeholder?: string;
         required?: boolean;
         disabled?: boolean;
+        translatable?: boolean;
     };
 };
 
@@ -28,6 +29,7 @@ export const TextField = ({ form, field }: TextFieldProps) => {
             instructions={field.instructions}
             warning={field.warning}
             required={field.required}
+            translatable={field.translatable}
             errors={errors}
         >
             <Input

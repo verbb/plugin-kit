@@ -25,6 +25,7 @@ var RichTextField = ({ form, field }) => {
 		instructions: field.instructions,
 		warning: field.warning,
 		required: field.required,
+		translatable: field.translatable,
 		errors,
 		withControl: false,
 		children: /* @__PURE__ */ jsx(TiptapEditor, {

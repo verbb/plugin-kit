@@ -12,6 +12,7 @@ var TextField = ({ form, field }) => {
 		instructions: field.instructions,
 		warning: field.warning,
 		required: field.required,
+		translatable: field.translatable,
 		errors,
 		children: /* @__PURE__ */ jsx(Input, {
 			value: String(value ?? ""),

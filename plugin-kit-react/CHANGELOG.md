@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+- Added a translation icon to `FieldLayout` for schema fields marked `translatable`.
+- Added `TranslationIcon` for host apps that need the same translatable-field affordance outside `FieldLayout`.
+- Added `translatable` support to `TextField`, `TextareaField`, and `RichTextField`.
+
 ### Fixed
 - Fixed `SelectField` ignoring the schema `disabled` property and leaving the select interactive when it should be read-only.
 

@@ -6,6 +6,7 @@ import { Label } from "../components/Label.js";
 import { Markdown } from "../components/Markdown.js";
 import "../components/index.js";
 import { Slot } from "../components/Slot.js";
+import { TranslationIcon } from "./TranslationIcon.js";
 import { createContext, useContext, useId } from "react";
 import { Fragment as Fragment$1, jsx, jsxs } from "react/jsx-runtime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -103,7 +104,7 @@ var FieldErrors = ({ className, ...props }) => {
 		})
 	});
 };
-var FieldLayout = ({ name, label, instructions, headerEnd, required, warning, errors = [], withControl = true, showInlineErrors, className, children, ...props }) => {
+var FieldLayout = ({ name, label, instructions, headerEnd, required, warning, errors = [], withControl = true, showInlineErrors, translatable = false, className, children, ...props }) => {
 	const t = useTranslation();
 	const contextShowInlineErrors = useContext(InlineFieldErrorVisibilityContext);
 	const shouldShowInlineErrors = showInlineErrors ?? contextShowInlineErrors;
@@ -119,17 +120,28 @@ var FieldLayout = ({ name, label, instructions, headerEnd, required, warning, er
 					className: "min-w-0 space-y-0.5",
 					children: [label && /* @__PURE__ */ jsxs(FieldLabel, {
 						className: "flex items-center gap-1",
-						children: [label, required && /* @__PURE__ */ jsxs(Fragment$1, { children: [/* @__PURE__ */ jsx("span", {
-							className: "sr-only",
-							children: t("Required")
-						}), /* @__PURE__ */ jsx("span", {
-							className: "text-rose-600",
-							"aria-hidden": "true",
-							children: /* @__PURE__ */ jsx(FontAwesomeIcon, {
-								icon: faAsterisk,
-								className: "size-[10px]"
-							})
-						})] })]
+						children: [
+							label,
+							required && /* @__PURE__ */ jsxs(Fragment$1, { children: [/* @__PURE__ */ jsx("span", {
+								className: "sr-only",
+								children: t("Required")
+							}), /* @__PURE__ */ jsx("span", {
+								className: "text-rose-600",
+								"aria-hidden": "true",
+								children: /* @__PURE__ */ jsx(FontAwesomeIcon, {
+									icon: faAsterisk,
+									className: "size-[10px]"
+								})
+							})] }),
+							translatable ? /* @__PURE__ */ jsxs("span", {
+								className: "inline-flex",
+								title: t("Translatable"),
+								children: [/* @__PURE__ */ jsx(TranslationIcon, {}), /* @__PURE__ */ jsx("span", {
+									className: "sr-only",
+									children: t("Translatable")
+								})]
+							}) : null
+						]
 					}), instructions && /* @__PURE__ */ jsx(FieldInstructions, { children: instructions })]
 				}), headerEnd && /* @__PURE__ */ jsx("div", {
 					className: "shrink-0",

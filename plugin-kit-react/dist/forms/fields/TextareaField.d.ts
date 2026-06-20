@@ -10,6 +10,7 @@ type TextareaFieldProps = {
         rows?: number;
         required?: boolean;
         disabled?: boolean;
+        translatable?: boolean;
     };
 };
 export declare const TextareaField: ({ form, field }: TextareaFieldProps) => import("react/jsx-runtime").JSX.Element;

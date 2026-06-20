@@ -12,6 +12,7 @@ var TextareaField = ({ form, field }) => {
 		instructions: field.instructions,
 		warning: field.warning,
 		required: field.required,
+		translatable: field.translatable,
 		errors,
 		children: /* @__PURE__ */ jsx(Textarea, {
 			value: String(value ?? ""),
