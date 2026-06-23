@@ -10,6 +10,7 @@ type ListFieldProps = {
         required?: boolean;
         schema?: SchemaRenderable;
         showGroupedErrors?: boolean;
+        className?: string;
     };
 };
 export declare const ListField: ({ form, field }: ListFieldProps) => import("react/jsx-runtime").JSX.Element | null;

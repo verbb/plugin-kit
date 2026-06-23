@@ -15,6 +15,7 @@ var ListField = ({ form, field }) => {
 		required: field.required,
 		errors,
 		withControl: false,
+		className: field.className,
 		children: items.map((item, index) => {
 			const modifyChildren = (children) => {
 				let normalizedChildren = [];

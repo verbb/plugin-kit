@@ -9,14 +9,14 @@ declare function CommandDialog({ title, description, children, showCloseButton, 
 }): import("react/jsx-runtime").JSX.Element;
 declare function CommandInput({ className, ...props }: ComponentProps<typeof CommandPrimitive.Input>): import("react/jsx-runtime").JSX.Element;
 declare const CommandList: React.ForwardRefExoticComponent<Omit<{
-    children?: React.ReactNode;
-} & Pick<Pick<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof React.HTMLAttributes<HTMLDivElement>> & {
-    ref?: React.Ref<HTMLDivElement>;
+    children?: import('react').ReactNode;
+} & Pick<Pick<import('react').DetailedHTMLProps<import('react').HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof import('react').HTMLAttributes<HTMLDivElement>> & {
+    ref?: import('react').Ref<HTMLDivElement>;
 } & {
     asChild?: boolean;
-}, "key" | keyof React.HTMLAttributes<HTMLDivElement> | "asChild"> & {
+}, "key" | "asChild" | keyof import('react').HTMLAttributes<HTMLDivElement>> & {
     label?: string;
-} & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
+} & import('react').RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
 declare function CommandEmpty({ ...props }: ComponentProps<typeof CommandPrimitive.Empty>): import("react/jsx-runtime").JSX.Element;
 declare function CommandGroup({ className, ...props }: ComponentProps<typeof CommandPrimitive.Group>): import("react/jsx-runtime").JSX.Element;
 declare function CommandSeparator({ className, ...props }: ComponentProps<typeof CommandPrimitive.Separator>): import("react/jsx-runtime").JSX.Element;
