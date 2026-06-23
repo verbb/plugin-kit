@@ -12,6 +12,7 @@ type ListFieldProps = {
         required?: boolean;
         schema?: SchemaRenderable;
         showGroupedErrors?: boolean;
+        className?: string;
     };
 };
 
@@ -40,6 +41,7 @@ export const ListField = ({ form, field }: ListFieldProps) => {
             required={field.required}
             errors={errors}
             withControl={false}
+            className={field.className}
         >
             {items.map((item, index) => {
                 const modifyChildren = (children: SchemaRenderable | undefined): SchemaRenderable[] => {
