@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.8 - 2026-06-23
+
 ### Added
 - Added a translation icon to `FieldLayout` for schema fields marked `translatable`.
 - Added `TranslationIcon` for host apps that need the same translatable-field affordance outside `FieldLayout`.

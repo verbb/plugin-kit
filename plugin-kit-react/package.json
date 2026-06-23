@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-react",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -154,7 +154,7 @@
         "@tiptap/react": "^3.22.4",
         "@types/prismjs": "^1.26.6",
         "@uiw/react-codemirror": "^4.25.10",
-        "@verbb/plugin-kit": "1.0.7",
+        "@verbb/plugin-kit": "1.0.8",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
