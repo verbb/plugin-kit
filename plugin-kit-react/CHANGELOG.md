@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.9 - 2026-07-02
+
 ### Changed
 - Changed `DropdownMenuContent` to default to `positionMethod="fixed"` when portaling into a Shadow DOM container, and added an optional `positionMethod` prop to override the default.
 
