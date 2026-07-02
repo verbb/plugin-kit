@@ -27,7 +27,7 @@ function PaneTabsTrigger({ className, ...props }) {
 function PaneTabsContent({ className, ...props }) {
 	return /* @__PURE__ */ jsx(Tabs.Panel, {
 		"data-slot": "tabs-content",
-		className: cn("outline-none", "relative", "h-full", "overflow-y-auto", "bg-white rounded-b-lg", "focus-visible:shadow-[inset_0_0_0_2px_var(--color-sky-600)]", className),
+		className: cn("outline-none", "relative", "h-full", "overflow-y-auto", "bg-white rounded-b-lg", className),
 		...props
 	});
 }

@@ -91,9 +91,6 @@ function PaneTabsContent({
                 'overflow-y-auto',
                 'bg-white rounded-b-lg',
 
-                // Accessibility
-                'focus-visible:shadow-[inset_0_0_0_2px_var(--color-sky-600)]',
-
                 className,
             )}
             {...props}

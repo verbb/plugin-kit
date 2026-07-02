@@ -7,6 +7,8 @@
 
 ### Fixed
 - Fixed dropdown menus rendering with a large positional offset inside Shadow DOM apps such as the Formie form builder.
+- Fixed `PaneTabsContent` showing a focus ring when the tab panel received focus, leaving focus styling on the tab trigger only.
+
 ## 1.0.8 - 2026-06-23
 
 ### Added
