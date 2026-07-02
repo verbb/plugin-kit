@@ -126,6 +126,7 @@ function DropdownMenuContent({
     alignOffset = 0,
     side = 'bottom',
     sideOffset = 4,
+    positionMethod,
     className,
     portalClassName,
     portalContainer,
@@ -133,13 +134,16 @@ function DropdownMenuContent({
 }: MenuPrimitive.Popup.Props &
     Pick<
         MenuPrimitive.Positioner.Props,
-        'align' | 'alignOffset' | 'side' | 'sideOffset'
+        'align' | 'alignOffset' | 'side' | 'sideOffset' | 'positionMethod'
     > & {
         portalClassName?: string
         portalContainer?: HTMLElement | ShadowRoot | null
     }) {
     const resolvedPortalClassName = getPortalClassName(portalClassName);
     const resolvedPortalContainer = getPortalContainer(portalContainer);
+    const resolvedPositionMethod = positionMethod ?? (
+        resolvedPortalContainer instanceof ShadowRoot ? 'fixed' : undefined
+    );
 
     return (
         <MenuPrimitive.Portal className={resolvedPortalClassName} container={resolvedPortalContainer}>
@@ -148,6 +152,7 @@ function DropdownMenuContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
+                positionMethod={resolvedPositionMethod}
                 className="z-[250]"
             >
                 <MenuPrimitive.Popup

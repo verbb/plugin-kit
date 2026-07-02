@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+- Changed `DropdownMenuContent` to default to `positionMethod="fixed"` when portaling into a Shadow DOM container, and added an optional `positionMethod` prop to override the default.
+
+### Fixed
+- Fixed dropdown menus rendering with a large positional offset inside Shadow DOM apps such as the Formie form builder.
 ## 1.0.8 - 2026-06-23
 
 ### Added

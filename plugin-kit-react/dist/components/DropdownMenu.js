@@ -80,9 +80,10 @@ function DropdownMenuTrigger({ size, ...props }) {
 		...props
 	});
 }
-function DropdownMenuContent({ align = "start", alignOffset = 0, side = "bottom", sideOffset = 4, className, portalClassName, portalContainer, ...props }) {
+function DropdownMenuContent({ align = "start", alignOffset = 0, side = "bottom", sideOffset = 4, positionMethod, className, portalClassName, portalContainer, ...props }) {
 	const resolvedPortalClassName = getPortalClassName(portalClassName);
 	const resolvedPortalContainer = getPortalContainer(portalContainer);
+	const resolvedPositionMethod = positionMethod ?? (resolvedPortalContainer instanceof ShadowRoot ? "fixed" : void 0);
 	return /* @__PURE__ */ jsx(Menu.Portal, {
 		className: resolvedPortalClassName,
 		container: resolvedPortalContainer,
@@ -91,6 +92,7 @@ function DropdownMenuContent({ align = "start", alignOffset = 0, side = "bottom"
 			alignOffset,
 			side,
 			sideOffset,
+			positionMethod: resolvedPositionMethod,
 			className: "z-[250]",
 			children: /* @__PURE__ */ jsx(Menu.Popup, {
 				"data-slot": "dropdown-menu-content",

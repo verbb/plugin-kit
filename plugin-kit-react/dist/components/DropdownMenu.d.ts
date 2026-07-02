@@ -16,7 +16,7 @@ declare function DropdownMenuPortal({ container, ...props }: ComponentProps<type
 declare function DropdownMenuTrigger({ size, ...props }: ComponentProps<typeof MenuPrimitive.Trigger> & {
     size?: DropdownMenuSize;
 }): import("react/jsx-runtime").JSX.Element;
-declare function DropdownMenuContent({ align, alignOffset, side, sideOffset, className, portalClassName, portalContainer, ...props }: MenuPrimitive.Popup.Props & Pick<MenuPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset'> & {
+declare function DropdownMenuContent({ align, alignOffset, side, sideOffset, positionMethod, className, portalClassName, portalContainer, ...props }: MenuPrimitive.Popup.Props & Pick<MenuPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset' | 'positionMethod'> & {
     portalClassName?: string;
     portalContainer?: HTMLElement | ShadowRoot | null;
 }): import("react/jsx-runtime").JSX.Element;
