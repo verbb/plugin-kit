@@ -10,4 +10,10 @@ export declare const getRichTextHtml: (json: any) => any;
  * @returns {string} - Plain text string
  */
 export declare const getRichTextText: (json: any) => any;
+/**
+ * Whether stored TipTap/ProseMirror content has no user-visible text.
+ * Empty editors often serialize to `[]` or `[{ type: 'paragraph' }]`, which are
+ * not blank for generic `isEmptyValue` checks.
+ */
+export declare const isRichTextEmpty: (value: unknown) => boolean;
 //# sourceMappingURL=tiptap.d.ts.map

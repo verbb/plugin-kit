@@ -1,4 +1,6 @@
 import { translate } from "./translation.js";
+import { isRichTextEmpty } from "./tiptap.js";
+import { isRequiredRuleName } from "../forms/engine/rules/requiredRules.js";
 import * as v from "valibot";
 //#region src/utils/validation.ts
 var isRecord = (value) => {
@@ -135,7 +137,7 @@ var variableRegex = /({.*?})/;
 var buildFieldSchema = (field, rules) => {
 	const label = String(field.label || field.name || "");
 	const isRequired = rules.some((rule) => {
-		return rule.name === "required";
+		return isRequiredRuleName(rule.name);
 	});
 	const actions = [];
 	rules.forEach((rule) => {
@@ -148,6 +150,11 @@ var buildFieldSchema = (field, rules) => {
 			case "required":
 				actions.push(v.check((value) => {
 					return !isEmptyValue(value);
+				}, translate("{attribute} cannot be blank.", { attribute: label })));
+				break;
+			case "requiredRichText":
+				actions.push(v.check((value) => {
+					return !isRichTextEmpty(value);
 				}, translate("{attribute} cannot be blank.", { attribute: label })));
 				break;
 			case "email":

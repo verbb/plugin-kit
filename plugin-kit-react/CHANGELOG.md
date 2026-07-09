@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Added
+- Added `requiredRichText` validation rule for schema fields that store TipTap/ProseMirror JSON, so empty rich-text documents (including `[]` and bare paragraph nodes) are treated as blank.
+- Added `isRichTextEmpty` utility to detect when stored TipTap content has no user-visible text (exported from `@verbb/plugin-kit-react/utils`).
+
+### Changed
+- Changed validation engines to treat both `required` and `requiredRichText` as required-field rules for dependency and shortcut logic.
+
+### Fixed
+- Fixed `translate()` failing validation when Craft's translation helper throws (for example missing translation keys), falling back to the raw message instead.
+
 ## 1.0.9 - 2026-07-02
 
 ### Changed

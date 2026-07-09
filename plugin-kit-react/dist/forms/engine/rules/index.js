@@ -4,11 +4,15 @@ import { handleRule } from "./handle.js";
 import { maxRule } from "./max.js";
 import { minRule } from "./min.js";
 import { requiredRule } from "./required.js";
+import { requiredRichTextRule } from "./requiredRichText.js";
 import { uniqueHandleRule } from "./uniqueHandle.js";
 //#region src/forms/engine/rules/index.ts
 var ruleHandlers = {
 	required: (value, label) => {
 		return requiredRule(value, label);
+	},
+	requiredRichText: (value, label) => {
+		return requiredRichTextRule(value, label);
 	},
 	min: (value, label, args) => {
 		return minRule(value, label, args);

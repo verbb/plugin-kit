@@ -1,5 +1,7 @@
 import * as v from 'valibot';
 import { translate } from '@verbb/plugin-kit-react/utils/translation';
+import { isRequiredRuleName } from '../forms/engine/rules/requiredRules';
+import { isRichTextEmpty } from './tiptap';
 
 // ============================================================================
 // Valibot schema adapter
@@ -263,7 +265,7 @@ const variableRegex = /({.*?})/;
 
 const buildFieldSchema = (field: SchemaField, rules: RuleToken[]) => {
     const label = String(field.label || field.name || '');
-    const isRequired = rules.some((rule) => { return rule.name === 'required'; });
+    const isRequired = rules.some((rule) => { return isRequiredRuleName(rule.name); });
 
     const actions = [];
 
@@ -279,6 +281,13 @@ const buildFieldSchema = (field: SchemaField, rules: RuleToken[]) => {
             case 'required':
                 actions.push(v.check(
                     (value) => { return !isEmptyValue(value); },
+                    translate('{attribute} cannot be blank.', { attribute: label }),
+                ));
+                break;
+
+            case 'requiredRichText':
+                actions.push(v.check(
+                    (value) => { return !isRichTextEmpty(value); },
                     translate('{attribute} cannot be blank.', { attribute: label }),
                 ));
                 break;

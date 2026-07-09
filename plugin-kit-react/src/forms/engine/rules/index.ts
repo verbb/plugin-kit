@@ -4,6 +4,7 @@ import { handleRule } from './handle';
 import { maxRule } from './max';
 import { minRule } from './min';
 import { requiredRule } from './required';
+import { requiredRichTextRule } from './requiredRichText';
 import { uniqueHandleRule } from './uniqueHandle';
 
 import type { SchemaNode } from '../SchemaIndex';
@@ -18,6 +19,7 @@ export type RuleHandler = (value: unknown, label: string, args: string[], contex
 
 export const ruleHandlers: Record<string, RuleHandler> = {
     required: (value, label) => { return requiredRule(value, label); },
+    requiredRichText: (value, label) => { return requiredRichTextRule(value, label); },
     min: (value, label, args) => { return minRule(value, label, args); },
     max: (value, label, args) => { return maxRule(value, label, args); },
     email: (value, label) => { return emailRule(value, label); },

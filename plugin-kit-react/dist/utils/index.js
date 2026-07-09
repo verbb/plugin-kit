@@ -15,7 +15,7 @@ import { getSchemaFieldIndex, hasSchemaErrorsCached } from "./schemaIndexCache.j
 import { normalizeSchemaNode } from "./schemaNormalize.js";
 import { zustandHmrFix } from "./store.js";
 import { clearTimeOptionsCache, generateTimeOptions } from "./timeOptions.js";
-import { getRichTextHtml, getRichTextText } from "./tiptap.js";
+import { getRichTextHtml, getRichTextText, isRichTextEmpty } from "./tiptap.js";
 import { validateFormValues } from "./validation.js";
 export * from "@verbb/plugin-kit";
 //#region src/utils/index.ts
@@ -49,6 +49,7 @@ var utils_exports = /* @__PURE__ */ __exportAll({
 	hostGetTimepickerOptions: () => hostGetTimepickerOptions,
 	hostOpenElementSelector: () => hostOpenElementSelector,
 	hostRequest: () => hostRequest,
+	isRichTextEmpty: () => isRichTextEmpty,
 	normalizeAttrs: () => normalizeAttrs,
 	normalizeSchemaNode: () => normalizeSchemaNode,
 	parseDateTimeValue: () => parseDateTimeValue,
@@ -69,6 +70,6 @@ var utils_exports = /* @__PURE__ */ __exportAll({
 import * as import__verbb_plugin_kit from "@verbb/plugin-kit";
 __reExport(utils_exports, import__verbb_plugin_kit);
 //#endregion
-export { buildUniqueHandleFromSource, clearTimeOptionsCache, cn, configurePluginKitReact, createCraftHostBridge, createSchemaFieldIndex, ensureDocumentScrollStability, evaluateCondition, extractFieldNames, extractFields, formatDateTimeValue, generateTimeOptions, getDynamicReservedHandles, getHostBridge, getPortalClassName, getPortalContainer, getPortalTargetForAppend, getRichTextHtml, getRichTextText, getSchemaFieldIndex, getSchemaFieldNames, getShadowRootSelectors, hasSchemaErrors, hasSchemaErrorsCached, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, normalizeAttrs, normalizeSchemaNode, parseDateTimeValue, parseLocalDate, resolveCalendarMonth, setHostBridge, setPortalClassName, setPortalContainer, setShadowRootSelectors, setTranslateFunction, setTranslationCategory, startOfMonth, translate, traverseSchema, utils_exports, validateFormValues, zustandHmrFix };
+export { buildUniqueHandleFromSource, clearTimeOptionsCache, cn, configurePluginKitReact, createCraftHostBridge, createSchemaFieldIndex, ensureDocumentScrollStability, evaluateCondition, extractFieldNames, extractFields, formatDateTimeValue, generateTimeOptions, getDynamicReservedHandles, getHostBridge, getPortalClassName, getPortalContainer, getPortalTargetForAppend, getRichTextHtml, getRichTextText, getSchemaFieldIndex, getSchemaFieldNames, getShadowRootSelectors, hasSchemaErrors, hasSchemaErrorsCached, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, isRichTextEmpty, normalizeAttrs, normalizeSchemaNode, parseDateTimeValue, parseLocalDate, resolveCalendarMonth, setHostBridge, setPortalClassName, setPortalContainer, setShadowRootSelectors, setTranslateFunction, setTranslationCategory, startOfMonth, translate, traverseSchema, utils_exports, validateFormValues, zustandHmrFix };
 
 //# sourceMappingURL=index.js.map

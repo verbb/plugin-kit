@@ -1,4 +1,5 @@
 import { evaluateCondition } from "../../utils/schema.js";
+import { isRequiredRuleName } from "./rules/requiredRules.js";
 import { isEmptyValue } from "./rules/utils.js";
 import { ruleHandlers } from "./rules/index.js";
 import { get } from "lodash-es";
@@ -50,7 +51,7 @@ var expandWildcardPaths = (values, path) => {
 var validateValue = (field, rules, value, context) => {
 	const label = String(field.label || field.name || "");
 	const isRequired = rules.some((rule) => {
-		return rule.name === "required";
+		return isRequiredRuleName(rule.name);
 	});
 	for (const rule of rules) {
 		const { name, args } = rule;

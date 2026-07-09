@@ -11,7 +11,11 @@ var translate = (message, params) => {
 	if (translateFn) return translateFn(translationCategory, message, params);
 	if (typeof window !== "undefined") {
 		const craft = window.Craft;
-		if (craft?.t) return craft.t(translationCategory, message, params);
+		if (craft?.t) try {
+			return craft.t(translationCategory, message, params);
+		} catch {
+			return message;
+		}
 	}
 	return message;
 };

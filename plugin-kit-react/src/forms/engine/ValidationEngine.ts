@@ -3,6 +3,7 @@ import { evaluateCondition } from '@verbb/plugin-kit-react/utils/schema';
 
 import type { FieldEntry, SchemaIndex, SchemaNode, SchemaRenderable } from './SchemaIndex';
 import { ruleHandlers, RuleHandlerContext } from './rules';
+import { isRequiredRuleName } from './rules/requiredRules';
 import { isEmptyValue } from './rules/utils';
 import type { FormValues } from './context';
 
@@ -82,7 +83,7 @@ const validateValue = (
     context: RuleHandlerContext,
 ) => {
     const label = String(field.label || field.name || '');
-    const isRequired = rules.some((rule) => { return rule.name === 'required'; });
+    const isRequired = rules.some((rule) => { return isRequiredRuleName(rule.name); });
 
     for (const rule of rules) {
         const { name, args } = rule;

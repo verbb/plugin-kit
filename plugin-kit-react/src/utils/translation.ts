@@ -20,7 +20,11 @@ export const translate = (message: string, params?: TranslateParams): string => 
         const craft = (window as { Craft?: { t?: (category: string, message: string, params?: TranslateParams) => string } }).Craft;
 
         if (craft?.t) {
-            return craft.t(translationCategory, message, params);
+            try {
+                return craft.t(translationCategory, message, params);
+            } catch {
+                return message;
+            }
         }
     }
 
