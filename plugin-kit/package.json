@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "type": "module",
     "main": "dist/plugin-kit.umd.js",
     "module": "dist/plugin-kit.es.js",
