@@ -119,6 +119,27 @@ const verifyNpmAuth = () => {
 
 const packageVersion = () => JSON.parse(readFileSync(paths.versionSourcePackageJson, 'utf8')).version;
 
+/** Abort if any publishable package.json drifted off the lockstep version. */
+const assertLockstepVersions = () => {
+    const expected = packageVersion();
+    const mismatches = [];
+
+    for (const relativePath of packageJsonPaths) {
+        const pkg = JSON.parse(readFileSync(new URL(`../${relativePath}`, import.meta.url), 'utf8'));
+
+        if (pkg.version !== expected) {
+            mismatches.push(`${pkg.name}@${pkg.version} (expected ${expected})`);
+        }
+    }
+
+    if (mismatches.length > 0) {
+        throw new Error(
+            `Lockstep broken — all publishable packages must share one version (${expected}):\n`
+            + mismatches.map((line) => `  - ${line}`).join('\n'),
+        );
+    }
+};
+
 const releaseDate = () => new Date().toISOString().slice(0, 10);
 
 const changelogUrl = (dir) => new URL(`../${dir}/CHANGELOG.md`, import.meta.url);
@@ -283,6 +304,13 @@ if (!publishCurrent && !hasMeaningfulChangelogBody(extractUnreleasedBody(primary
     process.exit(1);
 }
 
+try {
+    assertLockstepVersions();
+} catch (error) {
+    console.error(error.message ?? error);
+    process.exit(1);
+}
+
 if (publishCurrent) {
     console.log(`Publish-current mode: shipping on-disk versions (${packageVersion()}) without bumping.`);
 } else {
@@ -334,6 +362,7 @@ try {
         throw new Error(`Version did not change after ${bump} bump (still ${currentVersion}).`);
     }
 
+    assertLockstepVersions();
     syncInternalDependencies(version);
     run('npm', ['install', '--ignore-scripts']);
 

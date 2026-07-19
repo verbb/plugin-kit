@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-core",
-    "version": "2.0.0",
+    "version": "2.0.3",
     "type": "module",
     "main": "dist/plugin-kit-core.es.js",
     "module": "dist/plugin-kit-core.es.js",

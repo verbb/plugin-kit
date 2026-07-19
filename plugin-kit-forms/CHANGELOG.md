@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.3 - 2026-07-19
+
+### Changed
+- Restored lockstep versioning across all `@verbb/plugin-kit-*` packages after interim `2.0.1` / `2.0.2` drift.
+
 ## 2.0.0 - 2026-07-19
 
 ### Added
