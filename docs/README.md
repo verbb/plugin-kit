@@ -12,7 +12,7 @@ Unified VitePress site for [docs.verbb.io/plugin-kit](https://docs.verbb.io/plug
 | Vue | `/vue/` | Vue adapter guides, components, APIs |
 | Forms | `/forms/` | SchemaForm guides + API (`react/forms` and `vue/forms`) |
 
-Component workshop (visual demos) is separate — root `npm run dev` → http://localhost:5175.
+Component workshop (visual demos) is separate — root `npm run dev` → `http://localhost:5175`.
 
 ## Dev
 

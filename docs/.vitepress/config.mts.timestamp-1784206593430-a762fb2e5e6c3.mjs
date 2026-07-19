@@ -434,11 +434,11 @@ var config_default = defineConfig({
     ["link", { rel: "icon", type: "image/svg+xml", href: "/plugin-kit/favicon.svg" }]
   ],
   themeConfig: {
-    logo: "/plugin-kit-react-logo.svg",
+    logo: "/plugin-kit-logo.svg",
     siteTitle: "Plugin Kit",
     docsTheme: {
       homeLink: "/plugin-kit/",
-      primary: "#e64d4c"
+      primary: "#1276de"
     },
     nav: [
       { text: "Overview", link: "/overview/" },
