@@ -1,0 +1,961 @@
+{
+    "name": "@verbb/plugin-kit-web",
+    "version": "2.0.0",
+    "description": "Plugin Kit web components (shadow DOM, Craft design system)",
+    "type": "module",
+    "types": "dist/index.d.ts",
+    "sideEffects": [
+        "**/*.css",
+        "./dist/register.js",
+        "./dist/components/**/*.js",
+        "./dist-loader/**/*.js"
+    ],
+    "files": [
+        "dist",
+        "dist-loader",
+        "LICENSE.md",
+        "CHANGELOG.md"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./register": {
+            "types": "./dist/register.d.ts",
+            "import": "./dist/register.js"
+        },
+        "./plugin-kit": {
+            "types": "./dist/plugin-kit.d.ts",
+            "import": "./dist/plugin-kit.js"
+        },
+        "./register-components": {
+            "types": "./dist/register-components.d.ts",
+            "import": "./dist/register-components.js"
+        },
+        "./plugin-kit.loader.js": {
+            "types": "./dist-loader/plugin-kit.loader.d.ts",
+            "default": "./dist-loader/plugin-kit.loader.js"
+        },
+        "./plugin-kit.css": {
+            "style": "./dist/plugin-kit.css",
+            "default": "./dist/plugin-kit.css"
+        },
+        "./styles/utilities/fouce.css": {
+            "style": "./dist/utilities/fouce.css",
+            "default": "./dist/utilities/fouce.css"
+        },
+        "./styles/overlay-content.css": {
+            "style": "./dist/styles/overlay-content.css",
+            "default": "./dist/styles/overlay-content.css"
+        },
+        "./tokens.css": {
+            "style": "./dist/tokens.css",
+            "default": "./dist/tokens.css"
+        },
+        "./icons": {
+            "types": "./dist/icons/index.d.ts",
+            "import": "./dist/icons/index.js"
+        },
+        "./package.json": "./package.json",
+        "./components/button-group/pk-button-group.js": {
+            "types": "./dist/components/button-group/pk-button-group.d.ts",
+            "import": "./dist/components/button-group/pk-button-group.js",
+            "default": "./dist/components/button-group/pk-button-group.js"
+        },
+        "./components/button-group/pk-button-group": {
+            "types": "./dist/components/button-group/pk-button-group.d.ts",
+            "import": "./dist/components/button-group/pk-button-group.js",
+            "default": "./dist/components/button-group/pk-button-group.js"
+        },
+        "./components/button-group/pk-button-group-separator.js": {
+            "types": "./dist/components/button-group/pk-button-group-separator.d.ts",
+            "import": "./dist/components/button-group/pk-button-group-separator.js",
+            "default": "./dist/components/button-group/pk-button-group-separator.js"
+        },
+        "./components/button-group/pk-button-group-separator": {
+            "types": "./dist/components/button-group/pk-button-group-separator.d.ts",
+            "import": "./dist/components/button-group/pk-button-group-separator.js",
+            "default": "./dist/components/button-group/pk-button-group-separator.js"
+        },
+        "./components/button-group/pk-button-group-text.js": {
+            "types": "./dist/components/button-group/pk-button-group-text.d.ts",
+            "import": "./dist/components/button-group/pk-button-group-text.js",
+            "default": "./dist/components/button-group/pk-button-group-text.js"
+        },
+        "./components/button-group/pk-button-group-text": {
+            "types": "./dist/components/button-group/pk-button-group-text.d.ts",
+            "import": "./dist/components/button-group/pk-button-group-text.js",
+            "default": "./dist/components/button-group/pk-button-group-text.js"
+        },
+        "./components/button/pk-button.js": {
+            "types": "./dist/components/button/pk-button.d.ts",
+            "import": "./dist/components/button/pk-button.js",
+            "default": "./dist/components/button/pk-button.js"
+        },
+        "./components/button/pk-button": {
+            "types": "./dist/components/button/pk-button.d.ts",
+            "import": "./dist/components/button/pk-button.js",
+            "default": "./dist/components/button/pk-button.js"
+        },
+        "./components/calendar/pk-calendar.js": {
+            "types": "./dist/components/calendar/pk-calendar.d.ts",
+            "import": "./dist/components/calendar/pk-calendar.js",
+            "default": "./dist/components/calendar/pk-calendar.js"
+        },
+        "./components/calendar/pk-calendar": {
+            "types": "./dist/components/calendar/pk-calendar.d.ts",
+            "import": "./dist/components/calendar/pk-calendar.js",
+            "default": "./dist/components/calendar/pk-calendar.js"
+        },
+        "./components/checkbox-select/pk-checkbox-select.js": {
+            "types": "./dist/components/checkbox-select/pk-checkbox-select.d.ts",
+            "import": "./dist/components/checkbox-select/pk-checkbox-select.js",
+            "default": "./dist/components/checkbox-select/pk-checkbox-select.js"
+        },
+        "./components/checkbox-select/pk-checkbox-select": {
+            "types": "./dist/components/checkbox-select/pk-checkbox-select.d.ts",
+            "import": "./dist/components/checkbox-select/pk-checkbox-select.js",
+            "default": "./dist/components/checkbox-select/pk-checkbox-select.js"
+        },
+        "./components/checkbox/pk-checkbox.js": {
+            "types": "./dist/components/checkbox/pk-checkbox.d.ts",
+            "import": "./dist/components/checkbox/pk-checkbox.js",
+            "default": "./dist/components/checkbox/pk-checkbox.js"
+        },
+        "./components/checkbox/pk-checkbox": {
+            "types": "./dist/components/checkbox/pk-checkbox.d.ts",
+            "import": "./dist/components/checkbox/pk-checkbox.js",
+            "default": "./dist/components/checkbox/pk-checkbox.js"
+        },
+        "./components/code-editor/pk-code-editor.js": {
+            "types": "./dist/components/code-editor/pk-code-editor.d.ts",
+            "import": "./dist/components/code-editor/pk-code-editor.js",
+            "default": "./dist/components/code-editor/pk-code-editor.js"
+        },
+        "./components/code-editor/pk-code-editor": {
+            "types": "./dist/components/code-editor/pk-code-editor.d.ts",
+            "import": "./dist/components/code-editor/pk-code-editor.js",
+            "default": "./dist/components/code-editor/pk-code-editor.js"
+        },
+        "./components/color-input/pk-color-input.js": {
+            "types": "./dist/components/color-input/pk-color-input.d.ts",
+            "import": "./dist/components/color-input/pk-color-input.js",
+            "default": "./dist/components/color-input/pk-color-input.js"
+        },
+        "./components/color-input/pk-color-input": {
+            "types": "./dist/components/color-input/pk-color-input.d.ts",
+            "import": "./dist/components/color-input/pk-color-input.js",
+            "default": "./dist/components/color-input/pk-color-input.js"
+        },
+        "./components/combobox/pk-combobox.js": {
+            "types": "./dist/components/combobox/pk-combobox.d.ts",
+            "import": "./dist/components/combobox/pk-combobox.js",
+            "default": "./dist/components/combobox/pk-combobox.js"
+        },
+        "./components/combobox/pk-combobox": {
+            "types": "./dist/components/combobox/pk-combobox.d.ts",
+            "import": "./dist/components/combobox/pk-combobox.js",
+            "default": "./dist/components/combobox/pk-combobox.js"
+        },
+        "./components/copy-button/pk-copy-button.js": {
+            "types": "./dist/components/copy-button/pk-copy-button.d.ts",
+            "import": "./dist/components/copy-button/pk-copy-button.js",
+            "default": "./dist/components/copy-button/pk-copy-button.js"
+        },
+        "./components/copy-button/pk-copy-button": {
+            "types": "./dist/components/copy-button/pk-copy-button.d.ts",
+            "import": "./dist/components/copy-button/pk-copy-button.js",
+            "default": "./dist/components/copy-button/pk-copy-button.js"
+        },
+        "./components/date-picker/pk-date-picker.js": {
+            "types": "./dist/components/date-picker/pk-date-picker.d.ts",
+            "import": "./dist/components/date-picker/pk-date-picker.js",
+            "default": "./dist/components/date-picker/pk-date-picker.js"
+        },
+        "./components/date-picker/pk-date-picker": {
+            "types": "./dist/components/date-picker/pk-date-picker.d.ts",
+            "import": "./dist/components/date-picker/pk-date-picker.js",
+            "default": "./dist/components/date-picker/pk-date-picker.js"
+        },
+        "./components/dialog/pk-dialog.js": {
+            "types": "./dist/components/dialog/pk-dialog.d.ts",
+            "import": "./dist/components/dialog/pk-dialog.js",
+            "default": "./dist/components/dialog/pk-dialog.js"
+        },
+        "./components/dialog/pk-dialog": {
+            "types": "./dist/components/dialog/pk-dialog.d.ts",
+            "import": "./dist/components/dialog/pk-dialog.js",
+            "default": "./dist/components/dialog/pk-dialog.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-item.js": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-item.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-item.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-item.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-item": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-item.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-item.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-item.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-label.js": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-label.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-label.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-label.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-label": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-label.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-label.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-label.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-menu.js": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-menu.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-menu.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-menu.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-menu": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-menu.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-menu.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-menu.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-separator.js": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-separator.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-separator.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-separator.js"
+        },
+        "./components/dropdown-menu/pk-dropdown-separator": {
+            "types": "./dist/components/dropdown-menu/pk-dropdown-separator.d.ts",
+            "import": "./dist/components/dropdown-menu/pk-dropdown-separator.js",
+            "default": "./dist/components/dropdown-menu/pk-dropdown-separator.js"
+        },
+        "./components/editable-table/pk-editable-table.js": {
+            "types": "./dist/components/editable-table/pk-editable-table.d.ts",
+            "import": "./dist/components/editable-table/pk-editable-table.js",
+            "default": "./dist/components/editable-table/pk-editable-table.js"
+        },
+        "./components/editable-table/pk-editable-table": {
+            "types": "./dist/components/editable-table/pk-editable-table.d.ts",
+            "import": "./dist/components/editable-table/pk-editable-table.js",
+            "default": "./dist/components/editable-table/pk-editable-table.js"
+        },
+        "./components/field/pk-field.js": {
+            "types": "./dist/components/field/pk-field.d.ts",
+            "import": "./dist/components/field/pk-field.js",
+            "default": "./dist/components/field/pk-field.js"
+        },
+        "./components/field/pk-field": {
+            "types": "./dist/components/field/pk-field.d.ts",
+            "import": "./dist/components/field/pk-field.js",
+            "default": "./dist/components/field/pk-field.js"
+        },
+        "./components/icon/pk-icon.js": {
+            "types": "./dist/components/icon/pk-icon.d.ts",
+            "import": "./dist/components/icon/pk-icon.js",
+            "default": "./dist/components/icon/pk-icon.js"
+        },
+        "./components/icon/pk-icon": {
+            "types": "./dist/components/icon/pk-icon.d.ts",
+            "import": "./dist/components/icon/pk-icon.js",
+            "default": "./dist/components/icon/pk-icon.js"
+        },
+        "./components/input-group/pk-input-group.js": {
+            "types": "./dist/components/input-group/pk-input-group.d.ts",
+            "import": "./dist/components/input-group/pk-input-group.js",
+            "default": "./dist/components/input-group/pk-input-group.js"
+        },
+        "./components/input-group/pk-input-group": {
+            "types": "./dist/components/input-group/pk-input-group.d.ts",
+            "import": "./dist/components/input-group/pk-input-group.js",
+            "default": "./dist/components/input-group/pk-input-group.js"
+        },
+        "./components/input-group/pk-input-group-addon.js": {
+            "types": "./dist/components/input-group/pk-input-group-addon.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-addon.js",
+            "default": "./dist/components/input-group/pk-input-group-addon.js"
+        },
+        "./components/input-group/pk-input-group-addon": {
+            "types": "./dist/components/input-group/pk-input-group-addon.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-addon.js",
+            "default": "./dist/components/input-group/pk-input-group-addon.js"
+        },
+        "./components/input-group/pk-input-group-button.js": {
+            "types": "./dist/components/input-group/pk-input-group-button.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-button.js",
+            "default": "./dist/components/input-group/pk-input-group-button.js"
+        },
+        "./components/input-group/pk-input-group-button": {
+            "types": "./dist/components/input-group/pk-input-group-button.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-button.js",
+            "default": "./dist/components/input-group/pk-input-group-button.js"
+        },
+        "./components/input-group/pk-input-group-input.js": {
+            "types": "./dist/components/input-group/pk-input-group-input.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-input.js",
+            "default": "./dist/components/input-group/pk-input-group-input.js"
+        },
+        "./components/input-group/pk-input-group-input": {
+            "types": "./dist/components/input-group/pk-input-group-input.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-input.js",
+            "default": "./dist/components/input-group/pk-input-group-input.js"
+        },
+        "./components/input-group/pk-input-group-text.js": {
+            "types": "./dist/components/input-group/pk-input-group-text.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-text.js",
+            "default": "./dist/components/input-group/pk-input-group-text.js"
+        },
+        "./components/input-group/pk-input-group-text": {
+            "types": "./dist/components/input-group/pk-input-group-text.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-text.js",
+            "default": "./dist/components/input-group/pk-input-group-text.js"
+        },
+        "./components/input-group/pk-input-group-textarea.js": {
+            "types": "./dist/components/input-group/pk-input-group-textarea.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-textarea.js",
+            "default": "./dist/components/input-group/pk-input-group-textarea.js"
+        },
+        "./components/input-group/pk-input-group-textarea": {
+            "types": "./dist/components/input-group/pk-input-group-textarea.d.ts",
+            "import": "./dist/components/input-group/pk-input-group-textarea.js",
+            "default": "./dist/components/input-group/pk-input-group-textarea.js"
+        },
+        "./components/input/pk-input.js": {
+            "types": "./dist/components/input/pk-input.d.ts",
+            "import": "./dist/components/input/pk-input.js",
+            "default": "./dist/components/input/pk-input.js"
+        },
+        "./components/input/pk-input": {
+            "types": "./dist/components/input/pk-input.d.ts",
+            "import": "./dist/components/input/pk-input.js",
+            "default": "./dist/components/input/pk-input.js"
+        },
+        "./components/lightswitch/pk-lightswitch.js": {
+            "types": "./dist/components/lightswitch/pk-lightswitch.d.ts",
+            "import": "./dist/components/lightswitch/pk-lightswitch.js",
+            "default": "./dist/components/lightswitch/pk-lightswitch.js"
+        },
+        "./components/lightswitch/pk-lightswitch": {
+            "types": "./dist/components/lightswitch/pk-lightswitch.d.ts",
+            "import": "./dist/components/lightswitch/pk-lightswitch.js",
+            "default": "./dist/components/lightswitch/pk-lightswitch.js"
+        },
+        "./components/popover/pk-popover.js": {
+            "types": "./dist/components/popover/pk-popover.d.ts",
+            "import": "./dist/components/popover/pk-popover.js",
+            "default": "./dist/components/popover/pk-popover.js"
+        },
+        "./components/popover/pk-popover": {
+            "types": "./dist/components/popover/pk-popover.d.ts",
+            "import": "./dist/components/popover/pk-popover.js",
+            "default": "./dist/components/popover/pk-popover.js"
+        },
+        "./components/popup/pk-popup.js": {
+            "types": "./dist/components/popup/pk-popup.d.ts",
+            "import": "./dist/components/popup/pk-popup.js",
+            "default": "./dist/components/popup/pk-popup.js"
+        },
+        "./components/popup/pk-popup": {
+            "types": "./dist/components/popup/pk-popup.d.ts",
+            "import": "./dist/components/popup/pk-popup.js",
+            "default": "./dist/components/popup/pk-popup.js"
+        },
+        "./components/radio-group/pk-radio.js": {
+            "types": "./dist/components/radio-group/pk-radio.d.ts",
+            "import": "./dist/components/radio-group/pk-radio.js",
+            "default": "./dist/components/radio-group/pk-radio.js"
+        },
+        "./components/radio-group/pk-radio": {
+            "types": "./dist/components/radio-group/pk-radio.d.ts",
+            "import": "./dist/components/radio-group/pk-radio.js",
+            "default": "./dist/components/radio-group/pk-radio.js"
+        },
+        "./components/radio-group/pk-radio-group.js": {
+            "types": "./dist/components/radio-group/pk-radio-group.d.ts",
+            "import": "./dist/components/radio-group/pk-radio-group.js",
+            "default": "./dist/components/radio-group/pk-radio-group.js"
+        },
+        "./components/radio-group/pk-radio-group": {
+            "types": "./dist/components/radio-group/pk-radio-group.d.ts",
+            "import": "./dist/components/radio-group/pk-radio-group.js",
+            "default": "./dist/components/radio-group/pk-radio-group.js"
+        },
+        "./components/scroll-area/pk-scroll-area.js": {
+            "types": "./dist/components/scroll-area/pk-scroll-area.d.ts",
+            "import": "./dist/components/scroll-area/pk-scroll-area.js",
+            "default": "./dist/components/scroll-area/pk-scroll-area.js"
+        },
+        "./components/scroll-area/pk-scroll-area": {
+            "types": "./dist/components/scroll-area/pk-scroll-area.d.ts",
+            "import": "./dist/components/scroll-area/pk-scroll-area.js",
+            "default": "./dist/components/scroll-area/pk-scroll-area.js"
+        },
+        "./components/select/pk-option.js": {
+            "types": "./dist/components/select/pk-option.d.ts",
+            "import": "./dist/components/select/pk-option.js",
+            "default": "./dist/components/select/pk-option.js"
+        },
+        "./components/select/pk-option": {
+            "types": "./dist/components/select/pk-option.d.ts",
+            "import": "./dist/components/select/pk-option.js",
+            "default": "./dist/components/select/pk-option.js"
+        },
+        "./components/select/pk-option-group.js": {
+            "types": "./dist/components/select/pk-option-group.d.ts",
+            "import": "./dist/components/select/pk-option-group.js",
+            "default": "./dist/components/select/pk-option-group.js"
+        },
+        "./components/select/pk-option-group": {
+            "types": "./dist/components/select/pk-option-group.d.ts",
+            "import": "./dist/components/select/pk-option-group.js",
+            "default": "./dist/components/select/pk-option-group.js"
+        },
+        "./components/select/pk-select.js": {
+            "types": "./dist/components/select/pk-select.d.ts",
+            "import": "./dist/components/select/pk-select.js",
+            "default": "./dist/components/select/pk-select.js"
+        },
+        "./components/select/pk-select": {
+            "types": "./dist/components/select/pk-select.d.ts",
+            "import": "./dist/components/select/pk-select.js",
+            "default": "./dist/components/select/pk-select.js"
+        },
+        "./components/separator/pk-separator.js": {
+            "types": "./dist/components/separator/pk-separator.d.ts",
+            "import": "./dist/components/separator/pk-separator.js",
+            "default": "./dist/components/separator/pk-separator.js"
+        },
+        "./components/separator/pk-separator": {
+            "types": "./dist/components/separator/pk-separator.d.ts",
+            "import": "./dist/components/separator/pk-separator.js",
+            "default": "./dist/components/separator/pk-separator.js"
+        },
+        "./components/spinner/pk-spinner.js": {
+            "types": "./dist/components/spinner/pk-spinner.d.ts",
+            "import": "./dist/components/spinner/pk-spinner.js",
+            "default": "./dist/components/spinner/pk-spinner.js"
+        },
+        "./components/spinner/pk-spinner": {
+            "types": "./dist/components/spinner/pk-spinner.d.ts",
+            "import": "./dist/components/spinner/pk-spinner.js",
+            "default": "./dist/components/spinner/pk-spinner.js"
+        },
+        "./components/status/pk-status.js": {
+            "types": "./dist/components/status/pk-status.d.ts",
+            "import": "./dist/components/status/pk-status.js",
+            "default": "./dist/components/status/pk-status.js"
+        },
+        "./components/status/pk-status": {
+            "types": "./dist/components/status/pk-status.d.ts",
+            "import": "./dist/components/status/pk-status.js",
+            "default": "./dist/components/status/pk-status.js"
+        },
+        "./components/tabs/pk-tab.js": {
+            "types": "./dist/components/tabs/pk-tab.d.ts",
+            "import": "./dist/components/tabs/pk-tab.js",
+            "default": "./dist/components/tabs/pk-tab.js"
+        },
+        "./components/tabs/pk-tab": {
+            "types": "./dist/components/tabs/pk-tab.d.ts",
+            "import": "./dist/components/tabs/pk-tab.js",
+            "default": "./dist/components/tabs/pk-tab.js"
+        },
+        "./components/tabs/pk-tab-heading.js": {
+            "types": "./dist/components/tabs/pk-tab-heading.d.ts",
+            "import": "./dist/components/tabs/pk-tab-heading.js",
+            "default": "./dist/components/tabs/pk-tab-heading.js"
+        },
+        "./components/tabs/pk-tab-heading": {
+            "types": "./dist/components/tabs/pk-tab-heading.d.ts",
+            "import": "./dist/components/tabs/pk-tab-heading.js",
+            "default": "./dist/components/tabs/pk-tab-heading.js"
+        },
+        "./components/tabs/pk-tab-panel.js": {
+            "types": "./dist/components/tabs/pk-tab-panel.d.ts",
+            "import": "./dist/components/tabs/pk-tab-panel.js",
+            "default": "./dist/components/tabs/pk-tab-panel.js"
+        },
+        "./components/tabs/pk-tab-panel": {
+            "types": "./dist/components/tabs/pk-tab-panel.d.ts",
+            "import": "./dist/components/tabs/pk-tab-panel.js",
+            "default": "./dist/components/tabs/pk-tab-panel.js"
+        },
+        "./components/tabs/pk-tabs.js": {
+            "types": "./dist/components/tabs/pk-tabs.d.ts",
+            "import": "./dist/components/tabs/pk-tabs.js",
+            "default": "./dist/components/tabs/pk-tabs.js"
+        },
+        "./components/tabs/pk-tabs": {
+            "types": "./dist/components/tabs/pk-tabs.d.ts",
+            "import": "./dist/components/tabs/pk-tabs.js",
+            "default": "./dist/components/tabs/pk-tabs.js"
+        },
+        "./components/textarea/pk-textarea.js": {
+            "types": "./dist/components/textarea/pk-textarea.d.ts",
+            "import": "./dist/components/textarea/pk-textarea.js",
+            "default": "./dist/components/textarea/pk-textarea.js"
+        },
+        "./components/textarea/pk-textarea": {
+            "types": "./dist/components/textarea/pk-textarea.d.ts",
+            "import": "./dist/components/textarea/pk-textarea.js",
+            "default": "./dist/components/textarea/pk-textarea.js"
+        },
+        "./components/time-picker/pk-time-picker.js": {
+            "types": "./dist/components/time-picker/pk-time-picker.d.ts",
+            "import": "./dist/components/time-picker/pk-time-picker.js",
+            "default": "./dist/components/time-picker/pk-time-picker.js"
+        },
+        "./components/time-picker/pk-time-picker": {
+            "types": "./dist/components/time-picker/pk-time-picker.d.ts",
+            "import": "./dist/components/time-picker/pk-time-picker.js",
+            "default": "./dist/components/time-picker/pk-time-picker.js"
+        },
+        "./components/tiptap/pk-tiptap-content.js": {
+            "types": "./dist/components/tiptap/pk-tiptap-content.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-content.js",
+            "default": "./dist/components/tiptap/pk-tiptap-content.js"
+        },
+        "./components/tiptap/pk-tiptap-content": {
+            "types": "./dist/components/tiptap/pk-tiptap-content.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-content.js",
+            "default": "./dist/components/tiptap/pk-tiptap-content.js"
+        },
+        "./components/tiptap/pk-tiptap-editor.js": {
+            "types": "./dist/components/tiptap/pk-tiptap-editor.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-editor.js",
+            "default": "./dist/components/tiptap/pk-tiptap-editor.js"
+        },
+        "./components/tiptap/pk-tiptap-editor": {
+            "types": "./dist/components/tiptap/pk-tiptap-editor.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-editor.js",
+            "default": "./dist/components/tiptap/pk-tiptap-editor.js"
+        },
+        "./components/tiptap/pk-tiptap-input.js": {
+            "types": "./dist/components/tiptap/pk-tiptap-input.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-input.js",
+            "default": "./dist/components/tiptap/pk-tiptap-input.js"
+        },
+        "./components/tiptap/pk-tiptap-input": {
+            "types": "./dist/components/tiptap/pk-tiptap-input.d.ts",
+            "import": "./dist/components/tiptap/pk-tiptap-input.js",
+            "default": "./dist/components/tiptap/pk-tiptap-input.js"
+        },
+        "./components/toggle-group/pk-toggle-group.js": {
+            "types": "./dist/components/toggle-group/pk-toggle-group.d.ts",
+            "import": "./dist/components/toggle-group/pk-toggle-group.js",
+            "default": "./dist/components/toggle-group/pk-toggle-group.js"
+        },
+        "./components/toggle-group/pk-toggle-group": {
+            "types": "./dist/components/toggle-group/pk-toggle-group.d.ts",
+            "import": "./dist/components/toggle-group/pk-toggle-group.js",
+            "default": "./dist/components/toggle-group/pk-toggle-group.js"
+        },
+        "./components/toggle/pk-toggle.js": {
+            "types": "./dist/components/toggle/pk-toggle.d.ts",
+            "import": "./dist/components/toggle/pk-toggle.js",
+            "default": "./dist/components/toggle/pk-toggle.js"
+        },
+        "./components/toggle/pk-toggle": {
+            "types": "./dist/components/toggle/pk-toggle.d.ts",
+            "import": "./dist/components/toggle/pk-toggle.js",
+            "default": "./dist/components/toggle/pk-toggle.js"
+        },
+        "./components/tooltip/pk-tooltip.js": {
+            "types": "./dist/components/tooltip/pk-tooltip.d.ts",
+            "import": "./dist/components/tooltip/pk-tooltip.js",
+            "default": "./dist/components/tooltip/pk-tooltip.js"
+        },
+        "./components/tooltip/pk-tooltip": {
+            "types": "./dist/components/tooltip/pk-tooltip.d.ts",
+            "import": "./dist/components/tooltip/pk-tooltip.js",
+            "default": "./dist/components/tooltip/pk-tooltip.js"
+        },
+        "./components/button.js": {
+            "types": "./dist/components/button.d.ts",
+            "import": "./dist/components/button.js",
+            "default": "./dist/components/button.js"
+        },
+        "./components/button": {
+            "types": "./dist/components/button.d.ts",
+            "import": "./dist/components/button.js",
+            "default": "./dist/components/button.js"
+        },
+        "./components/button-group.js": {
+            "types": "./dist/components/button-group.d.ts",
+            "import": "./dist/components/button-group.js",
+            "default": "./dist/components/button-group.js"
+        },
+        "./components/button-group": {
+            "types": "./dist/components/button-group.d.ts",
+            "import": "./dist/components/button-group.js",
+            "default": "./dist/components/button-group.js"
+        },
+        "./components/calendar.js": {
+            "types": "./dist/components/calendar.d.ts",
+            "import": "./dist/components/calendar.js",
+            "default": "./dist/components/calendar.js"
+        },
+        "./components/calendar": {
+            "types": "./dist/components/calendar.d.ts",
+            "import": "./dist/components/calendar.js",
+            "default": "./dist/components/calendar.js"
+        },
+        "./components/checkbox.js": {
+            "types": "./dist/components/checkbox.d.ts",
+            "import": "./dist/components/checkbox.js",
+            "default": "./dist/components/checkbox.js"
+        },
+        "./components/checkbox": {
+            "types": "./dist/components/checkbox.d.ts",
+            "import": "./dist/components/checkbox.js",
+            "default": "./dist/components/checkbox.js"
+        },
+        "./components/checkbox-select.js": {
+            "types": "./dist/components/checkbox-select.d.ts",
+            "import": "./dist/components/checkbox-select.js",
+            "default": "./dist/components/checkbox-select.js"
+        },
+        "./components/checkbox-select": {
+            "types": "./dist/components/checkbox-select.d.ts",
+            "import": "./dist/components/checkbox-select.js",
+            "default": "./dist/components/checkbox-select.js"
+        },
+        "./components/code-editor.js": {
+            "types": "./dist/components/code-editor.d.ts",
+            "import": "./dist/components/code-editor.js",
+            "default": "./dist/components/code-editor.js"
+        },
+        "./components/code-editor": {
+            "types": "./dist/components/code-editor.d.ts",
+            "import": "./dist/components/code-editor.js",
+            "default": "./dist/components/code-editor.js"
+        },
+        "./components/color-input.js": {
+            "types": "./dist/components/color-input.d.ts",
+            "import": "./dist/components/color-input.js",
+            "default": "./dist/components/color-input.js"
+        },
+        "./components/color-input": {
+            "types": "./dist/components/color-input.d.ts",
+            "import": "./dist/components/color-input.js",
+            "default": "./dist/components/color-input.js"
+        },
+        "./components/combobox.js": {
+            "types": "./dist/components/combobox.d.ts",
+            "import": "./dist/components/combobox.js",
+            "default": "./dist/components/combobox.js"
+        },
+        "./components/combobox": {
+            "types": "./dist/components/combobox.d.ts",
+            "import": "./dist/components/combobox.js",
+            "default": "./dist/components/combobox.js"
+        },
+        "./components/copy-button.js": {
+            "types": "./dist/components/copy-button.d.ts",
+            "import": "./dist/components/copy-button.js",
+            "default": "./dist/components/copy-button.js"
+        },
+        "./components/copy-button": {
+            "types": "./dist/components/copy-button.d.ts",
+            "import": "./dist/components/copy-button.js",
+            "default": "./dist/components/copy-button.js"
+        },
+        "./components/date-picker.js": {
+            "types": "./dist/components/date-picker.d.ts",
+            "import": "./dist/components/date-picker.js",
+            "default": "./dist/components/date-picker.js"
+        },
+        "./components/date-picker": {
+            "types": "./dist/components/date-picker.d.ts",
+            "import": "./dist/components/date-picker.js",
+            "default": "./dist/components/date-picker.js"
+        },
+        "./components/dialog.js": {
+            "types": "./dist/components/dialog.d.ts",
+            "import": "./dist/components/dialog.js",
+            "default": "./dist/components/dialog.js"
+        },
+        "./components/dialog": {
+            "types": "./dist/components/dialog.d.ts",
+            "import": "./dist/components/dialog.js",
+            "default": "./dist/components/dialog.js"
+        },
+        "./components/dropdown-menu.js": {
+            "types": "./dist/components/dropdown-menu.d.ts",
+            "import": "./dist/components/dropdown-menu.js",
+            "default": "./dist/components/dropdown-menu.js"
+        },
+        "./components/dropdown-menu": {
+            "types": "./dist/components/dropdown-menu.d.ts",
+            "import": "./dist/components/dropdown-menu.js",
+            "default": "./dist/components/dropdown-menu.js"
+        },
+        "./components/editable-table.js": {
+            "types": "./dist/components/editable-table.d.ts",
+            "import": "./dist/components/editable-table.js",
+            "default": "./dist/components/editable-table.js"
+        },
+        "./components/editable-table": {
+            "types": "./dist/components/editable-table.d.ts",
+            "import": "./dist/components/editable-table.js",
+            "default": "./dist/components/editable-table.js"
+        },
+        "./components/field.js": {
+            "types": "./dist/components/field.d.ts",
+            "import": "./dist/components/field.js",
+            "default": "./dist/components/field.js"
+        },
+        "./components/field": {
+            "types": "./dist/components/field.d.ts",
+            "import": "./dist/components/field.js",
+            "default": "./dist/components/field.js"
+        },
+        "./components/icon.js": {
+            "types": "./dist/components/icon.d.ts",
+            "import": "./dist/components/icon.js",
+            "default": "./dist/components/icon.js"
+        },
+        "./components/icon": {
+            "types": "./dist/components/icon.d.ts",
+            "import": "./dist/components/icon.js",
+            "default": "./dist/components/icon.js"
+        },
+        "./components/input.js": {
+            "types": "./dist/components/input.d.ts",
+            "import": "./dist/components/input.js",
+            "default": "./dist/components/input.js"
+        },
+        "./components/input": {
+            "types": "./dist/components/input.d.ts",
+            "import": "./dist/components/input.js",
+            "default": "./dist/components/input.js"
+        },
+        "./components/input-group.js": {
+            "types": "./dist/components/input-group.d.ts",
+            "import": "./dist/components/input-group.js",
+            "default": "./dist/components/input-group.js"
+        },
+        "./components/input-group": {
+            "types": "./dist/components/input-group.d.ts",
+            "import": "./dist/components/input-group.js",
+            "default": "./dist/components/input-group.js"
+        },
+        "./components/lightswitch.js": {
+            "types": "./dist/components/lightswitch.d.ts",
+            "import": "./dist/components/lightswitch.js",
+            "default": "./dist/components/lightswitch.js"
+        },
+        "./components/lightswitch": {
+            "types": "./dist/components/lightswitch.d.ts",
+            "import": "./dist/components/lightswitch.js",
+            "default": "./dist/components/lightswitch.js"
+        },
+        "./components/popover.js": {
+            "types": "./dist/components/popover.d.ts",
+            "import": "./dist/components/popover.js",
+            "default": "./dist/components/popover.js"
+        },
+        "./components/popover": {
+            "types": "./dist/components/popover.d.ts",
+            "import": "./dist/components/popover.js",
+            "default": "./dist/components/popover.js"
+        },
+        "./components/popup.js": {
+            "types": "./dist/components/popup.d.ts",
+            "import": "./dist/components/popup.js",
+            "default": "./dist/components/popup.js"
+        },
+        "./components/popup": {
+            "types": "./dist/components/popup.d.ts",
+            "import": "./dist/components/popup.js",
+            "default": "./dist/components/popup.js"
+        },
+        "./components/radio-group.js": {
+            "types": "./dist/components/radio-group.d.ts",
+            "import": "./dist/components/radio-group.js",
+            "default": "./dist/components/radio-group.js"
+        },
+        "./components/radio-group": {
+            "types": "./dist/components/radio-group.d.ts",
+            "import": "./dist/components/radio-group.js",
+            "default": "./dist/components/radio-group.js"
+        },
+        "./components/scroll-area.js": {
+            "types": "./dist/components/scroll-area.d.ts",
+            "import": "./dist/components/scroll-area.js",
+            "default": "./dist/components/scroll-area.js"
+        },
+        "./components/scroll-area": {
+            "types": "./dist/components/scroll-area.d.ts",
+            "import": "./dist/components/scroll-area.js",
+            "default": "./dist/components/scroll-area.js"
+        },
+        "./components/select.js": {
+            "types": "./dist/components/select.d.ts",
+            "import": "./dist/components/select.js",
+            "default": "./dist/components/select.js"
+        },
+        "./components/select": {
+            "types": "./dist/components/select.d.ts",
+            "import": "./dist/components/select.js",
+            "default": "./dist/components/select.js"
+        },
+        "./components/separator.js": {
+            "types": "./dist/components/separator.d.ts",
+            "import": "./dist/components/separator.js",
+            "default": "./dist/components/separator.js"
+        },
+        "./components/separator": {
+            "types": "./dist/components/separator.d.ts",
+            "import": "./dist/components/separator.js",
+            "default": "./dist/components/separator.js"
+        },
+        "./components/spinner.js": {
+            "types": "./dist/components/spinner.d.ts",
+            "import": "./dist/components/spinner.js",
+            "default": "./dist/components/spinner.js"
+        },
+        "./components/spinner": {
+            "types": "./dist/components/spinner.d.ts",
+            "import": "./dist/components/spinner.js",
+            "default": "./dist/components/spinner.js"
+        },
+        "./components/status.js": {
+            "types": "./dist/components/status.d.ts",
+            "import": "./dist/components/status.js",
+            "default": "./dist/components/status.js"
+        },
+        "./components/status": {
+            "types": "./dist/components/status.d.ts",
+            "import": "./dist/components/status.js",
+            "default": "./dist/components/status.js"
+        },
+        "./components/tabs.js": {
+            "types": "./dist/components/tabs.d.ts",
+            "import": "./dist/components/tabs.js",
+            "default": "./dist/components/tabs.js"
+        },
+        "./components/tabs": {
+            "types": "./dist/components/tabs.d.ts",
+            "import": "./dist/components/tabs.js",
+            "default": "./dist/components/tabs.js"
+        },
+        "./components/textarea.js": {
+            "types": "./dist/components/textarea.d.ts",
+            "import": "./dist/components/textarea.js",
+            "default": "./dist/components/textarea.js"
+        },
+        "./components/textarea": {
+            "types": "./dist/components/textarea.d.ts",
+            "import": "./dist/components/textarea.js",
+            "default": "./dist/components/textarea.js"
+        },
+        "./components/time-picker.js": {
+            "types": "./dist/components/time-picker.d.ts",
+            "import": "./dist/components/time-picker.js",
+            "default": "./dist/components/time-picker.js"
+        },
+        "./components/time-picker": {
+            "types": "./dist/components/time-picker.d.ts",
+            "import": "./dist/components/time-picker.js",
+            "default": "./dist/components/time-picker.js"
+        },
+        "./components/tiptap-content.js": {
+            "types": "./dist/components/tiptap-content.d.ts",
+            "import": "./dist/components/tiptap-content.js",
+            "default": "./dist/components/tiptap-content.js"
+        },
+        "./components/tiptap-content": {
+            "types": "./dist/components/tiptap-content.d.ts",
+            "import": "./dist/components/tiptap-content.js",
+            "default": "./dist/components/tiptap-content.js"
+        },
+        "./components/tiptap-editor.js": {
+            "types": "./dist/components/tiptap-editor.d.ts",
+            "import": "./dist/components/tiptap-editor.js",
+            "default": "./dist/components/tiptap-editor.js"
+        },
+        "./components/tiptap-editor": {
+            "types": "./dist/components/tiptap-editor.d.ts",
+            "import": "./dist/components/tiptap-editor.js",
+            "default": "./dist/components/tiptap-editor.js"
+        },
+        "./components/tiptap-input.js": {
+            "types": "./dist/components/tiptap-input.d.ts",
+            "import": "./dist/components/tiptap-input.js",
+            "default": "./dist/components/tiptap-input.js"
+        },
+        "./components/tiptap-input": {
+            "types": "./dist/components/tiptap-input.d.ts",
+            "import": "./dist/components/tiptap-input.js",
+            "default": "./dist/components/tiptap-input.js"
+        },
+        "./components/toggle.js": {
+            "types": "./dist/components/toggle.d.ts",
+            "import": "./dist/components/toggle.js",
+            "default": "./dist/components/toggle.js"
+        },
+        "./components/toggle": {
+            "types": "./dist/components/toggle.d.ts",
+            "import": "./dist/components/toggle.js",
+            "default": "./dist/components/toggle.js"
+        },
+        "./components/toggle-group.js": {
+            "types": "./dist/components/toggle-group.d.ts",
+            "import": "./dist/components/toggle-group.js",
+            "default": "./dist/components/toggle-group.js"
+        },
+        "./components/toggle-group": {
+            "types": "./dist/components/toggle-group.d.ts",
+            "import": "./dist/components/toggle-group.js",
+            "default": "./dist/components/toggle-group.js"
+        },
+        "./components/tooltip.js": {
+            "types": "./dist/components/tooltip.d.ts",
+            "import": "./dist/components/tooltip.js",
+            "default": "./dist/components/tooltip.js"
+        },
+        "./components/tooltip": {
+            "types": "./dist/components/tooltip.d.ts",
+            "import": "./dist/components/tooltip.js",
+            "default": "./dist/components/tooltip.js"
+        }
+    },
+    "scripts": {
+        "build": "npm run gen:exports && npm run gen:register-components && npm run gen:fouce && vite build && vite build --config vite.loader.config.ts",
+        "build:loader": "vite build --config vite.loader.config.ts",
+        "gen:exports": "node --experimental-strip-types scripts/generate-exports.ts",
+        "gen:register-components": "node --experimental-strip-types scripts/generate-register-components.ts",
+        "gen:fouce": "node --experimental-strip-types scripts/generate-fouce-css.ts",
+        "predev": "npm run gen:register-components && npm run gen:fouce",
+        "prepare": "npm run gen:register-components && npm run gen:fouce",
+        "dev": "npm run dev --workspace @verbb/plugin-kit-playground",
+        "dev:lib": "vite build --watch"
+    },
+    "peerDependencies": {
+        "@floating-ui/dom": "^1.7.3",
+        "@verbb/plugin-kit-core": "^2.0.0",
+        "@verbb/plugin-kit-icons": "^2.0.0",
+        "lit": "^3.3.0"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@floating-ui/dom": "^1.7.3",
+        "@tiptap/core": "^3.22.4",
+        "@verbb/plugin-kit-codemirror-core": "2.0.0",
+        "@verbb/plugin-kit-core": "^2.0.0",
+        "@verbb/plugin-kit-icons": "^2.0.0",
+        "@verbb/plugin-kit-tiptap-core": "2.0.0",
+        "composed-offset-position": "^0.0.6",
+        "lit": "^3.3.0"
+    },
+    "devDependencies": {
+        "typescript": "^6.0.3",
+        "vite": "^8.0.10",
+        "vite-plugin-dts": "^4.5.4"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    }
+}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { SchemaFormEngineApi } from '../engine/context';
-import { SchemaRenderable } from '../engine/SchemaIndex';
+import { SchemaRenderable } from '@verbb/plugin-kit-forms';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type GroupFieldProps = {
     form: SchemaFormEngineApi;
     field: {

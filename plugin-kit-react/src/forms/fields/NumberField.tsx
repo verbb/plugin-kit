@@ -1,7 +1,7 @@
-import { Input } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { Input } from '../../components/Input.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type NumberFieldProps = {
     form: SchemaFormEngineApi;
@@ -34,12 +34,12 @@ export const NumberField = ({ form, field }: NumberFieldProps) => {
             <Input
                 type="number"
                 value={String(value ?? '')}
-                onChange={(event) => { return setValue(event.target.value); }}
+                onInput={(event) => { return setValue((event.target as { value?: string }).value ?? ''); }}
                 onBlur={setTouched}
                 placeholder={field.placeholder}
                 disabled={field.disabled}
+                invalid={isInvalid}
                 style={field.size ? { width: `${field.size}rem` } : undefined}
-                aria-invalid={isInvalid}
             />
         </FieldLayout>
     );

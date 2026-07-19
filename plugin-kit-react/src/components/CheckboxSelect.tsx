@@ -1,103 +1,67 @@
-import { useCallback, useMemo } from 'react';
-import { CheckboxInput } from '@verbb/plugin-kit-react/components/CheckboxInput';
-import { cn } from '@verbb/plugin-kit-react/utils';
+import React, { forwardRef, useCallback } from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import {
+    PkCheckboxSelect,
+    type PkCheckboxSelectOption,
+    type PkCheckboxSelectValue,
+} from '@verbb/plugin-kit-web/components/checkbox-select/pk-checkbox-select.js';
 
-export const ALL_VALUE = '*';
+import { trueBooleanProps } from '../utils/lit-react-booleans.js';
 
-export type CheckboxSelectOption = {
-    label: string;
-    value: string;
+const PkCheckboxSelectElement = createPluginKitComponent({
+    tagName: 'pk-checkbox-select',
+    elementClass: PkCheckboxSelect,
+    react: React,
+    events: {
+        onPkChange: 'pk-change',
+        // Keep native `change` available as `onNativeChange` if needed; React `onChange`
+        // is value sugar (see EditableTable) so `onChange={setValue}` works.
+        onNativeChange: 'change',
+    },
+});
+
+type PkCheckboxSelectElementProps = React.ComponentProps<typeof PkCheckboxSelectElement>;
+
+export type CheckboxSelectProps = Omit<PkCheckboxSelectElementProps, 'onChange'> & {
+    /**
+     * Controlled value callback — sugar over `onPkChange` detail.
+     * Prefer this in React apps; `onPkChange` remains for CE parity.
+     */
+    onChange?: (value: PkCheckboxSelectValue) => void;
 };
 
-export type CheckboxSelectValue = typeof ALL_VALUE | string[];
+/** React facade over `<pk-checkbox-select>`. Behavior and styles live in the web component. */
+export const CheckboxSelect = forwardRef<PkCheckboxSelect, CheckboxSelectProps>(
+    function CheckboxSelect({ disabled, onChange, onPkChange, ...rest }, ref) {
+        const handlePkChange = useCallback(
+            (event: Event) => {
+                onPkChange?.(event as Parameters<NonNullable<PkCheckboxSelectElementProps['onPkChange']>>[0]);
 
-type CheckboxSelectProps = {
-    options: CheckboxSelectOption[];
-    value?: CheckboxSelectValue;
-    onChange?: (value: CheckboxSelectValue) => void;
-    showAllOption?: boolean;
-    allLabel?: string;
-    disabled?: boolean;
-    name?: string;
-    className?: string;
-};
+                if (!onChange) {
+                    return;
+                }
 
-export function CheckboxSelect({
-    options,
-    value = [],
-    onChange,
-    showAllOption = false,
-    allLabel = 'All',
-    disabled = false,
-    className,
-}: CheckboxSelectProps) {
-    const isAllSelected = value === ALL_VALUE;
-    const selectedArray = useMemo(() => {
-        if (isAllSelected) {
-            return options.map((option) => {
-                return option.value;
-            });
-        }
+                const detail = (event as CustomEvent<{ value: PkCheckboxSelectValue }>).detail;
+                if (detail && 'value' in detail) {
+                    onChange(detail.value);
+                }
+            },
+            [onChange, onPkChange],
+        );
 
-        if (Array.isArray(value)) {
-            return value;
-        }
+        return (
+            <PkCheckboxSelectElement
+                ref={ref}
+                {...rest}
+                {...trueBooleanProps(['disabled'], { disabled })}
+                {...(onChange || onPkChange ? { onPkChange: handlePkChange } : {})}
+            />
+        );
+    },
+);
 
-        return [];
-    }, [isAllSelected, options, value]);
+CheckboxSelect.displayName = 'CheckboxSelect';
 
-    const handleAllChange = useCallback(
-        (checked: boolean | 'indeterminate') => {
-            onChange?.(checked === true ? ALL_VALUE : []);
-        },
-        [onChange],
-    );
-
-    const handleItemChange = useCallback(
-        (optionValue: string, checked: boolean) => {
-            if (isAllSelected) {
-                return;
-            }
-            const next = checked
-                ? [...selectedArray, optionValue]
-                : selectedArray.filter((v) => { return v !== optionValue; });
-            onChange?.(next);
-        },
-        [isAllSelected, selectedArray, onChange],
-    );
-
-    return (
-        <fieldset
-            className={cn('space-y-1', className)}
-            disabled={disabled}
-        >
-            {showAllOption && (
-                <CheckboxInput
-                    label={allLabel}
-                    labelClassName="font-bold"
-                    className="items-start gap-1.5"
-                    checked={isAllSelected}
-                    onCheckedChange={handleAllChange}
-                    disabled={disabled}
-                />
-            )}
-            {options.map((option) => {
-                const isChecked = isAllSelected || selectedArray.includes(option.value);
-                const isItemDisabled = isAllSelected;
-
-                return (
-                    <CheckboxInput
-                        key={option.value}
-                        label={option.label}
-                        className="items-start gap-1.5"
-                        checked={isChecked}
-                        onCheckedChange={(checked) => {
-                            return handleItemChange(option.value, checked === true);
-                        }}
-                        disabled={disabled || isItemDisabled}
-                    />
-                );
-            })}
-        </fieldset>
-    );
-}
+export { PkCheckboxSelectElement };
+export { ALL_VALUE } from '@verbb/plugin-kit-web/components/checkbox-select/pk-checkbox-select.js';
+export type { PkCheckboxSelectOption, PkCheckboxSelectValue };

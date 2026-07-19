@@ -15,9 +15,7 @@ var CheckboxSelectField = ({ form, field }) => {
 		children: /* @__PURE__ */ jsx(CheckboxSelect, {
 			options: field.options || [],
 			value: value === void 0 || value === null ? [] : value,
-			onChange: (v) => {
-				return setValue(v);
-			},
+			onChange: setValue,
 			showAllOption: field.showAllOption ?? false,
 			allLabel: field.allLabel,
 			disabled: field.disabled

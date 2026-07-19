@@ -1,0 +1,56 @@
+{
+    "name": "@verbb/plugin-kit-icons",
+    "version": "2.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "CHANGELOG.md",
+        "LICENSE.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/verbb/plugin-kit.git",
+        "directory": "plugin-kit-icons"
+    },
+    "bugs": {
+        "url": "https://github.com/verbb/plugin-kit/issues"
+    },
+    "homepage": "https://docs.verbb.io/plugin-kit",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "sideEffects": [
+        "./dist/all.js"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./all.js": {
+            "types": "./dist/all.d.ts",
+            "import": "./dist/all.js"
+        },
+        "./all": {
+            "types": "./dist/all.d.ts",
+            "import": "./dist/all.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^6.0.3",
+        "vite": "^8.0.10",
+        "vite-plugin-dts": "^4.5.4"
+    }
+}

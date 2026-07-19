@@ -1,9 +1,16 @@
-import { ComponentProps } from 'react';
-import { Switch as SwitchPrimitive } from '@base-ui/react/switch';
-import { VariantProps } from 'class-variance-authority';
-declare const lightswitchVariants: (props?: ({
-    size?: "default" | "xs" | "sm" | null | undefined;
-} & import('class-variance-authority/types').ClassProp) | undefined) => string;
-declare function Lightswitch({ className, size, ...props }: ComponentProps<typeof SwitchPrimitive.Root> & VariantProps<typeof lightswitchVariants>): import("react/jsx-runtime").JSX.Element;
-export { Lightswitch };
+import { default as React } from 'react';
+import { PkLightswitch, PkLightswitchSize } from '@verbb/plugin-kit-web/components/lightswitch/pk-lightswitch.js';
+declare const PkLightswitchElement: import('@lit/react').ReactWebComponent<PkLightswitch, {
+    onPkChange: string;
+    onInput: string;
+    onChange: string;
+}>;
+export type LightswitchProps = React.ComponentProps<typeof PkLightswitchElement> & {
+    /** Controlled checked updates — unwraps `pk-change` `detail.checked`. */
+    onCheckedChange?: (checked: boolean) => void;
+};
+/** React facade over `<pk-lightswitch>`. Behavior and styles live in the web component. */
+export declare function Lightswitch({ onCheckedChange, onPkChange, ...props }: LightswitchProps): import("react/jsx-runtime").JSX.Element;
+export { PkLightswitchElement };
+export type { PkLightswitchSize };
 //# sourceMappingURL=Lightswitch.d.ts.map

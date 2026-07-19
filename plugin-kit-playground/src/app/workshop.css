@@ -1,0 +1,223 @@
+/* Workshop shell — preview tabs + debug dock */
+
+.pg-main-host {
+    min-width: 0;
+    min-height: 100vh;
+}
+
+.pg-component-preview {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.pg-preview-chrome {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+}
+
+.pg-preview-outlet {
+    flex: 1;
+    min-height: 0;
+}
+
+.pg-surface-tabs {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border-radius: 8px;
+    background: #f1f5f9;
+}
+
+.pg-surface-tabs__btn {
+    appearance: none;
+    border: 0;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    color: #475569;
+    background: transparent;
+    cursor: pointer;
+}
+
+.pg-surface-tabs__btn:hover {
+    color: #0f172a;
+    background: #e2e8f0;
+}
+
+.pg-surface-tabs__btn.is-active {
+    color: #0f172a;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.pg-surface-tabs__btn.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.pg-app--with-debug {
+    grid-template-columns: 280px minmax(0, 1fr) min(320px, 30vw) !important;
+}
+
+.pg-tools__toggle {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    appearance: none;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    color: #334155;
+    background: #fff;
+    cursor: pointer;
+}
+
+.pg-tools__toggle:hover,
+.pg-tools__toggle[aria-pressed='true'] {
+    border-color: #0369a1;
+    color: #0369a1;
+    background: #f0f9ff;
+}
+
+.pg-crosslink__link.is-active {
+    color: #0c4a6e;
+}
+
+.pg-debug-dock {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow: auto;
+    padding: 16px 14px;
+    border-left: 1px solid #1e293b;
+    background: #0f172a;
+    color: #e2e8f0;
+    font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.pg-debug-dock__header {
+    margin-bottom: 16px;
+}
+
+.pg-debug-dock__title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.pg-debug-dock__lead {
+    margin: 6px 0 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #94a3b8;
+}
+
+.pg-debug-dock__section {
+    margin-bottom: 18px;
+}
+
+.pg-debug-dock__section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.pg-debug-dock__section-head h3 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.pg-debug-dock__btn {
+    appearance: none;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font: inherit;
+    font-size: 11px;
+    color: #e2e8f0;
+    background: #1e293b;
+    cursor: pointer;
+}
+
+.pg-debug-dock__table {
+    display: grid;
+    gap: 4px;
+}
+
+.pg-debug-dock__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 0;
+    border-bottom: 1px solid #1e293b;
+}
+
+.pg-debug-dock__row code {
+    color: #7dd3fc;
+}
+
+.pg-debug-dock__log {
+    display: grid;
+    gap: 8px;
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.pg-debug-dock__error {
+    margin: 0;
+    padding: 8px;
+    border-radius: 6px;
+    background: #1e293b;
+    color: #fecaca;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.pg-react-mount,
+.pg-vue-mount {
+    min-height: 100%;
+}
+
+.pg-perf-stats {
+    margin: 0 0 12px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #64748b;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1100px) {
+    .pg-app--with-debug {
+        grid-template-columns: 280px minmax(0, 1fr) !important;
+    }
+
+    .pg-debug-dock {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: min(360px, 92vw);
+        z-index: 40;
+        box-shadow: -12px 0 40px rgba(15, 23, 42, 0.35);
+    }
+}

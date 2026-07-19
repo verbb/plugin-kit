@@ -1,233 +1,132 @@
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-    SelectLabel,
-} from '@verbb/plugin-kit-react/components';
+import React, { forwardRef, useMemo } from 'react';
+import type { PkSelect, PkSelectSize } from '@verbb/plugin-kit-web/components/select/pk-select.js';
+import type { PkStatusVariant } from '@verbb/plugin-kit-web/components/status/pk-status.js';
 
-import type React from 'react';
-import { ComponentProps, forwardRef } from 'react';
-import { Status } from '@verbb/plugin-kit-react/components/Status';
-import { cn } from '@verbb/plugin-kit-react/utils';
+import { Option, OptionGroup, Select } from './Select.js';
+import { Status } from './Status.js';
 
-
-export interface Option<T = unknown> {
-    value: T;
+export interface SelectInputOption {
+    value: unknown;
     label: string;
     disabled?: boolean;
     status?: string;
 }
 
-type OptionGroup<T = unknown> = {
+export interface SelectInputOptionGroup {
     group: string;
-    options: Option<T>[];
-};
+    options: SelectInputOption[];
+}
 
-// const valueToString = (val: Option['value']) => {
-//     if (val === null) { return '__null__'; }
-//     if (val === undefined) {
-//         console.error('option value cannot be undefined');
-//         return '__undefined__';
-//     }
-//     if (val === Infinity) { return '__Infinity__'; }
-//     if (val === -Infinity) { return '__-Infinity__'; }
-//     if (Number.isNaN(val)) { return '__NaN__'; }
-//     if (typeof val === 'symbol') { return `__symbol__${val.description}`; }
-//     // console.log(JSON.stringify(val));
-//     return JSON.stringify(val);
-// };
-
-// const stringToValue = (str: string) => {
-//     switch (str) {
-//         case '__null__':
-//             return null;
-//         case '__undefined__':
-//             return undefined;
-//         case '__Infinity__':
-//             return Infinity;
-//         case '__-Infinity__':
-//             return -Infinity;
-//         case '__NaN__':
-//             return NaN;
-//         default:
-//             if (str.startsWith('__symbol__')) {
-//                 return Symbol(str.slice(10));
-//             }
-//             return JSON.parse(str);
-//     }
-// };
-
-type SelectBaseProps = ComponentProps<typeof Select>;
-
-interface SelectProps<T = unknown>
-    extends Omit<SelectBaseProps, 'children' | 'value' | 'defaultValue' | 'onValueChange'> {
-    options: Array<Option<T> | OptionGroup<T>>;
+export interface SelectInputProps {
+    options: Array<SelectInputOption | SelectInputOptionGroup>;
+    value?: unknown;
+    onChange?: (value: unknown) => void;
     placeholder?: string;
-    onChange?: (value: T) => void;
-    value?: T;
+    disabled?: boolean;
     isInvalid?: boolean;
-    onBlur?: React.FocusEventHandler<HTMLButtonElement>;
-    triggerClassName?: string;
-    contentClassName?: string;
-    alignItemWithTrigger?: boolean;
+    clearable?: boolean;
+    size?: PkSelectSize;
+    /** When `full`, stretch the select host to the available width (table cells). */
+    width?: 'full';
+    name?: string;
     id?: string;
-    'aria-invalid'?: boolean | 'true' | 'false';
+    onBlur?: (event: Event) => void;
+    'aria-label'?: string;
     'aria-describedby'?: string;
     'aria-errormessage'?: string;
-    'aria-label'?: string;
     'aria-labelledby'?: string;
 }
 
-export const SelectInput = forwardRef<HTMLButtonElement, SelectProps>(({
-    options,
-    placeholder,
-    size,
-    onChange,
-    value,
-    triggerClassName,
-    contentClassName,
-    alignItemWithTrigger = false,
-    isInvalid,
-    id,
-    modal = true,
-    'aria-invalid': ariaInvalid,
-    'aria-describedby': ariaDescribedBy,
-    'aria-errormessage': ariaErrorMessage,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    ...selectProps
-}, ref) => {
-    const handleValueChange = (nextValue: SelectProps['value']) => {
-        if (onChange) {
-            onChange(nextValue);
+const isGroup = (option: SelectInputOption | SelectInputOptionGroup): option is SelectInputOptionGroup => {
+    return typeof option === 'object' && option !== null && 'group' in option;
+};
+
+const toStringValue = (value: unknown): string => {
+    return value === undefined || value === null ? '' : String(value);
+};
+
+/**
+ * Convenience facade over `<pk-select>` matching the `plugin-kit-react` `SelectInput`
+ * ergonomics: an `options[]` array plus controlled `value`/`onChange`, instead of the
+ * slotted `<pk-option>` children the raw `Select` facade exposes.
+ *
+ * `pk-select` is string-valued, so option values are stringified for the element and
+ * mapped back to their original value on change.
+ */
+export const SelectInput = forwardRef<PkSelect, SelectInputProps>(function SelectInput(
+    {
+        options,
+        value,
+        onChange,
+        placeholder,
+        disabled,
+        isInvalid,
+        clearable,
+        size,
+        width,
+        name,
+        id,
+        onBlur,
+        'aria-label': ariaLabel,
+        'aria-describedby': ariaDescribedBy,
+        'aria-errormessage': ariaErrorMessage,
+        'aria-labelledby': ariaLabelledBy,
+    },
+    ref,
+) {
+    const flatOptions = useMemo(() => {
+        return options.flatMap((option) => { return isGroup(option) ? option.options : [option]; });
+    }, [options]);
+
+    const handleChange = (event: Event): void => {
+        if (!onChange) {
+            return;
         }
+
+        const detail = (event as CustomEvent<{ value: string | string[] }>).detail;
+        const raw = Array.isArray(detail?.value) ? detail?.value[0] : detail?.value;
+        const match = flatOptions.find((option) => { return toStringValue(option.value) === toStringValue(raw); });
+
+        onChange(match ? match.value : raw ?? '');
     };
 
-    // const hasEmptyOption = options?.find((option) => { return option.value === ''; });
-
-    // let defaultValue = undefined;
-
-    // // Only show placeholder when value is initially undefined,
-    // // or when the value is an empty string and there's an empty option
-    // if (value === undefined || value === '') {
-    //     if (hasEmptyOption) {
-    //         defaultValue = valueToString('');
-    //     } else {
-    //         defaultValue = undefined;
-    //     }
-    // } else {
-    //     defaultValue = valueToString(value);
-    // }
-
-    const hasGroup = (option: Option<unknown> | OptionGroup<unknown>): option is OptionGroup<unknown> => {
-        return typeof option === 'object' && option !== null && 'group' in option;
+    const renderOption = (option: SelectInputOption) => {
+        return (
+            <Option key={toStringValue(option.value)} value={toStringValue(option.value)} disabled={option.disabled}>
+                {option.status ? <Status slot="start" status={option.status as PkStatusVariant} /> : null}
+                {option.label}
+            </Option>
+        );
     };
-
-    const groupedOptions = options.map((option, index) => {
-        if (hasGroup(option)) {
-            return option;
-        }
-
-        return {
-            group: null,
-            options: [option],
-            _key: `ungrouped-${index}`,
-        };
-    });
-
-    const flatOptions = options.flatMap((option) => {
-        if (hasGroup(option)) {
-            return option.options;
-        }
-
-        return [option];
-    });
-
-    const selectedOption = flatOptions.find((option) => {
-        return String(option.value) === String(value);
-    });
-    const resolvedPlaceholder = placeholder || '';
-    const resolvedIsInvalid = Boolean(isInvalid || ariaInvalid === true || ariaInvalid === 'true');
 
     return (
         <Select
-            value={value}
-            onValueChange={handleValueChange}
+            ref={ref}
+            value={toStringValue(value)}
+            placeholder={placeholder}
+            disabled={disabled}
+            invalid={isInvalid}
+            clearable={clearable}
             size={size}
-            items={flatOptions as ComponentProps<typeof Select>['items']}
-            modal={modal}
-            {...selectProps}
+            width={width}
+            name={name}
+            id={id}
+            onPkChange={handleChange}
+            onFocusOut={onBlur}
+            aria-label={ariaLabel}
+            aria-describedby={ariaDescribedBy}
+            aria-errormessage={ariaErrorMessage}
+            aria-labelledby={ariaLabelledBy}
         >
-            <SelectTrigger
-                ref={ref}
-                id={id}
-                aria-invalid={resolvedIsInvalid}
-                aria-describedby={ariaDescribedBy}
-                aria-errormessage={ariaErrorMessage}
-                aria-label={ariaLabel}
-                aria-labelledby={ariaLabelledBy}
-                className={cn(
-                    selectedOption?.status && 'relative [&_[data-slot=select-value]]:pl-5',
-                    '[&_[data-slot=select-value]]:overflow-hidden [&_[data-slot=select-value]>span]:block [&_[data-slot=select-value]>span]:min-w-0 [&_[data-slot=select-value]>span]:max-w-full [&_[data-slot=select-value]>span]:truncate',
-                    triggerClassName,
-                )}
-            >
-                {selectedOption?.status && (
-                    <Status
-                        status={selectedOption.status}
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2"
-                    />
-                )}
-                <SelectValue placeholder={placeholder}>
-                    {selectedOption ? (
-                        <span className="block min-w-0 max-w-full truncate" title={selectedOption.label}>
-                            {selectedOption.label}
-                        </span>
-                    ) : (
-                        <span className="block min-w-0 max-w-full truncate text-slate-500" title={resolvedPlaceholder}>
-                            {resolvedPlaceholder}
-                        </span>
-                    )}
-                </SelectValue>
-            </SelectTrigger>
-
-            {options?.length > 0 && (
-                <SelectContent
-                    className={contentClassName}
-                    alignItemWithTrigger={alignItemWithTrigger}
-                >
-                    {groupedOptions.map((group) => {
-                        return (
-                            <SelectGroup key={group.group ?? group._key}>
-                                {group.group && <SelectLabel>{group.group}</SelectLabel>}
-
-                                {group.options?.map((option) => {
-                                    return (
-                                        <SelectItem
-                                            key={String(option.value)}
-                                            value={option.value}
-                                            disabled={option.disabled}
-                                        >
-                                            {option.status && (
-                                                <Status status={option.status} />
-                                            )}
-                                            <span className="block min-w-0 flex-1 truncate" title={option.label}>
-                                                {option.label}
-                                            </span>
-                                        </SelectItem>
-                                    );
-                                })}
-                            </SelectGroup>
-                        );
-                    })}
-                </SelectContent>
-            )}
+            {options.map((option) => {
+                return isGroup(option) ? (
+                    <OptionGroup key={option.group} label={option.group}>
+                        {option.options.map(renderOption)}
+                    </OptionGroup>
+                ) : (
+                    renderOption(option)
+                );
+            })}
         </Select>
     );
 });
-
-export default Select;
-export type { SelectProps };

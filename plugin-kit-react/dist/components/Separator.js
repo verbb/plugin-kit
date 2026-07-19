@@ -1,17 +1,15 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
-import { Separator as Separator$1 } from "@base-ui/react/separator";
-import { jsx } from "react/jsx-runtime";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import React from "react";
+import { PkSeparator } from "@verbb/plugin-kit-web/components/separator/pk-separator.js";
 //#region src/components/Separator.tsx
-function Separator({ className, orientation = "horizontal", ...props }) {
-	return /* @__PURE__ */ jsx(Separator$1, {
-		"data-slot": "separator",
-		orientation,
-		className: cn("shrink-0 bg-slate-200", "data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full", "data-[orientation=vertical]:w-px data-[orientation=vertical]:h-full", className),
-		...props
-	});
-}
+/** React facade over `<pk-separator>`. Behavior and styles live in the web component. */
+var PkSeparatorElement = createPluginKitComponent({
+	tagName: "pk-separator",
+	elementClass: PkSeparator,
+	react: React
+});
+var Separator = PkSeparatorElement;
 //#endregion
-export { Separator };
+export { PkSeparatorElement, Separator };
 
 //# sourceMappingURL=Separator.js.map

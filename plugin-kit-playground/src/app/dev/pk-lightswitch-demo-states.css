@@ -1,0 +1,15 @@
+/**
+ * Playground-only state previews for <pk-lightswitch> matrices.
+ *
+ * Imported by workshop dev servers only — NOT part of the pk-lightswitch bundle.
+ */
+pk-lightswitch[data-state='focus-visible']::part(switch) {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--pk-color-sky-600),
+        0 0 6px 1px hsl(from var(--pk-color-sky-600) h s l / 0.8);
+}
+
+pk-lightswitch[invalid][data-state='focus-visible']::part(switch),
+pk-lightswitch[data-state='focus-visible']:state(user-invalid)::part(switch) {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--pk-color-rose-600),
+        0 0 6px 1px hsl(from var(--pk-color-rose-600) h s l / 0.8);
+}

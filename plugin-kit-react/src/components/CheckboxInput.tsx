@@ -1,56 +1,50 @@
-import { type ComponentProps, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 
-import { Checkbox } from '@verbb/plugin-kit-react/components/Checkbox';
-import { cn } from '@verbb/plugin-kit-react/utils';
+import { Checkbox, type CheckboxProps } from './Checkbox.js';
 
-type CheckboxInputProps = Omit<ComponentProps<typeof Checkbox>, 'className' | 'children'> & {
+export interface CheckboxInputProps extends Omit<CheckboxProps, 'children'> {
     label: ReactNode;
     description?: ReactNode;
     className?: string;
-    checkboxClassName?: string;
-    labelClassName?: string;
-    descriptionClassName?: string;
-};
+}
 
-function CheckboxInput({
+/**
+ * Convenience facade pairing `<pk-checkbox>` with a label + optional description, mirroring the
+ * `plugin-kit-react` `CheckboxInput`. Layout uses a plain wrapping `<label>` (no Tailwind) — the
+ * checkbox itself is styled inside the web component's shadow root.
+ */
+export function CheckboxInput({
     label,
     description,
     className,
-    checkboxClassName,
-    labelClassName,
-    descriptionClassName,
     disabled,
     ...props
 }: CheckboxInputProps) {
     return (
         <label
             data-slot="checkbox-input"
-            className={cn(
-                'flex items-start gap-2 text-sm',
-                disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-                className,
-            )}
+            className={className}
+            style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.5rem',
+                cursor: disabled ? 'not-allowed' : 'pointer',
+            }}
         >
-            <Checkbox className={checkboxClassName} disabled={disabled} {...props} />
-            <span className="min-w-0 peer-disabled:opacity-50 peer-data-disabled:opacity-50">
-                <span
-                    data-slot="checkbox-input-label"
-                    className={cn('block leading-4', labelClassName)}
-                >
+            <Checkbox disabled={disabled} {...props} />
+            <span data-slot="checkbox-input-body" style={{ minWidth: 0, opacity: disabled ? 0.5 : undefined }}>
+                <span data-slot="checkbox-input-label" style={{ display: 'block', lineHeight: 1.25 }}>
                     {label}
                 </span>
-                {description && (
+                {description ? (
                     <span
                         data-slot="checkbox-input-description"
-                        className={cn('mt-1 block text-gray-500', descriptionClassName)}
+                        style={{ display: 'block', marginTop: '0.25rem', color: 'var(--pk-color-text-muted, #64748b)' }}
                     >
                         {description}
                     </span>
-                )}
+                ) : null}
             </span>
         </label>
     );
 }
-
-export { CheckboxInput };
-export type { CheckboxInputProps };

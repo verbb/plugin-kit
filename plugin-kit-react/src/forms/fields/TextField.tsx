@@ -1,7 +1,7 @@
-import { Input } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { Input } from '../../components/Input.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type TextFieldProps = {
     form: SchemaFormEngineApi;
@@ -34,11 +34,11 @@ export const TextField = ({ form, field }: TextFieldProps) => {
         >
             <Input
                 value={String(value ?? '')}
-                onChange={(event) => { return setValue(event.target.value); }}
+                onInput={(event) => { return setValue((event.target as { value?: string }).value ?? ''); }}
                 onBlur={setTouched}
                 placeholder={field.placeholder}
                 disabled={field.disabled}
-                aria-invalid={isInvalid}
+                invalid={isInvalid}
             />
         </FieldLayout>
     );

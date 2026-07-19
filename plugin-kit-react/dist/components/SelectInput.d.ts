@@ -1,34 +1,41 @@
-import { Select } from '.';
-import { default as React, ComponentProps } from 'react';
-export interface Option<T = unknown> {
-    value: T;
+import { default as React } from 'react';
+import { PkSelect, PkSelectSize } from '@verbb/plugin-kit-web/components/select/pk-select.js';
+export interface SelectInputOption {
+    value: unknown;
     label: string;
     disabled?: boolean;
     status?: string;
 }
-type OptionGroup<T = unknown> = {
+export interface SelectInputOptionGroup {
     group: string;
-    options: Option<T>[];
-};
-type SelectBaseProps = ComponentProps<typeof Select>;
-interface SelectProps<T = unknown> extends Omit<SelectBaseProps, 'children' | 'value' | 'defaultValue' | 'onValueChange'> {
-    options: Array<Option<T> | OptionGroup<T>>;
+    options: SelectInputOption[];
+}
+export interface SelectInputProps {
+    options: Array<SelectInputOption | SelectInputOptionGroup>;
+    value?: unknown;
+    onChange?: (value: unknown) => void;
     placeholder?: string;
-    onChange?: (value: T) => void;
-    value?: T;
+    disabled?: boolean;
     isInvalid?: boolean;
-    onBlur?: React.FocusEventHandler<HTMLButtonElement>;
-    triggerClassName?: string;
-    contentClassName?: string;
-    alignItemWithTrigger?: boolean;
+    clearable?: boolean;
+    size?: PkSelectSize;
+    /** When `full`, stretch the select host to the available width (table cells). */
+    width?: 'full';
+    name?: string;
     id?: string;
-    'aria-invalid'?: boolean | 'true' | 'false';
+    onBlur?: (event: Event) => void;
+    'aria-label'?: string;
     'aria-describedby'?: string;
     'aria-errormessage'?: string;
-    'aria-label'?: string;
     'aria-labelledby'?: string;
 }
-export declare const SelectInput: React.ForwardRefExoticComponent<SelectProps<unknown> & React.RefAttributes<HTMLButtonElement>>;
-export default Select;
-export type { SelectProps };
+/**
+ * Convenience facade over `<pk-select>` matching the `plugin-kit-react` `SelectInput`
+ * ergonomics: an `options[]` array plus controlled `value`/`onChange`, instead of the
+ * slotted `<pk-option>` children the raw `Select` facade exposes.
+ *
+ * `pk-select` is string-valued, so option values are stringified for the element and
+ * mapped back to their original value on change.
+ */
+export declare const SelectInput: React.ForwardRefExoticComponent<SelectInputProps & React.RefAttributes<PkSelect>>;
 //# sourceMappingURL=SelectInput.d.ts.map

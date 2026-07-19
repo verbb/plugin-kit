@@ -39,7 +39,6 @@ var GroupField = ({ form, field, children }) => {
 		warning: field.warning,
 		required: field.required,
 		errors,
-		withControl: false,
 		children: /* @__PURE__ */ jsx(Renderer, { schema: scopedSchema })
 	});
 	return /* @__PURE__ */ jsx(Renderer, { schema: scopedSchema });

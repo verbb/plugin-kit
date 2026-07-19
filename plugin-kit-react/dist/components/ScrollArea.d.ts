@@ -1,16 +1,12 @@
-import { ScrollArea as ScrollAreaPrimitive } from '@base-ui/react/scroll-area';
-import { RefObject } from 'react';
-import { VariantProps } from 'class-variance-authority';
-declare const scrollAreaVariants: (props?: ({
-    size?: "default" | "xs" | "sm" | null | undefined;
-} & import('class-variance-authority/types').ClassProp) | undefined) => string;
-type ScrollAreaSize = NonNullable<VariantProps<typeof scrollAreaVariants>['size']>;
-declare function ScrollArea({ className, children, size, orientation, viewPortClassName, viewPortRef, contentClassName, ...props }: ScrollAreaPrimitive.Root.Props & VariantProps<typeof scrollAreaVariants> & {
-    orientation?: 'horizontal' | 'vertical';
-    size?: ScrollAreaSize;
-    viewPortClassName?: string;
-    viewPortRef?: RefObject<HTMLDivElement>;
-    contentClassName?: string;
-}): import("react/jsx-runtime").JSX.Element;
-export { ScrollArea };
+import { default as React } from 'react';
+import { PkScrollArea, PkScrollAreaOrientation, PkScrollAreaSize } from '@verbb/plugin-kit-web/components/scroll-area/pk-scroll-area.js';
+/** React facade over `<pk-scroll-area>`. Behavior and styles live in the web component. */
+export declare const PkScrollAreaElement: import('@lit/react').ReactWebComponent<PkScrollArea, {
+    onPkScroll: string;
+}>;
+export declare const ScrollArea: import('@lit/react').ReactWebComponent<PkScrollArea, {
+    onPkScroll: string;
+}>;
+export type ScrollAreaProps = React.ComponentProps<typeof PkScrollAreaElement>;
+export type { PkScrollAreaOrientation, PkScrollAreaSize };
 //# sourceMappingURL=ScrollArea.d.ts.map

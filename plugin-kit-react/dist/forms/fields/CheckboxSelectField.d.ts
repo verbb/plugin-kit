@@ -1,5 +1,5 @@
-import { CheckboxSelectOption } from '../../components/CheckboxSelect';
-import { SchemaFormEngineApi } from '../engine/context';
+import { PkCheckboxSelectOption } from '../../components/CheckboxSelect.js';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type CheckboxSelectFieldProps = {
     form: SchemaFormEngineApi;
     field: {
@@ -7,7 +7,7 @@ type CheckboxSelectFieldProps = {
         label?: string;
         instructions?: string;
         warning?: string;
-        options?: CheckboxSelectOption[];
+        options?: PkCheckboxSelectOption[];
         showAllOption?: boolean;
         allLabel?: string;
         required?: boolean;

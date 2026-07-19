@@ -1,0 +1,108 @@
+@layer pk-utilities {
+    /*
+     * FOUCE (Flash of Undefined Custom Elements) prevention.
+     *
+     * GENERATED FILE — do not edit by hand.
+     * Run `npm run gen:fouce` after changing the component registry.
+     */
+
+    /* Tier 1a: reserve space for in-flow pk-* elements until they upgrade. */
+    :is(
+        pk-spinner,
+        pk-icon,
+        pk-button,
+        pk-checkbox,
+        pk-checkbox-select,
+        pk-color-input,
+        pk-code-editor,
+        pk-input,
+        pk-input-group,
+        pk-input-group-addon,
+        pk-input-group-button,
+        pk-input-group-input,
+        pk-input-group-text,
+        pk-input-group-textarea,
+        pk-textarea,
+        pk-tiptap-editor,
+        pk-tiptap-input,
+        pk-tiptap-content,
+        pk-field,
+        pk-separator,
+        pk-status,
+        pk-toggle,
+        pk-toggle-group,
+        pk-lightswitch,
+        pk-button-group,
+        pk-button-group-separator,
+        pk-button-group-text,
+        pk-dropdown-label,
+        pk-dropdown-item,
+        pk-dropdown-separator,
+        pk-radio,
+        pk-radio-group,
+        pk-tab,
+        pk-tab-heading,
+        pk-tab-panel,
+        pk-tabs,
+        pk-scroll-area,
+        pk-option,
+        pk-option-group,
+        pk-select,
+        pk-calendar,
+        pk-date-picker,
+        pk-combobox,
+        pk-time-picker,
+        pk-copy-button,
+        pk-editable-table
+    ):not(:defined) {
+        animation: 2s step-end pk-fouce;
+    }
+
+    /* Tier 1b: collapse out-of-flow overlays until they upgrade. */
+    :is(
+        pk-dialog,
+        pk-popup
+    ):not(:defined) {
+        display: none;
+    }
+
+    /*
+     * Tier 1c: trigger + overlay components. The host reserves space for the
+     * trigger (tier 1a), but the overlay panel content (default-slot children)
+     * only shows on interaction — collapse it so we don't reserve a wrong-sized
+     * box that shifts the layout on upgrade.
+     */
+    :is(
+        pk-dropdown-menu,
+        pk-popover,
+        pk-tooltip
+    ):not(:defined) > :not([slot='trigger']) {
+        display: none;
+    }
+
+    /*
+     * Tier 1d: listbox-style controls (select, combobox, …). Reserve the control
+     * host (tier 1a), but collapse the default-slot option list so it can never
+     * dump into the flow — including after the 2s reserve cap. Named-slot
+     * decorations are left alone.
+     */
+    :is(
+        pk-select,
+        pk-combobox,
+        pk-time-picker,
+        pk-checkbox-select
+    ):not(:defined) > :not([slot]) {
+        display: none;
+    }
+
+    /* Tier 2: hide a wrapper/page until all pk-* descendants upgrade. */
+    .pk-cloak:has(:not(:defined)) {
+        animation: 2s step-end pk-fouce;
+    }
+
+    @keyframes pk-fouce {
+        from {
+            visibility: hidden;
+        }
+    }
+}

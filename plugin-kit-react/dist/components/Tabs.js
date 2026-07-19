@@ -1,37 +1,64 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import { isHostEvent } from "../utils/isHostEvent.js";
+import React from "react";
 import { jsx } from "react/jsx-runtime";
-import { Tabs as Tabs$1 } from "@base-ui/react/tabs";
+import { PkTab } from "@verbb/plugin-kit-web/components/tabs/pk-tab.js";
+import { PkTabHeading } from "@verbb/plugin-kit-web/components/tabs/pk-tab-heading.js";
+import { PkTabPanel } from "@verbb/plugin-kit-web/components/tabs/pk-tab-panel.js";
+import { PkTabs } from "@verbb/plugin-kit-web/components/tabs/pk-tabs.js";
 //#region src/components/Tabs.tsx
-function Tabs({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Tabs$1.Root, {
-		"data-slot": "tabs",
-		className: cn("flex flex-col gap-3", className),
-		...props
+/** React facades over the `<pk-tabs>` family. Behavior and styles live in the web components. */
+var PkTabsElement = createPluginKitComponent({
+	tagName: "pk-tabs",
+	elementClass: PkTabs,
+	react: React,
+	events: {
+		onPkChange: "pk-change",
+		onPkTabShow: "pk-tab-show",
+		onPkTabHide: "pk-tab-hide"
+	}
+});
+var PkTabElement = createPluginKitComponent({
+	tagName: "pk-tab",
+	elementClass: PkTab,
+	react: React,
+	events: {
+		onPkTabSelect: "pk-tab-select",
+		onPkTabKeydown: "pk-tab-keydown"
+	}
+});
+var PkTabHeadingElement = createPluginKitComponent({
+	tagName: "pk-tab-heading",
+	elementClass: PkTabHeading,
+	react: React
+});
+var PkTabPanelElement = createPluginKitComponent({
+	tagName: "pk-tab-panel",
+	elementClass: PkTabPanel,
+	react: React
+});
+/** React facade over `<pk-tabs>` — only forwards host-originated tab events. */
+function Tabs({ onPkChange, onPkTabShow, onPkTabHide, ...props }) {
+	return /* @__PURE__ */ jsx(PkTabsElement, {
+		...props,
+		...onPkChange ? { onPkChange: (event) => {
+			if (!isHostEvent(event)) return;
+			onPkChange(event);
+		} } : {},
+		...onPkTabShow ? { onPkTabShow: (event) => {
+			if (!isHostEvent(event)) return;
+			onPkTabShow(event);
+		} } : {},
+		...onPkTabHide ? { onPkTabHide: (event) => {
+			if (!isHostEvent(event)) return;
+			onPkTabHide(event);
+		} } : {}
 	});
 }
-function TabsList({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Tabs$1.List, {
-		"data-slot": "tabs-list",
-		className: cn("inline-flex w-fit self-start items-center justify-center", "rounded-md p-0.5", "border border-gray-150 bg-gray-100/90 text-gray-500", "shadow-[0_1px_2px_rgba(31,41,51,0.06)]", className),
-		...props
-	});
-}
-function TabsTrigger({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Tabs$1.Tab, {
-		"data-slot": "tabs-trigger",
-		className: cn("inline-flex items-center justify-center whitespace-nowrap cursor-pointer outline-none", "min-h-8 rounded-sm px-3 py-1.5 text-[13px] font-medium", "transition-[background-color,color,box-shadow]", "text-gray-500", "hover:bg-white/70 hover:text-gray-700", "focus-visible:shadow-[inset_0_0_0_2px_var(--color-sky-600)]", "disabled:pointer-events-none disabled:opacity-50", "data-[active]:bg-white data-[active]:text-gray-800", "data-[active]:shadow-[0_1px_2px_rgba(31,41,51,0.12)]", className),
-		...props
-	});
-}
-function TabsContent({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Tabs$1.Panel, {
-		"data-slot": "tabs-content",
-		className: cn("outline-none", "mt-2", "focus-visible:shadow-[inset_0_0_0_2px_var(--color-sky-600)]", className),
-		...props
-	});
-}
+var Tab = PkTabElement;
+var TabHeading = PkTabHeadingElement;
+var TabPanel = PkTabPanelElement;
 //#endregion
-export { Tabs, TabsContent, TabsList, TabsTrigger };
+export { PkTabElement, PkTabHeadingElement, PkTabPanelElement, PkTabsElement, Tab, TabHeading, TabPanel, Tabs };
 
 //# sourceMappingURL=Tabs.js.map

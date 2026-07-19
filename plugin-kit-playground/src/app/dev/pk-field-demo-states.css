@@ -1,0 +1,11 @@
+/**
+ * Playground-only focus previews.
+ *
+ * pk-input / pk-textarea already paint focus on part=base (.form-control__input)
+ * when [data-state='focus-visible'] is set. Do not also style ::part(input) /
+ * ::part(textarea) — that stacks a second ring inside the control shell.
+ */
+
+pk-toggle[data-state='focus-visible']::part(base) {
+    box-shadow: var(--pk-shadow-focus);
+}

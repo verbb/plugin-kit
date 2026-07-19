@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import type { SchemaFormEngineApi } from './engine/context';
+import type { SchemaFormEngineApi } from './engine/context.js';
 
 const EMPTY_ERRORS: string[] = [];
 

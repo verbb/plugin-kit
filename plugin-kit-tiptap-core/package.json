@@ -1,0 +1,99 @@
+{
+    "name": "@verbb/plugin-kit-tiptap-core",
+    "version": "2.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "CHANGELOG.md",
+        "LICENSE.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/verbb/plugin-kit.git",
+        "directory": "plugin-kit-tiptap-core"
+    },
+    "bugs": {
+        "url": "https://github.com/verbb/plugin-kit/issues"
+    },
+    "homepage": "https://docs.verbb.io/plugin-kit",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./serialization/editor": {
+            "types": "./dist/serialization/editor.d.ts",
+            "import": "./dist/serialization/editor.js"
+        },
+        "./serialization/input": {
+            "types": "./dist/serialization/input.d.ts",
+            "import": "./dist/serialization/input.js"
+        },
+        "./links": {
+            "types": "./dist/links/index.d.ts",
+            "import": "./dist/links/index.js"
+        },
+        "./extensions": {
+            "types": "./dist/extensions/index.d.ts",
+            "import": "./dist/extensions/index.js"
+        },
+        "./toolbar": {
+            "types": "./dist/toolbar/index.d.ts",
+            "import": "./dist/toolbar/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch",
+        "test": "vitest run"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@tiptap/core": "^3.22.4",
+        "@tiptap/extension-blockquote": "^3.22.4",
+        "@tiptap/extension-bold": "^3.22.4",
+        "@tiptap/extension-bullet-list": "^3.22.4",
+        "@tiptap/extension-code": "^3.22.4",
+        "@tiptap/extension-code-block": "^3.22.4",
+        "@tiptap/extension-document": "^3.22.4",
+        "@tiptap/extension-dropcursor": "^3.22.4",
+        "@tiptap/extension-gapcursor": "^3.22.4",
+        "@tiptap/extension-hard-break": "^3.22.4",
+        "@tiptap/extension-heading": "^3.22.4",
+        "@tiptap/extension-highlight": "^3.22.4",
+        "@tiptap/extension-history": "^3.22.4",
+        "@tiptap/extension-horizontal-rule": "^3.22.4",
+        "@tiptap/extension-italic": "^3.22.4",
+        "@tiptap/extension-link": "^3.22.4",
+        "@tiptap/extension-list-item": "^3.22.4",
+        "@tiptap/extension-ordered-list": "^3.22.4",
+        "@tiptap/extension-paragraph": "^3.22.4",
+        "@tiptap/extension-strike": "^3.22.4",
+        "@tiptap/extension-subscript": "^3.22.4",
+        "@tiptap/extension-superscript": "^3.22.4",
+        "@tiptap/extension-table": "^3.22.4",
+        "@tiptap/extension-table-cell": "^3.22.4",
+        "@tiptap/extension-table-header": "^3.22.4",
+        "@tiptap/extension-table-row": "^3.22.4",
+        "@tiptap/extension-text": "^3.22.4",
+        "@tiptap/extension-text-align": "^3.22.4",
+        "@tiptap/extension-underline": "^3.22.4",
+        "@tiptap/pm": "^3.22.4"
+    },
+    "devDependencies": {
+        "typescript": "^6.0.3",
+        "vite": "^8.0.10",
+        "vite-plugin-dts": "^4.5.4",
+        "vitest": "^4.1.5"
+    }
+}

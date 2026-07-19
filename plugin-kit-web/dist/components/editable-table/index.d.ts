@@ -1,0 +1,3 @@
+export { PkEditableTable, getCustomCellSlotName, nextRowId, type PkEditableTableColumn, type PkEditableTableColumnType, type PkEditableTableGetRowMenuItems, type PkEditableTableModifyColumn, type PkEditableTableModifyRow, type PkEditableTableOption, type PkEditableTableRow, type PkEditableTableRowMenuItem, type PkEditableTableRowModifier, } from './pk-editable-table.js';
+export { BUILTIN_COLUMN_TYPES, isCustomColumn, } from './editable-table-model.js';
+//# sourceMappingURL=index.d.ts.map

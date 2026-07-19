@@ -1,4 +1,5 @@
-import { SchemaFormEngineApi } from '../engine/context';
+import { CodeEditorProps } from '../../components/CodeEditor.js';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type CodeEditorFieldProps = {
     form: SchemaFormEngineApi;
     field: {
@@ -6,11 +7,10 @@ type CodeEditorFieldProps = {
         label?: string;
         instructions?: string;
         warning?: string;
-        placeholder?: string;
         rows?: number;
         tabSize?: number;
         lineNumbers?: boolean;
-        language?: 'html' | 'text';
+        language?: CodeEditorProps['language'];
         required?: boolean;
         disabled?: boolean;
     };

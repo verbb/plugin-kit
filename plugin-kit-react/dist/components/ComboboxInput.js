@@ -1,175 +1,95 @@
-import { Combobox, ComboboxChip, ComboboxChips, ComboboxChipsInput, ComboboxContent, ComboboxEmpty, ComboboxHighlightedText, ComboboxItem, ComboboxList, ComboboxPrimitiveInput, ComboboxValue, useComboboxAnchor } from "./Combobox.js";
-import { Spinner } from "./Spinner.js";
-import "./index.js";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+import { Combobox } from "./Combobox.js";
+import { Option } from "./Select.js";
+import { forwardRef, useMemo } from "react";
+import { jsx } from "react/jsx-runtime";
 //#region src/components/ComboboxInput.tsx
-var optionsCache = /* @__PURE__ */ new Map();
 var toStringValue = (value) => {
-	return String(value ?? "");
+	return value === void 0 || value === null ? "" : String(value);
 };
-var OptionIcon = ({ icon }) => {
-	if (!icon || typeof icon !== "string") return null;
-	return /* @__PURE__ */ jsx("span", {
-		className: "text-slate-500 [&_svg]:size-4 [&_svg]:shrink-0",
-		"aria-hidden": "true",
-		dangerouslySetInnerHTML: { __html: icon }
-	});
-};
-var ComboboxInput = ({ options, fetchOptions, value = null, onValueChange, multiple = false, disabled = false, placeholder = "Select an option", emptyMessage = "No options found.", className, contentClassName, withLoadingIndicator = true, showClear = true, open, defaultOpen, onOpenChange, onInputValueChange, cacheKey, cacheTtlMs = 300 * 1e3, disableCache = false }) => {
-	const [fetchedOptions, setFetchedOptions] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [internalOpen, setInternalOpen] = useState(Boolean(defaultOpen));
-	const [searchValue, setSearchValue] = useState("");
-	const hasLoadedRef = useRef(false);
-	const anchor = useComboboxAnchor();
-	const isMultiple = multiple;
-	const isOpen = open ?? internalOpen;
-	const resolvedOptions = useMemo(() => {
-		return fetchedOptions ?? options ?? [];
-	}, [fetchedOptions, options]);
-	const resolveCachedOptions = useCallback(() => {
-		if (disableCache || !cacheKey) return null;
-		const cached = optionsCache.get(cacheKey);
-		if (!cached) return null;
-		if (cached.expiresAt <= Date.now()) {
-			optionsCache.delete(cacheKey);
-			return null;
-		}
-		return cached.options;
-	}, [cacheKey, disableCache]);
-	const persistCachedOptions = useCallback((nextOptions) => {
-		if (disableCache || !cacheKey) return;
-		optionsCache.set(cacheKey, {
-			options: nextOptions,
-			expiresAt: Date.now() + cacheTtlMs
+/**
+* Convenience facade over `<pk-combobox>` mirroring the `plugin-kit-react` `ComboboxInput`
+* contract: `options[]` (or `fetchOptions` for async search), controlled `value`/`onValueChange`,
+* and `multiple`. Unlike the base-ui version, `pk-combobox` owns async fetching, filtering, chips,
+* and empty/loading states internally — this wrapper just maps props/values.
+*
+* `pk-combobox` is string-valued, so values are stringified for the element and mapped back to
+* their original option value on change.
+*/
+var ComboboxInput = forwardRef(function ComboboxInput({ options, fetchOptions, value = null, onValueChange, multiple = false, disabled = false, placeholder = "", emptyMessage = "No options found.", loadingMessage = "Searching…", startTypingMessage = "Start typing to search…", showClear = false, isInvalid, size, width, allowCreate, onCreate, onOpenChange, name, id, "aria-label": ariaLabel, "aria-describedby": ariaDescribedBy, "aria-errormessage": ariaErrorMessage, "aria-labelledby": ariaLabelledBy }, ref) {
+	const usesAsync = Boolean(fetchOptions) && !options?.length;
+	const flatOptions = useMemo(() => {
+		return options ?? [];
+	}, [options]);
+	const mapBack = (raw) => {
+		const match = flatOptions.find((option) => {
+			return toStringValue(option.value) === toStringValue(raw);
 		});
-	}, [
-		cacheKey,
-		cacheTtlMs,
-		disableCache
-	]);
-	useEffect(() => {
-		if (!fetchOptions || !isOpen) return;
-		const cachedOptions = resolveCachedOptions();
-		if (cachedOptions) {
-			setFetchedOptions(cachedOptions);
-			hasLoadedRef.current = true;
-			return;
-		}
-		if (hasLoadedRef.current && fetchedOptions) return;
-		let isMounted = true;
-		const loadOptions = async () => {
-			setLoading(true);
-			try {
-				const fetchedOptions = await fetchOptions();
-				if (isMounted) {
-					setFetchedOptions(fetchedOptions);
-					persistCachedOptions(fetchedOptions);
-					hasLoadedRef.current = true;
-				}
-			} catch (error) {
-				console.error("Failed to load combobox options:", error);
-			} finally {
-				if (isMounted) setLoading(false);
-			}
-		};
-		loadOptions();
-		return () => {
-			isMounted = false;
-		};
-	}, [
-		fetchOptions,
-		fetchedOptions,
-		isOpen,
-		persistCachedOptions,
-		resolveCachedOptions
-	]);
-	const selectedValue = useMemo(() => {
-		if (isMultiple) {
-			const selectedValues = Array.isArray(value) ? new Set(value.map((item) => {
-				return toStringValue(item);
-			})) : /* @__PURE__ */ new Set();
-			return resolvedOptions.filter((option) => {
-				return selectedValues.has(toStringValue(option.value));
+		return match ? match.value : raw;
+	};
+	const adaptedFetch = useMemo(() => {
+		if (!fetchOptions) return null;
+		return async (query, signal) => {
+			return (await fetchOptions(query, signal)).map((option) => {
+				return {
+					value: toStringValue(option.value),
+					label: option.label
+				};
 			});
-		}
-		return resolvedOptions.find((option) => {
-			return toStringValue(option.value) === toStringValue(value);
-		}) ?? null;
-	}, [
-		isMultiple,
-		resolvedOptions,
-		value
-	]);
-	const handleChange = (nextValue) => {
+		};
+	}, [fetchOptions]);
+	const handleChange = (event) => {
 		if (!onValueChange) return;
-		if (isMultiple) {
-			onValueChange((Array.isArray(nextValue) ? nextValue : []).map((item) => {
-				return item.value;
+		const raw = event.detail?.value;
+		if (multiple) {
+			onValueChange((Array.isArray(raw) ? raw : raw ? [raw] : []).map((entry) => {
+				return mapBack(entry);
 			}));
 			return;
 		}
-		onValueChange(nextValue?.value ?? null);
+		const single = Array.isArray(raw) ? raw[0] : raw;
+		onValueChange(single ? mapBack(single) : null);
 	};
-	return /* @__PURE__ */ jsxs("div", {
-		className: "flex items-center gap-2",
-		children: [/* @__PURE__ */ jsxs(Combobox, {
-			multiple: isMultiple,
-			items: resolvedOptions,
-			value: selectedValue,
-			onValueChange: handleChange,
-			open,
-			defaultOpen,
-			onOpenChange: (nextOpen) => {
-				setInternalOpen(nextOpen);
-				onOpenChange?.(nextOpen);
-				if (!nextOpen) setSearchValue("");
-			},
-			onInputValueChange: (nextValue) => {
-				const nextSearchValue = String(nextValue ?? "");
-				setSearchValue(nextSearchValue);
-				onInputValueChange?.(nextSearchValue);
-			},
-			itemToStringLabel: (item) => {
-				return item?.label ?? "";
-			},
-			itemToStringValue: (item) => {
-				return toStringValue(item?.value);
-			},
-			disabled,
-			children: [isMultiple ? /* @__PURE__ */ jsx(ComboboxChips, {
-				ref: anchor,
-				className,
-				children: /* @__PURE__ */ jsx(ComboboxValue, { children: (items) => {
-					return /* @__PURE__ */ jsxs(Fragment, { children: [items.map((item) => {
-						return /* @__PURE__ */ jsxs(ComboboxChip, { children: [/* @__PURE__ */ jsx(OptionIcon, { icon: item.icon }), item.label] }, toStringValue(item.value));
-					}), /* @__PURE__ */ jsx(ComboboxChipsInput, { placeholder })] });
-				} })
-			}) : /* @__PURE__ */ jsx(ComboboxPrimitiveInput, {
-				className,
-				placeholder,
-				showClear,
-				disabled
-			}), /* @__PURE__ */ jsxs(ComboboxContent, {
-				anchor: isMultiple ? anchor : void 0,
-				className: contentClassName,
-				children: [/* @__PURE__ */ jsx(ComboboxEmpty, { children: emptyMessage }), /* @__PURE__ */ jsx(ComboboxList, { children: (item) => {
-					return /* @__PURE__ */ jsx(ComboboxItem, {
-						value: item,
-						children: /* @__PURE__ */ jsxs("span", {
-							className: "flex items-center gap-2",
-							children: [/* @__PURE__ */ jsx(OptionIcon, { icon: item.icon }), /* @__PURE__ */ jsx(ComboboxHighlightedText, {
-								text: item.label,
-								search: searchValue
-							})]
-						})
-					}, toStringValue(item.value));
-				} })]
-			})]
-		}), withLoadingIndicator && loading && /* @__PURE__ */ jsx(Spinner, { size: "xs" })]
+	const valueProps = multiple ? { values: (Array.isArray(value) ? value : []).map((entry) => {
+		return toStringValue(entry);
+	}) } : { value: toStringValue(value) };
+	return /* @__PURE__ */ jsx(Combobox, {
+		ref,
+		multiple,
+		disabled,
+		placeholder,
+		emptyMessage,
+		loadingMessage,
+		startTypingMessage,
+		clearable: showClear,
+		invalid: isInvalid,
+		size,
+		width,
+		allowCreate,
+		async: usesAsync,
+		fetchOptions: adaptedFetch,
+		name,
+		id,
+		onPkChange: handleChange,
+		onPkCreate: onCreate ? (event) => {
+			return onCreate(event.detail?.query ?? "");
+		} : void 0,
+		onPkOpenChange: onOpenChange ? (event) => {
+			return onOpenChange(Boolean(event.detail?.open));
+		} : void 0,
+		"aria-label": ariaLabel,
+		"aria-describedby": ariaDescribedBy,
+		"aria-errormessage": ariaErrorMessage,
+		"aria-labelledby": ariaLabelledBy,
+		...valueProps,
+		children: !usesAsync && flatOptions.map((option) => {
+			return /* @__PURE__ */ jsx(Option, {
+				value: toStringValue(option.value),
+				disabled: option.disabled,
+				children: option.label
+			}, toStringValue(option.value));
+		})
 	});
-};
+});
 //#endregion
 export { ComboboxInput };
 

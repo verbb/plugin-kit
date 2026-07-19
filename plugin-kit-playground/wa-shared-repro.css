@@ -1,0 +1,4 @@
+body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 52rem; }
+.log { margin-top: 1rem; padding: 0.75rem; background: #0f172a; color: #e2e8f0; font: 12px/1.5 ui-monospace, monospace; white-space: pre-wrap; border-radius: 8px; min-height: 8rem; }
+.status { margin-top: 0.75rem; font-size: 13px; }
+.stack { display: grid; gap: 1rem; margin-top: 1rem; }

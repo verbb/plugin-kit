@@ -1,9 +1,11 @@
-import { DatePicker, TimePicker } from '@verbb/plugin-kit-react/components';
-import { formatDateTimeValue, parseDateTimeValue } from '@verbb/plugin-kit-react/utils/datetime';
 import { useMemo } from 'react';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+
+import { DatePicker } from '../../components/DatePicker.js';
+import { TimePicker } from '../../components/TimePicker.js';
+import { FieldLayout } from '../Field.js';
+import { formatDateTimeParts, parseDateTimeParts } from '../datetime.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type DateTimeFieldProps = {
     form: SchemaFormEngineApi;
@@ -17,16 +19,9 @@ type DateTimeFieldProps = {
 };
 
 export const DateTimeField = ({ form, field }: DateTimeFieldProps) => {
-    const { value, setValue, errors } = useEngineField(form, field.name);
-    const parsedValue = useMemo(() => parseDateTimeValue(value), [value]);
-
-    const handleDateChange = (nextValue?: Date) => {
-        setValue(formatDateTimeValue(nextValue ?? null, parsedValue.time));
-    };
-
-    const handleTimeChange = (nextTime: string) => {
-        setValue(formatDateTimeValue(parsedValue.date, nextTime));
-    };
+    const { value, setValue, setTouched, errors } = useEngineField(form, field.name);
+    const parts = useMemo(() => { return parseDateTimeParts(value); }, [value]);
+    const isInvalid = errors.length > 0;
 
     return (
         <FieldLayout
@@ -36,18 +31,23 @@ export const DateTimeField = ({ form, field }: DateTimeFieldProps) => {
             warning={field.warning}
             required={field.required}
             errors={errors}
-            withControl={false}
         >
-            <div className="flex gap-2">
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <DatePicker
-                    value={parsedValue.date}
-                    onValueChange={handleDateChange}
-                    isInvalid={errors.length > 0}
+                    value={parts.date}
+                    onPkChange={(event) => {
+                        setValue(formatDateTimeParts((event as CustomEvent<{ value: string }>).detail?.value ?? '', parts.time));
+                        setTouched();
+                    }}
+                    invalid={isInvalid}
                 />
                 <TimePicker
-                    value={parsedValue.time}
-                    onValueChange={handleTimeChange}
-                    isInvalid={errors.length > 0}
+                    value={parts.time}
+                    onPkChange={(event) => {
+                        setValue(formatDateTimeParts(parts.date, (event as CustomEvent<{ value: string }>).detail?.value ?? ''));
+                        setTouched();
+                    }}
+                    invalid={isInvalid}
                 />
             </div>
         </FieldLayout>

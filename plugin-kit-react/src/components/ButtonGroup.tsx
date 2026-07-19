@@ -1,137 +1,36 @@
-import { mergeProps } from '@base-ui/react/merge-props';
-import { useRender } from '@base-ui/react/use-render';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkButtonGroup, type PkButtonGroupOrientation } from '@verbb/plugin-kit-web/components/button-group/pk-button-group.js';
+import {
+    PkButtonGroupSeparator,
+    type PkButtonGroupSeparatorOrientation,
+} from '@verbb/plugin-kit-web/components/button-group/pk-button-group-separator.js';
+import { PkButtonGroupText } from '@verbb/plugin-kit-web/components/button-group/pk-button-group-text.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
-import { Separator } from '@verbb/plugin-kit-react/components/Separator';
+/** React facade over `<pk-button-group>`. Behavior and styles live in the web component. */
+export const PkButtonGroupElement = createPluginKitComponent({
+    tagName: 'pk-button-group',
+    elementClass: PkButtonGroup,
+    react: React,
+});
 
-const buttonGroupVariants = cva([
-    // Layout
-    'flex w-fit items-stretch',
+export const PkButtonGroupSeparatorElement = createPluginKitComponent({
+    tagName: 'pk-button-group-separator',
+    elementClass: PkButtonGroupSeparator,
+    react: React,
+});
 
-    // Child sizing
-    "[&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
+export const PkButtonGroupTextElement = createPluginKitComponent({
+    tagName: 'pk-button-group-text',
+    elementClass: PkButtonGroupText,
+    react: React,
+});
 
-    // Focus layering
-    '*:focus-visible:z-10 *:focus-visible:relative',
+export const ButtonGroup = PkButtonGroupElement;
+export const ButtonGroupSeparator = PkButtonGroupSeparatorElement;
+export const ButtonGroupText = PkButtonGroupTextElement;
 
-    // Nested group spacing
-    'has-[>[data-slot=button-group]]:gap-2',
-
-    // Select edge-case rounding
-    'has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg',
-],
-    {
-        variants: {
-            orientation: {
-                horizontal: [
-                    // Last item keeps the right edge radius
-                    '[&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!',
-
-                    // Remove interior seams
-                    '[&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:border-l-0',
-
-                    // Ensure non-last items are flush on the right
-                    '*:data-slot:rounded-r-none',
-                ],
-                vertical: [
-                    // Stack children vertically
-                    'flex-col',
-
-                    // Last item keeps the bottom edge radius
-                    '[&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!',
-
-                    // Remove interior seams
-                    '[&>[data-slot]~[data-slot]]:rounded-t-none [&>[data-slot]~[data-slot]]:border-t-0',
-
-                    // Ensure non-last items are flush on the bottom
-                    '*:data-slot:rounded-b-none',
-                ],
-            },
-        },
-        defaultVariants: {
-            orientation: 'horizontal',
-        },
-    });
-
-function ButtonGroup({
-    className,
-    orientation,
-    ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof buttonGroupVariants>) {
-    return (
-        <div
-            role="group"
-            data-slot="button-group"
-            data-orientation={orientation}
-            className={cn(buttonGroupVariants({ orientation }), className)}
-            {...props}
-        />
-    );
-}
-
-function ButtonGroupText({
-    className,
-    render,
-    ...props
-}: useRender.ComponentProps<'div'>) {
-    return useRender({
-        defaultTagName: 'div',
-        props: mergeProps<'div'>({
-            className: cn(
-                // Layout
-                'flex items-center gap-2 rounded-lg border px-2.5',
-
-                // Typography
-                'text-sm font-medium',
-
-                // Theme
-                'border-slate-300 bg-slate-200 text-gray-700',
-
-                // Icons
-                "[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none",
-
-                className,
-            ),
-        },
-            props),
-        render,
-        state: {
-            slot: 'button-group-text',
-        },
-    });
-}
-
-function ButtonGroupSeparator({
-    className,
-    orientation = 'vertical',
-    ...props
-}: React.ComponentProps<typeof Separator>) {
-    return (
-        <Separator
-            data-slot="button-group-separator"
-            orientation={orientation}
-            className={cn(
-                // Layout
-                'relative self-stretch',
-
-                // Theme
-                'bg-white',
-
-                // Orientation tweaks
-                'data-[orientation=horizontal]:mx-px data-[orientation=horizontal]:w-auto',
-                'data-[orientation=vertical]:my-px data-[orientation=vertical]:h-auto',
-
-                className,
-            )}
-            {...props}
-        />
-    );
-}
-
-export {
-    ButtonGroup,
-    ButtonGroupSeparator,
-    ButtonGroupText,
-    buttonGroupVariants,
-};
+export type ButtonGroupProps = React.ComponentProps<typeof PkButtonGroupElement>;
+export type ButtonGroupSeparatorProps = React.ComponentProps<typeof PkButtonGroupSeparatorElement>;
+export type ButtonGroupTextProps = React.ComponentProps<typeof PkButtonGroupTextElement>;
+export type { PkButtonGroupOrientation, PkButtonGroupSeparatorOrientation };

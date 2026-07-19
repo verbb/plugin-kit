@@ -1,146 +1,196 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
-import { useTranslation } from "../hooks/useTranslation.js";
-import "../hooks/index.js";
-import { TableRow } from "./editable-table/TableRow.js";
-import { isGeneratedColumn, isThinColumn } from "./editable-table/helpers.js";
-import { useEditableTableRows } from "./editable-table/useEditableTableRows.js";
-import { useEditableTableDnd } from "./editable-table/useEditableTableDnd.js";
-import { useEditableTableCellChange } from "./editable-table/useEditableTableCellChange.js";
-import { Table, TableBody, TableHead, TableHeader, TableRow as TableRow$1 } from "./Table.js";
-import "./index.js";
-import { Button } from "./Button.js";
-import { useCallback, useMemo } from "react";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/pro-solid-svg-icons";
-import { DragDropProvider } from "@dnd-kit/react";
-import { AutoScroller } from "@dnd-kit/dom";
+import { PkEditableTable, getCustomCellSlotName, isCustomColumn, nextRowId } from "@verbb/plugin-kit-web/components/editable-table/pk-editable-table.js";
 //#region src/components/EditableTable.tsx
-function EditableTable({ columns, rows, onChange, onCellChange = void 0, addRowLabel, allowReorder = true, allowAdd = true, allowDelete = true, className = "", modifyColumn = void 0, modifyRow = void 0, fieldName = void 0, cellErrors = {}, newRowDefaults = {}, renderActions = void 0, renderRowActions = void 0, renderRowMenuItemsBeforeCore = void 0, renderRowMenuItemsAfterCore = void 0, renderRowMenuItems = void 0 }) {
-	const TableRowComponent = TableRow;
-	const t = useTranslation();
-	const normalizedColumns = useMemo(() => {
-		const sourceColumns = Array.isArray(columns) ? columns : [];
-		const validColumns = sourceColumns.filter((column) => {
-			return typeof column?.name === "string" && column.name.trim() !== "";
+var PkEditableTableElement = createPluginKitComponent({
+	tagName: "pk-editable-table",
+	elementClass: PkEditableTable,
+	react: React,
+	events: {
+		onPkChange: "pk-change",
+		onPkCellChange: "pk-cell-change",
+		onPkRowMenuSelect: "pk-row-menu-select",
+		onInput: "input",
+		onChange: "change"
+	}
+});
+function optionalBoolean(name, value) {
+	if (value === void 0) return {};
+	return { [name]: value };
+}
+function cellHasError(cellErrors, fieldName, rowIndex, columnName) {
+	if (!cellErrors) return false;
+	const errors = (fieldName ? cellErrors[`${fieldName}.${rowIndex}.${columnName}`] : void 0) ?? cellErrors[`${rowIndex}.${columnName}`];
+	if (!errors) return false;
+	return Array.isArray(errors) ? errors.length > 0 : Boolean(errors);
+}
+function normalizeColumnsForElement(columns) {
+	if (!Array.isArray(columns)) return [];
+	return columns.map((column) => {
+		const forceCustom = typeof column.renderCell === "function" || column.type === "custom" || typeof column.type === "string" && column.type !== "" && isCustomColumn({
+			name: String(column.name),
+			type: column.type
 		});
-		if (validColumns.length !== sourceColumns.length) {
-			const invalidColumns = sourceColumns.filter((column) => {
-				return !(typeof column?.name === "string" && column.name.trim() !== "");
-			});
-			console.error("EditableTable: column definitions must include a non-empty `name`.", {
-				invalidColumns,
-				columns: sourceColumns
-			});
-		}
-		return validColumns;
-	}, [columns]);
-	const generatedColumns = useMemo(() => {
-		return normalizedColumns.filter(isGeneratedColumn);
-	}, [normalizedColumns]);
-	const columnsSignature = useMemo(() => {
-		return JSON.stringify(normalizedColumns.map((column) => {
-			return {
-				name: column.name,
-				type: column.type,
-				label: column.label,
-				required: column.required,
-				placeholder: column.placeholder,
-				options: column.options
-			};
-		}));
-	}, [normalizedColumns]);
-	const { internalData, setInternalData, internalDataRef, skipNextRowsSyncRef, handleChange, addRow, removeRow, updateRow, moveRow } = useEditableTableRows({
-		rows,
-		onChange,
-		newRowDefaults
-	});
-	const { isDragging, isDndHydrated, effectiveAllowReorder, handleDragStart, handleDragEnd } = useEditableTableDnd({
-		allowReorder,
-		internalData,
-		handleChange
-	});
-	const { handleCellValueChange } = useEditableTableCellChange({
-		internalData,
-		internalDataRef,
-		setInternalData,
-		skipNextRowsSyncRef,
-		generatedColumns,
-		onCellChange,
-		updateRow,
-		handleChange
-	});
-	const getCellErrors = useCallback((rowIndex, columnName) => {
-		if (!fieldName) return [];
-		const key = `${fieldName}.${rowIndex}.${columnName}`;
-		const errors = cellErrors?.[key];
-		if (!errors) return [];
-		return Array.isArray(errors) ? errors : [errors];
-	}, [cellErrors, fieldName]);
-	return /* @__PURE__ */ jsxs("div", {
-		className,
-		children: [
-			typeof renderActions === "function" ? renderActions({
-				rows: internalData,
-				addRow,
-				isDragging
-			}) : null,
-			/* @__PURE__ */ jsx(DragDropProvider, {
-				plugins: useCallback((defaults) => {
-					return defaults.filter((plugin) => {
-						return plugin !== AutoScroller;
-					});
-				}, []),
-				onDragStart: handleDragStart,
-				onDragEnd: handleDragEnd,
-				children: /* @__PURE__ */ jsxs(Table, { children: [/* @__PURE__ */ jsx(TableHeader, { children: /* @__PURE__ */ jsxs(TableRow$1, { children: [normalizedColumns.map((column) => {
-					return /* @__PURE__ */ jsxs(TableHead, {
-						className: cn(column.className, isThinColumn(column) && "w-[1%] whitespace-nowrap"),
-						children: [column.label, column.required && /* @__PURE__ */ jsx("span", {
-							className: "text-error ml-1",
-							children: "*"
-						})]
-					}, column.name);
-				}), (allowReorder || allowDelete) && /* @__PURE__ */ jsx(TableHead, { className: "p-0 w-0" })] }) }), /* @__PURE__ */ jsx(TableBody, { children: internalData.map((row, rowIndex) => {
-					return /* @__PURE__ */ jsx(TableRowComponent, {
-						row,
-						rowIndex,
-						rowCount: internalData.length,
-						columns: normalizedColumns,
-						columnsSignature,
-						useDnd: allowReorder && isDndHydrated,
-						allowReorder: effectiveAllowReorder && isDndHydrated,
-						showReorderControls: allowReorder,
-						allowDelete,
-						modifyColumn,
-						modifyRow,
-						getCellErrors,
-						onUpdateCell: handleCellValueChange,
-						moveRow,
-						removeRow,
-						t,
-						renderRowActions,
-						renderRowMenuItemsBeforeCore,
-						renderRowMenuItemsAfterCore,
-						renderRowMenuItems
-					}, row._id);
-				}) })] })
-			}),
-			allowAdd && /* @__PURE__ */ jsxs(Button, {
-				type: "button",
-				variant: "dashed",
-				onClick: addRow,
-				className: cn("w-full rounded-t-none! border-t-0!", isDragging && "pointer-events-none"),
-				children: [/* @__PURE__ */ jsx(FontAwesomeIcon, {
-					icon: faPlus,
-					className: "size-3 mr-1"
-				}), addRowLabel || t("Add row")]
-			})
-		]
+		return {
+			name: String(column.name),
+			type: (forceCustom ? "custom" : column.type) || "text",
+			label: column.label,
+			required: column.required,
+			placeholder: column.placeholder,
+			width: column.width,
+			thin: column.thin,
+			options: column.options,
+			source: column.source,
+			allowUnselect: column.allowUnselect,
+			class: column.class || column.className || void 0
+		};
 	});
 }
+function wrapModifyRow(modifyRow) {
+	if (!modifyRow) return null;
+	return (row, rowIndex) => {
+		const result = modifyRow(row, rowIndex);
+		if (!result || typeof result !== "object") return result ?? void 0;
+		if ("cellClassName" in result || "tone" in result) {
+			const typed = result;
+			return {
+				class: typed.class || typed.cellClassName,
+				title: typed.title,
+				tone: typed.tone
+			};
+		}
+		return result;
+	};
+}
+/**
+* Keep stable `_id`s for slotted custom cells. The CE also mints ids, but React
+* projections key slots from the rows prop — without ids on first paint, TipTap
+* cells would mount empty until the next pk-change.
+*/
+function ensureRowIds(rows, previousIds) {
+	if (!Array.isArray(rows)) return {
+		rows: [],
+		ids: [],
+		minted: false
+	};
+	let minted = false;
+	const ids = [];
+	return {
+		rows: rows.map((row, index) => {
+			if (typeof row._id === "string" && row._id !== "") {
+				ids[index] = row._id;
+				return row;
+			}
+			const reused = previousIds[index];
+			const id = reused || nextRowId();
+			if (!reused) minted = true;
+			ids[index] = id;
+			return {
+				...row,
+				_id: id
+			};
+		}),
+		ids,
+		minted
+	};
+}
+/**
+* React facade over `<pk-editable-table>`.
+* Behavior and styles live in the web component; this layer adds React sugar
+* (`onChange`, `onCellChange`, `renderCell` light-DOM projection, `modifyRow`
+* className alias) without reimplementing the table.
+*/
+var EditableTable = forwardRef(function EditableTable({ allowAdd, allowDelete, allowReorder, columns, rows, cellErrors, fieldName, onChange, onCellChange, onPkChange, onPkCellChange, onPkRowMenuSelect, onRowMenuSelect, modifyColumn, modifyRow, getRowMenuItems, renderRowMenuItemsBeforeCore, children, ...rest }, ref) {
+	const elementRef = useRef(null);
+	const rowIdsRef = useRef([]);
+	useImperativeHandle(ref, () => elementRef.current, []);
+	const { rows: rowsWithIds, ids: nextIds, minted } = useMemo(() => ensureRowIds(rows, rowIdsRef.current), [rows]);
+	rowIdsRef.current = nextIds;
+	useEffect(() => {
+		if (!minted || !onChange) return;
+		onChange(rowsWithIds);
+	}, [
+		minted,
+		onChange,
+		rowsWithIds
+	]);
+	const elementColumns = useMemo(() => normalizeColumnsForElement(columns), [columns]);
+	const resolvedGetRowMenuItems = getRowMenuItems ?? renderRowMenuItemsBeforeCore ?? null;
+	const resolvedModifyRow = useMemo(() => wrapModifyRow(modifyRow), [modifyRow]);
+	const handlePkChange = useCallback((event) => {
+		onPkChange?.(event);
+		if (!onChange) return;
+		const detail = event.detail;
+		if (detail?.rows) onChange(detail.rows);
+	}, [onChange, onPkChange]);
+	const handlePkCellChange = useCallback((event) => {
+		onPkCellChange?.(event);
+		if (!onCellChange) return;
+		const detail = event.detail;
+		if (!detail) return;
+		onCellChange(detail.rowIndex, detail.columnName, detail.value, detail.row);
+	}, [onCellChange, onPkCellChange]);
+	const handlePkRowMenuSelect = useCallback((event) => {
+		onPkRowMenuSelect?.(event);
+		if (!onRowMenuSelect) return;
+		const detail = event.detail;
+		if (detail) onRowMenuSelect(detail);
+	}, [onPkRowMenuSelect, onRowMenuSelect]);
+	const customCellProjections = useMemo(() => {
+		if (!Array.isArray(columns) || rowsWithIds.length === 0) return null;
+		const projections = [];
+		rowsWithIds.forEach((row, rowIndex) => {
+			const rowId = String(row._id);
+			columns.forEach((column) => {
+				if (typeof column.renderCell !== "function") return;
+				const columnName = String(column.name);
+				const slotName = getCustomCellSlotName(rowId, columnName);
+				const isInvalid = cellHasError(cellErrors, typeof fieldName === "string" ? fieldName : void 0, rowIndex, columnName);
+				projections.push(/* @__PURE__ */ jsx("div", {
+					slot: slotName,
+					className: typeof column.contentClassName === "string" ? column.contentClassName : void 0,
+					children: column.renderCell({
+						column,
+						row,
+						rowIndex,
+						value: row[columnName],
+						isInvalid,
+						updateValue: (next) => {
+							elementRef.current?.setCellValue(rowIndex, columnName, next);
+						}
+					})
+				}, slotName));
+			});
+		});
+		return projections.length > 0 ? projections : null;
+	}, [
+		cellErrors,
+		columns,
+		fieldName,
+		rowsWithIds
+	]);
+	return /* @__PURE__ */ jsxs(PkEditableTableElement, {
+		ref: elementRef,
+		...rest,
+		columns: elementColumns,
+		rows: rowsWithIds,
+		cellErrors,
+		fieldName,
+		modifyColumn: modifyColumn ?? null,
+		modifyRow: resolvedModifyRow,
+		getRowMenuItems: resolvedGetRowMenuItems,
+		...optionalBoolean("allowAdd", allowAdd),
+		...optionalBoolean("allowDelete", allowDelete),
+		...optionalBoolean("allowReorder", allowReorder),
+		...onChange || onPkChange ? { onPkChange: handlePkChange } : {},
+		...onCellChange || onPkCellChange ? { onPkCellChange: handlePkCellChange } : {},
+		...onRowMenuSelect || onPkRowMenuSelect ? { onPkRowMenuSelect: handlePkRowMenuSelect } : {},
+		children: [customCellProjections, children]
+	});
+});
+EditableTable.displayName = "EditableTable";
 //#endregion
-export { EditableTable };
+export { EditableTable, PkEditableTableElement, getCustomCellSlotName };
 
 //# sourceMappingURL=EditableTable.js.map

@@ -1,4 +1,4 @@
-import {
+import React, {
     createContext,
     createElement,
     forwardRef,
@@ -13,21 +13,26 @@ import {
     useSyncExternalStore,
 } from 'react';
 
-import { evaluateCondition, normalizeAttrs } from '@verbb/plugin-kit-react/utils/schema';
-import { getFormComponentRegistry, getFormFieldRegistry } from './registry';
+import {
+    FormStateStore,
+    buildGroupedMessage,
+    createValidationEngine,
+    evaluateCondition,
+    normalizeSchema,
+} from '@verbb/plugin-kit-forms';
+import type { SchemaIndex, SchemaNode, SchemaRenderable } from '@verbb/plugin-kit-forms';
 
-import { FormStateStore } from './engine/FormStateStore';
-import { normalizeSchema } from './engine/SchemaIndex';
-import type { SchemaIndex, SchemaNode, SchemaRenderable } from './engine/SchemaIndex';
-import { createValidationEngine } from './engine/ValidationEngine';
-import { buildGroupedMessage } from './engine/buildGroupedMessage';
+import { Separator } from '../components/Separator.js';
+import { normalizeAttrs } from './utils.js';
+import { getFormComponentRegistry } from './registry.js';
+import { SchemaFormFieldNode } from './SchemaFormFieldNode.js';
 import type {
     FormValues,
     NestedFormApi,
     SchemaFieldApi,
     SchemaFormEngineApi,
-} from './engine/context';
-import { SchemaEngineContext } from './engine/context';
+} from './engine/context.js';
+import { SchemaEngineContext } from './engine/context.js';
 
 type SchemaFormEngineErrors = Record<string, unknown> | { errors?: unknown } | unknown[];
 
@@ -161,19 +166,18 @@ SchemaItem.displayName = 'SchemaItem';
 const renderFormField = (schema: SchemaNode, form: SchemaFormEngineApi) => {
     const fieldProps = schema.$field ? { $field: schema.$field, ...schema } : { $field: schema.type, ...schema };
     const { $field, ...props } = fieldProps;
+    const fieldType = String($field ?? '');
 
-    const Component = getFormFieldRegistry()[$field];
-
-    if (!Component) {
-        console.warn(`Unknown form field type: ${$field}`);
-        return null;
-    }
-
-    return createElement(Component, {
-        schema,
-        field: { ...props },
-        form,
-    }, props.children ? <SchemaRenderer schema={props.children} /> : null);
+    return (
+        <SchemaFormFieldNode
+            fieldType={fieldType}
+            schema={schema}
+            field={{ ...props }}
+            form={form}
+        >
+            {props.children ? <SchemaRenderer schema={props.children as SchemaRenderable} /> : null}
+        </SchemaFormFieldNode>
+    );
 };
 
 const renderHtmlElement = (schema: SchemaNode) => {
@@ -184,6 +188,11 @@ const renderHtmlElement = (schema: SchemaNode) => {
         return null;
     }
 
+    // Schema chrome historically used raw <hr>; map to pk-separator so CP stacks stay on kit.
+    if ($el === 'hr') {
+        return createElement(Separator, { ...normalizedAttrs });
+    }
+
     return createElement($el, { ...normalizedAttrs }, children ? <SchemaRenderer schema={children} /> : null);
 };
 
@@ -191,14 +200,43 @@ const renderFormComponent = (schema: SchemaNode) => {
     const {
         $cmp, props = {}, children, ...rest
     } = schema;
-    const Component = getFormComponentRegistry()[$cmp];
+    const Component = getFormComponentRegistry()[$cmp as string];
 
     if (!Component) {
         console.warn(`Unknown form component: ${$cmp}`);
         return null;
     }
 
-    const componentProps = { ...(isRecord(props) ? props : {}), ...rest } as Record<string, unknown>;
+    // Schema bookkeeping must not land on DOM hosts — React stringifies objects to
+    // `[object Object]` attributes (seen on pk-tabs: schema/_id/_data).
+    const {
+        _id: _schemaId,
+        _data: _schemaData,
+        _scopePath: _schemaScopePath,
+        schema: _nestedSchema,
+        schemaChildPrefix: _schemaChildPrefix,
+        $el: _schemaEl,
+        $field: _schemaField,
+        if: _schemaIf,
+        hideOnIf: _schemaHideOnIf,
+        attrs: _schemaAttrs,
+        type: _schemaType,
+        ...safeRest
+    } = rest as Record<string, unknown>;
+
+    void _schemaId;
+    void _schemaData;
+    void _schemaScopePath;
+    void _nestedSchema;
+    void _schemaChildPrefix;
+    void _schemaEl;
+    void _schemaField;
+    void _schemaIf;
+    void _schemaHideOnIf;
+    void _schemaAttrs;
+    void _schemaType;
+
+    const componentProps = { ...(isRecord(props) ? props : {}), ...safeRest } as Record<string, unknown>;
     const usesSchemaNode = Boolean(Component.usesSchemaNode);
 
     if (usesSchemaNode) {
@@ -210,7 +248,7 @@ const renderFormComponent = (schema: SchemaNode) => {
     return createElement(
         Component,
         componentProps,
-        children ? <SchemaRenderer schema={children} /> : null,
+        children ? <SchemaRenderer schema={children as SchemaRenderable} /> : null,
     );
 };
 
@@ -238,8 +276,8 @@ const SchemaRenderer = memo(({ schema }: SchemaRendererProps) => {
             const key = typeof schemaItem._id === 'string' ? schemaItem._id : `schema-item-${index}`;
             return (
                 <SchemaItemProvider key={key}>
-                    <SchemaItem field={schemaItem}>
-                        <SchemaRenderer schema={schemaItem} />
+                    <SchemaItem field={schemaItem as SchemaNode}>
+                        <SchemaRenderer schema={schemaItem as SchemaRenderable} />
                     </SchemaItem>
                 </SchemaItemProvider>
             );
@@ -531,7 +569,7 @@ export const useSchemaFormEngine = ({
         const groupedMessages: string[] = [];
 
         childKeys.forEach((key) => {
-            const wildcardPath = key.replace(/\\.\\d+(?=\\.|$)/g, '.*');
+            const wildcardPath = key.replace(/\.\d+(?=\.|$)/g, '.*');
             const childLabel = labelMap.get(wildcardPath) || key.split('.').slice(-1)[0];
             (currentErrors[key] || []).forEach((message) => {
                 if (parentLabel) {
@@ -630,6 +668,13 @@ export const useSchemaFormEngine = ({
     return form;
 };
 
+/**
+ * FACE shadow inputs (pk-input) cannot use HTML implicit submission. They
+ * dispatch this on the SchemaFormEngine <form>; keep in sync with
+ * plugin-kit-web `PK_IMPLICIT_SUBMIT_EVENT`.
+ */
+const PK_IMPLICIT_SUBMIT_EVENT = 'pk-implicit-submit';
+
 export const SchemaFormEngine = forwardRef(({
     form,
     className,
@@ -639,9 +684,36 @@ export const SchemaFormEngine = forwardRef(({
     className?: string;
     withoutForm?: boolean;
 }, ref: React.Ref<SchemaFormEngineApi>) => {
+    const formElementRef = useRef<HTMLFormElement | null>(null);
+
     useImperativeHandle(ref, () => {
         return form;
     });
+
+    // pk-input Enter → CustomEvent (not requestSubmit) so Craft’s #main never navigates.
+    useEffect(() => {
+        if (withoutForm) {
+            return undefined;
+        }
+
+        const formElement = formElementRef.current;
+
+        if (!formElement) {
+            return undefined;
+        }
+
+        const handleImplicitSubmit = (event: Event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            form.handleSubmit();
+        };
+
+        formElement.addEventListener(PK_IMPLICIT_SUBMIT_EVENT, handleImplicitSubmit);
+
+        return () => {
+            formElement.removeEventListener(PK_IMPLICIT_SUBMIT_EVENT, handleImplicitSubmit);
+        };
+    }, [form, withoutForm]);
 
     if (withoutForm) {
         return (
@@ -659,6 +731,7 @@ export const SchemaFormEngine = forwardRef(({
         <SchemaEngineContext.Provider value={form}>
             <SchemaProvider form={form}>
                 <form
+                    ref={formElementRef}
                     onSubmit={(event) => {
                         event.preventDefault();
                         event.stopPropagation();
@@ -667,6 +740,11 @@ export const SchemaFormEngine = forwardRef(({
                     className={className}
                 >
                     <SchemaRenderer schema={form.schema} />
+                    {/*
+                     * Hidden default submitter — v1 Enter-to-Apply for light-DOM
+                     * text inputs. FACE controls (pk-input) dispatch
+                     * `pk-implicit-submit` instead of requestSubmit() (Craft #main).
+                     */}
                     <button type="submit" tabIndex={-1} aria-hidden="true" className="sr-only" />
                 </form>
             </SchemaProvider>

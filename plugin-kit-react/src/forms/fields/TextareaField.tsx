@@ -1,7 +1,7 @@
-import { Textarea } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { Textarea } from '../../components/Textarea.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type TextareaFieldProps = {
     form: SchemaFormEngineApi;
@@ -35,12 +35,11 @@ export const TextareaField = ({ form, field }: TextareaFieldProps) => {
         >
             <Textarea
                 value={String(value ?? '')}
-                onChange={(event) => { return setValue(event.target.value); }}
+                onInput={(event) => { return setValue((event.target as { value?: string }).value ?? ''); }}
                 onBlur={setTouched}
                 placeholder={field.placeholder}
                 disabled={field.disabled}
-                rows={field.rows}
-                aria-invalid={isInvalid}
+                invalid={isInvalid}
             />
         </FieldLayout>
     );

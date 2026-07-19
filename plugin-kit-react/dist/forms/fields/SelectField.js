@@ -1,10 +1,9 @@
-import { evaluateCondition } from "../../utils/schema.js";
 import { SelectInput } from "../../components/SelectInput.js";
-import "../../components/index.js";
 import { FieldLayout } from "../Field.js";
 import { useEngineField } from "../useEngineField.js";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import { jsx } from "react/jsx-runtime";
+import { evaluateCondition } from "@verbb/plugin-kit-forms";
 //#region src/forms/fields/SelectField.tsx
 var SelectField = ({ form, field }) => {
 	const { value, setValue, setTouched, errors, isInvalid } = useEngineField(form, field.name);

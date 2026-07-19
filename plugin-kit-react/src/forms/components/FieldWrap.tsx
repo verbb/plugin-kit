@@ -1,34 +1,11 @@
-import { useMemo, useSyncExternalStore } from 'react';
+import { useMemo, useSyncExternalStore, type ReactNode } from 'react';
 
-import { FieldLayout, InlineFieldErrorVisibilityContext } from '../Field';
-import type { SchemaFormComponentProps } from '../engine/context';
-import { useSchemaEngineContext } from '../engine/context';
-import type { SchemaRenderable } from '../engine/SchemaIndex';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormComponentProps } from '../engine/context.js';
+import { useSchemaEngineContext } from '../engine/context.js';
+import type { SchemaRenderable } from '@verbb/plugin-kit-forms';
 
-const collectFieldNames = (schema: SchemaRenderable, names: Set<string>) => {
-    if (Array.isArray(schema)) {
-        schema.forEach((entry) => {
-            collectFieldNames(entry, names);
-        });
-        return;
-    }
-
-    if (!schema || typeof schema !== 'object') {
-        return;
-    }
-
-    if (schema.$field && typeof schema.name === 'string' && schema.name) {
-        names.add(schema.name);
-    }
-
-    if (Array.isArray(schema.children)) {
-        collectFieldNames(schema.children, names);
-    }
-
-    if (Array.isArray(schema.schema)) {
-        collectFieldNames(schema.schema, names);
-    }
-};
+import { collectSchemaFieldNames } from './schemaErrors.js';
 
 const ATTRIBUTE_MESSAGE_PATTERN = /^(.+?) (cannot be blank\.|must be .+)$/;
 
@@ -46,6 +23,10 @@ const formatWrapperMessage = (message: string, wrapperLabel?: string) => {
     return `${wrapperLabel} ${message}`;
 };
 
+/**
+ * Schema `$cmp: 'FieldWrap'` — labels a horizontal cluster of nested fields and
+ * surfaces grouped nested errors on the wrapper (kit v1 FieldWrap contract).
+ */
 export const FieldWrap = Object.assign(({
     name,
     label,
@@ -60,13 +41,12 @@ export const FieldWrap = Object.assign(({
     instructions?: string;
     required?: boolean;
     warning?: string;
+    children?: ReactNode;
 }) => {
     const form = useSchemaEngineContext();
     const fieldName = name || label || 'field';
     const nestedFieldNames = useMemo(() => {
-        const names = new Set<string>();
-        collectFieldNames(schemaNode?.children || [], names);
-        return Array.from(names);
+        return Array.from(collectSchemaFieldNames(schemaNode?.children || [] as SchemaRenderable));
     }, [schemaNode]);
     const errorMap = useSyncExternalStore(
         form.store.subscribe.bind(form.store),
@@ -115,13 +95,24 @@ export const FieldWrap = Object.assign(({
             required={required}
             warning={warning}
             errors={errors}
-            withControl={false}
         >
-            <InlineFieldErrorVisibilityContext.Provider value={false}>
-                <div className="flex items-center flex-row gap-2">
-                    {children}
-                </div>
-            </InlineFieldErrorVisibilityContext.Provider>
+            {/*
+              Horizontal control cluster (v1 FieldWrap). Nested pk-fields shrink via
+              `[data-pk-field-wrap-controls] pk-field` in kit-react style.css — not a
+              global unlabeled FieldLayout rule (that broke full-width conditions tables).
+            */}
+            <div
+                data-pk-field-wrap-controls=""
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: '0.5rem',
+                }}
+            >
+                {children}
+            </div>
         </FieldLayout>
     );
 }, { usesSchemaNode: true as const });

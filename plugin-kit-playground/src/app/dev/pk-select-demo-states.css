@@ -1,0 +1,20 @@
+/**
+ * Playground-only state previews for <pk-select> — mirrors pk-field-demo-states.css.
+ */
+pk-select[data-state='focus-visible']:not([invalid])::part(control) {
+    outline: none;
+    border-color: var(--pk-color-sky-600);
+    box-shadow: var(--pk-input-focus-shadow);
+}
+
+pk-select[invalid]::part(control),
+pk-select:user-invalid::part(control) {
+    border-color: var(--pk-color-rose-600);
+}
+
+pk-select[invalid][data-state='focus-visible']::part(control),
+pk-select:user-invalid[data-state='focus-visible']::part(control) {
+    outline: none;
+    border-color: var(--pk-color-rose-600);
+    box-shadow: var(--pk-input-invalid-focus-shadow);
+}

@@ -1,20 +1,9 @@
-import { FieldLayout, InlineFieldErrorVisibilityContext } from "../Field.js";
+import { FieldLayout } from "../Field.js";
 import { useSchemaEngineContext } from "../engine/context.js";
+import { collectSchemaFieldNames } from "./schemaErrors.js";
 import { useMemo, useSyncExternalStore } from "react";
 import { jsx } from "react/jsx-runtime";
 //#region src/forms/components/FieldWrap.tsx
-var collectFieldNames = (schema, names) => {
-	if (Array.isArray(schema)) {
-		schema.forEach((entry) => {
-			collectFieldNames(entry, names);
-		});
-		return;
-	}
-	if (!schema || typeof schema !== "object") return;
-	if (schema.$field && typeof schema.name === "string" && schema.name) names.add(schema.name);
-	if (Array.isArray(schema.children)) collectFieldNames(schema.children, names);
-	if (Array.isArray(schema.schema)) collectFieldNames(schema.schema, names);
-};
 var ATTRIBUTE_MESSAGE_PATTERN = /^(.+?) (cannot be blank\.|must be .+)$/;
 var formatWrapperMessage = (message, wrapperLabel) => {
 	if (!wrapperLabel) return message;
@@ -25,13 +14,15 @@ var formatWrapperMessage = (message, wrapperLabel) => {
 	}
 	return `${wrapperLabel} ${message}`;
 };
+/**
+* Schema `$cmp: 'FieldWrap'` — labels a horizontal cluster of nested fields and
+* surfaces grouped nested errors on the wrapper (kit v1 FieldWrap contract).
+*/
 var FieldWrap = Object.assign(({ name, label, instructions, required, warning, children, schemaNode }) => {
 	const form = useSchemaEngineContext();
 	const fieldName = name || label || "field";
 	const nestedFieldNames = useMemo(() => {
-		const names = /* @__PURE__ */ new Set();
-		collectFieldNames(schemaNode?.children || [], names);
-		return Array.from(names);
+		return Array.from(collectSchemaFieldNames(schemaNode?.children || []));
 	}, [schemaNode]);
 	const errorMap = useSyncExternalStore(form.store.subscribe.bind(form.store), () => {
 		return form.getErrorMapFields() || {};
@@ -68,13 +59,16 @@ var FieldWrap = Object.assign(({ name, label, instructions, required, warning, c
 			name,
 			nestedFieldNames
 		]),
-		withControl: false,
-		children: /* @__PURE__ */ jsx(InlineFieldErrorVisibilityContext.Provider, {
-			value: false,
-			children: /* @__PURE__ */ jsx("div", {
-				className: "flex items-center flex-row gap-2",
-				children
-			})
+		children: /* @__PURE__ */ jsx("div", {
+			"data-pk-field-wrap-controls": "",
+			style: {
+				display: "flex",
+				alignItems: "center",
+				flexDirection: "row",
+				flexWrap: "wrap",
+				gap: "0.5rem"
+			},
+			children
 		})
 	});
 }, { usesSchemaNode: true });

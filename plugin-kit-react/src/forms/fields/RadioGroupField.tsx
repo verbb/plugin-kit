@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useSyncExternalStore } from 'react';
-import { RadioGroup, RadioGroupItem } from '@verbb/plugin-kit-react/components/RadioGroup';
-import { evaluateCondition } from '@verbb/plugin-kit-react/utils/schema';
-import { cn } from '@verbb/plugin-kit-react/utils';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import type { SchemaNode } from '../engine/SchemaIndex';
-import { useEngineField } from '../useEngineField';
+
+import { evaluateCondition } from '@verbb/plugin-kit-forms';
+import type { SchemaNode } from '@verbb/plugin-kit-forms';
+
+import { RadioGroupInput } from '../../components/RadioGroupInput.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type RadioGroupFieldOption = {
     value: unknown;
@@ -31,7 +32,7 @@ type RadioGroupFieldProps = {
 
 export const RadioGroupField = ({ form, field }: RadioGroupFieldProps) => {
     const {
-        value, setValue, setTouched, errors, isInvalid,
+        value, setValue, setTouched, errors,
     } = useEngineField(form, field.name);
     const values = useSyncExternalStore(
         form.store.subscribe.bind(form.store),
@@ -64,8 +65,6 @@ export const RadioGroupField = ({ form, field }: RadioGroupFieldProps) => {
         });
     }, [conditionData, field.options]);
 
-    const currentValueKey = value === undefined || value === null ? undefined : String(value);
-
     useEffect(() => {
         if (value === undefined || value === null || value === '') {
             return;
@@ -95,56 +94,21 @@ export const RadioGroupField = ({ form, field }: RadioGroupFieldProps) => {
             required={field.required}
             errors={errors}
         >
-            <RadioGroup
+            <RadioGroupInput
                 name={field.name}
-                value={currentValueKey}
-                onValueChange={(nextValue) => {
-                    const matchedOption = filteredOptions.find((option) => {
-                        return String(option?.value) === nextValue;
-                    });
-
-                    setValue(matchedOption ? matchedOption.value : nextValue);
+                value={value}
+                options={filteredOptions.map((option) => ({
+                    value: option.value,
+                    label: option.label,
+                    disabled: option.disabled,
+                }))}
+                onChange={(nextValue) => {
+                    setValue(nextValue);
                     setTouched();
                 }}
-                aria-invalid={isInvalid}
                 disabled={field.disabled}
-                className="gap-3"
-            >
-                {filteredOptions.map((option, index) => {
-                    const optionId = `${field.name}-${index}`;
-                    const optionValue = String(option.value);
-                    const hasDescription = Boolean(option.description);
-                    const optionDisabled = field.disabled || option.disabled;
-
-                    return (
-                        <label
-                            key={optionId}
-                            htmlFor={optionId}
-                            className={cn(
-                                'flex gap-2 text-sm',
-                                hasDescription ? 'items-start' : 'items-center',
-                                optionDisabled && 'cursor-not-allowed opacity-60',
-                            )}
-                        >
-                            <RadioGroupItem
-                                id={optionId}
-                                value={optionValue}
-                                disabled={optionDisabled}
-                                aria-invalid={isInvalid}
-                                className={hasDescription ? 'mt-0.5' : undefined}
-                            />
-
-                            <span>
-                                <span className="font-medium text-slate-950">{option.label}</span>
-
-                                {hasDescription && (
-                                    <span className="block text-gray-500">{option.description}</span>
-                                )}
-                            </span>
-                        </label>
-                    );
-                })}
-            </RadioGroup>
+                aria-label={field.label}
+            />
         </FieldLayout>
     );
 };

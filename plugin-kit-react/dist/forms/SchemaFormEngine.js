@@ -1,12 +1,11 @@
-import { evaluateCondition, normalizeAttrs } from "../utils/schema.js";
+import { Separator } from "../components/Separator.js";
+import { normalizeAttrs } from "./utils.js";
 import { SchemaEngineContext } from "./engine/context.js";
-import { getFormComponentRegistry, getFormFieldRegistry } from "./registry.js";
-import { FormStateStore } from "./engine/FormStateStore.js";
-import { normalizeSchema } from "./engine/SchemaIndex.js";
-import { createValidationEngine } from "./engine/ValidationEngine.js";
-import { buildGroupedMessage } from "./engine/buildGroupedMessage.js";
+import { getFormComponentRegistry } from "./registry.js";
+import { SchemaFormFieldNode } from "./SchemaFormFieldNode.js";
 import { createContext, createElement, forwardRef, memo, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
+import { FormStateStore, buildGroupedMessage, createValidationEngine, evaluateCondition, normalizeSchema } from "@verbb/plugin-kit-forms";
 //#region src/forms/SchemaFormEngine.tsx
 var isRecord = (value) => {
 	return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -84,21 +83,19 @@ var renderFormField = (schema, form) => {
 		$field: schema.type,
 		...schema
 	};
-	const Component = getFormFieldRegistry()[$field];
-	if (!Component) {
-		console.warn(`Unknown form field type: ${$field}`);
-		return null;
-	}
-	return createElement(Component, {
+	return /* @__PURE__ */ jsx(SchemaFormFieldNode, {
+		fieldType: String($field ?? ""),
 		schema,
 		field: { ...props },
-		form
-	}, props.children ? /* @__PURE__ */ jsx(SchemaRenderer, { schema: props.children }) : null);
+		form,
+		children: props.children ? /* @__PURE__ */ jsx(SchemaRenderer, { schema: props.children }) : null
+	});
 };
 var renderHtmlElement = (schema) => {
 	const { $el, children, attrs = {} } = schema;
 	const normalizedAttrs = normalizeAttrs(isRecord(attrs) ? attrs : {});
 	if (typeof $el !== "string" || !$el) return null;
+	if ($el === "hr") return createElement(Separator, { ...normalizedAttrs });
 	return createElement($el, { ...normalizedAttrs }, children ? /* @__PURE__ */ jsx(SchemaRenderer, { schema: children }) : null);
 };
 var renderFormComponent = (schema) => {
@@ -108,9 +105,10 @@ var renderFormComponent = (schema) => {
 		console.warn(`Unknown form component: ${$cmp}`);
 		return null;
 	}
+	const { _id: _schemaId, _data: _schemaData, _scopePath: _schemaScopePath, schema: _nestedSchema, schemaChildPrefix: _schemaChildPrefix, $el: _schemaEl, $field: _schemaField, if: _schemaIf, hideOnIf: _schemaHideOnIf, attrs: _schemaAttrs, type: _schemaType, ...safeRest } = rest;
 	const componentProps = {
 		...isRecord(props) ? props : {},
-		...rest
+		...safeRest
 	};
 	if (Boolean(Component.usesSchemaNode)) componentProps.schemaNode = schema;
 	else if ("schemaNode" in componentProps) delete componentProps.schemaNode;
@@ -310,7 +308,7 @@ var useSchemaFormEngine = ({ schemaIndex = null, defaultValues = {}, errors, onC
 		const parentLabel = labelMap.get(path);
 		const groupedMessages = [];
 		childKeys.forEach((key) => {
-			const wildcardPath = key.replace(/\\.\\d+(?=\\.|$)/g, ".*");
+			const wildcardPath = key.replace(/\.\d+(?=\.|$)/g, ".*");
 			const childLabel = labelMap.get(wildcardPath) || key.split(".").slice(-1)[0];
 			(currentErrors[key] || []).forEach((message) => {
 				if (parentLabel) {
@@ -402,10 +400,31 @@ var useSchemaFormEngine = ({ schemaIndex = null, defaultValues = {}, errors, onC
 	]);
 	return form;
 };
+/**
+* FACE shadow inputs (pk-input) cannot use HTML implicit submission. They
+* dispatch this on the SchemaFormEngine <form>; keep in sync with
+* plugin-kit-web `PK_IMPLICIT_SUBMIT_EVENT`.
+*/
+var PK_IMPLICIT_SUBMIT_EVENT = "pk-implicit-submit";
 var SchemaFormEngine = forwardRef(({ form, className, withoutForm = false }, ref) => {
+	const formElementRef = useRef(null);
 	useImperativeHandle(ref, () => {
 		return form;
 	});
+	useEffect(() => {
+		if (withoutForm) return;
+		const formElement = formElementRef.current;
+		if (!formElement) return;
+		const handleImplicitSubmit = (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+			form.handleSubmit();
+		};
+		formElement.addEventListener(PK_IMPLICIT_SUBMIT_EVENT, handleImplicitSubmit);
+		return () => {
+			formElement.removeEventListener(PK_IMPLICIT_SUBMIT_EVENT, handleImplicitSubmit);
+		};
+	}, [form, withoutForm]);
 	if (withoutForm) return /* @__PURE__ */ jsx(SchemaEngineContext.Provider, {
 		value: form,
 		children: /* @__PURE__ */ jsx(SchemaProvider, {
@@ -421,6 +440,7 @@ var SchemaFormEngine = forwardRef(({ form, className, withoutForm = false }, ref
 		children: /* @__PURE__ */ jsx(SchemaProvider, {
 			form,
 			children: /* @__PURE__ */ jsxs("form", {
+				ref: formElementRef,
 				onSubmit: (event) => {
 					event.preventDefault();
 					event.stopPropagation();

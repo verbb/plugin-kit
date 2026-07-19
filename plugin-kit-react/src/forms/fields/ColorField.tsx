@@ -1,7 +1,7 @@
-import { ColorInput } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { ColorInput } from '../../components/ColorInput.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type ColorFieldProps = {
     form: SchemaFormEngineApi;
@@ -31,12 +31,12 @@ export const ColorField = ({ form, field }: ColorFieldProps) => {
         >
             <ColorInput
                 value={String(value || '')}
-                onValueChange={(nextValue) => {
-                    setValue(nextValue || '');
+                onPkChange={(event) => {
+                    setValue((event as CustomEvent<{ value: string }>).detail?.value ?? '');
+                    setTouched();
                 }}
-                onBlur={setTouched}
                 disabled={field.disabled}
-                isInvalid={isInvalid}
+                invalid={isInvalid}
             />
         </FieldLayout>
     );

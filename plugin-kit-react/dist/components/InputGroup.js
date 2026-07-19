@@ -1,111 +1,92 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
-import { Input } from "./Input.js";
-import { Textarea } from "./Textarea.js";
-import "./index.js";
-import { Button } from "./Button.js";
-import { cva } from "class-variance-authority";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import { trueBooleanProps } from "../utils/lit-react-booleans.js";
+import React, { forwardRef } from "react";
 import { jsx } from "react/jsx-runtime";
+import { PkInputGroup } from "@verbb/plugin-kit-web/components/input-group/pk-input-group.js";
+import { PkInputGroupAddon } from "@verbb/plugin-kit-web/components/input-group/pk-input-group-addon.js";
+import { PkInputGroupButton } from "@verbb/plugin-kit-web/components/input-group/pk-input-group-button.js";
+import { PkInputGroupInput } from "@verbb/plugin-kit-web/components/input-group/pk-input-group-input.js";
+import { PkInputGroupText } from "@verbb/plugin-kit-web/components/input-group/pk-input-group-text.js";
+import { PkInputGroupTextarea } from "@verbb/plugin-kit-web/components/input-group/pk-input-group-textarea.js";
 //#region src/components/InputGroup.tsx
-function InputGroup({ className, ...props }) {
-	return /* @__PURE__ */ jsx("div", {
-		"data-slot": "input-group",
-		role: "group",
-		className: cn("group/input-group outline-none relative flex w-full min-w-0 items-center", "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col", "has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col", "has-[>[data-align=block-end]]:[&>input]:pt-3", "has-[>[data-align=block-start]]:[&>input]:pb-3", "has-[>[data-align=inline-end]]:[&>input]:pr-1.5", "has-[>[data-align=inline-start]]:[&>input]:pl-1.5", "rounded-sm", "border border-[rgba(96,125,159,0.4)]", "bg-[rgb(251,252,254)] bg-clip-padding", "has-[[data-slot=input-group-control]:focus-visible]:border-sky-600", "has-[[data-slot=field-control]:focus-visible]:border-sky-600", "has-[[data-slot=input-group-control]:focus-visible]:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]", "has-[[data-slot=field-control]:focus-visible]:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]", "has-[[data-slot][aria-invalid=true]]:border-rose-600!", "has-disabled:opacity-50", className),
-		...props
-	});
-}
-var inputGroupAddonVariants = cva([
-	"flex h-auto items-center justify-center gap-2",
-	"px-2 text-sm",
-	"cursor-text select-none",
-	"group-data-[disabled=true]/input-group:opacity-50",
-	"[&>svg:not([class*='size-'])]:size-3",
-	"[&>kbd]:rounded-[calc(var(--radius)-5px)]"
-].join(" "), {
-	variants: { align: {
-		"inline-start": [
-			"order-first pl-2",
-			"has-[>button]:ml-[-0.3rem]",
-			"has-[>kbd]:ml-[-0.15rem]"
-		].join(" "),
-		"inline-end": [
-			"order-last pr-2",
-			"has-[>button]:mr-[-0.3rem]",
-			"has-[>kbd]:mr-[-0.15rem]"
-		].join(" "),
-		"block-start": [
-			"order-first w-full justify-start",
-			"px-2.5 pt-2",
-			"group-has-[>input]/input-group:pt-2",
-			"[.border-b]:pb-2"
-		].join(" "),
-		"block-end": [
-			"order-last w-full justify-start",
-			"px-2.5 pb-2",
-			"group-has-[>input]/input-group:pb-2",
-			"[.border-t]:pt-2"
-		].join(" ")
-	} },
-	defaultVariants: { align: "inline-start" }
+/** React facades over the `<pk-input-group>` family. Behavior and styles live in the web components. */
+var PkInputGroupElement = createPluginKitComponent({
+	tagName: "pk-input-group",
+	elementClass: PkInputGroup,
+	react: React
 });
-function InputGroupAddon({ className, align = "inline-start", ...props }) {
-	return /* @__PURE__ */ jsx("div", {
-		role: "group",
-		"data-slot": "input-group-addon",
-		"data-align": align,
-		className: cn(inputGroupAddonVariants({ align }), className),
-		onClick: (e) => {
-			if (e.target.closest("button")) return;
-			e.currentTarget.parentElement?.querySelector("input")?.focus();
-		},
-		...props
-	});
-}
-var inputGroupButtonVariants = cva([
-	"flex items-center gap-2",
-	"text-gray-500 text-sm",
-	"shadow-none rounded-sm",
-	"hover:bg-slate-100"
-].join(" "), {
-	variants: { size: {
-		xs: "",
-		sm: "",
-		"icon-xs": "size-6 [&>svg]:size-3.5 p-0 has-[>svg]:p-0",
-		"icon-sm": ""
-	} },
-	defaultVariants: { size: "xs" }
+var PkInputGroupAddonElement = createPluginKitComponent({
+	tagName: "pk-input-group-addon",
+	elementClass: PkInputGroupAddon,
+	react: React
 });
-function InputGroupButton({ className, type = "button", variant = "none", size = "xs", ...props }) {
-	return /* @__PURE__ */ jsx(Button, {
-		type,
-		"data-size": size,
-		variant,
-		className: cn(inputGroupButtonVariants({ size }), className),
-		...props
+var PkInputGroupButtonElement = createPluginKitComponent({
+	tagName: "pk-input-group-button",
+	elementClass: PkInputGroupButton,
+	react: React
+});
+var PkInputGroupInputElement = createPluginKitComponent({
+	tagName: "pk-input-group-input",
+	elementClass: PkInputGroupInput,
+	react: React,
+	events: {
+		onInput: "input",
+		onChange: "input"
+	}
+});
+var PkInputGroupTextElement = createPluginKitComponent({
+	tagName: "pk-input-group-text",
+	elementClass: PkInputGroupText,
+	react: React
+});
+var PkInputGroupTextareaElement = createPluginKitComponent({
+	tagName: "pk-input-group-textarea",
+	elementClass: PkInputGroupTextarea,
+	react: React,
+	events: {
+		onInput: "input",
+		onChange: "input"
+	}
+});
+var InputGroup = PkInputGroupElement;
+var InputGroupAddon = PkInputGroupAddonElement;
+var InputGroupButton = PkInputGroupButtonElement;
+var InputGroupInput = forwardRef(function InputGroupInput(props, ref) {
+	const { disabled, readonly, invalid, ...rest } = props;
+	return /* @__PURE__ */ jsx(PkInputGroupInputElement, {
+		ref,
+		...rest,
+		...trueBooleanProps([
+			"disabled",
+			"readonly",
+			"invalid"
+		], {
+			disabled,
+			readonly,
+			invalid
+		})
 	});
-}
-function InputGroupText({ className, ...props }) {
-	return /* @__PURE__ */ jsx("span", {
-		className: cn("flex items-center gap-2 text-sm", "text-gray-500", "[&_svg:not([class*='size-'])]:size-3", "[&_svg]:pointer-events-none", className),
-		...props
+});
+InputGroupInput.displayName = "InputGroupInput";
+var InputGroupText = PkInputGroupTextElement;
+var InputGroupTextarea = forwardRef(function InputGroupTextarea(props, ref) {
+	const { disabled, readonly, invalid, ...rest } = props;
+	return /* @__PURE__ */ jsx(PkInputGroupTextareaElement, {
+		ref,
+		...rest,
+		...trueBooleanProps([
+			"disabled",
+			"readonly",
+			"invalid"
+		], {
+			disabled,
+			readonly,
+			invalid
+		})
 	});
-}
-function InputGroupInput({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Input, {
-		"data-slot": "input-group-control",
-		className: cn("flex-1", "rounded-none border-0", "bg-transparent", "shadow-none!", "disabled:bg-transparent", className),
-		...props
-	});
-}
-function InputGroupTextarea({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Textarea, {
-		"data-slot": "input-group-control",
-		className: cn("flex-1", "rounded-none border-0 py-2", "resize-none", "bg-transparent", "shadow-none!", "disabled:bg-transparent", className),
-		...props
-	});
-}
+});
+InputGroupTextarea.displayName = "InputGroupTextarea";
 //#endregion
-export { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText, InputGroupTextarea };
+export { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText, InputGroupTextarea, PkInputGroupAddonElement, PkInputGroupButtonElement, PkInputGroupElement, PkInputGroupInputElement, PkInputGroupTextElement, PkInputGroupTextareaElement };
 
 //# sourceMappingURL=InputGroup.js.map

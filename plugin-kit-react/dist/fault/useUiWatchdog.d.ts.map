@@ -1,0 +1,1 @@
+{"version":3,"file":"useUiWatchdog.d.ts","sourceRoot":"","sources":["../../src/fault/useUiWatchdog.ts"],"names":[],"mappings":"AAEA,MAAM,MAAM,iBAAiB,GAAG;IAC5B,uEAAuE;IACvE,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,gFAAgF;IAChF,OAAO,CAAC,EAAE,OAAO,CAAC;IAClB,OAAO,EAAE,MAAM,IAAI,CAAC;CACvB,CAAC;AAEF;;;GAGG;AACH,eAAO,MAAM,aAAa,GAAI,gCAI3B,iBAAiB,KAAG,IAyCtB,CAAC"}

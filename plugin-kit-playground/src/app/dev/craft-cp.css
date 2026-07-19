@@ -1,0 +1,10 @@
+/**
+ * Craft CP stylesheet stack for playground dev shells (web, React, Vue).
+ * Vendored Craft CP chrome — dev-only, not shipped in dist.
+ *
+ * Font/image URLs in cp-2.css point at `/fonts` and `/images` under
+ * `plugin-kit-playground/public/` (copied from Craft CP dev assets).
+ */
+@import './craft-cp/tailwind_reset.css';
+@import './craft-cp/cp.css';
+@import './craft-cp/cp-2.css';

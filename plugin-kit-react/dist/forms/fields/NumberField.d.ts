@@ -1,4 +1,4 @@
-import { SchemaFormEngineApi } from '../engine/context';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type NumberFieldProps = {
     form: SchemaFormEngineApi;
     field: {

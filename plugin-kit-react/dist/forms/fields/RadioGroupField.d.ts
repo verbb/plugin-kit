@@ -1,5 +1,5 @@
-import { SchemaFormEngineApi } from '../engine/context';
-import { SchemaNode } from '../engine/SchemaIndex';
+import { SchemaNode } from '@verbb/plugin-kit-forms';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type RadioGroupFieldOption = {
     value: unknown;
     label: string;

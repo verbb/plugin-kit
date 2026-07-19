@@ -1,0 +1,64 @@
+/**
+ * Light-DOM overlay content styles (dialog panels, etc.).
+ * Loaded in dev / CP shell — not bundled into every component shadow tree.
+ */
+.pk-dialog__header {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--pk-color-gray-150);
+    border-radius: var(--pk-radius-lg) var(--pk-radius-lg) 0 0;
+    background: #f3f7fb;
+    text-align: left;
+}
+
+.pk-dialog__title {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    /* Craft CP body/title text (~gray-700), not gray-900. */
+    color: var(--pk-color-gray-700);
+}
+
+.pk-dialog__body {
+    padding: 1rem;
+    font-size: var(--pk-font-size-sm);
+    line-height: 1.5;
+    color: var(--pk-color-gray-600);
+}
+
+.pk-dialog__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-top: 1px solid var(--pk-color-gray-150);
+    border-radius: 0 0 var(--pk-radius-lg) var(--pk-radius-lg);
+    background: #e4edf6;
+}
+
+.pk-dialog__close {
+    --pk-dialog-close-focus-padding: 0.25rem;
+    position: absolute;
+    top: calc(1rem - var(--pk-dialog-close-focus-padding));
+    right: calc(1rem - var(--pk-dialog-close-focus-padding));
+    opacity: 0.7;
+    line-height: 1;
+    --pk-btn-padding-inline: var(--pk-dialog-close-focus-padding);
+    --pk-btn-height: calc(1.125rem + 2 * var(--pk-dialog-close-focus-padding));
+    --pk-btn-font: 1.125rem;
+    --pk-btn-radius: var(--pk-radius-sm);
+}
+
+.pk-dialog__close:hover {
+    opacity: 1;
+}
+
+.pk-dialog__close:focus-visible {
+    opacity: 1;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"one-liner-document.js","names":[],"sources":["../../src/extensions/one-liner-document.ts"],"sourcesContent":["import Document from '@tiptap/extension-document';\n\nexport const OneLinerDocument = Document.extend({\n    content: 'inline*',\n});\n"],"mappings":";;AAEA,IAAa,mBAAmB,SAAS,OAAO,EAC5C,SAAS,WACZ,CAAC"}

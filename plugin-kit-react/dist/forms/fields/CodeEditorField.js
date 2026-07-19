@@ -1,5 +1,4 @@
 import { CodeEditor } from "../../components/CodeEditor.js";
-import "../../components/index.js";
 import { FieldLayout } from "../Field.js";
 import { useEngineField } from "../useEngineField.js";
 import { jsx } from "react/jsx-runtime";
@@ -15,15 +14,16 @@ var CodeEditorField = ({ form, field }) => {
 		errors,
 		children: /* @__PURE__ */ jsx(CodeEditor, {
 			value: String(value ?? ""),
-			onChange: setValue,
+			onPkChange: (event) => {
+				return setValue(event.detail?.value ?? "");
+			},
 			onBlur: setTouched,
-			placeholder: field.placeholder,
-			disabled: field.disabled,
-			rows: field.rows,
+			language: field.language,
 			tabSize: field.tabSize,
 			lineNumbers: field.lineNumbers,
-			language: field.language,
-			isInvalid
+			rows: field.rows,
+			disabled: field.disabled,
+			invalid: isInvalid
 		})
 	});
 };

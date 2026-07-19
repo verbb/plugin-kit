@@ -1,27 +1,14 @@
-import { Separator as SeparatorPrimitive } from '@base-ui/react/separator';
+import React from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkSeparator, type PkSeparatorOrientation } from '@verbb/plugin-kit-web/components/separator/pk-separator.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
+/** React facade over `<pk-separator>`. Behavior and styles live in the web component. */
+export const PkSeparatorElement = createPluginKitComponent({
+    tagName: 'pk-separator',
+    elementClass: PkSeparator,
+    react: React,
+});
 
-function Separator({
-    className,
-    orientation = 'horizontal',
-    ...props
-}: SeparatorPrimitive.Props) {
-    return (
-        <SeparatorPrimitive
-            data-slot="separator"
-            orientation={orientation}
-            className={cn(
-                'shrink-0 bg-slate-200',
-
-                'data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full',
-                'data-[orientation=vertical]:w-px data-[orientation=vertical]:h-full',
-
-                className,
-            )}
-            {...props}
-        />
-    );
-}
-
-export { Separator };
+export const Separator = PkSeparatorElement;
+export type SeparatorProps = React.ComponentProps<typeof PkSeparatorElement>;
+export type { PkSeparatorOrientation };

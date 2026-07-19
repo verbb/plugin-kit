@@ -1,0 +1,57 @@
+{
+    "name": "@verbb/plugin-kit-core",
+    "version": "2.0.0",
+    "type": "module",
+    "main": "dist/plugin-kit-core.es.js",
+    "module": "dist/plugin-kit-core.es.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "CHANGELOG.md",
+        "LICENSE.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/verbb/plugin-kit.git",
+        "directory": "plugin-kit-core"
+    },
+    "bugs": {
+        "url": "https://github.com/verbb/plugin-kit/issues"
+    },
+    "homepage": "https://docs.verbb.io/plugin-kit",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/plugin-kit-core.es.js"
+        },
+        "./eslint/*": "./dist/eslint/*",
+        "./prettier/*": "./dist/prettier/*",
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch",
+        "lint": "eslint ."
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@eslint/js": "^10.0.1",
+        "@typescript-eslint/eslint-plugin": "^8.59.0",
+        "@typescript-eslint/parser": "^8.59.0",
+        "eslint-plugin-react-hooks": "^7.1.1",
+        "globals": "^17.5.0",
+        "markdown-it": "^14.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^10.2.1",
+        "typescript": "^6.0.3",
+        "vite": "^8.0.10",
+        "vite-plugin-dts": "^4.5.4"
+    }
+}

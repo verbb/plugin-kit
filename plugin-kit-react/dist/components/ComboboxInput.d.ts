@@ -1,29 +1,46 @@
-export type ComboboxInputOption = {
-    label: string;
+import { default as React } from 'react';
+import { PkCombobox, PkComboboxSize } from '@verbb/plugin-kit-web/components/combobox/pk-combobox.js';
+export interface ComboboxInputOption {
     value: string | number;
-    icon?: string | null;
+    label: string;
+    disabled?: boolean;
     [key: string]: unknown;
-};
-export type ComboboxInputProps = {
+}
+export type ComboboxFetchOptions = (query: string, signal?: AbortSignal) => Promise<ComboboxInputOption[]>;
+export interface ComboboxInputProps {
     options?: ComboboxInputOption[];
-    fetchOptions?: () => Promise<ComboboxInputOption[]>;
+    fetchOptions?: ComboboxFetchOptions;
     value?: string | number | Array<string | number> | null;
     onValueChange?: (value: string | number | Array<string | number> | null) => void;
     multiple?: boolean;
     disabled?: boolean;
     placeholder?: string;
     emptyMessage?: string;
-    className?: string;
-    contentClassName?: string;
-    withLoadingIndicator?: boolean;
+    loadingMessage?: string;
+    startTypingMessage?: string;
     showClear?: boolean;
-    open?: boolean;
-    defaultOpen?: boolean;
+    isInvalid?: boolean;
+    size?: PkComboboxSize;
+    /** When `full`, stretch the combobox host to the available width (schema fields, table cells). */
+    width?: 'full';
+    allowCreate?: boolean;
+    onCreate?: (query: string) => void;
     onOpenChange?: (open: boolean) => void;
-    onInputValueChange?: (value: string) => void;
-    cacheKey?: string;
-    cacheTtlMs?: number;
-    disableCache?: boolean;
-};
-export declare const ComboboxInput: ({ options, fetchOptions, value, onValueChange, multiple, disabled, placeholder, emptyMessage, className, contentClassName, withLoadingIndicator, showClear, open, defaultOpen, onOpenChange, onInputValueChange, cacheKey, cacheTtlMs, disableCache, }: ComboboxInputProps) => import("react/jsx-runtime").JSX.Element;
+    name?: string;
+    id?: string;
+    'aria-label'?: string;
+    'aria-describedby'?: string;
+    'aria-errormessage'?: string;
+    'aria-labelledby'?: string;
+}
+/**
+ * Convenience facade over `<pk-combobox>` mirroring the `plugin-kit-react` `ComboboxInput`
+ * contract: `options[]` (or `fetchOptions` for async search), controlled `value`/`onValueChange`,
+ * and `multiple`. Unlike the base-ui version, `pk-combobox` owns async fetching, filtering, chips,
+ * and empty/loading states internally — this wrapper just maps props/values.
+ *
+ * `pk-combobox` is string-valued, so values are stringified for the element and mapped back to
+ * their original option value on change.
+ */
+export declare const ComboboxInput: React.ForwardRefExoticComponent<ComboboxInputProps & React.RefAttributes<PkCombobox>>;
 //# sourceMappingURL=ComboboxInput.d.ts.map

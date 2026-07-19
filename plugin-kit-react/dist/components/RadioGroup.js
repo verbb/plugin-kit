@@ -1,34 +1,64 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import { trueBooleanProps } from "../utils/lit-react-booleans.js";
+import React, { forwardRef } from "react";
 import { jsx } from "react/jsx-runtime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/pro-solid-svg-icons";
-import { Radio } from "@base-ui/react/radio";
-import { RadioGroup as RadioGroup$1 } from "@base-ui/react/radio-group";
+import { PkRadio } from "@verbb/plugin-kit-web/components/radio-group/pk-radio.js";
+import { PkRadioGroup } from "@verbb/plugin-kit-web/components/radio-group/pk-radio-group.js";
 //#region src/components/RadioGroup.tsx
-function RadioGroup({ className, ...props }) {
-	return /* @__PURE__ */ jsx(RadioGroup$1, {
-		"data-slot": "radio-group",
-		className: cn("grid gap-1.5", className),
-		...props
-	});
-}
-function RadioGroupItem({ className, ...props }) {
-	return /* @__PURE__ */ jsx(Radio.Root, {
-		"data-slot": "radio-group-item",
-		className: cn("peer cursor-pointer aspect-square shrink-0 rounded-full outline-none border", "size-4 border-slate-400", "focus-visible:border-sky-600 focus-visible:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]", "aria-invalid:border-rose-600 aria-invalid:focus-visible:!shadow-[0_0_0_1px_var(--color-rose-600),0_0_4px_0_hsl(from_var(--color-rose-600)_h_s_l/0.7)]", "disabled:cursor-not-allowed disabled:opacity-50", "data-checked:bg-slate-50 data-checked:text-[#1f2933]", className),
-		...props,
-		children: /* @__PURE__ */ jsx(Radio.Indicator, {
-			"data-slot": "radio-group-indicator",
-			className: cn("flex items-center justify-center h-full w-full"),
-			children: /* @__PURE__ */ jsx(FontAwesomeIcon, {
-				icon: faCircle,
-				className: cn("size-2 fill-current text-current")
-			})
+var PkRadioGroupElement = createPluginKitComponent({
+	tagName: "pk-radio-group",
+	elementClass: PkRadioGroup,
+	react: React,
+	events: {
+		onPkChange: "pk-change",
+		onInput: "input",
+		onChange: "change"
+	}
+});
+var PkRadioElement = createPluginKitComponent({
+	tagName: "pk-radio",
+	elementClass: PkRadio,
+	react: React,
+	events: { onPkRadioSelect: "pk-radio-select" }
+});
+/** React facade over `<pk-radio-group>`. Behavior and styles live in the web component. */
+var RadioGroup = forwardRef(function RadioGroup(props, ref) {
+	const { disabled, invalid, required, ...rest } = props;
+	return /* @__PURE__ */ jsx(PkRadioGroupElement, {
+		ref,
+		...rest,
+		...trueBooleanProps([
+			"disabled",
+			"invalid",
+			"required"
+		], {
+			disabled,
+			invalid,
+			required
 		})
 	});
-}
+});
+RadioGroup.displayName = "RadioGroup";
+var Radio = forwardRef(function Radio(props, ref) {
+	const { disabled, invalid, required, checked, ...rest } = props;
+	return /* @__PURE__ */ jsx(PkRadioElement, {
+		ref,
+		...rest,
+		...trueBooleanProps([
+			"disabled",
+			"invalid",
+			"required",
+			"checked"
+		], {
+			disabled,
+			invalid,
+			required,
+			checked
+		})
+	});
+});
+Radio.displayName = "Radio";
 //#endregion
-export { RadioGroup, RadioGroupItem };
+export { PkRadioElement, PkRadioGroupElement, Radio, RadioGroup };
 
 //# sourceMappingURL=RadioGroup.js.map

@@ -1,64 +1,86 @@
-import { ComponentProps } from 'react';
-import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox';
+import React from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkCheckbox } from '@verbb/plugin-kit-web/components/checkbox/pk-checkbox.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
+import { readPkCheckedDetail } from '../utils/pk-change.js';
 
-function Checkbox({
-    className,
-    ...props
-}: ComponentProps<typeof CheckboxPrimitive.Root>) {
-    return (
-        <CheckboxPrimitive.Root
-            data-slot="checkbox"
-            className={cn(
-                // Reset
-                'peer group/checkbox flex items-center justify-center cursor-pointer shrink-0 rounded-sm outline-none border',
+const PkCheckboxElement = createPluginKitComponent({
+    tagName: 'pk-checkbox',
+    elementClass: PkCheckbox,
+    react: React,
+    events: {
+        onPkChange: 'pk-change',
+        onChange: 'change',
+    },
+});
 
-                // Themes
-                'size-4 border-[#c0cbd9]',
-
-                // States
-                'focus-visible:border-sky-600 focus-visible:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]',
-                'aria-invalid:border-rose-600 aria-invalid:focus-visible:!shadow-[0_0_0_1px_var(--color-rose-600),0_0_4px_0_hsl(from_var(--color-rose-600)_h_s_l/0.7)]',
-
-                'disabled:cursor-not-allowed disabled:opacity-50 data-disabled:cursor-not-allowed data-disabled:opacity-50',
-
-                // Custom
-                className,
-            )}
-            {...props}
-        >
-            <CheckboxPrimitive.Indicator
-                data-slot="checkbox-indicator"
-                className={cn(
-                    // Reset
-                    'flex items-center justify-center',
-
-                    // Themes
-                    'size-[14px] text-current',
-                )}
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-hidden="true"
-                    viewBox="0 0 640 640"
-                    className="size-[14px] translate-y-[1px] scale-[1.2] group-data-[indeterminate]/checkbox:hidden"
-                >
-                    <path fill="currentColor" d="M557.5 192L534.9 214.6L278.9 470.6C266.4 483.1 246.1 483.1 233.6 470.6L105.6 342.6L83 320L128.3 274.7C129.6 276 172.3 318.7 256.3 402.7L489.7 169.3L512.3 146.7L557.6 192z" />
-                </svg>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-hidden="true"
-                    viewBox="0 0 640 640"
-                    className="hidden size-[12px] group-data-[indeterminate]/checkbox:block"
-                >
-                    <path fill="currentColor" d="M96 352V288H544V352H96z" />
-                </svg>
-            </CheckboxPrimitive.Indicator>
-        </CheckboxPrimitive.Root>
-    );
+export type CheckboxProps = Omit<React.ComponentProps<typeof PkCheckboxElement>, 'checkboxValue'> & {
+    /** Controlled checked state. Omit for uncontrolled. */
+    checked?: boolean;
+    /**
+     * Initial checked state when uncontrolled.
+     * Mapped to `checked` on first paint — `pk-checkbox` only reads `default-checked` on form reset.
+     */
+    defaultChecked?: boolean;
+    indeterminate?: boolean;
+    disabled?: boolean;
+    invalid?: boolean;
+    required?: boolean;
+    name?: string;
+    value?: string;
+    'data-state'?: 'focus-visible';
+    /** Controlled checked updates — unwraps `pk-change` `detail.checked`. */
+    onCheckedChange?: (checked: boolean) => void;
 };
 
-export { Checkbox };
+/** React facade over `<pk-checkbox>`. Behavior and styles live in the web component. */
+export function Checkbox({
+    children,
+    checked,
+    defaultChecked,
+    indeterminate = false,
+    disabled = false,
+    invalid = false,
+    required = false,
+    value = 'on',
+    'data-state': dataState,
+    onCheckedChange,
+    onPkChange,
+    ...props
+}: CheckboxProps) {
+    // Uncontrolled + defaultChecked: seed the WC `checked` prop once. Keep subsequent
+    // user toggles by not forcing a controlled `checked={false}` default (legacy Base UI habit).
+    const [uncontrolledChecked, setUncontrolledChecked] = React.useState(Boolean(defaultChecked));
+    const isControlled = checked !== undefined;
+    const resolvedChecked = isControlled ? checked : uncontrolledChecked;
+
+    const handlePkChange = (event: Event): void => {
+        const next = readPkCheckedDetail(event);
+
+        if (!isControlled) {
+            setUncontrolledChecked(next);
+        }
+
+        onPkChange?.(event as Parameters<NonNullable<CheckboxProps['onPkChange']>>[0]);
+        onCheckedChange?.(next);
+    };
+
+    return (
+        <PkCheckboxElement
+            checked={resolvedChecked}
+            defaultChecked={defaultChecked}
+            indeterminate={indeterminate}
+            disabled={disabled}
+            invalid={invalid}
+            required={required}
+            checkboxValue={value}
+            {...(dataState ? { 'data-state': dataState } : {})}
+            onPkChange={handlePkChange}
+            {...props}
+        >
+            {children}
+        </PkCheckboxElement>
+    );
+}
+
+export { PkCheckboxElement };

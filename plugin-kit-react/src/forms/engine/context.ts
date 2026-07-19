@@ -1,15 +1,19 @@
-import { createContext, useContext } from 'react';
-import type { FormStateStore } from './FormStateStore';
-import type { SchemaIndex, SchemaNode, SchemaRenderable } from './SchemaIndex';
+import React, { createContext, useContext } from 'react';
+import type {
+    FormStateStore,
+    FormValues,
+    NestedFormApi,
+    SchemaFieldApi,
+    SchemaIndex,
+    SchemaNode,
+    SchemaRenderable,
+} from '@verbb/plugin-kit-forms';
 
-export type FormValues = Record<string, unknown>;
-
-export type SchemaFieldApi = {
-    state: { value: unknown };
-    handleChange: (valueOrEvent: unknown) => void;
-    handleBlur: () => void;
-    errors: string[];
-};
+export type {
+    FormValues,
+    NestedFormApi,
+    SchemaFieldApi,
+} from '@verbb/plugin-kit-forms';
 
 export type SchemaFieldRenderProps = {
     name: string;
@@ -32,12 +36,6 @@ export type SchemaFormComponentProps = Record<string, unknown> & {
 
 export type SchemaFormComponent = React.ComponentType<SchemaFormComponentProps> & {
     usesSchemaNode?: boolean;
-};
-
-export type NestedFormApi = {
-    path: string;
-    validate: () => { fields: Record<string, string[]> } | undefined;
-    getValues: () => FormValues;
 };
 
 export type SchemaFormEngineApi = {

@@ -1,45 +1,46 @@
-export * from './Button';
-export * from './ButtonGroup';
-export * from './Calendar';
-export * from './CodeEditor';
-export * from './Checkbox';
-export * from './CheckboxInput';
-export * from './CheckboxSelect';
-export * from './Combobox';
-export * from './ComboboxInput';
-export * from './Command';
-export * from './ColorInput';
-export * from './CopyButton';
-export * from './DatePicker';
-export * from './Dialog';
-export * from './DropdownMenu';
-export * from './EditableTable';
-export * from './FadeIn';
-export * from './Input';
-export * from './InputGroup';
-export * from './Label';
-export * from './Markdown';
-export * from './Lightswitch';
-export * from './Spinner';
-export * from './MenuButton';
-export * from './ModalTabs';
-export * from './PaneTabs';
-export * from './Popover';
-export * from './RadioGroup';
-export * from './ScrollArea';
-export * from './Select';
-export * from './SelectInput';
-export * from './Separator';
-export * from './SlideUp';
-export * from './Status';
-export * from './Table';
-export * from './Tabs';
-export * from './Textarea';
-export * from './TimePicker';
-export * from './TiptapEditor';
-export * from './TiptapContent';
-export * from './TiptapInput';
-export * from './Toggle';
-export * from './ToggleGroup';
-export * from './Tooltip';
-export * from './VirtualizedScrollArea';
+// Tier A — pass-through facades
+export * from './ButtonGroup.js';
+export * from './CopyButton.js';
+export * from './Field.js';
+export * from './Icon.js';
+export * from './InputGroup.js';
+export * from './Popover.js';
+export * from './Popup.js';
+export * from './ScrollArea.js';
+export * from './Separator.js';
+export * from './Status.js';
+export * from './Toggle.js';
+export * from './ToggleGroup.js';
+export * from './Tooltip.js';
+
+// Tier B — form-associated facades
+export * from './Calendar.js';
+export * from './CodeEditor.js';
+export * from './ColorInput.js';
+export * from './CheckboxSelect.js';
+export * from './DatePicker.js';
+export * from './Input.js';
+export * from './Lightswitch.js';
+export * from './RadioGroup.js';
+export * from './Textarea.js';
+export * from './TimePicker.js';
+export * from './Tiptap.js';
+
+// Tier C — overlay / compound facades
+export * from './Combobox.js';
+export * from './Dialog.js';
+export * from './EditableTable.js';
+export * from './DropdownMenu.js';
+export * from './Select.js';
+export * from './Tabs.js';
+
+// Tier D — convenience wrappers matching plugin-kit-react's *Input contracts
+export * from './CheckboxInput.js';
+export * from './ComboboxInput.js';
+export * from './RadioGroupInput.js';
+export * from './SelectInput.js';
+
+// Existing hand-authored facades
+export { Button, PkButtonElement, type ButtonProps } from './Button.js';
+export { Checkbox, PkCheckboxElement, type CheckboxProps } from './Checkbox.js';
+export { Spinner, PkSpinnerElement, type SpinnerProps } from './Spinner.js';

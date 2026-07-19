@@ -1,14 +1,12 @@
-import { cn } from "../../utils/classes.js";
-import { evaluateCondition } from "../../utils/schema.js";
-import "../../utils/index.js";
-import { RadioGroup, RadioGroupItem } from "../../components/RadioGroup.js";
+import { RadioGroupInput } from "../../components/RadioGroupInput.js";
 import { FieldLayout } from "../Field.js";
 import { useEngineField } from "../useEngineField.js";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx } from "react/jsx-runtime";
+import { evaluateCondition } from "@verbb/plugin-kit-forms";
 //#region src/forms/fields/RadioGroupField.tsx
 var RadioGroupField = ({ form, field }) => {
-	const { value, setValue, setTouched, errors, isInvalid } = useEngineField(form, field.name);
+	const { value, setValue, setTouched, errors } = useEngineField(form, field.name);
 	const values = useSyncExternalStore(form.store.subscribe.bind(form.store), () => {
 		return form.store.state.values;
 	}, () => {
@@ -35,7 +33,6 @@ var RadioGroupField = ({ form, field }) => {
 			return evaluateCondition(option.if, conditionData);
 		});
 	}, [conditionData, field.options]);
-	const currentValueKey = value === void 0 || value === null ? void 0 : String(value);
 	useEffect(() => {
 		if (value === void 0 || value === null || value === "") return;
 		if (filteredOptions.some((option) => {
@@ -57,42 +54,20 @@ var RadioGroupField = ({ form, field }) => {
 		warning: field.warning,
 		required: field.required,
 		errors,
-		children: /* @__PURE__ */ jsx(RadioGroup, {
+		children: /* @__PURE__ */ jsx(RadioGroupInput, {
 			name: field.name,
-			value: currentValueKey,
-			onValueChange: (nextValue) => {
-				const matchedOption = filteredOptions.find((option) => {
-					return String(option?.value) === nextValue;
-				});
-				setValue(matchedOption ? matchedOption.value : nextValue);
+			value,
+			options: filteredOptions.map((option) => ({
+				value: option.value,
+				label: option.label,
+				disabled: option.disabled
+			})),
+			onChange: (nextValue) => {
+				setValue(nextValue);
 				setTouched();
 			},
-			"aria-invalid": isInvalid,
 			disabled: field.disabled,
-			className: "gap-3",
-			children: filteredOptions.map((option, index) => {
-				const optionId = `${field.name}-${index}`;
-				const optionValue = String(option.value);
-				const hasDescription = Boolean(option.description);
-				const optionDisabled = field.disabled || option.disabled;
-				return /* @__PURE__ */ jsxs("label", {
-					htmlFor: optionId,
-					className: cn("flex gap-2 text-sm", hasDescription ? "items-start" : "items-center", optionDisabled && "cursor-not-allowed opacity-60"),
-					children: [/* @__PURE__ */ jsx(RadioGroupItem, {
-						id: optionId,
-						value: optionValue,
-						disabled: optionDisabled,
-						"aria-invalid": isInvalid,
-						className: hasDescription ? "mt-0.5" : void 0
-					}), /* @__PURE__ */ jsxs("span", { children: [/* @__PURE__ */ jsx("span", {
-						className: "font-medium text-slate-950",
-						children: option.label
-					}), hasDescription && /* @__PURE__ */ jsx("span", {
-						className: "block text-gray-500",
-						children: option.description
-					})] })]
-				}, optionId);
-			})
+			"aria-label": field.label
 		})
 	});
 };

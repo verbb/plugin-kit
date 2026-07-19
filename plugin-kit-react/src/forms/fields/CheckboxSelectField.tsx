@@ -1,7 +1,11 @@
-import { CheckboxSelect, type CheckboxSelectOption, type CheckboxSelectValue } from '@verbb/plugin-kit-react/components/CheckboxSelect';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import {
+    CheckboxSelect,
+    type PkCheckboxSelectOption,
+    type PkCheckboxSelectValue,
+} from '../../components/CheckboxSelect.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type CheckboxSelectFieldProps = {
     form: SchemaFormEngineApi;
@@ -10,7 +14,7 @@ type CheckboxSelectFieldProps = {
         label?: string;
         instructions?: string;
         warning?: string;
-        options?: CheckboxSelectOption[];
+        options?: PkCheckboxSelectOption[];
         showAllOption?: boolean;
         allLabel?: string;
         required?: boolean;
@@ -32,8 +36,8 @@ export const CheckboxSelectField = ({ form, field }: CheckboxSelectFieldProps) =
         >
             <CheckboxSelect
                 options={field.options || []}
-                value={(value === undefined || value === null ? [] : value) as CheckboxSelectValue}
-                onChange={(v) => { return setValue(v); }}
+                value={(value === undefined || value === null ? [] : value) as PkCheckboxSelectValue}
+                onChange={setValue}
                 showAllOption={field.showAllOption ?? false}
                 allLabel={field.allLabel}
                 disabled={field.disabled}

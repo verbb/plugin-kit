@@ -1,0 +1,16 @@
+@import '@verbb/plugin-kit-web/tokens.css';
+@import '@verbb/plugin-kit-web/styles/utilities/fouce.css';
+/* Dialog/popover light-DOM chrome (`.pk-dialog__header`, close button, etc.). */
+@import '@verbb/plugin-kit-web/styles/overlay-content.css';
+
+/*
+ * FieldWrap cluster: nested pk-fields default to width:100% and would split the flex
+ * row. Light-DOM rule beats :host { width:100% } so Allow-style number+select hug.
+ * Do not put this on all unlabeled FieldLayouts — conditions tables need full width.
+ */
+[data-pk-field-wrap-controls] pk-field {
+    width: auto;
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+}

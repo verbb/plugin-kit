@@ -1,0 +1,28 @@
+/**
+ * Tailwind-beside-kit host contract (documentation + no-op import target).
+ *
+ * ## Cascade fact
+ * Outer author styles that match a custom element **beat** shadow `:host` for
+ * margin/padding (encapsulation context). Tailwind preflight’s `* { margin: 0 }`
+ * therefore zeros kit host margins. That is not Kit being “restricted” — it’s
+ * how shadow hosts participate in the cascade.
+ *
+ * ## What does *not* work
+ * `margin: revert-layer` on `[data-pk]` looks like a fix but still specifies an
+ * **outer** value (usually the previous layer / UA `0`). Outer still wins, so
+ * `:host { margin: … }` never shows up. DevTools will highlight this rule and
+ * the host will still measure with no margin.
+ *
+ * ## What does work
+ * 1. Prefer default rhythm **inside** the shadow tree (e.g. `pk-separator` paints
+ *    a `.line` with margin — outer resets cannot reach it).
+ * 2. When spacing **must** live on the host (sibling gaps in a flex row, e.g.
+ *    button-group hairlines), mark those `:host` margins `!important` so they
+ *    outrank outer non-important author styles.
+ * 3. Host apps may still set host margin/padding intentionally (utilities like
+ *    `my-4`) — those outer rules remain the override surface for consumers.
+ *
+ * Keep importing this file after `@import "tailwindcss"` so consumers have a
+ * stable contract path; rules that claimed to “restore” host margin were removed
+ * because they were harmful.
+ */

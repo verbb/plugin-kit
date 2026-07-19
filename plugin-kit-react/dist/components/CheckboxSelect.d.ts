@@ -1,19 +1,20 @@
-export declare const ALL_VALUE = "*";
-export type CheckboxSelectOption = {
-    label: string;
-    value: string;
+import { default as React } from 'react';
+import { PkCheckboxSelect, PkCheckboxSelectOption, PkCheckboxSelectValue } from '@verbb/plugin-kit-web/components/checkbox-select/pk-checkbox-select.js';
+declare const PkCheckboxSelectElement: import('@lit/react').ReactWebComponent<PkCheckboxSelect, {
+    onPkChange: string;
+    onNativeChange: string;
+}>;
+type PkCheckboxSelectElementProps = React.ComponentProps<typeof PkCheckboxSelectElement>;
+export type CheckboxSelectProps = Omit<PkCheckboxSelectElementProps, 'onChange'> & {
+    /**
+     * Controlled value callback — sugar over `onPkChange` detail.
+     * Prefer this in React apps; `onPkChange` remains for CE parity.
+     */
+    onChange?: (value: PkCheckboxSelectValue) => void;
 };
-export type CheckboxSelectValue = typeof ALL_VALUE | string[];
-type CheckboxSelectProps = {
-    options: CheckboxSelectOption[];
-    value?: CheckboxSelectValue;
-    onChange?: (value: CheckboxSelectValue) => void;
-    showAllOption?: boolean;
-    allLabel?: string;
-    disabled?: boolean;
-    name?: string;
-    className?: string;
-};
-export declare function CheckboxSelect({ options, value, onChange, showAllOption, allLabel, disabled, className, }: CheckboxSelectProps): import("react/jsx-runtime").JSX.Element;
-export {};
+/** React facade over `<pk-checkbox-select>`. Behavior and styles live in the web component. */
+export declare const CheckboxSelect: React.ForwardRefExoticComponent<Omit<CheckboxSelectProps, "ref"> & React.RefAttributes<PkCheckboxSelect>>;
+export { PkCheckboxSelectElement };
+export { ALL_VALUE } from '@verbb/plugin-kit-web/components/checkbox-select/pk-checkbox-select.js';
+export type { PkCheckboxSelectOption, PkCheckboxSelectValue };
 //# sourceMappingURL=CheckboxSelect.d.ts.map

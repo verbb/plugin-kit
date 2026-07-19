@@ -1,49 +1,42 @@
-import { ComponentProps } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkTextarea, type PkTextareaSize } from '@verbb/plugin-kit-web/components/textarea/pk-textarea.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
+import { trueBooleanProps } from '../utils/lit-react-booleans.js';
 
-const textareaVariants = cva('', {
-    variants: {
-        size: {
-            xs: 'px-1.5 py-1 text-[11px]',
-            sm: 'px-2 py-1 text-[12px]',
-            default: 'px-2 py-1.5 text-sm',
-            lg: 'px-3 py-2 text-sm',
-            xl: 'px-4 py-2.5 text-base',
-        },
-    },
-    defaultVariants: {
-        size: 'default',
+const PkTextareaElement = createPluginKitComponent({
+    tagName: 'pk-textarea',
+    elementClass: PkTextarea,
+    react: React,
+    events: {
+        // React `onChange` is live (every keystroke); native `change` is blur-commit.
+        onInput: 'input',
+        onChange: 'input',
+        onFocus: 'focus',
+        onBlur: 'blur',
     },
 });
 
-function Textarea({ className, size, ...props }: ComponentProps<'textarea'> & VariantProps<typeof textareaVariants>) {
+type PkTextareaElementProps = React.ComponentProps<typeof PkTextareaElement>;
+
+/** React facade over `<pk-textarea>`. Behavior and styles live in the web component. */
+export const Textarea = forwardRef<PkTextarea, PkTextareaElementProps>(function Textarea(props, ref) {
+    const {
+        disabled, readonly, invalid, fitCell, ...rest
+    } = props;
+
     return (
-        <textarea
-            data-slot="textarea"
-            className={cn(
-                // Reset
-                'flex outline-none bg-clip-padding resize-y',
-
-                'min-h-[80px] w-full',
-                'rounded-sm',
-                'border border-[rgba(96,125,159,0.4)]',
-                'bg-[rgb(251,252,254)]',
-
-                // Themes
-                textareaVariants({ size }),
-
-                // Hover & Focus
-                'placeholder:text-[#7c8793]',
-                'focus-visible:border-sky-600 focus-visible:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]',
-                'aria-invalid:border-rose-600 aria-invalid:focus-visible:!shadow-[0_0_0_1px_var(--color-rose-600),0_0_4px_0_hsl(from_var(--color-rose-600)_h_s_l/0.7)]',
-
-                className,
-            )}
-            {...props}
+        <PkTextareaElement
+            ref={ref}
+            {...rest}
+            {...trueBooleanProps(['disabled', 'readonly', 'invalid', 'fitCell'], {
+                disabled, readonly, invalid, fitCell,
+            })}
         />
     );
-};
+});
 
-export { Textarea };
+Textarea.displayName = 'Textarea';
+
+export type TextareaProps = PkTextareaElementProps;
+export type { PkTextareaSize };

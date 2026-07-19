@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 2.0.0 - 2026-07-19
+
+### Changed
+- Rebuilt `@verbb/plugin-kit-react` as thin React facades over `@verbb/plugin-kit-web` custom elements (Lit + shadow DOM). Look, behaviour, and accessibility live in the web package.
+- Canonical bootstrap is React `createRoot` + `PluginKitProvider`. Importing a facade registers its custom element — no `createReactApp` / `registerAll` step.
+- `mountShadowApp` and opt-in `createCraftHostBridge` live under `@verbb/plugin-kit-react/utils` (shadow helpers are implemented in `@verbb/plugin-kit-web`).
+- SchemaForm UI bindings stay on `@verbb/plugin-kit-react/forms`; shared store/validation lives in `@verbb/plugin-kit-forms`.
+- Package versions lockstep with `@verbb/plugin-kit-web`, `@verbb/plugin-kit-forms`, `@verbb/plugin-kit-vue`, and related `@verbb/plugin-kit-*` packages at `2.0.0`.
+
+### Removed
+- Removed the Base UI / full React component implementation. Use the facade exports over `<pk-*>` elements instead.
+- Removed React-only EditableTable compound APIs (`renderCell`, `modifyColumn`, dnd-kit row stack). Configure columns on `<EditableTable>` / `<pk-editable-table>`, or compose outside the table.
+
 ## 1.0.10 - 2026-07-09
 
 ### Added

@@ -1,0 +1,1 @@
+{"version":3,"file":"pk-tab-panel-base.d.ts","sourceRoot":"","sources":["../../../src/components/tabs/pk-tab-panel-base.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,SAAS,EAAE,MAAM,0BAA0B,CAAC;AAErD,uDAAuD;AACvD,qBAAa,cAAe,SAAQ,SAAS;IAEzC,KAAK,SAAM;IAGX,MAAM,UAAQ;IAGd,KAAK,CAAC,EAAE,MAAM,CAAC;IAEf,SAAS,CAAC,WAAW,CAAC,SAAS,EAAE,MAAM;CAe1C"}

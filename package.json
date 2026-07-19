@@ -1,14 +1,35 @@
 {
-  "name": "plugin-kit-workspace",
-  "private": true,
-  "workspaces": [
-    "plugin-kit",
-    "plugin-kit-react"
-  ],
-  "scripts": {
-    "release": "node ./scripts/release.mjs",
-    "release:patch": "node ./scripts/release.mjs patch",
-    "release:minor": "node ./scripts/release.mjs minor",
-    "release:major": "node ./scripts/release.mjs major"
-  }
+    "name": "plugin-kit-workspace",
+    "private": true,
+    "workspaces": [
+        "plugin-kit-core",
+        "plugin-kit-icons",
+        "plugin-kit-codemirror-core",
+        "plugin-kit-tiptap-core",
+        "plugin-kit-forms",
+        "plugin-kit-web",
+        "plugin-kit-react",
+        "plugin-kit-vue",
+        "plugin-kit-playground",
+        "docs"
+    ],
+    "scripts": {
+        "build": "npm run build:libs && npm run build -w @verbb/plugin-kit-playground --if-present && npm run docs:build --if-present",
+        "build:libs": "npm run build -w @verbb/plugin-kit-core && npm run build -w @verbb/plugin-kit-icons && npm run build -w @verbb/plugin-kit-codemirror-core && npm run build -w @verbb/plugin-kit-tiptap-core && npm run build -w @verbb/plugin-kit-forms && npm run build:web && npm run build -w @verbb/plugin-kit-react && npm run build -w @verbb/plugin-kit-vue",
+        "build:web": "rm -rf plugin-kit-web/dist plugin-kit-web/dist-loader && npm run build -w @verbb/plugin-kit-web",
+        "dev": "npm run dev --workspace @verbb/plugin-kit-playground",
+        "dev:web": "npm run dev",
+        "dev:web-playground": "npm run dev",
+        "dev:ui": "npm run dev",
+        "docs:dev": "npm run docs:dev -w @verbb/plugin-kit-docs",
+        "docs:build": "npm run docs:build -w @verbb/plugin-kit-docs",
+        "release": "node ./scripts/release.mjs",
+        "release:patch": "node ./scripts/release.mjs patch",
+        "release:minor": "node ./scripts/release.mjs minor",
+        "release:major": "node ./scripts/release.mjs major",
+        "release:publish-current": "node ./scripts/release.mjs --publish-current"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
 }

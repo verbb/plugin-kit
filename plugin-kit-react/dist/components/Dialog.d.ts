@@ -1,21 +1,21 @@
-import { ComponentProps } from 'react';
-import { Dialog as DialogPrimitive } from '@base-ui/react/dialog';
-declare function Dialog({ ...props }: ComponentProps<typeof DialogPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
-declare function DialogTrigger({ ...props }: ComponentProps<typeof DialogPrimitive.Trigger>): import("react/jsx-runtime").JSX.Element;
-declare function DialogPortal({ ...props }: ComponentProps<typeof DialogPrimitive.Portal>): import("react/jsx-runtime").JSX.Element;
-declare function DialogClose({ ...props }: ComponentProps<typeof DialogPrimitive.Close>): import("react/jsx-runtime").JSX.Element;
-declare function DialogOverlay({ className, ...props }: ComponentProps<typeof DialogPrimitive.Backdrop>): import("react/jsx-runtime").JSX.Element;
-declare function DialogContent({ className, children, showCloseButton, autoFocusFirstInput, portalClassName, portalContainer, ...props }: ComponentProps<typeof DialogPrimitive.Popup> & {
-    showCloseButton?: boolean;
-    autoFocusFirstInput?: boolean;
-    portalClassName?: string;
-    portalContainer?: HTMLElement | ShadowRoot | null;
-}): import("react/jsx-runtime").JSX.Element;
-declare function DialogHeader({ className, showCloseButton, children, ...props }: ComponentProps<'div'> & {
-    showCloseButton?: boolean;
-}): import("react/jsx-runtime").JSX.Element;
-declare function DialogFooter({ className, ...props }: ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
-declare function DialogTitle({ className, ...props }: ComponentProps<typeof DialogPrimitive.Title>): import("react/jsx-runtime").JSX.Element;
-declare function DialogDescription({ className, ...props }: ComponentProps<typeof DialogPrimitive.Description>): import("react/jsx-runtime").JSX.Element;
-export { Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, };
+import { default as React } from 'react';
+import { PkDialog } from '@verbb/plugin-kit-web/components/dialog/pk-dialog.js';
+declare const PkDialogElement: import('@lit/react').ReactWebComponent<PkDialog, {
+    onPkShow: string;
+    onPkAfterShow: string;
+    onPkHide: string;
+    onPkAfterHide: string;
+    onPkOpenChange: string;
+}>;
+type PkDialogElementProps = React.ComponentProps<typeof PkDialogElement>;
+/** React facade over `<pk-dialog>`. Behavior and styles live in the web component. */
+export declare const Dialog: React.ForwardRefExoticComponent<Omit<Omit<React.HTMLAttributes<PkDialog>, "show" | "hide" | "open" | "label" | "firstUpdated" | "updated" | "render" | "connectedCallback" | "createRenderRoot" | "performUpdate" | "renderOptions" | "disconnectedCallback" | "renderRoot" | "isUpdatePending" | "hasUpdated" | "addController" | "removeController" | "attributeChangedCallback" | "requestUpdate" | "updateComplete" | "size" | "onPkShow" | "onPkAfterShow" | "onPkHide" | "onPkAfterHide" | "onPkOpenChange" | "description" | "disablePointerDismissal" | "withoutHeader" | "withoutBodyPadding" | "closeDialog" | "requestClose" | "forceOverlayReset"> & {
+    onPkShow?: ((e: Event) => void) | undefined;
+    onPkAfterShow?: ((e: Event) => void) | undefined;
+    onPkHide?: ((e: Event) => void) | undefined;
+    onPkAfterHide?: ((e: Event) => void) | undefined;
+    onPkOpenChange?: ((e: Event) => void) | undefined;
+} & Partial<Omit<PkDialog, keyof HTMLElement>> & React.RefAttributes<PkDialog>, "ref"> & React.RefAttributes<PkDialog>>;
+export { PkDialogElement };
+export type DialogProps = PkDialogElementProps;
 //# sourceMappingURL=Dialog.d.ts.map

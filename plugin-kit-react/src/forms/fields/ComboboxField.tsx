@@ -1,11 +1,12 @@
 import {
     ComboboxInput,
+    type ComboboxFetchOptions,
     type ComboboxInputOption,
     type ComboboxInputProps,
-} from '@verbb/plugin-kit-react/components/ComboboxInput';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+} from '../../components/ComboboxInput.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type ComboboxFieldProps = {
     form: SchemaFormEngineApi;
@@ -17,12 +18,11 @@ type ComboboxFieldProps = {
         placeholder?: string;
         emptyMessage?: string;
         options?: ComboboxInputOption[];
-        fetchOptions?: () => Promise<ComboboxInputOption[]>;
+        fetchOptions?: ComboboxFetchOptions;
         multiple?: boolean;
-        cacheKey?: string;
-        cacheTtlMs?: number;
         required?: boolean;
         disabled?: boolean;
+        width?: 'full';
     };
 };
 
@@ -30,7 +30,6 @@ export const ComboboxField = ({ form, field }: ComboboxFieldProps) => {
     const {
         value, setValue, setTouched, errors,
     } = useEngineField(form, field.name);
-    const isInvalid = errors.length > 0;
 
     return (
         <FieldLayout
@@ -53,10 +52,8 @@ export const ComboboxField = ({ form, field }: ComboboxFieldProps) => {
                 disabled={field.disabled}
                 placeholder={field.placeholder}
                 emptyMessage={field.emptyMessage}
-                cacheKey={field.cacheKey}
-                cacheTtlMs={field.cacheTtlMs}
-                className="w-full"
-                contentClassName={isInvalid ? 'aria-invalid:border-destructive' : undefined}
+                isInvalid={errors.length > 0}
+                width={field.width}
             />
         </FieldLayout>
     );

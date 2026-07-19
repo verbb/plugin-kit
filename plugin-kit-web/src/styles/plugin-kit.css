@@ -1,0 +1,5 @@
+/* Design tokens — always required */
+@import url('../tokens/tokens.css');
+
+/* FOUCE prevention — per-element (auto) + .pk-cloak wrapper */
+@import url('./utilities/fouce.css');

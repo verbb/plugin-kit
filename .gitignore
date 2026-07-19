@@ -39,4 +39,14 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 node_modules
-/plugin-kit-react/docs/.vitepress/cache
+
+# VITEPRESS (dev cache + build output — not source)
+**/.vitepress/cache
+**/.vitepress/dist
+
+# PRIVATE DEV APPS (published packages commit dist/ intentionally)
+/plugin-kit-playground/dist
+
+# TYPESCRIPT / TOOLING
+*.tsbuildinfo
+.turbo

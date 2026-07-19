@@ -1,70 +1,43 @@
-import { ComponentProps } from 'react';
-import { Input as InputPrimitive } from '@base-ui/react/input';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkInput, type PkInputSize } from '@verbb/plugin-kit-web/components/input/pk-input.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
+import { trueBooleanProps } from '../utils/lit-react-booleans.js';
 
-const inputVariants = cva('', {
-    variants: {
-        size: {
-            xs: 'px-1.5 py-1 text-[11px]',
-            sm: 'px-2 py-1 text-[12px]',
-            default: 'px-2 py-1.5 text-sm',
-            lg: 'px-3 py-2 text-sm',
-            xl: 'px-4 py-2.5 text-base',
-        },
-        width: {
-            xs: 'w-4',
-            sm: 'w-8',
-            lg: 'w-12',
-            xl: 'w-16',
-            full: 'w-full',
-        },
-    },
-    defaultVariants: {
-        size: 'default',
-        width: 'full',
+const PkInputElement = createPluginKitComponent({
+    tagName: 'pk-input',
+    elementClass: PkInput,
+    react: React,
+    events: {
+        // React `onChange` is live (every keystroke); native `change` is blur-commit.
+        onInput: 'input',
+        onChange: 'input',
+        onPkClear: 'pk-clear',
+        onFocus: 'focus',
+        onBlur: 'blur',
     },
 });
 
-function Input({
-    className,
-    type,
-    size,
-    width = 'full',
-    ...props
-}: Omit<ComponentProps<'input'>, 'size'> & VariantProps<typeof inputVariants>) {
+type PkInputElementProps = React.ComponentProps<typeof PkInputElement>;
+
+/** React facade over `<pk-input>`. Behavior and styles live in the web component. */
+export const Input = forwardRef<PkInput, PkInputElementProps>(function Input(props, ref) {
+    const {
+        disabled, readonly, invalid, fitCell, autofocus, mono, ...rest
+    } = props;
+
     return (
-        <InputPrimitive
-            type={type}
-            data-slot="input"
-            className={cn(
-                // Reset
-                'flex outline-none bg-clip-padding',
-
-                'rounded-sm',
-                'border border-[rgba(96,125,159,0.4)]',
-                'bg-[rgb(251,252,254)]',
-
-                // Themes
-                inputVariants({ size, width }),
-
-                // Hover & Focus
-                'placeholder:text-[#7c8793]',
-                'focus-visible:border-sky-600 focus-visible:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]',
-                'aria-invalid:border-rose-600! aria-invalid:focus-visible:shadow-[0_0_0_1px_var(--color-rose-600),0_0_4px_0_hsl(from_var(--color-rose-600)_h_s_l/0.7)]!',
-
-                // Data States
-                'disabled:cursor-not-allowed disabled:opacity-50',
-
-                // File
-                'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground',
-
-                // Custom Classes
-                className,
-            )}
-            {...props}
+        <PkInputElement
+            ref={ref}
+            {...rest}
+            {...trueBooleanProps(['disabled', 'readonly', 'invalid', 'fitCell', 'autofocus', 'mono'], {
+                disabled, readonly, invalid, fitCell, autofocus, mono,
+            })}
         />
     );
-}
-export { Input };
+});
+
+Input.displayName = 'Input';
+
+export type InputProps = PkInputElementProps;
+export type { PkInputSize };

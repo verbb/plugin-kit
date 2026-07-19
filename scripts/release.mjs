@@ -1,63 +1,83 @@
 #!/usr/bin/env node
 /**
- * Release @verbb/plugin-kit and @verbb/plugin-kit-react in lockstep.
+ * Release Plugin Kit v2 packages in lockstep.
  *
  * CHANGELOG.md is the source of truth. While developing, add entries under
- * `## Unreleased` in plugin-kit-react/CHANGELOG.md (and plugin-kit/CHANGELOG.md
- * when there are package-specific changes).
+ * `## Unreleased` in plugin-kit-react/CHANGELOG.md (and the other package
+ * changelogs when there are package-specific changes). Empty sibling
+ * changelogs get a lockstep “released alongside” note.
  *
  * Usage (from plugin-kit-repo/):
  *   npm run release:patch
  *   npm run release:minor
  *   npm run release:major
  *   npm run release:patch -- --dry-run
+ *   node ./scripts/release.mjs --publish-current [--dry-run]
+ *     → publish the versions already on disk (no bump / changelog rewrite / commit).
+ *       Use for the first 2.0.0 cut after versions were aligned manually.
  */
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
-const bump = args.find((arg) => arg !== '--dry-run') ?? 'patch';
+const publishCurrent = args.includes('--publish-current');
+const bump = args.find((arg) => arg !== '--dry-run' && arg !== '--publish-current') ?? 'patch';
 const validBumps = new Set(['patch', 'minor', 'major']);
-const packages = ['@verbb/plugin-kit', '@verbb/plugin-kit-react'];
 
-const paths = {
-    pluginKitChangelog: new URL('../plugin-kit/CHANGELOG.md', import.meta.url),
-    pluginKitReactChangelog: new URL('../plugin-kit-react/CHANGELOG.md', import.meta.url),
-    pluginKitPackageJson: new URL('../plugin-kit/package.json', import.meta.url),
-};
-
-const internalDependencyManifests = [
-    'plugin-kit-react/package.json',
+/** Publish order: leaves first, then web, then framework adapters. */
+const packageDirs = [
+    'plugin-kit-core',
+    'plugin-kit-icons',
+    'plugin-kit-codemirror-core',
+    'plugin-kit-tiptap-core',
+    'plugin-kit-forms',
+    'plugin-kit-web',
+    'plugin-kit-react',
+    'plugin-kit-vue',
 ];
 
+const packages = packageDirs.map((dir) => `@verbb/${dir}`);
+
+/** React remains the required Unreleased changelog (same SoT as v1). */
+const primaryChangelogDir = 'plugin-kit-react';
+
+/** Canonical version source for the lockstep bump (was plugin-kit in v1). */
+const versionSourceDir = 'plugin-kit-web';
+
+const paths = {
+    versionSourcePackageJson: new URL(`../${versionSourceDir}/package.json`, import.meta.url),
+};
+
+const packageJsonPaths = packageDirs.map((dir) => `${dir}/package.json`);
+const changelogPaths = packageDirs.map((dir) => `${dir}/CHANGELOG.md`);
+
 const rollbackPaths = [
-    'plugin-kit/package.json',
-    ...internalDependencyManifests,
-    'plugin-kit/CHANGELOG.md',
-    'plugin-kit-react/CHANGELOG.md',
+    ...packageJsonPaths,
+    ...changelogPaths,
     'package-lock.json',
 ];
 
-if (!validBumps.has(bump)) {
+if (!publishCurrent && !validBumps.has(bump)) {
     console.error('Usage: npm run release -- <patch|minor|major> [--dry-run]');
+    console.error('       node ./scripts/release.mjs --publish-current [--dry-run]');
     process.exit(1);
 }
 
-const run = (command, args, options = {}) => {
-    execFileSync(command, args, {
+const run = (command, commandArgs, options = {}) => {
+    execFileSync(command, commandArgs, {
         stdio: 'inherit',
         ...options,
     });
 };
 
-const output = (command, args) => execFileSync(command, args, {
+const output = (command, commandArgs) => execFileSync(command, commandArgs, {
     encoding: 'utf8',
 }).trim();
 
-const tryOutput = (command, args) => {
+const tryOutput = (command, commandArgs) => {
     try {
-        return output(command, args);
+        return output(command, commandArgs);
     } catch {
         return null;
     }
@@ -90,15 +110,18 @@ const verifyNpmAuth = () => {
         if (!access) {
             throw new Error(
                 `Cannot verify publish access for ${packageName}. `
-                + 'Ensure your npm user or token can publish to the @verbb scope.',
+                + 'Ensure your npm user or token can publish to the @verbb scope '
+                + '(first-time packages still need scope publish permission).',
             );
         }
     }
 };
 
-const packageVersion = () => JSON.parse(readFileSync(paths.pluginKitPackageJson, 'utf8')).version;
+const packageVersion = () => JSON.parse(readFileSync(paths.versionSourcePackageJson, 'utf8')).version;
 
 const releaseDate = () => new Date().toISOString().slice(0, 10);
+
+const changelogUrl = (dir) => new URL(`../${dir}/CHANGELOG.md`, import.meta.url);
 
 const readChangelog = (fileUrl) => readFileSync(fileUrl, 'utf8').replace(/\r\n/g, '\n');
 
@@ -124,16 +147,16 @@ const hasMeaningfulChangelogBody = (body) => {
     });
 };
 
-const lockstepPluginKitBody = () => (
+const lockstepBody = () => (
     '### Changed\n'
     + '- Released alongside `@verbb/plugin-kit-react` to keep package versions aligned.\n'
 );
 
-const finalizeChangelogContent = (content, version, date, { requireContent = true } = {}) => {
+const finalizeChangelogContent = (content, version, date, { requireContent = true, label = 'CHANGELOG.md' } = {}) => {
     const normalized = content.replace(/\r\n/g, '\n');
 
     if (!normalized.startsWith('# Changelog\n')) {
-        throw new Error('CHANGELOG must start with "# Changelog"');
+        throw new Error(`${label} must start with "# Changelog"`);
     }
 
     const unreleasedBody = extractUnreleasedBody(normalized);
@@ -141,10 +164,10 @@ const finalizeChangelogContent = (content, version, date, { requireContent = tru
 
     if (!hasMeaningfulChangelogBody(releaseBody)) {
         if (requireContent) {
-            throw new Error('plugin-kit-react/CHANGELOG.md must have change entries under `## Unreleased`');
+            throw new Error(`${label} must have change entries under \`## Unreleased\``);
         }
 
-        releaseBody = lockstepPluginKitBody().trim();
+        releaseBody = lockstepBody().trim();
     }
 
     const previousSections = normalized
@@ -167,8 +190,25 @@ const rollbackReleaseChanges = () => {
     }
 };
 
+/** Keep caret/range prefix when syncing internal @verbb deps to the new lockstep version. */
+const syncDepVersion = (current, version) => {
+    if (current === '*' || current === 'workspace:*') {
+        return current;
+    }
+
+    if (current.startsWith('^')) {
+        return `^${version}`;
+    }
+
+    if (current.startsWith('~')) {
+        return `~${version}`;
+    }
+
+    return version;
+};
+
 const syncInternalDependencies = (version) => {
-    for (const relativePath of internalDependencyManifests) {
+    for (const relativePath of packageJsonPaths) {
         const fileUrl = new URL(`../${relativePath}`, import.meta.url);
         const pkg = JSON.parse(readFileSync(fileUrl, 'utf8'));
         let changed = false;
@@ -182,8 +222,12 @@ const syncInternalDependencies = (version) => {
 
             for (const packageName of packages) {
                 if (deps[packageName]) {
-                    deps[packageName] = version;
-                    changed = true;
+                    const next = syncDepVersion(deps[packageName], version);
+
+                    if (deps[packageName] !== next) {
+                        deps[packageName] = next;
+                        changed = true;
+                    }
                 }
             }
         }
@@ -195,8 +239,8 @@ const syncInternalDependencies = (version) => {
 };
 
 const buildPackages = () => {
-    run('npm', ['run', 'build', '-w', '@verbb/plugin-kit']);
-    run('npm', ['run', 'build', '-w', '@verbb/plugin-kit-react']);
+    // Ordered lib build from the workspace root (core → icons → … → web → react → vue).
+    run('npm', ['run', 'build:libs']);
 };
 
 const packDryRunAll = () => {
@@ -227,15 +271,23 @@ if (!dryRun) {
     console.log('Dry run: skipping clean-tree check, version bump, changelog writes, publish, and commit.');
 }
 
-const pluginKitReactChangelog = readChangelog(paths.pluginKitReactChangelog);
-const pluginKitChangelog = readChangelog(paths.pluginKitChangelog);
+const primaryChangelog = readChangelog(changelogUrl(primaryChangelogDir));
+const changelogContents = Object.fromEntries(
+    packageDirs.map((dir) => [dir, readChangelog(changelogUrl(dir))]),
+);
 
-if (!hasMeaningfulChangelogBody(extractUnreleasedBody(pluginKitReactChangelog))) {
-    console.error('Release aborted: add entries under `## Unreleased` in plugin-kit-react/CHANGELOG.md first.');
+if (!publishCurrent && !hasMeaningfulChangelogBody(extractUnreleasedBody(primaryChangelog))) {
+    console.error(
+        `Release aborted: add entries under \`## Unreleased\` in ${primaryChangelogDir}/CHANGELOG.md first.`,
+    );
     process.exit(1);
 }
 
-console.log('Changelog check passed. Running pre-release build…');
+if (publishCurrent) {
+    console.log(`Publish-current mode: shipping on-disk versions (${packageVersion()}) without bumping.`);
+} else {
+    console.log('Changelog check passed. Running pre-release build…');
+}
 
 try {
     buildPackages();
@@ -252,6 +304,21 @@ if (dryRun) {
 }
 
 verifyNpmAuth();
+
+if (publishCurrent) {
+    const version = packageVersion();
+
+    try {
+        publishPackages();
+    } catch (error) {
+        console.error(error.message ?? error);
+        process.exit(1);
+    }
+
+    console.log(`Published Plugin Kit ${version} to npm (no version bump / commit).`);
+    console.log('Commit the aligned 2.0.0 tree yourself if it is not already committed, then push.');
+    process.exit(0);
+}
 
 const currentVersion = packageVersion();
 let releaseStarted = false;
@@ -272,24 +339,25 @@ try {
 
     releaseStarted = true;
 
-    writeChangelog(
-        paths.pluginKitReactChangelog,
-        finalizeChangelogContent(pluginKitReactChangelog, version, releaseDate(), { requireContent: true }),
-    );
-    writeChangelog(
-        paths.pluginKitChangelog,
-        finalizeChangelogContent(pluginKitChangelog, version, releaseDate(), { requireContent: false }),
-    );
+    const date = releaseDate();
+
+    for (const dir of packageDirs) {
+        writeChangelog(
+            changelogUrl(dir),
+            finalizeChangelogContent(changelogContents[dir], version, date, {
+                requireContent: dir === primaryChangelogDir,
+                label: `${dir}/CHANGELOG.md`,
+            }),
+        );
+    }
 
     publishPackages();
 
     run('git', [
         'add',
         'package-lock.json',
-        'plugin-kit/package.json',
-        'plugin-kit-react/package.json',
-        'plugin-kit/CHANGELOG.md',
-        'plugin-kit-react/CHANGELOG.md',
+        ...packageJsonPaths,
+        ...changelogPaths,
     ]);
     run('git', ['commit', '-m', `Release ${version}`]);
 
@@ -304,7 +372,7 @@ try {
 
     console.log(`Released Plugin Kit ${version} to npm.`);
     console.log('Push the release commit with:');
-    console.log('  git push origin main');
+    console.log('  git push');
 } catch (error) {
     if (releaseStarted) {
         rollbackReleaseChanges();

@@ -1,9 +1,19 @@
-import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
-declare function TooltipProvider({ delay, ...props }: TooltipPrimitive.Provider.Props): import("react/jsx-runtime").JSX.Element;
-declare function Tooltip({ ...props }: TooltipPrimitive.Root.Props): import("react/jsx-runtime").JSX.Element;
-declare function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props): import("react/jsx-runtime").JSX.Element;
-declare function TooltipContent({ className, side, sideOffset, align, alignOffset, portalContainer, children, ...props }: TooltipPrimitive.Popup.Props & Pick<TooltipPrimitive.Positioner.Props, 'align' | 'alignOffset' | 'side' | 'sideOffset'> & {
-    portalContainer?: HTMLElement | ShadowRoot | null;
-}): import("react/jsx-runtime").JSX.Element;
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, };
+import { default as React } from 'react';
+import { PkTooltip } from '@verbb/plugin-kit-web/components/tooltip/pk-tooltip.js';
+/** React facade over `<pk-tooltip>`. Behavior and styles live in the web component. */
+export declare const PkTooltipElement: import('@lit/react').ReactWebComponent<PkTooltip, {
+    onPkShow: string;
+    onPkAfterShow: string;
+    onPkHide: string;
+    onPkAfterHide: string;
+    onPkOpenChange: string;
+}>;
+export declare const Tooltip: import('@lit/react').ReactWebComponent<PkTooltip, {
+    onPkShow: string;
+    onPkAfterShow: string;
+    onPkHide: string;
+    onPkAfterHide: string;
+    onPkOpenChange: string;
+}>;
+export type TooltipProps = React.ComponentProps<typeof PkTooltipElement>;
 //# sourceMappingURL=Tooltip.d.ts.map

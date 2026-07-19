@@ -1,54 +1,17 @@
-import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faClipboard } from '@fortawesome/pro-solid-svg-icons';
+import React from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkCopyButton } from '@verbb/plugin-kit-web/components/copy-button/pk-copy-button.js';
 
-import { Button } from './Button';
-import { cn } from '@verbb/plugin-kit-react/utils';
+/** React facade over `<pk-copy-button>`. Behavior and styles live in the web component. */
+export const PkCopyButtonElement = createPluginKitComponent({
+    tagName: 'pk-copy-button',
+    elementClass: PkCopyButton,
+    react: React,
+    events: {
+        onPkCopy: 'pk-copy',
+        onPkCopyError: 'pk-copy-error',
+    },
+});
 
-export async function copyToClipboardWithMeta(value) {
-    await navigator.clipboard.writeText(value);
-}
-
-export function CopyButton({
-    value,
-    className,
-    variant = 'transparent',
-    ...props
-}: {
-    value: string;
-    className?: string;
-    src?: string;
-    variant?: 'link' | 'none' | 'default' | 'primary' | 'secondary' | 'dashed' | 'outline' | 'transparent' | 'ghost';
-    event?: Event;
-}) {
-    const [hasCopied, setHasCopied] = useState(false);
-
-    useEffect(() => {
-        const timeoutId = window.setTimeout(() => {
-            setHasCopied(false);
-        }, 2000);
-
-        return () => {
-            window.clearTimeout(timeoutId);
-        };
-    }, [hasCopied]);
-
-    return (
-        <Button
-            size="icon"
-            variant={variant}
-            className={cn(
-                className,
-            )}
-            onClick={() => {
-                copyToClipboardWithMeta(value);
-
-                setHasCopied(true);
-            }}
-            {...props}
-        >
-            <span className="sr-only">Copy</span>
-            {hasCopied ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClipboard} />}
-        </Button>
-    );
-}
+export const CopyButton = PkCopyButtonElement;
+export type CopyButtonProps = React.ComponentProps<typeof PkCopyButtonElement>;

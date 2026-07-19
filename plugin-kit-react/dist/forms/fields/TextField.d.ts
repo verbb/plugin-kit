@@ -1,4 +1,4 @@
-import { SchemaFormEngineApi } from '../engine/context';
+import { SchemaFormEngineApi } from '../engine/context.js';
 type TextFieldProps = {
     form: SchemaFormEngineApi;
     field: {

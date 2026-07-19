@@ -1,5 +1,4 @@
 import { Lightswitch } from "../../components/Lightswitch.js";
-import "../../components/index.js";
 import { FieldLayout } from "../Field.js";
 import { useEngineField } from "../useEngineField.js";
 import { jsx } from "react/jsx-runtime";
@@ -15,11 +14,8 @@ var LightswitchField = ({ form, field }) => {
 		errors,
 		children: /* @__PURE__ */ jsx(Lightswitch, {
 			checked: Boolean(value),
-			onCheckedChange: (checked) => {
-				return setValue(Boolean(checked));
-			},
-			"aria-label": field.label,
-			"aria-invalid": errors.length > 0
+			onCheckedChange: (checked) => setValue(checked),
+			"aria-label": field.label
 		})
 	});
 };

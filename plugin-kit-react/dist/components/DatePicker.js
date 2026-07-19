@@ -1,60 +1,89 @@
-import { cn } from "../utils/classes.js";
-import { hostFormatDate } from "../utils/hostBridge.js";
-import { parseLocalDate, resolveCalendarMonth } from "../utils/datetime.js";
-import "../utils/index.js";
-import { Calendar } from "./Calendar.js";
-import { Popover, PopoverContent, PopoverTrigger } from "./Popover.js";
-import "./index.js";
-import { Button } from "./Button.js";
-import { useEffect, useMemo, useState } from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/pro-solid-svg-icons";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import { trueBooleanProps } from "../utils/lit-react-booleans.js";
+import React, { forwardRef, useMemo } from "react";
+import { jsx } from "react/jsx-runtime";
+import { PkDatePicker } from "@verbb/plugin-kit-web/components/date-picker/pk-date-picker.js";
 //#region src/components/DatePicker.tsx
-var toDate = (value) => {
-	return parseLocalDate(value);
-};
-function DatePicker({ value, onValueChange, placeholder = "", className, disabled = false, isInvalid = false, ...props }) {
-	const [open, setOpen] = useState(false);
-	const date = useMemo(() => toDate(value), [value]);
-	const [month, setMonth] = useState(() => resolveCalendarMonth(date));
-	useEffect(() => {
-		if (date) setMonth(resolveCalendarMonth(date));
-	}, [date]);
-	const handleOpenChange = (nextOpen) => {
-		if (nextOpen) setMonth(resolveCalendarMonth(date));
-		setOpen(nextOpen);
-	};
-	const handleSelect = (selectedDate) => {
-		onValueChange?.(selectedDate);
-		setOpen(false);
-	};
-	return /* @__PURE__ */ jsxs(Popover, {
-		open,
-		onOpenChange: handleOpenChange,
-		children: [/* @__PURE__ */ jsx(PopoverTrigger, { render: /* @__PURE__ */ jsxs(Button, {
-			variant: "outline",
-			className: cn("min-h-[2.125rem] h-[2.125rem]", "w-[130px] px-[10px] !py-0", "!cursor-default", "justify-start text-left font-normal", "bg-transparent border border-slate-400", "hover:bg-slate-50!", "active:bg-slate-150!", "data-[popup-open]:bg-slate-150!", "[&>svg]:size-[14px]", isInvalid && ["border-rose-600!", "focus-visible:shadow-[0_0_0_1px_var(--color-rose-600),0_0_4px_0_hsl(from_var(--color-rose-600)_h_s_l/0.7)]!"], className),
-			disabled,
-			...props,
-			children: [/* @__PURE__ */ jsx(FontAwesomeIcon, {
-				icon: faCalendar,
-				className: cn("mr-1 text-gray-400")
-			}), date ? hostFormatDate(date) : placeholder]
-		}) }), /* @__PURE__ */ jsx(PopoverContent, {
-			className: cn("w-auto p-0!"),
-			children: /* @__PURE__ */ jsx(Calendar, {
-				mode: "single",
-				selected: date,
-				month,
-				onMonthChange: setMonth,
-				captionLayout: "dropdown",
-				onSelect: handleSelect
-			})
-		})]
-	});
+var PkDatePickerElement = createPluginKitComponent({
+	tagName: "pk-date-picker",
+	elementClass: PkDatePicker,
+	react: React,
+	events: {
+		onPkChange: "pk-change",
+		onPkClear: "pk-clear",
+		onInput: "input",
+		onChange: "change",
+		onPkShow: "pk-show",
+		onPkAfterShow: "pk-after-show",
+		onPkHide: "pk-hide",
+		onPkAfterHide: "pk-after-hide"
+	}
+});
+/** Local YYYY-MM-DD — keep facade free of non-exported kit util paths. */
+function formatIsoDate(date) {
+	return `${String(date.getFullYear()).padStart(4, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
+function parseIsoDate(value) {
+	const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim());
+	if (!match) return null;
+	const year = Number(match[1]);
+	const month = Number(match[2]);
+	const day = Number(match[3]);
+	const date = new Date(year, month - 1, day);
+	if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+	return date;
+}
+/** Coerce Formie/v1 Date|string values to the CE’s ISO `YYYY-MM-DD` string. */
+function toIsoValue(value) {
+	if (value == null || value === "") return "";
+	if (value instanceof Date) {
+		if (Number.isNaN(value.getTime())) return "";
+		return formatIsoDate(value);
+	}
+	const dateOnly = String(value).match(/^(\d{4}-\d{2}-\d{2})/);
+	return dateOnly ? dateOnly[1] : String(value);
+}
+/** React facade over `<pk-date-picker>`. Behavior and styles live in the web component. */
+var DatePicker = forwardRef(function DatePicker(props, ref) {
+	const { value, onValueChange, onPkChange, disabled, invalid, isInvalid, clearable, multiple, open, disablePast, disableFuture, withClear, required, ...rest } = props;
+	const resolvedInvalid = Boolean(invalid ?? isInvalid);
+	const isoValue = useMemo(() => toIsoValue(value), [value]);
+	const handlePkChange = (event) => {
+		onPkChange?.(event);
+		if (!onValueChange) return;
+		const next = event.detail?.value;
+		onValueChange(next ? parseIsoDate(next) ?? void 0 : void 0);
+	};
+	return /* @__PURE__ */ jsx(PkDatePickerElement, {
+		ref,
+		...rest,
+		value: isoValue,
+		onPkChange: handlePkChange,
+		...trueBooleanProps([
+			"disabled",
+			"invalid",
+			"clearable",
+			"multiple",
+			"open",
+			"disablePast",
+			"disableFuture",
+			"withClear",
+			"required"
+		], {
+			disabled,
+			invalid: resolvedInvalid,
+			clearable,
+			multiple,
+			open,
+			disablePast,
+			disableFuture,
+			withClear,
+			required
+		})
+	});
+});
+DatePicker.displayName = "DatePicker";
 //#endregion
-export { DatePicker };
+export { DatePicker, PkDatePickerElement };
 
 //# sourceMappingURL=DatePicker.js.map

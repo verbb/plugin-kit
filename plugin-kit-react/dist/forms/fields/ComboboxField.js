@@ -5,7 +5,6 @@ import { jsx } from "react/jsx-runtime";
 //#region src/forms/fields/ComboboxField.tsx
 var ComboboxField = ({ form, field }) => {
 	const { value, setValue, setTouched, errors } = useEngineField(form, field.name);
-	const isInvalid = errors.length > 0;
 	return /* @__PURE__ */ jsx(FieldLayout, {
 		name: field.name,
 		label: field.label,
@@ -25,10 +24,8 @@ var ComboboxField = ({ form, field }) => {
 			disabled: field.disabled,
 			placeholder: field.placeholder,
 			emptyMessage: field.emptyMessage,
-			cacheKey: field.cacheKey,
-			cacheTtlMs: field.cacheTtlMs,
-			className: "w-full",
-			contentClassName: isInvalid ? "aria-invalid:border-destructive" : void 0
+			isInvalid: errors.length > 0,
+			width: field.width
 		})
 	});
 };

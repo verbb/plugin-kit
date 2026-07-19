@@ -1,13 +1,19 @@
-import { ReactCodeMirrorProps } from '@uiw/react-codemirror';
-type CodeEditorLanguage = 'html' | 'text';
-type CodeEditorProps = Omit<ReactCodeMirrorProps, 'value' | 'onChange'> & {
-    value: string;
-    onChange: (value: string) => void;
-    language?: CodeEditorLanguage;
-    tabSize?: number;
-    lineNumbers?: boolean;
+import { default as React } from 'react';
+import { PkCodeEditor } from '@verbb/plugin-kit-web/components/code-editor/pk-code-editor.js';
+declare const PkCodeEditorElement: import('@lit/react').ReactWebComponent<PkCodeEditor, {
+    onPkChange: string;
+    onInput: string;
+    onChange: string;
+    onBlur: string;
+}>;
+type PkCodeEditorElementProps = React.ComponentProps<typeof PkCodeEditorElement>;
+export type CodeEditorProps = PkCodeEditorElementProps & {
+    /** React alias for the CE `invalid` boolean attribute. */
     isInvalid?: boolean;
+    /** React/Formie alias for the Lit `readonly` property. */
+    readOnly?: boolean;
 };
-export declare const CodeEditor: ({ value, onChange, language, tabSize, lineNumbers, rows, disabled, readOnly, isInvalid, className, ...props }: CodeEditorProps) => import("react/jsx-runtime").JSX.Element;
-export {};
+/** React facade over `<pk-code-editor>`. Behavior and styles live in the web component. */
+export declare const CodeEditor: React.ForwardRefExoticComponent<Omit<CodeEditorProps, "ref"> & React.RefAttributes<PkCodeEditor>>;
+export { PkCodeEditorElement };
 //# sourceMappingURL=CodeEditor.d.ts.map

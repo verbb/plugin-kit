@@ -1,0 +1,1 @@
+{"version":3,"file":"pk-tab.d.ts","sourceRoot":"","sources":["../../../src/components/tabs/pk-tab.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAG7C;;;;;;;;;;;GAWG;AACH,qBACa,KAAM,SAAQ,SAAS;IAChC,OAAgB,MAAM,0BAAe;IAE5B,MAAM;CAGlB;AAED,OAAO,CAAC,MAAM,CAAC;IACX,UAAU,qBAAqB;QAC3B,QAAQ,EAAE,KAAK,CAAC;KACnB;CACJ"}

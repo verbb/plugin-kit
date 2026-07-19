@@ -1,0 +1,1 @@
+{"version":3,"file":"pk-button-group-text.d.ts","sourceRoot":"","sources":["../../../src/components/button-group/pk-button-group-text.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,SAAS,EAAE,MAAM,0BAA0B,CAAC;AAGrD;;;;;;GAMG;AACH,qBACa,iBAAkB,SAAQ,SAAS;IAC5C,OAAgB,MAAM,4BAA2B;IAExC,MAAM;CAOlB;AAED,OAAO,CAAC,MAAM,CAAC;IACX,UAAU,qBAAqB;QAC3B,sBAAsB,EAAE,iBAAiB,CAAC;KAC7C;CACJ"}

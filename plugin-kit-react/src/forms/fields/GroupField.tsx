@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import type { ReactNode } from 'react';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import type { SchemaNode, SchemaRenderable } from '../engine/SchemaIndex';
+
+import type { SchemaNode, SchemaRenderable } from '@verbb/plugin-kit-forms';
+
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
 
 type GroupFieldProps = {
     form: SchemaFormEngineApi;
@@ -61,10 +63,10 @@ export const GroupField = ({ form, field, children }: GroupFieldProps) => {
         const schema = field.schema ?? field.children ?? children ?? [];
 
         if (!prefix) {
-            return schema;
+            return schema as SchemaRenderable;
         }
 
-        return prefixGroupSchema(schema, prefix, field.name || '');
+        return prefixGroupSchema(schema as SchemaRenderable, prefix, field.name || '');
     }, [children, field.children, field.name, field.schema, prefix]);
 
     if (!Renderer) {
@@ -84,7 +86,6 @@ export const GroupField = ({ form, field, children }: GroupFieldProps) => {
                 warning={field.warning}
                 required={field.required}
                 errors={errors}
-                withControl={false}
             >
                 <Renderer schema={scopedSchema} />
             </FieldLayout>

@@ -1,0 +1,28 @@
+{
+    "name": "@verbb/plugin-kit-docs",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "description": "VitePress documentation for Plugin Kit (web, React, Vue, forms, tiptap).",
+    "scripts": {
+        "docs:dev": "vitepress dev .",
+        "docs:build": "vitepress build .",
+        "docs:preview": "vitepress preview ."
+    },
+    "devDependencies": {
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.3.0",
+        "@fortawesome/react-fontawesome": "^3.3.1",
+        "@tailwindcss/vite": "^4.2.4",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "@verbb/vitepress-theme": "1.0.0",
+        "react": "^19.2.5",
+        "react-dom": "^19.2.5",
+        "tailwindcss": "^4.2.4",
+        "typescript": "^6.0.3",
+        "vite": "^8.0.10",
+        "vitepress": "^1.6.4",
+        "vue": "^3.5.13"
+    }
+}

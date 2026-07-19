@@ -1,4 +1,4 @@
-import { SchemaFormEngineApi } from './engine/context';
+import { SchemaFormEngineApi } from './engine/context.js';
 export declare const useEngineField: (form: SchemaFormEngineApi, name: string) => {
     value: unknown;
     errors: string[];

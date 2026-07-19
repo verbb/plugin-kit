@@ -1,5 +1,4 @@
 import { ColorInput } from "../../components/ColorInput.js";
-import "../../components/index.js";
 import { FieldLayout } from "../Field.js";
 import { useEngineField } from "../useEngineField.js";
 import { jsx } from "react/jsx-runtime";
@@ -15,12 +14,12 @@ var ColorField = ({ form, field }) => {
 		errors,
 		children: /* @__PURE__ */ jsx(ColorInput, {
 			value: String(value || ""),
-			onValueChange: (nextValue) => {
-				setValue(nextValue || "");
+			onPkChange: (event) => {
+				setValue(event.detail?.value ?? "");
+				setTouched();
 			},
-			onBlur: setTouched,
 			disabled: field.disabled,
-			isInvalid
+			invalid: isInvalid
 		})
 	});
 };

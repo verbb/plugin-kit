@@ -1,5 +1,6 @@
-import { SchemaIndex, SchemaNode, SchemaRenderable } from './engine/SchemaIndex';
-import { FormValues, SchemaFormEngineApi } from './engine/context';
+import { default as React } from 'react';
+import { SchemaIndex, SchemaNode, SchemaRenderable } from '@verbb/plugin-kit-forms';
+import { FormValues, SchemaFormEngineApi } from './engine/context.js';
 type SchemaFormEngineErrors = Record<string, unknown> | {
     errors?: unknown;
 } | unknown[];
@@ -14,10 +15,10 @@ type SchemaFormEngineOptions = {
     parentPath?: string;
 };
 export declare const useSchemaFormEngine: ({ schemaIndex, defaultValues, errors, onChange, getConditionContext, parentForm, parentPath, }: SchemaFormEngineOptions) => SchemaFormEngineApi;
-export declare const SchemaFormEngine: import('react').ForwardRefExoticComponent<{
+export declare const SchemaFormEngine: React.ForwardRefExoticComponent<{
     form: SchemaFormEngineApi;
     className?: string;
     withoutForm?: boolean;
-} & import('react').RefAttributes<SchemaFormEngineApi>>;
+} & React.RefAttributes<SchemaFormEngineApi>>;
 export {};
 //# sourceMappingURL=SchemaFormEngine.d.ts.map

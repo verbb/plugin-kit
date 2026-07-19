@@ -1,11 +1,13 @@
-import type React from 'react';
-import { SelectInput } from '@verbb/plugin-kit-react/components';
-import { evaluateCondition } from '@verbb/plugin-kit-react/utils/schema';
 import { useEffect, useMemo, useSyncExternalStore } from 'react';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import type { SchemaNode } from '../engine/SchemaIndex';
-import { useEngineField } from '../useEngineField';
+import type React from 'react';
+
+import { evaluateCondition } from '@verbb/plugin-kit-forms';
+import type { SchemaNode } from '@verbb/plugin-kit-forms';
+
+import { SelectInput } from '../../components/SelectInput.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type SelectFieldOption = {
     value: unknown;

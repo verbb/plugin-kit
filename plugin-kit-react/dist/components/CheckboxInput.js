@@ -1,27 +1,47 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
 import { Checkbox } from "./Checkbox.js";
+import "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 //#region src/components/CheckboxInput.tsx
-function CheckboxInput({ label, description, className, checkboxClassName, labelClassName, descriptionClassName, disabled, ...props }) {
+/**
+* Convenience facade pairing `<pk-checkbox>` with a label + optional description, mirroring the
+* `plugin-kit-react` `CheckboxInput`. Layout uses a plain wrapping `<label>` (no Tailwind) — the
+* checkbox itself is styled inside the web component's shadow root.
+*/
+function CheckboxInput({ label, description, className, disabled, ...props }) {
 	return /* @__PURE__ */ jsxs("label", {
 		"data-slot": "checkbox-input",
-		className: cn("flex items-start gap-2 text-sm", disabled ? "cursor-not-allowed" : "cursor-pointer", className),
+		className,
+		style: {
+			display: "flex",
+			alignItems: "flex-start",
+			gap: "0.5rem",
+			cursor: disabled ? "not-allowed" : "pointer"
+		},
 		children: [/* @__PURE__ */ jsx(Checkbox, {
-			className: checkboxClassName,
 			disabled,
 			...props
 		}), /* @__PURE__ */ jsxs("span", {
-			className: "min-w-0 peer-disabled:opacity-50 peer-data-disabled:opacity-50",
+			"data-slot": "checkbox-input-body",
+			style: {
+				minWidth: 0,
+				opacity: disabled ? .5 : void 0
+			},
 			children: [/* @__PURE__ */ jsx("span", {
 				"data-slot": "checkbox-input-label",
-				className: cn("block leading-4", labelClassName),
+				style: {
+					display: "block",
+					lineHeight: 1.25
+				},
 				children: label
-			}), description && /* @__PURE__ */ jsx("span", {
+			}), description ? /* @__PURE__ */ jsx("span", {
 				"data-slot": "checkbox-input-description",
-				className: cn("mt-1 block text-gray-500", descriptionClassName),
+				style: {
+					display: "block",
+					marginTop: "0.25rem",
+					color: "var(--pk-color-text-muted, #64748b)"
+				},
 				children: description
-			})]
+			}) : null]
 		})]
 	});
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"highlight-text.d.ts","sourceRoot":"","sources":["../../src/utils/highlight-text.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,aAAa,GAAG;IACxB,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,OAAO,CAAC;CAClB,CAAC;AAEF,mFAAmF;AACnF,wBAAgB,mBAAmB,CAAC,IAAI,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,GAAG,aAAa,EAAE,CAuCjF"}

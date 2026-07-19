@@ -1,22 +1,53 @@
-// Re-export all utilities from the base plugin-kit package
-export * from '@verbb/plugin-kit';
+export {
+    configure,
+    configurePluginKitReact,
+    type PluginKitReactConfig,
+    type TranslateFunction,
+} from '../app/configure.js';
 
-// Export local utilities
-export * from './classes';
-export * from './config';
-export * from './datetime';
-export * from './documentScrollStability';
-export * from './craftHostBridge';
-export * from './handle';
-export * from './hostBridge';
-export * from './portal';
-export * from './schema';
-export * from './schemaFieldNames';
-export * from './schemaIndex';
-export * from './schemaIndexCache';
-export * from './schemaNormalize';
-export * from './store';
-export * from './timeOptions';
-export * from './tiptap';
-export * from './translation';
-export * from './validation';
+export {
+    PluginKitProvider,
+    usePluginKitConfig,
+    type PluginKitProviderProps,
+} from '../app/PluginKitProvider.js';
+
+export {
+    mountShadowApp,
+    type MountShadowAppOptions,
+    type ShadowAppMount,
+} from '../app/mountShadowApp.js';
+
+export { createCraftHostBridge } from './craftHostBridge.js';
+export { cn } from './cn.js';
+
+export {
+    getPortalClassName,
+    getPortalContainer,
+    getPortalMountNode,
+    getPortalTargetForAppend,
+    setPortalClassName,
+    setPortalContainer,
+    type PortalContainer,
+} from '@verbb/plugin-kit-core';
+
+export {
+    getHostBridge,
+    hostFormatDate,
+    hostGetLocale,
+    hostGetTimepickerOptions,
+    hostOpenElementSelector,
+    hostRequest,
+    setHostBridge,
+    type HostElementSelectorOptions,
+    type HostRequestConfig,
+    type HostRequestMethod,
+    type HostSelectedElement,
+    type PluginKitHostBridge,
+} from '@verbb/plugin-kit-core';
+
+export {
+    setTranslateFunction,
+    setTranslationCategory,
+    translate,
+    type TranslateParams,
+} from '@verbb/plugin-kit-forms';

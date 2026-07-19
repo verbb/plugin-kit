@@ -1,4 +1,8 @@
-import { Separator as SeparatorPrimitive } from '@base-ui/react/separator';
-declare function Separator({ className, orientation, ...props }: SeparatorPrimitive.Props): import("react/jsx-runtime").JSX.Element;
-export { Separator };
+import { default as React } from 'react';
+import { PkSeparator, PkSeparatorOrientation } from '@verbb/plugin-kit-web/components/separator/pk-separator.js';
+/** React facade over `<pk-separator>`. Behavior and styles live in the web component. */
+export declare const PkSeparatorElement: import('@lit/react').ReactWebComponent<PkSeparator, {}>;
+export declare const Separator: import('@lit/react').ReactWebComponent<PkSeparator, {}>;
+export type SeparatorProps = React.ComponentProps<typeof PkSeparatorElement>;
+export type { PkSeparatorOrientation };
 //# sourceMappingURL=Separator.d.ts.map

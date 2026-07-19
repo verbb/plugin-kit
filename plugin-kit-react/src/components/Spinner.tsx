@@ -1,66 +1,42 @@
-import { cva, type VariantProps } from 'class-variance-authority';
-import type { ComponentProps } from 'react';
+import React from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import {
+    PkSpinner,
+    type PkSpinnerSize,
+    type PkSpinnerTone,
+    type PkSpinnerVariant,
+} from '@verbb/plugin-kit-web/components/spinner/pk-spinner.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
-
-const spinnerVariants = cva('', {
-    variants: {
-        variant: {
-            default: [
-                'border-t-red-500 border-r-red-500',
-            ],
-
-            primary: [
-                'border-t-white border-r-white',
-            ],
-
-            secondary: [
-                'border-t-white border-r-white',
-            ],
-
-            dashed: [
-                'border-t-gray-700 border-r-gray-700',
-            ],
-
-            outline: [
-                'border-t-gray-700 border-r-gray-700',
-            ],
-
-            transparent: [
-                'border-t-gray-700 border-r-gray-700',
-            ],
-        },
-        size: {
-            xxs: 'size-3 border-1',
-            xs: 'size-4 border-2',
-            sm: 'size-6 border-2',
-            md: 'size-8 border-2',
-            lg: 'size-12 border-2',
-            xl: 'size-16 border-2',
-        },
-    },
-    defaultVariants: {
-        variant: 'default',
-        size: 'sm',
-    },
+const PkSpinnerElement = createPluginKitComponent({
+    tagName: 'pk-spinner',
+    elementClass: PkSpinner,
+    react: React,
 });
 
-function Spinner({
-    className,
-    variant,
-    size,
-    ...props
-}: ComponentProps<'div'> & VariantProps<typeof spinnerVariants>) {
-    return <div
-        className={cn(
-            'mx-auto border-2 border-b-transparent border-l-transparent rounded-full animate-spin',
-
-            spinnerVariants({
-                variant, size, className,
-            }),
-        )}
-        {...props}
-    />;
+export type SpinnerProps = React.ComponentProps<typeof PkSpinnerElement> & {
+    variant?: PkSpinnerVariant;
+    size?: PkSpinnerSize;
+    tone?: PkSpinnerTone;
+    centered?: boolean;
 };
 
-export { Spinner };
+/** React facade over `<pk-spinner>`. Behavior and styles live in the web component. */
+export function Spinner({
+    variant = 'default',
+    size = 'sm',
+    tone,
+    centered = false,
+    ...props
+}: SpinnerProps) {
+    return (
+        <PkSpinnerElement
+            variant={variant}
+            size={size}
+            {...(tone ? { tone } : {})}
+            {...(centered ? { centered: true } : {})}
+            {...props}
+        />
+    );
+}
+
+export { PkSpinnerElement };

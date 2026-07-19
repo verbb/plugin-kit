@@ -1,0 +1,50 @@
+export const statusPlaygroundMeta = {
+    eyebrow: 'Components',
+    title: 'Status',
+    description: 'Semantic colour dot with label.',
+} as const;
+
+export const statusPlaygroundVariants = [
+    'all',
+    'on',
+    'live',
+    'active',
+    'enabled',
+    'off',
+    'suspended',
+    'expired',
+    'warning',
+    'pending',
+    'red',
+    'orange',
+    'amber',
+    'yellow',
+    'lime',
+    'green',
+    'emerald',
+    'teal',
+    'turquoise',
+    'cyan',
+    'sky',
+    'blue',
+    'indigo',
+    'violet',
+    'purple',
+    'fuchsia',
+    'pink',
+    'rose',
+    'light',
+    'gray',
+    'grey',
+    'white',
+    'black',
+    'disabled',
+    'inactive',
+] as const satisfies readonly StatusVariant[];
+
+export const statusPlaygroundSections = {
+    variants: {
+        title: 'Variants',
+        description: 'Semantic and colour aliases.',
+    },
+} as const;

@@ -1,0 +1,14 @@
+/**
+ * Playground-only state previews for <pk-checkbox> matrices.
+ *
+ * Imported by workshop dev servers only — NOT part of the pk-checkbox bundle.
+ */
+pk-checkbox[data-state='focus-visible']::part(control) {
+    border-color: var(--pk-color-sky-600);
+    box-shadow: 0 0 0 1px var(--pk-color-sky-600), 0 0 4px 0 hsl(from var(--pk-color-sky-600) h s l / 0.7);
+}
+
+pk-checkbox[invalid][data-state='focus-visible']::part(control) {
+    border-color: var(--pk-color-rose-600);
+    box-shadow: 0 0 0 1px var(--pk-color-rose-600), 0 0 4px 0 hsl(from var(--pk-color-rose-600) h s l / 0.7);
+}

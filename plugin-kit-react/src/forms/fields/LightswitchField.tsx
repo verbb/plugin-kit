@@ -1,7 +1,7 @@
-import { Lightswitch } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { Lightswitch } from '../../components/Lightswitch.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type LightswitchFieldProps = {
     form: SchemaFormEngineApi;
@@ -28,9 +28,8 @@ export const LightswitchField = ({ form, field }: LightswitchFieldProps) => {
         >
             <Lightswitch
                 checked={Boolean(value)}
-                onCheckedChange={(checked) => { return setValue(Boolean(checked)); }}
+                onCheckedChange={(checked) => setValue(checked)}
                 aria-label={field.label}
-                aria-invalid={errors.length > 0}
             />
         </FieldLayout>
     );

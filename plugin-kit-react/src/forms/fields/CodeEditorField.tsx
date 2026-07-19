@@ -1,7 +1,7 @@
-import { CodeEditor } from '@verbb/plugin-kit-react/components';
-import { FieldLayout } from '../Field';
-import type { SchemaFormEngineApi } from '../engine/context';
-import { useEngineField } from '../useEngineField';
+import { CodeEditor, type CodeEditorProps } from '../../components/CodeEditor.js';
+import { FieldLayout } from '../Field.js';
+import type { SchemaFormEngineApi } from '../engine/context.js';
+import { useEngineField } from '../useEngineField.js';
 
 type CodeEditorFieldProps = {
     form: SchemaFormEngineApi;
@@ -10,11 +10,10 @@ type CodeEditorFieldProps = {
         label?: string;
         instructions?: string;
         warning?: string;
-        placeholder?: string;
         rows?: number;
         tabSize?: number;
         lineNumbers?: boolean;
-        language?: 'html' | 'text';
+        language?: CodeEditorProps['language'];
         required?: boolean;
         disabled?: boolean;
     };
@@ -36,15 +35,16 @@ export const CodeEditorField = ({ form, field }: CodeEditorFieldProps) => {
         >
             <CodeEditor
                 value={String(value ?? '')}
-                onChange={setValue}
+                onPkChange={(event) => {
+                    return setValue((event as CustomEvent<{ value: string }>).detail?.value ?? '');
+                }}
                 onBlur={setTouched}
-                placeholder={field.placeholder}
-                disabled={field.disabled}
-                rows={field.rows}
+                language={field.language}
                 tabSize={field.tabSize}
                 lineNumbers={field.lineNumbers}
-                language={field.language}
-                isInvalid={isInvalid}
+                rows={field.rows}
+                disabled={field.disabled}
+                invalid={isInvalid}
             />
         </FieldLayout>
     );

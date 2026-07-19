@@ -1,83 +1,63 @@
 import fs from 'node:fs';
-import fsp from 'node:fs/promises';
+import path from 'node:path';
 import { defineConfig } from 'vite';
-import path from 'path';
-
-// Vite Plugins
 import DtsPlugin from 'vite-plugin-dts';
 
-const sourceEntryPattern = /\.(js|jsx|ts|tsx)$/;
-const sourceExcludePatterns = [
-    /\/stories\//,
-    /\/visual-tests\//,
-    /\.stories\.[jt]sx?$/,
-    /\.test\.[jt]sx?$/,
-];
+const resolveEntries = (dir: string, prefix: string, extensions: string[]) => {
+    const absDir = path.resolve(__dirname, dir);
+    const entries: Record<string, string> = {};
 
-function collectSourceEntries(sourceRoot: string, currentDir = sourceRoot, entries: Record<string, string> = {}) {
-    for (const dirent of fs.readdirSync(currentDir, { withFileTypes: true })) {
-        const fullPath = path.join(currentDir, dirent.name);
+    if (!fs.existsSync(absDir)) {
+        return entries;
+    }
 
-        if (dirent.isDirectory()) {
-            collectSourceEntries(sourceRoot, fullPath, entries);
+    for (const file of fs.readdirSync(absDir)) {
+        if (!extensions.some((ext) => file.endsWith(ext))) {
             continue;
         }
 
-        if (!sourceEntryPattern.test(fullPath) || sourceExcludePatterns.some((pattern) => pattern.test(fullPath))) {
+        // Barrel / index files are registered separately as lib entries.
+        if (file.startsWith('index.')) {
             continue;
         }
 
-        const relativePath = path.relative(sourceRoot, fullPath).replace(sourceEntryPattern, '');
-        entries[relativePath] = fullPath;
+        const name = file.replace(/\.(tsx?|jsx?)$/, '');
+        entries[`${prefix}/${name}`] = path.join(absDir, file);
     }
 
     return entries;
-}
-
-const copyPluginKitReactPublishAssets = () => ({
-    name: 'copy-plugin-kit-react-publish-assets',
-    async closeBundle() {
-        await fsp.cp(path.resolve(__dirname, 'src/css'), path.resolve(__dirname, 'dist/css'), { recursive: true });
-    },
-});
-
-const isExternalDependency = (id: string) => {
-    if (id.startsWith('\0') || id.startsWith('.') || path.isAbsolute(id)) {
-        return false;
-    }
-
-    // Jexl only ships CommonJS output. Bundle it so consumers don't need to
-    // rely on their dev server's CJS interop for a linked package dependency.
-    // Some React UI dependencies import Babel's CommonJS helper runtime. If we
-    // leave those helpers external, browser consumers such as Craft CP can end
-    // up with a raw `require("@babel/runtime/...")` in an ESM chunk.
-    if (id === 'jexl' || id.startsWith('jexl/') || id === '@babel/runtime' || id.startsWith('@babel/runtime/')) {
-        return false;
-    }
-
-    return !id.startsWith('@verbb/plugin-kit-react');
 };
 
 export default defineConfig({
-    resolve: {
-        alias: [
-            { find: /^@verbb\/plugin-kit-react$/, replacement: path.resolve(__dirname, 'src/index.ts') },
-            { find: /^@verbb\/plugin-kit-react\/(.*)$/, replacement: `${path.resolve(__dirname, 'src')}/$1` },
-        ],
-    },
     build: {
-        lib: false,
+        lib: {
+            entry: {
+                index: path.resolve(__dirname, 'src/index.ts'),
+                'components/index': path.resolve(__dirname, 'src/components/index.ts'),
+                ...resolveEntries('src/components', 'components', ['.ts', '.tsx']),
+                'forms/index': path.resolve(__dirname, 'src/forms/index.ts'),
+                ...resolveEntries('src/forms/fields', 'forms/fields', ['.ts', '.tsx']),
+                'app/index': path.resolve(__dirname, 'src/app/index.ts'),
+                'utils/index': path.resolve(__dirname, 'src/utils/index.ts'),
+                'hooks/index': path.resolve(__dirname, 'src/hooks/index.ts'),
+                'fault/index': path.resolve(__dirname, 'src/fault/index.ts'),
+            },
+            formats: ['es'],
+        },
         rollupOptions: {
-            input: collectSourceEntries(path.resolve(__dirname, 'src')),
-            external: isExternalDependency,
-            preserveEntrySignatures: 'exports-only',
+            external: (id) => {
+                if (id.startsWith('\0') || id.startsWith('.') || path.isAbsolute(id)) {
+                    return false;
+                }
+
+                return !id.startsWith('@verbb/plugin-kit-react');
+            },
             output: {
-                format: 'es',
+                // Keep 1:1 module layout so `import { Button } from '.../components'` can
+                // tree-shake TipTap/EditableTable (and deep `./components/Button` works).
                 preserveModules: true,
-                preserveModulesRoot: path.resolve(__dirname, 'src'),
+                preserveModulesRoot: 'src',
                 entryFileNames: '[name].js',
-                chunkFileNames: 'chunks/[name]-[hash].js',
-                assetFileNames: 'assets/[name]-[hash][extname]',
             },
         },
         sourcemap: true,
@@ -85,19 +65,12 @@ export default defineConfig({
         emptyOutDir: true,
         minify: false,
     },
-
     plugins: [
-        // Generate TypeScript declaration files
-        // https://github.com/qmhc/vite-plugin-dts
         DtsPlugin({
-            insertTypesEntry: true,
-            exclude: [
-                'src/**/*.stories.*',
-                'src/**/*.test.*',
-                'src/visual-tests/**/*',
-            ],
+            // Emit per-source declarations preserving the directory structure so each lib
+            // entry (`index`, `components/index`, `forms/index`) resolves its own re-exports.
+            // `rollupTypes` only bundles a single entry correctly, which clobbers the others.
+            include: ['src/**/*.ts', 'src/**/*.tsx'],
         }),
-
-        copyPluginKitReactPublishAssets(),
     ],
 });

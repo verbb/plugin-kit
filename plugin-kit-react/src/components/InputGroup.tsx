@@ -1,260 +1,120 @@
-import { ComponentProps } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { createPluginKitComponent } from '../utils/create-plugin-kit-component.js';
+import { PkInputGroup } from '@verbb/plugin-kit-web/components/input-group/pk-input-group.js';
+import {
+    PkInputGroupAddon,
+    type PkInputGroupAddonAlign,
+} from '@verbb/plugin-kit-web/components/input-group/pk-input-group-addon.js';
+import {
+    PkInputGroupButton,
+    type PkInputGroupButtonSize,
+} from '@verbb/plugin-kit-web/components/input-group/pk-input-group-button.js';
+import {
+    PkInputGroupInput,
+    type PkInputGroupInputSize,
+} from '@verbb/plugin-kit-web/components/input-group/pk-input-group-input.js';
+import { PkInputGroupText } from '@verbb/plugin-kit-web/components/input-group/pk-input-group-text.js';
+import { PkInputGroupTextarea } from '@verbb/plugin-kit-web/components/input-group/pk-input-group-textarea.js';
 
-import { cn } from '@verbb/plugin-kit-react/utils';
-import { Button } from '@verbb/plugin-kit-react/components';
-import { Input } from '@verbb/plugin-kit-react/components';
-import { Textarea } from '@verbb/plugin-kit-react/components';
+import { trueBooleanProps } from '../utils/lit-react-booleans.js';
 
-function InputGroup({ className, ...props }: ComponentProps<'div'>) {
-    return (
-        <div
-            data-slot="input-group"
-            role="group"
-            className={cn(
-                // Layout
-                'group/input-group outline-none relative flex w-full min-w-0 items-center',
-                'has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col',
-                'has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col',
-                'has-[>[data-align=block-end]]:[&>input]:pt-3',
-                'has-[>[data-align=block-start]]:[&>input]:pb-3',
-                'has-[>[data-align=inline-end]]:[&>input]:pr-1.5',
-                'has-[>[data-align=inline-start]]:[&>input]:pl-1.5',
+/** React facades over the `<pk-input-group>` family. Behavior and styles live in the web components. */
+export const PkInputGroupElement = createPluginKitComponent({
+    tagName: 'pk-input-group',
+    elementClass: PkInputGroup,
+    react: React,
+});
 
-                // Theme
-                'rounded-sm',
-                'border border-[rgba(96,125,159,0.4)]',
-                'bg-[rgb(251,252,254)] bg-clip-padding',
+export const PkInputGroupAddonElement = createPluginKitComponent({
+    tagName: 'pk-input-group-addon',
+    elementClass: PkInputGroupAddon,
+    react: React,
+});
 
-                // Focus and validation
-                'has-[[data-slot=input-group-control]:focus-visible]:border-sky-600',
-                'has-[[data-slot=field-control]:focus-visible]:border-sky-600',
-                'has-[[data-slot=input-group-control]:focus-visible]:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]',
-                'has-[[data-slot=field-control]:focus-visible]:shadow-[0_0_0_1px_var(--color-sky-600),0_0_4px_0_hsl(from_var(--color-sky-600)_h_s_l/0.7)]',
-                'has-[[data-slot][aria-invalid=true]]:border-rose-600!',
+export const PkInputGroupButtonElement = createPluginKitComponent({
+    tagName: 'pk-input-group-button',
+    elementClass: PkInputGroupButton,
+    react: React,
+});
 
-                // Disabled
-                'has-disabled:opacity-50',
+export const PkInputGroupInputElement = createPluginKitComponent({
+    tagName: 'pk-input-group-input',
+    elementClass: PkInputGroupInput,
+    react: React,
+    events: {
+        // React `onChange` is live (every keystroke); native `change` is blur-commit.
+        onInput: 'input',
+        onChange: 'input',
+    },
+});
 
-                className,
-            )}
-            {...props}
-        />
-    );
-}
+export const PkInputGroupTextElement = createPluginKitComponent({
+    tagName: 'pk-input-group-text',
+    elementClass: PkInputGroupText,
+    react: React,
+});
 
-const inputGroupAddonVariants = cva(
-    [
-        // Layout
-        'flex h-auto items-center justify-center gap-2',
-        'px-2 text-sm',
+export const PkInputGroupTextareaElement = createPluginKitComponent({
+    tagName: 'pk-input-group-textarea',
+    elementClass: PkInputGroupTextarea,
+    react: React,
+    events: {
+        // React `onChange` is live (every keystroke); native `change` is blur-commit.
+        onInput: 'input',
+        onChange: 'input',
+    },
+});
 
-        // Interaction
-        'cursor-text select-none',
+export const InputGroup = PkInputGroupElement;
+export const InputGroupAddon = PkInputGroupAddonElement;
+export const InputGroupButton = PkInputGroupButtonElement;
 
-        // Disabled
-        'group-data-[disabled=true]/input-group:opacity-50',
+type PkInputGroupInputElementProps = React.ComponentProps<typeof PkInputGroupInputElement>;
 
-        // Children
-        "[&>svg:not([class*='size-'])]:size-3",
-        '[&>kbd]:rounded-[calc(var(--radius)-5px)]',
-    ].join(' '),
-    {
-        variants: {
-            align: {
-                'inline-start': [
-                    // Layout
-                    'order-first pl-2',
+export const InputGroupInput = forwardRef<PkInputGroupInput, PkInputGroupInputElementProps>(
+    function InputGroupInput(props, ref) {
+        const {
+            disabled, readonly, invalid, ...rest
+        } = props;
 
-                    // Child offsets
-                    'has-[>button]:ml-[-0.3rem]',
-                    'has-[>kbd]:ml-[-0.15rem]',
-                ].join(' '),
-                'inline-end': [
-                    // Layout
-                    'order-last pr-2',
-
-                    // Child offsets
-                    'has-[>button]:mr-[-0.3rem]',
-                    'has-[>kbd]:mr-[-0.15rem]',
-                ].join(' '),
-                'block-start': [
-                    // Layout
-                    'order-first w-full justify-start',
-                    'px-2.5 pt-2',
-
-                    // State
-                    'group-has-[>input]/input-group:pt-2',
-                    '[.border-b]:pb-2',
-                ].join(' '),
-                'block-end': [
-                    // Layout
-                    'order-last w-full justify-start',
-                    'px-2.5 pb-2',
-
-                    // State
-                    'group-has-[>input]/input-group:pb-2',
-                    '[.border-t]:pt-2',
-                ].join(' '),
-            },
-        },
-        defaultVariants: {
-            align: 'inline-start',
-        },
+        return (
+            <PkInputGroupInputElement
+                ref={ref}
+                {...rest}
+                {...trueBooleanProps(['disabled', 'readonly', 'invalid'], { disabled, readonly, invalid })}
+            />
+        );
     },
 );
 
-function InputGroupAddon({
-    className,
-    align = 'inline-start',
-    ...props
-}: ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) {
-    return (
-        <div
-            role="group"
-            data-slot="input-group-addon"
-            data-align={align}
-            className={cn(inputGroupAddonVariants({ align }), className)}
-            onClick={(e) => {
-                if ((e.target as HTMLElement).closest('button')) {
-                    return;
-                }
-                e.currentTarget.parentElement?.querySelector('input')?.focus();
-            }}
-            {...props}
-        />
-    );
-}
+InputGroupInput.displayName = 'InputGroupInput';
 
-const inputGroupButtonVariants = cva(
-    [
-        // Layout
-        'flex items-center gap-2',
-        'text-gray-500 text-sm',
+export const InputGroupText = PkInputGroupTextElement;
 
-        // Theme
-        'shadow-none rounded-sm',
+type PkInputGroupTextareaElementProps = React.ComponentProps<typeof PkInputGroupTextareaElement>;
 
-        'hover:bg-slate-100',
-    ].join(' '),
-    {
-        variants: {
-            size: {
-                // xs: "h-6 gap-1 rounded-[calc(var(--radius)-3px)] px-1.5 [&>svg:not([class*='size-'])]:size-3",
-                xs: '',
-                sm: '',
-                'icon-xs': 'size-6 [&>svg]:size-3.5 p-0 has-[>svg]:p-0',
-                'icon-sm': '',
-                // 'icon-sm': 'size-8 p-0 has-[>svg]:p-0',
-            },
-        },
-        defaultVariants: {
-            size: 'xs',
-        },
+export const InputGroupTextarea = forwardRef<PkInputGroupTextarea, PkInputGroupTextareaElementProps>(
+    function InputGroupTextarea(props, ref) {
+        const {
+            disabled, readonly, invalid, ...rest
+        } = props;
+
+        return (
+            <PkInputGroupTextareaElement
+                ref={ref}
+                {...rest}
+                {...trueBooleanProps(['disabled', 'readonly', 'invalid'], { disabled, readonly, invalid })}
+            />
+        );
     },
 );
 
-function InputGroupButton({
-    className,
-    type = 'button',
-    variant = 'none',
-    size = 'xs',
-    ...props
-}: Omit<ComponentProps<typeof Button>, 'size' | 'type'> &
-    VariantProps<typeof inputGroupButtonVariants> & {
-        type?: 'button' | 'submit' | 'reset'
-        disabled?: boolean
-    }) {
-    return (
-        <Button
-            type={type}
-            data-size={size}
-            variant={variant}
-            className={cn(inputGroupButtonVariants({ size }), className)}
-            {...props}
-        />
-    );
-}
+InputGroupTextarea.displayName = 'InputGroupTextarea';
 
-function InputGroupText({ className, ...props }: ComponentProps<'span'>) {
-    return (
-        <span
-            className={cn(
-                // Layout
-                'flex items-center gap-2 text-sm',
-
-                // Theme
-                'text-gray-500',
-
-                // Icons
-                "[&_svg:not([class*='size-'])]:size-3",
-                '[&_svg]:pointer-events-none',
-
-                className,
-            )}
-            {...props}
-        />
-    );
-}
-
-function InputGroupInput({
-    className,
-    ...props
-}: Omit<ComponentProps<'input'>, 'size' | 'width'>) {
-    return (
-        <Input
-            data-slot="input-group-control"
-            className={cn(
-                // Layout
-                'flex-1',
-                'rounded-none border-0',
-
-                // Theme
-                'bg-transparent',
-                'shadow-none!',
-
-                // Disabled
-                'disabled:bg-transparent',
-
-                className,
-            )}
-            {...props}
-        />
-    );
-}
-
-function InputGroupTextarea({
-    className,
-    ...props
-}: ComponentProps<'textarea'>) {
-    return (
-        <Textarea
-            data-slot="input-group-control"
-            className={cn(
-                // Layout
-                'flex-1',
-                'rounded-none border-0 py-2',
-                'resize-none',
-
-                // Theme
-                'bg-transparent',
-                'shadow-none!',
-
-                // Disabled
-                'disabled:bg-transparent',
-
-                className,
-            )}
-            {...props}
-        />
-    );
-}
-
-export {
-    InputGroup,
-    InputGroupAddon,
-    InputGroupButton,
-    InputGroupText,
-    InputGroupInput,
-    InputGroupTextarea,
-};
+export type InputGroupProps = React.ComponentProps<typeof PkInputGroupElement>;
+export type InputGroupAddonProps = React.ComponentProps<typeof PkInputGroupAddonElement>;
+export type InputGroupButtonProps = React.ComponentProps<typeof PkInputGroupButtonElement>;
+export type InputGroupInputProps = React.ComponentProps<typeof PkInputGroupInputElement>;
+export type InputGroupTextProps = React.ComponentProps<typeof PkInputGroupTextElement>;
+export type InputGroupTextareaProps = React.ComponentProps<typeof PkInputGroupTextareaElement>;
+export type { PkInputGroupAddonAlign, PkInputGroupButtonSize, PkInputGroupInputSize };

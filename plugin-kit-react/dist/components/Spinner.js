@@ -1,43 +1,24 @@
-import { cn } from "../utils/classes.js";
-import "../utils/index.js";
-import { cva } from "class-variance-authority";
+import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
+import React from "react";
 import { jsx } from "react/jsx-runtime";
+import { PkSpinner } from "@verbb/plugin-kit-web/components/spinner/pk-spinner.js";
 //#region src/components/Spinner.tsx
-var spinnerVariants = cva("", {
-	variants: {
-		variant: {
-			default: ["border-t-red-500 border-r-red-500"],
-			primary: ["border-t-white border-r-white"],
-			secondary: ["border-t-white border-r-white"],
-			dashed: ["border-t-gray-700 border-r-gray-700"],
-			outline: ["border-t-gray-700 border-r-gray-700"],
-			transparent: ["border-t-gray-700 border-r-gray-700"]
-		},
-		size: {
-			xxs: "size-3 border-1",
-			xs: "size-4 border-2",
-			sm: "size-6 border-2",
-			md: "size-8 border-2",
-			lg: "size-12 border-2",
-			xl: "size-16 border-2"
-		}
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "sm"
-	}
+var PkSpinnerElement = createPluginKitComponent({
+	tagName: "pk-spinner",
+	elementClass: PkSpinner,
+	react: React
 });
-function Spinner({ className, variant, size, ...props }) {
-	return /* @__PURE__ */ jsx("div", {
-		className: cn("mx-auto border-2 border-b-transparent border-l-transparent rounded-full animate-spin", spinnerVariants({
-			variant,
-			size,
-			className
-		})),
+/** React facade over `<pk-spinner>`. Behavior and styles live in the web component. */
+function Spinner({ variant = "default", size = "sm", tone, centered = false, ...props }) {
+	return /* @__PURE__ */ jsx(PkSpinnerElement, {
+		variant,
+		size,
+		...tone ? { tone } : {},
+		...centered ? { centered: true } : {},
 		...props
 	});
 }
 //#endregion
-export { Spinner };
+export { PkSpinnerElement, Spinner };
 
 //# sourceMappingURL=Spinner.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"copy-to-clipboard.d.ts","sourceRoot":"","sources":["../../src/utils/copy-to-clipboard.ts"],"names":[],"mappings":"AAAA,iFAAiF;AACjF,wBAAsB,eAAe,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAC,IAAI,CAAC,CAElE;AAED,0EAA0E;AAC1E,wBAAgB,gBAAgB,CAC5B,IAAI,EAAE,QAAQ,GAAG,UAAU,EAC3B,IAAI,EAAE,MAAM,EACZ,aAAa,EAAE,MAAM,GACtB,MAAM,GAAG,IAAI,CAiCf"}
