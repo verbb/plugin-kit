@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-react",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Thin React facades over @verbb/plugin-kit-web custom elements",
     "type": "module",
     "main": "dist/index.js",
@@ -119,7 +119,7 @@
         "@lit/react": "^1.0.8",
         "@verbb/plugin-kit-core": "2.0.0",
         "@verbb/plugin-kit-forms": "2.0.0",
-        "@verbb/plugin-kit-web": "2.0.0",
+        "@verbb/plugin-kit-web": "2.0.1",
         "clsx": "^2.1.1",
         "tailwind-merge": "^3.5.0"
     }
