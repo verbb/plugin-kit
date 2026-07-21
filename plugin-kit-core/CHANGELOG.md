@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.5 - 2026-07-21
+
 ### Fixed
 - Importing string/handle utils (or anything else) from the package root no longer bundles `markdown-it` (~45 kB gzip) into a consumer. `markdown-it` is now constructed lazily and the package is published as `sideEffects: false`, so it only enters a bundle when `renderMarkdown` / `renderInlineMarkdown` (or `@verbb/plugin-kit-core/utils/markdown`) is actually used.
 

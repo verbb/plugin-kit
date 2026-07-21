@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.5 - 2026-07-21
+
 ### Added
 - Multi-date `DatePicker` (`mode="multiple"`, comma-separated ISO list) and `ColorInput` `readonly` are available through the underlying web components (lockstep with `@verbb/plugin-kit-web`). No Vue API change.
 

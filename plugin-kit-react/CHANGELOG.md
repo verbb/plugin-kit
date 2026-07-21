@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.5 - 2026-07-21
+
 ### Added
 - `DatePicker` gains `multiple` (sugar for `mode="multiple"` multi-date selection; an explicit `mode` wins) and `clearable` (sugar for the web component's `with-clear` toggle).
 - `ColorInput` accepts the `readonly` boolean (and keeps the existing `readOnly` alias) for the new read-only web-component state.
