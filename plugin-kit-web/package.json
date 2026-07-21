@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-web",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "Plugin Kit web components (shadow DOM, Craft design system)",
     "type": "module",
     "types": "dist/index.d.ts",
@@ -936,18 +936,18 @@
     },
     "peerDependencies": {
         "@floating-ui/dom": "^1.7.3",
-        "@verbb/plugin-kit-core": "^2.0.5",
-        "@verbb/plugin-kit-icons": "^2.0.5",
+        "@verbb/plugin-kit-core": "^2.0.6",
+        "@verbb/plugin-kit-icons": "^2.0.6",
         "lit": "^3.3.0"
     },
     "license": "MIT",
     "dependencies": {
         "@floating-ui/dom": "^1.7.3",
         "@tiptap/core": "^3.22.4",
-        "@verbb/plugin-kit-codemirror-core": "2.0.5",
-        "@verbb/plugin-kit-core": "^2.0.5",
-        "@verbb/plugin-kit-icons": "^2.0.5",
-        "@verbb/plugin-kit-tiptap-core": "^2.0.5",
+        "@verbb/plugin-kit-codemirror-core": "2.0.6",
+        "@verbb/plugin-kit-core": "^2.0.6",
+        "@verbb/plugin-kit-icons": "^2.0.6",
+        "@verbb/plugin-kit-tiptap-core": "^2.0.6",
         "composed-offset-position": "^0.0.6",
         "lit": "^3.3.0"
     },

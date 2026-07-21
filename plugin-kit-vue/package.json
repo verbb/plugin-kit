@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-vue",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "Vue adapters for @verbb/plugin-kit-web custom elements",
     "type": "module",
     "types": "dist/index.d.ts",
@@ -86,9 +86,9 @@
     "license": "MIT",
     "dependencies": {
         "@lit-labs/vue-utils": "^0.1.3",
-        "@verbb/plugin-kit-core": "2.0.5",
-        "@verbb/plugin-kit-forms": "2.0.5",
-        "@verbb/plugin-kit-web": "2.0.5",
+        "@verbb/plugin-kit-core": "2.0.6",
+        "@verbb/plugin-kit-forms": "2.0.6",
+        "@verbb/plugin-kit-web": "2.0.6",
         "clsx": "^2.1.1",
         "tailwind-merge": "^3.5.0"
     },
