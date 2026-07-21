@@ -21,6 +21,10 @@ export const datePickerPlaygroundSections = {
         title: 'Date range',
         description: 'Range mode with two visible months.',
     },
+    multiple: {
+        title: 'Multiple dates',
+        description: 'Multiple mode toggles individual days; value is a sorted ISO list.',
+    },
     callbacks: {
         title: 'Custom disabling',
         description: '`isDateDisabled` callback.',

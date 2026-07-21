@@ -6,6 +6,7 @@ function createPkColorInput(options: {
     value?: string;
     size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl';
     invalid?: boolean;
+    readonly?: boolean;
     disabled?: boolean;
 } = {}): ColorInputElement {
     const input = document.createElement('pk-color-input') as ColorInputElement;
@@ -20,6 +21,10 @@ function createPkColorInput(options: {
 
     if (options.invalid) {
         input.setAttribute('invalid', '');
+    }
+
+    if (options.readonly) {
+        input.setAttribute('readonly', '');
     }
 
     if (options.disabled) {
@@ -119,6 +124,7 @@ export const colorInputWebSectionRenderers: PlaygroundSectionRendererMap = {
         row.append(
             createStatefulDemo({ value: '#e64d4c' }, { showValue: false }),
             createPkColorInput({ value: '#ff', invalid: true }),
+            createPkColorInput({ value: '#64748b', readonly: true }),
             createPkColorInput({ value: '#64748b', disabled: true }),
         );
 

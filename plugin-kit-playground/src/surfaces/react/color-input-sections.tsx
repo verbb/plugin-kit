@@ -13,6 +13,7 @@ function ColorInputDemo({
     showValue?: boolean;
     size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl';
     invalid?: boolean;
+    readOnly?: boolean;
     disabled?: boolean;
 }) {
     const [value, setValue] = useState(initialValue);
@@ -75,6 +76,7 @@ export const colorInputReactSectionRenderers: PlaygroundSectionReactRendererMap 
         <div className="pg-card__inner--row">
             <ColorInputDemo initialValue="#e64d4c" showValue={false} />
             <ColorInput value="#ff" invalid />
+            <ColorInput value="#64748b" readOnly />
             <ColorInput value="#64748b" disabled />
         </div>
     ),

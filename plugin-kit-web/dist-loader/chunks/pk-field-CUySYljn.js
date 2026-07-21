@@ -5408,20 +5408,32 @@ MarkdownIt.prototype.renderInline = function(src, env) {
 	return this.renderer.render(this.parseInline(src, env), this.options, env);
 };
 //#endregion
-//#region ../plugin-kit-core/dist/plugin-kit-core.es.js
+//#region ../plugin-kit-core/dist/utils/markdown.js
 /**
-* Initialize markdown-it instance with secure defaults and common options
+* Lazily construct the markdown-it instance.
+*
+* Instantiating markdown-it at module scope is a live side effect: bundlers must
+* retain the ~2.3 MB dependency in any consumer that touches this module's graph,
+* even one that only imported a sibling util (e.g. `generateHandle`). Deferring the
+* `new MarkdownIt()` to first render keeps markdown-it out of the graph unless a
+* `render*` helper is actually called.
+*
+* markdown-it is configured with secure defaults:
 * - HTML is disabled for security
 * - Links are auto-detected
 * - Typography features like smart quotes are enabled
 * - Line breaks are converted to <br> tags
 */
-var md = new MarkdownIt({
-	html: false,
-	linkify: true,
-	typographer: true,
-	breaks: true
-});
+function createMarkdownIt() {
+	return new MarkdownIt({
+		html: false,
+		linkify: true,
+		typographer: true,
+		breaks: true
+	});
+}
+var mdInstance;
+var getMd = () => mdInstance ??= createMarkdownIt();
 /**
 * Renders markdown content as inline HTML only
 * Excludes block-level elements, only processes inline markdown syntax
@@ -5431,7 +5443,7 @@ var md = new MarkdownIt({
 */
 var renderInlineMarkdown = (content) => {
 	if (!content) return "";
-	return md.renderInline(content);
+	return getMd().renderInline(content);
 };
 //#endregion
 //#region src/utils/inline-markdown.ts

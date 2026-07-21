@@ -40,13 +40,17 @@ function toIsoValue(value) {
 		if (Number.isNaN(value.getTime())) return "";
 		return formatIsoDate(value);
 	}
-	const dateOnly = String(value).match(/^(\d{4}-\d{2}-\d{2})/);
-	return dateOnly ? dateOnly[1] : String(value);
+	const str = String(value);
+	if (str.includes("/") || str.includes(",")) return str;
+	const dateOnly = str.match(/^(\d{4}-\d{2}-\d{2})/);
+	return dateOnly ? dateOnly[1] : str;
 }
 /** React facade over `<pk-date-picker>`. Behavior and styles live in the web component. */
 var DatePicker = forwardRef(function DatePicker(props, ref) {
-	const { value, onValueChange, onPkChange, disabled, invalid, isInvalid, clearable, multiple, open, disablePast, disableFuture, withClear, required, ...rest } = props;
+	const { value, onValueChange, onPkChange, disabled, invalid, isInvalid, clearable, multiple, mode, open, disablePast, disableFuture, withClear, required, ...rest } = props;
 	const resolvedInvalid = Boolean(invalid ?? isInvalid);
+	const resolvedWithClear = withClear ?? clearable;
+	const resolvedMode = mode ?? (multiple ? "multiple" : void 0);
 	const isoValue = useMemo(() => toIsoValue(value), [value]);
 	const handlePkChange = (event) => {
 		onPkChange?.(event);
@@ -58,12 +62,11 @@ var DatePicker = forwardRef(function DatePicker(props, ref) {
 		ref,
 		...rest,
 		value: isoValue,
+		...resolvedMode ? { mode: resolvedMode } : {},
 		onPkChange: handlePkChange,
 		...trueBooleanProps([
 			"disabled",
 			"invalid",
-			"clearable",
-			"multiple",
 			"open",
 			"disablePast",
 			"disableFuture",
@@ -72,12 +75,10 @@ var DatePicker = forwardRef(function DatePicker(props, ref) {
 		], {
 			disabled,
 			invalid: resolvedInvalid,
-			clearable,
-			multiple,
 			open,
 			disablePast,
 			disableFuture,
-			withClear,
+			withClear: resolvedWithClear,
 			required
 		})
 	});

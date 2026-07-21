@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Fixed
+- Importing string/handle utils (or anything else) from the package root no longer bundles `markdown-it` (~45 kB gzip) into a consumer. `markdown-it` is now constructed lazily and the package is published as `sideEffects: false`, so it only enters a bundle when `renderMarkdown` / `renderInlineMarkdown` (or `@verbb/plugin-kit-core/utils/markdown`) is actually used.
+
+### Added
+- Granular subpath exports so consumers can cherry-pick exactly what they need: `./utils`, `./utils/string`, `./utils/handle`, `./utils/markdown`, and `./host`. The build now preserves the `src` module structure (`dist/utils/string.js`, `dist/host/index.js`, …) instead of one concatenated bundle.
+
+### Changed
+- The package main entry is now `dist/index.js` (was `dist/plugin-kit-core.es.js`). Consumers importing from `@verbb/plugin-kit-core` via the `exports` map are unaffected; anything deep-linking the old bundle filename must switch to the package root or a subpath export.
+
+### Removed
+- **Breaking:** removed the eager `export { md }` markdown-it instance (an exported pre-built instance is itself a module-level side effect that defeats tree-shaking). Use the new `getMarkdownIt()` accessor for direct markdown-it API access.
+
 ## 2.0.4 - 2026-07-21
 
 ### Changed

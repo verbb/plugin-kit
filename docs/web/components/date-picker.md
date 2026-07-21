@@ -26,6 +26,12 @@ Bound selectable days with `disable-past` / `disable-future`, weekday rules, and
 
 <ComponentPreview src="./examples/date-picker-range.preview.web.ts" />
 
+## Multiple
+
+`mode="multiple"` lets users toggle several individual dates. The panel stays open while selecting, the control shows a count summary, and the value is a comma-separated, sorted list of ISO dates.
+
+<ComponentPreview src="./examples/date-picker-multiple.preview.web.ts" />
+
 ## Date and Time
 
 Compose `pk-date-picker` with `pk-time-picker` side by side; combine the values in your app code.

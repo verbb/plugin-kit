@@ -68,6 +68,9 @@ export class PkColorInput extends PkFormAssociatedElement {
     fitCell = false;
 
     @property({ type: Boolean, reflect: true })
+    readonly = false;
+
+    @property({ type: Boolean, reflect: true })
     invalid = false;
 
     @property()
@@ -138,12 +141,21 @@ export class PkColorInput extends PkFormAssociatedElement {
     }
 
     private handleHexInput(event: Event): void {
+        // Readonly must not mutate the value even if a stray input event slips through.
+        if (this.disabled || this.readonly) {
+            return;
+        }
+
         const nextHex = sanitizeHex((event.target as HTMLInputElement).value);
         this.hexValue = nextHex;
         this.emitChange();
     }
 
     private handlePickerChange(event: Event): void {
+        if (this.disabled || this.readonly) {
+            return;
+        }
+
         const nextHex = sanitizeHex((event.target as HTMLInputElement).value);
         this.hexValue = nextHex;
         this.emitChange();
@@ -168,7 +180,7 @@ export class PkColorInput extends PkFormAssociatedElement {
                         class="swatch-picker"
                         type="color"
                         .value=${previewColor}
-                        ?disabled=${this.disabled}
+                        ?disabled=${this.disabled || this.readonly}
                         aria-label="Color picker"
                         @input=${this.handlePickerChange}
                     />
@@ -183,6 +195,7 @@ export class PkColorInput extends PkFormAssociatedElement {
                     maxlength="6"
                     .value=${this.hexValue}
                     ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
                     ?required=${this.required}
                     aria-label=${this.ariaLabel ?? nothing}
                     aria-invalid=${this.invalid ? 'true' : nothing}

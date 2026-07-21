@@ -9,6 +9,7 @@ export function ColorInputStatesExample() {
         <>
             <ColorInput value={value} onChange={setValue} />
             <ColorInput value="#ff" isInvalid />
+            <ColorInput value="#64748b" readOnly />
             <ColorInput value="#64748b" disabled />
         </>
     );

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Added
+- `DatePicker` gains `multiple` (sugar for `mode="multiple"` multi-date selection; an explicit `mode` wins) and `clearable` (sugar for the web component's `with-clear` toggle).
+- `ColorInput` accepts the `readonly` boolean (and keeps the existing `readOnly` alias) for the new read-only web-component state.
+
+### Fixed
+- `Input` re-adds the `autofocus` boolean prop that lit-react's `HTMLAttributes`-derived prop map dropped, and `EditableTable` now accepts (and swallows) `children` so it type-checks with JSX children.
+- Lockstep with `@verbb/plugin-kit-core`: importing string/handle utils from the core package root no longer pulls `markdown-it` into a consumer bundle (core is now `sideEffects: false` with lazy markdown-it and granular `./utils/*` subpath exports). No React API change.
+
 ## 2.0.4 - 2026-07-21
 
 ### Fixed

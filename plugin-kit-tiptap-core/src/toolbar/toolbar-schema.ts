@@ -213,7 +213,7 @@ function isToolbarGroupMenuButton(item: ToolbarGroupItemDefinition): item is Too
 }
 
 function groupItemDefinitionsToMenuEntries(items: ToolbarGroupItemDefinition[]): ToolbarGroupMenuEntry[] {
-    return items.flatMap((item) => {
+    return items.flatMap<ToolbarGroupMenuEntry>((item) => {
         if (isGroupItemSeparator(item)) {
             return [{ type: 'separator' as const }];
         }

@@ -211,7 +211,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
         super.willUpdate(changed);
     }
 
-    protected override firstUpdated(changed: PropertyValues): void {
+    override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.scheduleDndHydration();
     }

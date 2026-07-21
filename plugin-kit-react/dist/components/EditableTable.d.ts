@@ -68,6 +68,11 @@ export type EditableTableProps = Omit<PkEditableTableElementProps, 'onChange' | 
      */
     renderRowMenuItemsBeforeCore?: PkEditableTableGetRowMenuItems | null;
     onRowMenuSelect?: (detail: EditableTableRowMenuSelectDetail) => void;
+    /**
+     * Accepted but not forwarded — the facade projects cells via `renderCell`, not
+     * arbitrary children. Declared so it can be destructured away from element props.
+     */
+    children?: ReactNode;
 };
 /**
  * React facade over `<pk-editable-table>`.

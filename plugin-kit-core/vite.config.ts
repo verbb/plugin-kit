@@ -17,16 +17,18 @@ export default defineConfig({
     build: {
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'PluginKit',
-            fileName: (format) => `plugin-kit-core.${format}.js`,
+            formats: ['es'],
         },
         rollupOptions: {
             // Externalize dependencies that shouldn't be bundled
             external: ['markdown-it'],
             output: {
-                globals: {
-                    'markdown-it': 'MarkdownIt',
-                },
+                // Preserve the src module structure so consumers can cherry-pick
+                // subpaths (e.g. `utils/string`) and heavy deps like markdown-it
+                // only enter a bundle when the module that uses them is imported.
+                preserveModules: true,
+                preserveModulesRoot: 'src',
+                entryFileNames: '[name].js',
             },
         },
         sourcemap: true,

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+- `pk-calendar` and `pk-date-picker` gain a third `mode`, `multiple`, alongside `single` / `range`. Multi-date selection serializes as a comma-separated, deduped, ascending-sorted ISO list (e.g. `2026-01-03,2026-01-05`) for both the `value` property and the submitted form value; clicking a day toggles it and the panel stays open, with a `"N dates selected"` count summary. New `parseDateList` / `formatDateList` / `toggleDateInList` helpers in `utils/date`.
+- `pk-color-input` gains a `readonly` boolean (matching `pk-input`): the hex field is read-only, the native swatch picker is disabled, and input handlers no-op.
+
 ## 2.0.4 - 2026-07-21
 
 ### Fixed

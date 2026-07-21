@@ -2,7 +2,7 @@ import { PropertyValues } from 'lit';
 import { PkElement } from '../../base/pk-element.js';
 import { DateRange } from '../../utils/date.js';
 import { WeekdayName } from '../../utils/week-info.js';
-export type PkCalendarMode = 'single' | 'range';
+export type PkCalendarMode = 'single' | 'range' | 'multiple';
 export type PkCalendarSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 export type PkCalendarFirstDayOfWeek = 'auto' | WeekdayName;
 export type PkCalendarView = 'days' | 'months' | 'years';
@@ -66,6 +66,8 @@ export declare class PkCalendar extends PkElement {
     private syncCustomStates;
     private get resolvedLocale();
     private get resolvedToday();
+    /** Representative selected date used to anchor the view/focus across all modes. */
+    private get primarySelectedDate();
     private get resolvedFocusedDate();
     private get isDisabledMatcher();
     private get weekendDays();
@@ -74,6 +76,8 @@ export declare class PkCalendar extends PkElement {
     private syncViewAnchor;
     get valueAsDate(): Date | null;
     get valueAsRange(): DateRange;
+    /** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+    get valueAsDates(): Date[];
     focus(options?: FocusOptions): void;
     goToDate(date: string | Date): void;
     goToToday(): void;

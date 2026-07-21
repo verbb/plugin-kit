@@ -24,14 +24,14 @@ import { MirrorValidator, RequiredValidator } from '../../validators/index.js';
 import '../popup/pk-popup.js';
 import type { PkPopup, PkPopupPlacement } from '../popup/pk-popup.js';
 import { PkCalendar, type PkCalendarDayContent } from '../calendar/pk-calendar.js';
-import { coerceToDate, formatIsoDate, parseIsoDate, parseRange } from '../../utils/date.js';
+import { coerceToDate, formatIsoDate, parseDateList, parseIsoDate, parseRange } from '../../utils/date.js';
 import { formatHostDate, resolveHostLocale } from '../../utils/host-date.js';
 import { waitForPopupReposition } from '../../utils/popup-placement-animation.js';
 import { isPointerInsideOverlay } from '../../utils/popup-pointer.js';
 import { pkDatePickerStyles } from './pk-date-picker.styles.js';
 
 export type PkDatePickerSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
-export type PkDatePickerMode = 'single' | 'range';
+export type PkDatePickerMode = 'single' | 'range' | 'multiple';
 
 const CALENDAR_ICON = renderIconHtml(calendar);
 const CLEAR_ICON = renderIconHtml(xmark);
@@ -237,6 +237,7 @@ export class PkDatePicker extends PkFormAssociatedElement {
 
         if (changed.has('mode')) {
             this.setState('range', this.mode === 'range');
+            this.setState('multiple', this.mode === 'multiple');
         }
 
         super.willUpdate(changed);
@@ -252,8 +253,17 @@ export class PkDatePicker extends PkFormAssociatedElement {
         }
     }
 
+    /**
+     * `value` accepts a Date at the boundary (Formie/v1) but is normalized to an ISO
+     * string in willUpdate. Coerce defensively so string-typed consumers (form value,
+     * parseRange) never receive a Date if they read before the next update tick.
+     */
+    private get valueString(): string {
+        return this.value instanceof Date ? formatIsoDate(coerceToDate(this.value)) : this.value;
+    }
+
     protected override syncFormValue(): void {
-        this.setValue(this.value || '');
+        this.setValue(this.valueString || '');
     }
 
     protected override resetToDefaultValue(): void {
@@ -275,8 +285,18 @@ export class PkDatePicker extends PkFormAssociatedElement {
             return this.placeholder;
         }
 
+        if (this.mode === 'multiple') {
+            const count = parseDateList(this.valueString).length;
+
+            if (count === 0) {
+                return this.placeholder;
+            }
+
+            return `${count} date${count === 1 ? '' : 's'} selected`;
+        }
+
         if (this.mode === 'range') {
-            const range = parseRange(this.value);
+            const range = parseRange(this.valueString);
 
             if (range.from && range.to) {
                 return `${formatHostDate(range.from, this.resolvedLocale)} – ${formatHostDate(range.to, this.resolvedLocale)}`;
@@ -299,7 +319,12 @@ export class PkDatePicker extends PkFormAssociatedElement {
     }
 
     get valueAsRange() {
-        return parseRange(this.value);
+        return parseRange(this.valueString);
+    }
+
+    /** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+    get valueAsDates(): Date[] {
+        return this.mode === 'multiple' ? parseDateList(this.valueString) : [];
     }
 
     async show(): Promise<void> {

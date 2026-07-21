@@ -3,7 +3,7 @@ import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.j
 import { PkPopupPlacement } from '../popup/pk-popup.js';
 import { PkCalendarDayContent } from '../calendar/pk-calendar.js';
 export type PkDatePickerSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
-export type PkDatePickerMode = 'single' | 'range';
+export type PkDatePickerMode = 'single' | 'range' | 'multiple';
 /**
  * Date picker — mirrors React `DatePicker` ( `pk-date-input` API).
  *
@@ -72,6 +72,12 @@ export declare class PkDatePicker extends PkFormAssociatedElement {
     disconnectedCallback(): void;
     protected willUpdate(changed: PropertyValues): void;
     private updateDaySlots;
+    /**
+     * `value` accepts a Date at the boundary (Formie/v1) but is normalized to an ISO
+     * string in willUpdate. Coerce defensively so string-typed consumers (form value,
+     * parseRange) never receive a Date if they read before the next update tick.
+     */
+    private get valueString();
     protected syncFormValue(): void;
     protected resetToDefaultValue(): void;
     protected restoreFormState(state: string | File | FormData | null): void;
@@ -79,6 +85,8 @@ export declare class PkDatePicker extends PkFormAssociatedElement {
     private get displayText();
     get valueAsDate(): Date | null;
     get valueAsRange(): import('../../utils/date.js').DateRange;
+    /** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+    get valueAsDates(): Date[];
     show(): Promise<void>;
     hide(): Promise<void>;
     clear(): void;

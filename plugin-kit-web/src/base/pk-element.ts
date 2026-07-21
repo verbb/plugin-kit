@@ -58,7 +58,7 @@ export class PkElement extends LitElement {
             // failures without making this override async (avoids dev-mode update-queue bugs).
             // Lit may return void; keep a Promise guard for older async performUpdate paths.
             if ((result as unknown) instanceof Promise) {
-                void (result as Promise<unknown>).catch((error: unknown) => {
+                void (result as unknown as Promise<unknown>).catch((error: unknown) => {
                     this.handleRenderFailure(error);
                 });
             }

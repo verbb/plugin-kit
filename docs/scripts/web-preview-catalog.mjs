@@ -386,6 +386,7 @@ export const PREVIEW_HTML = {
     'color-input-states': `
 <pk-color-input value="#e64d4c"></pk-color-input>
 <pk-color-input value="#ff" invalid></pk-color-input>
+<pk-color-input value="#64748b" readonly></pk-color-input>
 <pk-color-input value="#64748b" disabled></pk-color-input>`.trim(),
 
     // combobox
@@ -485,6 +486,7 @@ export const PREVIEW_HTML = {
 <pk-date-picker disabled-days-of-week="sat sun" placeholder="Weekdays only"></pk-date-picker>
 <pk-date-picker min="2026-01-01" max="2026-12-31" placeholder="Within 2026"></pk-date-picker>`.trim(),
     'date-picker-range': `<pk-date-picker mode="range" months="2" label="Booking" placeholder="Select a range"></pk-date-picker>`,
+    'date-picker-multiple': `<pk-date-picker mode="multiple" value="2026-05-04,2026-05-20" label="Availability" placeholder="Select dates"></pk-date-picker>`,
     'date-picker-date-time': `
 <pk-date-picker value="2026-05-20" placeholder="Pick a date"></pk-date-picker>
 <pk-time-picker value="09:00" placeholder="Select time"></pk-time-picker>`.trim(),

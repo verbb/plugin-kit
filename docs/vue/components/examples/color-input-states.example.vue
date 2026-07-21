@@ -12,5 +12,6 @@ function onChange(event: CustomEvent<{ value: string }>) {
 <template>
     <ColorInput :value="value" @pk-change="onChange" />
     <ColorInput value="#ff" invalid />
+    <ColorInput value="#64748b" readonly />
     <ColorInput value="#64748b" disabled />
 </template>

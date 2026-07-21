@@ -20,10 +20,12 @@ import {
     isoWeekNumber,
     isSameDay,
     isSameMonth,
+    parseDateList,
     parseIsoDate,
     parseRange,
     startOfMonth,
     todayDate,
+    toggleDateInList,
     type DateRange,
 } from '../../utils/date.js';
 import {
@@ -40,7 +42,7 @@ import {
 } from '../../utils/week-info.js';
 import { pkCalendarStyles } from './pk-calendar.styles.js';
 
-export type PkCalendarMode = 'single' | 'range';
+export type PkCalendarMode = 'single' | 'range' | 'multiple';
 export type PkCalendarSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 export type PkCalendarFirstDayOfWeek = 'auto' | WeekdayName;
 export type PkCalendarView = 'days' | 'months' | 'years';
@@ -228,6 +230,7 @@ export class PkCalendar extends PkElement {
 
     private syncCustomStates(): void {
         this.toggleAttribute('data-range', this.mode === 'range');
+        this.toggleAttribute('data-multiple', this.mode === 'multiple');
         this.toggleAttribute('data-week-numbers', this.withWeekNumbers);
     }
 
@@ -239,9 +242,22 @@ export class PkCalendar extends PkElement {
         return parseIsoDate(this.today) ?? todayDate();
     }
 
+    /** Representative selected date used to anchor the view/focus across all modes. */
+    private get primarySelectedDate(): Date | null {
+        if (this.mode === 'single') {
+            return parseIsoDate(this.value);
+        }
+
+        if (this.mode === 'multiple') {
+            return parseDateList(this.value)[0] ?? null;
+        }
+
+        return parseRange(this.value).from;
+    }
+
     private get resolvedFocusedDate(): Date {
         return parseIsoDate(this.focusedDate)
-            ?? coerceToDate(this.mode === 'single' ? this.value : parseRange(this.value).from)
+            ?? coerceToDate(this.primarySelectedDate)
             ?? this.resolvedToday;
     }
 
@@ -290,6 +306,11 @@ export class PkCalendar extends PkElement {
 
     get valueAsRange(): DateRange {
         return parseRange(this.value);
+    }
+
+    /** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+    get valueAsDates(): Date[] {
+        return this.mode === 'multiple' ? parseDateList(this.value) : [];
     }
 
     focus(options?: FocusOptions): void {
@@ -422,6 +443,20 @@ export class PkCalendar extends PkElement {
             this.emitInput();
             this.emitChange();
             this.announce(formatDisplayDate(date, this.resolvedLocale));
+            return;
+        }
+
+        if (this.mode === 'multiple') {
+            // Each click toggles the day in/out of the set; the picker keeps the panel
+            // open so several dates can be chosen before dismissing.
+            const wasSelected = parseDateList(this.value).some((entry) => isSameDay(entry, date));
+            this.value = toggleDateInList(this.value, date);
+            this.focusedDate = formatIsoDate(date);
+            this.emitInput();
+            this.emitChange();
+            this.announce(
+                `${wasSelected ? 'Removed' : 'Added'} ${formatDisplayDate(date, this.resolvedLocale)}`,
+            );
             return;
         }
 
@@ -623,6 +658,8 @@ export class PkCalendar extends PkElement {
         const isDisabled = this.isDisabledMatcher(date);
         const range = parseRange(this.value);
         const selectedSingle = this.mode === 'single' && isSameDay(parseIsoDate(this.value), date);
+        const selectedMultiple = this.mode === 'multiple'
+            && parseDateList(this.value).some((entry) => isSameDay(entry, date));
         const rangeStart = this.mode === 'range' && isSameDay(range.from, date);
         const rangeEnd = this.mode === 'range' && isSameDay(range.to, date);
         const rangeInner = this.mode === 'range'
@@ -649,7 +686,7 @@ export class PkCalendar extends PkElement {
             today: isSameDay(date, this.resolvedToday),
             weekend: this.weekendDays.has(date.getDay()),
             disabled: isDisabled,
-            selected: selectedSingle || rangeStart || rangeEnd,
+            selected: selectedSingle || selectedMultiple || rangeStart || rangeEnd,
             rangeStart,
             rangeEnd,
             rangeInner: Boolean(rangeInner),
@@ -786,7 +823,7 @@ export class PkCalendar extends PkElement {
     private renderMonthsView() {
         const year = this.viewAnchor.getFullYear();
         const formatter = new Intl.DateTimeFormat(this.resolvedLocale, { month: 'long' });
-        const selectedDate = coerceToDate(this.mode === 'single' ? this.value : parseRange(this.value).from);
+        const selectedDate = this.primarySelectedDate;
         const selectedMonth = selectedDate?.getMonth();
         const rovingMonth = this.focusedMonth ?? this.resolvedFocusedDate.getMonth();
         const items = [];
@@ -830,7 +867,7 @@ export class PkCalendar extends PkElement {
     private renderYearsView() {
         const centerYear = this.viewAnchor.getFullYear();
         const decadeStart = Math.floor(centerYear / 12) * 12;
-        const selectedDate = coerceToDate(this.mode === 'single' ? this.value : parseRange(this.value).from);
+        const selectedDate = this.primarySelectedDate;
         const selectedYear = selectedDate?.getFullYear();
         const rovingYear = this.focusedYear ?? this.resolvedFocusedDate.getFullYear();
         const items = [];

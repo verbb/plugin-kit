@@ -263,6 +263,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
 		this.assumeInteractionOn = ["blur", "input"];
 		this.size = "default";
 		this.fitCell = false;
+		this.readonly = false;
 		this.invalid = false;
 		this.value = "";
 		this.defaultValue = "";
@@ -325,11 +326,13 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
 		}));
 	}
 	handleHexInput(event) {
+		if (this.disabled || this.readonly) return;
 		const nextHex = sanitizeHex(event.target.value);
 		this.hexValue = nextHex;
 		this.emitChange();
 	}
 	handlePickerChange(event) {
+		if (this.disabled || this.readonly) return;
 		const nextHex = sanitizeHex(event.target.value);
 		this.hexValue = nextHex;
 		this.emitChange();
@@ -352,7 +355,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
                         class="swatch-picker"
                         type="color"
                         .value=${previewColor}
-                        ?disabled=${this.disabled}
+                        ?disabled=${this.disabled || this.readonly}
                         aria-label="Color picker"
                         @input=${this.handlePickerChange}
                     />
@@ -367,6 +370,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
                     maxlength="6"
                     .value=${this.hexValue}
                     ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
                     ?required=${this.required}
                     aria-label=${this.ariaLabel ?? nothing}
                     aria-invalid=${this.invalid ? "true" : nothing}
@@ -385,6 +389,10 @@ __decorate([property({
 __decorate([property({
 	type: Boolean,
 	reflect: true
+})], PkColorInput.prototype, "readonly", void 0);
+__decorate([property({
+	type: Boolean,
+	reflect: true
 })], PkColorInput.prototype, "invalid", void 0);
 __decorate([property()], PkColorInput.prototype, "value", void 0);
 __decorate([property({ attribute: "default-value" })], PkColorInput.prototype, "defaultValue", void 0);
@@ -395,4 +403,4 @@ PkColorInput = __decorate([customElement("pk-color-input")], PkColorInput);
 //#endregion
 export { PkColorInput as t };
 
-//# sourceMappingURL=pk-color-input-D4L0DE5S.js.map
+//# sourceMappingURL=pk-color-input-CNnmHJJB.js.map

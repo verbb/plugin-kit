@@ -26,7 +26,7 @@ export function createPkDatePicker(options: {
     'first-day-of-week'?: string;
     'weekday-format'?: string;
     'with-outside-days'?: boolean;
-    mode?: 'single' | 'range';
+    mode?: 'single' | 'range' | 'multiple';
     months?: string;
 } = {}): DatePickerElement {
     const input = document.createElement('pk-date-picker') as DatePickerElement;

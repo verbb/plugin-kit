@@ -55,7 +55,7 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
     /** Skip drag rebinding when row identity/order is unchanged (typing shouldn't resync 195 rows). */
     private dndRowSignature;
     protected willUpdate(changed: PropertyValues): void;
-    protected firstUpdated(changed: PropertyValues): void;
+    firstUpdated(changed: PropertyValues): void;
     protected shouldUpdate(changed: PropertyValues): boolean;
     updated(changed: PropertyValues): void;
     disconnectedCallback(): void;

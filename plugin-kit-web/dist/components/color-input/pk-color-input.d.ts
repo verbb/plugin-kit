@@ -15,6 +15,7 @@ export declare class PkColorInput extends PkFormAssociatedElement {
     assumeInteractionOn: string[];
     size: PkColorInputSize;
     fitCell: boolean;
+    readonly: boolean;
     invalid: boolean;
     value: string;
     defaultValue: string;

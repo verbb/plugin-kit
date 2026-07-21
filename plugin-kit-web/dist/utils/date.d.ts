@@ -8,6 +8,15 @@ export type DateRange = {
 };
 export declare function parseRange(value: string | null | undefined): DateRange;
 export declare function formatRange(range: DateRange | null | undefined): string;
+/**
+ * Multi-date ("multiple" mode) serialization: a comma-separated list of ISO dates.
+ * Always parsed/emitted deduped and sorted ascending so the stored value is stable
+ * regardless of the order the user clicked days.
+ */
+export declare function parseDateList(value: string | null | undefined): Date[];
+export declare function formatDateList(dates: ReadonlyArray<Date | null | undefined>): string;
+/** Toggle a day in/out of a multi-date list, returning the new sorted CSV value. */
+export declare function toggleDateInList(value: string | null | undefined, date: Date): string;
 export declare function isSameDay(a: Date | null | undefined, b: Date | null | undefined): boolean;
 export declare function isSameMonth(a: Date, b: Date): boolean;
 export declare function addDays(date: Date, days: number): Date;

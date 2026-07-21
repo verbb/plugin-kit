@@ -101,6 +101,16 @@ export const datePickerWebSectionRenderers: PlaygroundSectionRendererMap = {
         }));
     },
 
+    multiple(preview) {
+        preview.classList.add('pg-demo-narrow');
+        preview.append(createStatefulDemo({
+            label: 'Availability',
+            mode: 'multiple',
+            value: '2026-05-04,2026-05-20',
+            placeholder: 'Select dates',
+        }));
+    },
+
     callbacks(preview) {
         preview.classList.add('pg-demo-narrow');
 

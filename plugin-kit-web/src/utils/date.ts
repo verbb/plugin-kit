@@ -117,6 +117,71 @@ export function formatRange(range: DateRange | null | undefined): string {
     return `${formatIsoDate(from)}/${formatIsoDate(to)}`;
 }
 
+/**
+ * Multi-date ("multiple" mode) serialization: a comma-separated list of ISO dates.
+ * Always parsed/emitted deduped and sorted ascending so the stored value is stable
+ * regardless of the order the user clicked days.
+ */
+export function parseDateList(value: string | null | undefined): Date[] {
+    if (!value) {
+        return [];
+    }
+
+    const seen = new Set<string>();
+    const dates: Date[] = [];
+
+    for (const part of value.split(',')) {
+        const date = parseIsoDate(part.trim());
+
+        if (!date) {
+            continue;
+        }
+
+        const iso = formatIsoDate(date);
+
+        if (seen.has(iso)) {
+            continue;
+        }
+
+        seen.add(iso);
+        dates.push(date);
+    }
+
+    dates.sort((a, b) => a.getTime() - b.getTime());
+
+    return dates;
+}
+
+export function formatDateList(dates: ReadonlyArray<Date | null | undefined>): string {
+    const seen = new Set<string>();
+
+    for (const date of dates) {
+        const iso = formatIsoDate(date ?? null);
+
+        if (iso) {
+            seen.add(iso);
+        }
+    }
+
+    return [...seen].sort().join(',');
+}
+
+/** Toggle a day in/out of a multi-date list, returning the new sorted CSV value. */
+export function toggleDateInList(value: string | null | undefined, date: Date): string {
+    const iso = formatIsoDate(date);
+
+    if (!iso) {
+        return value ?? '';
+    }
+
+    const existing = parseDateList(value);
+    const next = existing.some((entry) => isSameDay(entry, date))
+        ? existing.filter((entry) => !isSameDay(entry, date))
+        : [...existing, date];
+
+    return formatDateList(next);
+}
+
 export function isSameDay(a: Date | null | undefined, b: Date | null | undefined): boolean {
     if (!a || !b) {
         return false;

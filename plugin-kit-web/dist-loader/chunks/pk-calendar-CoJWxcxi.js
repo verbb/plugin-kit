@@ -64,6 +64,40 @@ function formatRange(range) {
 	if (!from && to) return formatIsoDate(to);
 	return `${formatIsoDate(from)}/${formatIsoDate(to)}`;
 }
+/**
+* Multi-date ("multiple" mode) serialization: a comma-separated list of ISO dates.
+* Always parsed/emitted deduped and sorted ascending so the stored value is stable
+* regardless of the order the user clicked days.
+*/
+function parseDateList(value) {
+	if (!value) return [];
+	const seen = /* @__PURE__ */ new Set();
+	const dates = [];
+	for (const part of value.split(",")) {
+		const date = parseIsoDate(part.trim());
+		if (!date) continue;
+		const iso = formatIsoDate(date);
+		if (seen.has(iso)) continue;
+		seen.add(iso);
+		dates.push(date);
+	}
+	dates.sort((a, b) => a.getTime() - b.getTime());
+	return dates;
+}
+function formatDateList(dates) {
+	const seen = /* @__PURE__ */ new Set();
+	for (const date of dates) {
+		const iso = formatIsoDate(date ?? null);
+		if (iso) seen.add(iso);
+	}
+	return [...seen].sort().join(",");
+}
+/** Toggle a day in/out of a multi-date list, returning the new sorted CSV value. */
+function toggleDateInList(value, date) {
+	if (!formatIsoDate(date)) return value ?? "";
+	const existing = parseDateList(value);
+	return formatDateList(existing.some((entry) => isSameDay(entry, date)) ? existing.filter((entry) => !isSameDay(entry, date)) : [...existing, date]);
+}
 function isSameDay(a, b) {
 	if (!a || !b) return false;
 	return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
@@ -802,6 +836,7 @@ var PkCalendar = class PkCalendar extends PkElement {
 	}
 	syncCustomStates() {
 		this.toggleAttribute("data-range", this.mode === "range");
+		this.toggleAttribute("data-multiple", this.mode === "multiple");
 		this.toggleAttribute("data-week-numbers", this.withWeekNumbers);
 	}
 	get resolvedLocale() {
@@ -810,8 +845,14 @@ var PkCalendar = class PkCalendar extends PkElement {
 	get resolvedToday() {
 		return parseIsoDate(this.today) ?? todayDate();
 	}
+	/** Representative selected date used to anchor the view/focus across all modes. */
+	get primarySelectedDate() {
+		if (this.mode === "single") return parseIsoDate(this.value);
+		if (this.mode === "multiple") return parseDateList(this.value)[0] ?? null;
+		return parseRange(this.value).from;
+	}
 	get resolvedFocusedDate() {
-		return parseIsoDate(this.focusedDate) ?? coerceToDate(this.mode === "single" ? this.value : parseRange(this.value).from) ?? this.resolvedToday;
+		return parseIsoDate(this.focusedDate) ?? coerceToDate(this.primarySelectedDate) ?? this.resolvedToday;
 	}
 	get isDisabledMatcher() {
 		return buildDisabledMatcher({
@@ -845,6 +886,10 @@ var PkCalendar = class PkCalendar extends PkElement {
 	}
 	get valueAsRange() {
 		return parseRange(this.value);
+	}
+	/** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+	get valueAsDates() {
+		return this.mode === "multiple" ? parseDateList(this.value) : [];
 	}
 	focus(options) {
 		const selector = this.view === "days" ? ".day.is-roving" : this.view === "months" ? ".view-item.is-roving" : ".view-item.is-roving";
@@ -912,6 +957,15 @@ var PkCalendar = class PkCalendar extends PkElement {
 			this.emitInput();
 			this.emitChange();
 			this.announce(formatDisplayDate(date, this.resolvedLocale));
+			return;
+		}
+		if (this.mode === "multiple") {
+			const wasSelected = parseDateList(this.value).some((entry) => isSameDay(entry, date));
+			this.value = toggleDateInList(this.value, date);
+			this.focusedDate = formatIsoDate(date);
+			this.emitInput();
+			this.emitChange();
+			this.announce(`${wasSelected ? "Removed" : "Added"} ${formatDisplayDate(date, this.resolvedLocale)}`);
 			return;
 		}
 		if (!this.rangeAnchor) {
@@ -1051,6 +1105,7 @@ var PkCalendar = class PkCalendar extends PkElement {
 		const isDisabled = this.isDisabledMatcher(date);
 		const range = parseRange(this.value);
 		const selectedSingle = this.mode === "single" && isSameDay(parseIsoDate(this.value), date);
+		const selectedMultiple = this.mode === "multiple" && parseDateList(this.value).some((entry) => isSameDay(entry, date));
 		const rangeStart = this.mode === "range" && isSameDay(range.from, date);
 		const rangeEnd = this.mode === "range" && isSameDay(range.to, date);
 		const rangeInner = this.mode === "range" && range.from && range.to && date.getTime() > range.from.getTime() && date.getTime() < range.to.getTime();
@@ -1069,7 +1124,7 @@ var PkCalendar = class PkCalendar extends PkElement {
 			today: isSameDay(date, this.resolvedToday),
 			weekend: this.weekendDays.has(date.getDay()),
 			disabled: isDisabled,
-			selected: selectedSingle || rangeStart || rangeEnd,
+			selected: selectedSingle || selectedMultiple || rangeStart || rangeEnd,
 			rangeStart,
 			rangeEnd,
 			rangeInner: Boolean(rangeInner),
@@ -1169,7 +1224,7 @@ var PkCalendar = class PkCalendar extends PkElement {
 	renderMonthsView() {
 		const year = this.viewAnchor.getFullYear();
 		const formatter = new Intl.DateTimeFormat(this.resolvedLocale, { month: "long" });
-		const selectedMonth = coerceToDate(this.mode === "single" ? this.value : parseRange(this.value).from)?.getMonth();
+		const selectedMonth = this.primarySelectedDate?.getMonth();
 		const rovingMonth = this.focusedMonth ?? this.resolvedFocusedDate.getMonth();
 		const items = [];
 		for (let monthIndex = 0; monthIndex < 12; monthIndex += 1) {
@@ -1208,7 +1263,7 @@ var PkCalendar = class PkCalendar extends PkElement {
 	renderYearsView() {
 		const centerYear = this.viewAnchor.getFullYear();
 		const decadeStart = Math.floor(centerYear / 12) * 12;
-		const selectedYear = coerceToDate(this.mode === "single" ? this.value : parseRange(this.value).from)?.getFullYear();
+		const selectedYear = this.primarySelectedDate?.getFullYear();
 		const rovingYear = this.focusedYear ?? this.resolvedFocusedDate.getFullYear();
 		const items = [];
 		for (let offset = 0; offset < 12; offset += 1) {
@@ -1400,4 +1455,4 @@ __decorate([r()], PkCalendar.prototype, "focusedYear", void 0);
 __decorate([r()], PkCalendar.prototype, "daySlotNames", void 0);
 PkCalendar = __decorate([t("pk-calendar")], PkCalendar);
 //#endregion
-export { parseRange as a, parseIsoDate as i, coerceToDate as n, formatIsoDate as r, PkCalendar as t };
+export { parseIsoDate as a, parseDateList as i, coerceToDate as n, parseRange as o, formatIsoDate as r, PkCalendar as t };

@@ -12,7 +12,7 @@ import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfter
 import { i as waitForPopupReposition } from "./popup-placement-animation-BPjq650B.js";
 import "./pk-popup-BYFbKaHH.js";
 import { n as isPointerInsideOverlay } from "./popup-pointer-BTS3Y6LE.js";
-import { a as parseRange, i as parseIsoDate, n as coerceToDate, r as formatIsoDate } from "./pk-calendar-Ir5izQJH.js";
+import { a as parseIsoDate, i as parseDateList, n as coerceToDate, o as parseRange, r as formatIsoDate } from "./pk-calendar-CoJWxcxi.js";
 //#region src/utils/host-date.ts
 function getCraft() {
 	return globalThis.Craft;
@@ -372,15 +372,26 @@ var PkDatePicker = class PkDatePicker extends PkFormAssociatedElement {
 			this.setState("open", this.open);
 			this.controlElement?.toggleAttribute("data-popup-open", this.open);
 		}
-		if (changed.has("mode")) this.setState("range", this.mode === "range");
+		if (changed.has("mode")) {
+			this.setState("range", this.mode === "range");
+			this.setState("multiple", this.mode === "multiple");
+		}
 		super.willUpdate(changed);
 	}
 	updateDaySlots() {
 		const names = [...this.children].map((child) => child.getAttribute("slot")).filter((name) => Boolean(name?.startsWith("day-")));
 		if (names.join(",") !== this.daySlotNames.join(",")) this.daySlotNames = names;
 	}
+	/**
+	* `value` accepts a Date at the boundary (Formie/v1) but is normalized to an ISO
+	* string in willUpdate. Coerce defensively so string-typed consumers (form value,
+	* parseRange) never receive a Date if they read before the next update tick.
+	*/
+	get valueString() {
+		return this.value instanceof Date ? formatIsoDate(coerceToDate(this.value)) : this.value;
+	}
 	syncFormValue() {
-		this.setValue(this.value || "");
+		this.setValue(this.valueString || "");
 	}
 	resetToDefaultValue() {
 		this.value = this.defaultValue;
@@ -393,8 +404,13 @@ var PkDatePicker = class PkDatePicker extends PkFormAssociatedElement {
 	}
 	get displayText() {
 		if (!this.value) return this.placeholder;
+		if (this.mode === "multiple") {
+			const count = parseDateList(this.valueString).length;
+			if (count === 0) return this.placeholder;
+			return `${count} date${count === 1 ? "" : "s"} selected`;
+		}
 		if (this.mode === "range") {
-			const range = parseRange(this.value);
+			const range = parseRange(this.valueString);
 			if (range.from && range.to) return `${formatHostDate(range.from, this.resolvedLocale)} – ${formatHostDate(range.to, this.resolvedLocale)}`;
 			if (range.from) return formatHostDate(range.from, this.resolvedLocale);
 			return this.placeholder;
@@ -406,7 +422,11 @@ var PkDatePicker = class PkDatePicker extends PkFormAssociatedElement {
 		return this.mode === "single" ? parseIsoDate(this.value) : null;
 	}
 	get valueAsRange() {
-		return parseRange(this.value);
+		return parseRange(this.valueString);
+	}
+	/** Sorted, deduped selection for `multiple` mode (empty otherwise). */
+	get valueAsDates() {
+		return this.mode === "multiple" ? parseDateList(this.valueString) : [];
 	}
 	async show() {
 		await this.openPanel();

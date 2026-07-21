@@ -21,7 +21,7 @@ type DatePickerDemoProps = {
     firstDayOfWeek?: string;
     weekdayFormat?: string;
     withOutsideDays?: boolean;
-    mode?: 'single' | 'range';
+    mode?: 'single' | 'range' | 'multiple';
     months?: string;
     isDateDisabled?: (date: Date) => boolean;
 };
@@ -148,6 +148,17 @@ export const datePickerReactSectionRenderers: PlaygroundSectionReactRendererMap 
                 mode="range"
                 months="2"
                 placeholder="Select a range"
+            />
+        </div>
+    ),
+
+    multiple: () => (
+        <div className="pg-demo-narrow">
+            <DatePickerDemo
+                label="Availability"
+                mode="multiple"
+                initialValue="2026-05-04,2026-05-20"
+                placeholder="Select dates"
             />
         </div>
     ),

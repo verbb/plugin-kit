@@ -2,8 +2,9 @@
     "name": "@verbb/plugin-kit-core",
     "version": "2.0.4",
     "type": "module",
-    "main": "dist/plugin-kit-core.es.js",
-    "module": "dist/plugin-kit-core.es.js",
+    "sideEffects": false,
+    "main": "dist/index.js",
+    "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
         "dist",
@@ -28,7 +29,27 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/plugin-kit-core.es.js"
+            "import": "./dist/index.js"
+        },
+        "./utils": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js"
+        },
+        "./utils/string": {
+            "types": "./dist/utils/string.d.ts",
+            "import": "./dist/utils/string.js"
+        },
+        "./utils/handle": {
+            "types": "./dist/utils/handle.d.ts",
+            "import": "./dist/utils/handle.js"
+        },
+        "./utils/markdown": {
+            "types": "./dist/utils/markdown.d.ts",
+            "import": "./dist/utils/markdown.js"
+        },
+        "./host": {
+            "types": "./dist/host/index.d.ts",
+            "import": "./dist/host/index.js"
         },
         "./eslint/*": "./dist/eslint/*",
         "./prettier/*": "./dist/prettier/*",

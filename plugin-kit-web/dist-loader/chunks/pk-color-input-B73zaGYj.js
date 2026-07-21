@@ -260,6 +260,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
 		this.assumeInteractionOn = ["blur", "input"];
 		this.size = "default";
 		this.fitCell = false;
+		this.readonly = false;
 		this.invalid = false;
 		this.value = "";
 		this.defaultValue = "";
@@ -322,11 +323,13 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
 		}));
 	}
 	handleHexInput(event) {
+		if (this.disabled || this.readonly) return;
 		const nextHex = sanitizeHex(event.target.value);
 		this.hexValue = nextHex;
 		this.emitChange();
 	}
 	handlePickerChange(event) {
+		if (this.disabled || this.readonly) return;
 		const nextHex = sanitizeHex(event.target.value);
 		this.hexValue = nextHex;
 		this.emitChange();
@@ -349,7 +352,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
                         class="swatch-picker"
                         type="color"
                         .value=${previewColor}
-                        ?disabled=${this.disabled}
+                        ?disabled=${this.disabled || this.readonly}
                         aria-label="Color picker"
                         @input=${this.handlePickerChange}
                     />
@@ -364,6 +367,7 @@ var PkColorInput = class PkColorInput extends PkFormAssociatedElement {
                     maxlength="6"
                     .value=${this.hexValue}
                     ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
                     ?required=${this.required}
                     aria-label=${this.ariaLabel ?? A}
                     aria-invalid=${this.invalid ? "true" : A}
@@ -379,6 +383,10 @@ __decorate([n({
 	reflect: true,
 	attribute: "fit-cell"
 })], PkColorInput.prototype, "fitCell", void 0);
+__decorate([n({
+	type: Boolean,
+	reflect: true
+})], PkColorInput.prototype, "readonly", void 0);
 __decorate([n({
 	type: Boolean,
 	reflect: true

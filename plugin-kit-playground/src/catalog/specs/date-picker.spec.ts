@@ -15,6 +15,7 @@ export const datePickerPlaygroundSpec: PlaygroundSpec = {
         { id: 'states', overflowVisible: true, ...datePickerPlaygroundSections.states },
         { id: 'constraints', overflowVisible: true, ...datePickerPlaygroundSections.constraints },
         { id: 'range', overflowVisible: true, ...datePickerPlaygroundSections.range },
+        { id: 'multiple', overflowVisible: true, ...datePickerPlaygroundSections.multiple },
         { id: 'callbacks', overflowVisible: true, ...datePickerPlaygroundSections.callbacks },
     ],
 };

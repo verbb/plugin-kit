@@ -33,6 +33,10 @@ export type DatePickerProps = Omit<PkDatePickerElementProps, 'value' | 'onPkChan
      */
     onValueChange?: (value: Date | undefined) => void;
     onPkChange?: PkDatePickerElementProps['onPkChange'];
+    /** Sugar for the CE `with-clear` toggle. */
+    clearable?: boolean;
+    /** Sugar for the CE `mode="multiple"` (multi-date selection). Explicit `mode` wins. */
+    multiple?: boolean;
 };
 
 /** Local YYYY-MM-DD — keep facade free of non-exported kit util paths. */
@@ -77,9 +81,17 @@ function toIsoValue(value: string | Date | null | undefined): string {
         return formatIsoDate(value);
     }
 
-    const dateOnly = String(value).match(/^(\d{4}-\d{2}-\d{2})/);
+    const str = String(value);
 
-    return dateOnly ? dateOnly[1] : String(value);
+    // Range (`from/to`) and multiple (`a,b,c`) values are already CE-formatted ISO lists —
+    // pass them through untouched. Only a lone date(time) gets trimmed to `YYYY-MM-DD`.
+    if (str.includes('/') || str.includes(',')) {
+        return str;
+    }
+
+    const dateOnly = str.match(/^(\d{4}-\d{2}-\d{2})/);
+
+    return dateOnly ? dateOnly[1] : str;
 }
 
 /** React facade over `<pk-date-picker>`. Behavior and styles live in the web component. */
@@ -93,6 +105,7 @@ export const DatePicker = forwardRef<PkDatePicker, DatePickerProps>(function Dat
         isInvalid,
         clearable,
         multiple,
+        mode,
         open,
         disablePast,
         disableFuture,
@@ -103,16 +116,23 @@ export const DatePicker = forwardRef<PkDatePicker, DatePickerProps>(function Dat
 
     // Docs / Formie often pass `isInvalid`; Lit property is `invalid`.
     const resolvedInvalid = Boolean(invalid ?? isInvalid);
+    // `clearable` is the legacy/docs name for the CE's `with-clear` toggle — the CE
+    // exposes a single `withClear` property (same convention as pk-input), so fold them.
+    const resolvedWithClear = withClear ?? clearable;
+    // `multiple` is sugar for the CE's `mode="multiple"`; an explicit `mode` wins.
+    const resolvedMode = mode ?? (multiple ? 'multiple' : undefined);
     const isoValue = useMemo(() => toIsoValue(value), [value]);
 
-    const handlePkChange = (event: CustomEvent<{ value?: string }>) => {
+    // Element event map types `onPkChange` as `(e: Event) => void`; widen at the boundary
+    // and read the CustomEvent detail after a local cast.
+    const handlePkChange = (event: Event) => {
         onPkChange?.(event as never);
 
         if (!onValueChange) {
             return;
         }
 
-        const next = event.detail?.value;
+        const next = (event as CustomEvent<{ value?: string }>).detail?.value;
         onValueChange(next ? (parseIsoDate(next) ?? undefined) : undefined);
     };
 
@@ -121,13 +141,12 @@ export const DatePicker = forwardRef<PkDatePicker, DatePickerProps>(function Dat
             ref={ref}
             {...rest}
             value={isoValue}
+            {...(resolvedMode ? { mode: resolvedMode } : {})}
             onPkChange={handlePkChange}
             {...trueBooleanProps(
                 [
                     'disabled',
                     'invalid',
-                    'clearable',
-                    'multiple',
                     'open',
                     'disablePast',
                     'disableFuture',
@@ -137,12 +156,10 @@ export const DatePicker = forwardRef<PkDatePicker, DatePickerProps>(function Dat
                 {
                     disabled,
                     invalid: resolvedInvalid,
-                    clearable,
-                    multiple,
                     open,
                     disablePast,
                     disableFuture,
-                    withClear,
+                    withClear: resolvedWithClear,
                     required,
                 },
             )}

@@ -8,6 +8,7 @@ export default defineWebPreview({
     html: `
 <pk-color-input value="#e64d4c"></pk-color-input>
 <pk-color-input value="#ff" invalid></pk-color-input>
+<pk-color-input value="#64748b" readonly></pk-color-input>
 <pk-color-input value="#64748b" disabled></pk-color-input>
 `.trim(),
 });

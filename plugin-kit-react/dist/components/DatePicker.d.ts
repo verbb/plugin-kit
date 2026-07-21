@@ -22,6 +22,10 @@ export type DatePickerProps = Omit<PkDatePickerElementProps, 'value' | 'onPkChan
      */
     onValueChange?: (value: Date | undefined) => void;
     onPkChange?: PkDatePickerElementProps['onPkChange'];
+    /** Sugar for the CE `with-clear` toggle. */
+    clearable?: boolean;
+    /** Sugar for the CE `mode="multiple"` (multi-date selection). Explicit `mode` wins. */
+    multiple?: boolean;
 };
 /** React facade over `<pk-date-picker>`. Behavior and styles live in the web component. */
 export declare const DatePicker: React.ForwardRefExoticComponent<Omit<DatePickerProps, "ref"> & React.RefAttributes<PkDatePicker>>;

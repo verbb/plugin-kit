@@ -22,6 +22,8 @@ type PkColorInputElementProps = React.ComponentProps<typeof PkColorInputElement>
 export type ColorInputProps = Omit<PkColorInputElementProps, 'onChange'> & {
     /** React alias for the CE `invalid` boolean attribute. */
     isInvalid?: boolean;
+    /** CE `readonly` boolean. Declared explicitly so it survives lit-react's prop mapping. */
+    readonly?: boolean;
     /** React/Formie alias for the Lit `readonly` property. */
     readOnly?: boolean;
     /**

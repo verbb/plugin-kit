@@ -22,6 +22,6 @@ The color input should scale cleanly across the shared size system.
 
 ## States
 
-Show invalid and disabled states when the color value participates in form validation.
+Show invalid, read-only, and disabled states when the color value participates in form validation. A read-only input keeps its value visible and copyable but blocks edits to both the swatch and hex field.
 
 <ComponentPreview src="./examples/color-input-states.preview.tsx" />

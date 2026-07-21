@@ -20,8 +20,12 @@ const PkInputElement = createPluginKitComponent({
 
 type PkInputElementProps = React.ComponentProps<typeof PkInputElement>;
 
+// lit-react derives props from `HTMLAttributes` (React spells it `autoFocus`), so the
+// CE's lowercase `autofocus` property is dropped from the generated prop map — re-add it.
+export type InputProps = PkInputElementProps & { autofocus?: boolean };
+
 /** React facade over `<pk-input>`. Behavior and styles live in the web component. */
-export const Input = forwardRef<PkInput, PkInputElementProps>(function Input(props, ref) {
+export const Input = forwardRef<PkInput, InputProps>(function Input(props, ref) {
     const {
         disabled, readonly, invalid, fitCell, autofocus, mono, ...rest
     } = props;
@@ -39,5 +43,4 @@ export const Input = forwardRef<PkInput, PkInputElementProps>(function Input(pro
 
 Input.displayName = 'Input';
 
-export type InputProps = PkInputElementProps;
 export type { PkInputSize };

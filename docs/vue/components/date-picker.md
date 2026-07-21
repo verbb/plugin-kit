@@ -26,6 +26,12 @@ Bound selectable days with `disablePast` / `disableFuture`, weekday rules, and `
 
 <ComponentPreview src="./examples/date-picker-range.preview.vue.ts" />
 
+## Multiple
+
+`mode="multiple"` lets users toggle several individual dates. The panel stays open while selecting, the control shows a count summary, and the value is a comma-separated, sorted list of ISO dates.
+
+<ComponentPreview src="./examples/date-picker-multiple.preview.vue.ts" />
+
 ## Date and Time
 
 Compose `DatePicker` with `TimePicker` side by side; combine the values in your app code.
