@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.4 - 2026-07-21
+
 ### Fixed
 - Slotted light-DOM labels on dropdown items (and related slotty hosts) no longer inherit Craft CP / page line-height via `font: inherit`. `:host` pins size-token `font-size` / `line-height` / `color` so the same `size` looks identical under tight Craft metrics and comfortable Tailwind metrics. Also covers `pk-dropdown-label`, `pk-option`, `pk-tab`, and `pk-button` slotted labels.
 

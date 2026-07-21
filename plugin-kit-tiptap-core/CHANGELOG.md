@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.4 - 2026-07-21
+
+### Changed
+- Released alongside `@verbb/plugin-kit-react` to keep package versions aligned.
+
 ## 2.0.3 - 2026-07-19
 
 ### Changed

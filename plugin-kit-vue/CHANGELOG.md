@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.4 - 2026-07-21
+
 ### Fixed
 - Slotted menu/button/option/tab labels inherit kit size-token type metrics from the web-component host (lockstep with `@verbb/plugin-kit-web` slotted-host fix). No Vue API change.
 
