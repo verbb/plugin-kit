@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Security
+- Lockstep with `@verbb/plugin-kit-core`: bumped the transitive `markdown-it` to `^14.3.0` (pulling patched `markdown-it` GHSA-6v5v-wf23-fmfq and `linkify-it` 5.0.2 GHSA-22p9-wv53-3rq4, both ReDoS advisories). Only affects consumers using the markdown renderer; no React API change.
+
 ## 2.0.5 - 2026-07-21
 
 ### Added
