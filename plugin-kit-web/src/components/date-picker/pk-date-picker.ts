@@ -20,7 +20,9 @@ import {
 import { HasSlotController } from '../../internal/has-slot.js';
 import { readLegacyInstructions } from '../../internal/field-labels.js';
 import { MirrorValidator, RequiredValidator } from '../../validators/index.js';
-import { PkPopup, type PkPopupPlacement } from '../popup/pk-popup.js';
+// Keep the internal element registered when production builds erase type-only imports.
+import '../popup/pk-popup.js';
+import type { PkPopup, PkPopupPlacement } from '../popup/pk-popup.js';
 import { PkCalendar, type PkCalendarDayContent } from '../calendar/pk-calendar.js';
 import { coerceToDate, formatIsoDate, parseIsoDate, parseRange } from '../../utils/date.js';
 import { formatHostDate, resolveHostLocale } from '../../utils/host-date.js';

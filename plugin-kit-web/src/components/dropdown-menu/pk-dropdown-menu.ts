@@ -14,7 +14,9 @@ import {
 import { resolveElementById } from '../../internal/resolve-element-by-id.js';
 import { animateWithClass } from '../../utils/animate-with-class.js';
 import { waitForPopupReposition } from '../../utils/popup-placement-animation.js';
-import { PkPopup, type PkPopupPlacement } from '../popup/pk-popup.js';
+// Keep the internal element registered when production builds erase type-only imports.
+import '../popup/pk-popup.js';
+import type { PkPopup, PkPopupPlacement } from '../popup/pk-popup.js';
 import { PkDropdownItem } from './pk-dropdown-item.js';
 import { pkDropdownMenuStyles } from './pk-dropdown-menu.styles.js';
 

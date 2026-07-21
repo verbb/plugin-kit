@@ -1,8 +1,8 @@
 import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
-import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
-import { t as HasSlotController } from "../../chunks/has-slot-BGJeJdHr.js";
-import { n as readLegacyInstructions, t as hasInstructionContent } from "../../chunks/field-labels-D3lKQ2nq.js";
+import { t as RequiredValidator } from "../../chunks/required-validator-DXqqPVeW.js";
+import { t as HasSlotController } from "../../chunks/has-slot-BZDcCpf9.js";
+import { n as readLegacyInstructions, t as hasInstructionContent } from "../../chunks/field-labels-Vo3wHq49.js";
 //#region src/components/radio-group/pk-radio-group.styles.ts
 var pkRadioGroupStyles = i`
     @layer pk-component {

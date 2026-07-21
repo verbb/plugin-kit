@@ -1,6 +1,6 @@
 import { m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { a as HostAriaMirror, c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-Dwakbyx5.js";
+import { n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-BNc-ksl1.js";
 //#region src/components/input-group/pk-input-group.styles.ts
 var pkInputGroupStyles = [
 	buttonGroupCornerRoleStyles(),

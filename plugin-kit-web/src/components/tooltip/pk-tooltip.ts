@@ -12,7 +12,9 @@ import {
     PkHideEvent,
     PkShowEvent,
 } from '../../events/overlay-lifecycle.js';
-import { PkPopup, type PkPopupPlacement } from '../popup/pk-popup.js';
+// Keep the internal element registered when production builds erase type-only imports.
+import '../popup/pk-popup.js';
+import type { PkPopup, PkPopupPlacement } from '../popup/pk-popup.js';
 import { syncPopupPlacementAnimation, waitForPopupReposition, getPopupSide } from '../../utils/popup-placement-animation.js';
 import { pkTooltipStyles } from './pk-tooltip.styles.js';
 

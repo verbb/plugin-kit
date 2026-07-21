@@ -13,7 +13,7 @@ export type PkDropdownItemType = 'normal' | 'checkbox' | 'radio';
  * @csspart prefix - Leading icon wrapper (hidden when empty)
  */
 export declare class PkDropdownItem extends PkElement {
-    static styles: any[];
+    static styles: import('lit').CSSResult[];
     value: string;
     type: PkDropdownItemType;
     radioGroup: string;

@@ -1,7 +1,7 @@
 import { l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, i as createVariableTagDomNodeView, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-DAH_90Fi.js";
+import { k as Editor } from "../../chunks/tiptap-_LAjdgeV.js";
+import { A as createTiptapExtensions, i as createVariableTagDomNodeView, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-CDjt6Iz4.js";
 //#region src/components/tiptap/pk-tiptap-content.styles.ts
 var pkTiptapContentStyles = i`
     @layer pk-component {

@@ -59,7 +59,6 @@ export default defineConfig({
         DtsPlugin({
             insertTypesEntry: true,
             rollupTypes: false,
-            exclude: ['src/components/_legacy/**'],
         }),
         emitPluginKitStyles('dist'),
     ],

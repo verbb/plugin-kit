@@ -1,6 +1,6 @@
 import { m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { n as buttonGroupCornerRadiusStyles } from "../../chunks/button-group-item.styles-Dwakbyx5.js";
+import { n as buttonGroupCornerRadiusStyles } from "../../chunks/button-group-item.styles-BNc-ksl1.js";
 //#region src/components/button-group/pk-button-group-text.styles.ts
 var pkButtonGroupTextStyles = [buttonGroupCornerRadiusStyles(".text", "var(--pk-radius-lg)"), i`
         @layer pk-component {
