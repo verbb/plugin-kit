@@ -2,12 +2,12 @@ import { c as r, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-DEz3BsbN.js";
 import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-CHXb-wYU.js";
-//#region node_modules/@verbb/plugin-kit-codemirror-core/dist/constants.js
+//#region ../plugin-kit-codemirror-core/dist/constants.js
 function computeCodeEditorMinHeight(rows = 12) {
 	return `${Math.max(Number(rows) || 12, 4) * 18 + 12}px`;
 }
 //#endregion
-//#region node_modules/@verbb/plugin-kit-codemirror-core/dist/languages.js
+//#region ../plugin-kit-codemirror-core/dist/languages.js
 function languageUsesSyntaxHelpers(language) {
 	return language !== "text";
 }
@@ -21,7 +21,7 @@ function createLanguageExtension(language) {
 	}
 }
 //#endregion
-//#region node_modules/@verbb/plugin-kit-codemirror-core/dist/theme.js
+//#region ../plugin-kit-codemirror-core/dist/theme.js
 /** Editor content surface — matches @uiw/react-codemirror default light theme. */
 var CODE_EDITOR_SURFACE_BG = "#ffffff";
 /** Gutter strip beside line numbers. */
@@ -71,7 +71,7 @@ var codeEditorTheme = EditorView.theme({
 	".cm-selectionBackground, &.cm-focused .cm-selectionBackground, ::selection": { backgroundColor: `rgba(59, 130, 246, 0.35) !important` }
 });
 //#endregion
-//#region node_modules/@verbb/plugin-kit-codemirror-core/dist/extensions.js
+//#region ../plugin-kit-codemirror-core/dist/extensions.js
 function createEditorSetupExtensions(language, showLineNumbers) {
 	const usesSyntaxHelpers = languageUsesSyntaxHelpers(language);
 	const extensions = [
@@ -118,7 +118,7 @@ function createCodeEditorExtensions({ language = "html", tabSize = 4, lineNumber
 	return extensions;
 }
 //#endregion
-//#region node_modules/@verbb/plugin-kit-codemirror-core/dist/host.js
+//#region ../plugin-kit-codemirror-core/dist/host.js
 var CodeMirrorHost = class {
 	view = null;
 	editableCompartment = new Compartment();
