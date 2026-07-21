@@ -3,9 +3,9 @@
  * Release Plugin Kit v2 packages in lockstep.
  *
  * CHANGELOG.md is the source of truth. While developing, add entries under
- * `## Unreleased` in plugin-kit-react/CHANGELOG.md (and the other package
- * changelogs when there are package-specific changes). Empty sibling
- * changelogs get a lockstep “released alongside” note.
+ * `## Unreleased` in whichever package changelog(s) actually changed. The
+ * release is gated on at least one package having Unreleased entries; every
+ * empty sibling changelog gets a lockstep “released alongside” note.
  *
  * Usage (from plugin-kit-repo/):
  *   npm run release:patch
@@ -38,9 +38,6 @@ const packageDirs = [
 ];
 
 const packages = packageDirs.map((dir) => `@verbb/${dir}`);
-
-/** React remains the required Unreleased changelog (same SoT as v1). */
-const primaryChangelogDir = 'plugin-kit-react';
 
 /** Canonical version source for the lockstep bump (was plugin-kit in v1). */
 const versionSourceDir = 'plugin-kit-web';
@@ -170,7 +167,7 @@ const hasMeaningfulChangelogBody = (body) => {
 
 const lockstepBody = () => (
     '### Changed\n'
-    + '- Released alongside `@verbb/plugin-kit-react` to keep package versions aligned.\n'
+    + '- Released alongside the other `@verbb/plugin-kit-*` packages to keep versions aligned.\n'
 );
 
 const finalizeChangelogContent = (content, version, date, { requireContent = true, label = 'CHANGELOG.md' } = {}) => {
@@ -292,16 +289,27 @@ if (!dryRun) {
     console.log('Dry run: skipping clean-tree check, version bump, changelog writes, publish, and commit.');
 }
 
-const primaryChangelog = readChangelog(changelogUrl(primaryChangelogDir));
 const changelogContents = Object.fromEntries(
     packageDirs.map((dir) => [dir, readChangelog(changelogUrl(dir))]),
 );
 
-if (!publishCurrent && !hasMeaningfulChangelogBody(extractUnreleasedBody(primaryChangelog))) {
-    console.error(
-        `Release aborted: add entries under \`## Unreleased\` in ${primaryChangelogDir}/CHANGELOG.md first.`,
-    );
-    process.exit(1);
+// Gate on Unreleased entries in ANY package rather than one fixed changelog, so a
+// change scoped to e.g. plugin-kit-core alone can still cut a lockstep release.
+// Empty siblings pick up the "released alongside" note at finalize time.
+if (!publishCurrent) {
+    const dirsWithEntries = packageDirs.filter((dir) => (
+        hasMeaningfulChangelogBody(extractUnreleasedBody(changelogContents[dir]))
+    ));
+
+    if (dirsWithEntries.length === 0) {
+        console.error(
+            'Release aborted: add entries under `## Unreleased` in at least one package '
+            + `CHANGELOG.md first (checked: ${packageDirs.join(', ')}).`,
+        );
+        process.exit(1);
+    }
+
+    console.log(`Unreleased changelog entries found in: ${dirsWithEntries.join(', ')}`);
 }
 
 try {
@@ -374,7 +382,9 @@ try {
         writeChangelog(
             changelogUrl(dir),
             finalizeChangelogContent(changelogContents[dir], version, date, {
-                requireContent: dir === primaryChangelogDir,
+                // The any-package gate above guarantees at least one changelog has
+                // real entries; each empty one falls back to the lockstep note.
+                requireContent: false,
                 label: `${dir}/CHANGELOG.md`,
             }),
         );
