@@ -33,7 +33,12 @@ export const WEB_PLAYGROUND_LABELS: Record<WebPlaygroundSurface, string> = {
     vue: 'Vue adapters',
 };
 
-export type WorkshopToolId = 'fouce' | 'debug' | 'nested-overlays' | 'editable-table-perf';
+export type WorkshopToolId =
+    | 'fouce'
+    | 'debug'
+    | 'nested-overlays'
+    | 'editable-table-perf'
+    | 'slotted-host';
 
 export type WorkshopRoute =
     | { kind: 'component'; surface: WebPlaygroundSurface; componentId: string }
@@ -88,7 +93,9 @@ export function parseWorkshopLocation(location: Pick<Location, 'pathname' | 'sea
         return null;
     }
 
-    const toolsMatch = normalized.match(/^\/tools\/(fouce|debug|nested-overlays|editable-table-perf)$/);
+    const toolsMatch = normalized.match(
+        /^\/tools\/(fouce|debug|nested-overlays|editable-table-perf|slotted-host)$/,
+    );
     if (toolsMatch) {
         return { kind: 'tools', tool: toolsMatch[1] as WorkshopToolId };
     }

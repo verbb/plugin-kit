@@ -262,7 +262,7 @@ const reactRecipeItems = [
 
 export default defineConfig({
     title: 'Plugin Kit',
-    description: 'Web components, framework adapters, and Craft CP UI for Verbb plugins.',
+    description: 'Web components, framework adapters, and Craft CP UI.',
     base: '/plugin-kit/',
     cleanUrls: true,
     appearance: false,

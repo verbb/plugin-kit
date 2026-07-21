@@ -6,7 +6,7 @@ import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfter
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-S6CK-zPp.js";
 import { n as resolveElementById } from "../../chunks/pk-popup-BNRyCsVX.js";
-import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-BC4n_sNb.js";
+import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-f9MKZ5v9.js";
 //#region src/components/popover/pk-popover.styles.ts
 var pkPopoverStyles = [
 	buttonGroupCornerRoleStyles(),

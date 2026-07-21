@@ -47,6 +47,7 @@ export function createWorkshopShell(mount: HTMLElement): WorkshopShell {
             <a class="pg-crosslink__link" data-tool="nested-overlays" href="${getWorkshopToolPath('nested-overlays')}">Nested overlays</a>
             <a class="pg-crosslink__link" data-tool="fouce" href="${getWorkshopToolPath('fouce')}">FOUCE lab</a>
             <a class="pg-crosslink__link" data-tool="editable-table-perf" href="${getWorkshopToolPath('editable-table-perf')}">Editable table perf</a>
+            <a class="pg-crosslink__link" data-tool="slotted-host" href="${getWorkshopToolPath('slotted-host')}">Slotted host metrics</a>
             <button type="button" class="pg-tools__toggle" data-debug-toggle>Debug dock</button>
         </div>
     `;
@@ -70,6 +71,7 @@ export function createWorkshopShell(mount: HTMLElement): WorkshopShell {
     const fouceLink = sidebar.querySelector<HTMLAnchorElement>('[data-tool="fouce"]')!;
     const nestedOverlaysLink = sidebar.querySelector<HTMLAnchorElement>('[data-tool="nested-overlays"]')!;
     const editableTablePerfLink = sidebar.querySelector<HTMLAnchorElement>('[data-tool="editable-table-perf"]')!;
+    const slottedHostLink = sidebar.querySelector<HTMLAnchorElement>('[data-tool="slotted-host"]')!;
 
     const setDebugDockOpen = (open: boolean) => {
         debugDock.hidden = !open;
@@ -127,12 +129,14 @@ export function createWorkshopShell(mount: HTMLElement): WorkshopShell {
         fouceLink.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'fouce');
         nestedOverlaysLink.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'nested-overlays');
         editableTablePerfLink.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'editable-table-perf');
+        slottedHostLink.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'slotted-host');
 
         const toolTitles: Record<WorkshopToolId, string> = {
             fouce: 'FOUCE lab',
             debug: 'Debug',
             'nested-overlays': 'Nested overlays',
             'editable-table-perf': 'Editable table perf',
+            'slotted-host': 'Slotted host metrics',
         };
 
         document.title = route.kind === 'tools'

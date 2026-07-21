@@ -12,6 +12,12 @@ export const pkTabStyles = css`
             height: auto;
             min-height: auto;
             align-items: stretch;
+            /* Pin type metrics for slotted labels — vars cascade from pk-tabs. */
+            font-family: var(--pk-font-family);
+            font-size: var(--pk-tabs-trigger-font-size, 13px);
+            font-weight: var(--pk-tabs-trigger-font-weight, 400);
+            line-height: var(--pk-tabs-trigger-line-height, 1.4);
+            color: var(--pk-tabs-trigger-color, inherit);
         }
 
         .trigger {
@@ -28,7 +34,7 @@ export const pkTabStyles = css`
             border-top: var(--pk-tabs-trigger-border-top, 0 solid transparent);
             border-radius: var(--pk-tabs-trigger-radius, var(--pk-radius-sm));
             background: transparent;
-            color: var(--pk-tabs-trigger-color, inherit);
+            color: inherit;
             font: inherit;
             font-family: var(--pk-font-family);
             font-size: var(--pk-tabs-trigger-font-size, 13px);

@@ -43,3 +43,11 @@ Leading icons go in the item’s `prefix` slot (or `start`).
 `size` on `pk-dropdown-menu` scales items, labels, and icons together.
 
 <ComponentPreview src="./examples/dropdown-menu-sizes.preview.web.ts" />
+
+## Slotted labels and host metrics
+
+Item labels live in light DOM (default slot). They inherit type metrics from the `pk-dropdown-item` **`:host`** — not from the shadow `.item` row, and not from the menu host or page. Size tokens set `--pk-dropdown-item-font-size` / `--pk-dropdown-item-line-height` on the item host so Craft CP (tight body line-height) and Tailwind-scoped hosts get the same row rhythm without consumer CSS.
+
+Do **not** put `font-size` / `line-height` on `pk-dropdown-menu` (or a wrapper) expecting item labels to pick them up for layout — ancestor noise can crush rows until the kit `:host` pin is present. After that pin, consumers should remove temporary menu-host type overrides.
+
+Stress this in the workshop playground at `/tools/slotted-host`: Craft vs Tailwind hosts, ellipsis + icon menus, a text-trigger type picker, an ancestor `line-height: normal` case, selects, overlay mode, and Measure popups.

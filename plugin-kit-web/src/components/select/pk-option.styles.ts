@@ -4,6 +4,15 @@ export const pkOptionStyles = css`
     @layer pk-component {
         :host {
             display: block;
+            /*
+             * Slotted option labels inherit type metrics from this host (same
+             * Craft-vs-Tailwind trap as pk-dropdown-item). Size tokens arrive via
+             * pk-select ::slotted(pk-option) custom properties.
+             */
+            font-family: var(--pk-font-family);
+            font-size: var(--pk-select-item-font-size, var(--pk-font-size-base));
+            line-height: var(--pk-select-item-line-height, 1.4);
+            color: var(--pk-color-gray-700);
         }
 
         .option {
@@ -19,8 +28,7 @@ export const pkOptionStyles = css`
             padding-inline-end: var(--pk-select-item-padding-inline-end, 2rem);
             border: var(--pk-select-trigger-border-width, 1px) solid transparent;
             background: transparent;
-            /* Craft CP body text (~gray-700), not gray-900. */
-            color: var(--pk-color-gray-700);
+            color: inherit;
             font: inherit;
             font-family: var(--pk-font-family);
             font-size: var(--pk-select-item-font-size, var(--pk-font-size-base));

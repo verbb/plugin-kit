@@ -41,6 +41,7 @@ let surfaceTeardown: (() => void) | null = null;
 let fouceHandle: { teardown: () => void } | null = null;
 let nestedOverlaysHandle: { teardown: () => void } | null = null;
 let editableTablePerfHandle: { teardown: () => void } | null = null;
+let slottedHostHandle: { teardown: () => void } | null = null;
 let previewShell: ComponentPreviewShell | null = null;
 let activeComponentId: string | null = null;
 
@@ -53,6 +54,8 @@ const teardownActiveSurface = () => {
     nestedOverlaysHandle = null;
     editableTablePerfHandle?.teardown();
     editableTablePerfHandle = null;
+    slottedHostHandle?.teardown();
+    slottedHostHandle = null;
     previewShell = null;
     activeComponentId = null;
     shell.outlet.replaceChildren();
@@ -108,6 +111,12 @@ const renderRoute = async (route: WorkshopRoute) => {
         if (route.tool === 'editable-table-perf') {
             const { mountEditableTablePerfLab } = await import('./dev/editable-table-perf.ts');
             editableTablePerfHandle = mountEditableTablePerfLab(shell.outlet);
+            return;
+        }
+
+        if (route.tool === 'slotted-host') {
+            const { mountSlottedHostLab } = await import('./dev/slotted-host.ts');
+            slottedHostHandle = mountSlottedHostLab(shell.outlet);
             return;
         }
 

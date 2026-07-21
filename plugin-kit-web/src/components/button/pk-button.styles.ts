@@ -20,8 +20,6 @@ export const pkButtonStyles = [
         @layer pk-component {
             :host {
                 font-family: var(--pk-font-family);
-                font-size: var(--pk-font-size-base);
-                line-height: var(--pk-line-height);
                 cursor: pointer;
                 --pk-btn-height: var(--pk-btn-height-default);
                 --pk-btn-font: var(--pk-btn-font-default);
@@ -30,6 +28,12 @@ export const pkButtonStyles = [
                 --pk-btn-icon-gap: var(--pk-btn-icon-gap-default);
                 --pk-btn-caret-size: var(--pk-btn-caret-size-default);
                 --pk-btn-radius: var(--pk-btn-radius-default);
+                /*
+                 * Slotted labels inherit from the host — pin the size-token font
+                 * (and button line-height) so Craft CP / Tailwind hosts match.
+                 */
+                font-size: var(--pk-btn-font);
+                line-height: 1.2;
             }
 
             :host([disabled]) {

@@ -11,6 +11,14 @@ export const pkDropdownItemStyles = [
         :host {
             display: block;
             position: relative;
+            /*
+             * Slotted label text inherits from this host (light DOM), not from
+             * shadow .item — pin size-token metrics so Craft CP / Tailwind /
+             * bare hosts all get the same item rhythm.
+             */
+            font-size: var(--pk-dropdown-item-font-size, var(--pk-font-size-base));
+            line-height: var(--pk-dropdown-item-line-height, 1.5);
+            color: var(--text-color, var(--pk-color-gray-700));
         }
 
         .item {
@@ -25,6 +33,8 @@ export const pkDropdownItemStyles = [
             color: inherit;
             font: inherit;
             font-size: var(--pk-dropdown-item-font-size, var(--pk-font-size-base));
+            /* Explicit — do not let font:inherit re-leak page line-height. */
+            line-height: var(--pk-dropdown-item-line-height, 1.5);
             font-weight: normal;
             text-align: left;
             white-space: nowrap;

@@ -1,5 +1,8 @@
 /**
  * Returns true when a pointer event occurred on pk-popup content.
+ *
+ * Intentionally matches *any* popup surface — callers that need overlay-scoped
+ * hit testing should use {@link isEventInsideOverlay} instead.
  */
 export declare function isPointerInPopupSurface(event: PointerEvent): boolean;
 export type PointerInsideOverlayOptions = {

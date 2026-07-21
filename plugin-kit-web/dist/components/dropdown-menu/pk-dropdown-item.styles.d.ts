@@ -1,2 +1,2 @@
-export declare const pkDropdownItemStyles: import('lit').CSSResult[];
+export declare const pkDropdownItemStyles: any[];
 //# sourceMappingURL=pk-dropdown-item.styles.d.ts.map
