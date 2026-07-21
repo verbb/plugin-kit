@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Security
+- Bumped the `markdown-it` runtime dependency to `^14.3.0` (from `^14.1.1`) to pull the patched `markdown-it` (GHSA-6v5v-wf23-fmfq) and transitive `linkify-it` 5.0.2 (GHSA-22p9-wv53-3rq4), both quadratic-complexity ReDoS advisories. Only affects consumers using the markdown renderer; no API change.
+
 ## 2.0.5 - 2026-07-21
 
 ### Fixed

@@ -30,6 +30,6 @@
         "release:publish-current": "node ./scripts/release.mjs --publish-current"
     },
     "devDependencies": {
-        "concurrently": "^9.2.1"
+        "concurrently": "^9.2.4"
     }
 }

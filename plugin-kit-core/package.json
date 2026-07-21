@@ -67,7 +67,7 @@
         "@typescript-eslint/parser": "^8.59.0",
         "eslint-plugin-react-hooks": "^7.1.1",
         "globals": "^17.5.0",
-        "markdown-it": "^14.1.1"
+        "markdown-it": "^14.3.0"
     },
     "devDependencies": {
         "eslint": "^10.2.1",
