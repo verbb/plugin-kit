@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-vue",
-    "version": "2.0.7",
+    "version": "2.0.6",
     "description": "Vue adapters for @verbb/plugin-kit-web custom elements",
     "type": "module",
     "types": "dist/index.d.ts",
