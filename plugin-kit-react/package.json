@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-react",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "Thin React facades over @verbb/plugin-kit-web custom elements",
     "type": "module",
     "main": "dist/index.js",
@@ -62,10 +62,6 @@
         "./hooks/*": {
             "types": "./dist/hooks/*.d.ts",
             "import": "./dist/hooks/*.js"
-        },
-        "./fault": {
-            "types": "./dist/fault/index.d.ts",
-            "import": "./dist/fault/index.js"
         },
         "./utils": {
             "types": "./dist/utils/index.d.ts",

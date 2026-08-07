@@ -123,7 +123,6 @@ Boolean controls use `v-model:checked`. Option-based wrappers use `v-model`.
 | `@verbb/plugin-kit-vue/app` | Provider, `mountShadowApp`, configure |
 | `@verbb/plugin-kit-vue/utils` | Host bridge, `cn`, shared helpers |
 | `@verbb/plugin-kit-vue/hooks` | `useTranslation` |
-| `@verbb/plugin-kit-vue/fault` | Fault boundary / watchdog / support bundle |
 | `@verbb/plugin-kit-vue/style.css` | Tokens + FOUCE + overlay chrome |
 
 ## Docs

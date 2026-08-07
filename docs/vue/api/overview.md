@@ -13,7 +13,6 @@ Also exported (same roles as React; dedicated Vue API pages may follow):
 | --- | --- |
 | `@verbb/plugin-kit-vue/hooks` | `useTranslation` |
 | `@verbb/plugin-kit-vue/utils` | `cn`, app config re-exports, host bridge, translation setters |
-| `@verbb/plugin-kit-vue/fault` | `AppFaultProvider`, boundary, fallback, watchdog, support bundle |
 
 SchemaForm APIs (`@verbb/plugin-kit-vue/forms`) live under **[Forms → API Reference](/forms/api/form-apis)** (import the Vue package path in Vue apps):
 

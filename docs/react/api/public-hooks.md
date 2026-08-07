@@ -21,10 +21,6 @@ Delegates to **`translate`** from `@verbb/plugin-kit-forms`, which respects `set
 
 Also re-exported from the package root `@verbb/plugin-kit-react`.
 
-## Fault hooks
-
-Error-boundary hooks (`useAppFault`, `useUiWatchdog`) live on the **`@verbb/plugin-kit-react/fault`** subpath — see [React App APIs](./react-app-apis.md#fault-handling).
-
 ## Related
 
 - [Public Utilities](./public-utilities.md)

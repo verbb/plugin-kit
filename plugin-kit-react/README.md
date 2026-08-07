@@ -94,9 +94,8 @@ import { CheckboxInput, RadioGroupInput, SelectInput } from '@verbb/plugin-kit-r
 | `@verbb/plugin-kit-react` | Provider + common re-exports |
 | `@verbb/plugin-kit-react/components` | UI facades (`Button`, TipTap, EditableTable, …) |
 | `@verbb/plugin-kit-react/forms` | SchemaForm UI + registry (engine in `@verbb/plugin-kit-forms`) |
-| `@verbb/plugin-kit-react/utils` | `mountShadowApp`, `createCraftHostBridge`, `configure`, `cn` |
+| `@verbb/plugin-kit-react/utils` | `mountShadowApp`, `createCraftHostBridge`, `configure`, `cn`, `AppErrorBoundary`, `LargeErrorState`, `StatePanel` |
 | `@verbb/plugin-kit-react/hooks` | `useTranslation` |
-| `@verbb/plugin-kit-react/fault` | Fault boundary / watchdog / support bundle |
 | `@verbb/plugin-kit-react/app` | Provider / configure (parity with Vue `/app`) |
 | `@verbb/plugin-kit-react/style.css` | Tokens + FOUCE + overlay chrome |
 

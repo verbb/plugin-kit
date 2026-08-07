@@ -33,11 +33,9 @@ Node/index shapes (**`SchemaNode`**, **`SchemaRenderable`**, **`FieldEntry`**, *
 - **`PortalContainer`** — legacy portal container type (see [Public Utilities](./public-utilities.md#portals-legacy-compatibility)).
 - **`TranslateParams`** — translation params map.
 
-## Fault (`@verbb/plugin-kit-react/fault`)
+## App error UI (`@verbb/plugin-kit-react/utils`)
 
-- **`AppFaultProviderProps`**, **`FaultFallbackProps`**, **`ResetUiButtonProps`**
-- **`AppFaultContext`**, **`AppFaultKind`**, **`AppFaultRecord`**
-- **`UiWatchdogOptions`**
+- **`AppErrorBoundaryProps`**, **`LargeErrorStateProps`**, **`StatePanelProps`**, **`StatePanelAction`**, **`StatePanelVariant`**
 
 ## Exhaustive signatures
 

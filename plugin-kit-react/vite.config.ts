@@ -40,7 +40,6 @@ export default defineConfig({
                 'app/index': path.resolve(__dirname, 'src/app/index.ts'),
                 'utils/index': path.resolve(__dirname, 'src/utils/index.ts'),
                 'hooks/index': path.resolve(__dirname, 'src/hooks/index.ts'),
-                'fault/index': path.resolve(__dirname, 'src/fault/index.ts'),
             },
             formats: ['es'],
         },

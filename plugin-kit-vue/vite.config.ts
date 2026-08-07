@@ -39,7 +39,6 @@ export default defineConfig({
                 ...resolveEntries('src/forms/fields', 'forms/fields', ['.ts', '.tsx']),
                 'utils/index': path.resolve(__dirname, 'src/utils/index.ts'),
                 'hooks/index': path.resolve(__dirname, 'src/hooks/index.ts'),
-                'fault/index': path.resolve(__dirname, 'src/fault/index.ts'),
             },
             formats: ['es'],
         },

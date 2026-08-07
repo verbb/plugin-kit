@@ -7,7 +7,7 @@ This reference follows the package **`exports`** map in `package.json`. Use subp
 | [Public hooks](./public-hooks.md) | `@verbb/plugin-kit-react/hooks` | `useTranslation` |
 | [Public utilities](./public-utilities.md) | `@verbb/plugin-kit-react/utils` | `cn`, app config, host bridge, translation setters |
 | [Public types](./public-types.md) | Same as hooks/utils/forms | Key TS types consumers rely on |
-| [React app APIs](./react-app-apis.md) | `@verbb/plugin-kit-react/utils`, `/fault` | `PluginKitProvider`, `mountShadowApp`, `createCraftHostBridge`, fault boundary |
+| [React app APIs](./react-app-apis.md) | `@verbb/plugin-kit-react/utils` | `PluginKitProvider`, `mountShadowApp`, `createCraftHostBridge`, `AppErrorBoundary` |
 | [Styling APIs](./styling-apis.md) | CSS + build | `style.css`, Tailwind bridge files, shadow notes |
 
 SchemaForm APIs (`@verbb/plugin-kit-react/forms`) live under **[Forms → API Reference](/forms/api/form-apis)**:

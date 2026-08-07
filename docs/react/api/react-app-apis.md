@@ -69,25 +69,28 @@ hostBridge: createCraftHostBridge()
 
 Wires `hostRequest`, `hostOpenElementSelector`, and related helpers to `window.Craft`. Only needed when those helpers are used.
 
-## Fault handling
+## App error boundary
 
-Import from **`@verbb/plugin-kit-react/fault`**.
+Import from **`@verbb/plugin-kit-react/utils`**.
 
 | Export | Purpose |
 | --- | --- |
-| `AppFaultProvider`, `useAppFault`, `useAppFaultOptional` | App-level fault state (record, reset). |
-| `AppFaultBoundary` | Error boundary that reports into the fault provider. |
-| `FaultFallback`, `ResetUiButton` | Default fallback UI pieces. |
-| `useUiWatchdog` | Detects a hung/blank UI and raises a fault. |
-| `buildSupportBundle` | Collects diagnostics for support reports. |
-| `isIgnorableGlobalError` | Filter for benign global errors (e.g. `ResizeObserver` noise). |
+| `AppErrorBoundary` | Class boundary that catches React render/lifecycle errors and paints a fallback. |
+| `LargeErrorState` | Error `StatePanel` + optional stack details. |
+| `StatePanel` | Centered empty / error / success / info surface. |
 
 ```tsx
-import { AppFaultProvider, AppFaultBoundary } from '@verbb/plugin-kit-react/fault';
+import { AppErrorBoundary } from '@verbb/plugin-kit-react/utils';
 
-<AppFaultProvider>
-  <AppFaultBoundary>
-    <App />
-  </AppFaultBoundary>
-</AppFaultProvider>
+<AppErrorBoundary
+  consoleLabel="My builder crashed:"
+  title={Craft.t('my-plugin', 'Something went wrong')}
+  message={Craft.t('my-plugin', 'The builder failed to load. Please refresh the page or try again.')}
+  detailsLabel={Craft.t('my-plugin', 'Show error details')}
+  reloadLabel={Craft.t('my-plugin', 'Reload')}
+>
+  <App />
+</AppErrorBoundary>
 ```
+
+Register icons the fallback uses (at least `triangle-exclamation` for the error variant).
