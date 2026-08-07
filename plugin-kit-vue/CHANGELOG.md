@@ -4,6 +4,11 @@
 
 ## 2.0.7 - 2026-08-07
 
+### Changed
+- Released alongside the other `@verbb/plugin-kit-*` packages to keep versions aligned.
+
+## 2.0.7 - 2026-08-07
+
 ### Removed
 - Removed the unused `@verbb/plugin-kit-vue/fault` surface (`AppFaultProvider` and related helpers). React apps should use `AppErrorBoundary` from `@verbb/plugin-kit-react/utils`.
 

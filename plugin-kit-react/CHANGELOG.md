@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.7 - 2026-08-07
+
 ### Added
 - Shared full-app crash UI on `@verbb/plugin-kit-react/utils`: `AppErrorBoundary`, `LargeErrorState`, and `StatePanel` (Formie’s established pattern for React CP builders).
 
