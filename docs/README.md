@@ -6,8 +6,7 @@ Unified VitePress site for [docs.verbb.io/plugin-kit](https://docs.verbb.io/plug
 
 | Section | Path | Content |
 |---------|------|---------|
-| Overview | `/overview/` | Product story, packages, where to start |
-| Web | `/web/` | Canonical `<pk-*>` reference |
+| Web | `/web/` | Product intro + canonical `<pk-*>` reference (`/` and `/overview/` redirect here) |
 | React | `/react/` | React adapter guides, components, recipes, APIs |
 | Vue | `/vue/` | Vue adapter guides, components, APIs |
 | Forms | `/forms/` | SchemaForm guides + API (`react/forms` and `vue/forms`) |

@@ -8,7 +8,7 @@ import { onMounted } from 'vue';
 import { useRouter, withBase } from 'vitepress';
 
 const router = useRouter();
-const target = withBase('/overview/');
+const target = withBase('/web/');
 
 onMounted(() => {
   router.go(target);
@@ -19,4 +19,4 @@ onMounted(() => {
 
 # Redirecting
 
-Continue to [Overview](/overview/).
+Continue to [Web](/web/).

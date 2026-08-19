@@ -450,24 +450,15 @@ export default defineConfig({
             primary: '#1276de',
         },
         // activeMatch is required when a section’s entry link is deeper than the section root
-        // (e.g. React → /react/getting-started/overview). Without it, /react/components/* falls
-        // through and the header dropdown incorrectly shows the first nav item ("Overview").
+        // (e.g. Vue → /vue/getting-started/overview). Without it, /vue/components/* falls
+        // through and the header dropdown incorrectly shows the first nav item.
         nav: [
-            { text: 'Overview', link: '/overview/', activeMatch: '^/overview' },
             { text: 'Web', link: '/web/', activeMatch: '^/web' },
             { text: 'React', link: '/react/', activeMatch: '^/react' },
             { text: 'Vue', link: '/vue/getting-started/overview', activeMatch: '^/vue' },
             { text: 'Forms', link: '/forms/', activeMatch: '^/forms' },
         ],
         sidebar: {
-            '/overview/': [
-                {
-                    text: 'Plugin Kit',
-                    items: [
-                        { text: 'Overview', link: '/overview/' },
-                    ],
-                },
-            ],
             '/web/': [
                 {
                     text: 'Getting Started',
