@@ -1,19 +1,26 @@
-import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, u as isTopDismissible } from "./pk-a11y-Cx5RZvhu.js";
-import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "./lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "./pk-base-BlxAYXJD.js";
-import { h as chevronDown } from "./svg-BCGsRUz7.js";
-import { t as MirrorValidator } from "./mirror-validator-DEz3BsbN.js";
-import { t as HasSlotController } from "./has-slot-BZDcCpf9.js";
-import { t as PkClearEvent } from "./pk-clear-BRS8vkV-.js";
-import { n as renderIconHtml } from "./render-BCU9WDSk.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-BG4QMRLw.js";
-import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-BPjq650B.js";
-import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-C9ffC35f.js";
-import "./pk-popup-BYFbKaHH.js";
-import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "./popup-pointer-BTS3Y6LE.js";
-import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS, r as createTypeToSelectHandler, t as syncListboxSeparators } from "./sync-listbox-separators-CT3oGzTf.js";
+import { t as icons_exports } from "./icons-BR8JcQj2.js";
+import { t as __decorate } from "./decorate-W02hmVTt.js";
+import { t as iconStyles } from "./icon.styles-BLTWLqYp.js";
+import { t as PkFormAssociatedElement } from "./pk-form-associated-element-DmZKgNPL.js";
+import { t as MirrorValidator } from "./mirror-validator-DCjNYrrx.js";
+import { t as HasSlotController } from "./has-slot-8BvCt_qo.js";
+import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
+import { i as uniqueId } from "./focus-aa5dlv8k.js";
+import { i as unregisterDismissible, n as isTopDismissible, r as registerDismissible } from "./dismissible-stack-XQUMfKO3.js";
+import { i as scrollIntoView } from "./scroll-lock-Bbh3Sc5g.js";
+import { t as PkClearEvent } from "./pk-clear--mPWZP7H.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-D0pkTQyI.js";
+import "./pk-popup-CgiXok-U.js";
+import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-WlEXnS85.js";
+import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS, r as createTypeToSelectHandler, t as syncListboxSeparators } from "./sync-listbox-separators-B1-V0oJi.js";
+import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "./popup-pointer-DMnuZDQl.js";
+import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-Dc6d9quJ.js";
+import { css, html, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
+import { customElement, property, query, state } from "lit/decorators.js";
+import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 //#region src/components/select/pk-select.styles.ts
-var pkSelectStyles = [popupContentAnimationStyles, i`
+var pkSelectStyles = [popupContentAnimationStyles, css`
     ${iconStyles}
     @layer pk-component {
         :host {
@@ -423,7 +430,7 @@ var pkSelectStyles = [popupContentAnimationStyles, i`
 `];
 //#endregion
 //#region src/components/select/pk-select.ts
-var CHEVRON_ICON = renderIconHtml(chevronDown);
+var CHEVRON_ICON = renderIconHtml(icons_exports.chevronDown);
 var PkSelect = class PkSelect extends PkFormAssociatedElement {
 	constructor(..._args) {
 		super(..._args);
@@ -907,7 +914,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
 		if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) this.typeToSelect.handleKey(event);
 	}
 	renderTags() {
-		return this.getSelectedOptions().map((option) => b`
+		return this.getSelectedOptions().map((option) => html`
             <span class="tag" part="tag">
                 <span class="tag-label">${option.getLabel()}</span>
                 <button
@@ -923,13 +930,13 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
         `);
 	}
 	renderChevronIcon() {
-		return b`
-            <span class="icon" aria-hidden="true">${o(CHEVRON_ICON)}</span>
+		return html`
+            <span class="icon" aria-hidden="true">${unsafeSVG(CHEVRON_ICON)}</span>
         `;
 	}
 	renderHostDecorationSlot(name) {
-		if (!this.hasSlotController.test(name)) return b`<slot name=${name} hidden></slot>`;
-		return b`
+		if (!this.hasSlotController.test(name)) return html`<slot name=${name} hidden></slot>`;
+		return html`
             <span part=${name} class=${name === "start" ? "control-start" : "control-end"}>
                 <slot name=${name}></slot>
             </span>
@@ -939,7 +946,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
 		const displayValue = this.getDisplayValue();
 		const isPlaceholder = !this.hasSelection();
 		const showClear = (this.clearable || this.withClear) && this.hasSelection() && !this.disabled;
-		return b`
+		return html`
             <input
                 class="value-input"
                 part="value-input"
@@ -949,18 +956,18 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                 ?required=${this.required}
                 @input=${() => this.updateValidity()}
             />
-            ${this.multiple ? b`
+            ${this.multiple ? html`
                     <div
                         part="control"
-                        class=${e({
+                        class=${classMap({
 			control: true,
 			"is-disabled": this.disabled
 		})}
                     >
                         ${this.renderHostDecorationSlot("start")}
-                        ${this.hasSelection() ? b`
+                        ${this.hasSelection() ? html`
                                 <div class="tags" part="tags">${this.renderTags()}</div>
-                                ${showClear ? b`
+                                ${showClear ? html`
                                         <button
                                             type="button"
                                             class="clear-button"
@@ -970,15 +977,15 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                                         >
                                             ×
                                         </button>
-                                    ` : A}
-                            ` : b`
+                                    ` : nothing}
+                            ` : html`
                                 <button
                                     part="trigger"
                                     type="button"
                                     class="trigger"
                                     id=${this.triggerId}
                                     ?disabled=${this.disabled}
-                                    aria-label=${this.ariaLabel ?? A}
+                                    aria-label=${this.ariaLabel ?? nothing}
                                     aria-haspopup="listbox"
                                     aria-expanded=${this.open ? "true" : "false"}
                                     aria-controls=${this.listboxId}
@@ -999,17 +1006,17 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                             ${this.renderChevronIcon()}
                         </button>
                     </div>
-                ` : b`
+                ` : html`
                     <button
                         part="control"
                         type="button"
-                        class=${e({
+                        class=${classMap({
 			control: true,
 			"is-disabled": this.disabled
 		})}
                         id=${this.triggerId}
                         ?disabled=${this.disabled}
-                        aria-label=${this.ariaLabel ?? A}
+                        aria-label=${this.ariaLabel ?? nothing}
                         aria-haspopup="listbox"
                         aria-expanded=${this.open ? "true" : "false"}
                         aria-controls=${this.listboxId}
@@ -1018,12 +1025,12 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                         ${this.renderHostDecorationSlot("start")}
                         <span part="trigger-start" class="trigger-start"></span>
                         <span
-                            class=${e({
+                            class=${classMap({
 			value: true,
 			"is-placeholder": isPlaceholder
 		})}
                         >${displayValue}</span>
-                        ${showClear ? b`
+                        ${showClear ? html`
                                 <span
                                     class="clear-button"
                                     part="clear-button"
@@ -1034,7 +1041,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                                 >
                                     ×
                                 </span>
-                            ` : A}
+                            ` : nothing}
                         ${this.renderHostDecorationSlot("end")}
                         ${this.renderChevronIcon()}
                     </button>
@@ -1049,7 +1056,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
             >
                 <div
                     part="panel"
-                    class=${e({
+                    class=${classMap({
 			panel: true,
 			"pk-popup-content": true,
 			closing: this.closing
@@ -1059,7 +1066,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
                     aria-multiselectable=${this.multiple ? "true" : "false"}
                     tabindex="-1"
                     ?hidden=${!this.open && !this.closing}
-                    data-open=${this.panelAnimated && !this.closing ? "" : A}
+                    data-open=${this.panelAnimated && !this.closing ? "" : nothing}
                     @slotchange=${this.syncOptions}
                 >
                     <slot></slot>
@@ -1068,54 +1075,56 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
         `;
 	}
 };
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkSelect.prototype, "open", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkSelect.prototype, "multiple", void 0);
-__decorate([n({ reflect: true })], PkSelect.prototype, "placement", void 0);
-__decorate([n({
+__decorate([property({ reflect: true })], PkSelect.prototype, "placement", void 0);
+__decorate([property({
 	attribute: "side-offset",
 	type: Number
 })], PkSelect.prototype, "sideOffset", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkSelect.prototype, "clearable", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "with-clear",
 	type: Boolean
 })], PkSelect.prototype, "withClear", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkSelect.prototype, "invalid", void 0);
-__decorate([n({ reflect: true })], PkSelect.prototype, "size", void 0);
-__decorate([n({ reflect: true })], PkSelect.prototype, "width", void 0);
-__decorate([n()], PkSelect.prototype, "placeholder", void 0);
-__decorate([n()], PkSelect.prototype, "value", void 0);
-__decorate([n({ attribute: "default-value" })], PkSelect.prototype, "defaultValue", void 0);
-__decorate([n({
+__decorate([property({ reflect: true })], PkSelect.prototype, "size", void 0);
+__decorate([property({ reflect: true })], PkSelect.prototype, "width", void 0);
+__decorate([property()], PkSelect.prototype, "placeholder", void 0);
+__decorate([property()], PkSelect.prototype, "value", void 0);
+__decorate([property({ attribute: "default-value" })], PkSelect.prototype, "defaultValue", void 0);
+__decorate([property({
 	type: Array,
 	attribute: false
 })], PkSelect.prototype, "values", void 0);
-__decorate([n({ attribute: false })], PkSelect.prototype, "defaultValues", void 0);
-__decorate([n({ attribute: "aria-label" })], PkSelect.prototype, "ariaLabel", void 0);
-__decorate([n({
+__decorate([property({ attribute: false })], PkSelect.prototype, "defaultValues", void 0);
+__decorate([property({ attribute: "aria-label" })], PkSelect.prototype, "ariaLabel", void 0);
+__decorate([property({
 	attribute: "loop-focus",
 	type: Boolean
 })], PkSelect.prototype, "loopFocus", void 0);
-__decorate([e$1(".trigger-start")], PkSelect.prototype, "triggerStartElement", void 0);
-__decorate([e$1("pk-popup")], PkSelect.prototype, "popupElement", void 0);
-__decorate([e$1(".control")], PkSelect.prototype, "controlElement", void 0);
-__decorate([e$1("button.control, .control > button.trigger")], PkSelect.prototype, "triggerButton", void 0);
-__decorate([e$1(".value-input")], PkSelect.prototype, "input", void 0);
-__decorate([r()], PkSelect.prototype, "highlightedIndex", void 0);
-__decorate([r()], PkSelect.prototype, "closing", void 0);
-__decorate([r()], PkSelect.prototype, "panelAnimated", void 0);
-PkSelect = __decorate([t("pk-select")], PkSelect);
+__decorate([query(".trigger-start")], PkSelect.prototype, "triggerStartElement", void 0);
+__decorate([query("pk-popup")], PkSelect.prototype, "popupElement", void 0);
+__decorate([query(".control")], PkSelect.prototype, "controlElement", void 0);
+__decorate([query("button.control, .control > button.trigger")], PkSelect.prototype, "triggerButton", void 0);
+__decorate([query(".value-input")], PkSelect.prototype, "input", void 0);
+__decorate([state()], PkSelect.prototype, "highlightedIndex", void 0);
+__decorate([state()], PkSelect.prototype, "closing", void 0);
+__decorate([state()], PkSelect.prototype, "panelAnimated", void 0);
+PkSelect = __decorate([customElement("pk-select")], PkSelect);
 //#endregion
 export { pkSelectStyles as n, PkSelect as t };
+
+//# sourceMappingURL=pk-select-BPnO9qgj.js.map

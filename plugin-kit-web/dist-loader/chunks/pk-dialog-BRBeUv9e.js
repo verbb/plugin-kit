@@ -1,4 +1,4 @@
-import { c as unlockBodyScrolling, d as registerDismissible, f as unregisterDismissible, o as lockBodyScrolling, u as isTopDismissible } from "./pk-a11y-Cx5RZvhu.js";
+import { c as unlockBodyScrolling, d as registerDismissible, f as unregisterDismissible, o as lockBodyScrolling, u as isTopDismissible } from "./pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "./lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "./pk-base-BlxAYXJD.js";
 import { J as xmark } from "./svg-BCGsRUz7.js";
@@ -315,6 +315,7 @@ var PkDialog = class PkDialog extends PkElement {
 		this.disablePointerDismissal = false;
 		this.withoutHeader = false;
 		this.withoutBodyPadding = false;
+		this.disableScrollLock = false;
 		this.size = "default";
 		this.triggerElement = null;
 		this.previouslyFocused = null;
@@ -429,7 +430,7 @@ var PkDialog = class PkDialog extends PkElement {
 		if (this.open) this.show();
 	}
 	disconnectedCallback() {
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		this.removeOpenListeners();
 		super.disconnectedCallback();
 	}
@@ -460,7 +461,7 @@ var PkDialog = class PkDialog extends PkElement {
 			this.previouslyFocused = document.activeElement;
 			this.open = true;
 			this.dialogElement.showModal();
-			lockBodyScrolling(this);
+			if (!this.disableScrollLock) lockBodyScrolling(this);
 			requestAnimationFrame(() => {
 				const elementToFocus = this.querySelector("[autofocus]");
 				if (elementToFocus) {
@@ -498,7 +499,7 @@ var PkDialog = class PkDialog extends PkElement {
 		await animateWithClass(this.dialogElement, "hide");
 		this.open = false;
 		this.dialogElement.close();
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		const restoreFocus = this.previouslyFocused;
 		this.previouslyFocused = null;
 		if (restoreFocus?.isConnected) window.setTimeout(() => {
@@ -521,7 +522,7 @@ var PkDialog = class PkDialog extends PkElement {
 			this.dialogElement.close();
 		} catch {}
 		this.dialogElement?.classList.remove("hide", "show", "pulse");
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 	}
 	addOpenListeners() {
 		document.addEventListener("keydown", this.handleDocumentKeyDown);
@@ -622,6 +623,11 @@ __decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutBodyPadding", void 0);
+__decorate([n({
+	attribute: "disable-scroll-lock",
+	type: Boolean,
+	reflect: true
+})], PkDialog.prototype, "disableScrollLock", void 0);
 __decorate([n({ reflect: true })], PkDialog.prototype, "size", void 0);
 __decorate([e$1("dialog")], PkDialog.prototype, "dialogElement", void 0);
 __decorate([r()], PkDialog.prototype, "triggerElement", void 0);

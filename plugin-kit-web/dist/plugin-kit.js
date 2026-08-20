@@ -1,6 +1,6 @@
 import { t as getDismissibleStackSnapshot } from "./chunks/dismissible-stack-XQUMfKO3.js";
-import { n as getScrollLockDepth, t as forceClearScrollLock } from "./chunks/scroll-lock-B4o9vdzJ.js";
-import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-DXK9MVuw.js";
+import { n as getScrollLockDepth, t as forceClearScrollLock } from "./chunks/scroll-lock-Bbh3Sc5g.js";
+import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-hkX3zcAt.js";
 import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-BOlxFlou.js";
 //#region src/utils/overlay-recovery.ts
 /**

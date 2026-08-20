@@ -67,6 +67,13 @@ export class PkDialog extends PkElement {
     @property({ attribute: 'without-body-padding', type: Boolean, reflect: true })
     withoutBodyPadding = false;
 
+    /**
+     * Skip document scroll lock while open. Useful for labs / rare cases where the
+     * page should keep scrolling under the modal (native dialog still traps focus).
+     */
+    @property({ attribute: 'disable-scroll-lock', type: Boolean, reflect: true })
+    disableScrollLock = false;
+
     @property({ reflect: true })
     size: 'default' | 'wide' = 'default';
 
@@ -207,7 +214,10 @@ export class PkDialog extends PkElement {
     }
 
     override disconnectedCallback(): void {
-        unlockBodyScrolling(this);
+        if (!this.disableScrollLock) {
+            unlockBodyScrolling(this);
+        }
+
         this.removeOpenListeners();
         super.disconnectedCallback();
     }
@@ -254,7 +264,10 @@ export class PkDialog extends PkElement {
             this.previouslyFocused = document.activeElement as HTMLElement | null;
             this.open = true;
             this.dialogElement.showModal();
-            lockBodyScrolling(this);
+
+            if (!this.disableScrollLock) {
+                lockBodyScrolling(this);
+            }
 
             requestAnimationFrame(() => {
                 const elementToFocus = this.querySelector<HTMLElement>('[autofocus]');
@@ -310,7 +323,10 @@ export class PkDialog extends PkElement {
         await animateWithClass(this.dialogElement, 'hide');
         this.open = false;
         this.dialogElement.close();
-        unlockBodyScrolling(this);
+
+        if (!this.disableScrollLock) {
+            unlockBodyScrolling(this);
+        }
 
         const restoreFocus = this.previouslyFocused;
         this.previouslyFocused = null;
@@ -345,7 +361,10 @@ export class PkDialog extends PkElement {
         }
 
         this.dialogElement?.classList.remove('hide', 'show', 'pulse');
-        unlockBodyScrolling(this);
+
+        if (!this.disableScrollLock) {
+            unlockBodyScrolling(this);
+        }
     }
 
     private addOpenListeners(): void {

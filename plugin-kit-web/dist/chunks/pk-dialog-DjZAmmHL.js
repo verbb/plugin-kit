@@ -2,7 +2,7 @@ import { t as icons_exports } from "./icons-BR8JcQj2.js";
 import { n as PkElement, t as __decorate } from "./decorate-W02hmVTt.js";
 import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
 import { i as unregisterDismissible, n as isTopDismissible, r as registerDismissible } from "./dismissible-stack-XQUMfKO3.js";
-import { a as unlockBodyScrolling, r as lockBodyScrolling } from "./scroll-lock-B4o9vdzJ.js";
+import { a as unlockBodyScrolling, r as lockBodyScrolling } from "./scroll-lock-Bbh3Sc5g.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-D0pkTQyI.js";
 import { t as animateWithClass } from "./animate-with-class-CsDwYnXL.js";
 import { css, html, nothing } from "lit";
@@ -319,6 +319,7 @@ var PkDialog = class PkDialog extends PkElement {
 		this.disablePointerDismissal = false;
 		this.withoutHeader = false;
 		this.withoutBodyPadding = false;
+		this.disableScrollLock = false;
 		this.size = "default";
 		this.triggerElement = null;
 		this.previouslyFocused = null;
@@ -433,7 +434,7 @@ var PkDialog = class PkDialog extends PkElement {
 		if (this.open) this.show();
 	}
 	disconnectedCallback() {
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		this.removeOpenListeners();
 		super.disconnectedCallback();
 	}
@@ -464,7 +465,7 @@ var PkDialog = class PkDialog extends PkElement {
 			this.previouslyFocused = document.activeElement;
 			this.open = true;
 			this.dialogElement.showModal();
-			lockBodyScrolling(this);
+			if (!this.disableScrollLock) lockBodyScrolling(this);
 			requestAnimationFrame(() => {
 				const elementToFocus = this.querySelector("[autofocus]");
 				if (elementToFocus) {
@@ -502,7 +503,7 @@ var PkDialog = class PkDialog extends PkElement {
 		await animateWithClass(this.dialogElement, "hide");
 		this.open = false;
 		this.dialogElement.close();
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		const restoreFocus = this.previouslyFocused;
 		this.previouslyFocused = null;
 		if (restoreFocus?.isConnected) window.setTimeout(() => {
@@ -525,7 +526,7 @@ var PkDialog = class PkDialog extends PkElement {
 			this.dialogElement.close();
 		} catch {}
 		this.dialogElement?.classList.remove("hide", "show", "pulse");
-		unlockBodyScrolling(this);
+		if (!this.disableScrollLock) unlockBodyScrolling(this);
 	}
 	addOpenListeners() {
 		document.addEventListener("keydown", this.handleDocumentKeyDown);
@@ -626,6 +627,11 @@ __decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutBodyPadding", void 0);
+__decorate([property({
+	attribute: "disable-scroll-lock",
+	type: Boolean,
+	reflect: true
+})], PkDialog.prototype, "disableScrollLock", void 0);
 __decorate([property({ reflect: true })], PkDialog.prototype, "size", void 0);
 __decorate([query("dialog")], PkDialog.prototype, "dialogElement", void 0);
 __decorate([state()], PkDialog.prototype, "triggerElement", void 0);
@@ -633,4 +639,4 @@ PkDialog = __decorate([customElement("pk-dialog")], PkDialog);
 //#endregion
 export { PkDialog as t };
 
-//# sourceMappingURL=pk-dialog-DZZd1Tzb.js.map
+//# sourceMappingURL=pk-dialog-DjZAmmHL.js.map

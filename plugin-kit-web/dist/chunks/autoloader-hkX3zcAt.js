@@ -1,24 +1,5 @@
 import { t as SUPPORTS_POPOVER } from "./supports-popover-CUBsbHpS.js";
 import { n as COMPONENT_MODULE_PATHS } from "./component-registry-BOlxFlou.js";
-//#region src/utils/documentScrollStability.ts
-var DOCUMENT_SCROLL_STABILITY_STYLE_ID = "plugin-kit-document-scroll-stability";
-/**
-* Reserve scrollbar space on the document root so overlay scroll lock
-* can use the stable gutter path instead of body width compensation.
-* Safe to call multiple times; only injects once.
-*
-* tokens.css already sets `html { scrollbar-gutter: stable }` for kit surfaces
-* that import tokens. This injector covers hosts that load components without
-* tokens (e.g. craft CP early boot / ShadowRoot portal config).
-*/
-var ensureDocumentScrollStability = () => {
-	if (typeof document === "undefined") return;
-	if (document.querySelector(`style[data-plugin-kit-style-id="${DOCUMENT_SCROLL_STABILITY_STYLE_ID}"]`)) return;
-	const style = document.createElement("style");
-	style.setAttribute("data-plugin-kit-style-id", DOCUMENT_SCROLL_STABILITY_STYLE_ID);
-	style.textContent = "html { scrollbar-gutter: stable; }";
-	document.head.appendChild(style);
-};
 //#endregion
 //#region src/utils/portal.ts
 var defaultPortalClassName;
@@ -69,7 +50,7 @@ function resolvePositionMethod(positionMethod, container) {
 //#endregion
 //#region src/utils/config.ts
 var configurePluginKitWeb = (config) => {
-	if (config.portalContainer instanceof ShadowRoot) ensureDocumentScrollStability();
+	if (config.portalContainer instanceof ShadowRoot);
 	if (config.shadowRootSelectors) setShadowRootSelectors(config.shadowRootSelectors);
 };
 //#endregion
@@ -174,4 +155,4 @@ var DISCOVERY_COMPLETE_EVENT = DISCOVERY_EVENT;
 //#endregion
 export { setPortalClassName as _, startLoader as a, setBasePath as c, getPortalClassName as d, getPortalContainer as f, resolvePositionMethod as g, getShadowRootSelectors as h, preventTurboFouce as i, allDefined as l, getPortalTargetForAppend as m, FOUCE_TIMEOUT_MS as n, stopLoader as o, getPortalMountElement as p, discover as r, getBasePath as s, DISCOVERY_COMPLETE_EVENT as t, configurePluginKitWeb as u, setPortalContainer as v, setShadowRootSelectors as y };
 
-//# sourceMappingURL=autoloader-DXK9MVuw.js.map
+//# sourceMappingURL=autoloader-hkX3zcAt.js.map

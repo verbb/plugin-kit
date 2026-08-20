@@ -1,24 +1,17 @@
-import { t as icons_exports } from "./icons-BR8JcQj2.js";
-import { t as __decorate } from "./decorate-W02hmVTt.js";
-import { t as iconStyles } from "./icon.styles-BLTWLqYp.js";
-import { t as PkFormAssociatedElement } from "./pk-form-associated-element-DmZKgNPL.js";
-import { t as MirrorValidator } from "./mirror-validator-DCjNYrrx.js";
-import { t as HasSlotController } from "./has-slot-8BvCt_qo.js";
-import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
-import { i as uniqueId, t as LiveRegion } from "./focus-aa5dlv8k.js";
-import { i as unregisterDismissible, n as isTopDismissible, r as registerDismissible } from "./dismissible-stack-XQUMfKO3.js";
-import { i as scrollIntoView } from "./scroll-lock-B4o9vdzJ.js";
-import { t as PkClearEvent } from "./pk-clear--mPWZP7H.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-D0pkTQyI.js";
-import "./pk-popup-CgiXok-U.js";
-import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-WlEXnS85.js";
-import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS, t as syncListboxSeparators } from "./sync-listbox-separators-B1-V0oJi.js";
-import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "./popup-pointer-DMnuZDQl.js";
-import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-Dc6d9quJ.js";
-import { css, html, nothing } from "lit";
-import { classMap } from "lit/directives/class-map.js";
-import { customElement, property, query, state } from "lit/decorators.js";
-import { unsafeSVG } from "lit/directives/unsafe-svg.js";
+import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "./pk-a11y-CjB4-U-R.js";
+import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "./lit-Dnn7gEi2.js";
+import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "./pk-base-BlxAYXJD.js";
+import { J as xmark, h as chevronDown } from "./svg-BCGsRUz7.js";
+import { t as MirrorValidator } from "./mirror-validator-DEz3BsbN.js";
+import { t as HasSlotController } from "./has-slot-BZDcCpf9.js";
+import { t as PkClearEvent } from "./pk-clear-BRS8vkV-.js";
+import { n as renderIconHtml } from "./render-BCU9WDSk.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-BG4QMRLw.js";
+import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-BPjq650B.js";
+import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-C9ffC35f.js";
+import "./pk-popup-BYFbKaHH.js";
+import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "./popup-pointer-BTS3Y6LE.js";
+import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS, t as syncListboxSeparators } from "./sync-listbox-separators-CT3oGzTf.js";
 //#region src/events/pk-create.ts
 /** Fired before a combobox creates a new option — mirrors  `pk-create`. */
 var PkCreateEvent = class extends Event {
@@ -33,7 +26,7 @@ var PkCreateEvent = class extends Event {
 };
 //#endregion
 //#region src/components/combobox/pk-combobox.styles.ts
-var pkComboboxStyles = [popupContentAnimationStyles, css`
+var pkComboboxStyles = [popupContentAnimationStyles, i`
     ${iconStyles}
     @layer pk-component {
         :host {
@@ -759,8 +752,8 @@ var pkComboboxStyles = [popupContentAnimationStyles, css`
 `];
 //#endregion
 //#region src/components/combobox/pk-combobox.ts
-var CHEVRON_ICON = renderIconHtml(icons_exports.chevronDown);
-var XMARK_ICON = renderIconHtml(icons_exports.xmark);
+var CHEVRON_ICON = renderIconHtml(chevronDown);
+var XMARK_ICON = renderIconHtml(xmark);
 var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 	constructor(..._args) {
 		super(..._args);
@@ -1674,15 +1667,15 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 		});
 	}
 	renderHostDecorationSlot(name) {
-		if (!this.hasSlotController.test(name)) return html`<slot name=${name} hidden></slot>`;
-		return html`
+		if (!this.hasSlotController.test(name)) return b`<slot name=${name} hidden></slot>`;
+		return b`
             <span part=${name} class=${name === "start" ? "control-start" : "control-end"}>
                 <slot name=${name}></slot>
             </span>
         `;
 	}
 	renderChevronButton() {
-		return html`
+		return b`
             <button
                 type="button"
                 class="icon-button expand-button"
@@ -1691,12 +1684,12 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                 ?disabled=${this.disabled}
                 @click=${this.togglePanel}
             >
-                <span class="icon" aria-hidden="true">${unsafeSVG(CHEVRON_ICON)}</span>
+                <span class="icon" aria-hidden="true">${o(CHEVRON_ICON)}</span>
             </button>
         `;
 	}
 	renderTags() {
-		return this.getSelectedOptions().map((option) => html`
+		return this.getSelectedOptions().map((option) => b`
             <span class="tag" part="tag">
                 <span class="tag-label">${option.getLabel()}</span>
                 <button
@@ -1707,7 +1700,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                     ?disabled=${this.disabled}
                     @click=${(event) => this.removeTag(option.value, event)}
                 >
-                    <span class="tag-remove-icon" aria-hidden="true">${unsafeSVG(XMARK_ICON)}</span>
+                    <span class="tag-remove-icon" aria-hidden="true">${o(XMARK_ICON)}</span>
                 </button>
             </span>
         `);
@@ -1719,10 +1712,10 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 	renderInput() {
 		const activeDescendant = this.open ? this.getActiveDescendantId() : null;
 		const showPlaceholder = this.shouldShowPlaceholder();
-		return html`
+		return b`
             <input
                 part="input"
-                class=${classMap({
+                class=${e({
 			"combobox-input": true,
 			"control-input": true,
 			"combobox-input--inline": this.multiple
@@ -1731,13 +1724,13 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                 role="combobox"
                 id=${this.inputId}
                 .value=${this.getDisplayInputValue()}
-                placeholder=${showPlaceholder ? this.placeholder : nothing}
+                placeholder=${showPlaceholder ? this.placeholder : A}
                 ?disabled=${this.disabled}
-                aria-label=${this.ariaLabel ?? nothing}
+                aria-label=${this.ariaLabel ?? A}
                 aria-expanded=${this.open ? "true" : "false"}
                 aria-controls=${this.listboxId}
                 aria-autocomplete="list"
-                aria-activedescendant=${activeDescendant ?? nothing}
+                aria-activedescendant=${activeDescendant ?? A}
                 @input=${this.handleInput}
                 @keydown=${this.handleInputKeyDown}
             />
@@ -1745,7 +1738,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 	}
 	renderPanelInput() {
 		const activeDescendant = this.open ? this.getActiveDescendantId() : null;
-		return html`
+		return b`
             <div part="panel-search" class="panel-search">
                 <input
                     part="panel-input"
@@ -1760,7 +1753,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                     aria-expanded="true"
                     aria-controls=${this.listboxId}
                     aria-autocomplete="list"
-                    aria-activedescendant=${activeDescendant ?? nothing}
+                    aria-activedescendant=${activeDescendant ?? A}
                     @input=${this.handleInput}
                     @keydown=${this.handleInputKeyDown}
                 />
@@ -1768,13 +1761,13 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
         `;
 	}
 	renderPopupTrigger() {
-		return html`
+		return b`
             <button
                 type="button"
                 part="trigger"
                 class="popup-trigger"
                 ?disabled=${this.disabled}
-                aria-label=${this.ariaLabel ?? nothing}
+                aria-label=${this.ariaLabel ?? A}
                 aria-haspopup="listbox"
                 aria-expanded=${this.open ? "true" : "false"}
                 aria-controls=${this.listboxId}
@@ -1782,28 +1775,28 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                 @keydown=${this.handleTriggerKeyDown}
             >
                 <span
-                    class=${classMap({
+                    class=${e({
 			"popup-trigger-value": true,
 			"is-placeholder": this.isTriggerPlaceholder()
 		})}
                 >
                     ${this.getTriggerDisplayValue()}
                 </span>
-                <span class="icon popup-trigger-icon" aria-hidden="true">${unsafeSVG(CHEVRON_ICON)}</span>
+                <span class="icon popup-trigger-icon" aria-hidden="true">${o(CHEVRON_ICON)}</span>
             </button>
         `;
 	}
 	renderControlContent() {
 		if (this.usesPopupMode) return this.renderPopupTrigger();
 		const showClear = (this.clearable || this.withClear) && this.hasSelection() && !this.disabled;
-		if (this.multiple) return html`
+		if (this.multiple) return b`
                 ${this.renderHostDecorationSlot("start")}
                 <div class="chips" part="tags">
                     ${this.renderTags()}
                     ${this.renderInput()}
                 </div>
                 ${this.renderHostDecorationSlot("end")}
-                ${showClear ? html`
+                ${showClear ? b`
                         <button
                             type="button"
                             class="clear-button"
@@ -1812,15 +1805,15 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                             ?disabled=${this.disabled}
                             @click=${this.handleClear}
                         >
-                            <span class="clear-button-icon" aria-hidden="true">${unsafeSVG(XMARK_ICON)}</span>
+                            <span class="clear-button-icon" aria-hidden="true">${o(XMARK_ICON)}</span>
                         </button>
-                    ` : nothing}
+                    ` : A}
             `;
-		return html`
+		return b`
             ${this.renderHostDecorationSlot("start")}
             ${this.renderInput()}
             ${this.renderHostDecorationSlot("end")}
-            ${showClear ? html`
+            ${showClear ? b`
                     <button
                         type="button"
                         class="clear-button"
@@ -1829,9 +1822,9 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                         ?disabled=${this.disabled}
                         @click=${this.handleClear}
                     >
-                        <span class="clear-button-icon" aria-hidden="true">${unsafeSVG(XMARK_ICON)}</span>
+                        <span class="clear-button-icon" aria-hidden="true">${o(XMARK_ICON)}</span>
                     </button>
-                ` : nothing}
+                ` : A}
             ${this.renderChevronButton()}
         `;
 	}
@@ -1841,7 +1834,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 		const showEmpty = this.open && (this.usesAsyncSearch ? this.shouldShowAsyncEmpty() : visibleOptions.length === 0 && !showCreate);
 		const asyncStatus = this.getAsyncStatusMessage();
 		const createQuery = this.inputValue.trim();
-		return html`
+		return b`
             <input
                 class="value-input"
                 part="value-input"
@@ -1853,13 +1846,13 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
             />
             <div
                 part="control"
-                class=${classMap({
+                class=${e({
 			control: true,
 			"is-disabled": this.disabled,
 			"control--multiple": this.multiple,
 			"control--popup": this.usesPopupMode
 		})}
-                data-popup-open=${this.open ? "" : nothing}
+                data-popup-open=${this.open ? "" : A}
                 @mousedown=${this.handleControlMouseDown}
             >
                 ${this.renderControlContent()}
@@ -1875,7 +1868,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
             >
                 <div
                     part="panel"
-                    class=${classMap({
+                    class=${e({
 			panel: true,
 			"pk-popup-content": true,
 			closing: this.closing,
@@ -1883,27 +1876,27 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 		})}
                     tabindex="-1"
                     ?hidden=${!this.open && !this.closing}
-                    data-open=${this.panelAnimated && !this.closing ? "" : nothing}
+                    data-open=${this.panelAnimated && !this.closing ? "" : A}
                 >
-                    ${this.usesPopupMode ? this.renderPanelInput() : nothing}
+                    ${this.usesPopupMode ? this.renderPanelInput() : A}
                     <div
                         part="panel-body"
                         class="panel-body"
                         id=${this.listboxId}
                         role="listbox"
                         aria-multiselectable=${this.multiple ? "true" : "false"}
-                        aria-busy=${this.usesAsyncSearch && this.asyncLoading ? "true" : nothing}
+                        aria-busy=${this.usesAsyncSearch && this.asyncLoading ? "true" : A}
                         @slotchange=${this.syncOptions}
                     >
                         <slot></slot>
-                        ${asyncStatus ? html`
+                        ${asyncStatus ? b`
                                 <div part="async-status" class="async-status" role="status">${asyncStatus}</div>
-                            ` : nothing}
-                        ${showCreate ? html`
+                            ` : A}
+                        ${showCreate ? b`
                                 <button
                                     type="button"
                                     part="create-option"
-                                    class=${classMap({
+                                    class=${e({
 			"create-option": true,
 			"is-highlighted": this.createOptionHighlighted
 		})}
@@ -1917,100 +1910,98 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
                                 >
                                     Create "${createQuery}"
                                 </button>
-                            ` : nothing}
-                        ${showEmpty ? html`
+                            ` : A}
+                        ${showEmpty ? b`
                                 <div part="empty" class="empty">${this.emptyMessage}</div>
-                            ` : nothing}
+                            ` : A}
                     </div>
                 </div>
             </pk-popup>
         `;
 	}
 };
-__decorate([property({
+__decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "open", void 0);
-__decorate([property({
+__decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "multiple", void 0);
-__decorate([property({ reflect: true })], PkCombobox.prototype, "placement", void 0);
-__decorate([property({
+__decorate([n({ reflect: true })], PkCombobox.prototype, "placement", void 0);
+__decorate([n({
 	attribute: "side-offset",
 	type: Number
 })], PkCombobox.prototype, "sideOffset", void 0);
-__decorate([property({
+__decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "clearable", void 0);
-__decorate([property({
+__decorate([n({
 	attribute: "with-clear",
 	type: Boolean
 })], PkCombobox.prototype, "withClear", void 0);
-__decorate([property({
+__decorate([n({
 	attribute: "allow-create",
 	type: Boolean
 })], PkCombobox.prototype, "allowCreate", void 0);
-__decorate([property({
+__decorate([n({
 	attribute: "allow-custom-value",
 	type: Boolean
 })], PkCombobox.prototype, "allowCustomValue", void 0);
-__decorate([property({
+__decorate([n({
 	attribute: "auto-highlight",
 	type: Boolean
 })], PkCombobox.prototype, "autoHighlight", void 0);
-__decorate([property({
+__decorate([n({
 	attribute: "popup-mode",
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "popupMode", void 0);
-__decorate([property({ attribute: "search-placeholder" })], PkCombobox.prototype, "searchPlaceholder", void 0);
-__decorate([property({
+__decorate([n({ attribute: "search-placeholder" })], PkCombobox.prototype, "searchPlaceholder", void 0);
+__decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "invalid", void 0);
-__decorate([property({ reflect: true })], PkCombobox.prototype, "size", void 0);
-__decorate([property({ reflect: true })], PkCombobox.prototype, "width", void 0);
-__decorate([property()], PkCombobox.prototype, "placeholder", void 0);
-__decorate([property({ attribute: "empty-message" })], PkCombobox.prototype, "emptyMessage", void 0);
-__decorate([property()], PkCombobox.prototype, "value", void 0);
-__decorate([property({ attribute: "default-value" })], PkCombobox.prototype, "defaultValue", void 0);
-__decorate([property({
+__decorate([n({ reflect: true })], PkCombobox.prototype, "size", void 0);
+__decorate([n({ reflect: true })], PkCombobox.prototype, "width", void 0);
+__decorate([n()], PkCombobox.prototype, "placeholder", void 0);
+__decorate([n({ attribute: "empty-message" })], PkCombobox.prototype, "emptyMessage", void 0);
+__decorate([n()], PkCombobox.prototype, "value", void 0);
+__decorate([n({ attribute: "default-value" })], PkCombobox.prototype, "defaultValue", void 0);
+__decorate([n({
 	type: Array,
 	attribute: false
 })], PkCombobox.prototype, "values", void 0);
-__decorate([property({ attribute: false })], PkCombobox.prototype, "defaultValues", void 0);
-__decorate([property()], PkCombobox.prototype, "label", void 0);
-__decorate([property()], PkCombobox.prototype, "instructions", void 0);
-__decorate([property({ attribute: "aria-label" })], PkCombobox.prototype, "ariaLabel", void 0);
-__decorate([property({
+__decorate([n({ attribute: false })], PkCombobox.prototype, "defaultValues", void 0);
+__decorate([n()], PkCombobox.prototype, "label", void 0);
+__decorate([n()], PkCombobox.prototype, "instructions", void 0);
+__decorate([n({ attribute: "aria-label" })], PkCombobox.prototype, "ariaLabel", void 0);
+__decorate([n({
 	attribute: "loop-focus",
 	type: Boolean
 })], PkCombobox.prototype, "loopFocus", void 0);
-__decorate([property({ attribute: false })], PkCombobox.prototype, "filter", void 0);
-__decorate([property({
+__decorate([n({ attribute: false })], PkCombobox.prototype, "filter", void 0);
+__decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkCombobox.prototype, "async", void 0);
-__decorate([property({ attribute: "loading-message" })], PkCombobox.prototype, "loadingMessage", void 0);
-__decorate([property({ attribute: "start-typing-message" })], PkCombobox.prototype, "startTypingMessage", void 0);
-__decorate([property({ attribute: false })], PkCombobox.prototype, "fetchOptions", void 0);
-__decorate([query("pk-popup")], PkCombobox.prototype, "popupElement", void 0);
-__decorate([query(".control")], PkCombobox.prototype, "controlElement", void 0);
-__decorate([query(".control-input")], PkCombobox.prototype, "controlInput", void 0);
-__decorate([query(".popup-trigger")], PkCombobox.prototype, "popupTrigger", void 0);
-__decorate([query(".create-option")], PkCombobox.prototype, "createOptionElement", void 0);
-__decorate([query(".value-input")], PkCombobox.prototype, "input", void 0);
-__decorate([state()], PkCombobox.prototype, "inputValue", void 0);
-__decorate([state()], PkCombobox.prototype, "highlightedIndex", void 0);
-__decorate([state()], PkCombobox.prototype, "createOptionHighlighted", void 0);
-__decorate([state()], PkCombobox.prototype, "closing", void 0);
-__decorate([state()], PkCombobox.prototype, "panelAnimated", void 0);
-__decorate([state()], PkCombobox.prototype, "asyncLoading", void 0);
-__decorate([state()], PkCombobox.prototype, "asyncError", void 0);
-PkCombobox = __decorate([customElement("pk-combobox")], PkCombobox);
+__decorate([n({ attribute: "loading-message" })], PkCombobox.prototype, "loadingMessage", void 0);
+__decorate([n({ attribute: "start-typing-message" })], PkCombobox.prototype, "startTypingMessage", void 0);
+__decorate([n({ attribute: false })], PkCombobox.prototype, "fetchOptions", void 0);
+__decorate([e$1("pk-popup")], PkCombobox.prototype, "popupElement", void 0);
+__decorate([e$1(".control")], PkCombobox.prototype, "controlElement", void 0);
+__decorate([e$1(".control-input")], PkCombobox.prototype, "controlInput", void 0);
+__decorate([e$1(".popup-trigger")], PkCombobox.prototype, "popupTrigger", void 0);
+__decorate([e$1(".create-option")], PkCombobox.prototype, "createOptionElement", void 0);
+__decorate([e$1(".value-input")], PkCombobox.prototype, "input", void 0);
+__decorate([r()], PkCombobox.prototype, "inputValue", void 0);
+__decorate([r()], PkCombobox.prototype, "highlightedIndex", void 0);
+__decorate([r()], PkCombobox.prototype, "createOptionHighlighted", void 0);
+__decorate([r()], PkCombobox.prototype, "closing", void 0);
+__decorate([r()], PkCombobox.prototype, "panelAnimated", void 0);
+__decorate([r()], PkCombobox.prototype, "asyncLoading", void 0);
+__decorate([r()], PkCombobox.prototype, "asyncError", void 0);
+PkCombobox = __decorate([t("pk-combobox")], PkCombobox);
 //#endregion
-export { PkCreateEvent as n, PkCombobox as t };
-
-//# sourceMappingURL=pk-combobox-DtkXaX67.js.map
+export { PkCombobox as t };

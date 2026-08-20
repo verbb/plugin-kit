@@ -1,4 +1,4 @@
-import { n as uniqueId } from "../../chunks/pk-a11y-Cx5RZvhu.js";
+import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
 import { l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
 //#region src/components/select/pk-option-group.styles.ts

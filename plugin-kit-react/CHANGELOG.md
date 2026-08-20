@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+- React `Dialog` forwards `disableScrollLock` (`disable-scroll-lock` on `pk-dialog`) to skip document scroll lock while open.
+
+### Fixed
+- `StatePanel` icon badge (size, muted color, rounded background) no longer depends on the host Tailwind scan picking up kit utility class strings.
+
 ## 2.0.7 - 2026-08-07
 
 ### Added

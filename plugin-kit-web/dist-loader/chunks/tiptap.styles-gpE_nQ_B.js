@@ -1,4 +1,4 @@
-import { n as uniqueId } from "./pk-a11y-Cx5RZvhu.js";
+import { n as uniqueId } from "./pk-a11y-CjB4-U-R.js";
 import { m as i } from "./lit-Dnn7gEi2.js";
 import { A as Node3, C as index_default$10, D as index_default$1, E as index_default$7, F as PluginKey, I as TextSelection, N as NodeSelection, O as index_default, P as Plugin, S as index_default$11, T as index_default$8, _ as index_default$16, a as index_default$5, b as index_default$13, c as index_default$24, d as index_default$21, f as index_default$20, g as index_default$17, h as index_default$6, i as index_default$2, j as getMarkRange, l as Table, m as index_default$18, n as index_default$25, o as index_default$22, p as index_default$19, r as index_default$3, s as index_default$23, t as index_default$26, u as index_default$4, v as index_default$15, w as index_default$9, x as index_default$12, y as index_default$14 } from "./tiptap-_LAjdgeV.js";
 //#region ../plugin-kit-tiptap-core/dist/links/extension.js

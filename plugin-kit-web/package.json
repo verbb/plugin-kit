@@ -9,6 +9,7 @@
         "./src/components/**/*.ts",
         "./dist/register.js",
         "./dist/components/**/*.js",
+        "./dist/chunks/**/*.js",
         "./dist-loader/**/*.js"
     ],
     "files": [

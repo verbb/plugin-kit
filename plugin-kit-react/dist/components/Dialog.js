@@ -26,7 +26,7 @@ var bindHostEvent = (handler) => {
 };
 /** React facade over `<pk-dialog>`. Behavior and styles live in the web component. */
 var Dialog = React.forwardRef(function Dialog(props, ref) {
-	const { open, disablePointerDismissal, withoutHeader, withoutBodyPadding, onPkShow, onPkAfterShow, onPkHide, onPkAfterHide, onPkOpenChange, ...rest } = props;
+	const { open, disablePointerDismissal, withoutHeader, withoutBodyPadding, disableScrollLock, onPkShow, onPkAfterShow, onPkHide, onPkAfterHide, onPkOpenChange, ...rest } = props;
 	return /* @__PURE__ */ jsx(PkDialogElement, {
 		ref,
 		...rest,
@@ -34,11 +34,13 @@ var Dialog = React.forwardRef(function Dialog(props, ref) {
 		...trueBooleanProps([
 			"disablePointerDismissal",
 			"withoutHeader",
-			"withoutBodyPadding"
+			"withoutBodyPadding",
+			"disableScrollLock"
 		], {
 			disablePointerDismissal,
 			withoutHeader,
-			withoutBodyPadding
+			withoutBodyPadding,
+			disableScrollLock
 		}),
 		...onPkShow ? { onPkShow: bindHostEvent(onPkShow) } : {},
 		...onPkAfterShow ? { onPkAfterShow: bindHostEvent(onPkAfterShow) } : {},

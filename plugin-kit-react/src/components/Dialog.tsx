@@ -40,6 +40,7 @@ export const Dialog = React.forwardRef<PkDialog, PkDialogElementProps>(function 
         disablePointerDismissal,
         withoutHeader,
         withoutBodyPadding,
+        disableScrollLock,
         onPkShow,
         onPkAfterShow,
         onPkHide,
@@ -55,11 +56,12 @@ export const Dialog = React.forwardRef<PkDialog, PkDialogElementProps>(function 
             // `open` must always forward false so controlled dialogs can close.
             open={open}
             {...trueBooleanProps(
-                ['disablePointerDismissal', 'withoutHeader', 'withoutBodyPadding'],
+                ['disablePointerDismissal', 'withoutHeader', 'withoutBodyPadding', 'disableScrollLock'],
                 {
                     disablePointerDismissal,
                     withoutHeader,
                     withoutBodyPadding,
+                    disableScrollLock,
                 },
             )}
             // Nested tooltip/popover/select also emit these — only the dialog host counts.

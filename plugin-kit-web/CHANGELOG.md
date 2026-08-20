@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Fixed
+- Documented that controlled `pk-dialog` zero-footprint hosts still participate in DOM sibling selectors (e.g. Tailwind `space-y-*` / `:not(:last-child)`). Prefer flex/grid `gap-*` or mount overlays outside the spaced stack; a light-DOM portal would also address it.
+- No longer sets permanent `html { scrollbar-gutter: stable }` (tokens + ShadowRoot config injector). That reserved an empty scrollbar strip on every Craft CP page (Formie, Navigation, etc.).
+- Overlay scroll lock now follows Craft / Garnish.Modal’s document model: `body { overflow: hidden }` only (Craft’s `body.no-scroll`), plus wheel/touch/page-key `preventDefault` outside locking hosts so the page cannot scroll under the shade. Does **not** use `body { position: fixed }`, `overflow: hidden` on `html`, lock-time `scrollbar-gutter`, `padding-right`, or scroll-position pin listeners (sticky `#global-sidebar` jumps, width shifts, or rubber-band scrollbar). Dialog hosts stay `position: fixed` like Craft’s modal/shade.
+
+### Added
+- `pk-dialog` / React `Dialog` gain `disableScrollLock` (`disable-scroll-lock`) to skip document scroll lock while open.
+
 ## 2.0.7 - 2026-08-07
 
 ### Changed

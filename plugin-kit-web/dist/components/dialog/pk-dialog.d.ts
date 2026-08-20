@@ -33,6 +33,11 @@ export declare class PkDialog extends PkElement {
      * Use for flush layouts (sidebars, full-bleed pickers) that own their own inset.
      */
     withoutBodyPadding: boolean;
+    /**
+     * Skip document scroll lock while open. Useful for labs / rare cases where the
+     * page should keep scrolling under the modal (native dialog still traps focus).
+     */
+    disableScrollLock: boolean;
     size: 'default' | 'wide';
     private dialogElement;
     private triggerElement;

@@ -1,4 +1,4 @@
-import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-Cx5RZvhu.js";
+import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-CjB4-U-R.js";
 //#region src/component-registry.ts
 /**
 * Canonical tag → loader module path mapping for the autoloader.
@@ -224,26 +224,6 @@ async function allDefined(options = {}) {
 	await Promise.all(tagsToAwait.map((tag) => customElements.whenDefined(tag)));
 	await new Promise(requestAnimationFrame);
 }
-//#endregion
-//#region src/utils/documentScrollStability.ts
-var DOCUMENT_SCROLL_STABILITY_STYLE_ID = "plugin-kit-document-scroll-stability";
-/**
-* Reserve scrollbar space on the document root so overlay scroll lock
-* can use the stable gutter path instead of body width compensation.
-* Safe to call multiple times; only injects once.
-*
-* tokens.css already sets `html { scrollbar-gutter: stable }` for kit surfaces
-* that import tokens. This injector covers hosts that load components without
-* tokens (e.g. craft CP early boot / ShadowRoot portal config).
-*/
-var ensureDocumentScrollStability = () => {
-	if (typeof document === "undefined") return;
-	if (document.querySelector(`style[data-plugin-kit-style-id="${DOCUMENT_SCROLL_STABILITY_STYLE_ID}"]`)) return;
-	const style = document.createElement("style");
-	style.setAttribute("data-plugin-kit-style-id", DOCUMENT_SCROLL_STABILITY_STYLE_ID);
-	style.textContent = "html { scrollbar-gutter: stable; }";
-	document.head.appendChild(style);
-};
 var setPortalClassName = (className) => {
 	className.trim();
 };
@@ -254,7 +234,7 @@ var setShadowRootSelectors = (selectors) => {
 //#endregion
 //#region src/utils/config.ts
 var configurePluginKitWeb = (config) => {
-	if (config.portalContainer instanceof ShadowRoot) ensureDocumentScrollStability();
+	if (config.portalContainer instanceof ShadowRoot);
 	if (config.shadowRootSelectors) setShadowRootSelectors(config.shadowRootSelectors);
 };
 //#endregion

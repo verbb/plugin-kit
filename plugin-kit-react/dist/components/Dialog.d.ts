@@ -9,7 +9,7 @@ declare const PkDialogElement: import('@lit/react').ReactWebComponent<PkDialog, 
 }>;
 type PkDialogElementProps = React.ComponentProps<typeof PkDialogElement>;
 /** React facade over `<pk-dialog>`. Behavior and styles live in the web component. */
-export declare const Dialog: React.ForwardRefExoticComponent<Omit<Omit<React.HTMLAttributes<PkDialog>, "show" | "hide" | "open" | "label" | "firstUpdated" | "updated" | "render" | "connectedCallback" | "createRenderRoot" | "performUpdate" | "renderOptions" | "disconnectedCallback" | "renderRoot" | "isUpdatePending" | "hasUpdated" | "addController" | "removeController" | "attributeChangedCallback" | "requestUpdate" | "updateComplete" | "size" | "onPkShow" | "onPkAfterShow" | "onPkHide" | "onPkAfterHide" | "onPkOpenChange" | "description" | "disablePointerDismissal" | "withoutHeader" | "withoutBodyPadding" | "closeDialog" | "requestClose" | "forceOverlayReset"> & {
+export declare const Dialog: React.ForwardRefExoticComponent<Omit<Omit<React.HTMLAttributes<PkDialog>, "show" | "hide" | "open" | "label" | "firstUpdated" | "updated" | "render" | "connectedCallback" | "createRenderRoot" | "performUpdate" | "renderOptions" | "disconnectedCallback" | "renderRoot" | "isUpdatePending" | "hasUpdated" | "addController" | "removeController" | "attributeChangedCallback" | "requestUpdate" | "updateComplete" | "size" | "onPkShow" | "onPkAfterShow" | "onPkHide" | "onPkAfterHide" | "onPkOpenChange" | "description" | "disablePointerDismissal" | "withoutHeader" | "withoutBodyPadding" | "disableScrollLock" | "closeDialog" | "requestClose" | "forceOverlayReset"> & {
     onPkShow?: ((e: Event) => void) | undefined;
     onPkAfterShow?: ((e: Event) => void) | undefined;
     onPkHide?: ((e: Event) => void) | undefined;

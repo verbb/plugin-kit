@@ -8,7 +8,7 @@ import { t as formControlStyles } from "./form-control.styles-BQdimE5o.js";
 import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
 import { i as uniqueId } from "./focus-aa5dlv8k.js";
 import "./pk-input-naIRPWGC.js";
-import "./pk-dialog-DZZd1Tzb.js";
+import "./pk-dialog-DjZAmmHL.js";
 import "./pk-dropdown-item-P3LLojCI.js";
 import "./pk-dropdown-menu-CsX95MCP.js";
 import "../components/dropdown-menu/pk-dropdown-separator.js";
@@ -1090,4 +1090,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-CdoutapZ.js.map
+//# sourceMappingURL=pk-tiptap-editor-DTeSKePZ.js.map

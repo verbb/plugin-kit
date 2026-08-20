@@ -3,32 +3,46 @@ import { Button } from "../components/Button.js";
 import { cn } from "./cn.js";
 import { jsx, jsxs } from "react/jsx-runtime";
 //#region src/utils/StatePanel.tsx
+var ICON_SHELL_STYLE = {
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+	width: "2.5rem",
+	height: "2.5rem",
+	marginBottom: "0.75rem",
+	borderRadius: "10px"
+};
+var ICON_GLYPH_STYLE = {
+	width: "1.25rem",
+	height: "1.25rem",
+	fontSize: "1.25rem"
+};
 var VARIANT_CONFIG = {
 	empty: {
 		icon: "empty-set",
-		iconColor: "text-slate-500",
-		iconContainer: "bg-slate-200/55",
+		iconColor: "var(--pk-color-slate-500)",
+		iconContainerBackground: "color-mix(in srgb, var(--pk-color-slate-200) 55%, transparent)",
 		titleClassName: "text-base font-medium text-gray-900",
 		messageClassName: "text-sm text-gray-500"
 	},
 	error: {
 		icon: "triangle-exclamation",
-		iconColor: "text-rose-600",
-		iconContainer: "bg-rose-500/12",
+		iconColor: "var(--pk-color-rose-600)",
+		iconContainerBackground: "color-mix(in srgb, var(--pk-color-rose-500) 12%, transparent)",
 		titleClassName: "text-base font-medium text-gray-900",
 		messageClassName: "text-sm text-gray-500"
 	},
 	success: {
 		icon: "circle-check",
-		iconColor: "text-emerald-600",
-		iconContainer: "bg-slate-100",
+		iconColor: "var(--pk-color-emerald-600)",
+		iconContainerBackground: "var(--pk-color-slate-100)",
 		titleClassName: "text-base font-medium text-gray-900",
 		messageClassName: "text-sm text-gray-500"
 	},
 	info: {
 		icon: "circle-info",
-		iconColor: "text-sky-600",
-		iconContainer: "bg-slate-100",
+		iconColor: "var(--pk-color-sky-600)",
+		iconContainerBackground: "var(--pk-color-slate-100)",
 		titleClassName: "text-base font-medium text-gray-900",
 		messageClassName: "text-sm text-gray-500"
 	}
@@ -46,10 +60,16 @@ function StatePanel({ variant = "empty", icon = null, title = null, message = nu
 			className: contentClassName,
 			children: [
 				showIcon && resolvedIcon ? /* @__PURE__ */ jsx("div", {
-					className: cn("mb-3 flex size-10 items-center justify-center rounded-[10px]", config.iconContainer),
+					style: {
+						...ICON_SHELL_STYLE,
+						backgroundColor: config.iconContainerBackground
+					},
 					children: /* @__PURE__ */ jsx(Icon, {
 						icon: resolvedIcon,
-						className: cn("size-5", config.iconColor)
+						style: {
+							...ICON_GLYPH_STYLE,
+							color: config.iconColor
+						}
 					})
 				}) : null,
 				title ? /* @__PURE__ */ jsx("h2", {

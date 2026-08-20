@@ -10,8 +10,8 @@ export type PluginKitWebConfig = {
      */
     portalClassName?: string;
     /**
-     * When a `ShadowRoot`, enables document scroll-gutter stability for overlay scroll lock
-     * in embedded hosts (e.g. Craft CP). React/Base UI compat still uses this as a portal target.
+     * When a `ShadowRoot`, used as a React portal target for Base UI compat.
+     * No longer injects document scroll-gutter CSS (see scroll-lock.ts).
      */
     portalContainer?: PortalContainer;
     shadowRootSelectors?: string[];
@@ -19,6 +19,7 @@ export type PluginKitWebConfig = {
 
 export const configurePluginKitWeb = (config: PluginKitWebConfig): void => {
     if (config.portalContainer instanceof ShadowRoot) {
+        // Historically forced `html { scrollbar-gutter: stable }`; that is a no-op now.
         ensureDocumentScrollStability();
     }
 

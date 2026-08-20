@@ -398,11 +398,8 @@
 
 /* Scroll lock — class is a state marker; locking logic lives in a11y/scroll-lock.ts.
  * Do NOT pad body for the scrollbar: that shifts position:fixed Craft/playground chrome.
- * Prefer permanent stable gutter so Path A succeeds more often. */
-html {
-    scrollbar-gutter: stable;
-}
-
+ * Do NOT set permanent `scrollbar-gutter: stable` on html — that leaves an empty strip
+ * on every Craft CP page. Lock applies compensation only while overlays are open. */
 html.pk-scroll-lock {
     --pk-scroll-lock: 1;
 }

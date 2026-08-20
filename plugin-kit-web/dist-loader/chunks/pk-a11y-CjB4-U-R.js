@@ -45,114 +45,81 @@ function getOffset(element, parent) {
 *
 * Ref-counted so nested overlays unlock only when all close.
 *
-* Avoids the classic “fixed chrome jumps” bug from `padding-right` compensation:
-* Craft CP / playground fixed sidebars & tip bars do not inherit body padding, so
-* `body { padding-right: scrollbar }` shifts them when the scrollbar goes
-* away. v1 (Base UI) did not jump — follow that model instead:
+* Aligns with Craft / Garnish.Modal where it matters:
+* - Modal + shade are `position: fixed` (hosts, not the document).
+* - Document lock is `body { overflow: hidden }` (Craft’s `.no-scroll`) — **not**
+*   `body { position: fixed }`, and **not** `overflow: hidden` on `html`.
+*   Body-only overflow keeps Craft’s sticky `#global-sidebar` stuck at the current
+*   scrollY; html overflow / body fixed both make sticky “let go” and the nav jumps.
 *
-* 1. Prefer a real `scrollbar-gutter: stable` lock (width unchanged under overflow:hidden).
-* 2. Otherwise keep `overflow-y: scroll` on `<html>` so the gutter stays painted, and
-*    constrain `<body>` so the page cannot scroll.
+* Craft’s class alone still lets the page scroll under the shade (wheel / scrollBy).
+* We add wheel / touch / page-key `preventDefault` outside locking overlay hosts so
+* user scrolling actually stops — without a `scroll` listener that rubber-bands the
+* position back (that felt gross).
+*
+* Also avoid: permanent/lock-time `scrollbar-gutter`, and `padding-right` compensation
+* (Craft fixed tip bars ignore body padding and jump).
 */
 var locks = /* @__PURE__ */ new Set();
 /** Undo for the currently applied lock (only while locks.size > 0). */
 var restoreLock = null;
-function isOverflowScrollContainer(element) {
-	const overflowY = getComputedStyle(element).overflowY;
-	return overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay";
+var SCROLL_KEYS = new Set([
+	" ",
+	"ArrowUp",
+	"ArrowDown",
+	"ArrowLeft",
+	"ArrowRight",
+	"PageUp",
+	"PageDown",
+	"Home",
+	"End"
+]);
+function eventPathContainsLock(event) {
+	for (const node of event.composedPath()) if (node instanceof HTMLElement && locks.has(node)) return true;
+	return false;
 }
-/** True when setting gutter + toggling overflow does not change layout width. */
-function supportsStableScrollbarGutterLock() {
-	if (typeof CSS === "undefined" || !CSS.supports?.("scrollbar-gutter", "stable")) return false;
-	const html = document.documentElement;
-	const body = document.body;
-	const scrollContainer = isOverflowScrollContainer(html) ? html : body;
-	const prevOverflowY = scrollContainer.style.overflowY;
-	const prevGutter = html.style.scrollbarGutter;
-	html.style.scrollbarGutter = "stable";
-	scrollContainer.style.overflowY = "scroll";
-	const before = scrollContainer.offsetWidth;
-	scrollContainer.style.overflowY = "hidden";
-	const after = scrollContainer.offsetWidth;
-	scrollContainer.style.overflowY = prevOverflowY;
-	html.style.scrollbarGutter = prevGutter;
-	return before === after;
-}
-function getInsetScrollbarWidth() {
-	return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+function isEditableTarget(target) {
+	if (!(target instanceof HTMLElement)) return false;
+	if (target.isContentEditable) return true;
+	const tag = target.tagName;
+	return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
 }
 /**
-* Apply a lock that does not use body padding-right (fixed elements stay put).
+* Craft-like body overflow + gesture block (no scroll-position pin).
 * Returns a restore function.
 */
 function applyScrollLock() {
-	const html = document.documentElement;
 	const body = document.body;
-	const htmlStyles = getComputedStyle(html);
-	const bodyStyles = getComputedStyle(body);
-	if (getInsetScrollbarWidth() < 2) {
-		const prevHtmlOverflow = html.style.overflow;
-		const prevBodyOverflow = body.style.overflow;
-		html.style.overflow = "hidden";
-		body.style.overflow = "hidden";
-		return () => {
-			html.style.overflow = prevHtmlOverflow;
-			body.style.overflow = prevBodyOverflow;
-		};
-	}
-	const elementToLock = isOverflowScrollContainer(html) ? html : body;
-	if (supportsStableScrollbarGutterLock()) {
-		const prevGutter = html.style.scrollbarGutter;
-		const prevOverflowY = elementToLock.style.overflowY;
-		const prevOverflowX = elementToLock.style.overflowX;
-		html.style.scrollbarGutter = htmlStyles.scrollbarGutter?.includes("both-edges") ? "stable both-edges" : "stable";
-		elementToLock.style.overflowY = "hidden";
-		elementToLock.style.overflowX = "hidden";
-		return () => {
-			html.style.scrollbarGutter = prevGutter;
-			elementToLock.style.overflowY = prevOverflowY;
-			elementToLock.style.overflowX = prevOverflowX;
-		};
-	}
-	const scrollTop = html.scrollTop;
-	const scrollLeft = html.scrollLeft;
-	const scrollbarWidth = Math.max(0, window.innerWidth - body.clientWidth);
-	const scrollbarHeight = Math.max(0, window.innerHeight - body.clientHeight);
-	const marginY = parseFloat(bodyStyles.marginTop) + parseFloat(bodyStyles.marginBottom);
-	const marginX = parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight);
-	const prevHtml = {
-		scrollbarGutter: html.style.scrollbarGutter,
-		overflowY: html.style.overflowY,
-		overflowX: html.style.overflowX,
-		scrollBehavior: html.style.scrollBehavior
+	const prevOverflow = body.style.overflow;
+	body.style.setProperty("overflow", "hidden", "important");
+	const onWheel = (event) => {
+		if (eventPathContainsLock(event)) return;
+		event.preventDefault();
 	};
-	const prevBody = {
-		position: body.style.position,
-		height: body.style.height,
-		width: body.style.width,
-		boxSizing: body.style.boxSizing,
-		overflow: body.style.overflow,
-		overflowY: body.style.overflowY,
-		overflowX: body.style.overflowX,
-		scrollBehavior: body.style.scrollBehavior
+	const onTouchMove = (event) => {
+		if (eventPathContainsLock(event)) return;
+		event.preventDefault();
 	};
-	html.style.scrollbarGutter = "stable";
-	html.style.overflowY = "scroll";
-	html.style.overflowX = "hidden";
-	html.style.scrollBehavior = "unset";
-	body.style.position = "relative";
-	body.style.boxSizing = "border-box";
-	body.style.overflow = "hidden";
-	body.style.scrollBehavior = "unset";
-	body.style.width = marginX || scrollbarWidth ? `calc(100vw - ${marginX + scrollbarWidth}px)` : "100vw";
-	body.style.height = marginY || scrollbarHeight ? `calc(100dvh - ${marginY + scrollbarHeight}px)` : "100dvh";
-	body.scrollTop = scrollTop;
-	body.scrollLeft = scrollLeft;
+	const onKeyDown = (event) => {
+		if (!SCROLL_KEYS.has(event.key)) return;
+		if (eventPathContainsLock(event) || isEditableTarget(event.target)) return;
+		event.preventDefault();
+	};
+	window.addEventListener("wheel", onWheel, {
+		passive: false,
+		capture: true
+	});
+	window.addEventListener("touchmove", onTouchMove, {
+		passive: false,
+		capture: true
+	});
+	window.addEventListener("keydown", onKeyDown, { capture: true });
 	return () => {
-		Object.assign(html.style, prevHtml);
-		Object.assign(body.style, prevBody);
-		html.scrollTop = scrollTop;
-		html.scrollLeft = scrollLeft;
+		window.removeEventListener("wheel", onWheel, { capture: true });
+		window.removeEventListener("touchmove", onTouchMove, { capture: true });
+		window.removeEventListener("keydown", onKeyDown, { capture: true });
+		body.style.removeProperty("overflow");
+		if (prevOverflow) body.style.overflow = prevOverflow;
 	};
 }
 function lockBodyScrolling(lockingEl) {

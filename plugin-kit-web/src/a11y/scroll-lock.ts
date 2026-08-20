@@ -3,14 +3,20 @@
  *
  * Ref-counted so nested overlays unlock only when all close.
  *
- * Avoids the classic “fixed chrome jumps” bug from `padding-right` compensation:
- * Craft CP / playground fixed sidebars & tip bars do not inherit body padding, so
- * `body { padding-right: scrollbar }` shifts them when the scrollbar goes
- * away. v1 (Base UI) did not jump — follow that model instead:
+ * Aligns with Craft / Garnish.Modal where it matters:
+ * - Modal + shade are `position: fixed` (hosts, not the document).
+ * - Document lock is `body { overflow: hidden }` (Craft’s `.no-scroll`) — **not**
+ *   `body { position: fixed }`, and **not** `overflow: hidden` on `html`.
+ *   Body-only overflow keeps Craft’s sticky `#global-sidebar` stuck at the current
+ *   scrollY; html overflow / body fixed both make sticky “let go” and the nav jumps.
  *
- * 1. Prefer a real `scrollbar-gutter: stable` lock (width unchanged under overflow:hidden).
- * 2. Otherwise keep `overflow-y: scroll` on `<html>` so the gutter stays painted, and
- *    constrain `<body>` so the page cannot scroll.
+ * Craft’s class alone still lets the page scroll under the shade (wheel / scrollBy).
+ * We add wheel / touch / page-key `preventDefault` outside locking overlay hosts so
+ * user scrolling actually stops — without a `scroll` listener that rubber-bands the
+ * position back (that felt gross).
+ *
+ * Also avoid: permanent/lock-time `scrollbar-gutter`, and `padding-right` compensation
+ * (Craft fixed tip bars ignore body padding and jump).
  */
 
 import { getOffset } from './offset.js';
@@ -20,135 +26,87 @@ const locks = new Set<HTMLElement>();
 /** Undo for the currently applied lock (only while locks.size > 0). */
 let restoreLock: (() => void) | null = null;
 
-function isOverflowScrollContainer(element: Element): boolean {
-    const style = getComputedStyle(element);
-    const overflowY = style.overflowY;
+const SCROLL_KEYS = new Set([
+    ' ',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'PageUp',
+    'PageDown',
+    'Home',
+    'End',
+]);
 
-    return overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay';
+function eventPathContainsLock(event: Event): boolean {
+    for (const node of event.composedPath()) {
+        if (node instanceof HTMLElement && locks.has(node)) {
+            return true;
+        }
+    }
+    return false;
 }
 
-/** True when setting gutter + toggling overflow does not change layout width. */
-function supportsStableScrollbarGutterLock(): boolean {
-    if (typeof CSS === 'undefined' || !CSS.supports?.('scrollbar-gutter', 'stable')) {
+function isEditableTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
         return false;
     }
-
-    const html = document.documentElement;
-    const body = document.body;
-    const scrollContainer = isOverflowScrollContainer(html) ? html : body;
-    const prevOverflowY = scrollContainer.style.overflowY;
-    const prevGutter = html.style.scrollbarGutter;
-
-    html.style.scrollbarGutter = 'stable';
-    scrollContainer.style.overflowY = 'scroll';
-    const before = scrollContainer.offsetWidth;
-    scrollContainer.style.overflowY = 'hidden';
-    const after = scrollContainer.offsetWidth;
-
-    scrollContainer.style.overflowY = prevOverflowY;
-    html.style.scrollbarGutter = prevGutter;
-
-    return before === after;
-}
-
-function getInsetScrollbarWidth(): number {
-    return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+    if (target.isContentEditable) {
+        return true;
+    }
+    const tag = target.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
 }
 
 /**
- * Apply a lock that does not use body padding-right (fixed elements stay put).
+ * Craft-like body overflow + gesture block (no scroll-position pin).
  * Returns a restore function.
  */
 function applyScrollLock(): () => void {
-    const html = document.documentElement;
     const body = document.body;
-    const htmlStyles = getComputedStyle(html);
-    const bodyStyles = getComputedStyle(body);
+    const prevOverflow = body.style.overflow;
 
-    // Overlay / floating scrollbars (macOS “show when scrolling”): hiding overflow
-    // does not change layout width — nothing to compensate.
-    if (getInsetScrollbarWidth() < 2) {
-        const prevHtmlOverflow = html.style.overflow;
-        const prevBodyOverflow = body.style.overflow;
-        html.style.overflow = 'hidden';
-        body.style.overflow = 'hidden';
-        return () => {
-            html.style.overflow = prevHtmlOverflow;
-            body.style.overflow = prevBodyOverflow;
-        };
-    }
+    // Same idea as Craft `.no-scroll { overflow: hidden !important }` — body only.
+    body.style.setProperty('overflow', 'hidden', 'important');
 
-    const elementToLock = isOverflowScrollContainer(html) ? html : body;
-
-    // Path A — gutter stays stable under overflow:hidden (Firefox; some Chrome builds).
-    if (supportsStableScrollbarGutterLock()) {
-        const prevGutter = html.style.scrollbarGutter;
-        const prevOverflowY = elementToLock.style.overflowY;
-        const prevOverflowX = elementToLock.style.overflowX;
-
-        html.style.scrollbarGutter = htmlStyles.scrollbarGutter?.includes('both-edges')
-            ? 'stable both-edges'
-            : 'stable';
-        elementToLock.style.overflowY = 'hidden';
-        elementToLock.style.overflowX = 'hidden';
-
-        return () => {
-            html.style.scrollbarGutter = prevGutter;
-            elementToLock.style.overflowY = prevOverflowY;
-            elementToLock.style.overflowX = prevOverflowX;
-        };
-    }
-
-    // Path B — keep the inset scrollbar painted (`overflow-y: scroll`) so layout
-    // width never changes, then freeze body scrolling. Matches Base UI inset lock.
-    const scrollTop = html.scrollTop;
-    const scrollLeft = html.scrollLeft;
-    const scrollbarWidth = Math.max(0, window.innerWidth - body.clientWidth);
-    const scrollbarHeight = Math.max(0, window.innerHeight - body.clientHeight);
-    const marginY = parseFloat(bodyStyles.marginTop) + parseFloat(bodyStyles.marginBottom);
-    const marginX = parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight);
-
-    const prevHtml = {
-        scrollbarGutter: html.style.scrollbarGutter,
-        overflowY: html.style.overflowY,
-        overflowX: html.style.overflowX,
-        scrollBehavior: html.style.scrollBehavior,
-    };
-    const prevBody = {
-        position: body.style.position,
-        height: body.style.height,
-        width: body.style.width,
-        boxSizing: body.style.boxSizing,
-        overflow: body.style.overflow,
-        overflowY: body.style.overflowY,
-        overflowX: body.style.overflowX,
-        scrollBehavior: body.style.scrollBehavior,
+    const onWheel = (event: WheelEvent) => {
+        if (eventPathContainsLock(event)) {
+            return;
+        }
+        event.preventDefault();
     };
 
-    html.style.scrollbarGutter = 'stable';
-    html.style.overflowY = 'scroll';
-    html.style.overflowX = 'hidden';
-    html.style.scrollBehavior = 'unset';
+    const onTouchMove = (event: TouchEvent) => {
+        if (eventPathContainsLock(event)) {
+            return;
+        }
+        event.preventDefault();
+    };
 
-    body.style.position = 'relative';
-    body.style.boxSizing = 'border-box';
-    body.style.overflow = 'hidden';
-    body.style.scrollBehavior = 'unset';
-    body.style.width = marginX || scrollbarWidth
-        ? `calc(100vw - ${marginX + scrollbarWidth}px)`
-        : '100vw';
-    body.style.height = marginY || scrollbarHeight
-        ? `calc(100dvh - ${marginY + scrollbarHeight}px)`
-        : '100dvh';
+    const onKeyDown = (event: KeyboardEvent) => {
+        if (!SCROLL_KEYS.has(event.key)) {
+            return;
+        }
+        if (eventPathContainsLock(event) || isEditableTarget(event.target)) {
+            return;
+        }
+        event.preventDefault();
+    };
 
-    body.scrollTop = scrollTop;
-    body.scrollLeft = scrollLeft;
+    // Capture + non-passive so preventDefault actually stops scrolling.
+    // Deliberately no `scroll` listener — resetting scrollY after the fact rubber-bands.
+    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+    window.addEventListener('keydown', onKeyDown, { capture: true });
 
     return () => {
-        Object.assign(html.style, prevHtml);
-        Object.assign(body.style, prevBody);
-        html.scrollTop = scrollTop;
-        html.scrollLeft = scrollLeft;
+        window.removeEventListener('wheel', onWheel, { capture: true } as EventListenerOptions);
+        window.removeEventListener('touchmove', onTouchMove, { capture: true } as EventListenerOptions);
+        window.removeEventListener('keydown', onKeyDown, { capture: true } as EventListenerOptions);
+        body.style.removeProperty('overflow');
+        if (prevOverflow) {
+            body.style.overflow = prevOverflow;
+        }
     };
 }
 
@@ -157,8 +115,7 @@ export function lockBodyScrolling(lockingEl: HTMLElement): void {
 
     if (locks.size === 1) {
         document.documentElement.classList.add('pk-scroll-lock');
-        // Keep the CSS variable for any consumer that opts in; always 0 now that we
-        // no longer pad the body (fixed chrome must not shift).
+        // Always 0 — we never pad the body (Craft fixed chrome must not shift).
         document.documentElement.style.setProperty('--pk-scroll-lock-size', '0px');
         restoreLock = applyScrollLock();
     }

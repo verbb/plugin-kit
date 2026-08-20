@@ -1,7 +1,7 @@
 import { Button } from '../components/Button.js';
 import { Icon } from '../components/Icon.js';
 import type { PkButtonVariant } from '@verbb/plugin-kit-web/components/button/pk-button.js';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import { cn } from './cn.js';
 
@@ -28,41 +28,60 @@ export type StatePanelProps = {
     showIcon?: boolean;
 };
 
+// Icon chrome uses token CSS variables (not Tailwind utilities) so host apps that
+// don't `@source` this package still get the rounded badge + muted glyph.
+const ICON_SHELL_STYLE: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '2.5rem',
+    height: '2.5rem',
+    marginBottom: '0.75rem',
+    borderRadius: '10px',
+};
+
+const ICON_GLYPH_STYLE: CSSProperties = {
+    width: '1.25rem',
+    height: '1.25rem',
+    fontSize: '1.25rem',
+};
+
 const VARIANT_CONFIG: Record<
     StatePanelVariant,
     {
         icon: string;
         iconColor: string;
-        iconContainer: string;
+        iconContainerBackground: string;
         titleClassName: string;
         messageClassName: string;
     }
 > = {
     empty: {
         icon: 'empty-set',
-        iconColor: 'text-slate-500',
-        iconContainer: 'bg-slate-200/55',
+        iconColor: 'var(--pk-color-slate-500)',
+        // Match prior `bg-slate-200/55` against the already-alpha slate-200 token.
+        iconContainerBackground: 'color-mix(in srgb, var(--pk-color-slate-200) 55%, transparent)',
         titleClassName: 'text-base font-medium text-gray-900',
         messageClassName: 'text-sm text-gray-500',
     },
     error: {
         icon: 'triangle-exclamation',
-        iconColor: 'text-rose-600',
-        iconContainer: 'bg-rose-500/12',
+        iconColor: 'var(--pk-color-rose-600)',
+        iconContainerBackground: 'color-mix(in srgb, var(--pk-color-rose-500) 12%, transparent)',
         titleClassName: 'text-base font-medium text-gray-900',
         messageClassName: 'text-sm text-gray-500',
     },
     success: {
         icon: 'circle-check',
-        iconColor: 'text-emerald-600',
-        iconContainer: 'bg-slate-100',
+        iconColor: 'var(--pk-color-emerald-600)',
+        iconContainerBackground: 'var(--pk-color-slate-100)',
         titleClassName: 'text-base font-medium text-gray-900',
         messageClassName: 'text-sm text-gray-500',
     },
     info: {
         icon: 'circle-info',
-        iconColor: 'text-sky-600',
-        iconContainer: 'bg-slate-100',
+        iconColor: 'var(--pk-color-sky-600)',
+        iconContainerBackground: 'var(--pk-color-slate-100)',
         titleClassName: 'text-base font-medium text-gray-900',
         messageClassName: 'text-sm text-gray-500',
     },
@@ -93,8 +112,19 @@ export function StatePanel({
         <div className={containerClassName}>
             <div className={contentClassName}>
                 {showIcon && resolvedIcon ? (
-                    <div className={cn('mb-3 flex size-10 items-center justify-center rounded-[10px]', config.iconContainer)}>
-                        <Icon icon={resolvedIcon} className={cn('size-5', config.iconColor)} />
+                    <div
+                        style={{
+                            ...ICON_SHELL_STYLE,
+                            backgroundColor: config.iconContainerBackground,
+                        }}
+                    >
+                        <Icon
+                            icon={resolvedIcon}
+                            style={{
+                                ...ICON_GLYPH_STYLE,
+                                color: config.iconColor,
+                            }}
+                        />
                     </div>
                 ) : null}
 
