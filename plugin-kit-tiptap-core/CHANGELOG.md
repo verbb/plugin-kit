@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.8 - 2026-08-20
+
+### Changed
+- Released alongside the other `@verbb/plugin-kit-*` packages to keep versions aligned.
+
 ## 2.0.7 - 2026-08-07
 
 ### Changed

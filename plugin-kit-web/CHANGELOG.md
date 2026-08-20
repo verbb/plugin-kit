@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.8 - 2026-08-20
+
 ### Fixed
 - Documented that controlled `pk-dialog` zero-footprint hosts still participate in DOM sibling selectors (e.g. Tailwind `space-y-*` / `:not(:last-child)`). Prefer flex/grid `gap-*` or mount overlays outside the spaced stack; a light-DOM portal would also address it.
 - No longer sets permanent `html { scrollbar-gutter: stable }` (tokens + ShadowRoot config injector). That reserved an empty scrollbar strip on every Craft CP page (Formie, Navigation, etc.).

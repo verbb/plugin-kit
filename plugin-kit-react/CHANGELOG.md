@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.8 - 2026-08-20
+
 ### Added
 - React `Dialog` forwards `disableScrollLock` (`disable-scroll-lock` on `pk-dialog`) to skip document scroll lock while open.
 

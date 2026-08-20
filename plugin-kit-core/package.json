@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-core",
-    "version": "2.0.7",
+    "version": "2.0.8",
     "type": "module",
     "sideEffects": false,
     "main": "dist/index.js",
