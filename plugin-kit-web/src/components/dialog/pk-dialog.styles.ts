@@ -19,9 +19,9 @@ export const pkDialogStyles = css`
          * yielding. An inline-block host still sizes to the open <dialog> box in some
          * engines and expands parents (Formie nested field cards grow a blank gap).
          *
-         * Zero box ≠ gone from the tree: Tailwind `space-y-*` uses :not(:last-child) on
+         * Zero box ≠ gone from the tree: Tailwind space-y-* uses :not(:last-child) on
          * DOM siblings, so an in-tree host still steals last-child and margins the
-         * previous sibling. Prefer flex/grid `gap-*` (skips out-of-flow children), or
+         * previous sibling. Prefer flex/grid gap-* (skips out-of-flow children), or
          * mount overlays outside the spaced stack. True light-DOM portal would also fix it.
          */
         :host(:not([data-has-trigger])) {

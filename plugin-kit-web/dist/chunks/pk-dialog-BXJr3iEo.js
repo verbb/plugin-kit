@@ -1,10 +1,14 @@
-import { c as unlockBodyScrolling, d as registerDismissible, f as unregisterDismissible, o as lockBodyScrolling, u as isTopDismissible } from "./pk-a11y-CjB4-U-R.js";
-import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "./lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "./pk-base-BlxAYXJD.js";
-import { J as xmark } from "./svg-BCGsRUz7.js";
-import { n as renderIconHtml } from "./render-BCU9WDSk.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-BG4QMRLw.js";
-import { t as animateWithClass } from "./animate-with-class-B2hHgK5M.js";
+import { t as icons_exports } from "./icons-BR8JcQj2.js";
+import { n as PkElement, t as __decorate } from "./decorate-W02hmVTt.js";
+import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
+import { i as unregisterDismissible, n as isTopDismissible, r as registerDismissible } from "./dismissible-stack-XQUMfKO3.js";
+import { a as unlockBodyScrolling, r as lockBodyScrolling } from "./scroll-lock-Bbh3Sc5g.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-D0pkTQyI.js";
+import { t as animateWithClass } from "./animate-with-class-CsDwYnXL.js";
+import { css, html, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
+import { customElement, property, query, state } from "lit/decorators.js";
+import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 //#region src/utils/craft-host-modal.ts
 /**
 * Craft CP Garnish modals (element selector, asset picker, …) live in normal
@@ -61,7 +65,7 @@ function observeCraftHostModal(onChange, options = {}) {
 }
 //#endregion
 //#region src/components/dialog/pk-dialog.styles.ts
-var pkDialogStyles = i`
+var pkDialogStyles = css`
     @layer pk-component {
         :host {
             /* Not display:contents — that flattens the trigger slot into flex parents
@@ -79,6 +83,11 @@ var pkDialogStyles = i`
          * Controlled dialogs (no slot="trigger") — panel is top-layer / fixed while
          * yielding. An inline-block host still sizes to the open <dialog> box in some
          * engines and expands parents (Formie nested field cards grow a blank gap).
+         *
+         * Zero box ≠ gone from the tree: Tailwind space-y-* uses :not(:last-child) on
+         * DOM siblings, so an in-tree host still steals last-child and margins the
+         * previous sibling. Prefer flex/grid gap-* (skips out-of-flow children), or
+         * mount overlays outside the spaced stack. True light-DOM portal would also fix it.
          */
         :host(:not([data-has-trigger])) {
             position: absolute;
@@ -305,7 +314,7 @@ var pkDialogStyles = i`
 `;
 //#endregion
 //#region src/components/dialog/pk-dialog.ts
-var CLOSE_ICON = renderIconHtml(xmark);
+var CLOSE_ICON = renderIconHtml(icons_exports.xmark);
 var PkDialog = class PkDialog extends PkElement {
 	constructor(..._args) {
 		super(..._args);
@@ -553,11 +562,11 @@ var PkDialog = class PkDialog extends PkElement {
 		const showBuiltInHeader = !this.hasCustomHeaderSlot() && !this.withoutHeader && Boolean(this.label);
 		const padBody = showBuiltInHeader && !this.withoutBodyPadding;
 		const hasFooter = this.querySelector(":scope > [slot=\"footer\"]") !== null;
-		return b`
+		return html`
             <slot name="trigger" @slotchange=${this.onTriggerSlotChange}></slot>
             <dialog
                 part="panel"
-                class=${e({
+                class=${classMap({
 			dialog: true,
 			open: this.open,
 			"dialog--wide": this.size === "wide"
@@ -568,69 +577,71 @@ var PkDialog = class PkDialog extends PkElement {
                 @pointerdown=${this.handleDialogPointerDown}
             >
                 <slot name="header">
-                    ${showBuiltInHeader ? b`
+                    ${showBuiltInHeader ? html`
                             <header part="header" class="header">
                                 <h2 part="title" class="title">
                                     <slot name="label">${this.label}</slot>
                                 </h2>
-                                ${this.description ? b`
+                                ${this.description ? html`
                                         <p part="description" class="description">
                                             <slot name="description">${this.description}</slot>
                                         </p>
-                                    ` : b`<slot name="description" hidden></slot>`}
+                                    ` : html`<slot name="description" hidden></slot>`}
                                 <button type="button" class="close" data-dialog="close" aria-label="Close">
-                                    <span class="close-icon" aria-hidden="true">${o(CLOSE_ICON)}</span>
+                                    <span class="close-icon" aria-hidden="true">${unsafeSVG(CLOSE_ICON)}</span>
                                 </button>
                             </header>
-                        ` : A}
+                        ` : nothing}
                 </slot>
                 <div
                     part="body"
-                    class=${e({
+                    class=${classMap({
 			body: true,
 			"body--padded": padBody
 		})}
                 >
                     <slot></slot>
                 </div>
-                ${hasFooter ? b`
+                ${hasFooter ? html`
                         <footer part="footer" class="footer">
                             <slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>
                         </footer>
-                    ` : b`<slot name="footer" @slotchange=${this.onFooterSlotChange} hidden></slot>`}
+                    ` : html`<slot name="footer" @slotchange=${this.onFooterSlotChange} hidden></slot>`}
             </dialog>
         `;
 	}
 };
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "open", void 0);
-__decorate([n()], PkDialog.prototype, "label", void 0);
-__decorate([n()], PkDialog.prototype, "description", void 0);
-__decorate([n({
+__decorate([property()], PkDialog.prototype, "label", void 0);
+__decorate([property()], PkDialog.prototype, "description", void 0);
+__decorate([property({
 	attribute: "disable-pointer-dismissal",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "disablePointerDismissal", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "without-header",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutHeader", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "without-body-padding",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutBodyPadding", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "disable-scroll-lock",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "disableScrollLock", void 0);
-__decorate([n({ reflect: true })], PkDialog.prototype, "size", void 0);
-__decorate([e$1("dialog")], PkDialog.prototype, "dialogElement", void 0);
-__decorate([r()], PkDialog.prototype, "triggerElement", void 0);
-PkDialog = __decorate([t("pk-dialog")], PkDialog);
+__decorate([property({ reflect: true })], PkDialog.prototype, "size", void 0);
+__decorate([query("dialog")], PkDialog.prototype, "dialogElement", void 0);
+__decorate([state()], PkDialog.prototype, "triggerElement", void 0);
+PkDialog = __decorate([customElement("pk-dialog")], PkDialog);
 //#endregion
 export { PkDialog as t };
+
+//# sourceMappingURL=pk-dialog-BXJr3iEo.js.map

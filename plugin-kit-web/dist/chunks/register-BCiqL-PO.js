@@ -36,7 +36,7 @@ import { t as PkLightswitch } from "./pk-lightswitch-B-rLflNq.js";
 import "../components/lightswitch.js";
 import { t as PkCopyButton } from "./pk-copy-button-C17MLLYS.js";
 import "../components/copy-button.js";
-import { t as PkDialog } from "./pk-dialog-DjZAmmHL.js";
+import { t as PkDialog } from "./pk-dialog-BXJr3iEo.js";
 import "../components/dialog.js";
 import { t as PkDropdownItem } from "./pk-dropdown-item-P3LLojCI.js";
 import { t as PkDropdownMenu } from "./pk-dropdown-menu-CsX95MCP.js";
@@ -76,7 +76,7 @@ import "../components/select.js";
 import "../components/time-picker.js";
 import "../components/spinner.js";
 import { t as PkTiptapContent } from "./pk-tiptap-content-DAtNbJYC.js";
-import { t as PkTiptapEditor } from "./pk-tiptap-editor-DTeSKePZ.js";
+import { t as PkTiptapEditor } from "./pk-tiptap-editor-HemVPILE.js";
 import { t as PkTiptapInput } from "./pk-tiptap-input-CXcYXbRa.js";
 import "@verbb/plugin-kit-icons/all.js";
 //#region src/register.ts
@@ -140,4 +140,4 @@ function registerAll() {
 //#endregion
 export { registerAll as t };
 
-//# sourceMappingURL=register-DBm8nYxX.js.map
+//# sourceMappingURL=register-BCiqL-PO.js.map
