@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.9 - 2026-08-21
+
 ### Added
 - `sliders`, `lock`, `circle-info`, `circle-check`, `circle-exclamation` (shared across Formie / Navigation / Timber / Video Picker — drop plugin-local registrations once this ships).
 - `arrows-rotate` icon (dual-arrow reload; preferred for refresh controls over `arrow-rotate-*`).
