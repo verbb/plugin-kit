@@ -17,6 +17,8 @@ var PkIcon = class PkIcon extends PkElement {
             align-items: center;
             justify-content: center;
             flex: none;
+            /* Square em box + slight baseline nudge for inline text. Flex
+             * parents (e.g. button slots) should zero vertical-align. */
             width: 1em;
             height: 1em;
             line-height: 1;
@@ -28,6 +30,8 @@ var PkIcon = class PkIcon extends PkElement {
             width: 100%;
             height: 100%;
             fill: currentColor;
+            /* Allow intentional path overhang past the icon canvas. */
+            overflow: visible;
         }
     `;
 	}

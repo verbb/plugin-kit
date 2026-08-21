@@ -1,22 +1,22 @@
 import { c as r, f as A, i as e, l as n, m as i, o, p as b, t as c, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { J as xmark, S as gear, b as ellipsis, l as arrowUp, o as arrowDown, z as plus } from "../../chunks/svg-BCGsRUz7.js";
+import { B as plus, C as gripMove, S as gear, Y as xmark, b as ellipsis, l as arrowUp, o as arrowDown } from "../../chunks/svg-_Mtb7CHx.js";
 import { t as getIcon } from "../../chunks/registry-CmL0rH9r.js";
-import "../../chunks/pk-button-CK5FZiwP.js";
+import "../../chunks/pk-button-Qg2Tot_-.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-DXqqPVeW.js";
 import "../../chunks/pk-checkbox-CoDX2G3J.js";
 import "../../chunks/pk-color-input-B73zaGYj.js";
 import "../../chunks/pk-input-88DVgoVz.js";
 import "../../chunks/pk-textarea-LC_CPUav.js";
-import { n as renderIconHtml } from "../../chunks/render-BCU9WDSk.js";
-import "../../chunks/pk-dropdown-item-DkZRcPJ5.js";
-import "../../chunks/pk-dropdown-menu-DsHJ-4Ys.js";
+import { n as renderIconHtml } from "../../chunks/render-B_9MG170.js";
+import "../../chunks/pk-dropdown-item-CdBLgJoh.js";
+import "../../chunks/pk-dropdown-menu-BX4lGvGe.js";
 import "../../chunks/pk-lightswitch-BHEOy7aK.js";
-import "../../chunks/pk-option-vh8UvSAI.js";
-import "../../chunks/pk-select-ClUdE4yB.js";
-import "../../chunks/pk-date-picker-38hUgJ2-.js";
-import "../../chunks/pk-combobox-IyQd9a1s.js";
-import "../../chunks/pk-time-picker-Bc6UkCYG.js";
+import "../../chunks/pk-option-DL4rxbo2.js";
+import "../../chunks/pk-select-D0Ia0Mz3.js";
+import "../../chunks/pk-date-picker-DPg627Ad.js";
+import "../../chunks/pk-combobox-BpGW0asd.js";
+import "../../chunks/pk-time-picker-CesVpPiv.js";
 //#region src/components/editable-table/editable-table-dnd.ts
 /**
 * Table-native pointer drag for `<pk-editable-table>` rows.
@@ -776,12 +776,8 @@ var isCustomColumn = (column) => {
 };
 //#endregion
 //#region src/components/editable-table/pk-editable-table.ts
-/** Slotted start-icon markup for pk-button (bundled — no registry lookup). */
-var START_GRIP_ICON = `
-    <svg slot="start" viewBox="0 0 448 512" focusable="false" aria-hidden="true">
-        <path fill="currentColor" d="M71.3 295.6c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2s-57.4 21.9-79.2 0zM184.4 182.5c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2-57.3 21.8-79.2 0zm0 147c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.9-21.8-21.9-57.3 0-79.2zM297.5 216.4c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.8-21.9-21.8-57.3 0-79.2z"></path>
-    </svg>
-`;
+/** Craft CP reorder diamond (`grip-move`). */
+var START_GRIP_MOVE_ICON = renderIconHtml(gripMove).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ELLIPSIS_ICON = renderIconHtml(ellipsis).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ARROW_UP_ICON = renderIconHtml(arrowUp).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ARROW_DOWN_ICON = renderIconHtml(arrowDown).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
@@ -1408,7 +1404,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         aria-label="Reorder row"
                                         ?disabled=${this.disabled || !this.dndReady}
                                         title=${!this.dndReady && !this.disabled ? "Preparing drag…" : A}
-                                    >${o(START_GRIP_ICON)}</pk-button>
+                                    >${o(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>` : A}
                         ${showRowMenu ? b`<pk-dropdown-menu size="sm" placement="bottom-end" side-offset="2">
                                     <pk-button

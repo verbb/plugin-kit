@@ -18,7 +18,7 @@ import "./pk-time-picker-CZGr2dI2.js";
 import { css, html, nothing } from "lit";
 import { classMap } from "lit/directives/class-map.js";
 import { customElement, property, state } from "lit/decorators.js";
-import { arrowDown, arrowUp, ellipsis, gear, getIcon, plus, xmark } from "@verbb/plugin-kit-icons";
+import { arrowDown, arrowUp, ellipsis, gear, getIcon, gripMove, plus, xmark } from "@verbb/plugin-kit-icons";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { repeat } from "lit/directives/repeat.js";
 //#region src/components/editable-table/editable-table-dnd.ts
@@ -780,12 +780,8 @@ var isCustomColumn = (column) => {
 };
 //#endregion
 //#region src/components/editable-table/pk-editable-table.ts
-/** Slotted start-icon markup for pk-button (bundled — no registry lookup). */
-var START_GRIP_ICON = `
-    <svg slot="start" viewBox="0 0 448 512" focusable="false" aria-hidden="true">
-        <path fill="currentColor" d="M71.3 295.6c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2s-57.4 21.9-79.2 0zM184.4 182.5c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2-57.3 21.8-79.2 0zm0 147c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.9-21.8-21.9-57.3 0-79.2zM297.5 216.4c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.8-21.9-21.8-57.3 0-79.2z"></path>
-    </svg>
-`;
+/** Craft CP reorder diamond (`grip-move`). */
+var START_GRIP_MOVE_ICON = renderIconHtml(gripMove).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ELLIPSIS_ICON = renderIconHtml(ellipsis).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ARROW_UP_ICON = renderIconHtml(arrowUp).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
 var START_ARROW_DOWN_ICON = renderIconHtml(arrowDown).replace("<svg", "<svg slot=\"start\" aria-hidden=\"true\"");
@@ -1412,7 +1408,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         aria-label="Reorder row"
                                         ?disabled=${this.disabled || !this.dndReady}
                                         title=${!this.dndReady && !this.disabled ? "Preparing drag…" : nothing}
-                                    >${unsafeHTML(START_GRIP_ICON)}</pk-button>
+                                    >${unsafeHTML(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>` : nothing}
                         ${showRowMenu ? html`<pk-dropdown-menu size="sm" placement="bottom-end" side-offset="2">
                                     <pk-button
@@ -1538,4 +1534,4 @@ PkEditableTable = __decorate([customElement("pk-editable-table")], PkEditableTab
 //#endregion
 export { nextRowId as a, isCustomColumn as i, BUILTIN_COLUMN_TYPES as n, getCustomCellSlotName as r, PkEditableTable as t };
 
-//# sourceMappingURL=pk-editable-table-sZO9JwiR.js.map
+//# sourceMappingURL=pk-editable-table-fPL8Zbbg.js.map

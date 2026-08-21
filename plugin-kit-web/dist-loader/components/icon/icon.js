@@ -1,6 +1,6 @@
 import { a as o, f as A, l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { j as icons, t as iconToSvg } from "../../chunks/svg-BCGsRUz7.js";
+import { M as icons, t as iconToSvg } from "../../chunks/svg-_Mtb7CHx.js";
 import { n as normalizeIconName, r as registerIcons, t as getIcon } from "../../chunks/registry-CmL0rH9r.js";
 //#region ../plugin-kit-icons/dist/all.js
 /**
@@ -31,6 +31,8 @@ var PkIcon = class PkIcon extends PkElement {
             align-items: center;
             justify-content: center;
             flex: none;
+            /* Square em box + slight baseline nudge for inline text. Flex
+             * parents (e.g. button slots) should zero vertical-align. */
             width: 1em;
             height: 1em;
             line-height: 1;
@@ -42,6 +44,8 @@ var PkIcon = class PkIcon extends PkElement {
             width: 100%;
             height: 100%;
             fill: currentColor;
+            /* Allow intentional path overhang past the icon canvas. */
+            overflow: visible;
         }
     `;
 	}

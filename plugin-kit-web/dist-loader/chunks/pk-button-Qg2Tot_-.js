@@ -1,7 +1,7 @@
 import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, u as t } from "./lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement, s as iconStyles, u as hostDisplayInlineBlock } from "./pk-base-BlxAYXJD.js";
 import "./pk-spinner-Di9O69-m.js";
-import { h as chevronDown, t as iconToSvg } from "./svg-BCGsRUz7.js";
+import { h as chevronDown, t as iconToSvg } from "./svg-_Mtb7CHx.js";
 import { i as buttonGroupIndentStyles, n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "./button-group-item.styles-BNc-ksl1.js";
 //#region src/components/spinner/spinner-utils.ts
 function getButtonSpinnerSize(buttonSize = "default") {

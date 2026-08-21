@@ -1,7 +1,7 @@
 import { a as o, f as A, l as n, m as i, p as b, u as t } from "./lit-Dnn7gEi2.js";
 import { c as __decorate, l as PkElement } from "./pk-base-BlxAYXJD.js";
-import { m as check } from "./svg-BCGsRUz7.js";
-import { n as renderIconHtml } from "./render-BCU9WDSk.js";
+import { m as check } from "./svg-_Mtb7CHx.js";
+import { n as renderIconHtml } from "./render-B_9MG170.js";
 //#region src/utils/highlight-text.ts
 /** Split label text into matched/unmatched segments for typeahead highlighting. */
 function splitHighlightParts(text, search) {
