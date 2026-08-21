@@ -269,8 +269,8 @@ export function craftNewEntryBtngroupMarkup(): string {
 /** Craft CP element index view mode picker — `.btngroup--exclusive` icon toggles. */
 export const buttonGroupViewModeIcons = {
     table: 'list',
-    /** Craft CP has no FA twin for cards view — Plugin Kit uses `grip`. */
-    cards: 'grip',
+    /** Craft CP has no FA twin for cards view — Plugin Kit uses `grip-dots`. */
+    cards: 'grip-dots',
 } as const;
 
 /** Craft CP element index view mode picker — `.btngroup--exclusive` icon toggles. */

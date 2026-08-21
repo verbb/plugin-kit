@@ -52,7 +52,8 @@ export const iconCommonNames: string[] = [
     'ellipsis-vertical',
     'trash',
     'check',
-    'search',
+    'magnifying-glass',
+    'arrows-rotate',
 ];
 
 export const iconSizeScale: { label: string; size: number }[] = [

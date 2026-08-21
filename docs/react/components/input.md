@@ -36,9 +36,9 @@ Disable the field when it is present for context but not currently editable.
 
 Use `slot="start"` / `slot="end"` for icons or short units **inside** the field border. Prefer this for a single leading/trailing glyph (search, currency). Use [input groups](/web/components/input-group) when the adornment is a separate control (button, select) or multi-part addon.
 
-```tsx
+```html
 <Input placeholder="Search">
-  <Icon slot="start" icon="search" />
+  <Icon slot="start" icon="magnifying-glass"></Icon>
 </Input>
 ```
 

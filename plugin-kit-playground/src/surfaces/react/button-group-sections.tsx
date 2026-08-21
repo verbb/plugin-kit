@@ -255,7 +255,7 @@ export const buttonGroupReactSectionRenderers: PlaygroundSectionReactRendererMap
         <div className="pg-card__inner--stack">
             <ButtonGroup>
                 <Input placeholder="Search forms..." style={{ width: '18rem' }} />
-                <GroupButton label="Search" variant="outline" icon="search" />
+                <GroupButton label="Search" variant="outline" icon="magnifying-glass" />
             </ButtonGroup>
 
             <ButtonGroup>

@@ -12,7 +12,7 @@ export function InputAdornmentsExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <Input placeholder="Search entries" style={{ maxWidth: '20rem' }}>
-                <Icon slot="start" icon="search" />
+                <Icon slot="start" icon="magnifying-glass" />
             </Input>
             <InputGroup style={{ maxWidth: '20rem' }}>
                 <InputGroupInput defaultValue="49" />

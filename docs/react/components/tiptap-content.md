@@ -1,6 +1,6 @@
 # Tiptap Content
 
-`TiptapContent` / `<pk-tiptap-content>` renders read-only TipTap / ProseMirror content from the same JSON document shape used by [TiptapEditor](/react/components/tiptap-editor).
+`<TiptapContent>` renders read-only TipTap / ProseMirror content from the same JSON document shape used by [TiptapEditor](/react/components/tiptap-editor).
 Use it for previews, summaries, and builder canvases where formatted content should display without a toolbar or editing surface.
 
 ## Basic Usage
@@ -20,20 +20,20 @@ Pass a TipTap JSON document, a JSON string, or an HTML string. Normalization use
 
 ## Live updates
 
-The editor instance is read-only (`editable: false`), but content still updates when the `value` prop / attribute changes. The component compares serialized document content before calling `setContent`, so parent re-renders do not reset selection or cause unnecessary DOM churn.
+The editor instance is read-only (`editable: false`), but content still updates when the `value` prop changes. The component compares serialized document content before calling `setContent`, so host updates do not reset selection or cause unnecessary DOM churn.
 
 This matters for builder previews where field settings change before the form is saved.
 
-## Props
+## Attributes / properties
 
-| Prop | Type | Default | Description |
+| Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | `''` | TipTap JSON, HTML, or empty content (arrays/objects should be serialized by the React/Vue facade or caller). |
+| `value` | `string` | `''` | TipTap JSON, HTML, or empty content. |
 
-Host attributes and remaining Lit properties follow the web component. Styling is owned by shadow DOM — use host class names or `--pk-tiptap-content-*` tokens where documented, not Tailwind ProseMirror piercing selectors.
+Styling is owned by shadow DOM — use host class names or `--TiptapContent-*` tokens where documented, not light-DOM Tailwind ProseMirror piercing selectors.
 
 ## Related
 
 - Editable authoring: [TiptapEditor](./tiptap-editor.md)
-- SchemaForm: bind TipTap yourself via [Custom Schema Fields](../../forms/custom-schema-fields.md) (rich-text `$field`s are product-owned, e.g. Formie)
+- SchemaForm: bind TipTap via [Custom Schema Fields](../../forms/custom-schema-fields.md) (rich-text `$field`s are product-owned)
 - Shared extensions and normalization: `@verbb/plugin-kit-tiptap-core`

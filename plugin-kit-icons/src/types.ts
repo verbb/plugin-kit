@@ -1,14 +1,17 @@
 /**
  * A raw, framework-agnostic icon definition.
  *
- * Sourced from Font Awesome at build time (see `scripts/generate-icons.mjs`)
- * but shipped as plain SVG path data so consumers are not tied to Font Awesome
- * (or any icon font). Consumers bring their own font/rendering system.
+ * Path data is stored edge-cropped (variable width × canvas height — usually
+ * 512). {@link iconViewBox} expands that to a centered square at render so every
+ * glyph fills `<pk-icon>`’s square `1em` host evenly, without rewriting paths.
+ *
+ * Shipped as plain `{ width, height, path }` — no icon font or external icon
+ * runtime required.
  */
 export type PkIcon = {
-    /** Intrinsic viewBox width. */
+    /** Intrinsic glyph width (edge-cropped canvas). */
     readonly width: number;
-    /** Intrinsic viewBox height. */
+    /** Intrinsic glyph height (edge-cropped canvas). */
     readonly height: number;
     /** SVG path `d` attribute data. */
     readonly path: string;

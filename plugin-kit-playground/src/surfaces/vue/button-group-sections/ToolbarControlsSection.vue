@@ -8,7 +8,7 @@ import GroupButton from './GroupButton.vue';
   <div class="pg-card__inner--stack">
     <ButtonGroup>
       <pk-input placeholder="Search forms..." style="width: 18rem" />
-      <GroupButton label="Search" variant="outline" icon="search" />
+      <GroupButton label="Search" variant="outline" icon="magnifying-glass" />
     </ButtonGroup>
 
     <ButtonGroup>

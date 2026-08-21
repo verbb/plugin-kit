@@ -12,7 +12,7 @@ export default defineWebPreview({
     layout: 'stack',
     html: `
 <pk-input placeholder="Search entries" style="max-width:20rem">
-  <pk-icon slot="start" icon="search"></pk-icon>
+  <pk-icon slot="start" icon="magnifying-glass"></pk-icon>
 </pk-input>
 <pk-input-group style="max-width:20rem">
   <pk-input-group-input value="49"></pk-input-group-input>

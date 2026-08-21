@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+- `pk-icon` SVGs set `overflow: visible` so FA-style canvas overhang is not clipped (pairs with `@verbb/plugin-kit-icons` square viewBox normalization).
+- `<pk-editable-table>` reorder handle uses kit `gripMove` / Craft diamond (was a hardcoded copy of the same path under a `START_GRIP_ICON` name — not FA `grip`).
+
 ## 2.0.8 - 2026-08-20
 
 ### Fixed

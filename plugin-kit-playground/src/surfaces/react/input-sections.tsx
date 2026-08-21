@@ -77,7 +77,7 @@ export const inputReactSectionRenderers: PlaygroundSectionReactRendererMap = {
             <InputGroup>
                 <InputGroupInput placeholder={inputPlaygroundSections.inputGroupIcon.placeholder} />
                 <InputGroupAddon align="inline-end">
-                    <Icon icon="search" aria-hidden />
+                    <Icon icon="magnifying-glass" aria-hidden />
                 </InputGroupAddon>
             </InputGroup>
         </div>
@@ -88,13 +88,13 @@ export const inputReactSectionRenderers: PlaygroundSectionReactRendererMap = {
             <InputGroup>
                 <InputGroupInput placeholder={inputPlaygroundSections.inputGroupIcon.placeholder} />
                 <InputGroupAddon align="inline-end">
-                    <Icon icon="search" aria-hidden />
+                    <Icon icon="magnifying-glass" aria-hidden />
                 </InputGroupAddon>
             </InputGroup>
             <InputGroup>
                 <InputGroupInput placeholder={inputPlaygroundSections.inputGroupIcon.placeholder} />
                 <InputGroupAddon align="inline-end">
-                    <Icon icon="search" aria-hidden />
+                    <Icon icon="magnifying-glass" aria-hidden />
                 </InputGroupAddon>
             </InputGroup>
         </div>

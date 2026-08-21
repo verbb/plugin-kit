@@ -92,6 +92,10 @@ export const IMPORTS_BY_PREFIX = [
         '@verbb/plugin-kit-web/components/button/pk-button.js',
         '@verbb/plugin-kit-web/components/icon/pk-icon.js',
     ]],
+    ['icon-alignment', [
+        '@verbb/plugin-kit-web/components/button/pk-button.js',
+        '@verbb/plugin-kit-web/components/icon/pk-icon.js',
+    ]],
     ['icon', ['@verbb/plugin-kit-web/components/icon/pk-icon.js']],
     ['input-group', [
         '@verbb/plugin-kit-web/components/input-group/pk-input-group.js',
@@ -719,12 +723,50 @@ export const PREVIEW_HTML = {
 <pk-icon icon="ellipsis"></pk-icon>
 <pk-icon icon="trash"></pk-icon>
 <pk-icon icon="check"></pk-icon>
-<pk-icon icon="search"></pk-icon>`.trim(),
+<pk-icon icon="magnifying-glass"></pk-icon>
+<pk-icon icon="arrows-rotate"></pk-icon>
+<pk-icon icon="grip-move"></pk-icon>
+<pk-icon icon="sliders"></pk-icon>
+<pk-icon icon="lock"></pk-icon>
+<pk-icon icon="circle-info"></pk-icon>
+<pk-icon icon="circle-check"></pk-icon>
+<pk-icon icon="circle-exclamation"></pk-icon>`.trim(),
     'icon-sizing': `
 <pk-icon icon="gear" style="font-size:12px"></pk-icon>
 <pk-icon icon="gear" style="font-size:16px"></pk-icon>
 <pk-icon icon="gear" style="font-size:24px"></pk-icon>
 <pk-icon icon="gear" style="font-size:32px"></pk-icon>`.trim(),
+    'icon-alignment': `
+<div data-pk-icon-align>
+  <p data-pk-icon-align-line style="font-size:16px;line-height:1.5;margin:0">
+    Inline with text
+    <pk-icon icon="gear"></pk-icon>
+    <pk-icon icon="plus"></pk-icon>
+    <pk-icon icon="ellipsis-vertical"></pk-icon>
+    <pk-icon icon="arrows-rotate"></pk-icon>
+    — baseline nudge is <code>-0.125em</code>
+  </p>
+  <div data-pk-icon-align-grid>
+    <span data-pk-icon-align-cell>
+      <pk-icon icon="ellipsis-vertical" style="font-size:32px"></pk-icon>
+      <code>ellipsis-vertical</code>
+    </span>
+    <span data-pk-icon-align-cell>
+      <pk-icon icon="plus" style="font-size:32px"></pk-icon>
+      <code>plus</code>
+    </span>
+    <span data-pk-icon-align-cell>
+      <pk-icon icon="gear" style="font-size:32px"></pk-icon>
+      <code>gear</code>
+    </span>
+  </div>
+  <div data-pk-icon-align-row>
+    <pk-button variant="outline">
+      <pk-icon slot="start" icon="plus"></pk-icon>
+      Flex slot
+    </pk-button>
+  </div>
+</div>`.trim(),
     'icon-color': `
 <pk-icon icon="triangle-exclamation" style="color:#1c2e36;font-size:24px"></pk-icon>
 <pk-icon icon="triangle-exclamation" style="color:#64748b;font-size:24px"></pk-icon>
@@ -743,24 +785,20 @@ export const PREVIEW_HTML = {
 <pk-button aria-label="Settings">
   <pk-icon slot="start" icon="gear"></pk-icon>
 </pk-button>`.trim(),
-    'icon-aliases': `
-<pk-icon icon="cog" style="font-size:24px"></pk-icon>
-<pk-icon icon="gear" style="font-size:24px"></pk-icon>
-<pk-icon icon="cross" style="font-size:24px"></pk-icon>
-<pk-icon icon="xmark" style="font-size:24px"></pk-icon>`.trim(),
+    // Synonym aliases were removed — one canonical kebab name per glyph.
 
     // input-group
     'input-group-icon': `
 <pk-input-group>
   <pk-input-group-input placeholder="Search..."></pk-input-group-input>
   <pk-input-group-addon>
-    <pk-icon icon="search" aria-hidden="true"></pk-icon>
+    <pk-icon icon="magnifying-glass" aria-hidden="true"></pk-icon>
   </pk-input-group-addon>
 </pk-input-group>
 <pk-input-group>
   <pk-input-group-input placeholder="Search..."></pk-input-group-input>
   <pk-input-group-addon align="inline-end">
-    <pk-icon icon="search" aria-hidden="true"></pk-icon>
+    <pk-icon icon="magnifying-glass" aria-hidden="true"></pk-icon>
   </pk-input-group-addon>
 </pk-input-group>`.trim(),
     'input-group-text': `
@@ -800,7 +838,7 @@ export const PREVIEW_HTML = {
     'input-disabled': `<pk-input disabled value="Read only value"></pk-input>`,
     'input-adornments': `
 <pk-input placeholder="Search entries" style="max-width:20rem">
-  <pk-icon slot="start" icon="search"></pk-icon>
+  <pk-icon slot="start" icon="magnifying-glass"></pk-icon>
 </pk-input>
 <pk-input-group style="max-width:20rem">
   <pk-input-group-input value="49"></pk-input-group-input>

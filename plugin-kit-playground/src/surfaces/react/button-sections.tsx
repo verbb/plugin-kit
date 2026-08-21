@@ -146,7 +146,7 @@ export const buttonReactSectionRenderers: PlaygroundSectionReactRendererMap = {
             </div>
 
             {[
-                { title: 'Icon with label by size (search)', icon: 'search' as const },
+                { title: 'Icon with label by size (search)', icon: 'magnifying-glass' as const },
                 { title: 'Icon with label by size (download)', icon: 'download' as const },
                 { title: 'Icon with label by size (pen)', icon: 'pen' as const },
             ].map(({ title, icon }) => (

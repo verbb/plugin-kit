@@ -1,6 +1,6 @@
 # `@verbb/plugin-kit-icons`
 
-Curated UI icons as **raw SVG path data** — no icon font, no Font Awesome runtime. Each glyph is `{ width, height, path }`, so bundlers only ship the icons you import.
+Curated UI icons as **raw SVG path data** — no icon font, no external icon runtime. Each glyph is `{ width, height, path }`, so bundlers only ship the icons you import.
 
 Used by `@verbb/plugin-kit-web` (`<pk-icon>`) and the React/Vue `<Icon>` facades.
 
@@ -108,12 +108,20 @@ registerIcons({ plus });
 
 ## Naming
 
+Use one kebab-case name per glyph in HTML / the registry, and the matching camelCase export in JS. Prefer the curated names as shipped — do not invent kit-local synonyms (`search`, `add`, `plus-circle`); use `magnifying-glass`, `plus`, `circle-plus`, and so on.
+
 | Context | Form | Example |
 |---------|------|---------|
-| HTML / `getIcon` | kebab-case | `chevron-down`, `arrow-up` |
-| JS exports | camelCase | `chevronDown`, `arrowUp` |
+| HTML / `getIcon` | kebab-case | `chevron-down`, `arrow-up`, `arrows-rotate` |
+| JS exports | camelCase | `chevronDown`, `arrowUp`, `arrowsRotate` |
 
-`registerIcons({ arrowUp })` stores under `arrow-up` for HTML lookup.
+`registerIcons({ arrowUp })` stores under `arrow-up` for HTML lookup. Prefer `arrows-rotate` for reload controls over `arrow-rotate-left` / `arrow-rotate-right`.
+
+### ViewBox / canvas
+
+Glyphs are stored edge-cropped (variable width × canvas height, usually 512). At render time, `iconViewBox()` expands that to a **centered square** so every icon fills `<pk-icon>`’s square `1em` host evenly, without rewriting path data. Rendered SVGs also set `overflow="visible"` so intentional canvas overhang is not clipped.
+
+The full curated set is documented on the Icon component Gallery under Web / React / Vue.
 
 ```ts
 import { getIcon, getIconNames } from '@verbb/plugin-kit-icons';
@@ -141,7 +149,3 @@ registerIcons({
 ```
 
 Register **before** the first render that looks up those names.
-
-## Licensing
-
-Path data in this package was originally traced from Font Awesome. Font Awesome Free icons are typically CC BY 4.0; some glyphs may originate from Pro. Confirm licensing before redistributing or adding new paths to this package.

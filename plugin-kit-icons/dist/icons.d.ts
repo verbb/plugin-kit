@@ -1,5 +1,4 @@
 import { PkIcon } from './types.js';
-export declare const add: PkIcon;
 export declare const alignCenter: PkIcon;
 export declare const alignJustify: PkIcon;
 export declare const alignLeft: PkIcon;
@@ -23,6 +22,9 @@ export declare const chevronLeft: PkIcon;
 export declare const chevronRight: PkIcon;
 export declare const chevronUp: PkIcon;
 export declare const circle: PkIcon;
+export declare const circleCheck: PkIcon;
+export declare const circleExclamation: PkIcon;
+export declare const circleInfo: PkIcon;
 export declare const clipboard: PkIcon;
 export declare const clock: PkIcon;
 export declare const clone: PkIcon;
@@ -33,7 +35,14 @@ export declare const ellipsis: PkIcon;
 export declare const eye: PkIcon;
 export declare const fileDashedLine: PkIcon;
 export declare const flagCheckered: PkIcon;
-export declare const grip: PkIcon;
+/**
+ * Craft CP reorder handle (`data-icon="move"` / custom diamond).
+ * Four-dot diamond — distinct from `grip-dots` / `grip-dots-vertical`.
+ * Prefer for structure/table drag handles.
+ */
+export declare const gripMove: PkIcon;
+export declare const gripDots: PkIcon;
+export declare const gripDotsVertical: PkIcon;
 export declare const h1: PkIcon;
 export declare const h2: PkIcon;
 export declare const h3: PkIcon;
@@ -45,6 +54,7 @@ export declare const house: PkIcon;
 export declare const italic: PkIcon;
 export declare const lightbulb: PkIcon;
 export declare const link: PkIcon;
+export declare const lock: PkIcon;
 export declare const list: PkIcon;
 export declare const listOl: PkIcon;
 export declare const listUl: PkIcon;
@@ -53,15 +63,17 @@ export declare const heading: PkIcon;
 export declare const paragraph: PkIcon;
 export declare const pen: PkIcon;
 export declare const plus: PkIcon;
-export declare const plusCircle: PkIcon;
+export declare const circlePlus: PkIcon;
 export declare const quoteRight: PkIcon;
-export declare const search: PkIcon;
+/** Dual circular arrows for reload / refresh. Prefer over single-arrow `arrow-rotate-*`. */
+export declare const arrowsRotate: PkIcon;
+export declare const magnifyingGlass: PkIcon;
 export declare const share: PkIcon;
+export declare const sliders: PkIcon;
 export declare const strikethrough: PkIcon;
 export declare const subscript: PkIcon;
 export declare const superscript: PkIcon;
 export declare const table: PkIcon;
-export declare const tableRegular: PkIcon;
 export declare const textSlash: PkIcon;
 export declare const triangleExclamation: PkIcon;
 export declare const underline: PkIcon;
@@ -71,7 +83,6 @@ export declare const gear: PkIcon;
 export declare const penToSquare: PkIcon;
 export declare const trash: PkIcon;
 export declare const icons: {
-    readonly add: PkIcon;
     readonly alignCenter: PkIcon;
     readonly alignJustify: PkIcon;
     readonly alignLeft: PkIcon;
@@ -95,6 +106,9 @@ export declare const icons: {
     readonly chevronRight: PkIcon;
     readonly chevronUp: PkIcon;
     readonly circle: PkIcon;
+    readonly circleCheck: PkIcon;
+    readonly circleExclamation: PkIcon;
+    readonly circleInfo: PkIcon;
     readonly clipboard: PkIcon;
     readonly clock: PkIcon;
     readonly clone: PkIcon;
@@ -107,7 +121,9 @@ export declare const icons: {
     readonly fileDashedLine: PkIcon;
     readonly flagCheckered: PkIcon;
     readonly gear: PkIcon;
-    readonly grip: PkIcon;
+    readonly gripDots: PkIcon;
+    readonly gripDotsVertical: PkIcon;
+    readonly gripMove: PkIcon;
     readonly h1: PkIcon;
     readonly h2: PkIcon;
     readonly h3: PkIcon;
@@ -120,6 +136,7 @@ export declare const icons: {
     readonly italic: PkIcon;
     readonly lightbulb: PkIcon;
     readonly link: PkIcon;
+    readonly lock: PkIcon;
     readonly list: PkIcon;
     readonly listOl: PkIcon;
     readonly listUl: PkIcon;
@@ -128,15 +145,16 @@ export declare const icons: {
     readonly pen: PkIcon;
     readonly penToSquare: PkIcon;
     readonly plus: PkIcon;
-    readonly plusCircle: PkIcon;
+    readonly circlePlus: PkIcon;
     readonly quoteRight: PkIcon;
-    readonly search: PkIcon;
+    readonly arrowsRotate: PkIcon;
+    readonly magnifyingGlass: PkIcon;
     readonly share: PkIcon;
+    readonly sliders: PkIcon;
     readonly strikethrough: PkIcon;
     readonly subscript: PkIcon;
     readonly superscript: PkIcon;
     readonly table: PkIcon;
-    readonly tableRegular: PkIcon;
     readonly textSlash: PkIcon;
     readonly trash: PkIcon;
     readonly triangleExclamation: PkIcon;

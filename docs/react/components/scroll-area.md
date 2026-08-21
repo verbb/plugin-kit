@@ -8,9 +8,9 @@ Use a standard scroll area when the content is modest in size but still needs a 
 
 <ComponentPreview src="./examples/scroll-area-vertical.preview.tsx" />
 
-## Long lists
+## Long Lists
 
-Use a taller scroll area for longer lists that need to stay bounded inside the surrounding interface. This is a fixed viewport — it does not virtualize rows.
+Use a taller scroll area for longer lists that need to stay bounded inside the surrounding interface.
 
 <ComponentPreview src="./examples/scroll-area-virtualized.preview.tsx" />
 

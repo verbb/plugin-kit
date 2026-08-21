@@ -52,13 +52,12 @@ Grouped content is useful when the option list should be organized into labeled 
 
 ## Higher-Level Input API
 
-`ComboboxInput` provides a field-style API for the common single and async loading cases.
+`Combobox` covers the common single-select and async loading cases — static `Option` children for local lists, or `async` + `fetchOptions` when results come from a remote search.
 
 <ComponentPreview src="./examples/combobox-high-level-input.preview.tsx" />
 
 ## Async Search
 
-When using `ComboboxInput`, pass `fetchOptions={(query) => ...}` without a static `options` array to enable async search mode automatically.
+Set `async` and assign `fetchOptions={(query, signal) => ...}` (a JS property) so options load as the user types. No static `Option` children are needed — the control owns loading and empty states.
 
-For large datasets, load matches from a remote source as the user types.
 <ComponentPreview src="./examples/combobox-async-search.preview.tsx" />

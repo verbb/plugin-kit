@@ -38,7 +38,7 @@ Use `slot="start"` / `slot="end"` for icons or short units **inside** the field 
 
 ```html
 <Input placeholder="Search">
-  <Icon slot="start" icon="search"></Icon>
+  <Icon slot="start" icon="magnifying-glass"></Icon>
 </Input>
 ```
 

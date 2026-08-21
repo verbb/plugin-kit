@@ -33,8 +33,8 @@ export const buttonIconSections = [
 export const buttonIconPlacementExamples = [
     { id: 'prepend', label: 'Prepend', startSlot: 'eye' as const },
     { id: 'append', label: 'Append', endSlot: 'eye' as const },
-    { id: 'both', label: 'Both', startSlot: 'add' as const, endSlot: 'eye' as const },
-    { id: 'add-chevron', label: 'Add entry', startSlot: 'add' as const, endSlot: 'chevron' as const },
+    { id: 'both', label: 'Both', startSlot: 'plus' as const, endSlot: 'eye' as const },
+    { id: 'plus-chevron', label: 'Add entry', startSlot: 'plus' as const, endSlot: 'chevron' as const },
     { id: 'icon-only', ariaLabel: 'View', startSlot: 'eye' as const },
 ] as const;
 

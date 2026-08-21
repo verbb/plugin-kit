@@ -4,7 +4,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { PropertyValues, TemplateResult } from 'lit';
-import { arrowDown, arrowUp, ellipsis, gear, getIcon, plus, xmark } from '@verbb/plugin-kit-icons';
+import { arrowDown, arrowUp, ellipsis, gear, getIcon, gripMove, plus, xmark } from '@verbb/plugin-kit-icons';
 
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
 import { renderIconHtml } from '../../icons/index.js';
@@ -48,12 +48,8 @@ import {
     type PkEditableTableRowModifier,
 } from './editable-table-model.js';
 
-/** Slotted start-icon markup for pk-button (bundled — no registry lookup). */
-const START_GRIP_ICON = `
-    <svg slot="start" viewBox="0 0 448 512" focusable="false" aria-hidden="true">
-        <path fill="currentColor" d="M71.3 295.6c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2s-57.4 21.9-79.2 0zM184.4 182.5c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0 21.9 57.3 0 79.2-57.3 21.8-79.2 0zm0 147c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.9-21.8-21.9-57.3 0-79.2zM297.5 216.4c21.9-21.9 57.3-21.9 79.2 0s21.9 57.3 0 79.2s-57.3 21.9-79.2 0c-21.8-21.9-21.8-57.3 0-79.2z"></path>
-    </svg>
-`;
+/** Craft CP reorder diamond (`grip-move`). */
+const START_GRIP_MOVE_ICON = renderIconHtml(gripMove).replace('<svg', '<svg slot="start" aria-hidden="true"');
 const START_ELLIPSIS_ICON = renderIconHtml(ellipsis).replace('<svg', '<svg slot="start" aria-hidden="true"');
 const START_ARROW_UP_ICON = renderIconHtml(arrowUp).replace('<svg', '<svg slot="start" aria-hidden="true"');
 const START_ARROW_DOWN_ICON = renderIconHtml(arrowDown).replace('<svg', '<svg slot="start" aria-hidden="true"');
@@ -1052,7 +1048,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         aria-label="Reorder row"
                                         ?disabled=${this.disabled || !this.dndReady}
                                         title=${!this.dndReady && !this.disabled ? 'Preparing drag…' : nothing}
-                                    >${unsafeHTML(START_GRIP_ICON)}</pk-button>
+                                    >${unsafeHTML(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>`
                             : nothing}
                         ${showRowMenu

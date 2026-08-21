@@ -14,6 +14,13 @@ export default defineWebPreview({
 <pk-icon icon="ellipsis"></pk-icon>
 <pk-icon icon="trash"></pk-icon>
 <pk-icon icon="check"></pk-icon>
-<pk-icon icon="search"></pk-icon>
+<pk-icon icon="magnifying-glass"></pk-icon>
+<pk-icon icon="arrows-rotate"></pk-icon>
+<pk-icon icon="grip-move"></pk-icon>
+<pk-icon icon="sliders"></pk-icon>
+<pk-icon icon="lock"></pk-icon>
+<pk-icon icon="circle-info"></pk-icon>
+<pk-icon icon="circle-check"></pk-icon>
+<pk-icon icon="circle-exclamation"></pk-icon>
 `.trim(),
 });

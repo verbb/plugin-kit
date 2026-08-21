@@ -89,6 +89,65 @@ const previewShellStyles = `
 [data-pk-icon-gallery] button[data-copied] code {
     color: #10b981;
 }
+
+/* Icon alignment harness — baseline + square-canvas check */
+[data-pk-icon-align] {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+[data-pk-icon-align-line] {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background:
+        linear-gradient(#e5e7eb, #e5e7eb) 0 50% / 100% 1px no-repeat,
+        #f8fafc;
+}
+
+[data-pk-icon-align-line] pk-icon,
+[data-pk-icon-align-line] .pk-icon {
+    margin-inline: 0.15em;
+}
+
+[data-pk-icon-align-grid] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+[data-pk-icon-align-cell] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background:
+        linear-gradient(#f1f5f9, #f1f5f9) center / 1px 100% no-repeat,
+        linear-gradient(#f1f5f9, #f1f5f9) center / 100% 1px no-repeat,
+        #fff;
+    text-align: center;
+}
+
+[data-pk-icon-align-cell] code {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+[data-pk-icon-align-cell] small {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+[data-pk-icon-align-row] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
 `;
 
 function shadowTokensCss(cssText: string) {

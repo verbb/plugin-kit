@@ -4,7 +4,7 @@ import {
     ellipsis,
     eye,
     flagCheckered,
-    grip,
+    gripDots,
     house,
     list,
     pen,
@@ -48,10 +48,10 @@ export const playgroundIconEllipsis = renderIconHtml(ellipsis);
 
 export const playgroundIconList = renderIconHtml(list);
 
-/** Craft CP cards view stand-in — Plugin Kit glyph is `grip`. */
-export const playgroundIconNameElementCards = 'grip' as const;
+/** Craft CP cards view stand-in — Plugin Kit glyph is `grip-dots`. */
+export const playgroundIconNameElementCards = 'grip-dots' as const;
 
-export const playgroundIconElementCards = renderIconHtml(grip);
+export const playgroundIconElementCards = renderIconHtml(gripDots);
 
 export const playgroundIconShare = renderIconHtml(share);
 

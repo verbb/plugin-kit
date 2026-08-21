@@ -12,13 +12,13 @@ export default defineWebPreview({
 <pk-input-group>
   <pk-input-group-input placeholder="Search..."></pk-input-group-input>
   <pk-input-group-addon>
-    <pk-icon icon="search" aria-hidden="true"></pk-icon>
+    <pk-icon icon="magnifying-glass" aria-hidden="true"></pk-icon>
   </pk-input-group-addon>
 </pk-input-group>
 <pk-input-group>
   <pk-input-group-input placeholder="Search..."></pk-input-group-input>
   <pk-input-group-addon align="inline-end">
-    <pk-icon icon="search" aria-hidden="true"></pk-icon>
+    <pk-icon icon="magnifying-glass" aria-hidden="true"></pk-icon>
   </pk-input-group-addon>
 </pk-input-group>
 `.trim(),

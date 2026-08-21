@@ -54,7 +54,7 @@ Use `isInvalid` for field-level error styling. Use `readOnly` or `disabled` when
 - Text mode omits HTML language extensions for generic monospace editing.
 - The wrapper exposes `data-slot="code-editor"` for styling hooks in host apps.
 - Min height is derived from `rows` and a fixed line height so the control stays stable in modal layouts.
-- Vanilla plugins can use `<CodeEditor>` from `@verbb/plugin-kit-web/register` and listen for `pk-change` events.
+- Vanilla plugins can import `@verbb/plugin-kit-web/components/code-editor.js` and listen for `pk-change` events.
 - Web component attributes: `rows`, `tab-size`, `line-numbers`, `language`, `invalid`, `readonly`, `disabled`.
 
 ## Related

@@ -5,7 +5,7 @@ import { Icon, Input, InputGroup, InputGroupAddon, InputGroupInput, InputGroupTe
 <template>
     <div style="display: flex; flex-direction: column; gap: 12px;">
         <Input placeholder="Search entries" style="max-width: 20rem;">
-            <Icon slot="start" icon="search" />
+            <Icon slot="start" icon="magnifying-glass" />
         </Input>
         <InputGroup style="max-width: 20rem;">
             <InputGroupInput value="49" />

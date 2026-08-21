@@ -10,7 +10,7 @@ import { Button } from '@verbb/plugin-kit-vue/components';
 import { Icon } from '@verbb/plugin-kit-vue/components';
 
 const labelIconVariations = [
-    { title: 'Icon with label by size (search)', icon: 'search' },
+    { title: 'Icon with label by size (search)', icon: 'magnifying-glass' },
     { title: 'Icon with label by size (download)', icon: 'download' },
     { title: 'Icon with label by size (pen)', icon: 'pen' },
 ] as const;

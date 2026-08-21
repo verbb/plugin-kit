@@ -10,7 +10,7 @@ Control-level `label` and `instructions` can live on `Input` (and similar contro
 
 ## Errors and Warnings
 
-Use `required`, `warning`, and `errors` around an invalid control. Tip and instruction values can include inline Markdown.
+Use `required`, `warning`, and the `errors` slot around an invalid control. Tip and instruction values can include inline Markdown.
 
 <ComponentPreview src="./examples/field-errors-and-warnings.preview.tsx" />
 
@@ -28,6 +28,6 @@ Use `required`, `warning`, and `errors` around an invalid control. Tip and instr
 
 ## Header End
 
-Trailing header actions go in `headerEnd` — for example a small “Bulk add” button.
+Trailing header actions go in `slot="header-end"` — for example a small “Bulk add” button.
 
 <ComponentPreview src="./examples/field-header-end.preview.tsx" />

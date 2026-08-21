@@ -1,6 +1,6 @@
 # Code Editor
 
-CodeEditor provides a monospace code surface for HTML or plain text, built on [CodeMirror 6](https://codemirror.net/) via `@verbb/plugin-kit-codemirror-core`.
+CodeEditor provides a monospace code surface for HTML or plain text, built on [CodeMirror 6](https://codemirror.net/) via `@verbb/plugin-kit-codemirror-core` (shared with the `<CodeEditor>` web component).
 Use it when a schema field or settings screen needs syntax-aware editing with line numbers, tab sizing, and validation styling — without pulling in a full IDE.
 
 ## Basic Usage
@@ -54,8 +54,8 @@ Use `isInvalid` for field-level error styling. Use `readOnly` or `disabled` when
 - Text mode omits HTML language extensions for generic monospace editing.
 - The wrapper exposes `data-slot="code-editor"` for styling hooks in host apps.
 - Min height is derived from `rows` and a fixed line height so the control stays stable in modal layouts.
-- Common props: `rows`, `tabSize`, `lineNumbers`, `language`, `invalid`, `readOnly`, `disabled`.
-- Listen for `onPkChange` (and native `onChange` / `onInput` where applicable) for value updates.
+- Vanilla plugins can import `@verbb/plugin-kit-web/components/code-editor.js` and listen for `pk-change` events.
+- Web component attributes: `rows`, `tab-size`, `line-numbers`, `language`, `invalid`, `readonly`, `disabled`.
 
 ## Related
 

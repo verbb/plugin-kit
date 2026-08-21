@@ -81,7 +81,7 @@ export const inputVueSectionComponents: Record<string, Component> = {
                 default: () => [
                     h(InputGroupInput, { placeholder: inputPlaygroundSections.inputGroupIcon.placeholder }),
                     h(InputGroupAddon, { align: 'inline-end' }, {
-                        default: () => h(Icon, { icon: 'search', 'aria-hidden': true }),
+                        default: () => h(Icon, { icon: 'magnifying-glass', 'aria-hidden': true }),
                     }),
                 ],
             }),
@@ -95,7 +95,7 @@ export const inputVueSectionComponents: Record<string, Component> = {
                 default: () => [
                     h(InputGroupInput, { placeholder: inputPlaygroundSections.inputGroupIcon.placeholder }),
                     h(InputGroupAddon, { align: 'inline-end' }, {
-                        default: () => h(Icon, { icon: 'search', 'aria-hidden': true }),
+                        default: () => h(Icon, { icon: 'magnifying-glass', 'aria-hidden': true }),
                     }),
                 ],
             }),
@@ -103,7 +103,7 @@ export const inputVueSectionComponents: Record<string, Component> = {
                 default: () => [
                     h(InputGroupInput, { placeholder: inputPlaygroundSections.inputGroupIcon.placeholder }),
                     h(InputGroupAddon, { align: 'inline-end' }, {
-                        default: () => h(Icon, { icon: 'search', 'aria-hidden': true }),
+                        default: () => h(Icon, { icon: 'magnifying-glass', 'aria-hidden': true }),
                     }),
                 ],
             }),
