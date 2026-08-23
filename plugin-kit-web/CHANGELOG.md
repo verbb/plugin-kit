@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.10 - 2026-08-23
+
 ### Added
 - `<pk-connect-oauth>` — OAuth connect row (Craft `.formsubmit` Connect/Disconnect + dirty-form save warning).
 - React `<ConnectOauth>` facade over `<pk-connect-oauth>`.

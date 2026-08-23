@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.10 - 2026-08-23
+
 ### Added
 - `<ConnectOauth>` — React facade over `<pk-connect-oauth>`.
 

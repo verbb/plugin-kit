@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.10 - 2026-08-23
+
 ### Added
 - `idParam` on `buildConnectPayload` / `id-param` on `<pk-connect>` (Formie posts `id`, Metrix/VP post `sourceId`).
 
