@@ -1,0 +1,1 @@
+{"version":3,"file":"ConnectOauth.d.ts","sourceRoot":"","sources":["../../src/components/ConnectOauth.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAE1B,OAAO,EAAE,cAAc,EAAE,MAAM,8DAA8D,CAAC;AAE9F,6FAA6F;AAC7F,eAAO,MAAM,qBAAqB,4DAIhC,CAAC;AAEH,eAAO,MAAM,YAAY,4DAAwB,CAAC;AAClD,MAAM,MAAM,iBAAiB,GAAG,KAAK,CAAC,cAAc,CAAC,OAAO,qBAAqB,CAAC,CAAC"}

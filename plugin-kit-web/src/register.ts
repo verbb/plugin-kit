@@ -12,6 +12,8 @@ import { PkColorInput } from './components/color-input/pk-color-input.js';
 import { PkCalendar } from './components/calendar/pk-calendar.js';
 import { PkDatePicker } from './components/date-picker/pk-date-picker.js';
 import { PkCombobox } from './components/combobox/pk-combobox.js';
+import { PkConnect } from './components/connect/pk-connect.js';
+import { PkConnectOauth } from './components/connect/pk-connect-oauth.js';
 import { PkCopyButton } from './components/copy-button/pk-copy-button.js';
 import { PkDialog } from './components/dialog/pk-dialog.js';
 import { PkDropdownLabel } from './components/dropdown-menu/pk-dropdown-label.js';
@@ -65,6 +67,7 @@ export * from './components/status/index.js';
 export * from './components/toggle/index.js';
 export * from './components/toggle-group/index.js';
 export * from './components/lightswitch/index.js';
+export * from './components/connect/index.js';
 export * from './components/copy-button/index.js';
 export * from './components/dialog/index.js';
 export * from './components/dropdown-menu/index.js';
@@ -96,6 +99,8 @@ export {
     PkCalendar,
     PkDatePicker,
     PkCombobox,
+    PkConnect,
+    PkConnectOauth,
     PkCopyButton,
     PkDialog,
     PkDropdownMenu,
@@ -186,6 +191,8 @@ const COMPONENTS: [string, CustomElementConstructor][] = [
     ['pk-calendar', PkCalendar],
     ['pk-date-picker', PkDatePicker],
     ['pk-combobox', PkCombobox],
+    ['pk-connect', PkConnect],
+    ['pk-connect-oauth', PkConnectOauth],
     ['pk-time-picker', PkTimePicker],
     ['pk-copy-button', PkCopyButton],
 ];

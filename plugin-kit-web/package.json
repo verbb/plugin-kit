@@ -7,7 +7,9 @@
     "sideEffects": [
         "**/*.css",
         "./src/components/**/*.ts",
+        "./src/connect/**/*.ts",
         "./dist/register.js",
+        "./dist/connect/**/*.js",
         "./dist/components/**/*.js",
         "./dist/chunks/**/*.js",
         "./dist-loader/**/*.js"
@@ -53,6 +55,19 @@
         "./styles/overlay-content.css": {
             "style": "./dist/styles/overlay-content.css",
             "default": "./dist/styles/overlay-content.css"
+        },
+        "./styles/connect/pk-connect.css": {
+            "style": "./dist/styles/connect/pk-connect.css",
+            "default": "./dist/styles/connect/pk-connect.css"
+        },
+        "./connect/register-cp-connect": {
+            "types": "./dist/connect/register-cp-connect.d.ts",
+            "import": "./dist/connect/register-cp-connect.js"
+        },
+        "./connect/register-cp-connect.js": {
+            "types": "./dist/connect/register-cp-connect.d.ts",
+            "import": "./dist/connect/register-cp-connect.js",
+            "default": "./dist/connect/register-cp-connect.js"
         },
         "./tokens.css": {
             "style": "./dist/tokens.css",
@@ -162,6 +177,26 @@
             "types": "./dist/components/combobox/pk-combobox.d.ts",
             "import": "./dist/components/combobox/pk-combobox.js",
             "default": "./dist/components/combobox/pk-combobox.js"
+        },
+        "./components/connect/pk-connect.js": {
+            "types": "./dist/components/connect/pk-connect.d.ts",
+            "import": "./dist/components/connect/pk-connect.js",
+            "default": "./dist/components/connect/pk-connect.js"
+        },
+        "./components/connect/pk-connect": {
+            "types": "./dist/components/connect/pk-connect.d.ts",
+            "import": "./dist/components/connect/pk-connect.js",
+            "default": "./dist/components/connect/pk-connect.js"
+        },
+        "./components/connect/pk-connect-oauth.js": {
+            "types": "./dist/components/connect/pk-connect-oauth.d.ts",
+            "import": "./dist/components/connect/pk-connect-oauth.js",
+            "default": "./dist/components/connect/pk-connect-oauth.js"
+        },
+        "./components/connect/pk-connect-oauth": {
+            "types": "./dist/components/connect/pk-connect-oauth.d.ts",
+            "import": "./dist/components/connect/pk-connect-oauth.js",
+            "default": "./dist/components/connect/pk-connect-oauth.js"
         },
         "./components/copy-button/pk-copy-button.js": {
             "types": "./dist/components/copy-button/pk-copy-button.d.ts",
@@ -652,6 +687,16 @@
             "types": "./dist/components/combobox.d.ts",
             "import": "./dist/components/combobox.js",
             "default": "./dist/components/combobox.js"
+        },
+        "./components/connect.js": {
+            "types": "./dist/components/connect.d.ts",
+            "import": "./dist/components/connect.js",
+            "default": "./dist/components/connect.js"
+        },
+        "./components/connect": {
+            "types": "./dist/components/connect.d.ts",
+            "import": "./dist/components/connect.js",
+            "default": "./dist/components/connect.js"
         },
         "./components/copy-button.js": {
             "types": "./dist/components/copy-button.d.ts",

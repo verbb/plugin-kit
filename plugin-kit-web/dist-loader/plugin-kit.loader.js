@@ -55,6 +55,8 @@ var COMPONENT_MODULE_PATHS = {
 	"pk-combobox": "components/combobox/combobox.js",
 	"pk-time-picker": "components/time-picker/time-picker.js",
 	"pk-copy-button": "components/copy-button/copy-button.js",
+	"pk-connect": "components/connect/connect.js",
+	"pk-connect-oauth": "components/connect/connect-oauth.js",
 	"pk-editable-table": "components/editable-table/editable-table.js"
 };
 /** Vite loader-build entries: output key → source module. */
@@ -109,6 +111,8 @@ var LOADER_COMPONENT_ENTRIES = {
 	"components/combobox/combobox": "src/components/combobox/pk-combobox.ts",
 	"components/time-picker/time-picker": "src/components/time-picker/pk-time-picker.ts",
 	"components/copy-button/copy-button": "src/components/copy-button/pk-copy-button.ts",
+	"components/connect/connect": "src/components/connect/pk-connect.ts",
+	"components/connect/connect-oauth": "src/components/connect/pk-connect-oauth.ts",
 	"components/editable-table/editable-table": "src/components/editable-table/pk-editable-table.ts"
 };
 /** Loader-only shims → real element modules for the bundler dist graph. */

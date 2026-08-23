@@ -12,6 +12,7 @@ export * from './components/status/index.js';
 export * from './components/toggle/index.js';
 export * from './components/toggle-group/index.js';
 export * from './components/lightswitch/index.js';
+export * from './components/connect/index.js';
 export * from './components/copy-button/index.js';
 export * from './components/dialog/index.js';
 export * from './components/dropdown-menu/index.js';

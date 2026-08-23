@@ -18,6 +18,10 @@ export declare function registerPkCodeEditor(): Promise<void>;
 export declare function registerPkColorInput(): Promise<void>;
 /** Register `pk-combobox` only (async side-effect import). */
 export declare function registerPkCombobox(): Promise<void>;
+/** Register `pk-connect` only (async side-effect import). */
+export declare function registerPkConnect(): Promise<void>;
+/** Register `pk-connect-oauth` only (async side-effect import). */
+export declare function registerPkConnectOauth(): Promise<void>;
 /** Register `pk-copy-button` only (async side-effect import). */
 export declare function registerPkCopyButton(): Promise<void>;
 /** Register `pk-date-picker` only (async side-effect import). */

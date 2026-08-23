@@ -43,6 +43,19 @@ const STATIC_EXPORTS = {
         style: './dist/styles/overlay-content.css',
         default: './dist/styles/overlay-content.css',
     },
+    './styles/connect/pk-connect.css': {
+        style: './dist/styles/connect/pk-connect.css',
+        default: './dist/styles/connect/pk-connect.css',
+    },
+    './connect/register-cp-connect': {
+        types: './dist/connect/register-cp-connect.d.ts',
+        import: './dist/connect/register-cp-connect.js',
+    },
+    './connect/register-cp-connect.js': {
+        types: './dist/connect/register-cp-connect.d.ts',
+        import: './dist/connect/register-cp-connect.js',
+        default: './dist/connect/register-cp-connect.js',
+    },
     './tokens.css': {
         style: './dist/tokens.css',
         default: './dist/tokens.css',

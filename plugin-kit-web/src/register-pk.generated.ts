@@ -50,6 +50,16 @@ export async function registerPkCombobox(): Promise<void> {
     await import('./components/combobox/pk-combobox.js');
 }
 
+/** Register `pk-connect` only (async side-effect import). */
+export async function registerPkConnect(): Promise<void> {
+    await import('./components/connect/pk-connect.js');
+}
+
+/** Register `pk-connect-oauth` only (async side-effect import). */
+export async function registerPkConnectOauth(): Promise<void> {
+    await import('./components/connect/pk-connect-oauth.js');
+}
+
 /** Register `pk-copy-button` only (async side-effect import). */
 export async function registerPkCopyButton(): Promise<void> {
     await import('./components/copy-button/pk-copy-button.js');

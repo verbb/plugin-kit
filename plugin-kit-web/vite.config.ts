@@ -10,6 +10,7 @@ const resolveBundlerEntries = () => {
         'plugin-kit': path.resolve(__dirname, 'src/plugin-kit.ts'),
         'register-components': path.resolve(__dirname, 'src/register-components.ts'),
         register: path.resolve(__dirname, 'src/register.ts'),
+        'connect/register-cp-connect': path.resolve(__dirname, 'src/connect/register-cp-connect.ts'),
         'icons/index': path.resolve(__dirname, 'src/icons/index.ts'),
     };
 

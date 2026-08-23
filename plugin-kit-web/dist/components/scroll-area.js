@@ -1,2 +1,2 @@
-import { t as PkScrollArea } from "../chunks/pk-scroll-area-B0V4Dr2j.js";
+import { t as PkScrollArea } from "../chunks/pk-scroll-area-BjU7-vZX.js";
 export { PkScrollArea };

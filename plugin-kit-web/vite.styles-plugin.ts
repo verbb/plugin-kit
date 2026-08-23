@@ -14,8 +14,10 @@ export const emitPluginKitStyles = (outDir: string) => ({
         const dist = path.resolve(outDir);
         const tokensSrc = path.resolve(__dirname, 'src/tokens/tokens.css');
         const overlaySrc = path.resolve(__dirname, 'src/styles/overlay-content.css');
+        const connectSrc = path.resolve(__dirname, 'src/styles/connect/pk-connect.css');
         const tokensCss = await fs.readFile(tokensSrc, 'utf8');
         const overlayCss = await fs.readFile(overlaySrc, 'utf8');
+        const connectCss = await fs.readFile(connectSrc, 'utf8');
         const fouceCss = generateFouceCss();
 
         await fs.mkdir(dist, { recursive: true });
@@ -29,6 +31,10 @@ export const emitPluginKitStyles = (outDir: string) => ({
         const overlayDest = path.join(dist, 'styles/overlay-content.css');
         await fs.mkdir(path.dirname(overlayDest), { recursive: true });
         await fs.writeFile(overlayDest, overlayCss, 'utf8');
+
+        const connectDest = path.join(dist, 'styles/connect/pk-connect.css');
+        await fs.mkdir(path.dirname(connectDest), { recursive: true });
+        await fs.writeFile(connectDest, connectCss, 'utf8');
 
         // Aggregate for the default Craft CP / bundler DX — no nested @imports.
         const aggregate = [

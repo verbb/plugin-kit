@@ -1,2 +1,2 @@
-import { t as PkTabPanel } from "../../chunks/pk-tab-panel-Q3Pqyq-f.js";
+import { t as PkTabPanel } from "../../chunks/pk-tab-panel-DdAbrOBF.js";
 export { PkTabPanel };

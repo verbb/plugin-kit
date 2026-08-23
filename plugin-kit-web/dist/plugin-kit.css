@@ -460,6 +460,8 @@ html.pk-scroll-lock {
         pk-combobox,
         pk-time-picker,
         pk-copy-button,
+        pk-connect,
+        pk-connect-oauth,
         pk-editable-table
     ):not(:defined) {
         animation: 2s step-end pk-fouce;

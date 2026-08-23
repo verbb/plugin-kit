@@ -1,0 +1,231 @@
+/*
+ * Document-scoped connect styles (light DOM — not shadow-piercing).
+ *
+ * Row layout lives here — canonical for CP. Lit `:host` rules in `pk-connect.styles.ts`
+ * are a secondary copy; light-DOM WCs do not always receive adopted `:host` styles.
+ */
+
+/* Lift the connect row above CP chrome while the error dialog is open. */
+.pk-connect-field.pk-connect-field--modal-open {
+    position: relative;
+    z-index: 2147482999;
+    isolation: isolate;
+}
+
+/*
+ * Connect row layout — CP meta lightswitch row (status/label left, action right).
+ * Twig mounts `<pk-connect>` / `<pk-connect-oauth>` inside `.pk-connect-field`.
+ */
+.pk-connect-field > pk-connect,
+.pk-connect-field > pk-connect-oauth {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 1 1 100%;
+    min-width: 0;
+    min-height: 2.75rem;
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .heading {
+    display: flex;
+    align-items: center;
+    gap: var(--pk-connect-status-gap, 15px);
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    line-height: 1.125rem;
+    padding-block: 0.75rem;
+    padding-inline: var(--pk-connect-heading-padding-inline, var(--m, 1rem) var(--s, 0.75rem));
+    color: var(--pk-connect-heading-color, var(--gray-600, #515f6c));
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .heading:only-child {
+    flex: 1 1 100%;
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .input {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding-block: var(--pk-connect-input-padding-block, var(--s, 0.75rem));
+    padding-inline: var(--pk-connect-input-padding-inline, 10px var(--m, 1rem));
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .heading .light {
+    color: var(--pk-connect-muted-color, var(--gray-500, #606d7b));
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .heading pk-status.pk-connect__status-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    --pk-status-ring: var(--gray-500);
+}
+
+.pk-connect-field > :is(pk-connect, pk-connect-oauth) > .heading .warning.with-icon::before {
+    margin-inline-end: 7px;
+}
+
+/*
+ * Connection error dialog — full-viewport on small screens, ~66% on md+.
+ * Tokens pierce into pk-dialog's shadow panel; host Tailwind never reaches .dialog.
+ */
+pk-dialog.pk-connect-dialog {
+    --pk-dialog-width: calc(100vw - 24px);
+    --pk-dialog-max-width: calc(100vw - 24px);
+    --pk-dialog-height: calc(100dvh - 24px);
+    --pk-dialog-max-height: calc(100dvh - 24px);
+    --pk-dialog-min-width: 0;
+    --pk-dialog-min-height: 0;
+}
+
+@media (min-width: 768px) {
+    pk-dialog.pk-connect-dialog {
+        --pk-dialog-width: 66%;
+        --pk-dialog-max-width: 66%;
+        --pk-dialog-height: 66%;
+        --pk-dialog-max-height: calc(100dvh - 24px);
+        --pk-dialog-min-width: 600px;
+        --pk-dialog-min-height: 400px;
+    }
+}
+
+pk-dialog.pk-connect-dialog::part(body) {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+pk-button.pk-connect-dialog__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    opacity: 0.7;
+    color: var(--pk-color-gray-600, #515f6c);
+    --pk-btn-height: 1.125rem;
+    --pk-btn-icon-size: 1.125rem;
+    --pk-btn-padding-inline: 0;
+}
+
+pk-button.pk-connect-dialog__close:hover:not([disabled]) {
+    opacity: 1;
+}
+
+pk-button.pk-connect-dialog__close::part(base) {
+    width: 1.125rem;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    min-height: 1.125rem;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.pk-connection-error {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: var(--pk-color-rose-600, #e11d48);
+}
+
+.pk-connection-error__stack {
+    display: flex;
+    width: 100%;
+    max-width: 680px;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: inherit;
+}
+
+.pk-connection-error__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pk-color-rose-600, #e11d48);
+}
+
+.pk-connection-error__icon pk-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2.5rem;
+    color: inherit;
+}
+
+.pk-connection-error__heading {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: inherit;
+}
+
+.pk-connection-error__message {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: inherit;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.pk-connection-error__details {
+    width: 100%;
+}
+
+.pk-connection-error__details.hidden {
+    display: none;
+}
+
+.pk-connection-error__details-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0.25rem auto 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1.25;
+}
+
+.pk-connection-error__details-toggle pk-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+    font-size: 0.75rem;
+    transition: transform 0.15s ease;
+}
+
+.pk-connection-error__details-toggle pk-icon.is-open {
+    transform: rotate(90deg);
+}
+
+.pk-connection-error__trace {
+    margin-top: 0.75rem;
+    max-height: 180px;
+    overflow: auto;
+    border-radius: 0.375rem;
+    background: var(--pk-color-gray-50, #f3f7fc);
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    color: var(--pk-color-gray-700, #3f4d5a);
+}
+
+.pk-connection-error__trace.hidden {
+    display: none;
+}

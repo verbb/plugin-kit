@@ -23,6 +23,8 @@ export * from './Textarea.js';
 export * from './TimePicker.js';
 export * from './Tiptap.js';
 export * from './Combobox.js';
+export * from './Connect.js';
+export * from './ConnectOauth.js';
 export * from './Dialog.js';
 export * from './EditableTable.js';
 export * from './DropdownMenu.js';

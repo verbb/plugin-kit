@@ -28,6 +28,8 @@ export * from './Tiptap.js';
 
 // Tier C — overlay / compound facades
 export * from './Combobox.js';
+export * from './Connect.js';
+export * from './ConnectOauth.js';
 export * from './Dialog.js';
 export * from './EditableTable.js';
 export * from './DropdownMenu.js';

@@ -53,6 +53,8 @@ export const COMPONENT_MODULE_PATHS: Record<string, string> = {
     'pk-combobox': 'components/combobox/combobox.js',
     'pk-time-picker': 'components/time-picker/time-picker.js',
     'pk-copy-button': 'components/copy-button/copy-button.js',
+    'pk-connect': 'components/connect/connect.js',
+    'pk-connect-oauth': 'components/connect/connect-oauth.js',
     'pk-editable-table': 'components/editable-table/editable-table.js',
 };
 
@@ -115,6 +117,8 @@ export const LOADER_COMPONENT_ENTRIES: Record<string, string> = {
     'components/combobox/combobox': 'src/components/combobox/pk-combobox.ts',
     'components/time-picker/time-picker': 'src/components/time-picker/pk-time-picker.ts',
     'components/copy-button/copy-button': 'src/components/copy-button/pk-copy-button.ts',
+    'components/connect/connect': 'src/components/connect/pk-connect.ts',
+    'components/connect/connect-oauth': 'src/components/connect/pk-connect-oauth.ts',
     'components/editable-table/editable-table': 'src/components/editable-table/pk-editable-table.ts',
 };
 
@@ -161,6 +165,7 @@ export const COMPONENT_FAMILY_ENTRIES: Record<string, string> = {
     'color-input': 'src/components/color-input/index.ts',
     'combobox': 'src/components/combobox/index.ts',
     'copy-button': 'src/components/copy-button/index.ts',
+    'connect': 'src/components/connect/index.ts',
     'date-picker': 'src/components/date-picker/index.ts',
     'dialog': 'src/components/dialog/index.ts',
     'dropdown-menu': 'src/components/dropdown-menu/index.ts',

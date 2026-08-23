@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Added
+- `<pk-connect-oauth>` — OAuth connect row (Craft `.formsubmit` Connect/Disconnect + dirty-form save warning).
+- React `<ConnectOauth>` facade over `<pk-connect-oauth>`.
+
+### Added
+- `<pk-connect>` — credentials / REST connect row for Craft CP source settings (light DOM; Video Picker behavior without jQuery).
+- Document styles: `@verbb/plugin-kit-web/styles/connect/pk-connect.css` (`.pk-connect-field` layout + error dialog).
+- React `<Connect>` facade over `<pk-connect>`.
+
 ## 2.0.9 - 2026-08-21
 
 ### Changed
