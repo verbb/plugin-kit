@@ -5,6 +5,8 @@ import { PkIcon } from "../components/icon/pk-icon.js";
 import { PkConnect } from "../components/connect/pk-connect.js";
 import { PkConnectOauth } from "../components/connect/pk-connect-oauth.js";
 import { chevronRight, registerIcons, triangleExclamation, xmark } from "@verbb/plugin-kit-icons";
+import "@verbb/plugin-kit-web/plugin-kit.css";
+import "@verbb/plugin-kit-web/styles/connect/pk-connect.css";
 //#region src/connect/register-cp-connect.ts
 var CP_CONNECT_CTORS = [
 	PkButton,

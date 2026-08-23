@@ -44,6 +44,13 @@ export default defineConfig({
                     return false;
                 }
 
+                // Self-package CSS (e.g. connect/register-cp-connect) resolves via package
+                // exports at consumer build time. dist/*.css is emitted in closeBundle, so
+                // Rolldown must not try to resolve these during our own lib build.
+                if (id.startsWith('@verbb/plugin-kit-web/') && id.endsWith('.css')) {
+                    return true;
+                }
+
                 return !id.startsWith('@verbb/plugin-kit-web');
             },
             output: {
