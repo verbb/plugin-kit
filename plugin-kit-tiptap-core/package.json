@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-tiptap-core",
-    "version": "2.0.12",
+    "version": "2.0.13",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",

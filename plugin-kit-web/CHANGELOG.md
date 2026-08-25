@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.13 - 2026-08-25
+
 ### Fixed
 - `<pk-icon>` re-resolves when the shared icon registry gains glyphs (pairs with `@verbb/plugin-kit-icons` page-global registry — later plugins’ `registerIcons` fill icons that upgraded earlier).
 

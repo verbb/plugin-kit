@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.13 - 2026-08-25
+
 ### Fixed
 - Icon name registry is page-global (`globalThis`) so multiple Craft plugins that each bundle `@verbb/plugin-kit-icons` share one glyph map — `registerIcons` from a later plugin reaches the winning `<pk-icon>` (fixes empty gear / refresh icons on multi-field CP pages).
 - Added `subscribeIconRegistry()` so hosts can re-resolve after additive registrations.
