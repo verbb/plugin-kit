@@ -1,5 +1,5 @@
-import { f as A, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/input-group/pk-input-group-textarea.styles.ts
 var pkInputGroupTextareaStyles = i`
     @layer pk-component {
@@ -105,6 +105,6 @@ __decorate([n({
 	reflect: true
 })], PkInputGroupTextarea.prototype, "invalid", void 0);
 __decorate([n({ type: Number })], PkInputGroupTextarea.prototype, "rows", void 0);
-PkInputGroupTextarea = __decorate([t("pk-input-group-textarea")], PkInputGroupTextarea);
+PkInputGroupTextarea = __decorate([customElement("pk-input-group-textarea")], PkInputGroupTextarea);
 //#endregion
 export { PkInputGroupTextarea };

@@ -1,20 +1,20 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
+import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B21zXxSo.js";
 import { A as heading, D as h4, E as h3, F as link, G as table, H as strikethrough, I as listOl, J as underline, K as textSlash, L as listUl, N as italic, O as h5, R as minus, T as h2, U as subscript, V as quoteRight, W as superscript, a as alignRight, c as arrowRotateRight, d as bold, f as bracketsCurly, h as chevronDown, i as alignLeft, j as highlighter, k as h6, n as alignCenter, q as triangleExclamation, r as alignJustify, s as arrowRotateLeft, w as h1, x as fileDashedLine, y as code, z as paragraph } from "../../chunks/svg-_Mtb7CHx.js";
-import "../../chunks/pk-button-BiR9aCRh.js";
+import "../../chunks/pk-button-Dh4gjLHw.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
-import "../../chunks/pk-checkbox-hJCj8In8.js";
-import "../../chunks/pk-input-BupRMhK1.js";
+import "../../chunks/pk-checkbox-BrZQB816.js";
+import "../../chunks/pk-input-CEw3AdYt.js";
 import { M as posToDOMRect, j as getMarkRange, k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, D as getFatalTiptapContentError, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-mxwZHY1l.js";
+import { A as createTiptapExtensions, D as getFatalTiptapContentError, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BIRIMP7I.js";
 import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
-import "../../chunks/pk-field-BU3DkBLi.js";
-import "../../chunks/pk-dialog-CyUKChc9.js";
-import "../../chunks/pk-dropdown-item-D2X2L4nu.js";
-import "../../chunks/pk-dropdown-menu-yOOPMVOg.js";
+import "../../chunks/pk-field-CJ09ll1S.js";
+import "../../chunks/pk-dialog-BpPRqFMm.js";
+import "../../chunks/pk-dropdown-item-CHkFNlA9.js";
+import "../../chunks/pk-dropdown-menu-BHVOMNV1.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-D6Slr-A6.js";
+import "../../chunks/pk-tooltip-HwZ0zRd2.js";
 //#region src/components/tiptap/tiptap-editor-host.ts
 function serializeTiptapDocumentContent(content) {
 	return JSON.stringify(normalizeContentArray(content));
@@ -1081,6 +1081,6 @@ __decorate([n({
 	attribute: "value",
 	reflect: true
 })], PkTiptapEditor.prototype, "defaultValue", void 0);
-PkTiptapEditor = __decorate([t("pk-tiptap-editor")], PkTiptapEditor);
+PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor);
 //#endregion
 export { PkTiptapEditor };

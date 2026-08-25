@@ -1,5 +1,5 @@
-import { l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/input-group/pk-input-group-addon.styles.ts
 var pkInputGroupAddonStyles = i`
     @layer pk-component {
@@ -93,6 +93,6 @@ var PkInputGroupAddon = class PkInputGroupAddon extends PkElement {
 	}
 };
 __decorate([n({ reflect: true })], PkInputGroupAddon.prototype, "align", void 0);
-PkInputGroupAddon = __decorate([t("pk-input-group-addon")], PkInputGroupAddon);
+PkInputGroupAddon = __decorate([customElement("pk-input-group-addon")], PkInputGroupAddon);
 //#endregion
 export { PkInputGroupAddon };

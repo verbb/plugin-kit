@@ -1,5 +1,5 @@
-import { c as r, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B21zXxSo.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
 import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-CSgOT0QM.js";
 //#region node_modules/@verbb/plugin-kit-codemirror-core/dist/constants.js
@@ -371,6 +371,6 @@ __decorate([n({
 	attribute: "value",
 	reflect: true
 })], PkCodeEditor.prototype, "defaultValue", void 0);
-PkCodeEditor = __decorate([t("pk-code-editor")], PkCodeEditor);
+PkCodeEditor = __decorate([customElement("pk-code-editor")], PkCodeEditor);
 //#endregion
 export { PkCodeEditor };

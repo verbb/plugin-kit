@@ -1,6 +1,6 @@
-import { f as A, l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { i as buttonGroupIndentStyles, n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-Dwakbyx5.js";
+import { f as A, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
+import { i as buttonGroupIndentStyles, n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-CsBQ3Cyh.js";
 //#region src/components/toggle/pk-toggle.styles.ts
 var pkToggleStyles = [
 	buttonGroupCornerRoleStyles(),
@@ -248,6 +248,6 @@ __decorate([n({ reflect: true })], PkToggle.prototype, "variant", void 0);
 __decorate([n({ reflect: true })], PkToggle.prototype, "size", void 0);
 __decorate([n({ attribute: "data-value" })], PkToggle.prototype, "value", void 0);
 __decorate([n({ attribute: "aria-label" })], PkToggle.prototype, "ariaLabel", void 0);
-PkToggle = __decorate([t("pk-toggle")], PkToggle);
+PkToggle = __decorate([customElement("pk-toggle")], PkToggle);
 //#endregion
 export { PkToggle };

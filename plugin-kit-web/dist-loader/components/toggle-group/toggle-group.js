@@ -1,5 +1,5 @@
-import { c as r, l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/toggle-group/pk-toggle-group.styles.ts
 var pkToggleGroupStyles = i`
     @layer pk-component {
@@ -167,6 +167,6 @@ __decorate([n({
 	attribute: false
 })], PkToggleGroup.prototype, "value", void 0);
 __decorate([r()], PkToggleGroup.prototype, "items", void 0);
-PkToggleGroup = __decorate([t("pk-toggle-group")], PkToggleGroup);
+PkToggleGroup = __decorate([customElement("pk-toggle-group")], PkToggleGroup);
 //#endregion
 export { PkToggleGroup };

@@ -1,22 +1,22 @@
-import { c as r, f as A, i as e, l as n, m as i, o, p as b, t as c, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, f as A, i as e, l as n, m as i, o, p as b, t as c, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-B21zXxSo.js";
 import { B as plus, C as gripMove, S as gear, Y as xmark, b as ellipsis, l as arrowUp, o as arrowDown } from "../../chunks/svg-_Mtb7CHx.js";
 import { t as getIcon } from "../../chunks/registry-CmL0rH9r.js";
-import "../../chunks/pk-button-BiR9aCRh.js";
+import "../../chunks/pk-button-Dh4gjLHw.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
-import "../../chunks/pk-checkbox-hJCj8In8.js";
-import "../../chunks/pk-color-input-B52sVacS.js";
-import "../../chunks/pk-input-BupRMhK1.js";
-import "../../chunks/pk-textarea-BrRPLWsG.js";
+import "../../chunks/pk-checkbox-BrZQB816.js";
+import "../../chunks/pk-color-input-sS05YOwT.js";
+import "../../chunks/pk-input-CEw3AdYt.js";
+import "../../chunks/pk-textarea-C_rOUtFS.js";
 import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
-import "../../chunks/pk-dropdown-item-D2X2L4nu.js";
-import "../../chunks/pk-dropdown-menu-yOOPMVOg.js";
-import "../../chunks/pk-lightswitch-C86ABIv3.js";
-import "../../chunks/pk-option-DN_AHNmh.js";
-import "../../chunks/pk-select-BzTTYknK.js";
-import "../../chunks/pk-date-picker-Ds8nm8nk.js";
-import "../../chunks/pk-combobox-DumNw0gq.js";
-import "../../chunks/pk-time-picker-DpRBAHVK.js";
+import "../../chunks/pk-dropdown-item-CHkFNlA9.js";
+import "../../chunks/pk-dropdown-menu-BHVOMNV1.js";
+import "../../chunks/pk-lightswitch-DJEUScgo.js";
+import "../../chunks/pk-option-CunPIei0.js";
+import "../../chunks/pk-select-CbAaQ7uE.js";
+import "../../chunks/pk-date-picker-Dni5ty79.js";
+import "../../chunks/pk-combobox-B7q6alzE.js";
+import "../../chunks/pk-time-picker-Dr3uvbvc.js";
 //#region src/components/editable-table/editable-table-dnd.ts
 /**
 * Table-native pointer drag for `<pk-editable-table>` rows.
@@ -1526,6 +1526,6 @@ __decorate([n({ attribute: false })], PkEditableTable.prototype, "modifyRow", vo
 __decorate([n({ attribute: false })], PkEditableTable.prototype, "getRowMenuItems", void 0);
 __decorate([r()], PkEditableTable.prototype, "internalRows", void 0);
 __decorate([r()], PkEditableTable.prototype, "dndReady", void 0);
-PkEditableTable = __decorate([t("pk-editable-table")], PkEditableTable);
+PkEditableTable = __decorate([customElement("pk-editable-table")], PkEditableTable);
 //#endregion
 export { PkEditableTable, getCustomCellSlotName, isCustomColumn, nextRowId };

@@ -1,6 +1,6 @@
-import { m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { a as HostAriaMirror, c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-Dwakbyx5.js";
+import { m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { a as HostAriaMirror, c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
+import { n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "../../chunks/button-group-item.styles-CsBQ3Cyh.js";
 //#region src/components/input-group/pk-input-group.styles.ts
 var pkInputGroupStyles = [
 	buttonGroupCornerRoleStyles(),
@@ -229,6 +229,6 @@ var PkInputGroup = class PkInputGroup extends PkElement {
 	}
 };
 __decorate([e("slot")], PkInputGroup.prototype, "defaultSlot", void 0);
-PkInputGroup = __decorate([t("pk-input-group")], PkInputGroup);
+PkInputGroup = __decorate([customElement("pk-input-group")], PkInputGroup);
 //#endregion
 export { PkInputGroup };

@@ -1,6 +1,6 @@
 import { t as PkButton } from "../chunks/pk-button-QpDDlRbG.js";
 import { t as PkStatus } from "../chunks/pk-status-7_5dEuw-.js";
-import { t as PkDialog } from "../chunks/pk-dialog-B23Rbh5j.js";
+import { t as PkDialog } from "../chunks/pk-dialog-Ck1InIBC.js";
 import { PkIcon } from "../components/icon/pk-icon.js";
 import { PkConnect } from "../components/connect/pk-connect.js";
 import { PkConnectOauth } from "../components/connect/pk-connect-oauth.js";

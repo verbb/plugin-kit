@@ -1,6 +1,6 @@
-import { c as r, i as e, l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import "../../chunks/pk-checkbox-hJCj8In8.js";
+import { c as r, i as e, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
+import "../../chunks/pk-checkbox-BrZQB816.js";
 //#region src/components/checkbox-select/pk-checkbox-select.styles.ts
 var pkCheckboxSelectStyles = i`
     @layer pk-component {
@@ -213,6 +213,6 @@ __decorate([n({
 __decorate([n({ reflect: true })], PkCheckboxSelect.prototype, "orientation", void 0);
 __decorate([n({ attribute: "aria-label" })], PkCheckboxSelect.prototype, "ariaLabel", void 0);
 __decorate([r()], PkCheckboxSelect.prototype, "optionElements", void 0);
-PkCheckboxSelect = __decorate([t("pk-checkbox-select")], PkCheckboxSelect);
+PkCheckboxSelect = __decorate([customElement("pk-checkbox-select")], PkCheckboxSelect);
 //#endregion
 export { ALL_VALUE, PkCheckboxSelect };

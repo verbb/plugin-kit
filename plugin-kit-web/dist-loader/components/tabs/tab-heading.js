@@ -1,5 +1,5 @@
-import { m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/tabs/pk-tab-heading.styles.ts
 var pkTabHeadingStyles = i`
     @layer pk-component {
@@ -42,6 +42,6 @@ var PkTabHeading = class PkTabHeading extends PkElement {
         `;
 	}
 };
-PkTabHeading = __decorate([t("pk-tab-heading")], PkTabHeading);
+PkTabHeading = __decorate([customElement("pk-tab-heading")], PkTabHeading);
 //#endregion
 export { PkTabHeading };

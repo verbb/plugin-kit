@@ -1,10 +1,10 @@
-import { c as r, d as i, f as A, l as n, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate } from "../../chunks/pk-base-BlxAYXJD.js";
-import "../../chunks/pk-icon-DAnw7wPF.js";
-import "../../chunks/pk-button-BiR9aCRh.js";
-import "../../chunks/pk-dialog-CyUKChc9.js";
-import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-C1ICg1bF.js";
-import "../../chunks/pk-status-BFpjCym0.js";
+import { c as r, d as i, f as A, l as n, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate } from "../../chunks/pk-base-B21zXxSo.js";
+import "../../chunks/pk-icon-B-OBmJ3K.js";
+import "../../chunks/pk-button-Dh4gjLHw.js";
+import "../../chunks/pk-dialog-BpPRqFMm.js";
+import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-BAgeFns_.js";
+import "../../chunks/pk-status-BRIVW7EH.js";
 //#region src/components/connect/pk-connect.ts
 var pkStatusForState = (status) => {
 	if (status === "connected") return "on";
@@ -251,6 +251,6 @@ __decorate([n({ attribute: "label-close" })], PkConnect.prototype, "labelClose",
 __decorate([r()], PkConnect.prototype, "isDirty", void 0);
 __decorate([r()], PkConnect.prototype, "loading", void 0);
 __decorate([r()], PkConnect.prototype, "showDetails", void 0);
-PkConnect = __decorate([t("pk-connect")], PkConnect);
+PkConnect = __decorate([customElement("pk-connect")], PkConnect);
 //#endregion
 export { PkConnect };

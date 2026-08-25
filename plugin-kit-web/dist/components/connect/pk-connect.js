@@ -1,7 +1,7 @@
 import { t as __decorate } from "../../chunks/decorate-W02hmVTt.js";
 import "../../chunks/pk-button-QpDDlRbG.js";
 import "../../chunks/pk-status-7_5dEuw-.js";
-import "../../chunks/pk-dialog-B23Rbh5j.js";
+import "../../chunks/pk-dialog-Ck1InIBC.js";
 import "../icon/pk-icon.js";
 import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-DshgIW2n.js";
 import { LitElement, html, nothing } from "lit";

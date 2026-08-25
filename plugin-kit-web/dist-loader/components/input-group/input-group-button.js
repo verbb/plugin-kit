@@ -1,5 +1,5 @@
-import { l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/input-group/pk-input-group-button.styles.ts
 var pkInputGroupButtonStyles = i`
     @layer pk-component {
@@ -47,6 +47,6 @@ __decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkInputGroupButton.prototype, "disabled", void 0);
-PkInputGroupButton = __decorate([t("pk-input-group-button")], PkInputGroupButton);
+PkInputGroupButton = __decorate([customElement("pk-input-group-button")], PkInputGroupButton);
 //#endregion
 export { PkInputGroupButton };

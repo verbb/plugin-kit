@@ -1,7 +1,7 @@
-import { c as r, l as n, m as i, o, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, l as n, m as i, o, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 import { m as check } from "../../chunks/svg-_Mtb7CHx.js";
-import "../../chunks/pk-button-BiR9aCRh.js";
+import "../../chunks/pk-button-Dh4gjLHw.js";
 import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
 //#region src/events/pk-copy.ts
 /** Emitted when copy-button successfully copies text. */
@@ -131,6 +131,6 @@ __decorate([n({
 })], PkCopyButton.prototype, "disabled", void 0);
 __decorate([n({ reflect: true })], PkCopyButton.prototype, "variant", void 0);
 __decorate([r()], PkCopyButton.prototype, "copied", void 0);
-PkCopyButton = __decorate([t("pk-copy-button")], PkCopyButton);
+PkCopyButton = __decorate([customElement("pk-copy-button")], PkCopyButton);
 //#endregion
 export { PkCopyButton };

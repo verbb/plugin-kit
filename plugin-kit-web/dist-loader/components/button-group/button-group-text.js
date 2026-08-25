@@ -1,6 +1,6 @@
-import { m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
-import { n as buttonGroupCornerRadiusStyles } from "../../chunks/button-group-item.styles-Dwakbyx5.js";
+import { m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
+import { n as buttonGroupCornerRadiusStyles } from "../../chunks/button-group-item.styles-CsBQ3Cyh.js";
 //#region src/components/button-group/pk-button-group-text.styles.ts
 var pkButtonGroupTextStyles = [buttonGroupCornerRadiusStyles(".text", "var(--pk-radius-lg)"), i`
         @layer pk-component {
@@ -41,6 +41,6 @@ var PkButtonGroupText = class PkButtonGroupText extends PkElement {
         `;
 	}
 };
-PkButtonGroupText = __decorate([t("pk-button-group-text")], PkButtonGroupText);
+PkButtonGroupText = __decorate([customElement("pk-button-group-text")], PkButtonGroupText);
 //#endregion
 export { PkButtonGroupText };

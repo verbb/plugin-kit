@@ -1,5 +1,5 @@
-import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/scroll-area/pk-scroll-area.styles.ts
 var pkScrollAreaStyles = i`
     @layer pk-component {
@@ -393,6 +393,6 @@ __decorate([e$1(".thumb")], PkScrollArea.prototype, "thumbElement", void 0);
 __decorate([r()], PkScrollArea.prototype, "hovering", void 0);
 __decorate([r()], PkScrollArea.prototype, "scrolling", void 0);
 __decorate([r()], PkScrollArea.prototype, "canScroll", void 0);
-PkScrollArea = __decorate([t("pk-scroll-area")], PkScrollArea);
+PkScrollArea = __decorate([customElement("pk-scroll-area")], PkScrollArea);
 //#endregion
 export { PkScrollArea };

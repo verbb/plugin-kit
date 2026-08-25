@@ -1,6 +1,6 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { c as r, f as A, l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, f as A, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/tabs/pk-tabs.styles.ts
 /**
 * Variant tokens are defined on `pk-tabs` and inherited by slotted
@@ -614,6 +614,6 @@ __decorate([n({ attribute: "aria-label" })], PkTabs.prototype, "ariaLabel", void
 __decorate([r()], PkTabs.prototype, "tabs", void 0);
 __decorate([r()], PkTabs.prototype, "panels", void 0);
 __decorate([r()], PkTabs.prototype, "focusedValue", void 0);
-PkTabs = __decorate([t("pk-tabs")], PkTabs);
+PkTabs = __decorate([customElement("pk-tabs")], PkTabs);
 //#endregion
 export { PkTabs };

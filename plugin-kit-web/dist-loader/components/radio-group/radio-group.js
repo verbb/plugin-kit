@@ -1,5 +1,5 @@
-import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B21zXxSo.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
 import { t as HasSlotController } from "../../chunks/has-slot-BGJeJdHr.js";
 import { n as readLegacyInstructions, t as hasInstructionContent } from "../../chunks/field-labels-D3lKQ2nq.js";
@@ -242,6 +242,6 @@ __decorate([n()], PkRadioGroup.prototype, "instructions", void 0);
 __decorate([n({ attribute: "aria-label" })], PkRadioGroup.prototype, "ariaLabel", void 0);
 __decorate([e$1("slot:not([name])")], PkRadioGroup.prototype, "defaultSlot", void 0);
 __decorate([r()], PkRadioGroup.prototype, "items", void 0);
-PkRadioGroup = __decorate([t("pk-radio-group")], PkRadioGroup);
+PkRadioGroup = __decorate([customElement("pk-radio-group")], PkRadioGroup);
 //#endregion
 export { PkRadioGroup };

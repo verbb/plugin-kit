@@ -1,8 +1,8 @@
-import { c as r, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BlxAYXJD.js";
+import { c as r, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B21zXxSo.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
 import { k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { C as contentToValue, E as valueToContent, T as flattenVariableOptions, i as createVariableTagDomNodeView, j as createTiptapInputExtensions, n as tiptapInputProseMirrorStyles, w as dedupeVariableOptions } from "../../chunks/tiptap.styles-mxwZHY1l.js";
+import { C as contentToValue, E as valueToContent, T as flattenVariableOptions, i as createVariableTagDomNodeView, j as createTiptapInputExtensions, n as tiptapInputProseMirrorStyles, w as dedupeVariableOptions } from "../../chunks/tiptap.styles-BIRIMP7I.js";
 //#region src/components/tiptap/pk-tiptap-input.styles.ts
 var pkTiptapInputStyles = i`
     @layer pk-component {
@@ -239,6 +239,6 @@ __decorate([n({
 	attribute: "value",
 	reflect: true
 })], PkTiptapInput.prototype, "defaultValue", void 0);
-PkTiptapInput = __decorate([t("pk-tiptap-input")], PkTiptapInput);
+PkTiptapInput = __decorate([customElement("pk-tiptap-input")], PkTiptapInput);
 //#endregion
 export { PkTiptapInput };

@@ -1,5 +1,5 @@
-import { m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/dropdown-menu/pk-dropdown-label.styles.ts
 var pkDropdownLabelStyles = i`
     @layer pk-component {
@@ -46,6 +46,6 @@ var PkDropdownLabel = class PkDropdownLabel extends PkElement {
         `;
 	}
 };
-PkDropdownLabel = __decorate([t("pk-dropdown-label")], PkDropdownLabel);
+PkDropdownLabel = __decorate([customElement("pk-dropdown-label")], PkDropdownLabel);
 //#endregion
 export { PkDropdownLabel };

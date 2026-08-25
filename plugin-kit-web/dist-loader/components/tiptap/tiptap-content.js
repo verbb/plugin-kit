@@ -1,7 +1,7 @@
-import { l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 import { k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, i as createVariableTagDomNodeView, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-mxwZHY1l.js";
+import { A as createTiptapExtensions, i as createVariableTagDomNodeView, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-BIRIMP7I.js";
 //#region src/components/tiptap/pk-tiptap-content.styles.ts
 var pkTiptapContentStyles = i`
     @layer pk-component {
@@ -67,6 +67,6 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 };
 __decorate([e(".editor-mount")], PkTiptapContent.prototype, "editorMount", void 0);
 __decorate([n({ attribute: "value" })], PkTiptapContent.prototype, "value", void 0);
-PkTiptapContent = __decorate([t("pk-tiptap-content")], PkTiptapContent);
+PkTiptapContent = __decorate([customElement("pk-tiptap-content")], PkTiptapContent);
 //#endregion
 export { PkTiptapContent };

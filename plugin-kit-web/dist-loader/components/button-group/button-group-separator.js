@@ -1,5 +1,5 @@
-import { l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/button-group/pk-button-group-separator.styles.ts
 var pkButtonGroupSeparatorStyles = i`
     @layer pk-component {
@@ -53,6 +53,6 @@ var PkButtonGroupSeparator = class PkButtonGroupSeparator extends PkElement {
 	}
 };
 __decorate([n({ reflect: true })], PkButtonGroupSeparator.prototype, "orientation", void 0);
-PkButtonGroupSeparator = __decorate([t("pk-button-group-separator")], PkButtonGroupSeparator);
+PkButtonGroupSeparator = __decorate([customElement("pk-button-group-separator")], PkButtonGroupSeparator);
 //#endregion
 export { PkButtonGroupSeparator };

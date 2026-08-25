@@ -1,8 +1,8 @@
-import { c as r, d as i, l as n, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate } from "../../chunks/pk-base-BlxAYXJD.js";
-import "../../chunks/pk-button-BiR9aCRh.js";
-import { c as watchCpFormDirty, s as submitCpFormAction, t as pkConnectStyles } from "../../chunks/pk-connect.styles-C1ICg1bF.js";
-import "../../chunks/pk-status-BFpjCym0.js";
+import { c as r, d as i, l as n, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate } from "../../chunks/pk-base-B21zXxSo.js";
+import "../../chunks/pk-button-Dh4gjLHw.js";
+import { c as watchCpFormDirty, s as submitCpFormAction, t as pkConnectStyles } from "../../chunks/pk-connect.styles-BAgeFns_.js";
+import "../../chunks/pk-status-BRIVW7EH.js";
 //#region src/components/connect/pk-connect-oauth.ts
 var PkConnectOauth = class PkConnectOauth extends i {
 	constructor(..._args) {
@@ -127,6 +127,6 @@ __decorate([n({ attribute: "label-connect" })], PkConnectOauth.prototype, "label
 __decorate([n({ attribute: "label-disconnect" })], PkConnectOauth.prototype, "labelDisconnect", void 0);
 __decorate([n({ attribute: "label-save-to-connect" })], PkConnectOauth.prototype, "labelSaveToConnect", void 0);
 __decorate([r()], PkConnectOauth.prototype, "isDirty", void 0);
-PkConnectOauth = __decorate([t("pk-connect-oauth")], PkConnectOauth);
+PkConnectOauth = __decorate([customElement("pk-connect-oauth")], PkConnectOauth);
 //#endregion
 export { PkConnectOauth };

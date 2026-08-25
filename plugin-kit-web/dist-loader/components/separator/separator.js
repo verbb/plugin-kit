@@ -1,5 +1,5 @@
-import { l as n, m as i, p as b, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/separator/pk-separator.styles.ts
 /**
 * Default block rhythm lives on the inner `.line`, not `:host` margin.
@@ -81,6 +81,6 @@ var PkSeparator = class PkSeparator extends PkElement {
 	}
 };
 __decorate([n({ reflect: true })], PkSeparator.prototype, "orientation", void 0);
-PkSeparator = __decorate([t("pk-separator")], PkSeparator);
+PkSeparator = __decorate([customElement("pk-separator")], PkSeparator);
 //#endregion
 export { PkSeparator };

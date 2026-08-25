@@ -1,5 +1,5 @@
-import { f as A, l as n, m as i, p as b, s as e, u as t } from "../../chunks/lit-Dnn7gEi2.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BlxAYXJD.js";
+import { f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
 //#region src/components/button-group/pk-button-group.styles.ts
 var pkButtonGroupStyles = i`
     @layer pk-component {
@@ -414,6 +414,6 @@ __decorate([n({
 })], PkButtonGroup.prototype, "exclusive", void 0);
 __decorate([n()], PkButtonGroup.prototype, "label", void 0);
 __decorate([e("slot:not([name])")], PkButtonGroup.prototype, "defaultSlot", void 0);
-PkButtonGroup = __decorate([t("pk-button-group")], PkButtonGroup);
+PkButtonGroup = __decorate([customElement("pk-button-group")], PkButtonGroup);
 //#endregion
 export { PkButtonGroup };
