@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.12 - 2026-08-25
+
 ### Fixed
 - Consuming `@verbb/plugin-kit-core` connect helpers no longer injects optional `Window.$` / `Craft` into the global type scope (fixes TS2687 clashes with apps that declare their own jQuery typings).
 

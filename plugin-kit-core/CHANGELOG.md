@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.12 - 2026-08-25
+
 ### Fixed
 - `utils/connect` no longer augments global `Window` (`Craft` / `$`). Craft CP globals are typed via a local cast so consumers’ own `Window.$` declarations no longer conflict (TS2687).
 
