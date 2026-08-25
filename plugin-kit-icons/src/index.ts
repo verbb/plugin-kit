@@ -8,4 +8,5 @@ export {
     normalizeIconName,
     registerIcon,
     registerIcons,
+    subscribeIconRegistry,
 } from './registry.js';

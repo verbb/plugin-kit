@@ -1,4 +1,4 @@
-//#region src/registry.ts
+//#region ../plugin-kit-icons/dist/registry.js
 var camelToKebab = (value) => {
 	return value.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 };
@@ -46,45 +46,11 @@ var subscribeIconRegistry = (listener) => {
 		listeners.delete(listener);
 	};
 };
-/** All currently registered icon names (kebab-case). */
-var getIconNames = () => {
-	return Object.keys(getRegistry()).sort();
-};
 /** Resolve an icon by kebab-case or camelCase name. Returns `undefined` if unknown. */
 var getIcon = (name) => {
 	if (!name) return;
 	const registry = getRegistry();
 	return registry[normalizeIconName(name)] ?? registry[name];
-};
-/**
-* Register (or overwrite) an icon for `<pk-icon icon="…">` / {@link getIcon}.
-*
-* Call once at app bootstrap for every name your markup looks up. Prefer named
-* icon imports so unused glyphs stay out of the bundle; use
-* `@verbb/plugin-kit-icons/all.js` only when you need the full curated set.
-*
-* Object keys may be camelCase (`arrowUp`) or kebab-case (`arrow-up`) — both
-* store under the kebab key that HTML uses.
-*
-* Registrations merge into a **page-global** map so multiple Craft plugins that
-* each bundle this package still share one glyph table (first `pk-icon` wins
-* define; every plugin’s `registerIcons` still contributes).
-*
-* @example
-* ```ts
-* import { registerIcons, plus, gear, arrowUp } from '@verbb/plugin-kit-icons';
-*
-* registerIcons({ plus, gear, arrowUp });
-* // <pk-icon icon="plus"></pk-icon>
-* // <pk-icon icon="arrow-up"></pk-icon>
-* ```
-*/
-var registerIcon = (name, icon) => {
-	const key = normalizeIconName(name);
-	if (!key) throw new Error("registerIcon: name must be a non-empty string");
-	if (!icon?.path || !icon.width || !icon.height) throw new Error(`registerIcon: icon "${key}" must include width, height, and path`);
-	getRegistry()[key] = icon;
-	notifyRegistryChanged();
 };
 /**
 * Register several icons in one call. Equivalent to repeated {@link registerIcon},
@@ -103,6 +69,4 @@ var registerIcons = (entries) => {
 	if (changed) notifyRegistryChanged();
 };
 //#endregion
-export { getIcon, getIconNames, normalizeIconName, registerIcon, registerIcons, subscribeIconRegistry };
-
-//# sourceMappingURL=registry.js.map
+export { subscribeIconRegistry as i, normalizeIconName as n, registerIcons as r, getIcon as t };

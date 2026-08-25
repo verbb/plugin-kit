@@ -5,6 +5,7 @@ import { PkElement } from '../../base/pk-element.js';
  *
  * The name registry starts empty — consumers must {@link registerIcons}
  * (or import `@verbb/plugin-kit-icons/all.js`) before `<pk-icon icon="…">` resolves.
+ * Registrations are page-global across bundled Plugin Kit copies (Craft multi-plugin CP).
  *
  * Sizing follows `font-size` (defaults to `1em`), colour follows `currentColor`,
  * so consumers style it like text:
@@ -36,6 +37,9 @@ export declare class PkIcon extends PkElement {
      * otherwise it is hidden from assistive technology.
      */
     label?: string;
+    private unsubscribeRegistry;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
     render(): import('lit-html').TemplateResult<1> | typeof nothing;
 }
 declare global {

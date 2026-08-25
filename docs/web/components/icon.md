@@ -4,7 +4,9 @@
 
 ## Register the icons you use
 
-`<pk-icon icon="…">` looks up glyphs by **kebab-case** name. The registry starts **empty** so production CP bundles only pay for icons you register. Import the element, then register named (camelCase) exports — keys normalize to kebab automatically:
+`<pk-icon icon="…">` looks up glyphs by **kebab-case** name. The registry starts **empty** so production CP bundles only pay for icons you register. Import the element, then register named (camelCase) exports — keys normalize to kebab automatically.
+
+On Craft CP pages with several Plugin Kit plugins, each Vite bundle includes its own copy of `@verbb/plugin-kit-icons`. Registrations still merge into one **page-global** map, so every plugin’s `registerIcons` reaches the winning `<pk-icon>`.
 
 ```ts
 import '@verbb/plugin-kit-web/components/icon.js';

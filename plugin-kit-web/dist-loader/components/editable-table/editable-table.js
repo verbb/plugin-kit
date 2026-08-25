@@ -1,7 +1,7 @@
 import { c as r, f as A, i as e, l as n, m as i, o, p as b, t as c, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-B21zXxSo.js";
 import { B as plus, C as gripMove, S as gear, Y as xmark, b as ellipsis, l as arrowUp, o as arrowDown } from "../../chunks/svg-_Mtb7CHx.js";
-import { t as getIcon } from "../../chunks/registry-CmL0rH9r.js";
+import { t as getIcon } from "../../chunks/registry-BanyScVR.js";
 import "../../chunks/pk-button-Dh4gjLHw.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
 import "../../chunks/pk-checkbox-BrZQB816.js";

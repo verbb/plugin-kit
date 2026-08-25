@@ -12,7 +12,9 @@ npm install @verbb/plugin-kit-icons
 
 ## Register for `<pk-icon>` / `<Icon>`
 
-The name registry starts **empty** in bundler builds. Register the glyphs your markup looks up:
+The name registry starts **empty** in bundler builds. Register the glyphs your markup looks up.
+
+On Craft CP pages that load several Plugin Kit plugins, each Vite bundle includes its own copy of this package. Registrations still merge into one **page-global** map (`globalThis`), so Plugin B’s `registerIcons({ gear })` is visible to Plugin A’s winning `<pk-icon>`.
 
 ```ts
 import '@verbb/plugin-kit-web/components/icon.js';

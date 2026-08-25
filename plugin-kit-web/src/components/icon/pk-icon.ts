@@ -1,7 +1,7 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { getIcon, iconToSvg } from '@verbb/plugin-kit-icons';
+import { getIcon, iconToSvg, subscribeIconRegistry } from '@verbb/plugin-kit-icons';
 
 import { PkElement } from '../../base/pk-element.js';
 
@@ -10,6 +10,7 @@ import { PkElement } from '../../base/pk-element.js';
  *
  * The name registry starts empty — consumers must {@link registerIcons}
  * (or import `@verbb/plugin-kit-icons/all.js`) before `<pk-icon icon="…">` resolves.
+ * Registrations are page-global across bundled Plugin Kit copies (Craft multi-plugin CP).
  *
  * Sizing follows `font-size` (defaults to `1em`), colour follows `currentColor`,
  * so consumers style it like text:
@@ -70,6 +71,23 @@ export class PkIcon extends PkElement {
      */
     @property()
     label?: string;
+
+    private unsubscribeRegistry: (() => void) | null = null;
+
+    override connectedCallback(): void {
+        super.connectedCallback();
+
+        // Later plugins may register glyphs after this host upgraded — re-resolve.
+        this.unsubscribeRegistry = subscribeIconRegistry(() => {
+            this.requestUpdate();
+        });
+    }
+
+    override disconnectedCallback(): void {
+        this.unsubscribeRegistry?.();
+        this.unsubscribeRegistry = null;
+        super.disconnectedCallback();
+    }
 
     override render() {
         const icon = getIcon(this.icon || this.name);

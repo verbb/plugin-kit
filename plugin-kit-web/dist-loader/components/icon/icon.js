@@ -1,6 +1,6 @@
 import { M as icons } from "../../chunks/svg-_Mtb7CHx.js";
-import { n as normalizeIconName, r as registerIcons } from "../../chunks/registry-CmL0rH9r.js";
-import "../../chunks/pk-icon-B-OBmJ3K.js";
+import { n as normalizeIconName, r as registerIcons } from "../../chunks/registry-BanyScVR.js";
+import "../../chunks/pk-icon-WHUu7wxk.js";
 //#region ../plugin-kit-icons/dist/all.js
 /**
 * Side-effect entry: register every curated icon for `<pk-icon icon="…">` lookup.

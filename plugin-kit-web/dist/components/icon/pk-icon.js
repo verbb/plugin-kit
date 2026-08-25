@@ -2,13 +2,14 @@ import { n as PkElement, t as __decorate } from "../../chunks/decorate-W02hmVTt.
 import { css, html, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
-import { getIcon, iconToSvg } from "@verbb/plugin-kit-icons";
+import { getIcon, iconToSvg, subscribeIconRegistry } from "@verbb/plugin-kit-icons";
 //#region src/components/icon/pk-icon.ts
 var PkIcon = class PkIcon extends PkElement {
 	constructor(..._args) {
 		super(..._args);
 		this.icon = "";
 		this.name = "";
+		this.unsubscribeRegistry = null;
 	}
 	static {
 		this.styles = css`
@@ -34,6 +35,17 @@ var PkIcon = class PkIcon extends PkElement {
             overflow: visible;
         }
     `;
+	}
+	connectedCallback() {
+		super.connectedCallback();
+		this.unsubscribeRegistry = subscribeIconRegistry(() => {
+			this.requestUpdate();
+		});
+	}
+	disconnectedCallback() {
+		this.unsubscribeRegistry?.();
+		this.unsubscribeRegistry = null;
+		super.disconnectedCallback();
 	}
 	render() {
 		const icon = getIcon(this.icon || this.name);

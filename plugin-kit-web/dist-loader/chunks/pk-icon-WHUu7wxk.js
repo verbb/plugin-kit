@@ -1,13 +1,14 @@
 import { a as o, f as A, l as n, m as i, p as b, u as customElement } from "./lit-DpLik9Rf.js";
 import { c as __decorate, l as PkElement } from "./pk-base-B21zXxSo.js";
 import { t as iconToSvg } from "./svg-_Mtb7CHx.js";
-import { t as getIcon } from "./registry-CmL0rH9r.js";
+import { i as subscribeIconRegistry, t as getIcon } from "./registry-BanyScVR.js";
 //#region src/components/icon/pk-icon.ts
 var PkIcon = class PkIcon extends PkElement {
 	constructor(..._args) {
 		super(..._args);
 		this.icon = "";
 		this.name = "";
+		this.unsubscribeRegistry = null;
 	}
 	static {
 		this.styles = i`
@@ -33,6 +34,17 @@ var PkIcon = class PkIcon extends PkElement {
             overflow: visible;
         }
     `;
+	}
+	connectedCallback() {
+		super.connectedCallback();
+		this.unsubscribeRegistry = subscribeIconRegistry(() => {
+			this.requestUpdate();
+		});
+	}
+	disconnectedCallback() {
+		this.unsubscribeRegistry?.();
+		this.unsubscribeRegistry = null;
+		super.disconnectedCallback();
 	}
 	render() {
 		const icon = getIcon(this.icon || this.name);
