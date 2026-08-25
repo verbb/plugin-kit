@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 2.0.14 - 2026-08-25
+
+### Added
+- `<pk-editable-table>` spreadsheet paste: TSV clipboard (Excel / Sheets) fills from the focused cell and expands rows when `allow-add` / `max-rows` allow — Craft `EditableTable.importData` parity. Single-cell paste and `textarea` cells keep native paste.
+- `<pk-editable-table>` optional **Insert above** / **Insert below** in the row ellipsis menu (`allow-insert`, default on). Disabled when add is disallowed.
+- `<pk-editable-table>` `max-rows` attribute — hard cap for add / insert / paste expansion (hosts that only toggle `allow-add` after `pk-change` still stay within the cap mid-paste).
+
 ## 2.0.13 - 2026-08-25
 
 ### Fixed

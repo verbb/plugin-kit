@@ -774,6 +774,62 @@ var isCustomColumn = (column) => {
 	if (type === "custom") return true;
 	return typeof type === "string" && !BUILTIN_COLUMN_TYPES.has(type);
 };
+/**
+* Column types that receive TSV paste *writes* (Craft `importData` fills textual
+* cells; checkbox/radio/lightswitch and static/custom cells are skipped).
+*/
+var PASTE_IMPORT_SKIP_TYPES = new Set([
+	"checkbox",
+	"radio",
+	"lightswitch",
+	"heading",
+	"label"
+]);
+/**
+* Types that intercept multi-cell paste (Craft attaches `handlePaste` to textual
+* inputs except multiline — native paste stays on `textarea`).
+*/
+var PASTE_INTERCEPT_TYPES = new Set([
+	"text",
+	"number",
+	"email",
+	"url",
+	"handle",
+	"value",
+	"color",
+	"date",
+	"time"
+]);
+/** Whether a multi-cell paste gesturing from this cell should run `importData`. */
+var columnInterceptsPaste = (column) => {
+	if (isCustomColumn(column)) return false;
+	return PASTE_INTERCEPT_TYPES.has(column.type ?? "text");
+};
+/** Whether `importData` should write a clipboard cell into this column. */
+var columnAcceptsPasteImport = (column) => {
+	if (isCustomColumn(column)) return false;
+	return !PASTE_IMPORT_SKIP_TYPES.has(column.type ?? "text");
+};
+/**
+* Craft `Craft.trim(text, ' \\n\\r')` — strip spaces/newlines from both ends so a
+* trailing spreadsheet newline does not create an empty extra row.
+*/
+var trimClipboardText = (text) => {
+	return String(text ?? "").replace(/^[\n\r ]+|[\n\r ]+$/g, "");
+};
+/** True when clipboard looks like a multi-cell / multi-row TSV paste. */
+var isMultiCellClipboard = (text) => {
+	return /[\t\r\n]/.test(text);
+};
+/**
+* Parse spreadsheet clipboard text into a grid (rows → cells).
+* Excel / Sheets copy as tab-separated values with newline-separated rows.
+*/
+var parseTsvClipboard = (text) => {
+	const trimmed = trimClipboardText(text);
+	if (!trimmed) return [];
+	return trimmed.split(/\r?\n|\r/).map((line) => line.split("	"));
+};
 //#endregion
 //#region src/components/editable-table/pk-editable-table.ts
 /** Craft CP reorder diamond (`grip-move`). */
@@ -799,6 +855,8 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		this.allowAdd = true;
 		this.allowDelete = true;
 		this.allowReorder = true;
+		this.allowInsert = true;
+		this.maxRows = null;
 		this.addRowLabel = "";
 		this.fieldName = "";
 		this.cellErrors = {};
@@ -875,7 +933,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		return this.validColumns.filter(isGeneratedColumn);
 	}
 	get showActionsColumn() {
-		return this.allowReorder || this.allowDelete || Boolean(this.getRowMenuItems);
+		return this.allowReorder || this.allowDelete || this.allowInsert || Boolean(this.getRowMenuItems);
 	}
 	cleanRows() {
 		return this.internalRows.map((row) => {
@@ -1063,20 +1121,120 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		}));
 		this.commitRows(next, cellChanges);
 	}
-	addRow() {
-		if (this.disabled || !this.allowAdd) return;
+	canAddRow(currentCount = this.internalRows.length) {
+		if (this.disabled || !this.allowAdd) return false;
+		if (this.maxRows != null && Number.isFinite(this.maxRows) && currentCount >= this.maxRows) return false;
+		return true;
+	}
+	createEmptyRow() {
+		if (!this.canAddRow()) return null;
 		const row = {
 			_id: nextRowId(),
 			...this.newRowDefaults && typeof this.newRowDefaults === "object" ? this.newRowDefaults : {}
 		};
 		for (const column of this.validColumns) if (!(column.name in row)) row[column.name] = defaultValueForColumn(column);
+		return row;
+	}
+	addRow() {
+		const row = this.createEmptyRow();
+		if (!row) return;
 		this.internalRows = [...this.internalRows, row];
+		this.syncGeneratedModesFromRows();
+		this.emitChange();
+	}
+	/** Insert a blank row at `index` (0 = above first row). No-ops when add is disallowed. */
+	insertRowAt(index) {
+		const row = this.createEmptyRow();
+		if (!row) return;
+		const clamped = Math.max(0, Math.min(index, this.internalRows.length));
+		const next = this.internalRows.slice();
+		next.splice(clamped, 0, row);
+		this.internalRows = next;
 		this.syncGeneratedModesFromRows();
 		this.emitChange();
 	}
 	removeRow(rowIndex) {
 		if (this.disabled || !this.allowDelete) return;
 		this.internalRows = this.internalRows.filter((_, index) => index !== rowIndex);
+		this.syncGeneratedModesFromRows();
+		this.emitChange();
+	}
+	/**
+	* Craft EditableTable paste: intercept only when the clipboard has tabs/newlines.
+	* Listens on the scroll wrapper so events compose out of cell control shadows.
+	*/
+	handleTablePaste(event) {
+		if (this.disabled || !event.clipboardData) return;
+		const data = trimClipboardText(event.clipboardData.getData("text/plain") || event.clipboardData.getData("Text") || "");
+		if (!isMultiCellClipboard(data)) return;
+		const path = event.composedPath();
+		let cell = null;
+		let row = null;
+		for (const node of path) {
+			if (node instanceof HTMLTableCellElement && node.tagName === "TD" && !node.classList.contains("actions")) cell = node;
+			if (node instanceof HTMLTableRowElement && node.dataset.rowId) {
+				row = node;
+				break;
+			}
+		}
+		if (!cell || !row) return;
+		const rowIndex = this.internalRows.findIndex((item) => String(item._id) === row.dataset.rowId);
+		const columnIndex = [...row.querySelectorAll(":scope > td:not(.actions)")].indexOf(cell);
+		if (rowIndex < 0 || columnIndex < 0) return;
+		const column = this.validColumns[columnIndex];
+		if (!column || !columnInterceptsPaste(column)) return;
+		event.preventDefault();
+		event.stopPropagation();
+		this.importTsvData(data, rowIndex, columnIndex);
+	}
+	/**
+	* Apply a TSV grid starting at `[startRowIndex, startColumnIndex]`.
+	* Skips non-textual columns (checkbox etc.) but still advances the column
+	* cursor — same as Craft writing only into matching `textarea`/`input`s.
+	*/
+	importTsvData(data, startRowIndex, startColumnIndex) {
+		const grid = parseTsvClipboard(data);
+		if (grid.length === 0) return;
+		const columns = this.validColumns;
+		if (columns.length === 0 || startColumnIndex >= columns.length) return;
+		const next = this.internalRows.map((row) => ({ ...row }));
+		let rowIndex = startRowIndex;
+		let mutated = false;
+		for (let lineIndex = 0; lineIndex < grid.length; lineIndex++) {
+			if (rowIndex >= next.length) {
+				if (!this.canAddRow(next.length)) break;
+				const created = {
+					_id: nextRowId(),
+					...this.newRowDefaults && typeof this.newRowDefaults === "object" ? this.newRowDefaults : {}
+				};
+				for (const column of columns) if (!(column.name in created)) created[column.name] = defaultValueForColumn(column);
+				next.push(created);
+				mutated = true;
+			}
+			const cells = grid[lineIndex] ?? [];
+			const row = next[rowIndex];
+			if (!row) break;
+			let rowPatch = null;
+			for (let cellIndex = 0; cellIndex < cells.length; cellIndex++) {
+				const column = columns[startColumnIndex + cellIndex];
+				if (!column) break;
+				if (!columnAcceptsPasteImport(column)) continue;
+				const value = cells[cellIndex] ?? "";
+				if (row[column.name] === value) continue;
+				rowPatch = rowPatch ?? {};
+				rowPatch[column.name] = value;
+			}
+			if (rowPatch) {
+				next[rowIndex] = {
+					...row,
+					...rowPatch
+				};
+				mutated = true;
+			}
+			rowIndex += 1;
+		}
+		if (!mutated) return;
+		this.internalRows = next;
 		this.syncGeneratedModesFromRows();
 		this.emitChange();
 	}
@@ -1364,7 +1522,8 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		const rowId = String(row._id);
 		const rowMod = this.resolveRowModifier(row, rowIndex);
 		const extraMenuItems = this.resolveRowMenuItems(row, rowIndex);
-		const showRowMenu = this.allowReorder || extraMenuItems.length > 0;
+		const showRowMenu = this.allowReorder || this.allowInsert || extraMenuItems.length > 0;
+		const insertDisabled = this.disabled || !this.canAddRow();
 		return b`<tr
             data-row-id=${rowId}
             data-tone=${rowMod.tone || A}
@@ -1417,6 +1576,25 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         ?disabled=${this.disabled}
                                     >${o(START_ELLIPSIS_ICON)}</pk-button>
                                     ${this.renderExtraMenuItems(row, rowIndex)}
+                                    ${this.allowInsert ? b`
+                                            <pk-dropdown-item
+                                                ?disabled=${insertDisabled}
+                                                @click=${() => {
+			this.insertRowAt(rowIndex);
+		}}
+                                            >
+                                                ${o(START_PLUS_ICON)}
+                                                Insert above
+                                            </pk-dropdown-item>
+                                            <pk-dropdown-item
+                                                ?disabled=${insertDisabled}
+                                                @click=${() => {
+			this.insertRowAt(rowIndex + 1);
+		}}
+                                            >
+                                                ${o(START_PLUS_ICON)}
+                                                Insert below
+                                            </pk-dropdown-item>` : A}
                                     ${this.allowReorder ? b`
                                             <pk-dropdown-item
                                                 ?disabled=${this.disabled || rowIndex === 0}
@@ -1460,6 +1638,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 @pk-change=${this.stopInnerControlEvent}
                 @input=${this.stopInnerControlEvent}
                 @change=${this.stopInnerControlEvent}
+                @paste=${this.handleTablePaste}
             >
                 <table class="et">
                     <thead>
@@ -1517,6 +1696,15 @@ __decorate([n({
 	reflect: true,
 	attribute: "allow-reorder"
 })], PkEditableTable.prototype, "allowReorder", void 0);
+__decorate([n({
+	type: Boolean,
+	reflect: true,
+	attribute: "allow-insert"
+})], PkEditableTable.prototype, "allowInsert", void 0);
+__decorate([n({
+	type: Number,
+	attribute: "max-rows"
+})], PkEditableTable.prototype, "maxRows", void 0);
 __decorate([n({ attribute: "add-row-label" })], PkEditableTable.prototype, "addRowLabel", void 0);
 __decorate([n({ attribute: "field-name" })], PkEditableTable.prototype, "fieldName", void 0);
 __decorate([n({ attribute: false })], PkEditableTable.prototype, "cellErrors", void 0);

@@ -19,6 +19,16 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
     allowAdd: boolean;
     allowDelete: boolean;
     allowReorder: boolean;
+    /**
+     * Show Insert above / Insert below in the row ellipsis menu.
+     * Insert still requires `allowAdd` (disabled at max rows when the host turns add off).
+     */
+    allowInsert: boolean;
+    /**
+     * Optional hard cap on row count. When set, add / insert / paste expansion stop
+     * at this length even if `allowAdd` is still true mid-batch.
+     */
+    maxRows: number | null;
     addRowLabel: string;
     /**
      * Optional form-field prefix for `cellErrors` keys.
@@ -91,8 +101,23 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
     private emitCellChange;
     private commitRows;
     private updateCell;
+    private canAddRow;
+    private createEmptyRow;
     private addRow;
+    /** Insert a blank row at `index` (0 = above first row). No-ops when add is disallowed. */
+    private insertRowAt;
     private removeRow;
+    /**
+     * Craft EditableTable paste: intercept only when the clipboard has tabs/newlines.
+     * Listens on the scroll wrapper so events compose out of cell control shadows.
+     */
+    private handleTablePaste;
+    /**
+     * Apply a TSV grid starting at `[startRowIndex, startColumnIndex]`.
+     * Skips non-textual columns (checkbox etc.) but still advances the column
+     * cursor — same as Craft writing only into matching `textarea`/`input`s.
+     */
+    private importTsvData;
     private moveRow;
     private commitReorder;
     /**

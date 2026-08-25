@@ -90,4 +90,20 @@ export declare const nextRowId: () => string;
 export declare const getCustomCellSlotName: (rowId: string, columnName: string) => string;
 export declare const BUILTIN_COLUMN_TYPES: Set<string>;
 export declare const isCustomColumn: (column: PkEditableTableColumn) => boolean;
+/** Whether a multi-cell paste gesturing from this cell should run `importData`. */
+export declare const columnInterceptsPaste: (column: PkEditableTableColumn) => boolean;
+/** Whether `importData` should write a clipboard cell into this column. */
+export declare const columnAcceptsPasteImport: (column: PkEditableTableColumn) => boolean;
+/**
+ * Craft `Craft.trim(text, ' \\n\\r')` — strip spaces/newlines from both ends so a
+ * trailing spreadsheet newline does not create an empty extra row.
+ */
+export declare const trimClipboardText: (text: string) => string;
+/** True when clipboard looks like a multi-cell / multi-row TSV paste. */
+export declare const isMultiCellClipboard: (text: string) => boolean;
+/**
+ * Parse spreadsheet clipboard text into a grid (rows → cells).
+ * Excel / Sheets copy as tab-separated values with newline-separated rows.
+ */
+export declare const parseTsvClipboard: (text: string) => string[][];
 //# sourceMappingURL=editable-table-model.d.ts.map

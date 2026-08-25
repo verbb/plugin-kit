@@ -221,3 +221,75 @@ export const isCustomColumn = (column: PkEditableTableColumn): boolean => {
     // Unknown / product types (e.g. Formie `variablePicker`) project via custom slots.
     return typeof type === 'string' && !BUILTIN_COLUMN_TYPES.has(type);
 };
+
+/**
+ * Column types that receive TSV paste *writes* (Craft `importData` fills textual
+ * cells; checkbox/radio/lightswitch and static/custom cells are skipped).
+ */
+const PASTE_IMPORT_SKIP_TYPES = new Set<string>([
+    'checkbox',
+    'radio',
+    'lightswitch',
+    'heading',
+    'label',
+]);
+
+/**
+ * Types that intercept multi-cell paste (Craft attaches `handlePaste` to textual
+ * inputs except multiline — native paste stays on `textarea`).
+ */
+const PASTE_INTERCEPT_TYPES = new Set<string>([
+    'text',
+    'number',
+    'email',
+    'url',
+    'handle',
+    'value',
+    'color',
+    'date',
+    'time',
+]);
+
+/** Whether a multi-cell paste gesturing from this cell should run `importData`. */
+export const columnInterceptsPaste = (column: PkEditableTableColumn): boolean => {
+    if (isCustomColumn(column)) {
+        return false;
+    }
+
+    return PASTE_INTERCEPT_TYPES.has(column.type ?? 'text');
+};
+
+/** Whether `importData` should write a clipboard cell into this column. */
+export const columnAcceptsPasteImport = (column: PkEditableTableColumn): boolean => {
+    if (isCustomColumn(column)) {
+        return false;
+    }
+
+    return !PASTE_IMPORT_SKIP_TYPES.has(column.type ?? 'text');
+};
+
+/**
+ * Craft `Craft.trim(text, ' \\n\\r')` — strip spaces/newlines from both ends so a
+ * trailing spreadsheet newline does not create an empty extra row.
+ */
+export const trimClipboardText = (text: string): string => {
+    return String(text ?? '').replace(/^[\n\r ]+|[\n\r ]+$/g, '');
+};
+
+/** True when clipboard looks like a multi-cell / multi-row TSV paste. */
+export const isMultiCellClipboard = (text: string): boolean => {
+    return /[\t\r\n]/.test(text);
+};
+
+/**
+ * Parse spreadsheet clipboard text into a grid (rows → cells).
+ * Excel / Sheets copy as tab-separated values with newline-separated rows.
+ */
+export const parseTsvClipboard = (text: string): string[][] => {
+    const trimmed = trimClipboardText(text);
+    if (!trimmed) {
+        return [];
+    }
+
+    return trimmed.split(/\r?\n|\r/).map((line) => line.split('\t'));
+};
