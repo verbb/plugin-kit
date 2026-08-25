@@ -17,6 +17,15 @@ const resolveLoaderEntries = () => {
 };
 
 export default defineConfig({
+    // Same as vite.config.ts — loader chunks also run `@customElement` side effects.
+    resolve: {
+        alias: {
+            '@lit/reactive-element/decorators/custom-element.js': path.resolve(
+                __dirname,
+                'src/internal/safe-custom-element.ts',
+            ),
+        },
+    },
     build: {
         lib: {
             entry: resolveLoaderEntries(),

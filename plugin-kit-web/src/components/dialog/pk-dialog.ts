@@ -410,6 +410,13 @@ export class PkDialog extends PkElement {
             return;
         }
 
+        // Nested overlays (dropdown / select / combobox) register above us on the
+        // dismissible stack. Their capture-phase light-dismiss runs first; skip closing
+        // the dialog for the same click so “click off the menu” doesn’t also dismiss us.
+        if (!isTopDismissible(this)) {
+            return;
+        }
+
         if (!this.disablePointerDismissal) {
             void this.requestClose('pointer-dismiss');
             return;

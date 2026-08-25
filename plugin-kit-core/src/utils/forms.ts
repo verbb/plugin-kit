@@ -28,7 +28,11 @@ const nl2br = (str: string): string => {
     return str.replace(/\n/g, '<br>');
 };
 
-const getErrorHeading = (error: ServerError): string => {
+const getErrorHeading = (error: ServerError | null | undefined): string => {
+    if (!error) {
+        return 'An error has occurred';
+    }
+
     // Server error status text (e.g., "Internal Server Error", "Bad Request")
     if (error.response?.statusText) {
         return error.response.statusText;
@@ -47,7 +51,11 @@ const getErrorHeading = (error: ServerError): string => {
     return 'An error has occurred';
 };
 
-const getErrorText = (error: ServerError): string => {
+const getErrorText = (error: ServerError | null | undefined): string => {
+    if (!error) {
+        return '';
+    }
+
     // Server-side error messages
     if (error.response?.data?.message) {
         return error.response.data.message;
@@ -66,8 +74,15 @@ const getErrorText = (error: ServerError): string => {
     return String(error);
 };
 
-const getErrorTrace = (error: ServerError, maxTraceLines: number = 5): { traces: string[], traceAsString: string } => {
+const getErrorTrace = (error: ServerError | null | undefined, maxTraceLines: number = 5): { traces: string[], traceAsString: string } => {
     const traces: string[] = [];
+
+    if (!error) {
+        return {
+            traces,
+            traceAsString: '',
+        };
+    }
 
     // Server-side file and line information
     const file1 = error.response?.data?.file;
@@ -99,7 +114,17 @@ const getErrorTrace = (error: ServerError, maxTraceLines: number = 5): { traces:
     };
 };
 
-export const getErrorMessage = function(error: ServerError, maxTraceLines: number = 5): ErrorContent {
+export const getErrorMessage = function(error: ServerError | null | undefined, maxTraceLines: number = 5): ErrorContent {
+    if (error == null) {
+        return {
+            heading: 'An error has occurred',
+            text: '',
+            trace: '',
+            traceAsString: '',
+            traceAsArray: [],
+        };
+    }
+
     const { traces, traceAsString } = getErrorTrace(error, maxTraceLines);
 
     return {

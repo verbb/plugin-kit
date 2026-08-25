@@ -27,6 +27,16 @@ const resolveBundlerEntries = () => {
 };
 
 export default defineConfig({
+    // Multiple Craft plugins each ship a Plugin Kit copy. Lit's `@customElement`
+    // throws on the second define of the same tag — use our idempotent decorator.
+    resolve: {
+        alias: {
+            '@lit/reactive-element/decorators/custom-element.js': path.resolve(
+                __dirname,
+                'src/internal/safe-custom-element.ts',
+            ),
+        },
+    },
     build: {
         lib: {
             entry: resolveBundlerEntries(),

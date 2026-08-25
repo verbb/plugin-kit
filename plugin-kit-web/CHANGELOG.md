@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+- `@customElement` registration is idempotent (`customElements.get` guard). Multiple Craft plugins that each bundle Plugin Kit no longer throw `NotSupportedError: "pk-spinner" has already been used` (and abort the rest of that register bundle) when several fields share a CP page.
+- `<pk-dialog>` pointer light-dismiss no longer closes the dialog when a nested dismissible overlay (e.g. `pk-dropdown-menu` / `pk-select`) is open — click-off closes the menu only.
+
 ## 2.0.10 - 2026-08-23
 
 ### Added
