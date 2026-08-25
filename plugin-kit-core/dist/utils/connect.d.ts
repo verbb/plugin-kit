@@ -23,24 +23,6 @@ export type BuildConnectPayloadOptions = {
     /** Extra top-level keys to copy from serialized form values. */
     extraKeys?: string[];
 };
-declare global {
-    interface Window {
-        Craft?: {
-            csrfTokenName?: string;
-            escapeHtml?: (value: string) => string;
-            sendActionRequest?: <T = unknown>(method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', action: string, config?: {
-                data?: Record<string, unknown>;
-            }) => Promise<T>;
-            submitForm?: ($form: unknown, options: {
-                action?: string;
-                redirect?: string;
-                params?: Record<string, string>;
-                confirm?: string;
-            }) => void;
-        };
-        $?: (el: Element) => unknown;
-    }
-}
 /** Escape text for CP dialog markup; prefers `Craft.escapeHtml` when available. */
 export declare const escapeCpHtml: (value: string) => string;
 /** POST a credentials connect/check controller action from the CP. */

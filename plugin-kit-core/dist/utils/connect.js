@@ -1,5 +1,6 @@
 import { getErrorMessage } from "./forms.js";
 //#region src/utils/connect.ts
+var craftWindow = () => window;
 var DEFAULT_FORM_SELECTOR = "#main-form";
 var resolveCpForm = ({ formSelector = DEFAULT_FORM_SELECTOR, host } = {}) => {
 	if (formSelector) {
@@ -12,13 +13,15 @@ var resolveCpForm = ({ formSelector = DEFAULT_FORM_SELECTOR, host } = {}) => {
 };
 /** Escape text for CP dialog markup; prefers `Craft.escapeHtml` when available. */
 var escapeCpHtml = (value) => {
-	if (window.Craft?.escapeHtml) return window.Craft.escapeHtml(value);
+	const craft = craftWindow().Craft;
+	if (craft?.escapeHtml) return craft.escapeHtml(value);
 	return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 };
 /** POST a credentials connect/check controller action from the CP. */
 var sendCpConnectRequest = (action, data) => {
-	if (!window.Craft?.sendActionRequest) return Promise.reject(/* @__PURE__ */ new Error("Craft.sendActionRequest is unavailable."));
-	return window.Craft.sendActionRequest("POST", action, { data });
+	const craft = craftWindow().Craft;
+	if (!craft?.sendActionRequest) return Promise.reject(/* @__PURE__ */ new Error("Craft.sendActionRequest is unavailable."));
+	return craft.sendActionRequest("POST", action, { data });
 };
 /**
 * Serialize named CP form controls into a flat key → value map.
@@ -46,7 +49,7 @@ var buildConnectPayload = (values, options = {}) => {
 	const idParam = options.idParam ?? "sourceId";
 	const payload = { type };
 	payload[idParam] = values[idParam] ?? values.sourceId ?? values.id ?? options.sourceId;
-	const csrfTokenName = typeof window !== "undefined" ? window.Craft?.csrfTokenName : void 0;
+	const csrfTokenName = typeof window !== "undefined" ? craftWindow().Craft?.csrfTokenName : void 0;
 	if (csrfTokenName && values[csrfTokenName]) payload[csrfTokenName] = values[csrfTokenName];
 	if (includeTypeNamespace && type) {
 		const prefix = `types[${type}]`;
@@ -105,8 +108,7 @@ var submitCpFormAction = ({ formSelector = DEFAULT_FORM_SELECTOR, host, action, 
 		formSelector,
 		host
 	});
-	const craft = window.Craft;
-	const $ = window.$;
+	const { Craft: craft, $ } = craftWindow();
 	if (!form || typeof craft?.submitForm !== "function" || !$) return;
 	const params = {};
 	if (paramName && paramValue) params[paramName] = paramValue;

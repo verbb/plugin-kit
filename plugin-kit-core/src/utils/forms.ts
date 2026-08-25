@@ -1,4 +1,4 @@
-interface ErrorContent {
+export interface ErrorContent {
     heading: string;
     text: string;
     trace: string;

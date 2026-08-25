@@ -3,12 +3,14 @@ var nl2br = (str) => {
 	return str.replace(/\n/g, "<br>");
 };
 var getErrorHeading = (error) => {
+	if (!error) return "An error has occurred";
 	if (error.response?.statusText) return error.response.statusText;
 	if (error.message?.includes("Network Error")) return "Network Error";
 	if (error.message?.includes("timeout")) return "Request Timeout";
 	return "An error has occurred";
 };
 var getErrorText = (error) => {
+	if (!error) return "";
 	if (error.response?.data?.message) return error.response.data.message;
 	if (error.response?.data?.error) return error.response.data.error;
 	if (error.message) return error.message;
@@ -16,6 +18,10 @@ var getErrorText = (error) => {
 };
 var getErrorTrace = (error, maxTraceLines = 5) => {
 	const traces = [];
+	if (!error) return {
+		traces,
+		traceAsString: ""
+	};
 	const file1 = error.response?.data?.file;
 	const line1 = error.response?.data?.line;
 	if (file1 && line1) traces.push(`${file1}:${line1}`);
@@ -31,6 +37,13 @@ var getErrorTrace = (error, maxTraceLines = 5) => {
 	};
 };
 var getErrorMessage = function(error, maxTraceLines = 5) {
+	if (error == null) return {
+		heading: "An error has occurred",
+		text: "",
+		trace: "",
+		traceAsString: "",
+		traceAsArray: []
+	};
 	const { traces, traceAsString } = getErrorTrace(error, maxTraceLines);
 	return {
 		heading: getErrorHeading(error),

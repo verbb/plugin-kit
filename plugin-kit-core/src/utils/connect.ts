@@ -27,29 +27,34 @@ export type BuildConnectPayloadOptions = {
     extraKeys?: string[];
 };
 
-declare global {
-    interface Window {
-        Craft?: {
-            csrfTokenName?: string;
-            escapeHtml?: (value: string) => string;
-            sendActionRequest?: <T = unknown>(
-                method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-                action: string,
-                config?: { data?: Record<string, unknown> },
-            ) => Promise<T>;
-            submitForm?: (
-                $form: unknown,
-                options: {
-                    action?: string;
-                    redirect?: string;
-                    params?: Record<string, string>;
-                    confirm?: string;
-                },
-            ) => void;
-        };
-        $?: (el: Element) => unknown;
-    }
-}
+/**
+ * Craft CP globals used by connect helpers.
+ * Kept as a local cast type — never `declare global` on Window — so importing
+ * this module does not conflict with consumer Window.$ / Craft typings.
+ */
+type CraftCpWindow = Window & {
+    Craft?: {
+        csrfTokenName?: string;
+        escapeHtml?: (value: string) => string;
+        sendActionRequest?: <T = unknown>(
+            method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+            action: string,
+            config?: { data?: Record<string, unknown> },
+        ) => Promise<T>;
+        submitForm?: (
+            $form: unknown,
+            options: {
+                action?: string;
+                redirect?: string;
+                params?: Record<string, string>;
+                confirm?: string;
+            },
+        ) => void;
+    };
+    $?: (el: Element) => unknown;
+};
+
+const craftWindow = (): CraftCpWindow => window as CraftCpWindow;
 
 const DEFAULT_FORM_SELECTOR = '#main-form';
 
@@ -83,8 +88,10 @@ const resolveCpForm = ({
 
 /** Escape text for CP dialog markup; prefers `Craft.escapeHtml` when available. */
 export const escapeCpHtml = (value: string): string => {
-    if (window.Craft?.escapeHtml) {
-        return window.Craft.escapeHtml(value);
+    const craft = craftWindow().Craft;
+
+    if (craft?.escapeHtml) {
+        return craft.escapeHtml(value);
     }
 
     return value
@@ -99,11 +106,13 @@ export const sendCpConnectRequest = (
     action: string,
     data: Record<string, unknown>,
 ): Promise<{ data?: { success?: boolean; message?: string } }> => {
-    if (!window.Craft?.sendActionRequest) {
+    const craft = craftWindow().Craft;
+
+    if (!craft?.sendActionRequest) {
         return Promise.reject(new Error('Craft.sendActionRequest is unavailable.'));
     }
 
-    return window.Craft.sendActionRequest('POST', action, { data });
+    return craft.sendActionRequest('POST', action, { data });
 };
 
 /**
@@ -152,7 +161,7 @@ export const buildConnectPayload = (
     // Resolve id from form fields first, then pk-connect fallback attribute.
     payload[idParam] = values[idParam] ?? values.sourceId ?? values.id ?? options.sourceId;
 
-    const csrfTokenName = typeof window !== 'undefined' ? window.Craft?.csrfTokenName : undefined;
+    const csrfTokenName = typeof window !== 'undefined' ? craftWindow().Craft?.csrfTokenName : undefined;
 
     if (csrfTokenName && values[csrfTokenName]) {
         payload[csrfTokenName] = values[csrfTokenName];
@@ -271,8 +280,7 @@ export const submitCpFormAction = ({
     confirm,
 }: SubmitCpFormActionOptions): void => {
     const form = resolveCpForm({ formSelector, host });
-    const craft = window.Craft;
-    const $ = window.$;
+    const { Craft: craft, $ } = craftWindow();
 
     if (!form || typeof craft?.submitForm !== 'function' || !$) {
         return;

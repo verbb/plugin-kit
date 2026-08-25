@@ -1,4 +1,4 @@
-interface ErrorContent {
+export interface ErrorContent {
     heading: string;
     text: string;
     trace: string;
@@ -22,6 +22,6 @@ interface ServerError {
     message?: string;
     stack?: string;
 }
-export declare const getErrorMessage: (error: ServerError, maxTraceLines?: number) => ErrorContent;
+export declare const getErrorMessage: (error: ServerError | null | undefined, maxTraceLines?: number) => ErrorContent;
 export {};
 //# sourceMappingURL=forms.d.ts.map
