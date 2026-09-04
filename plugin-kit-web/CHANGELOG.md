@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.15 - 2026-09-04
+
 ### Fixed
 - Idempotent `@customElement` now actually ships in component builds. The Vite
   alias alone never applied when `lit` is external — published chunks still
