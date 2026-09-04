@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query } from '../../decorators.js';
 import type { PropertyValues } from 'lit';
 
 import { uniqueId } from '../../a11y/focus.js';

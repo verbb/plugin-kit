@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query } from '../../decorators.js';
 import type { PropertyValues } from 'lit';
 
 import { formControlStyles } from '../../base/form-control.styles.js';

@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { pkScrollAreaStyles } from './pk-scroll-area.styles.js';

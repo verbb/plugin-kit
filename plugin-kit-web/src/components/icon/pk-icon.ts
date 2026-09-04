@@ -1,5 +1,5 @@
 import { html, css, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property } from '../../decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { getIcon, iconToSvg, subscribeIconRegistry } from '@verbb/plugin-kit-icons';
 

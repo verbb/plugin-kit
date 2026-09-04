@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { PropertyValues, TemplateResult } from 'lit';
 import { arrowDown, arrowUp, ellipsis, gear, getIcon, gripMove, plus, xmark } from '@verbb/plugin-kit-icons';

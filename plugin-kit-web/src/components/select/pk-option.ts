@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property } from '../../decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 import { check, renderIconHtml } from '../../icons/index.js';

@@ -10,7 +10,7 @@ import {
     type ErrorContent,
 } from '@verbb/plugin-kit-core';
 import { html, LitElement, nothing } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 
 import '../button/pk-button.js';
 import '../dialog/pk-dialog.js';

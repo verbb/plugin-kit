@@ -1,2 +1,2 @@
-import { t as PkTiptapInput } from "../../chunks/pk-tiptap-input-D7xj13FY.js";
+import { t as PkTiptapInput } from "../../chunks/pk-tiptap-input-CtefNnaK.js";
 export { PkTiptapInput };

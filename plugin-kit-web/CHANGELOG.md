@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Fixed
+- Idempotent `@customElement` now actually ships in component builds. The Vite
+  alias alone never applied when `lit` is external — published chunks still
+  imported Lit’s bare decorator and threw `NotSupportedError` when multiple
+  Craft plugins each bundled Plugin Kit. Components import `customElement` from
+  `src/decorators.ts` (safe `customElements.get` guard) instead.
+
 ## 2.0.14 - 2026-08-25
 
 ### Added

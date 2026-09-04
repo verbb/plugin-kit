@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement } from '../../decorators.js';
 
 import { createIconElement, clock } from '../../icons/index.js';
 import { PkSelect } from '../select/pk-select.js';

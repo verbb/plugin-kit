@@ -1,9 +1,8 @@
-import { t as __decorate } from "../../chunks/decorate-W02hmVTt.js";
-import "../../chunks/pk-button-QpDDlRbG.js";
-import "../../chunks/pk-status-7_5dEuw-.js";
+import { i as property, o as state, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
+import "../../chunks/pk-button-BWGDkuzc.js";
+import "../../chunks/pk-status-D1IzTSI2.js";
 import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-DshgIW2n.js";
 import { LitElement, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
 import { submitCpFormAction, watchCpFormDirty } from "@verbb/plugin-kit-core";
 //#region src/components/connect/pk-connect-oauth.ts
 var PkConnectOauth = class PkConnectOauth extends LitElement {

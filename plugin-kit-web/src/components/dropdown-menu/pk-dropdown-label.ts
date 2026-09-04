@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { pkDropdownLabelStyles } from './pk-dropdown-label.styles.js';

@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 import type { PropertyValues } from 'lit';
 
 import { PkElement } from '../../base/pk-element.js';

@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { PkCopyErrorEvent, PkCopyEvent } from '../../events/pk-copy.js';

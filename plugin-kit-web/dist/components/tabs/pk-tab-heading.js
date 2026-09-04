@@ -1,2 +1,2 @@
-import { t as PkTabHeading } from "../../chunks/pk-tab-heading-79ZuLhXi.js";
+import { t as PkTabHeading } from "../../chunks/pk-tab-heading-BV6m_sT-.js";
 export { PkTabHeading };

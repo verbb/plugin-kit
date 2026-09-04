@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { chevronDown, iconToSvg } from '@verbb/plugin-kit-icons';
 

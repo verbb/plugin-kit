@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { pkInputGroupAddonStyles } from './pk-input-group-addon.styles.js';

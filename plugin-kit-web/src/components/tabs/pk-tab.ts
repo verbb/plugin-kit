@@ -1,4 +1,4 @@
-import { customElement } from 'lit/decorators.js';
+import { customElement } from '../../decorators.js';
 
 import { PkTabBase } from './pk-tab-base.js';
 import { pkTabStyles } from './pk-tab.styles.js';

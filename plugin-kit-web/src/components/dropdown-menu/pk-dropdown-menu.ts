@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query } from '../../decorators.js';
 
 import { activeElements } from '../../a11y/active-elements.js';
 import { isTopDismissible, registerDismissible, unregisterDismissible } from '../../a11y/dismissible-stack.js';

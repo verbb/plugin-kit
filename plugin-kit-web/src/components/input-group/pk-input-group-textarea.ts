@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { pkInputGroupTextareaStyles } from './pk-input-group-textarea.styles.js';

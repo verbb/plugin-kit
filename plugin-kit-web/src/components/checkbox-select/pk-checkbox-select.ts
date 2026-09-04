@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from '../../decorators.js';
 import type { ComplexAttributeConverter, PropertyValues } from 'lit';
 
 import { PkElement } from '../../base/pk-element.js';

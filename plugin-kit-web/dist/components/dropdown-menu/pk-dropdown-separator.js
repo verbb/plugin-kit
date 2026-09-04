@@ -1,6 +1,5 @@
-import { n as PkElement, t as __decorate } from "../../chunks/decorate-W02hmVTt.js";
+import { n as PkElement, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
 import { css, html } from "lit";
-import { customElement } from "lit/decorators.js";
 //#region src/components/dropdown-menu/pk-dropdown-separator.ts
 var PkDropdownSeparator = class PkDropdownSeparator extends PkElement {
 	static {

@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query } from '../../decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { PkElement } from '../../base/pk-element.js';

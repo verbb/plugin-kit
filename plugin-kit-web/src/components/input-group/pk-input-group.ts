@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, query } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { HostAriaMirror } from '../../internal/control-aria.js';

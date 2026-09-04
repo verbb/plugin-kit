@@ -1,6 +1,5 @@
-import { n as PkElement, t as __decorate } from "../../chunks/decorate-W02hmVTt.js";
+import { i as property, n as PkElement, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
 import { css, html, nothing } from "lit";
-import { customElement, property } from "lit/decorators.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import { getIcon, iconToSvg, subscribeIconRegistry } from "@verbb/plugin-kit-icons";
 //#region src/components/icon/pk-icon.ts

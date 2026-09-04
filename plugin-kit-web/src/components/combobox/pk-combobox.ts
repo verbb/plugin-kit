@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from '../../decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { PropertyValues } from 'lit';
 
