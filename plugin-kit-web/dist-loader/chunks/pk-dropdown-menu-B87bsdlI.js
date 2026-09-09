@@ -5,7 +5,7 @@ import { r as buttonGroupCornerRoleStyles } from "./button-group-item.styles-CsB
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-C3tSQ3UR.js";
 import { t as animateWithClass } from "./animate-with-class-DT0jwaR_.js";
 import { i as waitForPopupReposition } from "./popup-placement-animation-WlEXnS85.js";
-import { n as dropdownMenuHostSizeStyles, r as dropdownMenuPanelSizeStyles, t as PkDropdownItem } from "./pk-dropdown-item-CGw8NNU2.js";
+import { n as dropdownMenuHostSizeStyles, r as dropdownMenuPanelSizeStyles, t as PkDropdownItem } from "./pk-dropdown-item-DJ5TeF1r.js";
 import { n as resolveElementById } from "./pk-popup-BooGjXgH.js";
 //#region src/components/dropdown-menu/pk-dropdown-menu.styles.ts
 /**

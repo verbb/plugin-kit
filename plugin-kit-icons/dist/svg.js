@@ -35,14 +35,16 @@ var iconToSvg = (icon, options = {}) => {
 		...attributes
 	};
 	if (className) attrs.class = className;
-	if (title) attrs.role = "img";
-	else {
+	if (title) {
+		attrs.role = "img";
+		attrs["aria-label"] = title;
+	} else {
 		attrs["aria-hidden"] = "true";
 		attrs.focusable = "false";
 	}
 	return `<svg ${Object.entries(attrs).map(([key, value]) => {
 		return `${key}="${escapeHtml(value)}"`;
-	}).join(" ")}>${title ? `<title>${escapeHtml(title)}</title>` : ""}<path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
+	}).join(" ")}><path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
 };
 //#endregion
 export { iconToSvg, iconViewBox };

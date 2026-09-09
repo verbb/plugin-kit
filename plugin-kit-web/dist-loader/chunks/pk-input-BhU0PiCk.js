@@ -462,7 +462,8 @@ var pkInputStyles = i`
             box-sizing: border-box;
             width: calc(var(--pk-input-decoration-size) + var(--pk-input-padding-inline));
             margin-block: calc(-1 * var(--pk-input-padding-block));
-            margin-inline-end: calc(-1 * var(--pk-input-padding-inline));
+            /* Match pk-copy-button[slot=end]: pull into padding but leave a 4px glyph inset. */
+            margin-inline-end: calc(-1 * var(--pk-input-padding-inline) + 4px);
             font-size: var(--pk-input-decoration-size);
             line-height: 1;
         }

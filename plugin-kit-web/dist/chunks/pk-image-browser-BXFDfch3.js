@@ -115,11 +115,12 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, css`
             pointer-events: none;
         }
 
-        /* Combobox-style chrome: label + clear + chevron share one filled control. */
+        /* Combobox-style chrome: label + clear + chevron share one filled control.
+         * 0.5rem gap keeps ellipsized filenames from kissing the clear glyph. */
         .control {
             display: inline-flex;
             align-items: stretch;
-            gap: 0.25rem;
+            gap: 0.5rem;
             min-width: 12.5rem;
             max-width: 100%;
             height: var(--pk-image-browser-trigger-min-height);
@@ -1360,4 +1361,4 @@ PkImageBrowser = __decorate([customElement("pk-image-browser")], PkImageBrowser)
 //#endregion
 export { PkImageBrowser as t };
 
-//# sourceMappingURL=pk-image-browser-BumEF2jS.js.map
+//# sourceMappingURL=pk-image-browser-BXFDfch3.js.map

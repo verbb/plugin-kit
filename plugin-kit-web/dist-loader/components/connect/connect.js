@@ -1,8 +1,8 @@
 import { c as r, d as i, f as A, l as n, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate } from "../../chunks/pk-base-CyzwylQ7.js";
-import "../../chunks/pk-icon-CaMo8Wf3.js";
-import "../../chunks/pk-button-CX8ddNJb.js";
-import "../../chunks/pk-dialog-CJW5J_DO.js";
+import "../../chunks/pk-icon-B5ob3JdK.js";
+import "../../chunks/pk-button-dngp-vOd.js";
+import "../../chunks/pk-dialog-B6lzsRur.js";
 import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-Bfgwu0VH.js";
 import "../../chunks/pk-status-D3ArH2ui.js";
 //#region src/components/connect/pk-connect.ts

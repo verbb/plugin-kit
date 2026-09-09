@@ -1,8 +1,8 @@
 import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as customElement } from "./lit-DpLik9Rf.js";
 import { c as __decorate, l as PkElement } from "./pk-base-CyzwylQ7.js";
-import { _ as chevronRight, m as check } from "./svg-_Mtb7CHx.js";
+import { _ as chevronRight, m as check } from "./svg-BiAlXtCn.js";
 import { t as HasSlotController } from "./has-slot-BGJeJdHr.js";
-import { n as renderIconHtml } from "./render-Niz5wYRa.js";
+import { n as renderIconHtml } from "./render-BKfL_WRl.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-duCg9-CH.js";
 //#region src/components/dropdown-menu/dropdown-menu-size.styles.ts

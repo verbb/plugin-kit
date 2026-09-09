@@ -505,14 +505,16 @@ var iconToSvg = (icon, options = {}) => {
 		...attributes
 	};
 	if (className) attrs.class = className;
-	if (title) attrs.role = "img";
-	else {
+	if (title) {
+		attrs.role = "img";
+		attrs["aria-label"] = title;
+	} else {
 		attrs["aria-hidden"] = "true";
 		attrs.focusable = "false";
 	}
 	return `<svg ${Object.entries(attrs).map(([key, value]) => {
 		return `${key}="${escapeHtml(value)}"`;
-	}).join(" ")}>${title ? `<title>${escapeHtml(title)}</title>` : ""}<path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
+	}).join(" ")}><path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
 };
 //#endregion
 export { heading as A, plus as B, gripMove as C, h4 as D, h3 as E, link as F, table as G, strikethrough as H, listOl as I, underline as J, textSlash as K, listUl as L, icons as M, italic as N, h5 as O, lightbulb as P, minus as R, gear as S, h2 as T, subscript as U, quoteRight as V, superscript as W, xmark as Y, chevronRight as _, alignRight as a, ellipsis as b, arrowRotateRight as c, bold as d, bracketsCurly as f, chevronLeft as g, chevronDown as h, alignLeft as i, highlighter as j, h6 as k, arrowUp as l, check as m, alignCenter as n, arrowDown as o, calendar as p, triangleExclamation as q, alignJustify as r, arrowRotateLeft as s, iconToSvg as t, asterisk as u, clock as v, h1 as w, fileDashedLine as x, code as y, paragraph as z };

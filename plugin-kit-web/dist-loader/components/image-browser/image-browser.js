@@ -1,11 +1,12 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "../../chunks/pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-CyzwylQ7.js";
-import { Y as xmark, h as chevronDown } from "../../chunks/svg-_Mtb7CHx.js";
+import "../../chunks/pk-spinner-BKU9Rf2R.js";
+import { Y as xmark, h as chevronDown } from "../../chunks/svg-BiAlXtCn.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
 import { t as PkClearEvent } from "../../chunks/pk-clear-BMZUzwDt.js";
-import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
+import { n as renderIconHtml } from "../../chunks/render-BKfL_WRl.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C3tSQ3UR.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-duCg9-CH.js";
@@ -108,11 +109,12 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             pointer-events: none;
         }
 
-        /* Combobox-style chrome: label + clear + chevron share one filled control. */
+        /* Combobox-style chrome: label + clear + chevron share one filled control.
+         * 0.5rem gap keeps ellipsized filenames from kissing the clear glyph. */
         .control {
             display: inline-flex;
             align-items: stretch;
-            gap: 0.25rem;
+            gap: 0.5rem;
             min-width: 12.5rem;
             max-width: 100%;
             height: var(--pk-image-browser-trigger-min-height);
@@ -532,6 +534,22 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             color: var(--pk-color-rose-600, #e11d48);
         }
 
+        /* Host-driven catalog warm — spinner only (no loading copy). */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            min-height: 6rem;
+            padding: 1.25rem 0.75rem;
+            color: var(--pk-color-gray-500);
+        }
+
+        .panel-input:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         /* Host is inert layout chrome; the floating tip lives in pk-popup. */
         .option-tooltip {
             position: absolute;
@@ -569,6 +587,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 		this.searchPlaceholder = "Search…";
 		this.emptyMessage = "No items match your query.";
 		this.ariaLabel = null;
+		this.loading = false;
 		this.withClear = true;
 		this.items = [];
 		this.groups = [];
@@ -630,13 +649,14 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 			}
 		};
 		this.handleSearchInput = (event) => {
+			if (this.loading) return;
 			this.query = event.target.value;
 			this.limit = this.normalizedPageSize();
 			this.resetHighlightForOpenCatalog();
 			this.announceResults();
 		};
 		this.handleSearchKeyDown = (event) => {
-			if (!this.open || this.closing) return;
+			if (!this.open || this.closing || this.loading) return;
 			switch (event.key) {
 				case "ArrowDown":
 				case "ArrowUp":
@@ -710,6 +730,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 		}
 		if ((changed.has("open") || changed.has("closing")) && (this.open || this.closing)) this.syncPanelPlacement();
 		if (this.open && (changed.has("highlightedIndex") || changed.has("query") || changed.has("limit"))) this.scrollHighlightedIntoView();
+		if (this.open && changed.has("loading") && !this.loading) this.resetHighlightForOpenCatalog();
 	}
 	get validationTarget() {
 		return this.triggerElement ?? this;
@@ -809,6 +830,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 		return this.triggerDisplay().label;
 	}
 	announceResults() {
+		if (this.loading) return;
 		const items = this.flatVisibleItems();
 		if (!this.query.trim()) return;
 		if (!this.liveRegion) this.liveRegion = new LiveRegion("polite");
@@ -1064,6 +1086,18 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
         `;
 	}
 	renderResults() {
+		if (this.loading) return b`
+                <div
+                    id=${this.listboxId}
+                    role="listbox"
+                    aria-label=${this.ariaLabel || "Options"}
+                    aria-busy="true"
+                >
+                    <div part="loading" class="loading" role="status" aria-label="Loading">
+                        <pk-spinner size="sm" centered></pk-spinner>
+                    </div>
+                </div>
+            `;
 		const groups = this.visibleGroups();
 		if (groups.length === 0) return b`
                 <div
@@ -1229,6 +1263,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
                             aria-expanded=${this.open ? "true" : "false"}
                             aria-controls=${this.listboxId}
                             aria-activedescendant=${activeDescendant ?? A}
+                            ?disabled=${this.loading}
                             @input=${this.handleSearchInput}
                             @keydown=${this.handleSearchKeyDown}
                         />
@@ -1275,6 +1310,10 @@ __decorate([n()], PkImageBrowser.prototype, "placeholder", void 0);
 __decorate([n({ attribute: "search-placeholder" })], PkImageBrowser.prototype, "searchPlaceholder", void 0);
 __decorate([n({ attribute: "empty-message" })], PkImageBrowser.prototype, "emptyMessage", void 0);
 __decorate([n({ attribute: "aria-label" })], PkImageBrowser.prototype, "ariaLabel", void 0);
+__decorate([n({
+	type: Boolean,
+	reflect: true
+})], PkImageBrowser.prototype, "loading", void 0);
 __decorate([n({
 	type: Boolean,
 	reflect: true,

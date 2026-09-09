@@ -12,6 +12,7 @@ var builtinFormFieldLoaders = {
 	color: async () => (await import("./fields/ColorField.js")).ColorField,
 	radioGroup: async () => (await import("./fields/RadioGroupField.js")).RadioGroupField,
 	checkboxSelect: async () => (await import("./fields/CheckboxSelectField.js")).CheckboxSelectField,
+	autocomplete: async () => (await import("./fields/AutocompleteField.js")).AutocompleteField,
 	combobox: async () => (await import("./fields/ComboboxField.js")).ComboboxField,
 	group: async () => (await import("./fields/GroupField.js")).GroupField,
 	date: async () => (await import("./fields/DateTimeField.js")).DateTimeField,

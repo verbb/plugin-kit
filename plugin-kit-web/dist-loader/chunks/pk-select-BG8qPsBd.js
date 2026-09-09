@@ -1,11 +1,11 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, u as isTopDismissible } from "./pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "./lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "./pk-base-CyzwylQ7.js";
-import { h as chevronDown } from "./svg-_Mtb7CHx.js";
+import { h as chevronDown } from "./svg-BiAlXtCn.js";
 import { t as MirrorValidator } from "./mirror-validator-C5XrXPaq.js";
 import { t as HasSlotController } from "./has-slot-BGJeJdHr.js";
 import { t as PkClearEvent } from "./pk-clear-BMZUzwDt.js";
-import { n as renderIconHtml } from "./render-Niz5wYRa.js";
+import { n as renderIconHtml } from "./render-BKfL_WRl.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-C3tSQ3UR.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-duCg9-CH.js";

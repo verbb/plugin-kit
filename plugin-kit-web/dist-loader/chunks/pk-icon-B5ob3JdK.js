@@ -1,6 +1,6 @@
 import { a as o, f as A, l as n, m as i, p as b, u as customElement } from "./lit-DpLik9Rf.js";
 import { c as __decorate, l as PkElement } from "./pk-base-CyzwylQ7.js";
-import { t as iconToSvg } from "./svg-_Mtb7CHx.js";
+import { t as iconToSvg } from "./svg-BiAlXtCn.js";
 import { i as subscribeIconRegistry, t as getIcon } from "./registry-BanyScVR.js";
 //#region src/components/icon/pk-icon.ts
 var PkIcon = class PkIcon extends PkElement {
