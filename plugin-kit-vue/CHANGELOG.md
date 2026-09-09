@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.16 - 2026-09-09
+
 ### Added
 - `Autocomplete` facade over `<pk-autocomplete>` — freeform text with optional
   suggestions.

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.16 - 2026-09-09
+
 ### Changed
 - `iconToSvg({ title })` sets SVG `aria-label` (and `role="img"`) instead of a
   `<title>` child, so accessible names no longer produce native hover tooltips.

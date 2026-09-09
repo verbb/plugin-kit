@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.16 - 2026-09-09
+
 ### Added
 - `<pk-autocomplete>` — freeform text field with optional `pk-option` suggestions
   (React/Vue `Autocomplete`). Committed `value` is the input text
