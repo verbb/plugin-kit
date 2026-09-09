@@ -8,6 +8,7 @@ import { renderDropdownMenuPlayground } from './dropdown-menu.js';
 import { renderInputPlayground } from './input.js';
 import { renderFieldPlayground } from './field.js';
 import { renderIconPlayground } from './icon.js';
+import { renderImageBrowserPlayground } from './image-browser.js';
 import { renderPopoverPlayground } from './popover.js';
 import { renderSeparatorPlayground } from './separator.js';
 import { renderStatusPlayground } from './status.js';
@@ -43,6 +44,7 @@ const wcPlaygroundRenderers: Record<string, PlaygroundRenderer> = {
     button: renderButtonPlayground,
     spinner: renderSpinnerPlayground,
     icon: renderIconPlayground,
+    'image-browser': renderImageBrowserPlayground,
     checkbox: renderCheckboxPlayground,
     field: renderFieldPlayground,
     input: renderInputPlayground,

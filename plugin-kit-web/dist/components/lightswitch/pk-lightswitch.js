@@ -1,2 +1,2 @@
-import { t as PkLightswitch } from "../../chunks/pk-lightswitch-DI1BeCmA.js";
+import { t as PkLightswitch } from "../../chunks/pk-lightswitch-D1qEFRxK.js";
 export { PkLightswitch };

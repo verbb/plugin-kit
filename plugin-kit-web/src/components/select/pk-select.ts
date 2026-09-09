@@ -45,7 +45,7 @@ export type PkSelectSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 const CHEVRON_ICON = renderIconHtml(chevronDown);
 
 /**
- * Select —  pattern: slotted `pk-option` children, form-associated, clearable, multiselect tags.
+ * Select — slotted `pk-option` children, form-associated, clearable, multiselect tags.
  *
  * @slot start - Presentational decoration before the trigger label (e.g. icons)
  * @slot end - Presentational decoration before the expand chevron
@@ -57,6 +57,31 @@ const CHEVRON_ICON = renderIconHtml(chevronDown);
  * @csspart trigger-start - Mirrored start decoration from the selected option
  * @csspart trigger - Select trigger button
  * @csspart panel - Listbox panel
+ *
+ * @cssproperty [--pk-select-fill=var(--pk-color-slate-250)] - Closed trigger background.
+ * @cssproperty [--pk-select-fill-hover=var(--pk-color-slate-300)] - Closed trigger hover background.
+ * @cssproperty [--pk-select-anchor-width] - Panel min-width; set from the trigger width while open.
+ * @cssproperty [--pk-select-decoration-size=0.875rem] - Start/end decoration glyph size.
+ *
+ * @event pk-show - Emitted when the listbox begins to open.
+ * @event pk-after-show - Emitted after the listbox opens and enter motion finishes.
+ * @event {{ source: string }} pk-hide - Emitted when the listbox begins to close (cancelable).
+ * @event pk-after-hide - Emitted after the listbox closes and exit motion finishes.
+ * @event {{ open: boolean }} pk-open-change - Emitted when `open` changes after show/hide settles.
+ * @event {{ value: string, values: string[] }} pk-change - Emitted when the selection changes.
+ * @event pk-clear - Emitted when the value is cleared via the clear control.
+ * @event pk-invalid - Emitted when constraint validation fails.
+ * @event input - Native input event when the selection changes.
+ * @event change - Native change event when the selection changes.
+ *
+ * @method show - Opens the listbox.
+ * @method hide - Closes the listbox.
+ * @method checkValidity - Runs constraint validation without showing the browser UI.
+ * @method reportValidity - Runs constraint validation and shows the browser UI when invalid.
+ * @method setCustomValidity - Sets or clears a custom validation message.
+ * @method resetValidity - Clears custom errors and re-syncs validity state.
+ *
+ * @dependency pk-popup - Positioned listbox panel host.
  */
 @customElement('pk-select')
 export class PkSelect extends PkFormAssociatedElement {
@@ -96,28 +121,35 @@ export class PkSelect extends PkFormAssociatedElement {
 
     override assumeInteractionOn = ['blur', 'input'];
 
+    /** Whether the listbox is open. Prefer `show()` / `hide()` for animated transitions. */
     @property({ type: Boolean, reflect: true })
     open = false;
 
+    /** Allow more than one option to be selected (tag display). */
     @property({ type: Boolean, reflect: true })
     multiple = false;
 
+    /** Preferred listbox placement; may flip to stay in viewport. */
     @property({ reflect: true })
     placement: PkPopupPlacement = 'bottom-start';
 
-    /** Gap between the trigger and listbox panel in px (default: 4). */
+    /** Gap between the trigger and listbox panel in px. */
     @property({ attribute: 'side-offset', type: Number })
     sideOffset = 4;
 
+    /** Alias of `with-clear` — shows a clear control when the value is non-empty. */
     @property({ type: Boolean, reflect: true })
     clearable = false;
 
+    /** Shows a clear control when the value is non-empty. */
     @property({ attribute: 'with-clear', type: Boolean })
     withClear = false;
 
+    /** Marks the control invalid (visual + ARIA). */
     @property({ type: Boolean, reflect: true })
     invalid = false;
 
+    /** Shared CP size scale for the closed trigger and list items. */
     @property({ reflect: true })
     size: PkSelectSize = 'default';
 
@@ -125,22 +157,27 @@ export class PkSelect extends PkFormAssociatedElement {
     @property({ reflect: true })
     width?: 'full';
 
-    /** Empty by default — consumers opt in when a prompt is useful. */
+    /** Prompt shown when nothing is selected. Empty by default. */
     @property()
     placeholder = '';
 
+    /** Selected value (single-select). Empty string when cleared. */
     @property()
     value = '';
 
+    /** Initial value before user interaction (form reset baseline). */
     @property({ attribute: 'default-value' })
     defaultValue = '';
 
+    /** Selected values when `multiple` is set. Property-only (not an attribute). */
     @property({ type: Array, attribute: false })
     values: string[] = [];
 
+    /** Initial multi values before user interaction. Property-only. */
     @property({ attribute: false })
     defaultValues: string[] = [];
 
+    /** Accessible name for the trigger when no visible label is present. */
     @property({ attribute: 'aria-label' })
     ariaLabel: string | null = null;
 
@@ -522,6 +559,7 @@ export class PkSelect extends PkFormAssociatedElement {
         return highlighted?.optionId || null;
     }
 
+    /** Opens the listbox. */
     async show(): Promise<void> {
         if (this.open || this.closing || this.disabled) {
             return;
@@ -530,6 +568,7 @@ export class PkSelect extends PkFormAssociatedElement {
         await this.openPanel();
     }
 
+    /** Closes the listbox. */
     async hide(source: PkOverlaySource = 'api'): Promise<void> {
         if (!this.open || this.closing) {
             return;

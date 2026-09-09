@@ -11,9 +11,10 @@ export const copyButtonVueSectionComponents: Record<string, Component> = {
             const { value } = copyButtonPlaygroundSections.basicUsage;
 
             return h('div', { class: 'pg-card__inner--row' }, [
-                h(Input, { value, readOnly: true, style: { width: '16rem' } }),
-                h(CopyButton, { value }, {
-                    icon: () => h(Icon, { icon: 'clipboard' }),
+                h(Input, { value, readOnly: true, style: { width: '16rem' } }, {
+                    default: () => h(CopyButton, { slot: 'end', value }, {
+                        icon: () => h(Icon, { icon: 'clipboard' }),
+                    }),
                 }),
             ]);
         },
@@ -26,9 +27,10 @@ export const copyButtonVueSectionComponents: Record<string, Component> = {
 
             return h('div', {}, [
                 h('div', { class: 'pg-card__inner--row', style: { marginBottom: '0.75rem' } }, [
-                    h(Input, { value, readOnly: true, style: { width: '16rem' } }),
-                    h(CopyButton, { value }, {
-                        icon: () => h(Icon, { icon: 'clipboard' }),
+                    h(Input, { value, readOnly: true, style: { width: '16rem' } }, {
+                        default: () => h(CopyButton, { slot: 'end', value }, {
+                            icon: () => h(Icon, { icon: 'clipboard' }),
+                        }),
                     }),
                 ]),
                 h('div', { class: 'pg-card__inner--row' },

@@ -15,6 +15,7 @@ export const builtinFormFieldLoaders: Record<string, BuiltinFieldLoader> = {
     color: async () => (await import('./fields/ColorField.js')).ColorField as SchemaFormFieldComponent,
     radioGroup: async () => (await import('./fields/RadioGroupField.js')).RadioGroupField as SchemaFormFieldComponent,
     checkboxSelect: async () => (await import('./fields/CheckboxSelectField.js')).CheckboxSelectField as SchemaFormFieldComponent,
+    autocomplete: async () => (await import('./fields/AutocompleteField.js')).AutocompleteField as SchemaFormFieldComponent,
     combobox: async () => (await import('./fields/ComboboxField.js')).ComboboxField as SchemaFormFieldComponent,
     group: async () => (await import('./fields/GroupField.js')).GroupField as SchemaFormFieldComponent,
     date: async () => (await import('./fields/DateTimeField.js')).DateTimeField as SchemaFormFieldComponent,

@@ -1,2 +1,2 @@
-import { t as PkTabs } from "../../chunks/pk-tabs-BTE63uK9.js";
+import { t as PkTabs } from "../../chunks/pk-tabs-BgEBki1q.js";
 export { PkTabs };

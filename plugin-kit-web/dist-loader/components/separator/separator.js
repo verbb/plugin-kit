@@ -1,5 +1,5 @@
 import { l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-CyzwylQ7.js";
 //#region src/components/separator/pk-separator.styles.ts
 /**
 * Default block rhythm lives on the inner `.line`, not `:host` margin.

@@ -17,6 +17,7 @@
     "files": [
         "dist",
         "dist-loader",
+        "custom-elements.json",
         "LICENSE.md",
         "CHANGELOG.md"
     ],
@@ -78,6 +79,16 @@
             "import": "./dist/icons/index.js"
         },
         "./package.json": "./package.json",
+        "./components/autocomplete/pk-autocomplete.js": {
+            "types": "./dist/components/autocomplete/pk-autocomplete.d.ts",
+            "import": "./dist/components/autocomplete/pk-autocomplete.js",
+            "default": "./dist/components/autocomplete/pk-autocomplete.js"
+        },
+        "./components/autocomplete/pk-autocomplete": {
+            "types": "./dist/components/autocomplete/pk-autocomplete.d.ts",
+            "import": "./dist/components/autocomplete/pk-autocomplete.js",
+            "default": "./dist/components/autocomplete/pk-autocomplete.js"
+        },
         "./components/button-group/pk-button-group.js": {
             "types": "./dist/components/button-group/pk-button-group.d.ts",
             "import": "./dist/components/button-group/pk-button-group.js",
@@ -297,6 +308,16 @@
             "types": "./dist/components/icon/pk-icon.d.ts",
             "import": "./dist/components/icon/pk-icon.js",
             "default": "./dist/components/icon/pk-icon.js"
+        },
+        "./components/image-browser/pk-image-browser.js": {
+            "types": "./dist/components/image-browser/pk-image-browser.d.ts",
+            "import": "./dist/components/image-browser/pk-image-browser.js",
+            "default": "./dist/components/image-browser/pk-image-browser.js"
+        },
+        "./components/image-browser/pk-image-browser": {
+            "types": "./dist/components/image-browser/pk-image-browser.d.ts",
+            "import": "./dist/components/image-browser/pk-image-browser.js",
+            "default": "./dist/components/image-browser/pk-image-browser.js"
         },
         "./components/input-group/pk-input-group.js": {
             "types": "./dist/components/input-group/pk-input-group.d.ts",
@@ -608,6 +629,16 @@
             "import": "./dist/components/tooltip/pk-tooltip.js",
             "default": "./dist/components/tooltip/pk-tooltip.js"
         },
+        "./components/autocomplete.js": {
+            "types": "./dist/components/autocomplete.d.ts",
+            "import": "./dist/components/autocomplete.js",
+            "default": "./dist/components/autocomplete.js"
+        },
+        "./components/autocomplete": {
+            "types": "./dist/components/autocomplete.d.ts",
+            "import": "./dist/components/autocomplete.js",
+            "default": "./dist/components/autocomplete.js"
+        },
         "./components/button.js": {
             "types": "./dist/components/button.d.ts",
             "import": "./dist/components/button.js",
@@ -767,6 +798,16 @@
             "types": "./dist/components/icon.d.ts",
             "import": "./dist/components/icon.js",
             "default": "./dist/components/icon.js"
+        },
+        "./components/image-browser.js": {
+            "types": "./dist/components/image-browser.d.ts",
+            "import": "./dist/components/image-browser.js",
+            "default": "./dist/components/image-browser.js"
+        },
+        "./components/image-browser": {
+            "types": "./dist/components/image-browser.d.ts",
+            "import": "./dist/components/image-browser.js",
+            "default": "./dist/components/image-browser.js"
         },
         "./components/input.js": {
             "types": "./dist/components/input.d.ts",
@@ -970,11 +1011,12 @@
         }
     },
     "scripts": {
-        "build": "npm run gen:exports && npm run gen:register-components && npm run gen:fouce && vite build && vite build --config vite.loader.config.ts",
+        "build": "npm run gen:exports && npm run gen:register-components && npm run gen:fouce && npm run gen:cem && vite build && vite build --config vite.loader.config.ts",
         "build:loader": "vite build --config vite.loader.config.ts",
         "gen:exports": "node --experimental-strip-types scripts/generate-exports.ts",
         "gen:register-components": "node --experimental-strip-types scripts/generate-register-components.ts",
         "gen:fouce": "node --experimental-strip-types scripts/generate-fouce-css.ts",
+        "gen:cem": "cem analyze",
         "predev": "npm run gen:register-components && npm run gen:fouce",
         "prepare": "npm run gen:register-components && npm run gen:fouce",
         "dev": "npm run dev --workspace @verbb/plugin-kit-playground",
@@ -998,11 +1040,13 @@
         "lit": "^3.3.0"
     },
     "devDependencies": {
+        "@custom-elements-manifest/analyzer": "^0.11.0",
         "typescript": "^6.0.3",
         "vite": "^8.0.10",
         "vite-plugin-dts": "^4.5.4"
     },
     "engines": {
         "node": ">=20.0.0"
-    }
+    },
+    "customElements": "custom-elements.json"
 }

@@ -56,7 +56,10 @@ export interface PkEditableTableRowMenuItem {
 export interface PkEditableTableRowModifier {
     /** Space-separated class names applied to the `<tr>`. */
     class?: string;
-    /** Native `title` on the `<tr>` (tooltip). */
+    /**
+     * Accessible name for the row (`aria-label`). Not a hover tooltip —
+     * use visible tone/chrome for sighted status.
+     */
     title?: string;
     /**
      * Semantic row chrome styled inside the CE (host Tailwind cannot reach shadow `<tr>`).

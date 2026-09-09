@@ -170,7 +170,8 @@ export const pkComboboxStyles = [
             outline: none;
         }
 
-        /* Trailing control absorbs the control's inline-end padding into its hit box. */
+        /* Trailing control absorbs the control's inline-end padding into its hit box,
+           with the same 4px glyph inset as pk-copy-button[slot=end]. */
         .control > .expand-button,
         .control > .clear-button:last-child {
             width: calc(
@@ -178,7 +179,7 @@ export const pkComboboxStyles = [
                     var(--pk-combobox-padding-inline)
             );
             margin-inline-start: calc(-0.5 * var(--pk-combobox-control-gap));
-            margin-inline-end: calc(-1 * var(--pk-combobox-padding-inline));
+            margin-inline-end: calc(-1 * var(--pk-combobox-padding-inline) + 4px);
         }
 
         .icon-button:disabled,

@@ -44,7 +44,7 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
      * Return a partial column merged over the base definition for that render.
      */
     modifyColumn: PkEditableTableModifyColumn | null;
-    /** Per-row chrome — class/title on the `<tr>` (availability highlights, etc.). */
+    /** Per-row chrome — class / accessible name / tone on the `<tr>`. */
     modifyRow: PkEditableTableModifyRow | null;
     /**
      * Extra ellipsis-menu items for a row (data descriptors — not React nodes).

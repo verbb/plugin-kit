@@ -1,6 +1,6 @@
 import { PkElement } from '../../base/pk-element.js';
 /**
- * Visual option group for `pk-select` —  listbox grouping pattern.
+ * Visual option group for `pk-select` — listbox grouping pattern.
  *
  * @slot - `pk-option` items in this group
  *
@@ -8,7 +8,9 @@ import { PkElement } from '../../base/pk-element.js';
  */
 export declare class PkOptionGroup extends PkElement {
     static styles: import('lit').CSSResult;
+    /** Visible group heading above the options. */
     label: string;
+    /** Hides the group and its options. */
     hidden: boolean;
     private readonly labelId;
     connectedCallback(): void;

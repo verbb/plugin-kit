@@ -8,12 +8,11 @@ export default defineWebPreview({
     title: 'Copy button variant examples',
     layout: 'stack',
     html: `
-<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
-  <pk-input value="FORMIE_LICENSE_KEY" readonly style="width:16rem"></pk-input>
-  <pk-copy-button value="FORMIE_LICENSE_KEY">
+<pk-input value="FORMIE_LICENSE_KEY" readonly style="width:16rem">
+  <pk-copy-button slot="end" value="FORMIE_LICENSE_KEY">
     <pk-icon slot="icon" icon="clipboard" aria-hidden="true"></pk-icon>
   </pk-copy-button>
-</div>
+</pk-input>
 <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
   <pk-copy-button value="FORMIE_LICENSE_KEY" variant="default">
     <pk-icon slot="icon" icon="clipboard" aria-hidden="true"></pk-icon>

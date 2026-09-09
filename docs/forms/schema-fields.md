@@ -39,6 +39,7 @@ Plugin Kit ships these `$field` types as lazy builtins (React and Vue):
 - [`CodeEditorField`](./schema-fields/code-editor-field.md)
 - [`CheckboxSelectField`](./schema-fields/checkbox-select-field.md)
 - [`ColorField`](./schema-fields/color-field.md)
+- [`AutocompleteField`](./schema-fields/autocomplete-field.md)
 - [`ComboboxField`](./schema-fields/combobox-field.md)
 
 Each built-in field page explains the schema shape and behavior for that type.

@@ -20,6 +20,9 @@ const COPIED_RESET_MS = 2000;
 /**
  * Copy button — copies text to the clipboard and briefly shows a check icon.
  *
+ * Place in `slot="end"` on `<pk-input>` (or another control with an end adornment)
+ * for in-control chrome that matches combobox / image-browser trailing actions.
+ *
  * @slot icon - Copy icon (SVG supplied by the consumer)
  *
  * @event pk-copy - Emitted when text is copied successfully
@@ -91,12 +94,16 @@ export class PkCopyButton extends PkElement {
     }
 
     override render() {
+        // slot=end → in-control chrome (pk-input end adornment); padless glyph button.
+        const inControl = this.getAttribute('slot') === 'end';
+
         return html`
             <pk-button
                 part="button"
-                variant=${this.variant}
-                size="default"
-                title="Copy"
+                variant=${inControl ? 'none' : this.variant}
+                size=${inControl ? 'none' : 'default'}
+                ?icon=${inControl}
+                aria-label="Copy"
                 ?disabled=${this.disabled}
                 @click=${this.handleCopy}
             >

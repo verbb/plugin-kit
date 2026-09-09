@@ -167,7 +167,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
     @property({ attribute: false })
     modifyColumn: PkEditableTableModifyColumn | null = null;
 
-    /** Per-row chrome — class/title on the `<tr>` (availability highlights, etc.). */
+    /** Per-row chrome — class / accessible name / tone on the `<tr>`. */
     @property({ attribute: false })
     modifyRow: PkEditableTableModifyRow | null = null;
 
@@ -1205,7 +1205,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
             class=${rowMod.class
                 ? classMap(Object.fromEntries(rowMod.class.split(/\s+/).filter(Boolean).map((token) => [token, true])))
                 : nothing}
-            title=${rowMod.title || nothing}
+            aria-label=${rowMod.title || nothing}
         >
             ${columns.map((column) => {
                 const resolved = this.resolveColumn(row, column, rowIndex);
@@ -1220,7 +1220,6 @@ export class PkEditableTable extends PkFormAssociatedElement {
                             : {}),
                     })}
                     style=${resolved.width || column.width ? `width: ${resolved.width || column.width}` : nothing}
-                    title=${errors.length ? errors.join('\n') : nothing}
                 >
                     ${this.renderCell(resolved, row, rowIndex, errors.length > 0)}
                 </td>`;
@@ -1241,9 +1240,10 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         class="action-btn"
                                         variant="none"
                                         size="xs"
-                                        aria-label="Reorder row"
+                                        aria-label=${!this.dndReady && !this.disabled
+                                            ? 'Preparing drag…'
+                                            : 'Reorder row'}
                                         ?disabled=${this.disabled || !this.dndReady}
-                                        title=${!this.dndReady && !this.disabled ? 'Preparing drag…' : nothing}
                                     >${unsafeHTML(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>`
                             : nothing}

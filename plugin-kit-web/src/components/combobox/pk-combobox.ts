@@ -33,26 +33,27 @@ import {
     syncPopupPlacementAnimation,
     waitForPopupReposition,
 } from '../../utils/popup-placement-animation.js';
+import { waitForPopupContentExitAnimation } from '../../utils/popup-content-exit.js';
 import { isEventInsideOverlay, isPointerInsideOverlay } from '../../utils/popup-pointer.js';
-import { syncListboxSeparators } from '../../internal/sync-listbox-separators.js';
+import { syncFilteredOptions } from '../../internal/sync-filtered-options.js';
+import {
+    AsyncOptionFetcher,
+    type PkAsyncOptionFetchHandler,
+    type PkAsyncOptionItem,
+} from '../../utils/async-option-fetch.js';
+import { matchesOptionFilter, type PkOptionFilter } from '../../utils/option-filter.js';
 import type { PkOption } from '../select/pk-option.js';
 import type { PkOptionGroup } from '../select/pk-option-group.js';
 import { pkComboboxStyles } from './pk-combobox.styles.js';
 
 export type PkComboboxSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
-export type PkComboboxFilter = (option: PkOption, query: string) => boolean;
+/** Alias of `PkOptionFilter` — public Combobox filter API. */
+export type PkComboboxFilter = PkOptionFilter;
 
-export type PkComboboxAsyncOption = {
-    value: string;
-    label: string;
-};
+export type PkComboboxAsyncOption = PkAsyncOptionItem;
 
-export type PkComboboxFetchHandler = (
-    query: string,
-    signal: AbortSignal,
-) => Promise<PkComboboxAsyncOption[]>;
-
+export type PkComboboxFetchHandler = PkAsyncOptionFetchHandler;
 const CHEVRON_ICON = renderIconHtml(chevronDown);
 const XMARK_ICON = renderIconHtml(xmark);
 
@@ -307,10 +308,8 @@ export class PkCombobox extends PkFormAssociatedElement {
     private panelEventTarget: HTMLElement | null = null;
     private optionsObserver?: MutationObserver;
     private liveRegion?: LiveRegion;
-    private fetchAbortController?: AbortController;
-    private asyncFetchTimer?: number;
-    private asyncFetchRequestId = 0;
     private selectedOptionMeta: PkComboboxAsyncOption | null = null;
+    private asyncFetcher: AsyncOptionFetcher | null = null;
 
     @state()
     private asyncLoading = false;
@@ -336,8 +335,7 @@ export class PkCombobox extends PkFormAssociatedElement {
         this.optionsObserver?.disconnect();
         this.liveRegion?.destroy();
         this.liveRegion = undefined;
-        window.clearTimeout(this.asyncFetchTimer);
-        this.fetchAbortController?.abort();
+        this.asyncFetcher?.cancel();
         void this.closePanel('api');
         super.disconnectedCallback();
     }
@@ -469,21 +467,8 @@ export class PkCombobox extends PkFormAssociatedElement {
         return Boolean(group?.hidden);
     }
 
-    private defaultFilter(option: PkOption, query: string): boolean {
-        const label = option.getLabel().toLowerCase();
-        const value = option.value.toLowerCase();
-        // Rich options may set a short `label` for the closed input — still match subtitle text.
-        const searchText = (option.getSearchText?.() ?? label).toLowerCase();
-
-        return label.includes(query) || value.includes(query) || searchText.includes(query);
-    }
-
     private matchesFilter(option: PkOption, query: string): boolean {
-        if (this.filter) {
-            return this.filter(option, query);
-        }
-
-        return this.defaultFilter(option, query);
+        return matchesOptionFilter(option, query, this.filter);
     }
 
     private getFilterQuery(): string {
@@ -601,57 +586,40 @@ export class PkCombobox extends PkFormAssociatedElement {
     }
 
     private scheduleAsyncFetch(query: string): void {
-        window.clearTimeout(this.asyncFetchTimer);
-
-        this.asyncFetchTimer = window.setTimeout(() => {
-            void this.runAsyncFetch(query);
-        }, 200);
+        this.ensureAsyncFetcher().schedule(query);
     }
 
-    private async runAsyncFetch(query: string): Promise<void> {
-        if (!this.fetchOptions) {
-            return;
+    private ensureAsyncFetcher(): AsyncOptionFetcher {
+        if (!this.asyncFetcher) {
+            this.asyncFetcher = new AsyncOptionFetcher(
+                () => this.fetchOptions,
+                {
+                    errorLabel: 'combobox options',
+                    onLoading: () => {
+                        this.asyncLoading = true;
+                        this.asyncError = null;
+                    },
+                    onResults: (results) => {
+                        this.renderAsyncOptionNodes(results);
+                    },
+                    onError: (message) => {
+                        this.asyncError = message;
+                    },
+                    onSettled: () => {
+                        this.asyncLoading = false;
+                    },
+                    onEmptyQuery: () => {
+                        this.asyncLoading = false;
+                        this.asyncError = null;
+                        this.renderAsyncOptionNodes(
+                            this.value && this.selectedOptionMeta ? [this.selectedOptionMeta] : [],
+                        );
+                    },
+                },
+            );
         }
 
-        const requestId = ++this.asyncFetchRequestId;
-        this.fetchAbortController?.abort();
-        this.fetchAbortController = new AbortController();
-
-        if (!query) {
-            this.asyncLoading = false;
-            this.asyncError = null;
-            this.renderAsyncOptionNodes(this.value && this.selectedOptionMeta ? [this.selectedOptionMeta] : []);
-            return;
-        }
-
-        this.asyncLoading = true;
-        this.asyncError = null;
-
-        try {
-            const results = await this.fetchOptions(query, this.fetchAbortController.signal);
-
-            if (requestId !== this.asyncFetchRequestId) {
-                return;
-            }
-
-            this.renderAsyncOptionNodes(results);
-        } catch (error) {
-            if (this.fetchAbortController?.signal.aborted || requestId !== this.asyncFetchRequestId) {
-                return;
-            }
-
-            if (error instanceof DOMException && error.name === 'AbortError') {
-                return;
-            }
-
-            console.error('Failed to load combobox options:', error);
-            this.asyncError = 'Failed to load options. Please try again.';
-            this.renderAsyncOptionNodes([]);
-        } finally {
-            if (requestId === this.asyncFetchRequestId) {
-                this.asyncLoading = false;
-            }
-        }
+        return this.asyncFetcher;
     }
 
     private getAsyncStatusMessage(): string | null {
@@ -678,20 +646,6 @@ export class PkCombobox extends PkFormAssociatedElement {
         }
 
         return null;
-    }
-
-    private shouldShowAsyncEmpty(): boolean {
-        if (!this.usesAsyncSearch || !this.open) {
-            return false;
-        }
-
-        const query = this.inputValue.trim();
-
-        if (!query || this.asyncLoading || this.asyncError) {
-            return false;
-        }
-
-        return this.getEnabledVisibleOptions().length === 0 && !this.shouldShowCreateOption();
     }
 
     private isSelected(value: string): boolean {
@@ -765,26 +719,15 @@ export class PkCombobox extends PkFormAssociatedElement {
         const visible = this.getVisibleOptions();
         const filterQuery = this.open ? this.getFilterQuery() : '';
 
-        for (const option of this.options) {
-            option.selected = this.isSelected(option.value);
-            option.hidden = !visible.includes(option);
-            option.optionId = `${this.listboxId}-option-${option.value}`;
-            option.matchQuery = filterQuery;
-        }
-
-        for (const group of this.querySelectorAll('pk-option-group')) {
-            const groupOptions = [...group.querySelectorAll('pk-option')];
-            // Use data-pk-filter-empty — not `hidden` — so clearing the query can
-            // resurrect options. `hidden` is reserved for intentional author hide;
-            // consulting it in getVisibleOptions would trap emptied groups forever.
-            const filterEmpty = groupOptions.length > 0
-                && groupOptions.every((option) => option.hidden);
-
-            group.toggleAttribute('data-pk-filter-empty', filterEmpty);
-        }
-
-        // Sibling <pk-separator>s stay in the light DOM when groups hide — sync them.
-        syncListboxSeparators(this);
+        // Shared filter visibility / group empty markers — Combobox still owns selection + chips.
+        syncFilteredOptions({
+            host: this,
+            options: this.options,
+            visible,
+            listboxId: this.listboxId,
+            filterQuery,
+            isSelected: (value) => this.isSelected(value),
+        });
 
         this.syncValueInput();
 
@@ -1123,7 +1066,7 @@ export class PkCombobox extends PkFormAssociatedElement {
         this.unbindPanelEvents();
         this.closing = true;
         this.panelAnimated = false;
-        await this.waitForExitAnimation();
+        await waitForPopupContentExitAnimation(this.panelElement);
 
         this.open = false;
         this.closing = false;
@@ -1142,8 +1085,7 @@ export class PkCombobox extends PkFormAssociatedElement {
         this.applySelection();
 
         if (this.usesAsyncSearch) {
-            window.clearTimeout(this.asyncFetchTimer);
-            this.fetchAbortController?.abort();
+            this.asyncFetcher?.cancel();
             this.asyncLoading = false;
             this.asyncError = null;
             this.renderAsyncOptionNodes(this.selectedOptionMeta ? [this.selectedOptionMeta] : []);
@@ -1171,40 +1113,6 @@ export class PkCombobox extends PkFormAssociatedElement {
             bubbles: true,
             composed: true,
         }));
-    }
-
-    private waitForExitAnimation(): Promise<void> {
-        const panel = this.panelElement;
-
-        if (!panel) {
-            return Promise.resolve();
-        }
-
-        return new Promise((resolve) => {
-            let settled = false;
-
-            const finish = (): void => {
-                if (settled) {
-                    return;
-                }
-
-                settled = true;
-                panel.removeEventListener('animationend', onAnimationEnd);
-                window.clearTimeout(fallback);
-                panel.classList.remove('closing');
-                resolve();
-            };
-
-            const onAnimationEnd = (event: AnimationEvent): void => {
-                if (event.target === panel && event.animationName.startsWith('pk-popup-content-out')) {
-                    finish();
-                }
-            };
-
-            panel.classList.add('closing');
-            panel.addEventListener('animationend', onAnimationEnd);
-            const fallback = window.setTimeout(finish, 150);
-        });
     }
 
     private shouldReturnFocusToInput(source: PkOverlaySource): boolean {
@@ -1853,11 +1761,9 @@ export class PkCombobox extends PkFormAssociatedElement {
     override render() {
         const visibleOptions = this.getEnabledVisibleOptions();
         const showCreate = this.shouldShowCreateOption();
-        const showEmpty = this.open && (
-            this.usesAsyncSearch
-                ? this.shouldShowAsyncEmpty()
-                : visibleOptions.length === 0 && !showCreate
-        );
+        // Async empty / loading / errors use `async-status` only — avoid stacking
+        // `emptyMessage` under “No matches…”.
+        const showEmpty = this.open && !this.usesAsyncSearch && visibleOptions.length === 0 && !showCreate;
         const asyncStatus = this.getAsyncStatusMessage();
         const createQuery = this.inputValue.trim();
 

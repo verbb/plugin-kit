@@ -33,20 +33,6 @@ Use `isInvalid` for field-level error styling. Use `readOnly` or `disabled` when
 
 <ComponentPreview src="./examples/code-editor-states.preview.vue.ts" />
 
-## Props
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Current editor content. |
-| `onChange` | `(value: string) => void` | — | Called when the document changes. |
-| `language` | `'html' \| 'text' \| 'javascript' \| 'css' \| 'json'` | `'html'` | Enables syntax support for the selected language. |
-| `rows` | `number` | `12` | Minimum visible row count used to calculate editor height. |
-| `tabSize` | `number` | `4` | Tab character width and indent unit (Tab key / auto-indent). Existing space indentation is unchanged. |
-| `lineNumbers` | `boolean` | `true` | Shows the line-number gutter. |
-| `isInvalid` | `boolean` | `false` | Applies error border styling. |
-| `disabled` | `boolean` | `false` | Prevents editing and lowers opacity. |
-| `readOnly` | `boolean` | `false` | Prevents editing while keeping full opacity. |
-| `className` | `string` | — | Optional wrapper class name. |
 
 ## Implementation notes
 
@@ -62,3 +48,57 @@ Use `isInvalid` for field-level error styling. Use `readOnly` or `disabled` when
 - Schema field wrapper: [CodeEditorField](../../forms/schema-fields/code-editor-field.md)
 - Rich text editing: [TiptapEditor](./tiptap-editor.md)
 - Read-only rich text output: [TiptapContent](./tiptap-content.md)
+
+<!-- pk-api:begin -->
+
+## API
+
+### Props
+
+| Name | Description |
+| --- | --- |
+| `customError` | Custom validation message; also settable via `setCustomValidity()`.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `defaultValue` | <small><strong>Type</strong> <code>string \| null</code></small> |
+| `disabled` | Disables the control and excludes it from constraint validation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `invalid` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `isInvalid` | Alias for `invalid`. |
+| `language` | <small><strong>Type</strong> <code>CodeEditorLanguage</code></small><br><small><strong>Default</strong> <code>html</code></small> |
+| `lineNumbers` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `name` | Name submitted with form data.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `readonly` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `readOnly` | Alias for `readonly`. |
+| `required` | Marks the control as required for form submission.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `rows` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>12</code></small> |
+| `tabSize` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>4</code></small> |
+
+### Methods
+
+| Name | Description |
+| --- | --- |
+| `checkValidity()` | Runs constraint validation without showing the browser UI. |
+| `reportValidity()` | Runs constraint validation and shows the browser UI when invalid. |
+| `resetValidity()` | Clears custom errors and re-syncs validity state. |
+| `setCustomValidity(message: string)` | Sets or clears a custom validation message. |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| `@blur` | — |
+| `@change` | — |
+| `@input` | — |
+| `@pk-change` | — |
+
+### Custom States
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `disabled` | The control is disabled. | `:state(disabled)` |
+| `invalid` | The control currently fails constraint validation. | `:state(invalid)` |
+| `optional` | The control is not required. | `:state(optional)` |
+| `required` | The control is required. | `:state(required)` |
+| `user-invalid` | Invalid after the user has interacted with the control. | `:state(user-invalid)` |
+| `user-valid` | Valid after the user has interacted with the control. | `:state(user-valid)` |
+| `valid` | The control currently passes constraint validation. | `:state(valid)` |
+
+<!-- pk-api:end -->

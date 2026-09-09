@@ -38,7 +38,7 @@ import {
 
 Lazy builtins (same keys in React and Vue):
 
-`text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `color`, `checkboxSelect`, `combobox`, `group`, `date`, `codeEditor`
+`text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `color`, `checkboxSelect`, `autocomplete`, `combobox`, `group`, `date`, `codeEditor`
 
 Product-specific keys (`handle`, `list`, `richText`, `variablePicker`, `elementSelect`, formula editors, plugin table variants, etc.) are **not** kit builtins — register them in the consumer with `registerFormFields()`.
 

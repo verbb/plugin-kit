@@ -9,6 +9,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,6 +44,11 @@ const SPECIAL = {
     'code-editor': 'CodeEditor',
     'editable-table': 'EditableTable',
     'input-group': 'InputGroup',
+    'input-group-addon': 'InputGroupAddon',
+    'input-group-button': 'InputGroupButton',
+    'input-group-input': 'InputGroupInput',
+    'input-group-text': 'InputGroupText',
+    'input-group-textarea': 'InputGroupTextarea',
 };
 
 const ATTR_TO_PROP = {
@@ -56,6 +62,11 @@ const ATTR_TO_PROP = {
     'allow-create': 'allowCreate',
     'allow-custom-value': 'allowCustomValue',
 };
+
+/** CEM-generated WC API tables stay Web-only until React/Vue variants exist. */
+function stripGeneratedApi(content) {
+    return content.replace(/\n*<!-- pk-api:begin -->[\s\S]*?<!-- pk-api:end -->\n*/g, '\n');
+}
 
 function reactName(slug) {
     if (Object.prototype.hasOwnProperty.call(SPECIAL, slug)) {
@@ -171,6 +182,7 @@ function main() {
         }
 
         let next = webContent.replaceAll('.preview.web.ts', '.preview.tsx');
+        next = stripGeneratedApi(next);
         next = rewriteProse(next, tagToReact, reactSlugs);
 
         // If web omitted previews but React already had them, restore under matching headings.
@@ -192,6 +204,16 @@ function main() {
 
         fs.writeFileSync(reactPath, `${next.trim()}\n`);
         console.log(`synced react ${slug}`);
+    }
+
+    // Re-inject framework-voiced API tables (sync strips WC API from web).
+    const gen = spawnSync(
+        process.execPath,
+        [path.join(__dirname, 'generate-component-api-docs.mjs'), '--voice=react'],
+        { stdio: 'inherit' },
+    );
+    if (gen.status !== 0) {
+        process.exit(gen.status ?? 1);
     }
 }
 

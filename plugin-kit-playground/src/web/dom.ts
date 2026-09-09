@@ -735,6 +735,7 @@ export function createPkCopyButton(options: {
     variant?: string;
     from?: string;
     icon?: string;
+    slot?: string;
 }): HTMLElement {
     const button = document.createElement('pk-copy-button');
     button.setAttribute('value', options.value);
@@ -745,6 +746,10 @@ export function createPkCopyButton(options: {
 
     if (options.from) {
         button.setAttribute('from', options.from);
+    }
+
+    if (options.slot) {
+        button.setAttribute('slot', options.slot);
     }
 
     if (options.icon) {

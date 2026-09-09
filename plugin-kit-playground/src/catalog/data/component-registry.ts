@@ -33,6 +33,7 @@ export const componentRegistry: ComponentRegistryEntry[] = [
     { id: 'editable-table', title: 'Editable Table', tier: 'composite', vanilla: true, react: true, description: 'Inline-editable table with mixed cell types, derived columns, and row reorder.', docsPath: '/components/editable-table' },
     { id: 'field', title: 'Field', tier: 'ui', vanilla: true, react: true, description: '`pk-field` wrapper — label, instructions, errors, tips.', docsPath: '/components/field' },
     { id: 'icon', title: 'Icon', tier: 'ui', vanilla: true, react: true, description: 'Raw-SVG icon set — `<pk-icon name>`.', docsPath: '/components/icon' },
+    { id: 'image-browser', title: 'Image Browser', tier: 'ui', vanilla: true, react: true, description: 'Presentational browser for static icons and images.', docsPath: '/components/image-browser' },
     { id: 'input', title: 'Input', tier: 'ui', vanilla: true, react: true, description: 'Single-line text field.', docsPath: '/components/input' },
     { id: 'lightswitch', title: 'Lightswitch', tier: 'ui', vanilla: true, react: true, description: 'On/off toggle switch.', docsPath: '/components/lightswitch' },
     { id: 'popover', title: 'Popover', tier: 'ui', vanilla: true, react: true, description: 'Anchored floating panel.', docsPath: '/components/popover' },

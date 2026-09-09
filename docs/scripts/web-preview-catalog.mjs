@@ -106,6 +106,13 @@ export const IMPORTS_BY_PREFIX = [
         '@verbb/plugin-kit-web/components/icon/pk-icon.js',
     ]],
     ['color-input', ['@verbb/plugin-kit-web/components/color-input/pk-color-input.js']],
+    ['autocomplete', [
+        '@verbb/plugin-kit-web/components/autocomplete/pk-autocomplete.js',
+        '@verbb/plugin-kit-web/components/select/pk-option.js',
+        '@verbb/plugin-kit-web/components/select/pk-option-group.js',
+        '@verbb/plugin-kit-web/components/field/pk-field.js',
+    ]],
+    ['image-browser', ['@verbb/plugin-kit-web/components/image-browser/pk-image-browser.js']],
     ['code-editor', ['@verbb/plugin-kit-web/components/code-editor/pk-code-editor.js']],
     ['copy-button', [
         '@verbb/plugin-kit-web/components/copy-button/pk-copy-button.js',

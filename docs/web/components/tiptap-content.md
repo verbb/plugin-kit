@@ -24,16 +24,21 @@ The editor instance is read-only (`editable: false`), but content still updates 
 
 This matters for builder previews where field settings change before the form is saved.
 
-## Attributes / properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | `''` | TipTap JSON, HTML, or empty content. |
-
-Styling is owned by shadow DOM — use host class names or `--pk-tiptap-content-*` tokens where documented, not light-DOM Tailwind ProseMirror piercing selectors.
 
 ## Related
 
 - Editable authoring: [TiptapEditor](./tiptap-editor.md)
 - SchemaForm: bind TipTap via [Custom Schema Fields](../../forms/custom-schema-fields.md) (rich-text `$field`s are product-owned)
 - Shared extensions and normalization: `@verbb/plugin-kit-tiptap-core`
+
+<!-- pk-api:begin -->
+
+## API
+
+### Attributes & Properties
+
+| Name | Description |
+| --- | --- |
+| `value` | <small><strong>Type</strong> <code>string</code></small> |
+
+<!-- pk-api:end -->

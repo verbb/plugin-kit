@@ -10,14 +10,33 @@ export type PkButtonSize = 'default' | 'xxs' | 'xs' | 'sm' | 'lg' | 'xl' | 'none
  * @slot start - Leading icon or prefix
  * @slot end - Trailing icon or suffix
  *
- * @csspart base - The native button element
+ * @csspart base - The native button / link element
+ *
+ * @cssproperty [--pk-btn-height=var(--pk-btn-height-default)] - Control height (also min-height).
+ * @cssproperty [--pk-btn-font=var(--pk-btn-font-default)] - Label font size.
+ * @cssproperty [--pk-btn-padding-inline=var(--pk-btn-padding-inline-default)] - Horizontal padding.
+ * @cssproperty [--pk-btn-padding-block=0] - Vertical padding override.
+ * @cssproperty [--pk-btn-icon-size=var(--pk-btn-icon-size-default)] - Start/end slot glyph size.
+ * @cssproperty [--pk-btn-icon-gap=var(--pk-btn-icon-gap-default)] - Gap between icons and label.
+ * @cssproperty [--pk-btn-caret-size=var(--pk-btn-caret-size-default)] - Built-in caret glyph size.
+ * @cssproperty [--pk-btn-radius=var(--pk-btn-radius-default)] - Border radius.
+ * @cssproperty [--pk-btn-fill] - Background fill (filled variants).
+ * @cssproperty [--pk-btn-fill-hover] - Hover fill.
+ * @cssproperty [--pk-btn-fill-active] - Active / pressed fill.
+ * @cssproperty [--pk-btn-on] - Foreground color on filled variants.
+ *
+ * @dependency pk-spinner - Loading indicator rendered while `loading` is set.
  */
 export declare class PkButton extends PkElement {
     static shadowRootOptions: ShadowRootInit;
     static styles: import('lit').CSSResult[];
+    /** Visual treatment — filled, outline, link, etc. */
     variant: PkButtonVariant;
+    /** Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides. */
     size: PkButtonSize;
+    /** Disables the control and blocks activation. */
     disabled: boolean;
+    /** Shows an inline spinner and prevents activation while busy. */
     loading: boolean;
     /**
      * Override loading spinner size. When unset, derived from `size` via
@@ -25,8 +44,11 @@ export declare class PkButton extends PkElement {
      * Formie New Form passes `xs` on `size="lg"` so the ring stays size-4 (1rem), not sm (1.5rem).
      */
     spinnerSize?: PkSpinnerSize;
+    /** Loading spinner visual style. Defaults from the button variant when unset. */
     spinnerVariant?: PkSpinnerVariant;
+    /** Loading spinner tone. Defaults from the button variant when unset. */
     spinnerTone?: PkSpinnerTone;
+    /** Shows a disclosure caret after the label. */
     withCaret: boolean;
     /**
      * Compact chevron-only trigger for grouped split actions — Craft `.menubtn`.
@@ -46,12 +68,26 @@ export declare class PkButton extends PkElement {
      * For one-off dimensions use `size="none"` and set `--pk-btn-*` on the host.
      */
     icon: boolean;
+    /** When set, renders as an anchor instead of a button. */
     href?: string;
+    /** Anchor `target` when `href` is set. */
     target?: string;
+    /** Anchor `rel` when `href` is set. */
     rel?: string;
+    /** Native `name` when used as a submit/reset control. */
     name?: string;
+    /** Native `value` when used as a submit control. */
     value?: string;
+    /**
+     * Accessible name for icon-only / unlabeled controls.
+     * Applied as `aria-label` — never as HTML `title` (no native hover tooltip).
+     * Prefer the `aria-label` attribute when setting from markup; `title` remains
+     * as a concise alias for the same accessible name.
+     */
     title: string;
+    /** Accessible name — wins over {@link title} when both are set. */
+    ariaLabel: string | null;
+    /** Native button type — ignored when `href` is set. */
     type: 'button' | 'submit' | 'reset';
     /**
      * HTML form owner id — same as native `<button form="…">`.

@@ -11,15 +11,19 @@ export const copyButtonWebSectionRenderers: PlaygroundSectionRendererMap = {
         const row = document.createElement('div');
         row.className = 'pg-card__inner--row';
 
-        row.append(
-            createPkInput({
-                value,
-                readonly: true,
-                style: { width: '16rem' },
-            }),
-            createPkCopyButton({ value, icon: playgroundIconClipboard }),
-        );
+        const copy = createPkCopyButton({
+            value,
+            slot: 'end',
+            icon: playgroundIconClipboard,
+        });
+        const input = createPkInput({
+            value,
+            readonly: true,
+            style: { width: '16rem' },
+        });
+        input.append(copy);
 
+        row.append(input);
         preview.append(row);
     },
 
@@ -29,14 +33,19 @@ export const copyButtonWebSectionRenderers: PlaygroundSectionRendererMap = {
         const pairedRow = document.createElement('div');
         pairedRow.className = 'pg-card__inner--row';
         pairedRow.style.marginBottom = '0.75rem';
-        pairedRow.append(
-            createPkInput({
-                value,
-                readonly: true,
-                style: { width: '16rem' },
-            }),
-            createPkCopyButton({ value, icon: playgroundIconClipboard }),
-        );
+
+        const copy = createPkCopyButton({
+            value,
+            slot: 'end',
+            icon: playgroundIconClipboard,
+        });
+        const input = createPkInput({
+            value,
+            readonly: true,
+            style: { width: '16rem' },
+        });
+        input.append(copy);
+        pairedRow.append(input);
         preview.append(pairedRow);
 
         const variantRow = document.createElement('div');

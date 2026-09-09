@@ -12,10 +12,11 @@ export const copyButtonReactSectionRenderers: PlaygroundSectionReactRendererMap 
 
         return (
             <div className="pg-card__inner--row">
-                <Input value={value} readOnly style={{ width: '16rem' }} />
-                <CopyButton value={value}>
-                    <Icon slot="icon" icon="clipboard" />
-                </CopyButton>
+                <Input value={value} readOnly style={{ width: '16rem' }}>
+                    <CopyButton slot="end" value={value}>
+                        <Icon slot="icon" icon="clipboard" />
+                    </CopyButton>
+                </Input>
             </div>
         );
     },
@@ -26,10 +27,11 @@ export const copyButtonReactSectionRenderers: PlaygroundSectionReactRendererMap 
         return (
             <>
                 <div className="pg-card__inner--row" style={{ marginBottom: '0.75rem' }}>
-                    <Input value={value} readOnly style={{ width: '16rem' }} />
-                    <CopyButton value={value}>
-                        <Icon slot="icon" icon="clipboard" />
-                    </CopyButton>
+                    <Input value={value} readOnly style={{ width: '16rem' }}>
+                        <CopyButton slot="end" value={value}>
+                            <Icon slot="icon" icon="clipboard" />
+                        </CopyButton>
+                    </Input>
                 </div>
                 <div className="pg-card__inner--row">
                     {variants.map((variant) => (

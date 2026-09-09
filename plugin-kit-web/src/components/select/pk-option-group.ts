@@ -6,7 +6,7 @@ import { uniqueId } from '../../a11y/focus.js';
 import { pkOptionGroupStyles } from './pk-option-group.styles.js';
 
 /**
- * Visual option group for `pk-select` —  listbox grouping pattern.
+ * Visual option group for `pk-select` — listbox grouping pattern.
  *
  * @slot - `pk-option` items in this group
  *
@@ -16,9 +16,11 @@ import { pkOptionGroupStyles } from './pk-option-group.styles.js';
 export class PkOptionGroup extends PkElement {
     static override styles = pkOptionGroupStyles;
 
+    /** Visible group heading above the options. */
     @property({ reflect: true })
     label = '';
 
+    /** Hides the group and its options. */
     @property({ type: Boolean, reflect: true })
     hidden = false;
 

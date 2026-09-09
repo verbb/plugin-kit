@@ -20,6 +20,8 @@ export * from './ColorInput.js';
 export * from './CheckboxSelect.js';
 export * from './DatePicker.js';
 export * from './Input.js';
+export * from './ImageBrowser.js';
+export * from './Autocomplete.js';
 export * from './Lightswitch.js';
 export * from './RadioGroup.js';
 export * from './Textarea.js';
@@ -39,6 +41,7 @@ export * from './Tabs.js';
 // Tier D — convenience wrappers matching plugin-kit-react's *Input contracts
 export * from './CheckboxInput.js';
 export * from './ComboboxInput.js';
+export * from './AutocompleteInput.js';
 export * from './RadioGroupInput.js';
 export * from './SelectInput.js';
 

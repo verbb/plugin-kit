@@ -7,7 +7,15 @@ import { CustomErrorValidator, type PkValidator } from '../validators/index.js';
 import { PkElement } from './pk-element.js';
 
 /**
- * Form-associated custom element base —  `FormAssociatedElement` pattern.
+ * Form-associated custom element base — ElementInternals + shared validity helpers.
+ *
+ * @cssstate disabled - The control is disabled.
+ * @cssstate required - The control is required.
+ * @cssstate optional - The control is not required.
+ * @cssstate invalid - The control currently fails constraint validation.
+ * @cssstate valid - The control currently passes constraint validation.
+ * @cssstate user-invalid - Invalid after the user has interacted with the control.
+ * @cssstate user-valid - Valid after the user has interacted with the control.
  */
 export abstract class PkFormAssociatedElement extends PkElement {
     static formAssociated = true;
@@ -38,15 +46,19 @@ export abstract class PkFormAssociatedElement extends PkElement {
 
     validators: PkValidator[] = [];
 
+    /** Name submitted with form data. */
     @property({ reflect: true })
     name: string | null = null;
 
+    /** Disables the control and excludes it from constraint validation. */
     @property({ type: Boolean, reflect: true })
     disabled = false;
 
+    /** Marks the control as required for form submission. */
     @property({ type: Boolean, reflect: true })
     required = false;
 
+    /** Custom validation message; also settable via `setCustomValidity()`. */
     @property({ attribute: 'custom-error', reflect: true })
     customError: string | null = null;
 
@@ -190,23 +202,27 @@ export abstract class PkFormAssociatedElement extends PkElement {
         return this.internals.form;
     }
 
+    /** Runs constraint validation without showing the browser UI. */
     checkValidity(): boolean {
         this.updateValidity();
         return this.internals.checkValidity();
     }
 
+    /** Runs constraint validation and shows the browser UI when invalid. */
     reportValidity(): boolean {
         this.updateValidity();
         this.hasInteracted = true;
         return this.internals.reportValidity();
     }
 
+    /** Clears custom errors and re-syncs validity state. */
     resetValidity(): void {
         this.setCustomValidity('');
         this.internals.setValidity({});
         this.syncCustomStates();
     }
 
+    /** Sets or clears a custom validation message. */
     setCustomValidity(message: string): void {
         if (!message) {
             this.customError = null;

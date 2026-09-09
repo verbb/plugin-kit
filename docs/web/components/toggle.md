@@ -31,3 +31,39 @@ Pressed examples make it clear how the control should behave when selected.
 Disabled examples show how the control should read when unavailable.
 
 <ComponentPreview src="./examples/toggle-disabled.preview.web.ts" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | Button label or icon content |
+
+### Attributes & Properties
+
+| Name | Description |
+| --- | --- |
+| `ariaLabel` `aria-label` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `pressed` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `size` | <small><strong>Type</strong> <code>PkToggleSize</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+| `value` `data-value` | <small><strong>Type</strong> <code>string</code></small> |
+| `variant` | <small><strong>Type</strong> <code>PkToggleVariant</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| `change` | — |
+| `pk-pressed-change` | — |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | Toggle button element | `::part(base)` |
+
+<!-- pk-api:end -->

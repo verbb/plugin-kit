@@ -3,6 +3,7 @@ export * from './mount.js';
 export * from './button.js';
 export * from './spinner.js';
 export * from './icon.js';
+export * from './image-browser.js';
 export * from './checkbox.js';
 export * from './field.js';
 export * from './input.js';

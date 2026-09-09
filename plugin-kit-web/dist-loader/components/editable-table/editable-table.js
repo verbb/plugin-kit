@@ -1,22 +1,22 @@
 import { c as r, f as A, i as e, l as n, m as i, o, p as b, t as c, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-B21zXxSo.js";
+import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-CyzwylQ7.js";
 import { B as plus, C as gripMove, S as gear, Y as xmark, b as ellipsis, l as arrowUp, o as arrowDown } from "../../chunks/svg-_Mtb7CHx.js";
 import { t as getIcon } from "../../chunks/registry-BanyScVR.js";
-import "../../chunks/pk-button-Dh4gjLHw.js";
+import "../../chunks/pk-button-CX8ddNJb.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
-import "../../chunks/pk-checkbox-BrZQB816.js";
-import "../../chunks/pk-color-input-sS05YOwT.js";
-import "../../chunks/pk-input-CEw3AdYt.js";
-import "../../chunks/pk-textarea-C_rOUtFS.js";
+import "../../chunks/pk-checkbox-B3d4nkBx.js";
+import "../../chunks/pk-color-input-CD-r_sfG.js";
+import "../../chunks/pk-input-Da3ri30w.js";
+import "../../chunks/pk-textarea-CC7rA5A7.js";
 import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
-import "../../chunks/pk-dropdown-item-CHkFNlA9.js";
-import "../../chunks/pk-dropdown-menu-BHVOMNV1.js";
-import "../../chunks/pk-lightswitch-DJEUScgo.js";
-import "../../chunks/pk-option-CunPIei0.js";
-import "../../chunks/pk-select-CbAaQ7uE.js";
-import "../../chunks/pk-date-picker-Dni5ty79.js";
-import "../../chunks/pk-combobox-B7q6alzE.js";
-import "../../chunks/pk-time-picker-Dr3uvbvc.js";
+import "../../chunks/pk-dropdown-item-CGw8NNU2.js";
+import "../../chunks/pk-dropdown-menu-Dl9ZZUzQ.js";
+import "../../chunks/pk-lightswitch-DRxY8511.js";
+import "../../chunks/pk-option-PxtaL7DK.js";
+import "../../chunks/pk-select-BmNlzfLb.js";
+import "../../chunks/pk-date-picker-BtPMNlCo.js";
+import "../../chunks/pk-combobox-CXWiDQRf.js";
+import "../../chunks/pk-time-picker-CC_Yj659.js";
 //#region src/components/editable-table/editable-table-dnd.ts
 /**
 * Table-native pointer drag for `<pk-editable-table>` rows.
@@ -1528,7 +1528,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
             data-row-id=${rowId}
             data-tone=${rowMod.tone || A}
             class=${rowMod.class ? e(Object.fromEntries(rowMod.class.split(/\s+/).filter(Boolean).map((token) => [token, true]))) : A}
-            title=${rowMod.title || A}
+            aria-label=${rowMod.title || A}
         >
             ${columns.map((column) => {
 			const resolved = this.resolveColumn(row, column, rowIndex);
@@ -1541,7 +1541,6 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 				...columnClass ? Object.fromEntries(columnClass.split(/\s+/).filter(Boolean).map((token) => [token, true])) : {}
 			})}
                     style=${resolved.width || column.width ? `width: ${resolved.width || column.width}` : A}
-                    title=${errors.length ? errors.join("\n") : A}
                 >
                     ${this.renderCell(resolved, row, rowIndex, errors.length > 0)}
                 </td>`;
@@ -1560,9 +1559,8 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         class="action-btn"
                                         variant="none"
                                         size="xs"
-                                        aria-label="Reorder row"
+                                        aria-label=${!this.dndReady && !this.disabled ? "Preparing drag…" : "Reorder row"}
                                         ?disabled=${this.disabled || !this.dndReady}
-                                        title=${!this.dndReady && !this.disabled ? "Preparing drag…" : A}
                                     >${o(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>` : A}
                         ${showRowMenu ? b`<pk-dropdown-menu size="sm" placement="bottom-end" side-offset="2">

@@ -1,6 +1,6 @@
 import { c as r, i as e, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B21zXxSo.js";
-import "../../chunks/pk-checkbox-BrZQB816.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-CyzwylQ7.js";
+import "../../chunks/pk-checkbox-B3d4nkBx.js";
 //#region src/components/checkbox-select/pk-checkbox-select.styles.ts
 var pkCheckboxSelectStyles = i`
     @layer pk-component {

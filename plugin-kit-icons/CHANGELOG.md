@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+- `iconToSvg({ title })` sets SVG `aria-label` (and `role="img"`) instead of a
+  `<title>` child, so accessible names no longer produce native hover tooltips.
+  Pair with `<pk-icon>` / kit chrome that also avoid HTML `title` for naming.
+
 ## 2.0.15 - 2026-09-04
 
 ### Changed

@@ -1,2 +1,2 @@
-import { t as PkCopyButton } from "../../chunks/pk-copy-button-asOLQkqk.js";
+import { t as PkCopyButton } from "../../chunks/pk-copy-button-BVaOLtYG.js";
 export { PkCopyButton };

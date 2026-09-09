@@ -6,12 +6,11 @@ const value = 'FORMIE_LICENSE_KEY';
 export function CopyButtonVariantsExample() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                <Input value={value} readonly style={{ width: '16rem' }} />
-                <CopyButton value={value}>
+            <Input value={value} readonly style={{ width: '16rem' }}>
+                <CopyButton slot="end" value={value}>
                     <Icon slot="icon" icon="clipboard" aria-hidden="true" />
                 </CopyButton>
-            </div>
+            </Input>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <CopyButton value={value}>
                     <Icon slot="icon" icon="clipboard" aria-hidden="true" />

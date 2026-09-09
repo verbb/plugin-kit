@@ -66,8 +66,9 @@ export class PkIcon extends PkElement {
     name = '';
 
     /**
-     * Accessible label. When set the icon is exposed as an image with a title;
-     * otherwise it is hidden from assistive technology.
+     * Accessible label. When set the icon is exposed as an image with
+     * `aria-label`; otherwise it is hidden from assistive technology.
+     * Does not use HTML/SVG `title` (no native hover tooltip).
      */
     @property()
     label?: string;

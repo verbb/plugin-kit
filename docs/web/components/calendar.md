@@ -49,3 +49,56 @@ Click the month/year title to step between day, month, and year views.
 `disabled-days-of-week` takes space-separated weekday names (`sun`, `mon`, …).
 
 <ComponentPreview src="./examples/calendar-disabled-days-of-week.preview.web.ts" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| `previous-icon` | — |
+| `next-icon` | — |
+| `footer` | — |
+| `day-YYYY-MM-DD` | Custom content for a specific day cell |
+
+### Attributes & Properties
+
+| Name | Description |
+| --- | --- |
+| `bordered` | When false, omits the outer frame — use inside popovers (e.g. `pk-date-picker`).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `disabledDatesRaw` `disabled-dates` | <small><strong>Type</strong> <code>string</code></small> |
+| `disabledDaysOfWeek` `disabled-days-of-week` | <small><strong>Type</strong> <code>string</code></small> |
+| `disableFuture` `disable-future` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `disablePast` `disable-past` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `firstDayOfWeek` `first-day-of-week` | <small><strong>Type</strong> <code>PkCalendarFirstDayOfWeek</code></small><br><small><strong>Default</strong> <code>auto</code></small> |
+| `focusedDate` `focused-date` | <small><strong>Type</strong> <code>string</code></small> |
+| `locale` | <small><strong>Type</strong> <code>string</code></small> |
+| `max` | <small><strong>Type</strong> <code>string</code></small> |
+| `maxRange` `max-range` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>0</code></small> |
+| `min` | <small><strong>Type</strong> <code>string</code></small> |
+| `minRange` `min-range` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>0</code></small> |
+| `mode` | <small><strong>Type</strong> <code>PkCalendarMode</code></small><br><small><strong>Default</strong> <code>single</code></small> |
+| `months` | <small><strong>Type</strong> <code>1 \| 2</code></small><br><small><strong>Default</strong> <code>1</code></small> |
+| `pageBy` `page-by` | <small><strong>Type</strong> <code>PkCalendarPageBy</code></small><br><small><strong>Default</strong> <code>months</code></small> |
+| `readonly` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `size` | <small><strong>Type</strong> <code>PkCalendarSize</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+| `today` | <small><strong>Type</strong> <code>string</code></small> |
+| `value` | <small><strong>Type</strong> <code>string</code></small> |
+| `view` | <small><strong>Type</strong> <code>PkCalendarView</code></small><br><small><strong>Default</strong> <code>days</code></small> |
+| `weekdayFormat` `weekday-format` | <small><strong>Type</strong> <code>'narrow' \| 'short' \| 'long'</code></small><br><small><strong>Default</strong> <code>narrow</code></small> |
+| `withOutsideDays` `with-outside-days` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `withWeekNumbers` `with-week-numbers` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| `change` | User commits a new value |
+| `input` | Value changes during interaction |
+| `pk-focus-day` | Focused day changed; `detail.date` |
+| `pk-view-change` | View changed; `detail.view`, `detail.date` |
+
+<!-- pk-api:end -->

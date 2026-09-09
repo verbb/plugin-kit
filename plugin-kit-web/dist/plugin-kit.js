@@ -1,7 +1,7 @@
 import { t as getDismissibleStackSnapshot } from "./chunks/dismissible-stack-XQUMfKO3.js";
 import { n as getScrollLockDepth, t as forceClearScrollLock } from "./chunks/scroll-lock-Bbh3Sc5g.js";
-import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-DPX9YYZs.js";
-import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-CNB8PbP_.js";
+import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-dJO3tYOX.js";
+import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-D34fm8xW.js";
 //#region src/utils/overlay-recovery.ts
 /**
 * Production overlay recovery — detects and clears stuck pk-dialog / popup /

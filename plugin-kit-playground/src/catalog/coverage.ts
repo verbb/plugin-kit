@@ -143,6 +143,7 @@ export const VUE_ADAPTER_IDS = new Set([
     'dialog',
     'dropdown-menu',
     'field',
+    'image-browser',
     'input',
     'input-group',
     'popover',

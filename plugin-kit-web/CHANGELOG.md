@@ -2,6 +2,68 @@
 
 ## Unreleased
 
+### Added
+- `<pk-autocomplete>` — freeform text field with optional `pk-option` suggestions
+  (React/Vue `Autocomplete`). Committed `value` is the input text
+  (`aria-autocomplete="both"`); Combobox stays selection-first. Shares option
+  filter + async fetch helpers with Combobox. No filesystem scanning — plugins
+  feed suggestions and Field `warning` / `invalid` for missing paths.
+- Shared `waitForPopupContentExitAnimation` and `syncFilteredOptions` used by
+  Combobox and Autocomplete (panel exit motion + filter visibility / group empty
+  markers) — not a shared listbox controller.
+
+### Changed
+- `<pk-autocomplete>` field chrome matches `pk-input` (border / fill / focus ring;
+  optional clear only). No longer reuses Combobox’s slate select fill or expand
+  chevron — freeform text with suggestions, not a dropdown.
+- `<pk-autocomplete>` async mode clears previous suggestion nodes when a search
+  starts (and on open/close), so “Searching…” no longer appears under a stale list
+  on reopen.
+- Async Autocomplete / Combobox no longer stack `emptyMessage` under the async
+  “No matches…” status — empty async UI goes through `async-status` only.
+- Custom Elements Manifest (`custom-elements.json`) via `npm run gen:cem`. Web docs
+  API tables (Slots / Attributes & Properties / Methods / Events / CSS Custom
+  Properties / Custom States / CSS Parts / Dependencies) are generated for all
+  documented `<pk-*>` components from Lit source. React and Vue component docs
+  (including Input Group) get the same tables with framework prop/event naming.
+- `<pk-image-browser>` — presentational static icon/image browser (trigger + search +
+  grouped grid). Consumers supply `items` / `groups` with `value` / `label` /
+  `preview` (URL or inline SVG); the kit does not scan disks or filter extensions.
+  Modes: `icon` (compact glyphs) and `image` (larger photo tiles). Cell name
+  visibility via `label-mode` / `labelMode`: `tooltip` (default), `inline`, or `none`. Form-associated
+  with clear, scroll paging, and `pk-popup`
+  panel. Host-driven `loading` shows a centered `pk-spinner` in the open panel
+  (no loading copy); pair with `selected-label` / `selected-preview` for the
+  closed trigger before the catalog is ready. Keyboard: open from trigger (Enter / Space / arrows); search combobox with
+  `aria-activedescendant`; 2D arrow navigation in the grid; Enter selects; Escape
+  closes; live-region announces filter results.
+
+### Changed
+- `<pk-image-browser>` renames `density` → `mode` (`icon` | `image`) — preview kind,
+  not packing density. Type: `PkImageBrowserMode`.
+- `<pk-image-browser>` icon mode uses ~22px glyphs in ~36px square cells (same
+  glyph size for every `label-mode`) so select/hover rings clear the tips;
+  content-height cells when labels are inline. Image mode defaults to the same tooltip treatment
+  with larger photo tracks (~7.5rem), tight inset chrome, and `object-fit: cover`
+  so previews fill the cell (cropping is fine for thumbnails). Image-mode
+  select/hover ring is drawn above the photo (flush tiles otherwise hide inset
+  `box-shadow`). Re-clicking the
+  active option clears it when `with-clear` is on; hover highlight snaps back to
+  the selected cell when the pointer leaves the grid.
+- Accessible names no longer use HTML `title` / SVG `<title>` (no native hover
+  tooltips). Icon-only controls use `aria-label` (or `sr-only` text). `<pk-button
+  title>` maps to `aria-label` on the inner control. Copy button, field
+  “Translatable”, image-browser options, editable-table row/drag/cell chrome, and
+  TipTap variable-tag / link-bubble follow the same rule. Pair with
+  `@verbb/plugin-kit-icons` `iconToSvg({ title })` → SVG `aria-label`.
+- `<pk-copy-button slot="end">` inside `<pk-input>` is the canonical in-control copy
+  pattern (same flex-reserved trailing action model as combobox clear/expand and
+  image-browser clear). Long values stay in the field’s remaining width instead of
+  painting under the button. Standalone (non-slotted) copy buttons are unchanged.
+- `<pk-input>` clear control is flex-flow (not absolutely overlaid); trailing chrome
+  tokens (`--pk-input-padding-*`, `--pk-input-decoration-size`) are shared with
+  in-control end actions.
+
 ## 2.0.15 - 2026-09-04
 
 ### Fixed

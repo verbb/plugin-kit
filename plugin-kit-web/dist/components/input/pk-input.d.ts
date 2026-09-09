@@ -8,7 +8,8 @@ export type PkInputSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
  * @slot instructions
  * @slot hint - Alias for `instructions`
  * @slot start - Leading adornment inside the field chrome (icon, unit, etc.)
- * @slot end - Trailing adornment inside the field chrome
+ * @slot end - Trailing adornment inside the field chrome (icon, unit, or
+ *   in-control action such as `pk-copy-button`)
  * @slot clear-icon
  *
  * @csspart form-control - Wrapper

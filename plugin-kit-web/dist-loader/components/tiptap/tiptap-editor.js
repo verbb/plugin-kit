@@ -1,20 +1,20 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B21zXxSo.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-CyzwylQ7.js";
 import { A as heading, D as h4, E as h3, F as link, G as table, H as strikethrough, I as listOl, J as underline, K as textSlash, L as listUl, N as italic, O as h5, R as minus, T as h2, U as subscript, V as quoteRight, W as superscript, a as alignRight, c as arrowRotateRight, d as bold, f as bracketsCurly, h as chevronDown, i as alignLeft, j as highlighter, k as h6, n as alignCenter, q as triangleExclamation, r as alignJustify, s as arrowRotateLeft, w as h1, x as fileDashedLine, y as code, z as paragraph } from "../../chunks/svg-_Mtb7CHx.js";
-import "../../chunks/pk-button-Dh4gjLHw.js";
+import "../../chunks/pk-button-CX8ddNJb.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
-import "../../chunks/pk-checkbox-BrZQB816.js";
-import "../../chunks/pk-input-CEw3AdYt.js";
+import "../../chunks/pk-checkbox-B3d4nkBx.js";
+import "../../chunks/pk-input-Da3ri30w.js";
 import { M as posToDOMRect, j as getMarkRange, k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, D as getFatalTiptapContentError, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BIRIMP7I.js";
+import { A as createTiptapExtensions, D as getFatalTiptapContentError, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BFGP4eTV.js";
 import { n as renderIconHtml } from "../../chunks/render-Niz5wYRa.js";
-import "../../chunks/pk-field-CJ09ll1S.js";
-import "../../chunks/pk-dialog-BpPRqFMm.js";
-import "../../chunks/pk-dropdown-item-CHkFNlA9.js";
-import "../../chunks/pk-dropdown-menu-BHVOMNV1.js";
+import "../../chunks/pk-field-DlrIzuXF.js";
+import "../../chunks/pk-dialog-CJW5J_DO.js";
+import "../../chunks/pk-dropdown-item-CGw8NNU2.js";
+import "../../chunks/pk-dropdown-menu-Dl9ZZUzQ.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-HwZ0zRd2.js";
+import "../../chunks/pk-tooltip-BS2dNLOS.js";
 //#region src/components/tiptap/tiptap-editor-host.ts
 function serializeTiptapDocumentContent(content) {
 	return JSON.stringify(normalizeContentArray(content));
@@ -675,7 +675,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
                 style=${`top:${this.linkBubbleTop}px;left:${this.linkBubbleLeft}px;transform:translate(-50%, -100%);`}
             >
                 <span class="link-bubble__arrow" aria-hidden="true"></span>
-                <span class="link-bubble__url" title=${this.linkBubbleHref}>${this.linkBubbleHref}</span>
+                <span class="link-bubble__url">${this.linkBubbleHref}</span>
                 <span class="link-bubble__divider" aria-hidden="true"></span>
                 <button
                     type="button"

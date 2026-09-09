@@ -271,7 +271,7 @@ export class PkField extends PkElement {
                                                 : nothing}
                                             ${this.translatable
                                                 ? html`
-                                                    <span class="form-control__translatable" title="Translatable">
+                                                    <span class="form-control__translatable">
                                                         ${createTranslationIconElement()}
                                                         <span class="sr-only">Translatable</span>
                                                     </span>

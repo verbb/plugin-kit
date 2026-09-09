@@ -57,6 +57,9 @@ export const iconToSvg = (icon: PkIcon, options: PkIconRenderOptions = {}): stri
 
     if (title) {
         attrs.role = 'img';
+        // aria-label names the image for AT without SVG <title> (which browsers
+        // surface as a native hover tooltip — same problem as HTML title).
+        attrs['aria-label'] = title;
     } else {
         attrs['aria-hidden'] = 'true';
         attrs.focusable = 'false';
@@ -66,7 +69,5 @@ export const iconToSvg = (icon: PkIcon, options: PkIconRenderOptions = {}): stri
         .map(([key, value]) => { return `${key}="${escapeHtml(value)}"`; })
         .join(' ');
 
-    const titleMarkup = title ? `<title>${escapeHtml(title)}</title>` : '';
-
-    return `<svg ${attrString}>${titleMarkup}<path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
+    return `<svg ${attrString}><path fill="currentColor" d="${escapeHtml(icon.path)}"/></svg>`;
 };

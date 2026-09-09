@@ -55,3 +55,30 @@ Dropdown triggers work well at the end of a group when the primary action remain
 Popover triggers work well when a grouped action needs lightweight supporting content instead of a menu. Same pattern: `groupTrigger` on the trigger, no chevron icon.
 
 <ComponentPreview src="./examples/button-group-popover.preview.tsx" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | Buttons, toolbars, and overlay triggers |
+
+### Props
+
+| Name | Description |
+| --- | --- |
+| `exclusive` | Exclusive icon/text toggle styling — Craft `.btngroup--exclusive`. Use with `pk-toggle` items for view-mode pickers.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `label` | Accessible label for the group —  `pk-button-group.label`.<br><small><strong>Type</strong> <code>string</code></small> |
+| `orientation` | <small><strong>Type</strong> <code>PkButtonGroupOrientation</code></small><br><small><strong>Default</strong> <code>horizontal</code></small> |
+| `separators` | Draw 1px dividers between adjacent controls (Craft default). Set `separators="false"` for flush join. Explicit `pk-button-group-separator` elements always work for segment splits.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | Group container | `::part(base)` |
+
+<!-- pk-api:end -->

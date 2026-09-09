@@ -8,6 +8,15 @@ export const pkInputStyles = css`
             font-family: var(--pk-font-family);
             font-size: var(--pk-font-size-base);
             line-height: var(--pk-line-height);
+            /*
+             * Control chrome tokens — inherit into light-DOM in-control actions
+             * (e.g. pk-copy-button[slot=end]) the same way combobox/image-browser
+             * size their trailing clear/expand hit targets.
+             */
+            --pk-input-padding-block: 6px;
+            --pk-input-padding-inline: 8px;
+            --pk-input-control-gap: 6px;
+            --pk-input-decoration-size: 0.75rem;
         }
 
         :host([data-pk-group-orientation]) {
@@ -93,11 +102,13 @@ export const pkInputStyles = css`
         /* Chrome lives on the flex shell (part=base) so slot=start/end adornments sit
          * inside the border — same visual contract as pk-input-group / v1 InputGroup.
          * Height is content-sized (v1): padding-block + --pk-input-control-line-height + border.
+         * Trailing actions (clear, pk-copy-button[slot=end]) stay in flex flow so long
+         * values never paint under the button — mirror combobox / image-browser.
          */
         .form-control__input {
             align-items: center;
-            gap: 6px;
-            padding-inline: 8px;
+            gap: var(--pk-input-control-gap);
+            padding-inline: var(--pk-input-padding-inline);
             border: var(--pk-input-border);
             border-radius: var(--pk-input-border-radius, var(--pk-radius-sm));
             background: var(--pk-input-bg);
@@ -111,8 +122,11 @@ export const pkInputStyles = css`
             margin: 0;
             color: var(--pk-color-gray-400);
             line-height: 0;
+            align-self: stretch;
+            align-items: center;
         }
 
+        /* Decorative glyphs only — interactive in-control actions opt out below. */
         .form-control__start ::slotted(*),
         .form-control__end ::slotted(*) {
             display: block;
@@ -120,12 +134,31 @@ export const pkInputStyles = css`
             max-height: 1.25rem;
         }
 
+        /* Copy (and similar) inside the field: flex-reserved space, not absolute overlay. */
+        .form-control__end:has(::slotted(pk-copy-button)) {
+            align-items: stretch;
+        }
+
+        .form-control__end ::slotted(pk-copy-button) {
+            display: inline-flex;
+            align-self: stretch;
+            align-items: stretch;
+            max-width: none;
+            max-height: none;
+            /*
+             * Pull into trailing padding like combobox expand/clear, but leave a
+             * small inset so the glyph is not tight against the field border.
+             */
+            margin-inline-end: calc(-1 * var(--pk-input-padding-inline) + 4px);
+            margin-block: calc(-1 * var(--pk-input-padding-block));
+        }
+
         .input {
             display: block;
             width: 100%;
             margin: 0;
             /* v1 Input default: py-1.5 + text-sm (14px / 1.25rem lh) → 34px with border. */
-            padding-block: 6px;
+            padding-block: var(--pk-input-padding-block);
             padding-inline: 0;
             border: 0;
             border-radius: 0;
@@ -179,43 +212,47 @@ export const pkInputStyles = css`
             box-shadow: var(--pk-input-invalid-focus-shadow);
         }
 
-        :host([size='xs']) .form-control__input {
-            gap: 4px;
-            padding-inline: 6px;
+        :host([size='xs']) {
+            --pk-input-padding-block: 4px;
+            --pk-input-padding-inline: 6px;
+            --pk-input-control-gap: 4px;
+            --pk-input-decoration-size: 0.625rem;
         }
 
         :host([size='xs']) .input {
-            padding-block: 4px;
             font-size: 11px;
         }
 
-        :host([size='sm']) .form-control__input {
-            gap: 4px;
-            padding-inline: 8px;
+        :host([size='sm']) {
+            --pk-input-padding-block: 4px;
+            --pk-input-padding-inline: 8px;
+            --pk-input-control-gap: 4px;
+            --pk-input-decoration-size: 0.6875rem;
         }
 
         :host([size='sm']) .input {
-            padding-block: 4px;
             font-size: 12px;
         }
 
-        :host([size='lg']) .form-control__input {
-            gap: 8px;
-            padding-inline: 12px;
+        :host([size='lg']) {
+            --pk-input-padding-block: 8px;
+            --pk-input-padding-inline: 12px;
+            --pk-input-control-gap: 8px;
+            --pk-input-decoration-size: 0.875rem;
         }
 
         :host([size='lg']) .input {
-            padding-block: 8px;
             font-size: var(--pk-font-size-base);
         }
 
-        :host([size='xl']) .form-control__input {
-            gap: 8px;
-            padding-inline: 16px;
+        :host([size='xl']) {
+            --pk-input-padding-block: 10px;
+            --pk-input-padding-inline: 16px;
+            --pk-input-control-gap: 8px;
+            --pk-input-decoration-size: 1rem;
         }
 
         :host([size='xl']) .input {
-            padding-block: 10px;
             font-size: 16px;
         }
 
@@ -338,15 +375,24 @@ export const pkInputStyles = css`
             border-bottom-width: 0;
         }
 
+        /*
+         * Clear is a flex trailing action (not absolute). Reserves width in the
+         * control so values cannot scroll under the glyph — same contract as
+         * combobox clear/expand and image-browser clear.
+         */
         .clear-button {
-            position: absolute;
-            inset-inline-end: 6px;
-            inset-block-start: 50%;
-            translate: 0 -50%;
-        }
-
-        .form-control__input:has(.clear-button) .input {
-            padding-inline-end: 20px;
+            display: inline-flex;
+            flex-shrink: 0;
+            align-self: stretch;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            width: calc(var(--pk-input-decoration-size) + var(--pk-input-padding-inline));
+            margin-block: calc(-1 * var(--pk-input-padding-block));
+            /* Match pk-copy-button[slot=end]: pull into padding but leave a 4px glyph inset. */
+            margin-inline-end: calc(-1 * var(--pk-input-padding-inline) + 4px);
+            font-size: var(--pk-input-decoration-size);
+            line-height: 1;
         }
     }
 `;

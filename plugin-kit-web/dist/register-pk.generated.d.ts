@@ -1,3 +1,5 @@
+/** Register `pk-autocomplete` only (async side-effect import). */
+export declare function registerPkAutocomplete(): Promise<void>;
 /** Register `pk-button` only (async side-effect import). */
 export declare function registerPkButton(): Promise<void>;
 /** Register `pk-button-group` only (async side-effect import). */
@@ -42,6 +44,8 @@ export declare function registerPkEditableTable(): Promise<void>;
 export declare function registerPkField(): Promise<void>;
 /** Register `pk-icon` only (async side-effect import). */
 export declare function registerPkIcon(): Promise<void>;
+/** Register `pk-image-browser` only (async side-effect import). */
+export declare function registerPkImageBrowser(): Promise<void>;
 /** Register `pk-input` only (async side-effect import). */
 export declare function registerPkInput(): Promise<void>;
 /** Register `pk-input-group` only (async side-effect import). */

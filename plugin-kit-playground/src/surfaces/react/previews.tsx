@@ -20,6 +20,7 @@ import { editableTablePreview } from './previews/EditableTablePreview';
 import { fieldPreview } from './previews/FieldPreview';
 import { formsPreview } from './previews/FormsPreview';
 import { iconPreview } from './previews/IconPreview';
+import { imageBrowserPreview } from './previews/ImageBrowserPreview';
 import { inputPreview } from './previews/InputPreview';
 import { lightswitchPreview } from './previews/LightswitchPreview';
 import { popoverPreview } from './previews/PopoverPreview';
@@ -78,6 +79,7 @@ const dedicatedPreviews = new Map<string, SurfacePreviewDefinition>([
     [formsPreview.id, formsPreview],
     [editableTablePreview.id, editableTablePreview],
     [iconPreview.id, iconPreview],
+    [imageBrowserPreview.id, imageBrowserPreview],
     [inputPreview.id, inputPreview],
     [lightswitchPreview.id, lightswitchPreview],
     [popoverPreview.id, popoverPreview],

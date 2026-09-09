@@ -21,8 +21,9 @@ export type PkIcon = {
 export type PkIconRenderOptions = {
     /**
      * Accessible title. When provided the SVG is exposed as an image
-     * (`role="img"`) with a `<title>`; otherwise it is hidden from the
-     * accessibility tree (`aria-hidden="true"`).
+     * (`role="img"`) with `aria-label`; otherwise it is hidden from the
+     * accessibility tree (`aria-hidden="true"`). Does not emit SVG `<title>`
+     * (browsers would show a native hover tooltip).
      */
     title?: string;
     /** Value for the SVG `class` attribute. */

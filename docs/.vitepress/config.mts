@@ -115,6 +115,7 @@ const reactAppItems = [
 ];
 
 const reactComponentItems = [
+    { text: 'Autocomplete', link: '/react/components/autocomplete' },
     { text: 'Button', link: '/react/components/button' },
     { text: 'Button Group', link: '/react/components/button-group' },
     { text: 'Calendar', link: '/react/components/calendar' },
@@ -131,7 +132,9 @@ const reactComponentItems = [
     { text: 'Editable Table', link: '/react/components/editable-table' },
     { text: 'Field', link: '/react/components/field' },
     { text: 'Icon', link: '/react/components/icon' },
+    { text: 'Image Browser', link: '/react/components/image-browser' },
     { text: 'Input', link: '/react/components/input' },
+    { text: 'Input Group', link: '/react/components/input-group' },
     { text: 'Lightswitch', link: '/react/components/lightswitch' },
     { text: 'Popover', link: '/react/components/popover' },
     { text: 'Radio Group', link: '/react/components/radio-group' },
@@ -159,8 +162,9 @@ const vueComponentItems = reactComponentItems
         link: item.link.replace('/react/components/', '/vue/components/'),
     }));
 
-/** Web nav is canonical — includes Input Group (also exported from React; docs TBD). */
+/** Web nav is canonical; React/Vue mirror the documented component set (minus React-only wrappers). */
 const webComponentItems = [
+    { text: 'Autocomplete', link: '/web/components/autocomplete' },
     { text: 'Button', link: '/web/components/button' },
     { text: 'Button Group', link: '/web/components/button-group' },
     { text: 'Calendar', link: '/web/components/calendar' },
@@ -177,6 +181,7 @@ const webComponentItems = [
     { text: 'Editable Table', link: '/web/components/editable-table' },
     { text: 'Field', link: '/web/components/field' },
     { text: 'Icon', link: '/web/components/icon' },
+    { text: 'Image Browser', link: '/web/components/image-browser' },
     { text: 'Input', link: '/web/components/input' },
     { text: 'Input Group', link: '/web/components/input-group' },
     { text: 'Lightswitch', link: '/web/components/lightswitch' },
@@ -220,6 +225,7 @@ const formsItems = [
         text: 'Built-in Schema Fields',
         collapsed: true,
         items: [
+            { text: 'Autocomplete Field', link: '/forms/schema-fields/autocomplete-field' },
             { text: 'Checkbox Select Field', link: '/forms/schema-fields/checkbox-select-field' },
             { text: 'Code Editor Field', link: '/forms/schema-fields/code-editor-field' },
             { text: 'Color Field', link: '/forms/schema-fields/color-field' },

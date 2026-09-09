@@ -5,9 +5,10 @@
     "type": "module",
     "description": "VitePress documentation for Plugin Kit (web, React, Vue, forms, tiptap).",
     "scripts": {
-        "docs:dev": "vitepress dev .",
-        "docs:build": "vitepress build .",
-        "docs:preview": "vitepress preview ."
+        "docs:dev": "npm run gen:api && vitepress dev .",
+        "docs:build": "npm run gen:api && vitepress build .",
+        "docs:preview": "vitepress preview .",
+        "gen:api": "npm run gen:cem -w @verbb/plugin-kit-web && node scripts/generate-component-api-docs.mjs"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-svg-core": "^7.2.0",

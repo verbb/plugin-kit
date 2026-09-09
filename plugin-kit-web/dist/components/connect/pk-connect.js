@@ -1,9 +1,9 @@
 import { i as property, o as state, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
-import "../../chunks/pk-button-BWGDkuzc.js";
-import "../../chunks/pk-status-D1IzTSI2.js";
-import "../../chunks/pk-dialog-BbEfvb0g.js";
+import "../../chunks/pk-button-BrH4u4Qr.js";
+import "../../chunks/pk-status-BehQARDv.js";
+import "../../chunks/pk-dialog-VMQqLW1f.js";
 import "../icon/pk-icon.js";
-import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-DshgIW2n.js";
+import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-BhW406jt.js";
 import { LitElement, html, nothing } from "lit";
 import { buildConnectPayload, escapeCpHtml, resolveConnectError, sendCpConnectRequest, serializeCpForm, watchCpFormDirty } from "@verbb/plugin-kit-core";
 //#region src/components/connect/pk-connect.ts

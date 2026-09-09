@@ -5,12 +5,13 @@ import { defineWebPreview } from '../../../.vitepress/theme/components/defineWeb
 
 export default defineWebPreview({
     label: 'Basic Usage',
-    title: 'Basic usage example',
-    layout: 'row',
+    title: 'In-control copy action',
+    layout: 'stack',
     html: `
-<pk-input value="https://verbb.io" readonly style="width:16rem"></pk-input>
-<pk-copy-button value="https://verbb.io">
-  <pk-icon slot="icon" icon="clipboard" aria-hidden="true"></pk-icon>
-</pk-copy-button>
+<pk-input value="https://verbb.io" readonly style="width:16rem">
+  <pk-copy-button slot="end" value="https://verbb.io">
+    <pk-icon slot="icon" icon="clipboard" aria-hidden="true"></pk-icon>
+  </pk-copy-button>
+</pk-input>
 `.trim(),
 });

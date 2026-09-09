@@ -10,7 +10,7 @@ import { pkOptionStyles } from './pk-option.styles.js';
 const CHECK_ICON = renderIconHtml(check);
 
 /**
- * Select option — use inside `pk-select` or `pk-combobox`.
+ * Select option — use inside `pk-select`, `pk-combobox`, or `pk-autocomplete`.
  *
  * @slot start - Presentational decoration before the label (e.g. `pk-status`).
  * @slot - Option label
@@ -19,11 +19,15 @@ const CHECK_ICON = renderIconHtml(check);
  * @csspart option - Option button
  * @csspart label - Option label
  * @csspart check - Selected-state check indicator
+ *
+ * @event pk-option-select - Emitted when the option is activated (click / Enter).
+ * @event pk-option-highlight - Emitted when the option becomes the highlighted item.
  */
 @customElement('pk-option')
 export class PkOption extends PkElement {
     static override styles = pkOptionStyles;
 
+    /** Option value submitted / emitted when selected. */
     @property()
     value = '';
 
@@ -34,15 +38,19 @@ export class PkOption extends PkElement {
     @property()
     label = '';
 
+    /** Disables the option so it cannot be selected. */
     @property({ type: Boolean, reflect: true })
     disabled = false;
 
+    /** Whether this option is currently selected. */
     @property({ type: Boolean, reflect: true })
     selected = false;
 
+    /** Keyboard / pointer highlight within the listbox. */
     @property({ type: Boolean, reflect: true })
     highlighted = false;
 
+    /** Hides the option from the list (e.g. filtered combobox results). */
     @property({ type: Boolean, reflect: true })
     hidden = false;
 
@@ -56,6 +64,7 @@ export class PkOption extends PkElement {
     @property({ attribute: false })
     matchQuery = '';
 
+    /** Focus the option’s inner control (listbox keyboard navigation). */
     focusControl(preventScroll = true): void {
         this.shadowRoot?.querySelector<HTMLButtonElement>('.option')?.focus({ preventScroll });
     }
@@ -173,7 +182,7 @@ export class PkOption extends PkElement {
             return;
         }
 
-        const owner = this.closest('pk-select, pk-combobox');
+        const owner = this.closest('pk-select, pk-combobox, pk-autocomplete');
         const panel = owner ? null : this.closest('[role="listbox"]');
 
         if (!owner && !panel) {

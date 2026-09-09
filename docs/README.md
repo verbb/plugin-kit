@@ -38,3 +38,24 @@ npm run docs:build
 ## Edit links
 
 GitHub edit URLs point at `docs/` in the plugin-kit repo — adjust `editLink.pattern` in `.vitepress/config.mts` if the default branch path differs.
+
+## Component API tables
+
+Web / React / Vue component pages append a generated **API** section from the Lit
+Custom Elements Manifest (Slots, Props or Attributes & Properties, Methods, Events,
+CSS Custom Properties, Custom States, CSS Parts, Dependencies).
+
+```bash
+# From monorepo root — regenerates CEM + injects all voices
+npm run gen:api -w @verbb/plugin-kit-docs
+
+# Single voice
+node docs/scripts/generate-component-api-docs.mjs --voice=react
+```
+
+`docs:dev` / `docs:build` run `gen:api` first. Tag → page mapping lives in
+`docs/scripts/generate-component-api-docs.mjs` (`PAGE_APIS`). React/Vue get camelCase
+**Props**, facade aliases (`isInvalid`, `readOnly`), and framework event names
+(`onPkChange` / `@pk-change`). Sync scripts strip the Web API block then re-run the
+generator for that voice. `checkbox-input.md` has no CE and is excluded.
+

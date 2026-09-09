@@ -37,3 +37,32 @@ Spacing can loosen the group when the items should read as related controls with
 Use single selection for mutually exclusive choices, and multiple selection for independent formatting-style choices.
 
 <ComponentPreview src="./examples/toggle-group-selection.preview.vue.ts" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | `pk-toggle` or `button[data-value]` items |
+
+### Props
+
+| Name | Description |
+| --- | --- |
+| `joined` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `multiple` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `orientation` | <small><strong>Type</strong> <code>PkToggleGroupOrientation</code></small><br><small><strong>Default</strong> <code>horizontal</code></small> |
+| `size` | <small><strong>Type</strong> <code>PkToggleSize</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+| `spacing` | Gap between items — `0` joins adjacent toggles (React `spacing={0}`).<br><small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>0</code></small> |
+| `variant` | <small><strong>Type</strong> <code>PkToggleVariant</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | Group container | `::part(base)` |
+
+<!-- pk-api:end -->

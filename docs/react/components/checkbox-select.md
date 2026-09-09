@@ -43,3 +43,42 @@ Disable the whole group when the selection is present for context but locked.
 Longer option labels still stack cleanly in the default vertical orientation.
 
 <ComponentPreview src="./examples/checkbox-select-long-list.preview.tsx" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Props
+
+| Name | Description |
+| --- | --- |
+| `allLabel` | <small><strong>Type</strong> <code>string</code></small><br><small><strong>Default</strong> <code>All</code></small> |
+| `ariaLabel` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `options` | <small><strong>Type</strong> <code>PkCheckboxSelectOption[]</code></small><br><small><strong>Default</strong> <code>[]</code></small> |
+| `orientation` | <small><strong>Type</strong> <code>PkCheckboxSelectOrientation</code></small><br><small><strong>Default</strong> <code>vertical</code></small> |
+| `showAllOption` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `value` | Selected values, or `*` when the All option is active.<br><small><strong>Type</strong> <code>PkCheckboxSelectValue</code></small><br><small><strong>Default</strong> <code>[]</code></small> |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| `onChange` | — |
+| `onPkChange` | `{ value: string[] \| '*' }` Some facades also expose value sugar via `onChange`. |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | Checkbox options container | `::part(base)` |
+
+### Dependencies
+
+This component registers the following elements when it loads.
+
+| Name | Description |
+| --- | --- |
+| `pk-checkbox` | — |
+
+<!-- pk-api:end -->

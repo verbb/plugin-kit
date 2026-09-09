@@ -33,7 +33,22 @@ const CARET_ICON = iconToSvg(chevronDown);
  * @slot start - Leading icon or prefix
  * @slot end - Trailing icon or suffix
  *
- * @csspart base - The native button element
+ * @csspart base - The native button / link element
+ *
+ * @cssproperty [--pk-btn-height=var(--pk-btn-height-default)] - Control height (also min-height).
+ * @cssproperty [--pk-btn-font=var(--pk-btn-font-default)] - Label font size.
+ * @cssproperty [--pk-btn-padding-inline=var(--pk-btn-padding-inline-default)] - Horizontal padding.
+ * @cssproperty [--pk-btn-padding-block=0] - Vertical padding override.
+ * @cssproperty [--pk-btn-icon-size=var(--pk-btn-icon-size-default)] - Start/end slot glyph size.
+ * @cssproperty [--pk-btn-icon-gap=var(--pk-btn-icon-gap-default)] - Gap between icons and label.
+ * @cssproperty [--pk-btn-caret-size=var(--pk-btn-caret-size-default)] - Built-in caret glyph size.
+ * @cssproperty [--pk-btn-radius=var(--pk-btn-radius-default)] - Border radius.
+ * @cssproperty [--pk-btn-fill] - Background fill (filled variants).
+ * @cssproperty [--pk-btn-fill-hover] - Hover fill.
+ * @cssproperty [--pk-btn-fill-active] - Active / pressed fill.
+ * @cssproperty [--pk-btn-on] - Foreground color on filled variants.
+ *
+ * @dependency pk-spinner - Loading indicator rendered while `loading` is set.
  */
 @customElement('pk-button')
 export class PkButton extends PkElement {
@@ -44,15 +59,19 @@ export class PkButton extends PkElement {
 
     static override styles = pkButtonStyles;
 
+    /** Visual treatment — filled, outline, link, etc. */
     @property({ reflect: true })
     variant: PkButtonVariant = 'default';
 
+    /** Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides. */
     @property({ reflect: true })
     size: PkButtonSize = 'default';
 
+    /** Disables the control and blocks activation. */
     @property({ type: Boolean, reflect: true })
     disabled = false;
 
+    /** Shows an inline spinner and prevents activation while busy. */
     @property({ type: Boolean, reflect: true })
     loading = false;
 
@@ -64,12 +83,15 @@ export class PkButton extends PkElement {
     @property({ reflect: true, attribute: 'spinner-size' })
     spinnerSize?: PkSpinnerSize;
 
+    /** Loading spinner visual style. Defaults from the button variant when unset. */
     @property({ reflect: true, attribute: 'spinner-variant' })
     spinnerVariant?: PkSpinnerVariant;
 
+    /** Loading spinner tone. Defaults from the button variant when unset. */
     @property({ reflect: true, attribute: 'spinner-tone' })
     spinnerTone?: PkSpinnerTone;
 
+    /** Shows a disclosure caret after the label. */
     @property({ type: Boolean, reflect: true, attribute: 'with-caret' })
     withCaret = false;
 
@@ -95,24 +117,40 @@ export class PkButton extends PkElement {
     @property({ type: Boolean, reflect: true })
     icon = false;
 
+    /** When set, renders as an anchor instead of a button. */
     @property()
     href?: string;
 
+    /** Anchor `target` when `href` is set. */
     @property()
     target?: string;
 
+    /** Anchor `rel` when `href` is set. */
     @property()
     rel?: string;
 
+    /** Native `name` when used as a submit/reset control. */
     @property()
     name?: string;
 
+    /** Native `value` when used as a submit control. */
     @property()
     value?: string;
 
+    /**
+     * Accessible name for icon-only / unlabeled controls.
+     * Applied as `aria-label` — never as HTML `title` (no native hover tooltip).
+     * Prefer the `aria-label` attribute when setting from markup; `title` remains
+     * as a concise alias for the same accessible name.
+     */
     @property()
     title = '';
 
+    /** Accessible name — wins over {@link title} when both are set. */
+    @property({ attribute: 'aria-label' })
+    ariaLabel: string | null = null;
+
+    /** Native button type — ignored when `href` is set. */
     @property()
     type: 'button' | 'submit' | 'reset' = 'button';
 
@@ -256,6 +294,8 @@ export class PkButton extends PkElement {
         const spinnerSize = this.spinnerSize || getButtonSpinnerSize(this.size);
         const spinnerVariant = resolveSpinnerVariant(this.variant, this.spinnerVariant);
         const isLink = Boolean(this.href);
+        // Accessible name only — never HTML title (native tooltips get in the way).
+        const accessibleName = this.ariaLabel || this.title || '';
 
         return html`
             ${isLink
@@ -266,7 +306,7 @@ export class PkButton extends PkElement {
                         href=${this.href!}
                         target=${this.target ?? nothing}
                         rel=${this.rel ?? nothing}
-                        title=${this.title || nothing}
+                        aria-label=${accessibleName || nothing}
                     >
                         ${this.renderInner(spinnerSize, spinnerVariant)}
                     </a>
@@ -279,9 +319,9 @@ export class PkButton extends PkElement {
                         ?disabled=${this.disabled}
                         aria-disabled=${this.disabled ? 'true' : nothing}
                         aria-busy=${this.loading ? 'true' : nothing}
+                        aria-label=${accessibleName || nothing}
                         name=${this.name ?? nothing}
                         value=${this.value ?? nothing}
-                        title=${this.title || nothing}
                     >
                         ${this.renderInner(spinnerSize, spinnerVariant)}
                     </button>

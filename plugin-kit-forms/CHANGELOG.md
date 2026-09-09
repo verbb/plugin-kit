@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Documented SchemaForm `$field: "autocomplete"` (implemented in React/Vue adapters).
+
 ## 2.0.15 - 2026-09-04
 
 ### Changed

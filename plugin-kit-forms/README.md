@@ -28,7 +28,7 @@ npm install @verbb/plugin-kit-forms
 
 `SchemaFormEngine`, `Field`, registries, and field components are framework-specific. Product-owned fields (handles, element selects, variable pickers, …) are registered by the host app — they are not kit builtins. Styling and controls live in `@verbb/plugin-kit-web`.
 
-Builtin `$field` keys (documented under Forms): `text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `color`, `checkboxSelect`, `combobox`, `group`, `date`, `codeEditor`.
+Builtin `$field` keys (documented under Forms): `text`, `textarea`, `number`, `select`, `radioGroup`, `lightswitch`, `color`, `checkboxSelect`, `autocomplete`, `combobox`, `group`, `date`, `codeEditor`.
 
 ## Engine usage
 

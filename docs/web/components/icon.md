@@ -69,3 +69,17 @@ Icons are decorative by default (hidden from assistive technology). Set `label` 
 Slot into other components — buttons stay icon-agnostic via `slot="start"` / `slot="end"`.
 
 <ComponentPreview src="./examples/icon-in-context.preview.web.ts" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Attributes & Properties
+
+| Name | Description |
+| --- | --- |
+| `icon` | Icon name (kebab-case), e.g. `chevron-down`, `gear`, `xmark`. Namespacing-safe alternative to `name` — use this inside CMS form markup.<br><small><strong>Type</strong> <code>string</code></small> |
+| `label` | Accessible label. When set the icon is exposed as an image with `aria-label`; otherwise it is hidden from assistive technology. Does not use HTML/SVG `title` (no native hover tooltip).<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
+| `name` | Icon name (kebab-case). Back-compat / non-form alias for `icon`. Avoid in server-namespaced forms, where `name` attributes get rewritten.<br><small><strong>Type</strong> <code>string</code></small> |
+
+<!-- pk-api:end -->

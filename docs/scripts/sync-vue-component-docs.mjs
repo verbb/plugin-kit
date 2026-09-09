@@ -7,12 +7,11 @@
  * - `pk-*` tags / links rewritten to Vue component names / `/vue/components/…`
  * - no WC “canonical API” / facade intro
  *
- * Skips web-only pages Vue does not document yet (e.g. input-group stays web-only
- * until Vue nav includes it). Creates missing vue/*.md when a matching preview exists
- * or when react already documents the slug.
+ * Creates missing vue/*.md when React already documents the slug (minus SKIP_SLUGS).
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -49,6 +48,13 @@ const SPECIAL = {
     'code-editor': 'CodeEditor',
     'editable-table': 'EditableTable',
     'input-group': 'InputGroup',
+    'input-group-addon': 'InputGroupAddon',
+    'input-group-button': 'InputGroupButton',
+    'input-group-input': 'InputGroupInput',
+    'input-group-text': 'InputGroupText',
+    'input-group-textarea': 'InputGroupTextarea',
+    'image-browser': 'ImageBrowser',
+    'autocomplete': 'Autocomplete',
 };
 
 const ATTR_TO_PROP = {
@@ -62,6 +68,11 @@ const ATTR_TO_PROP = {
     'allow-create': 'allowCreate',
     'allow-custom-value': 'allowCustomValue',
 };
+
+/** CEM-generated WC API tables stay Web-only until Vue variants exist. */
+function stripGeneratedApi(content) {
+    return content.replace(/\n*<!-- pk-api:begin -->[\s\S]*?<!-- pk-api:end -->\n*/g, '\n');
+}
 
 /** React-only convenience wrappers — skip until Vue ships them. */
 const SKIP_SLUGS = new Set([
@@ -205,6 +216,7 @@ function main() {
         const webContent = fs.readFileSync(webPath, 'utf8');
 
         let next = webContent.replaceAll('.preview.web.ts', '.preview.vue.ts');
+        next = stripGeneratedApi(next);
         next = rewriteProse(next, tagToVue, vueSlugs);
         next = rewritePreviewSrcs(next, slug);
 
@@ -216,6 +228,16 @@ function main() {
 
         fs.writeFileSync(vuePath, `${next.trim()}\n`);
         console.log(`synced vue ${slug}`);
+    }
+
+    // Re-inject framework-voiced API tables (sync strips WC API from web).
+    const gen = spawnSync(
+        process.execPath,
+        [path.join(__dirname, 'generate-component-api-docs.mjs'), '--voice=vue'],
+        { stdio: 'inherit' },
+    );
+    if (gen.status !== 0) {
+        process.exit(gen.status ?? 1);
     }
 }
 

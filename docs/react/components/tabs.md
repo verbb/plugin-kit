@@ -31,3 +31,123 @@ Modal tabs adapt the same pattern to dialog layouts where the tab content needs 
 Disabled tabs and scrollable tab lists — default, pane, and modal variants.
 
 <ComponentPreview src="./examples/tabs-disabled-overflow.preview.tsx" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Tabs
+
+#### Slots
+
+| Name | Description |
+| --- | --- |
+| `nav` | `pk-tab` triggers and optional `pk-tab-heading` group labels |
+| `(default)` | `pk-tab-panel` content panels |
+
+#### Props
+
+| Name | Description |
+| --- | --- |
+| `activation` | `manual` — arrow keys move focus only; Enter/Space activates (Base UI default). `auto` — arrow keys activate tabs immediately.<br><small><strong>Type</strong> <code>PkTabsActivation</code></small><br><small><strong>Default</strong> <code>manual</code></small> |
+| `ariaLabel` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `orientation` | <small><strong>Type</strong> <code>PkTabsOrientation</code></small><br><small><strong>Default</strong> <code>horizontal</code></small> |
+| `placement` | <small><strong>Type</strong> <code>PkTabsPlacement</code></small><br><small><strong>Default</strong> <code>top</code></small> |
+| `value` | <small><strong>Type</strong> <code>string</code></small> |
+| `variant` | Visual style — `default` (segmented), `pane`, `modal`, or `sidebar` (vertical nav).<br><small><strong>Type</strong> <code>PkTabsVariant</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `onPkChange` | Active tab changed. Some facades also expose value sugar via `onChange`. |
+| `onPkTabHide` | A tab panel became hidden. |
+| `onPkTabShow` | A tab panel became visible. |
+
+#### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | Root container | `::part(base)` |
+| `list` | Tab list | `::part(list)` |
+
+### Tab
+
+#### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | Tab label |
+| `icon` | Optional leading content (icon, logo, etc.) |
+| `status` | Optional trailing content (status dot, badge, etc.) |
+
+#### Props
+
+| Name | Description |
+| --- | --- |
+| `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `focusIndex` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>-1</code></small> |
+| `panelId` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
+| `selected` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `value` | <small><strong>Type</strong> <code>string</code></small> |
+
+#### Methods
+
+| Name | Description |
+| --- | --- |
+| `focusControl()` | — |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `onPkTabKeydown` | — |
+| `onPkTabSelect` | — |
+
+#### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `icon` | Icon slot wrapper (hidden when empty) | `::part(icon)` |
+| `label` | Label slot wrapper | `::part(label)` |
+| `status` | Status slot wrapper (hidden when empty) | `::part(status)` |
+| `trigger` | Tab button | `::part(trigger)` |
+
+### TabHeading
+
+#### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | Heading text |
+
+#### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `heading` | Heading container | `::part(heading)` |
+
+### TabPanel
+
+#### Slots
+
+| Name | Description |
+| --- | --- |
+| `(default)` | Panel content |
+
+#### Props
+
+| Name | Description |
+| --- | --- |
+| `hidden` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `tabId` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
+| `value` | <small><strong>Type</strong> <code>string</code></small> |
+
+#### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `content` | Panel container | `::part(content)` |
+
+<!-- pk-api:end -->

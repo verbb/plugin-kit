@@ -232,3 +232,26 @@
   font-size: 14px;
 }
 
+/*
+  Generated component API tables (Slots / Attributes / Events / …).
+  Description cells stack Type / Default on their own lines (WA-style).
+*/
+.vp-doc table td:first-child code {
+  white-space: nowrap;
+}
+
+.vp-doc table td code {
+  font-size: 0.85em;
+}
+
+/*
+  VitePress: inline `code` inside headings inherits the heading font-size, so a
+  monospace chip like `pk-button` reads as large as (or larger than) the next h3.
+  Keep heading code slightly smaller than the heading text.
+*/
+.vp-doc :is(h1, h2, h3, h4, h5, h6) code {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+

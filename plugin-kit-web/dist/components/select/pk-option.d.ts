@@ -1,6 +1,6 @@
 import { PkElement } from '../../base/pk-element.js';
 /**
- * Select option — use inside `pk-select` or `pk-combobox`.
+ * Select option — use inside `pk-select`, `pk-combobox`, or `pk-autocomplete`.
  *
  * @slot start - Presentational decoration before the label (e.g. `pk-status`).
  * @slot - Option label
@@ -9,23 +9,32 @@ import { PkElement } from '../../base/pk-element.js';
  * @csspart option - Option button
  * @csspart label - Option label
  * @csspart check - Selected-state check indicator
+ *
+ * @event pk-option-select - Emitted when the option is activated (click / Enter).
+ * @event pk-option-highlight - Emitted when the option becomes the highlighted item.
  */
 export declare class PkOption extends PkElement {
     static styles: import('lit').CSSResult;
+    /** Option value submitted / emitted when selected. */
     value: string;
     /**
      * Optional short label for the closed trigger / filter identity (v1 itemToStringLabel).
      * When set, preferred over concatenating rich default-slot text (title + subtitle).
      */
     label: string;
+    /** Disables the option so it cannot be selected. */
     disabled: boolean;
+    /** Whether this option is currently selected. */
     selected: boolean;
+    /** Keyboard / pointer highlight within the listbox. */
     highlighted: boolean;
+    /** Hides the option from the list (e.g. filtered combobox results). */
     hidden: boolean;
     focusIndex: number;
     optionId: string;
     /** When set, the label renders with matching query text highlighted (combobox filter). */
     matchQuery: string;
+    /** Focus the option’s inner control (listbox keyboard navigation). */
     focusControl(preventScroll?: boolean): void;
     /**
      * Label for the closed combobox/select value.

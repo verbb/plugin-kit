@@ -2,7 +2,15 @@ import { PropertyValues } from 'lit';
 import { PkValidator } from '../validators/index.js';
 import { PkElement } from './pk-element.js';
 /**
- * Form-associated custom element base —  `FormAssociatedElement` pattern.
+ * Form-associated custom element base — ElementInternals + shared validity helpers.
+ *
+ * @cssstate disabled - The control is disabled.
+ * @cssstate required - The control is required.
+ * @cssstate optional - The control is not required.
+ * @cssstate invalid - The control currently fails constraint validation.
+ * @cssstate valid - The control currently passes constraint validation.
+ * @cssstate user-invalid - Invalid after the user has interacted with the control.
+ * @cssstate user-valid - Valid after the user has interacted with the control.
  */
 export declare abstract class PkFormAssociatedElement extends PkElement {
     static formAssociated: boolean;
@@ -14,9 +22,13 @@ export declare abstract class PkFormAssociatedElement extends PkElement {
     /** Events that must all fire before `:user-invalid` applies — override per component. */
     assumeInteractionOn: string[];
     validators: PkValidator[];
+    /** Name submitted with form data. */
     name: string | null;
+    /** Disables the control and excludes it from constraint validation. */
     disabled: boolean;
+    /** Marks the control as required for form submission. */
     required: boolean;
+    /** Custom validation message; also settable via `setCustomValidity()`. */
     customError: string | null;
     valueHasChanged: boolean;
     hasInteracted: boolean;
@@ -43,9 +55,13 @@ export declare abstract class PkFormAssociatedElement extends PkElement {
     get willValidate(): boolean;
     get validationMessage(): string;
     getForm(): HTMLFormElement | null;
+    /** Runs constraint validation without showing the browser UI. */
     checkValidity(): boolean;
+    /** Runs constraint validation and shows the browser UI when invalid. */
     reportValidity(): boolean;
+    /** Clears custom errors and re-syncs validity state. */
     resetValidity(): void;
+    /** Sets or clears a custom validation message. */
     setCustomValidity(message: string): void;
     protected get validationTarget(): HTMLElement | undefined;
     protected get allValidators(): PkValidator[];

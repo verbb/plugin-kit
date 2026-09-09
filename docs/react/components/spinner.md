@@ -25,3 +25,24 @@ Spinner variants help the loading indicator stay legible inside matching button 
 Use the size scale to match the spinner to the surrounding control without changing its visual behavior.
 
 <ComponentPreview src="./examples/spinner-sizes.preview.tsx" />
+
+<!-- pk-api:begin -->
+
+## API
+
+### Props
+
+| Name | Description |
+| --- | --- |
+| `centered` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `size` | <small><strong>Type</strong> <code>PkSpinnerSize</code></small><br><small><strong>Default</strong> <code>sm</code></small> |
+| `tone` | <small><strong>Type</strong> <code>PkSpinnerTone \| undefined</code></small> |
+| `variant` | <small><strong>Type</strong> <code>PkSpinnerVariant</code></small><br><small><strong>Default</strong> <code>default</code></small> |
+
+### CSS Parts
+
+| Name | Description | CSS selector |
+| --- | --- | --- |
+| `base` | The spinning ring element | `::part(base)` |
+
+<!-- pk-api:end -->

@@ -32,12 +32,13 @@ type PreviewSourceModule = {
 
 function getRouteDirectory(routePath: string) {
     const sanitizedPath = routePath.split(/[?#]/, 1)[0] || '/';
+    // VitePress may serve `/web/components/foo` or `/web/components/foo/`. Relative
+    // preview paths (`./examples/…`) are siblings of the page file, so always strip
+    // the page segment — a trailing slash must not keep `foo/` as the base directory.
+    const trimmed = sanitizedPath.replace(/\/+$/, '') || '/';
+    const slash = trimmed.lastIndexOf('/');
 
-    if (sanitizedPath.endsWith('/')) {
-        return sanitizedPath;
-    }
-
-    return `${sanitizedPath.slice(0, sanitizedPath.lastIndexOf('/') + 1)}`;
+    return `${trimmed.slice(0, slash + 1)}`;
 }
 
 function stripSiteBase(docPath: string, siteBase = '/') {

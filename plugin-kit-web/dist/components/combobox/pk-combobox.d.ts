@@ -3,14 +3,13 @@ import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.j
 import { PkOverlaySource } from '../../events/overlay-lifecycle.js';
 import { PkValidator } from '../../validators/types.js';
 import { PkPopupPlacement } from '../popup/pk-popup.js';
-import { PkOption } from '../select/pk-option.js';
+import { PkAsyncOptionFetchHandler, PkAsyncOptionItem } from '../../utils/async-option-fetch.js';
+import { PkOptionFilter } from '../../utils/option-filter.js';
 export type PkComboboxSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
-export type PkComboboxFilter = (option: PkOption, query: string) => boolean;
-export type PkComboboxAsyncOption = {
-    value: string;
-    label: string;
-};
-export type PkComboboxFetchHandler = (query: string, signal: AbortSignal) => Promise<PkComboboxAsyncOption[]>;
+/** Alias of `PkOptionFilter` — public Combobox filter API. */
+export type PkComboboxFilter = PkOptionFilter;
+export type PkComboboxAsyncOption = PkAsyncOptionItem;
+export type PkComboboxFetchHandler = PkAsyncOptionFetchHandler;
 /**
  * Combobox — searchable select with separate input and selection state.
  *
@@ -118,10 +117,8 @@ export declare class PkCombobox extends PkFormAssociatedElement {
     private panelEventTarget;
     private optionsObserver?;
     private liveRegion?;
-    private fetchAbortController?;
-    private asyncFetchTimer?;
-    private asyncFetchRequestId;
     private selectedOptionMeta;
+    private asyncFetcher;
     private asyncLoading;
     private asyncError;
     connectedCallback(): void;
@@ -141,7 +138,6 @@ export declare class PkCombobox extends PkFormAssociatedElement {
     private bindPanelEvents;
     private unbindPanelEvents;
     private isOptionInHiddenGroup;
-    private defaultFilter;
     private matchesFilter;
     private getFilterQuery;
     private getVisibleOptions;
@@ -155,9 +151,8 @@ export declare class PkCombobox extends PkFormAssociatedElement {
     private mergeAsyncItems;
     private syncSelectedOptionMeta;
     private scheduleAsyncFetch;
-    private runAsyncFetch;
+    private ensureAsyncFetcher;
     private getAsyncStatusMessage;
-    private shouldShowAsyncEmpty;
     private isSelected;
     private getDisplayInputValue;
     private getTriggerDisplayValue;
@@ -180,7 +175,6 @@ export declare class PkCombobox extends PkFormAssociatedElement {
     private commitInputOnClose;
     private shouldCommitCustomValueOnClose;
     private closePanel;
-    private waitForExitAnimation;
     private shouldReturnFocusToInput;
     private registerDismissHandlers;
     private unregisterDismissHandlers;

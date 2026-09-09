@@ -142,14 +142,15 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
             dom.classList.toggle('pk-variable-tag--unresolved', unresolved);
             if (unresolved) {
                 dom.dataset.unresolved = 'true';
-                // Hover: prompt to fix + keep the raw token for support/debug.
-                dom.title = token
+                // Extra context for AT — not HTML title (avoids native hover tooltip).
+                const description = token
                     ? `Unknown or missing reference — ${token}`
                     : 'Unknown or missing reference';
+                dom.setAttribute('aria-description', description);
                 label.setAttribute('aria-invalid', 'true');
             } else {
                 delete dom.dataset.unresolved;
-                dom.removeAttribute('title');
+                dom.removeAttribute('aria-description');
                 label.removeAttribute('aria-invalid');
             }
 

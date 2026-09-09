@@ -485,7 +485,7 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
                 style=${`top:${this.linkBubbleTop}px;left:${this.linkBubbleLeft}px;transform:translate(-50%, -100%);`}
             >
                 <span class="link-bubble__arrow" aria-hidden="true"></span>
-                <span class="link-bubble__url" title=${this.linkBubbleHref}>${this.linkBubbleHref}</span>
+                <span class="link-bubble__url">${this.linkBubbleHref}</span>
                 <span class="link-bubble__divider" aria-hidden="true"></span>
                 <button
                     type="button"

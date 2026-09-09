@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Added
+- `Autocomplete` facade over `<pk-autocomplete>` — freeform text with optional
+  suggestions.
+- `AutocompleteInput` convenience wrapper (`options` / `fetchOptions`, `v-model`)
+  and SchemaForm `$field: "autocomplete"` (`AutocompleteField`) for freeform
+  path / alias settings with Field `warning` support.
+- `ImageBrowser` facade over `<pk-image-browser>` — presentational static
+  icon/image browser. Consumers pass `items` / `groups` with `value` / `label` /
+  `preview` (URL or inline SVG); plugins own catalogs and storage formats.
+  Optional `label-mode` / `labelMode` (`tooltip` | `inline` | `none`; default `tooltip`).
+  Host-driven `loading` shows a panel spinner until the catalog arrives.
+### Changed
+- Copy Button demos nest `CopyButton slot="end"` inside `Input` (in-control
+  chrome from `@verbb/plugin-kit-web`).
+
 ## 2.0.15 - 2026-09-04
 
 ### Changed
