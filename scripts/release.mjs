@@ -7,7 +7,7 @@
  * release is gated on at least one package having Unreleased entries; every
  * empty sibling changelog gets a lockstep “released alongside” note.
  *
- * Usage (from plugin-kit-repo/):
+ * Usage (from the plugin-kit repository root):
  *   npm run release:patch
  *   npm run release:minor
  *   npm run release:major

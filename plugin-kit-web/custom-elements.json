@@ -1936,468 +1936,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/button-group/pk-button-group-separator.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Vertical separator for button groups.",
-          "name": "PkButtonGroupSeparator",
-          "cssParts": [
-            {
-              "description": "Separator element",
-              "name": "base"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "orientation",
-              "type": {
-                "text": "PkButtonGroupSeparatorOrientation"
-              },
-              "default": "'vertical'",
-              "attribute": "orientation",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "orientation",
-              "type": {
-                "text": "PkButtonGroupSeparatorOrientation"
-              },
-              "default": "'vertical'",
-              "fieldName": "orientation"
-            }
-          ],
-          "superclass": {
-            "name": "PkElement",
-            "module": "/src/base/pk-element.js"
-          },
-          "tagName": "pk-button-group-separator",
-          "customElement": true,
-          "events": [
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkButtonGroupSeparator",
-          "declaration": {
-            "name": "PkButtonGroupSeparator",
-            "module": "src/components/button-group/pk-button-group-separator.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-button-group-separator",
-          "declaration": {
-            "name": "PkButtonGroupSeparator",
-            "module": "src/components/button-group/pk-button-group-separator.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/button-group/pk-button-group-text.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Prefix text span for URL / compound button groups.",
-          "name": "PkButtonGroupText",
-          "cssParts": [
-            {
-              "description": "Text container",
-              "name": "base"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Prefix text content",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "PkElement",
-            "module": "/src/base/pk-element.js"
-          },
-          "tagName": "pk-button-group-text",
-          "customElement": true,
-          "events": [
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkButtonGroupText",
-          "declaration": {
-            "name": "PkButtonGroupText",
-            "module": "src/components/button-group/pk-button-group-text.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-button-group-text",
-          "declaration": {
-            "name": "PkButtonGroupText",
-            "module": "src/components/button-group/pk-button-group-text.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/button-group/pk-button-group.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Visually groups related buttons —  `pk-button-group` pattern (CSS var join, no JS).",
-          "name": "PkButtonGroup",
-          "cssParts": [
-            {
-              "description": "Group container",
-              "name": "base"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Buttons, toolbars, and overlay triggers",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "orientation",
-              "type": {
-                "text": "PkButtonGroupOrientation"
-              },
-              "default": "'horizontal'",
-              "attribute": "orientation",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "separators",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Draw 1px dividers between adjacent controls (Craft default).\nSet `separators=\"false\"` for flush join. Explicit `pk-button-group-separator` elements always work for segment splits.",
-              "attribute": "separators",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "exclusive",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Exclusive icon/text toggle styling — Craft `.btngroup--exclusive`.\nUse with `pk-toggle` items for view-mode pickers.",
-              "attribute": "exclusive",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Accessible label for the group —  `pk-button-group.label`.",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "defaultSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "scheduleSyncGroupLayout",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncGroupLayout",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Overlap-join adjacent items within each segment; 1px divider between joins when `separators` is on."
-            },
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "orientation",
-              "type": {
-                "text": "PkButtonGroupOrientation"
-              },
-              "default": "'horizontal'",
-              "fieldName": "orientation"
-            },
-            {
-              "name": "separators",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Draw 1px dividers between adjacent controls (Craft default).\nSet `separators=\"false\"` for flush join. Explicit `pk-button-group-separator` elements always work for segment splits.",
-              "fieldName": "separators"
-            },
-            {
-              "name": "exclusive",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Exclusive icon/text toggle styling — Craft `.btngroup--exclusive`.\nUse with `pk-toggle` items for view-mode pickers.",
-              "fieldName": "exclusive"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Accessible label for the group —  `pk-button-group.label`.",
-              "fieldName": "label"
-            }
-          ],
-          "superclass": {
-            "name": "PkElement",
-            "module": "/src/base/pk-element.js"
-          },
-          "tagName": "pk-button-group",
-          "customElement": true,
-          "events": [
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkButtonGroup",
-          "declaration": {
-            "name": "PkButtonGroup",
-            "module": "src/components/button-group/pk-button-group.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-button-group",
-          "declaration": {
-            "name": "PkButtonGroup",
-            "module": "src/components/button-group/pk-button-group.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/button/pk-button.ts",
       "declarations": [
         {
@@ -3058,1104 +2596,6 @@
           "declaration": {
             "name": "PkButton",
             "module": "src/components/button/pk-button.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/checkbox/pk-checkbox.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "–aligned checkbox control.",
-          "name": "PkCheckbox",
-          "cssParts": [
-            {
-              "description": "Root label element",
-              "name": "base"
-            },
-            {
-              "description": "Native checkbox input",
-              "name": "input"
-            },
-            {
-              "description": "Visual checkbox box",
-              "name": "control"
-            },
-            {
-              "description": "Label text container",
-              "name": "label"
-            },
-            {
-              "description": "Hint text container",
-              "name": "hint"
-            },
-            {
-              "description": "Checked state icon",
-              "name": "checked-icon"
-            },
-            {
-              "description": "Indeterminate state icon",
-              "name": "indeterminate-icon"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Checkbox label text",
-              "name": ""
-            },
-            {
-              "description": "Descriptive hint (or use the `hint` attribute)",
-              "name": "hint"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validators",
-              "type": {
-                "text": "PkValidator[]"
-              },
-              "default": "[]",
-              "static": true,
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "assumeInteractionOn",
-              "type": {
-                "text": "string[]"
-              },
-              "default": "['change']",
-              "description": "Events that must all fire before `:user-invalid` applies — override per component.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasSlotController",
-              "privacy": "private",
-              "readonly": true,
-              "default": "new HasSlotController(this, 'hint')"
-            },
-            {
-              "kind": "field",
-              "name": "checked",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "checked",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "indeterminate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "indeterminate",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and excludes it from constraint validation.",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "invalid",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "checkboxValue",
-              "type": {
-                "text": "string"
-              },
-              "default": "'on'",
-              "attribute": "checkboxValue"
-            },
-            {
-              "kind": "field",
-              "name": "defaultChecked",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "default-checked"
-            },
-            {
-              "kind": "field",
-              "name": "ariaLabel",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "attribute": "aria-label"
-            },
-            {
-              "kind": "field",
-              "name": "hint",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Descriptive hint — use the `hint` slot for HTML content.",
-              "attribute": "hint"
-            },
-            {
-              "kind": "field",
-              "name": "withHint",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Only required for SSR when slotting a hint.",
-              "attribute": "with-hint"
-            },
-            {
-              "kind": "field",
-              "name": "input",
-              "type": {
-                "text": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | undefined"
-              },
-              "description": "Shadow native control for `MirrorValidator`.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasDefaultSlotContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "validationTarget",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncFormValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "resetToDefaultValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "restoreFormState",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "state",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "defaultSlotChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "formAssociated",
-              "type": {
-                "text": "boolean"
-              },
-              "static": true,
-              "default": "true",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "internals",
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Name submitted with form data.",
-              "attribute": "name",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Marks the control as required for form submission.",
-              "attribute": "required",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "customError",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Custom validation message; also settable via `setCustomValidity()`.",
-              "attribute": "custom-error",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "valueHasChanged",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasInteracted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "emittedEvents",
-              "type": {
-                "text": "string[]"
-              },
-              "privacy": "private",
-              "default": "[]",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hostAriaMirror",
-              "type": {
-                "text": "HostAriaMirror | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getAriaMirrorTarget",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElement | null"
-                }
-              },
-              "description": "Focusable native control that receives mirrored field-shell ARIA.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncStandaloneAria",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Standalone label/instructions wiring when no external field shell is present.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "connectHostAriaMirror",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncHostAriaMirror",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formResetCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formDisabledCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "isDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formStateRestoreCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "state",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "_reason",
-                  "optional": true,
-                  "type": {
-                    "text": "'restore' | 'autocomplete'"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "form",
-              "type": {
-                "text": "HTMLFormElement | null"
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "labels",
-              "type": {
-                "text": "NodeList"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validity",
-              "type": {
-                "text": "ValidityState"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "willValidate",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessage",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getForm",
-              "return": {
-                "type": {
-                  "text": "HTMLFormElement | null"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "checkValidity",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "description": "Runs constraint validation without showing the browser UI.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "reportValidity",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "description": "Runs constraint validation and shows the browser UI when invalid.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "resetValidity",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Clears custom errors and re-syncs validity state.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setCustomValidity",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "message",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ],
-              "description": "Sets or clears a custom validation message.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "allValidators",
-              "type": {
-                "text": "PkValidator[]"
-              },
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setFormValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "state",
-                  "optional": true,
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "state",
-                  "optional": true,
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updateValidity",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncCustomStates",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setState",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "name",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "active",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "emitInvalid",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "handleInteraction",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "pk-change",
-              "type": {
-                "text": "CustomEvent"
-              }
-            },
-            {
-              "name": "input",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "checked",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "checked"
-            },
-            {
-              "name": "indeterminate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "indeterminate"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and excludes it from constraint validation.",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "invalid"
-            },
-            {
-              "name": "checkboxValue",
-              "type": {
-                "text": "string"
-              },
-              "default": "'on'",
-              "fieldName": "checkboxValue"
-            },
-            {
-              "name": "default-checked",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "defaultChecked"
-            },
-            {
-              "name": "aria-label",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "fieldName": "ariaLabel"
-            },
-            {
-              "name": "hint",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Descriptive hint — use the `hint` slot for HTML content.",
-              "fieldName": "hint"
-            },
-            {
-              "name": "with-hint",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Only required for SSR when slotting a hint.",
-              "fieldName": "withHint"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Name submitted with form data.",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Marks the control as required for form submission.",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "custom-error",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Custom validation message; also settable via `setCustomValidity()`.",
-              "fieldName": "customError",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "PkFormAssociatedElement",
-            "module": "/src/base/pk-form-associated-element.js"
-          },
-          "tagName": "pk-checkbox",
-          "customElement": true,
-          "cssStates": [
-            {
-              "name": "disabled",
-              "description": "The control is disabled.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "required",
-              "description": "The control is required.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "optional",
-              "description": "The control is not required.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "invalid",
-              "description": "The control currently fails constraint validation.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "valid",
-              "description": "The control currently passes constraint validation.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "user-invalid",
-              "description": "Invalid after the user has interacted with the control.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "user-valid",
-              "description": "Valid after the user has interacted with the control.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkCheckbox",
-          "declaration": {
-            "name": "PkCheckbox",
-            "module": "src/components/checkbox/pk-checkbox.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-checkbox",
-          "declaration": {
-            "name": "PkCheckbox",
-            "module": "src/components/checkbox/pk-checkbox.ts"
           }
         }
       ]
@@ -5406,6 +3846,1566 @@
           "declaration": {
             "name": "PkCalendar",
             "module": "src/components/calendar/pk-calendar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/checkbox/pk-checkbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "–aligned checkbox control.",
+          "name": "PkCheckbox",
+          "cssParts": [
+            {
+              "description": "Root label element",
+              "name": "base"
+            },
+            {
+              "description": "Native checkbox input",
+              "name": "input"
+            },
+            {
+              "description": "Visual checkbox box",
+              "name": "control"
+            },
+            {
+              "description": "Label text container",
+              "name": "label"
+            },
+            {
+              "description": "Hint text container",
+              "name": "hint"
+            },
+            {
+              "description": "Checked state icon",
+              "name": "checked-icon"
+            },
+            {
+              "description": "Indeterminate state icon",
+              "name": "indeterminate-icon"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Checkbox label text",
+              "name": ""
+            },
+            {
+              "description": "Descriptive hint (or use the `hint` attribute)",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validators",
+              "type": {
+                "text": "PkValidator[]"
+              },
+              "default": "[]",
+              "static": true,
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "assumeInteractionOn",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "['change']",
+              "description": "Events that must all fire before `:user-invalid` applies — override per component.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasSlotController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController(this, 'hint')"
+            },
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "indeterminate",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and excludes it from constraint validation.",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "checkboxValue",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "attribute": "checkboxValue"
+            },
+            {
+              "kind": "field",
+              "name": "defaultChecked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "default-checked"
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabel",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "hint",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Descriptive hint — use the `hint` slot for HTML content.",
+              "attribute": "hint"
+            },
+            {
+              "kind": "field",
+              "name": "withHint",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Only required for SSR when slotting a hint.",
+              "attribute": "with-hint"
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | undefined"
+              },
+              "description": "Shadow native control for `MirrorValidator`.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasDefaultSlotContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "validationTarget",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncFormValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "resetToDefaultValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "restoreFormState",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "defaultSlotChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Name submitted with form data.",
+              "attribute": "name",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the control as required for form submission.",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "customError",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Custom validation message; also settable via `setCustomValidity()`.",
+              "attribute": "custom-error",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "valueHasChanged",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasInteracted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "emittedEvents",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hostAriaMirror",
+              "type": {
+                "text": "HostAriaMirror | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getAriaMirrorTarget",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "HTMLElement | null"
+                }
+              },
+              "description": "Focusable native control that receives mirrored field-shell ARIA.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncStandaloneAria",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Standalone label/instructions wiring when no external field shell is present.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "connectHostAriaMirror",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncHostAriaMirror",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "isDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "_reason",
+                  "optional": true,
+                  "type": {
+                    "text": "'restore' | 'autocomplete'"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "type": {
+                "text": "HTMLFormElement | null"
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "labels",
+              "type": {
+                "text": "NodeList"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "type": {
+                "text": "ValidityState"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "willValidate",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getForm",
+              "return": {
+                "type": {
+                  "text": "HTMLFormElement | null"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Runs constraint validation without showing the browser UI.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Runs constraint validation and shows the browser UI when invalid.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "resetValidity",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Clears custom errors and re-syncs validity state.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setCustomValidity",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "message",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Sets or clears a custom validation message.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "allValidators",
+              "type": {
+                "text": "PkValidator[]"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setFormValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "state",
+                  "optional": true,
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "state",
+                  "optional": true,
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateValidity",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncCustomStates",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setState",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "active",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "emitInvalid",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleInteraction",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "pk-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "input",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "indeterminate"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and excludes it from constraint validation.",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "checkboxValue",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "fieldName": "checkboxValue"
+            },
+            {
+              "name": "default-checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "defaultChecked"
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "fieldName": "ariaLabel"
+            },
+            {
+              "name": "hint",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Descriptive hint — use the `hint` slot for HTML content.",
+              "fieldName": "hint"
+            },
+            {
+              "name": "with-hint",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Only required for SSR when slotting a hint.",
+              "fieldName": "withHint"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Name submitted with form data.",
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the control as required for form submission.",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "custom-error",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Custom validation message; also settable via `setCustomValidity()`.",
+              "fieldName": "customError",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "PkFormAssociatedElement",
+            "module": "/src/base/pk-form-associated-element.js"
+          },
+          "tagName": "pk-checkbox",
+          "customElement": true,
+          "cssStates": [
+            {
+              "name": "disabled",
+              "description": "The control is disabled.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "required",
+              "description": "The control is required.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "optional",
+              "description": "The control is not required.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "invalid",
+              "description": "The control currently fails constraint validation.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "valid",
+              "description": "The control currently passes constraint validation.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "user-invalid",
+              "description": "Invalid after the user has interacted with the control.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "user-valid",
+              "description": "Valid after the user has interacted with the control.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkCheckbox",
+          "declaration": {
+            "name": "PkCheckbox",
+            "module": "src/components/checkbox/pk-checkbox.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-checkbox",
+          "declaration": {
+            "name": "PkCheckbox",
+            "module": "src/components/checkbox/pk-checkbox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/button-group/pk-button-group-separator.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Vertical separator for button groups.",
+          "name": "PkButtonGroupSeparator",
+          "cssParts": [
+            {
+              "description": "Separator element",
+              "name": "base"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "orientation",
+              "type": {
+                "text": "PkButtonGroupSeparatorOrientation"
+              },
+              "default": "'vertical'",
+              "attribute": "orientation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "orientation",
+              "type": {
+                "text": "PkButtonGroupSeparatorOrientation"
+              },
+              "default": "'vertical'",
+              "fieldName": "orientation"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "tagName": "pk-button-group-separator",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkButtonGroupSeparator",
+          "declaration": {
+            "name": "PkButtonGroupSeparator",
+            "module": "src/components/button-group/pk-button-group-separator.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-button-group-separator",
+          "declaration": {
+            "name": "PkButtonGroupSeparator",
+            "module": "src/components/button-group/pk-button-group-separator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/button-group/pk-button-group-text.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Prefix text span for URL / compound button groups.",
+          "name": "PkButtonGroupText",
+          "cssParts": [
+            {
+              "description": "Text container",
+              "name": "base"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Prefix text content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "tagName": "pk-button-group-text",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkButtonGroupText",
+          "declaration": {
+            "name": "PkButtonGroupText",
+            "module": "src/components/button-group/pk-button-group-text.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-button-group-text",
+          "declaration": {
+            "name": "PkButtonGroupText",
+            "module": "src/components/button-group/pk-button-group-text.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/button-group/pk-button-group.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Visually groups related buttons —  `pk-button-group` pattern (CSS var join, no JS).",
+          "name": "PkButtonGroup",
+          "cssParts": [
+            {
+              "description": "Group container",
+              "name": "base"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Buttons, toolbars, and overlay triggers",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "orientation",
+              "type": {
+                "text": "PkButtonGroupOrientation"
+              },
+              "default": "'horizontal'",
+              "attribute": "orientation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "separators",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Draw 1px dividers between adjacent controls (Craft default).\nSet `separators=\"false\"` for flush join. Explicit `pk-button-group-separator` elements always work for segment splits.",
+              "attribute": "separators",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "exclusive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Exclusive icon/text toggle styling — Craft `.btngroup--exclusive`.\nUse with `pk-toggle` items for view-mode pickers.",
+              "attribute": "exclusive",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible label for the group —  `pk-button-group.label`.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "defaultSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "scheduleSyncGroupLayout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncGroupLayout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Overlap-join adjacent items within each segment; 1px divider between joins when `separators` is on."
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "orientation",
+              "type": {
+                "text": "PkButtonGroupOrientation"
+              },
+              "default": "'horizontal'",
+              "fieldName": "orientation"
+            },
+            {
+              "name": "separators",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Draw 1px dividers between adjacent controls (Craft default).\nSet `separators=\"false\"` for flush join. Explicit `pk-button-group-separator` elements always work for segment splits.",
+              "fieldName": "separators"
+            },
+            {
+              "name": "exclusive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Exclusive icon/text toggle styling — Craft `.btngroup--exclusive`.\nUse with `pk-toggle` items for view-mode pickers.",
+              "fieldName": "exclusive"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible label for the group —  `pk-button-group.label`.",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "tagName": "pk-button-group",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkButtonGroup",
+          "declaration": {
+            "name": "PkButtonGroup",
+            "module": "src/components/button-group/pk-button-group.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-button-group",
+          "declaration": {
+            "name": "PkButtonGroup",
+            "module": "src/components/button-group/pk-button-group.ts"
           }
         }
       ]
@@ -29519,1218 +29519,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/textarea/pk-textarea.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Multiline text field —  API, Craft visuals.",
-          "name": "PkTextarea",
-          "cssParts": [
-            {
-              "description": "Wrapper",
-              "name": "form-control"
-            },
-            {
-              "description": "Label",
-              "name": "label"
-            },
-            {
-              "description": "Instructions",
-              "name": "instructions"
-            },
-            {
-              "description": "Native textarea",
-              "name": "textarea"
-            }
-          ],
-          "slots": [
-            {
-              "name": "label"
-            },
-            {
-              "name": "instructions"
-            },
-            {
-              "description": "Alias for `instructions`",
-              "name": "hint"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "validators",
-              "type": {
-                "text": "PkValidator[]"
-              },
-              "default": "[]",
-              "static": true,
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "assumeInteractionOn",
-              "type": {
-                "text": "string[]"
-              },
-              "default": "['blur', 'input']",
-              "description": "Events that must all fire before `:user-invalid` applies — override per component.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasSlotController",
-              "privacy": "private",
-              "readonly": true,
-              "default": "new HasSlotController(this, 'instructions', 'hint', 'label')"
-            },
-            {
-              "kind": "field",
-              "name": "controlId",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "input",
-              "type": {
-                "text": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | undefined"
-              },
-              "description": "Shadow native control for `MirrorValidator`.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "placeholder"
-            },
-            {
-              "kind": "field",
-              "name": "_value",
-              "type": {
-                "text": "string | null"
-              },
-              "privacy": "private",
-              "default": "null"
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "defaultValue",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "attribute": "value",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "PkTextareaSize"
-              },
-              "default": "'default'",
-              "attribute": "size",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "instructions",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "instructions"
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "readonly",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "invalid",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "fitCell",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Flush + fill parent cell (editable tables).",
-              "attribute": "fit-cell",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "type": {
-                "text": "number | undefined"
-              },
-              "description": "Native `rows` — use `1` in table cells so intrinsic height doesn't overflow.",
-              "attribute": "rows"
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "type": {
-                "text": "number | undefined"
-              },
-              "attribute": "max-length"
-            },
-            {
-              "kind": "field",
-              "name": "withLabel",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "with-label"
-            },
-            {
-              "kind": "field",
-              "name": "withInstructions",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "with-instructions"
-            },
-            {
-              "kind": "method",
-              "name": "syncFormValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "resetToDefaultValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "restoreFormState",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "state",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formResetCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncStandaloneAria",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Standalone label/instructions wiring when no external field shell is present.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasLabelContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasInstructionsContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "options",
-                  "optional": true,
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleInput",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "formAssociated",
-              "type": {
-                "text": "boolean"
-              },
-              "static": true,
-              "default": "true",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "internals",
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Name submitted with form data.",
-              "attribute": "name",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and excludes it from constraint validation.",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Marks the control as required for form submission.",
-              "attribute": "required",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "customError",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Custom validation message; also settable via `setCustomValidity()`.",
-              "attribute": "custom-error",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "valueHasChanged",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasInteracted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "emittedEvents",
-              "type": {
-                "text": "string[]"
-              },
-              "privacy": "private",
-              "default": "[]",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hostAriaMirror",
-              "type": {
-                "text": "HostAriaMirror | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getAriaMirrorTarget",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElement | null"
-                }
-              },
-              "description": "Focusable native control that receives mirrored field-shell ARIA.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "connectHostAriaMirror",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncHostAriaMirror",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formDisabledCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "isDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "formStateRestoreCallback",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "state",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "_reason",
-                  "optional": true,
-                  "type": {
-                    "text": "'restore' | 'autocomplete'"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "form",
-              "type": {
-                "text": "HTMLFormElement | null"
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "labels",
-              "type": {
-                "text": "NodeList"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validity",
-              "type": {
-                "text": "ValidityState"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "willValidate",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessage",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getForm",
-              "return": {
-                "type": {
-                  "text": "HTMLFormElement | null"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "checkValidity",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "description": "Runs constraint validation without showing the browser UI.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "reportValidity",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "description": "Runs constraint validation and shows the browser UI when invalid.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "resetValidity",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Clears custom errors and re-syncs validity state.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setCustomValidity",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "message",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ],
-              "description": "Sets or clears a custom validation message.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationTarget",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "allValidators",
-              "type": {
-                "text": "PkValidator[]"
-              },
-              "privacy": "protected",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setFormValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "state",
-                  "optional": true,
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setValue",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                },
-                {
-                  "name": "state",
-                  "optional": true,
-                  "type": {
-                    "text": "string | File | FormData | null"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updateValidity",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "syncCustomStates",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setState",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "name",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "active",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "emitInvalid",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "handleInteraction",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "input",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "focus",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "blur",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "placeholder",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "placeholder"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "fieldName": "defaultValue"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "PkTextareaSize"
-              },
-              "default": "'default'",
-              "fieldName": "size"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "instructions",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "instructions"
-            },
-            {
-              "name": "readonly",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "readonly"
-            },
-            {
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "invalid"
-            },
-            {
-              "name": "fit-cell",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Flush + fill parent cell (editable tables).",
-              "fieldName": "fitCell"
-            },
-            {
-              "name": "rows",
-              "type": {
-                "text": "number | undefined"
-              },
-              "description": "Native `rows` — use `1` in table cells so intrinsic height doesn't overflow.",
-              "fieldName": "rows"
-            },
-            {
-              "name": "max-length",
-              "type": {
-                "text": "number | undefined"
-              },
-              "fieldName": "maxlength"
-            },
-            {
-              "name": "with-label",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "withLabel"
-            },
-            {
-              "name": "with-instructions",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "withInstructions"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Name submitted with form data.",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and excludes it from constraint validation.",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Marks the control as required for form submission.",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "custom-error",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Custom validation message; also settable via `setCustomValidity()`.",
-              "fieldName": "customError",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "PkFormAssociatedElement",
-            "module": "/src/base/pk-form-associated-element.js"
-          },
-          "tagName": "pk-textarea",
-          "customElement": true,
-          "cssStates": [
-            {
-              "name": "disabled",
-              "description": "The control is disabled.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "required",
-              "description": "The control is required.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "optional",
-              "description": "The control is not required.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "invalid",
-              "description": "The control currently fails constraint validation.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "valid",
-              "description": "The control currently passes constraint validation.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "user-invalid",
-              "description": "Invalid after the user has interacted with the control.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            },
-            {
-              "name": "user-valid",
-              "description": "Valid after the user has interacted with the control.",
-              "inheritedFrom": {
-                "name": "PkFormAssociatedElement",
-                "module": "src/base/pk-form-associated-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkTextarea",
-          "declaration": {
-            "name": "PkTextarea",
-            "module": "src/components/textarea/pk-textarea.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-textarea",
-          "declaration": {
-            "name": "PkTextarea",
-            "module": "src/components/textarea/pk-textarea.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/tabs/pk-tab-base.ts",
       "declarations": [
         {
@@ -32181,6 +30969,1218 @@
           "declaration": {
             "name": "PkTabs",
             "module": "src/components/tabs/pk-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/textarea/pk-textarea.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Multiline text field —  API, Craft visuals.",
+          "name": "PkTextarea",
+          "cssParts": [
+            {
+              "description": "Wrapper",
+              "name": "form-control"
+            },
+            {
+              "description": "Label",
+              "name": "label"
+            },
+            {
+              "description": "Instructions",
+              "name": "instructions"
+            },
+            {
+              "description": "Native textarea",
+              "name": "textarea"
+            }
+          ],
+          "slots": [
+            {
+              "name": "label"
+            },
+            {
+              "name": "instructions"
+            },
+            {
+              "description": "Alias for `instructions`",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "validators",
+              "type": {
+                "text": "PkValidator[]"
+              },
+              "default": "[]",
+              "static": true,
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "assumeInteractionOn",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "['blur', 'input']",
+              "description": "Events that must all fire before `:user-invalid` applies — override per component.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasSlotController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController(this, 'instructions', 'hint', 'label')"
+            },
+            {
+              "kind": "field",
+              "name": "controlId",
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | undefined"
+              },
+              "description": "Shadow native control for `MirrorValidator`.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "_value",
+              "type": {
+                "text": "string | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "defaultValue",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "PkTextareaSize"
+              },
+              "default": "'default'",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "instructions",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "instructions"
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "fitCell",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flush + fill parent cell (editable tables).",
+              "attribute": "fit-cell",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rows",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native `rows` — use `1` in table cells so intrinsic height doesn't overflow.",
+              "attribute": "rows"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "type": {
+                "text": "number | undefined"
+              },
+              "attribute": "max-length"
+            },
+            {
+              "kind": "field",
+              "name": "withLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "with-label"
+            },
+            {
+              "kind": "field",
+              "name": "withInstructions",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "with-instructions"
+            },
+            {
+              "kind": "method",
+              "name": "syncFormValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "resetToDefaultValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "restoreFormState",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncStandaloneAria",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Standalone label/instructions wiring when no external field shell is present.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasLabelContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasInstructionsContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Name submitted with form data.",
+              "attribute": "name",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and excludes it from constraint validation.",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the control as required for form submission.",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "customError",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Custom validation message; also settable via `setCustomValidity()`.",
+              "attribute": "custom-error",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "valueHasChanged",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasInteracted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "emittedEvents",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hostAriaMirror",
+              "type": {
+                "text": "HostAriaMirror | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getAriaMirrorTarget",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "HTMLElement | null"
+                }
+              },
+              "description": "Focusable native control that receives mirrored field-shell ARIA.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "connectHostAriaMirror",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncHostAriaMirror",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "isDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "_reason",
+                  "optional": true,
+                  "type": {
+                    "text": "'restore' | 'autocomplete'"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "type": {
+                "text": "HTMLFormElement | null"
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "labels",
+              "type": {
+                "text": "NodeList"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "type": {
+                "text": "ValidityState"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "willValidate",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getForm",
+              "return": {
+                "type": {
+                  "text": "HTMLFormElement | null"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Runs constraint validation without showing the browser UI.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Runs constraint validation and shows the browser UI when invalid.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "resetValidity",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Clears custom errors and re-syncs validity state.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setCustomValidity",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "message",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Sets or clears a custom validation message.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationTarget",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "allValidators",
+              "type": {
+                "text": "PkValidator[]"
+              },
+              "privacy": "protected",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setFormValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "state",
+                  "optional": true,
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setValue",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                },
+                {
+                  "name": "state",
+                  "optional": true,
+                  "type": {
+                    "text": "string | File | FormData | null"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateValidity",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncCustomStates",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setState",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "active",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "emitInvalid",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleInteraction",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "input",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "focus",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "blur",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "fieldName": "defaultValue"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "PkTextareaSize"
+              },
+              "default": "'default'",
+              "fieldName": "size"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "instructions",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "instructions"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "fit-cell",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flush + fill parent cell (editable tables).",
+              "fieldName": "fitCell"
+            },
+            {
+              "name": "rows",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native `rows` — use `1` in table cells so intrinsic height doesn't overflow.",
+              "fieldName": "rows"
+            },
+            {
+              "name": "max-length",
+              "type": {
+                "text": "number | undefined"
+              },
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "with-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "withLabel"
+            },
+            {
+              "name": "with-instructions",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "withInstructions"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Name submitted with form data.",
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and excludes it from constraint validation.",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the control as required for form submission.",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "custom-error",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Custom validation message; also settable via `setCustomValidity()`.",
+              "fieldName": "customError",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "PkFormAssociatedElement",
+            "module": "/src/base/pk-form-associated-element.js"
+          },
+          "tagName": "pk-textarea",
+          "customElement": true,
+          "cssStates": [
+            {
+              "name": "disabled",
+              "description": "The control is disabled.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "required",
+              "description": "The control is required.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "optional",
+              "description": "The control is not required.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "invalid",
+              "description": "The control currently fails constraint validation.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "valid",
+              "description": "The control currently passes constraint validation.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "user-invalid",
+              "description": "Invalid after the user has interacted with the control.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            },
+            {
+              "name": "user-valid",
+              "description": "Valid after the user has interacted with the control.",
+              "inheritedFrom": {
+                "name": "PkFormAssociatedElement",
+                "module": "src/base/pk-form-associated-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkTextarea",
+          "declaration": {
+            "name": "PkTextarea",
+            "module": "src/components/textarea/pk-textarea.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-textarea",
+          "declaration": {
+            "name": "PkTextarea",
+            "module": "src/components/textarea/pk-textarea.ts"
           }
         }
       ]
