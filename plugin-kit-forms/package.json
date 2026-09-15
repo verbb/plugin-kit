@@ -1,6 +1,9 @@
 {
     "name": "@verbb/plugin-kit-forms",
     "version": "2.0.16",
+    "repository": {
+        "url": "git+https://github.com/verbb/plugin-kit.git"
+    },
     "description": "Framework-agnostic SchemaForm engine (state, validation, schema) for Plugin Kit",
     "type": "module",
     "types": "dist/index.d.ts",

@@ -23,11 +23,7 @@
         "dev:ui": "npm run dev",
         "docs:dev": "npm run docs:dev -w @verbb/plugin-kit-docs",
         "docs:build": "npm run docs:build -w @verbb/plugin-kit-docs",
-        "release": "node ./scripts/release.mjs",
-        "release:patch": "node ./scripts/release.mjs patch",
-        "release:minor": "node ./scripts/release.mjs minor",
-        "release:major": "node ./scripts/release.mjs major",
-        "release:publish-current": "node ./scripts/release.mjs --publish-current"
+        "release:publish-prepared": "node ./scripts/publish-prepared.mjs"
     },
     "devDependencies": {
         "concurrently": "^9.2.4"

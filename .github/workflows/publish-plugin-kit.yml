@@ -1,0 +1,158 @@
+name: Publish Plugin Kit
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Full reviewed release commit SHA on main
+        required: true
+        type: string
+      release_version:
+        description: Exact lockstep version (for example, 2.0.17)
+        required: true
+        type: string
+
+# Never let two manual attempts race over the same lockstep release.
+concurrency:
+  group: plugin-kit-npm-publish
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - name: Check out reviewed commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.release_sha }}
+          fetch-depth: 0
+
+      - name: Verify commit belongs to main
+        env:
+          RELEASE_SHA: ${{ inputs.release_sha }}
+        run: |
+          if [[ ! "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo 'A full lowercase commit SHA is required.' >&2
+            exit 1
+          fi
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          git fetch origin main
+          git merge-base --is-ancestor "$RELEASE_SHA" origin/main
+
+      - name: Set up Node and npm registry
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Check Node and npm versions
+        run: |
+          node --version
+          npm --version
+          node -e 'const version = require("node:child_process").execFileSync("npm", ["--version"], { encoding: "utf8" }).trim(); const [major, minor, patch] = version.split(".").map(Number); if (major < 11 || (major === 11 && (minor < 5 || (minor === 5 && patch < 1)))) process.exit(1)'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build publishable packages
+        run: npm run build:libs
+
+      - name: Run package tests
+        run: |
+          npm test -w @verbb/plugin-kit-codemirror-core
+          npm test -w @verbb/plugin-kit-tiptap-core
+
+      - name: Inspect all package tarballs
+        run: |
+          for package in \
+            @verbb/plugin-kit-core \
+            @verbb/plugin-kit-icons \
+            @verbb/plugin-kit-codemirror-core \
+            @verbb/plugin-kit-tiptap-core \
+            @verbb/plugin-kit-forms \
+            @verbb/plugin-kit-web \
+            @verbb/plugin-kit-react \
+            @verbb/plugin-kit-vue; do
+            echo "::group::Pack $package"
+            npm pack --dry-run -w "$package"
+            echo '::endgroup::'
+          done
+
+      - name: Reject regenerated repository files
+        run: |
+          git status --short
+          test -z "$(git status --porcelain)"
+
+      - name: Create reviewed package tarballs
+        run: |
+          mkdir -p "$RUNNER_TEMP/plugin-kit-tarballs"
+          for package in \
+            @verbb/plugin-kit-core \
+            @verbb/plugin-kit-icons \
+            @verbb/plugin-kit-codemirror-core \
+            @verbb/plugin-kit-tiptap-core \
+            @verbb/plugin-kit-forms \
+            @verbb/plugin-kit-web \
+            @verbb/plugin-kit-react \
+            @verbb/plugin-kit-vue; do
+            echo "::group::Build tarball $package"
+            npm pack -w "$package" --pack-destination "$RUNNER_TEMP/plugin-kit-tarballs"
+            echo '::endgroup::'
+          done
+          git status --short
+          test -z "$(git status --porcelain)"
+          test "$(find "$RUNNER_TEMP/plugin-kit-tarballs" -maxdepth 1 -name '*.tgz' | wc -l | tr -d ' ')" = 8
+
+      - name: Transfer validated tarballs to publish job
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-kit-release-tarballs
+          path: ${{ runner.temp }}/plugin-kit-tarballs/*.tgz
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out reviewed commit without dependencies
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.release_sha }}
+
+      - name: Set up Node and npm registry
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Check supported npm CLI
+        run: |
+          node --version
+          npm --version
+          node -e 'const version = require("node:child_process").execFileSync("npm", ["--version"], { encoding: "utf8" }).trim(); const [major, minor, patch] = version.split(".").map(Number); if (major < 11 || (major === 11 && (minor < 5 || (minor === 5 && patch < 1)))) process.exit(1)'
+
+      - name: Receive validated tarballs
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-kit-release-tarballs
+          path: ${{ runner.temp }}/plugin-kit-tarballs
+
+      - name: Publish missing package versions with npm OIDC
+        env:
+          RELEASE_SHA: ${{ inputs.release_sha }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
+          PACKAGE_TARBALL_DIR: ${{ runner.temp }}/plugin-kit-tarballs
+        run: npm run release:publish-prepared

@@ -1,6 +1,9 @@
 {
     "name": "@verbb/plugin-kit-vue",
     "version": "2.0.16",
+    "repository": {
+        "url": "git+https://github.com/verbb/plugin-kit.git"
+    },
     "description": "Vue adapters for @verbb/plugin-kit-web custom elements",
     "type": "module",
     "types": "dist/index.d.ts",

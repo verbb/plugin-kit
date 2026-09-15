@@ -70,12 +70,3 @@ npm run dev
 # Docs → http://localhost:5281/plugin-kit/
 npm run docs:dev
 ```
-
-## Release
-
-Lockstep publish (see `scripts/release.mjs`):
-
-```bash
-npm run release:publish-current -- --dry-run   # first 2.0.0 cut
-npm run release:patch                          # later cuts (React Unreleased required)
-```

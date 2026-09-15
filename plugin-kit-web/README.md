@@ -8,7 +8,7 @@ Canonical Craft CP UI as Lit custom elements (`<pk-*>`) — shadow DOM, `--pk-*`
 npm install @verbb/plugin-kit-web
 ```
 
-Node `>= 20`. Peer / runtime packages (`lit`, `@floating-ui/dom`, `@verbb/plugin-kit-core`, `@verbb/plugin-kit-icons`, and TipTap/CodeMirror cores when you import those families) install with the package on a normal npm publish.
+Node `>= 20`. npm installs the package's declared runtime dependencies. TipTap and CodeMirror cores are needed when you import those component families.
 
 Full Craft wiring (Vite + asset bundle + Twig) is in the [Web quick start](https://docs.verbb.io/plugin-kit/web/getting-started/quick-start).
 
