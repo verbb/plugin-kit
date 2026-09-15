@@ -12,6 +12,7 @@
 - Pin the TipTap core peer used by rich-text web components to `3.22.4`.
 
 ### Fixed
+- Custom Elements Manifest generation now writes modules in a deterministic order, preventing unchanged builds from repeatedly rewriting `custom-elements.json`.
 - Dropdown menus and nested submenus now constrain themselves to the available viewport height and scroll internally when their contents are taller.
 - TipTap text and highlight color swatches now keep hover, keyboard-focus, and selected-state backgrounds centred on the swatch.
 

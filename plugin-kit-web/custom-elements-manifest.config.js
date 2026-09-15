@@ -77,6 +77,26 @@ function pkJsdocExtrasPlugin() {
     };
 }
 
+/**
+ * The analyzer receives globbed source files in a non-deterministic order and
+ * preserves that order in the top-level modules array. Canonicalize that
+ * unordered collection so identical sources produce a byte-identical manifest.
+ */
+function stableModuleOrderPlugin() {
+    return {
+        name: 'pk-stable-module-order',
+        packageLinkPhase({ customElementsManifest }) {
+            customElementsManifest.modules.sort((left, right) => {
+                if (left.path === right.path) {
+                    return 0;
+                }
+
+                return left.path < right.path ? -1 : 1;
+            });
+        },
+    };
+}
+
 export default {
     globs: [
         'src/components/**/pk-*.ts',
@@ -91,5 +111,5 @@ export default {
     litelement: true,
     // Keep package.json `customElements` field in sync for tooling consumers.
     packagejson: true,
-    plugins: [pkJsdocExtrasPlugin()],
+    plugins: [pkJsdocExtrasPlugin(), stableModuleOrderPlugin()],
 };
