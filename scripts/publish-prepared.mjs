@@ -83,7 +83,8 @@ for (const dir of packageDirs) {
 const registry = 'https://registry.npmjs.org/';
 const publishedVersion = (packageName) => {
     try {
-        return output('npm', ['view', `${packageName}@${expectedVersion}`, 'version', '--registry', registry]);
+        // A newly published version must bypass npm's fresh metadata cache on every check.
+        return output('npm', ['view', `${packageName}@${expectedVersion}`, 'version', '--registry', registry, '--prefer-online']);
     } catch (error) {
         const diagnostic = `${error.stderr ?? ''}\n${error.stdout ?? ''}`;
 
@@ -92,6 +93,29 @@ const publishedVersion = (packageName) => {
         }
 
         throw new Error(`Could not check ${packageName}@${expectedVersion} on npm; publication stopped.`, { cause: error });
+    }
+};
+
+const waitForPublishedVersion = async (packageName) => {
+    const deadline = Date.now() + 5 * 60_000;
+
+    while (true) {
+        const visible = publishedVersion(packageName);
+
+        if (visible === expectedVersion) {
+            return;
+        }
+
+        if (visible) {
+            throw new Error(`${packageName} registry returned unexpected version ${visible}.`);
+        }
+
+        if (Date.now() >= deadline) {
+            throw new Error(`${packageName}@${expectedVersion} was accepted by npm but is still not visible after five minutes. Check the registry before retrying.`);
+        }
+
+        console.log(`${packageName}@${expectedVersion} is still processing on npm; checking again in 10 seconds...`);
+        await new Promise((resolve) => setTimeout(resolve, 10_000));
     }
 };
 
@@ -113,9 +137,7 @@ for (const packageName of packages) {
         stdio: 'inherit',
     });
 
-    if (publishedVersion(packageName) !== expectedVersion) {
-        throw new Error(`${packageName}@${expectedVersion} was not visible on npm after publication. Check the registry before retrying.`);
-    }
+    await waitForPublishedVersion(packageName);
 }
 
 console.log(`All eight Plugin Kit packages are published at ${expectedVersion}.`);
