@@ -43,11 +43,10 @@ jobs:
           git fetch origin main
           git merge-base --is-ancestor "$RELEASE_SHA" origin/main
 
-      - name: Set up Node and npm registry
+      - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
       - name: Check Node and npm versions
@@ -131,11 +130,10 @@ jobs:
         with:
           ref: ${{ inputs.release_sha }}
 
-      - name: Set up Node and npm registry
+      - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
       - name: Check supported npm CLI
