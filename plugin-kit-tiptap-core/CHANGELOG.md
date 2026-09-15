@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.17 - 2026-09-15
+
 ### Added
 - Official TextStyle support for font family, font size, text color, background color, and line height, plus constrained `textStyle.fontVariantCaps` support and the built-in `small-caps` toolbar command.
 - Configurable default option sets for Plugin Kit's TextStyle toolbar menus.

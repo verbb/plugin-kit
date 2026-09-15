@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.17 - 2026-09-15
+
 ### Added
 - `TiptapEditor` exposes the web component's opt-in font family, font size, text/highlight color, line-height, and small-caps controls, including the `textStyleOptions` configuration surface.
 

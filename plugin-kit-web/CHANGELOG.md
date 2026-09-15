@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.17 - 2026-09-15
+
 ### Added
 - `auto-size` and `auto-size-padding` options for `<pk-popup>`, allowing popup content to respond to the space available inside its collision boundary.
 - A labelled, icon-backed `small-caps` TipTap toolbar control.
