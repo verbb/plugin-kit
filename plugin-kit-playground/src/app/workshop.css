@@ -200,6 +200,12 @@
     min-height: 100%;
 }
 
+/* SchemaForm renders all fields inside one child of the outer form grid. */
+.pg-schemaform-fields {
+    display: grid;
+    gap: 20px;
+}
+
 .pg-perf-stats {
     margin: 0 0 12px;
     font-size: 12px;

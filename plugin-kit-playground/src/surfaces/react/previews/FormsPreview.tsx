@@ -2,12 +2,12 @@ import { useEffect, useState, useSyncExternalStore, type CSSProperties } from 'r
 
 import { Button } from '@verbb/plugin-kit-react/components';
 import { SchemaFormEngine, useSchemaFormEngine } from '@verbb/plugin-kit-react/forms';
+import { setTranslateFunction } from '@verbb/plugin-kit-forms';
 import { PlaygroundPage, PlaygroundSection, PreviewCard } from '../shared/playgroundLayouts.js';
 import type { SurfacePreviewDefinition } from '../types.js';
 
-// A representative schema exercising several field facades through the engine:
-// text (+ email validation), number, select, radio group, color, lightswitch, and a
-// conditional text field driven by `if`.
+// Keep this workshop form focused on required fields, validation, and a
+// lightswitch-driven conditional field; other facades have their own previews.
 const schema = [
     {
         $field: 'text',
@@ -16,21 +16,6 @@ const schema = [
         instructions: 'Required single-line text.',
         required: true,
         placeholder: 'Launch announcement',
-    },
-    {
-        $field: 'text',
-        name: 'email',
-        label: 'Reply-to email',
-        instructions: 'Optional, but must be a valid email when provided.',
-        validation: 'email',
-        placeholder: 'you@example.com',
-    },
-    {
-        $field: 'number',
-        name: 'priority',
-        label: 'Priority',
-        instructions: 'Higher runs first.',
-        size: 6,
     },
     {
         $field: 'select',
@@ -43,21 +28,6 @@ const schema = [
             { label: 'Product', value: 'product' },
             { label: 'Support', value: 'support' },
         ],
-    },
-    {
-        $field: 'radioGroup',
-        name: 'visibility',
-        label: 'Visibility',
-        options: [
-            { label: 'Everyone', value: 'public' },
-            { label: 'Team only', value: 'team' },
-            { label: 'Just me', value: 'private' },
-        ],
-    },
-    {
-        $field: 'color',
-        name: 'accent',
-        label: 'Accent colour',
     },
     {
         $field: 'lightswitch',
@@ -84,11 +54,7 @@ const schemaIndex = {
 
 const defaultValues = {
     title: '',
-    email: '',
-    priority: 1,
     category: '',
-    visibility: 'public',
-    accent: '#e12d39',
     enabled: false,
     notes: '',
 };
@@ -132,6 +98,12 @@ function SchemaFormDemo() {
     const form = useSchemaFormEngine({ schemaIndex, defaultValues });
     const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
 
+    useEffect(() => {
+        // Craft is absent in the standalone workshop; retain its parameter interpolation.
+        setTranslateFunction((_category, message, params) => message.replace(/\{([^}]+)\}/g, (_match, key: string) => params?.[key] ?? `{${key}}`));
+        return () => setTranslateFunction();
+    }, []);
+
     const values = useSyncExternalStore(
         form.store.subscribe.bind(form.store),
         () => { return form.store.state.values || defaultValues; },
@@ -153,14 +125,14 @@ function SchemaFormDemo() {
                     form.handleSubmit();
                 }}
             >
-                <SchemaFormEngine form={form} withoutForm />
+                <SchemaFormEngine form={form} withoutForm className="pg-schemaform-fields" />
 
                 <div>
                     <Button type="submit" variant="primary">Submit</Button>
                 </div>
             </form>
 
-            <div style={panelStyle}>
+            <div className="pg-schemaform-live-values" style={panelStyle}>
                 <div style={panelHeaderStyle}>Live values</div>
                 <pre style={panelCodeStyle}>{JSON.stringify(values, null, 2)}</pre>
             </div>
