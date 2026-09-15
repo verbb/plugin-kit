@@ -84,8 +84,14 @@ jobs:
 
       - name: Reject regenerated repository files
         run: |
-          git status --short
-          test -z "$(git status --porcelain)"
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo 'Build or pack regenerated repository files:' >&2
+            git status --short
+            # The tracked diff distinguishes a real output change from platform-dependent generation.
+            git diff --stat
+            git diff --
+            exit 1
+          fi
 
       - name: Create reviewed package tarballs
         run: |

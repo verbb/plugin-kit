@@ -4,6 +4,19 @@ import DtsPlugin from 'vite-plugin-dts';
 import { LOADER_COMPONENT_ENTRIES } from './src/component-registry.ts';
 import { emitPluginKitStyles } from './vite.styles-plugin.ts';
 
+const normalizeCodeMirrorRegionComments = () => ({
+    name: 'normalize-codemirror-region-comments',
+    renderChunk(code: string) {
+        // Rolldown labels workspace modules by their symlink on macOS and real path on Linux.
+        const normalized = code.replace(
+            /^\/\/#region (?:node_modules\/@verbb\/plugin-kit-codemirror-core|\.\.\/plugin-kit-codemirror-core)\/dist\//gm,
+            '//#region @verbb/plugin-kit-codemirror-core/dist/',
+        );
+
+        return normalized === code ? null : { code: normalized, map: null };
+    },
+});
+
 const resolveLoaderEntries = () => {
     const entries: Record<string, string> = {
         'plugin-kit.loader': path.resolve(__dirname, 'src/plugin-kit.loader.ts'),
@@ -80,6 +93,7 @@ export default defineConfig({
         minify: false,
     },
     plugins: [
+        normalizeCodeMirrorRegionComments(),
         DtsPlugin({
             entryRoot: 'src',
             outDir: 'dist-loader',
