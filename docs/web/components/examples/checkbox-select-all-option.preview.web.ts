@@ -51,7 +51,7 @@ export default defineWebPreview({
     label: 'All Option',
     title: 'All option example',
     layout: 'stack',
-    // Copyable snippet stays the control only; demo chrome stays in `html` + `enhance`.
+    // Copyable snippet stays the control only; demo framing stays in `html` + `enhance`.
     code: selectMarkup,
     html: `
 <div style="display:flex;flex-direction:column;gap:1rem;font-size:14px">

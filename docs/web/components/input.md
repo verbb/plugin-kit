@@ -55,8 +55,8 @@ Use `slot="start"` / `slot="end"` for icons or short units **inside** the field 
 | `label` | — |
 | `instructions` | — |
 | `hint` | Alias for `instructions` |
-| `start` | Leading adornment inside the field chrome (icon, unit, etc.) |
-| `end` | Trailing adornment inside the field chrome (icon, unit, or in-control action such as `pk-copy-button`) |
+| `start` | Leading adornment inside the field control (icon, unit, etc.) |
+| `end` | Trailing adornment inside the field control (icon, unit, or in-control action such as `pk-copy-button`) |
 | `clear-icon` | — |
 
 ### Attributes & Properties

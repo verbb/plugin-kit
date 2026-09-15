@@ -21,7 +21,7 @@ const COPIED_RESET_MS = 2000;
  * Copy button — copies text to the clipboard and briefly shows a check icon.
  *
  * Place in `slot="end"` on `<pk-input>` (or another control with an end adornment)
- * for in-control chrome that matches combobox / image-browser trailing actions.
+ * for an in-control treatment that matches combobox / image-browser trailing actions.
  *
  * @slot icon - Copy icon (SVG supplied by the consumer)
  *

@@ -6,6 +6,6 @@ export default defineWebPreview({
     title: 'Grouped toolbar example',
     layout: 'plain',
     html: `
-<pk-tiptap-editor toolbar='[{"preset":"headings","headingLevels":[1,2,3,4]},"|","bold","italic","underline"]' value='[{"type":"paragraph","content":[{"type":"text","text":"Grouped toolbar demo"}]}]'></pk-tiptap-editor>
+<pk-tiptap-editor toolbar='[{"type":"group","group":{"label":"Text style","icon":"bold","items":["paragraph","|","h2","bold","italic","underline","small-caps"]}},"|",{"preset":"lists"},{"preset":"align"},"link","undo","redo"]' value='[{"type":"paragraph","content":[{"type":"text","text":"Mix custom groups, preset groups, and standalone controls."}]}]'></pk-tiptap-editor>
 `.trim(),
 });

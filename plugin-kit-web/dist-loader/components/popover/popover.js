@@ -5,8 +5,8 @@ import { r as buttonGroupCornerRoleStyles } from "../../chunks/button-group-item
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C3tSQ3UR.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-duCg9-CH.js";
-import { n as resolveElementById } from "../../chunks/pk-popup-BooGjXgH.js";
-import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-caPc8kwB.js";
+import { n as resolveElementById } from "../../chunks/pk-popup-CrxxR-Hb.js";
+import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Ck28WdVP.js";
 //#region src/components/popover/pk-popover.styles.ts
 var pkPopoverStyles = [
 	buttonGroupCornerRoleStyles(),

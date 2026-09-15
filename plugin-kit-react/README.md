@@ -97,7 +97,7 @@ import { CheckboxInput, RadioGroupInput, SelectInput } from '@verbb/plugin-kit-r
 | `@verbb/plugin-kit-react/utils` | `mountShadowApp`, `createCraftHostBridge`, `configure`, `cn`, `AppErrorBoundary`, `LargeErrorState`, `StatePanel` |
 | `@verbb/plugin-kit-react/hooks` | `useTranslation` |
 | `@verbb/plugin-kit-react/app` | Provider / configure (parity with Vue `/app`) |
-| `@verbb/plugin-kit-react/style.css` | Tokens + FOUCE + overlay chrome |
+| `@verbb/plugin-kit-react/style.css` | Tokens + FOUCE + overlay styles |
 
 ## Docs
 

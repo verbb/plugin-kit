@@ -64,6 +64,7 @@ export class PkTiptapContent extends PkElement {
             element: this.editorMount,
             extensions: createTiptapExtensions({
                 variableTagNodeView: createVariableTagDomNodeView(),
+                surface: 'content',
             }),
             content: valueToContent(this.value),
             editable: false,

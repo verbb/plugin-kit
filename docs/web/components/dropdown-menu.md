@@ -113,7 +113,7 @@ This component registers the following elements when it loads.
 
 | Name | Description |
 | --- | --- |
-| `active` | Roving highlight index for keyboard nav (`active`). Visual chrome uses `:focus-visible` / hover — not this flag — so mouse-open does not paint the first item selected (initial open).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `active` | Roving highlight index for keyboard nav (`active`). Visual styling uses `:focus-visible` / hover — not this flag — so mouse-open does not paint the first item selected (initial open).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `checked` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `destructive` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `disabled` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
@@ -138,7 +138,9 @@ This component registers the following elements when it loads.
 
 | Name | Description | CSS selector |
 | --- | --- | --- |
+| `check` | Checkbox/radio selected indicator | `::part(check)` |
 | `item` | Menu item button | `::part(item)` |
+| `label` | Item label wrapper | `::part(label)` |
 | `prefix` | Leading icon wrapper (hidden when empty) | `::part(prefix)` |
 
 ### pk-dropdown-label

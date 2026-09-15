@@ -167,7 +167,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
     @property({ attribute: false })
     modifyColumn: PkEditableTableModifyColumn | null = null;
 
-    /** Per-row chrome — class / accessible name / tone on the `<tr>`. */
+    /** Per-row presentation — class / accessible name / tone on the `<tr>`. */
     @property({ attribute: false })
     modifyRow: PkEditableTableModifyRow | null = null;
 

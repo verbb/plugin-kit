@@ -1,7 +1,7 @@
 import { l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-CyzwylQ7.js";
-import { k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, i as createVariableTagDomNodeView, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-BFGP4eTV.js";
+import { A as Editor } from "../../chunks/tiptap-CgXkiK8d.js";
+import { i as createVariableTagDomNodeView, j as createTiptapExtensions, k as valueToContent, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-C0E1NpSx.js";
 //#region src/components/tiptap/pk-tiptap-content.styles.ts
 var pkTiptapContentStyles = i`
     @layer pk-component {
@@ -47,7 +47,10 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 	mountEditor() {
 		this.editor = new Editor({
 			element: this.editorMount,
-			extensions: createTiptapExtensions({ variableTagNodeView: createVariableTagDomNodeView() }),
+			extensions: createTiptapExtensions({
+				variableTagNodeView: createVariableTagDomNodeView(),
+				surface: "content"
+			}),
 			content: valueToContent(this.value),
 			editable: false
 		});

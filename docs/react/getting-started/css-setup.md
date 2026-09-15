@@ -18,7 +18,7 @@ import '@verbb/plugin-kit-web/styles/utilities/fouce.css';
 import '@verbb/plugin-kit-web/styles/overlay-content.css';
 ```
 
-`style.css` is tokens + FOUCE + overlay chrome (dialog/popover light-DOM classes). Prefer it unless you are assembling the sheets yourself.
+`style.css` contains tokens, FOUCE, and overlay styles (dialog/popover light-DOM classes). Prefer it unless you are assembling the sheets yourself.
 
 ## Light DOM vs Shadow DOM
 

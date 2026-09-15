@@ -7,6 +7,7 @@ import {
     createTiptapExtensions,
     getCraftLinkOptions,
     getFatalTiptapContentError,
+    getRegisteredTiptapToolbarControl,
     getLinkEditState,
     getLinkOptionsElementSiteId,
     getLinkOpenInNewTab,
@@ -20,12 +21,15 @@ import {
     isToolbarButtonActive,
     openCraftElementLinkSelector,
     runToolbarButton,
+    resolveTiptapTextStyleToolbarConfig,
     toolbarIncludesButton,
     unsetLinkFromEditor,
     type LinkElementConfig,
     type LinkOptionsInput,
     type ToolbarGroup,
     type ToolbarNode,
+    type TiptapTextStyleOption,
+    type TiptapTextStyleToolbarConfig,
 } from '@verbb/plugin-kit-tiptap-core';
 import { getMarkRange, posToDOMRect } from '@tiptap/core';
 
@@ -43,6 +47,7 @@ import '../button/pk-button.js';
 import '../checkbox/pk-checkbox.js';
 import '../dialog/pk-dialog.js';
 import '../dropdown-menu/pk-dropdown-item.js';
+import '../dropdown-menu/pk-dropdown-label.js';
 import '../field/pk-field.js';
 import '../input/pk-input.js';
 import '../dropdown-menu/pk-dropdown-menu.js';
@@ -51,6 +56,7 @@ import '../tooltip/pk-tooltip.js';
 import type { PkButton } from '../button/pk-button.js';
 import type { PkCheckbox } from '../checkbox/pk-checkbox.js';
 import type { PkDialog } from '../dialog/pk-dialog.js';
+import type { PkDropdownItem } from '../dropdown-menu/pk-dropdown-item.js';
 import type { PkDropdownMenu } from '../dropdown-menu/pk-dropdown-menu.js';
 import type { PkInput } from '../input/pk-input.js';
 import { TiptapEditorHost, parseTiptapDocumentValue, serializeTiptapDocumentContent, serializeTiptapDocumentValue } from './tiptap-editor-host.js';
@@ -60,6 +66,7 @@ import {
     TOOLBAR_ICONS,
     TOOLBAR_LABELS,
     createToolbarPrefixIcon,
+    getToolbarButtonIcon,
     getToolbarMenuItemLabel,
 } from './tiptap-toolbar.js';
 import { createVariableTagDomNodeView } from './variable-tag-node-view.js';
@@ -154,6 +161,28 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
         },
     })
     toolbar: string | ToolbarNode[] | null = null;
+
+    /** Values shown by the optional TextStyle toolbar controls. */
+    @property({
+        attribute: 'text-style-options',
+        converter: {
+            fromAttribute: (value: string | null) => {
+                if (!value) {
+                    return null;
+                }
+
+                try {
+                    return JSON.parse(value) as TiptapTextStyleToolbarConfig;
+                } catch {
+                    return null;
+                }
+            },
+            toAttribute: (value: TiptapTextStyleToolbarConfig | null | undefined) => (
+                value ? JSON.stringify(value) : null
+            ),
+        },
+    })
+    textStyleOptions: TiptapTextStyleToolbarConfig | null = null;
 
     @property({ attribute: 'link-options' })
     linkOptions: string | null = null;
@@ -373,6 +402,9 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
 
         queueMicrotask(() => {
             this.attachSelectionListeners();
+            // Visibility predicates need the mounted Editor instance before the
+            // first custom-control render can be authoritative.
+            this.requestUpdate();
         });
     }
 
@@ -736,7 +768,9 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     }
 
     private getToolbarButtonLabel(buttonName: string): string {
-        return TOOLBAR_LABELS[buttonName] ?? buttonName;
+        return TOOLBAR_LABELS[buttonName]
+            ?? getRegisteredTiptapToolbarControl(buttonName)?.label
+            ?? buttonName;
     }
 
     private renderToolbarTooltip(buttonId: string, label: string) {
@@ -751,7 +785,13 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
 
     private renderToolbarButton(buttonName: string) {
         const editor = this.host.editor;
-        const icon = TOOLBAR_ICONS[buttonName];
+        const registered = getRegisteredTiptapToolbarControl(buttonName);
+
+        if (registered?.isVisible && (!editor || !registered.isVisible(editor))) {
+            return nothing;
+        }
+
+        const icon = getToolbarButtonIcon(buttonName);
         const label = this.getToolbarButtonLabel(buttonName);
         const buttonId = this.getToolbarButtonId(buttonName);
         const active = editor ? isTiptapButtonActive(editor, buttonName) : false;
@@ -770,6 +810,197 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
                     ${icon ? unsafeSVG(icon) : html`<span class="toolbar-btn__label">${label}</span>`}
                 </button>
                 ${this.renderToolbarTooltip(buttonId, label)}
+            </div>
+        `;
+    }
+
+    private get textStyleToolbarConfig() {
+        return resolveTiptapTextStyleToolbarConfig(this.textStyleOptions);
+    }
+
+    private getTextStyleValue(attribute: string): string | null {
+        const value = this.host.editor?.getAttributes('textStyle')[attribute];
+        return typeof value === 'string' && value ? value : null;
+    }
+
+    private setTextStyleValue(attribute: string, value: string | null): void {
+        const editor = this.host.editor;
+
+        if (!editor) {
+            return;
+        }
+
+        const chain = editor.chain().focus();
+
+        switch (attribute) {
+            case 'fontFamily':
+                value ? chain.setFontFamily(value).run() : chain.unsetFontFamily().run();
+                break;
+            case 'fontSize':
+                value ? chain.setFontSize(value).run() : chain.unsetFontSize().run();
+                break;
+            case 'color':
+                value ? chain.setColor(value).run() : chain.unsetColor().run();
+                break;
+            case 'backgroundColor':
+                value ? chain.setBackgroundColor(value).run() : chain.unsetBackgroundColor().run();
+                break;
+            case 'lineHeight':
+                value ? chain.setLineHeight(value).run() : chain.unsetLineHeight().run();
+                break;
+        }
+    }
+
+    private getTextStyleOptionLabel(options: TiptapTextStyleOption[], value: string | null): string {
+        return options.find((option) => option.value === value)?.label
+            ?? options.find((option) => option.value === null)?.label
+            ?? 'Default';
+    }
+
+    private renderTextStyleOptions(attribute: string, options: TiptapTextStyleOption[]) {
+        const currentValue = this.getTextStyleValue(attribute);
+
+        return options.map((option) => html`
+            <pk-dropdown-item
+                type="radio"
+                radio-group=${attribute}
+                value=${option.value ?? ''}
+                ?checked=${option.value === currentValue}
+                @click=${() => this.setTextStyleValue(attribute, option.value)}
+            >
+                ${option.label}
+            </pk-dropdown-item>
+        `);
+    }
+
+    private renderTextStylePaletteOptions(
+        attribute: 'color' | 'backgroundColor',
+        options: TiptapTextStyleOption[],
+        idPrefix: string,
+    ) {
+        const currentValue = this.getTextStyleValue(attribute);
+        const isTextColor = attribute === 'color';
+
+        return options.map((option, index) => {
+            const optionId = `${idPrefix}-${attribute}-${index}`;
+            const accessibleLabel = option.value
+                ? `${option.label} ${isTextColor ? 'text' : 'highlight'}`
+                : isTextColor ? 'Default text color' : 'No highlight';
+
+            return html`
+                <pk-dropdown-item
+                    id=${optionId}
+                    class="text-style-palette__option"
+                    type="radio"
+                    radio-group=${attribute}
+                    value=${option.value ?? ''}
+                    ?checked=${option.value === currentValue}
+                    @click=${() => this.setTextStyleValue(attribute, option.value)}
+                >
+                    <span
+                        slot="start"
+                        class="text-style-palette__swatch ${isTextColor ? 'text-style-palette__swatch--text' : 'text-style-palette__swatch--highlight'}"
+                        style=${option.value ? `--text-style-swatch:${option.value}` : ''}
+                        data-empty=${option.value === null ? '' : nothing}
+                        aria-hidden="true"
+                    >${isTextColor ? 'A' : nothing}</span>
+                    <span class="text-style-palette__accessible-label">${accessibleLabel}</span>
+                </pk-dropdown-item>
+                ${this.toolbarTooltips ? html`
+                    <pk-tooltip for=${optionId} content=${accessibleLabel} placement="top"></pk-tooltip>
+                ` : nothing}
+            `;
+        });
+    }
+
+    private handleTextStylePaletteKeyDown(event: KeyboardEvent): void {
+        const deltas: Partial<Record<KeyboardEvent['key'], number>> = {
+            ArrowLeft: -1,
+            ArrowRight: 1,
+            ArrowUp: -5,
+            ArrowDown: 5,
+        };
+        const delta = deltas[event.key];
+
+        if (!delta) {
+            return;
+        }
+
+        const menu = event.currentTarget as PkDropdownMenu;
+        const item = event.composedPath().find((node): node is PkDropdownItem => (
+            node instanceof HTMLElement
+            && node.localName === 'pk-dropdown-item'
+            && node.classList.contains('text-style-palette__option')
+        ));
+        const items = menu.getItems().filter((candidate) => (
+            candidate.classList.contains('text-style-palette__option')
+        ));
+        const index = item ? items.indexOf(item) : -1;
+
+        if (index === -1) {
+            return;
+        }
+
+        // The menu remains the focus/dismissal owner; only its directional
+        // movement changes to match the palette's five-column visual layout.
+        const target = items[Math.max(0, Math.min(index + delta, items.length - 1))];
+
+        event.preventDefault();
+        event.stopPropagation();
+        target?.focusControl();
+    }
+
+    private renderTextStyleToolbar(buttonName: string) {
+        const config = this.textStyleToolbarConfig;
+        const buttonId = this.getToolbarButtonId(buttonName);
+        const triggerColor = buttonName === 'text-color' ? this.getTextStyleValue('color') : null;
+        let triggerLabel = '';
+        let menuContent: unknown = nothing;
+
+        if (buttonName === 'font-family') {
+            triggerLabel = this.getTextStyleOptionLabel(config.fontFamilies, this.getTextStyleValue('fontFamily'));
+            menuContent = html`${this.renderTextStyleOptions('fontFamily', config.fontFamilies)}`;
+        } else if (buttonName === 'font-size') {
+            triggerLabel = this.getTextStyleOptionLabel(config.fontSizes, this.getTextStyleValue('fontSize'));
+            menuContent = html`${this.renderTextStyleOptions('fontSize', config.fontSizes)}`;
+        } else if (buttonName === 'line-height') {
+            triggerLabel = this.getTextStyleOptionLabel(config.lineHeights, this.getTextStyleValue('lineHeight'));
+            menuContent = html`${this.renderTextStyleOptions('lineHeight', config.lineHeights)}`;
+        } else {
+            triggerLabel = 'A';
+            menuContent = html`
+                <pk-dropdown-label class="text-style-palette__label">Text color</pk-dropdown-label>
+                ${this.renderTextStylePaletteOptions('color', config.textColors, buttonId)}
+                <pk-dropdown-label class="text-style-palette__label text-style-palette__label--highlight">Highlight color</pk-dropdown-label>
+                ${this.renderTextStylePaletteOptions('backgroundColor', config.backgroundColors, buttonId)}
+            `;
+        }
+
+        const label = this.getToolbarButtonLabel(buttonName);
+
+        return html`
+            <div class="toolbar-item">
+                <button
+                    id=${buttonId}
+                    type="button"
+                    class="toolbar-btn toolbar-btn--menu toolbar-btn--text-style ${buttonName === 'text-color' ? 'toolbar-btn--color' : ''}"
+                    aria-label=${label}
+                    aria-haspopup="menu"
+                    ?disabled=${this.disabled || this.readonly}
+                    style=${triggerColor ? `--text-style-trigger-color:${triggerColor}` : ''}
+                >
+                    <span class="toolbar-btn__text-style-value">${triggerLabel}</span>
+                    <span class="toolbar-btn__chevron">${unsafeSVG(TOOLBAR_CHEVRON_HTML)}</span>
+                </button>
+                ${this.renderToolbarTooltip(buttonId, label)}
+                <pk-dropdown-menu
+                    for=${buttonId}
+                    placement="bottom-start"
+                    class=${buttonName === 'text-color' ? 'text-style-palette' : ''}
+                    @keydown=${buttonName === 'text-color' ? this.handleTextStylePaletteKeyDown : nothing}
+                >
+                    ${menuContent}
+                </pk-dropdown-menu>
             </div>
         `;
     }
@@ -807,7 +1038,7 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     }
 
     private renderGroupTriggerContent(group: ToolbarGroup, triggerLabel: string, iconName: string) {
-        const icon = TOOLBAR_ICONS[iconName];
+        const icon = getToolbarButtonIcon(iconName);
         const showTextLabel = Boolean(group.label);
 
         if (showTextLabel && triggerLabel) {
@@ -832,7 +1063,18 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
             isActive: false,
             icon: group.icon ?? getToolbarGroupDefaultIcon(group),
         };
-        const menuItems = getToolbarGroupMenuItems(group);
+        const menuItems = getToolbarGroupMenuItems(group).filter((entry) => {
+            if (entry.type === 'separator') {
+                return true;
+            }
+
+            const control = getRegisteredTiptapToolbarControl(entry.name);
+            return !control?.isVisible || Boolean(editor && control.isVisible(editor));
+        });
+
+        if (!menuItems.some((entry) => entry.type === 'item')) {
+            return nothing;
+        }
         const tooltipLabel = group.label
             ?? (isHeadingsOnlyToolbarPreset(group.preset) ? 'Headings'
                 : isFormattingToolbarPreset(group.preset) ? 'Formatting'
@@ -892,6 +1134,10 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
 
         if (node.name === 'link') {
             return this.renderLinkToolbarButton();
+        }
+
+        if (['font-family', 'font-size', 'text-color', 'line-height'].includes(node.name)) {
+            return this.renderTextStyleToolbar(node.name);
         }
 
         return this.renderToolbarButton(node.name);

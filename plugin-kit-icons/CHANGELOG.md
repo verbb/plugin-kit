@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- `smallCaps` icon for constrained font-variant formatting controls.
+
 ## 2.0.16 - 2026-09-09
 
 ### Changed

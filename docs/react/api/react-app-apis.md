@@ -57,7 +57,7 @@ Pass `portalContainer` to `PluginKitProvider` so overlay scroll lock stays stabl
 
 ## `configurePluginKitReact` / `configure`
 
-Same options as the Provider, for chrome slots or reconfigure-without-remount. Prefer the Provider for the main tree.
+Same options as the Provider, for secondary interface slots or reconfigure-without-remount. Prefer the Provider for the main tree.
 
 ## `createCraftHostBridge`
 

@@ -86,7 +86,7 @@ function isInlineSvg(preview: string): boolean {
  * `aria-activedescendant`; arrows move the highlight (2D in the grid); Enter
  * selects; Escape closes.
  *
- * @csspart root - Filled control chrome (trigger + clear + chevron)
+ * @csspart root - Filled control surface (trigger + clear + chevron)
  * @csspart trigger - Opens the panel (preview + label)
  * @csspart clear-button - Clear selection button (inside the control)
  * @csspart panel - Popup panel shell

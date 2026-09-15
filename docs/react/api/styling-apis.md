@@ -10,7 +10,7 @@ import '@verbb/plugin-kit-react/style.css';
 
 | Export | Purpose |
 | --- | --- |
-| `@verbb/plugin-kit-react/style.css` | Main bundle: PK tokens, FOUCE cloak, overlay light-DOM chrome (dialog header/close), FieldWrap layout rules. |
+| `@verbb/plugin-kit-react/style.css` | Main bundle: PK tokens, FOUCE cloak, overlay light-DOM styles (dialog header/close), FieldWrap layout rules. |
 | `@verbb/plugin-kit-react/tailwind-theme.css` | Tailwind v4 `@theme` bridge — maps utility colors (`bg-gray-50`, …) onto PK tokens. Import only when your app also uses `@import "tailwindcss"`. |
 | `@verbb/plugin-kit-react/tailwind-preflight-scope.css` | Documentation/no-op target for the Tailwind-preflight-beside-kit host contract (preflight `* { margin: 0 }` beats shadow `:host` margins). |
 
@@ -26,7 +26,7 @@ For local monorepo dev, `@verbb/plugin-kit-react/vite-dev` exports `getPluginKit
 
 If your app renders inside a shadow root, inject the package CSS into that same shadow root (see [`mountShadowApp`](./react-app-apis.md#mountshadowapp) — pass the CSS as `styles`). Importing the stylesheet only at the document level will not style content rendered inside shadow DOM. Keep a document-level `style.css` import too, so FOUCE cloaking hides unupgraded tags before the shadow tree mounts.
 
-Overlays render through the native Popover API top layer; there is no portal class hook for styling them (`portalClassName` is deprecated and ignored). Style overlay content via component parts/tokens, or the light-DOM `.pk-dialog__*` chrome classes shipped in `style.css`.
+Overlays render through the native Popover API top layer; there is no portal class hook for styling them (`portalClassName` is deprecated and ignored). Style overlay content via component parts/tokens, or the light-DOM `.pk-dialog__*` classes shipped in `style.css`.
 
 ## Tokens and CP variables
 

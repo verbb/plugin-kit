@@ -1,10 +1,10 @@
 import { c as r, d as i, f as A, l as n, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate } from "../../chunks/pk-base-CyzwylQ7.js";
-import "../../chunks/pk-icon-B5ob3JdK.js";
-import "../../chunks/pk-button-dngp-vOd.js";
-import "../../chunks/pk-dialog-B6lzsRur.js";
-import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-Bfgwu0VH.js";
-import "../../chunks/pk-status-D3ArH2ui.js";
+import "../../chunks/pk-icon-Bph-EBqp.js";
+import "../../chunks/pk-button-saBDszJV.js";
+import "../../chunks/pk-dialog-C6aaPokv.js";
+import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-k61snd3X.js";
+import "../../chunks/pk-status-D2g_77m_.js";
 //#region src/components/connect/pk-connect.ts
 var pkStatusForState = (status) => {
 	if (status === "connected") return "on";

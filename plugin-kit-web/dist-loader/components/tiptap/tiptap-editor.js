@@ -1,20 +1,21 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-CyzwylQ7.js";
-import { A as heading, D as h4, E as h3, F as link, G as table, H as strikethrough, I as listOl, J as underline, K as textSlash, L as listUl, N as italic, O as h5, R as minus, T as h2, U as subscript, V as quoteRight, W as superscript, a as alignRight, c as arrowRotateRight, d as bold, f as bracketsCurly, h as chevronDown, i as alignLeft, j as highlighter, k as h6, n as alignCenter, q as triangleExclamation, r as alignJustify, s as arrowRotateLeft, w as h1, x as fileDashedLine, y as code, z as paragraph } from "../../chunks/svg-BiAlXtCn.js";
-import "../../chunks/pk-button-dngp-vOd.js";
+import { A as heading, D as h4, E as h3, F as link, G as superscript, H as smallCaps, I as listOl, J as triangleExclamation, K as table, L as listUl, N as italic, O as h5, R as minus, T as h2, U as strikethrough, V as quoteRight, W as subscript, Y as underline, a as alignRight, c as arrowRotateRight, d as bold, f as bracketsCurly, h as chevronDown, i as alignLeft, j as highlighter, k as h6, n as alignCenter, q as textSlash, r as alignJustify, s as arrowRotateLeft, w as h1, x as fileDashedLine, y as code, z as paragraph } from "../../chunks/svg-Bz-bXZn7.js";
+import "../../chunks/pk-button-saBDszJV.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
 import "../../chunks/pk-checkbox-B3d4nkBx.js";
 import "../../chunks/pk-input-BhU0PiCk.js";
-import { M as posToDOMRect, j as getMarkRange, k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { A as createTiptapExtensions, D as getFatalTiptapContentError, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BFGP4eTV.js";
-import { n as renderIconHtml } from "../../chunks/render-BKfL_WRl.js";
-import "../../chunks/pk-field-D_SNOJpl.js";
-import "../../chunks/pk-dialog-B6lzsRur.js";
-import "../../chunks/pk-dropdown-item-DJ5TeF1r.js";
-import "../../chunks/pk-dropdown-menu-B87bsdlI.js";
+import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-CgXkiK8d.js";
+import { A as resolveTiptapTextStyleToolbarConfig, D as getFatalTiptapContentError, N as getRegisteredTiptapToolbarControl, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, j as createTiptapExtensions, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-C0E1NpSx.js";
+import { n as renderIconHtml } from "../../chunks/render-Bnzcxfss.js";
+import "../../chunks/pk-field-V7JOy26T.js";
+import "../../chunks/pk-dialog-C6aaPokv.js";
+import "../../chunks/pk-dropdown-item-D8RrwjxL.js";
+import "../../chunks/pk-dropdown-label-Cg32UgRe.js";
+import "../../chunks/pk-dropdown-menu-CAHCltlX.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-BS2dNLOS.js";
+import "../../chunks/pk-tooltip-Dd_Q0Bn5.js";
 //#region src/components/tiptap/tiptap-editor-host.ts
 function serializeTiptapDocumentContent(content) {
 	return JSON.stringify(normalizeContentArray(content));
@@ -117,6 +118,7 @@ var TOOLBAR_ICONS = {
 	strikethrough: renderIconHtml(strikethrough),
 	subscript: renderIconHtml(subscript),
 	superscript: renderIconHtml(superscript),
+	"small-caps": renderIconHtml(smallCaps),
 	code: renderIconHtml(bracketsCurly),
 	"code-block": renderIconHtml(code),
 	highlight: renderIconHtml(highlighter),
@@ -150,6 +152,11 @@ var TOOLBAR_LABELS = {
 	strikethrough: "Strikethrough",
 	subscript: "Subscript",
 	superscript: "Superscript",
+	"small-caps": "Small caps",
+	"font-family": "Font family",
+	"font-size": "Font size",
+	"text-color": "Text and background color",
+	"line-height": "Line height",
 	code: "Inline code",
 	"code-block": "Code block",
 	highlight: "Highlight",
@@ -176,11 +183,15 @@ var TOOLBAR_LABELS = {
 	redo: "Redo"
 };
 function getToolbarMenuItemLabel(buttonName) {
-	return TOOLBAR_LABELS[buttonName] ?? buttonName;
+	return TOOLBAR_LABELS[buttonName] ?? getRegisteredTiptapToolbarControl(buttonName)?.label ?? buttonName;
+}
+function getToolbarButtonIcon(buttonName) {
+	const registeredIcon = getRegisteredTiptapToolbarControl(buttonName)?.icon;
+	return TOOLBAR_ICONS[buttonName] ?? (registeredIcon ? renderIconHtml(registeredIcon) : void 0);
 }
 /** Prefix icon for `pk-dropdown-item` — SVG must carry `slot="prefix"` directly. */
 function createToolbarPrefixIcon(buttonName) {
-	const iconHtml = TOOLBAR_ICONS[buttonName];
+	const iconHtml = getToolbarButtonIcon(buttonName);
 	if (!iconHtml) return null;
 	const template = document.createElement("template");
 	template.innerHTML = iconHtml.trim();
@@ -309,6 +320,136 @@ var pkTiptapEditorStyles = i`
             line-height: 1;
             text-transform: uppercase;
             letter-spacing: 0.02em;
+        }
+
+        .toolbar-btn--text-style {
+            max-width: 9rem;
+            padding-inline: 0.5rem;
+        }
+
+        .toolbar-btn__text-style-value {
+            overflow: hidden;
+            font-size: var(--pk-font-size-xs);
+            line-height: 1;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .toolbar-btn--color .toolbar-btn__text-style-value {
+            min-width: 1rem;
+            border-bottom: 2px solid var(--text-style-trigger-color, currentColor);
+            color: var(--text-style-trigger-color, currentColor);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        pk-dropdown-menu.text-style-palette::part(panel) {
+            display: grid;
+            grid-template-columns: repeat(5, 2rem);
+            gap: 0.625rem 0.75rem;
+            width: max-content;
+            min-width: 0;
+            padding: 1rem;
+        }
+
+        .text-style-palette__label {
+            grid-column: 1 / -1;
+            color: var(--pk-color-gray-900);
+        }
+
+        .text-style-palette__label::part(label) {
+            padding: 0 0 0.125rem;
+            font-size: var(--pk-font-size-base);
+            font-weight: 600;
+        }
+
+        .text-style-palette__label--highlight {
+            margin-top: 0.375rem;
+        }
+
+        .text-style-palette__option {
+            width: 2rem;
+            height: 2rem;
+            --pk-dropdown-item-gap: 0;
+            --pk-dropdown-item-icon-size: 1.625rem;
+        }
+
+        .text-style-palette__option::part(item) {
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            min-height: 0;
+            padding: 0;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .text-style-palette__option:hover::part(item),
+        .text-style-palette__option:focus-within::part(item),
+        .text-style-palette__option[data-highlighted]::part(item),
+        .text-style-palette__option[checked]::part(item) {
+            background: transparent;
+        }
+
+        .text-style-palette__option::part(prefix) {
+            width: 1.625rem;
+            height: 1.625rem;
+        }
+
+        .text-style-palette__option::part(label) {
+            position: absolute;
+        }
+
+        .text-style-palette__option::part(check) {
+            display: none;
+        }
+
+        .text-style-palette__swatch {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.625rem;
+            height: 1.625rem;
+            box-sizing: border-box;
+            border: 1px solid rgba(15, 23, 42, 0.16);
+            border-radius: 50%;
+        }
+
+        /* Keep the state treatment concentric with the slotted swatch. The
+           dropdown item's shadow button is wider than its prefix in some hosts. */
+        .text-style-palette__option:hover .text-style-palette__swatch,
+        .text-style-palette__option:focus-within .text-style-palette__swatch,
+        .text-style-palette__option[data-highlighted] .text-style-palette__swatch,
+        .text-style-palette__option[checked] .text-style-palette__swatch {
+            box-shadow: 0 0 0 0.25rem var(--pk-color-slate-100);
+        }
+
+        .text-style-palette__swatch--text {
+            border-color: var(--text-style-swatch, rgba(15, 23, 42, 0.35));
+            color: var(--text-style-swatch, #1f2937);
+            font-size: var(--pk-font-size-base);
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .text-style-palette__swatch--highlight {
+            background: var(--text-style-swatch, #fff);
+        }
+
+        .text-style-palette__accessible-label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .text-style-palette pk-tooltip {
+            display: contents;
         }
 
         /* Full toolbar replace (slot=toolbar on host when hasCustomToolbar). */
@@ -445,6 +586,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		this._value = null;
 		this.buttons = "bold,italic";
 		this.toolbar = null;
+		this.textStyleOptions = null;
 		this.linkOptions = null;
 		this.rows = 4;
 		this.placeholder = "";
@@ -621,6 +763,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		});
 		queueMicrotask(() => {
 			this.attachSelectionListeners();
+			this.requestUpdate();
 		});
 	}
 	attachSelectionListeners() {
@@ -837,7 +980,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		return id;
 	}
 	getToolbarButtonLabel(buttonName) {
-		return TOOLBAR_LABELS[buttonName] ?? buttonName;
+		return TOOLBAR_LABELS[buttonName] ?? getRegisteredTiptapToolbarControl(buttonName)?.label ?? buttonName;
 	}
 	renderToolbarTooltip(buttonId, label) {
 		if (!this.toolbarTooltips) return A;
@@ -847,7 +990,9 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 	}
 	renderToolbarButton(buttonName) {
 		const editor = this.host.editor;
-		const icon = TOOLBAR_ICONS[buttonName];
+		const registered = getRegisteredTiptapToolbarControl(buttonName);
+		if (registered?.isVisible && (!editor || !registered.isVisible(editor))) return A;
+		const icon = getToolbarButtonIcon(buttonName);
 		const label = this.getToolbarButtonLabel(buttonName);
 		const buttonId = this.getToolbarButtonId(buttonName);
 		const active = editor ? isTiptapButtonActive(editor, buttonName) : false;
@@ -865,6 +1010,152 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
                     ${icon ? o(icon) : b`<span class="toolbar-btn__label">${label}</span>`}
                 </button>
                 ${this.renderToolbarTooltip(buttonId, label)}
+            </div>
+        `;
+	}
+	get textStyleToolbarConfig() {
+		return resolveTiptapTextStyleToolbarConfig(this.textStyleOptions);
+	}
+	getTextStyleValue(attribute) {
+		const value = this.host.editor?.getAttributes("textStyle")[attribute];
+		return typeof value === "string" && value ? value : null;
+	}
+	setTextStyleValue(attribute, value) {
+		const editor = this.host.editor;
+		if (!editor) return;
+		const chain = editor.chain().focus();
+		switch (attribute) {
+			case "fontFamily":
+				value ? chain.setFontFamily(value).run() : chain.unsetFontFamily().run();
+				break;
+			case "fontSize":
+				value ? chain.setFontSize(value).run() : chain.unsetFontSize().run();
+				break;
+			case "color":
+				value ? chain.setColor(value).run() : chain.unsetColor().run();
+				break;
+			case "backgroundColor":
+				value ? chain.setBackgroundColor(value).run() : chain.unsetBackgroundColor().run();
+				break;
+			case "lineHeight":
+				value ? chain.setLineHeight(value).run() : chain.unsetLineHeight().run();
+				break;
+		}
+	}
+	getTextStyleOptionLabel(options, value) {
+		return options.find((option) => option.value === value)?.label ?? options.find((option) => option.value === null)?.label ?? "Default";
+	}
+	renderTextStyleOptions(attribute, options) {
+		const currentValue = this.getTextStyleValue(attribute);
+		return options.map((option) => b`
+            <pk-dropdown-item
+                type="radio"
+                radio-group=${attribute}
+                value=${option.value ?? ""}
+                ?checked=${option.value === currentValue}
+                @click=${() => this.setTextStyleValue(attribute, option.value)}
+            >
+                ${option.label}
+            </pk-dropdown-item>
+        `);
+	}
+	renderTextStylePaletteOptions(attribute, options, idPrefix) {
+		const currentValue = this.getTextStyleValue(attribute);
+		const isTextColor = attribute === "color";
+		return options.map((option, index) => {
+			const optionId = `${idPrefix}-${attribute}-${index}`;
+			const accessibleLabel = option.value ? `${option.label} ${isTextColor ? "text" : "highlight"}` : isTextColor ? "Default text color" : "No highlight";
+			return b`
+                <pk-dropdown-item
+                    id=${optionId}
+                    class="text-style-palette__option"
+                    type="radio"
+                    radio-group=${attribute}
+                    value=${option.value ?? ""}
+                    ?checked=${option.value === currentValue}
+                    @click=${() => this.setTextStyleValue(attribute, option.value)}
+                >
+                    <span
+                        slot="start"
+                        class="text-style-palette__swatch ${isTextColor ? "text-style-palette__swatch--text" : "text-style-palette__swatch--highlight"}"
+                        style=${option.value ? `--text-style-swatch:${option.value}` : ""}
+                        data-empty=${option.value === null ? "" : A}
+                        aria-hidden="true"
+                    >${isTextColor ? "A" : A}</span>
+                    <span class="text-style-palette__accessible-label">${accessibleLabel}</span>
+                </pk-dropdown-item>
+                ${this.toolbarTooltips ? b`
+                    <pk-tooltip for=${optionId} content=${accessibleLabel} placement="top"></pk-tooltip>
+                ` : A}
+            `;
+		});
+	}
+	handleTextStylePaletteKeyDown(event) {
+		const delta = {
+			ArrowLeft: -1,
+			ArrowRight: 1,
+			ArrowUp: -5,
+			ArrowDown: 5
+		}[event.key];
+		if (!delta) return;
+		const menu = event.currentTarget;
+		const item = event.composedPath().find((node) => node instanceof HTMLElement && node.localName === "pk-dropdown-item" && node.classList.contains("text-style-palette__option"));
+		const items = menu.getItems().filter((candidate) => candidate.classList.contains("text-style-palette__option"));
+		const index = item ? items.indexOf(item) : -1;
+		if (index === -1) return;
+		const target = items[Math.max(0, Math.min(index + delta, items.length - 1))];
+		event.preventDefault();
+		event.stopPropagation();
+		target?.focusControl();
+	}
+	renderTextStyleToolbar(buttonName) {
+		const config = this.textStyleToolbarConfig;
+		const buttonId = this.getToolbarButtonId(buttonName);
+		const triggerColor = buttonName === "text-color" ? this.getTextStyleValue("color") : null;
+		let triggerLabel = "";
+		let menuContent = A;
+		if (buttonName === "font-family") {
+			triggerLabel = this.getTextStyleOptionLabel(config.fontFamilies, this.getTextStyleValue("fontFamily"));
+			menuContent = b`${this.renderTextStyleOptions("fontFamily", config.fontFamilies)}`;
+		} else if (buttonName === "font-size") {
+			triggerLabel = this.getTextStyleOptionLabel(config.fontSizes, this.getTextStyleValue("fontSize"));
+			menuContent = b`${this.renderTextStyleOptions("fontSize", config.fontSizes)}`;
+		} else if (buttonName === "line-height") {
+			triggerLabel = this.getTextStyleOptionLabel(config.lineHeights, this.getTextStyleValue("lineHeight"));
+			menuContent = b`${this.renderTextStyleOptions("lineHeight", config.lineHeights)}`;
+		} else {
+			triggerLabel = "A";
+			menuContent = b`
+                <pk-dropdown-label class="text-style-palette__label">Text color</pk-dropdown-label>
+                ${this.renderTextStylePaletteOptions("color", config.textColors, buttonId)}
+                <pk-dropdown-label class="text-style-palette__label text-style-palette__label--highlight">Highlight color</pk-dropdown-label>
+                ${this.renderTextStylePaletteOptions("backgroundColor", config.backgroundColors, buttonId)}
+            `;
+		}
+		const label = this.getToolbarButtonLabel(buttonName);
+		return b`
+            <div class="toolbar-item">
+                <button
+                    id=${buttonId}
+                    type="button"
+                    class="toolbar-btn toolbar-btn--menu toolbar-btn--text-style ${buttonName === "text-color" ? "toolbar-btn--color" : ""}"
+                    aria-label=${label}
+                    aria-haspopup="menu"
+                    ?disabled=${this.disabled || this.readonly}
+                    style=${triggerColor ? `--text-style-trigger-color:${triggerColor}` : ""}
+                >
+                    <span class="toolbar-btn__text-style-value">${triggerLabel}</span>
+                    <span class="toolbar-btn__chevron">${o(TOOLBAR_CHEVRON_HTML)}</span>
+                </button>
+                ${this.renderToolbarTooltip(buttonId, label)}
+                <pk-dropdown-menu
+                    for=${buttonId}
+                    placement="bottom-start"
+                    class=${buttonName === "text-color" ? "text-style-palette" : ""}
+                    @keydown=${buttonName === "text-color" ? this.handleTextStylePaletteKeyDown : A}
+                >
+                    ${menuContent}
+                </pk-dropdown-menu>
             </div>
         `;
 	}
@@ -897,7 +1188,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		return b`<span class="toolbar-separator" aria-hidden="true"></span>`;
 	}
 	renderGroupTriggerContent(group, triggerLabel, iconName) {
-		const icon = TOOLBAR_ICONS[iconName];
+		const icon = getToolbarButtonIcon(iconName);
 		if (Boolean(group.label) && triggerLabel) return b`
                 <span class="toolbar-btn__trigger-label">${triggerLabel}</span>
                 <span class="toolbar-btn__chevron">${o(TOOLBAR_CHEVRON_HTML)}</span>
@@ -916,7 +1207,12 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 			isActive: false,
 			icon: group.icon ?? getToolbarGroupDefaultIcon(group)
 		};
-		const menuItems = getToolbarGroupMenuItems(group);
+		const menuItems = getToolbarGroupMenuItems(group).filter((entry) => {
+			if (entry.type === "separator") return true;
+			const control = getRegisteredTiptapToolbarControl(entry.name);
+			return !control?.isVisible || Boolean(editor && control.isVisible(editor));
+		});
+		if (!menuItems.some((entry) => entry.type === "item")) return A;
 		const tooltipLabel = group.label ?? (isHeadingsOnlyToolbarPreset(group.preset) ? "Headings" : isFormattingToolbarPreset(group.preset) ? "Formatting" : group.preset === "lists" ? "Lists" : group.preset === "align" ? "Alignment" : "More");
 		return b`
             <div class="toolbar-item">
@@ -958,6 +1254,12 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		if (node.type === "separator") return this.renderToolbarSeparator();
 		if (node.type === "group") return this.renderToolbarGroup(node.group, `group-${index}`);
 		if (node.name === "link") return this.renderLinkToolbarButton();
+		if ([
+			"font-family",
+			"font-size",
+			"text-color",
+			"line-height"
+		].includes(node.name)) return this.renderTextStyleToolbar(node.name);
 		return this.renderToolbarButton(node.name);
 	}
 	renderDefaultToolbar() {
@@ -1051,6 +1353,20 @@ __decorate([n({
 		}
 	}
 })], PkTiptapEditor.prototype, "toolbar", void 0);
+__decorate([n({
+	attribute: "text-style-options",
+	converter: {
+		fromAttribute: (value) => {
+			if (!value) return null;
+			try {
+				return JSON.parse(value);
+			} catch {
+				return null;
+			}
+		},
+		toAttribute: (value) => value ? JSON.stringify(value) : null
+	}
+})], PkTiptapEditor.prototype, "textStyleOptions", void 0);
 __decorate([n({ attribute: "link-options" })], PkTiptapEditor.prototype, "linkOptions", void 0);
 __decorate([n({ attribute: "link-selector-storage-key-prefix" })], PkTiptapEditor.prototype, "linkSelectorStorageKeyPrefix", void 0);
 __decorate([n({ type: Number })], PkTiptapEditor.prototype, "rows", void 0);

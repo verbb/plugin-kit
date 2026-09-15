@@ -1,7 +1,7 @@
 # Copy Button
 
 Copy a URL, token, or other value in one click. The canonical pattern nests the
-button inside an input’s trailing slot so the action sits in the field chrome.
+button inside an input’s trailing slot so the action sits within the field.
 
 ## Basic Usage
 
@@ -14,7 +14,7 @@ under the button.
 ## Variants
 
 In-control copy uses a compact glyph treatment. Standalone buttons still accept
-the usual button variants for toolbars and other chrome outside a field.
+the usual button variants for toolbars and other controls outside a field.
 
 <ComponentPreview src="./examples/copy-button-variants.preview.tsx" />
 

@@ -28,6 +28,7 @@ This matters for builder previews where field settings change before the form is
 ## Related
 
 - Editable authoring: [TiptapEditor](./tiptap-editor.md)
+- Custom document schemas: [Extending TipTap](/web/guides/tiptap-extensibility)
 - SchemaForm: bind TipTap via [Custom Schema Fields](../../forms/custom-schema-fields.md) (rich-text `$field`s are product-owned)
 - Shared extensions and normalization: `@verbb/plugin-kit-tiptap-core`
 

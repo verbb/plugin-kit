@@ -18,13 +18,13 @@ export declare class PkPopover extends PkElement {
     placement: PkPopupPlacement;
     sideOffset: number;
     /**
-     * Drop default panel padding/fixed width so slotted chrome (command lists, etc.)
+     * Drop default panel padding/fixed width so slotted content (command lists, etc.)
      * can control its own inset. Consumer outer `p-0` alone cannot reach `.panel`.
      */
     flush: boolean;
     /**
      * Show a floating-ui arrow on the panel (off by default).
-     * Named like other optional chrome (`with-clear`, `with-caret`) — tooltip always
+     * Named like other optional controls (`with-clear`, `with-caret`) — tooltip always
      * paints its own arrow and has no toggle.
      */
     withArrow: boolean;

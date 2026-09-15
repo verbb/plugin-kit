@@ -4,7 +4,7 @@ import { LitElement } from 'lit';
  *
  * **Light DOM** — the row mounts inside Craft's `.field.lightswitch-field` wrapper and
  * reuses CP column classes (`.heading` / `.input`) so it lines up with Provider/Enabled
- * rows without shadow-piercing or duplicating Craft field chrome. Action buttons use
+ * rows without shadow-piercing or duplicating Craft field styling. Action buttons use
  * `pk-button`; submission goes through `Craft.submitForm` (same as `.formsubmit`).
  */
 export declare class PkConnectOauth extends LitElement {

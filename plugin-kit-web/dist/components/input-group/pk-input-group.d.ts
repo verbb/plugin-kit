@@ -13,7 +13,7 @@ export declare class PkInputGroup extends PkElement {
     static styles: import('lit').CSSResult[];
     private defaultSlot;
     private hostAriaMirror?;
-    /** Watch slotted control `invalid` / `disabled` / `aria-invalid` for host chrome attrs. */
+    /** Watch slotted control `invalid` / `disabled` / `aria-invalid` for host state attributes. */
     private controlStateObserver?;
     disconnectedCallback(): void;
     firstUpdated(): void;
@@ -25,7 +25,7 @@ export declare class PkInputGroup extends PkElement {
     /** Block addons live in light DOM; `:host(:has())` cannot see slotted children from shadow styles. */
     private syncBlockLayout;
     /**
-     * Mirror control invalid/disabled onto the host so shadow styles can paint shell chrome
+     * Mirror control invalid/disabled onto the host so shadow styles can paint the shell
      * without `:host(:has(…))` (unreliable for light-DOM slotted children in Chromium).
      */
     private syncControlChromeState;

@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Added
+- `auto-size` and `auto-size-padding` options for `<pk-popup>`, allowing popup content to respond to the space available inside its collision boundary.
+- A labelled, icon-backed `small-caps` TipTap toolbar control.
+- Opt-in font family, font size, text/highlight color, and line-height menus for `<pk-tiptap-editor>`, with configurable option sets and a compact, accessible color-swatch palette.
+- `<pk-tiptap-editor>` renders registered custom toolbar controls, and the editor/content pair now load their matching registered TipTap surface extensions.
+
+### Changed
+- Pin the TipTap core peer used by rich-text web components to `3.22.4`.
+
+### Fixed
+- Dropdown menus and nested submenus now constrain themselves to the available viewport height and scroll internally when their contents are taller.
+- TipTap text and highlight color swatches now keep hover, keyboard-focus, and selected-state backgrounds centred on the swatch.
+
 ## 2.0.16 - 2026-09-09
 
 ### Added

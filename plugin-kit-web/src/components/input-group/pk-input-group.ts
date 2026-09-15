@@ -42,7 +42,7 @@ export class PkInputGroup extends PkElement {
 
     private hostAriaMirror?: HostAriaMirror;
 
-    /** Watch slotted control `invalid` / `disabled` / `aria-invalid` for host chrome attrs. */
+    /** Watch slotted control `invalid` / `disabled` / `aria-invalid` for host state attributes. */
     private controlStateObserver?: MutationObserver;
 
     override disconnectedCallback(): void {
@@ -113,7 +113,7 @@ export class PkInputGroup extends PkElement {
     }
 
     /**
-     * Mirror control invalid/disabled onto the host so shadow styles can paint shell chrome
+     * Mirror control invalid/disabled onto the host so shadow styles can paint the shell
      * without `:host(:has(…))` (unreliable for light-DOM slotted children in Chromium).
      */
     private syncControlChromeState(): void {

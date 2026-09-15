@@ -116,6 +116,136 @@ export const pkTiptapEditorStyles = css`
             letter-spacing: 0.02em;
         }
 
+        .toolbar-btn--text-style {
+            max-width: 9rem;
+            padding-inline: 0.5rem;
+        }
+
+        .toolbar-btn__text-style-value {
+            overflow: hidden;
+            font-size: var(--pk-font-size-xs);
+            line-height: 1;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .toolbar-btn--color .toolbar-btn__text-style-value {
+            min-width: 1rem;
+            border-bottom: 2px solid var(--text-style-trigger-color, currentColor);
+            color: var(--text-style-trigger-color, currentColor);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        pk-dropdown-menu.text-style-palette::part(panel) {
+            display: grid;
+            grid-template-columns: repeat(5, 2rem);
+            gap: 0.625rem 0.75rem;
+            width: max-content;
+            min-width: 0;
+            padding: 1rem;
+        }
+
+        .text-style-palette__label {
+            grid-column: 1 / -1;
+            color: var(--pk-color-gray-900);
+        }
+
+        .text-style-palette__label::part(label) {
+            padding: 0 0 0.125rem;
+            font-size: var(--pk-font-size-base);
+            font-weight: 600;
+        }
+
+        .text-style-palette__label--highlight {
+            margin-top: 0.375rem;
+        }
+
+        .text-style-palette__option {
+            width: 2rem;
+            height: 2rem;
+            --pk-dropdown-item-gap: 0;
+            --pk-dropdown-item-icon-size: 1.625rem;
+        }
+
+        .text-style-palette__option::part(item) {
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            min-height: 0;
+            padding: 0;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .text-style-palette__option:hover::part(item),
+        .text-style-palette__option:focus-within::part(item),
+        .text-style-palette__option[data-highlighted]::part(item),
+        .text-style-palette__option[checked]::part(item) {
+            background: transparent;
+        }
+
+        .text-style-palette__option::part(prefix) {
+            width: 1.625rem;
+            height: 1.625rem;
+        }
+
+        .text-style-palette__option::part(label) {
+            position: absolute;
+        }
+
+        .text-style-palette__option::part(check) {
+            display: none;
+        }
+
+        .text-style-palette__swatch {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.625rem;
+            height: 1.625rem;
+            box-sizing: border-box;
+            border: 1px solid rgba(15, 23, 42, 0.16);
+            border-radius: 50%;
+        }
+
+        /* Keep the state treatment concentric with the slotted swatch. The
+           dropdown item's shadow button is wider than its prefix in some hosts. */
+        .text-style-palette__option:hover .text-style-palette__swatch,
+        .text-style-palette__option:focus-within .text-style-palette__swatch,
+        .text-style-palette__option[data-highlighted] .text-style-palette__swatch,
+        .text-style-palette__option[checked] .text-style-palette__swatch {
+            box-shadow: 0 0 0 0.25rem var(--pk-color-slate-100);
+        }
+
+        .text-style-palette__swatch--text {
+            border-color: var(--text-style-swatch, rgba(15, 23, 42, 0.35));
+            color: var(--text-style-swatch, #1f2937);
+            font-size: var(--pk-font-size-base);
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .text-style-palette__swatch--highlight {
+            background: var(--text-style-swatch, #fff);
+        }
+
+        .text-style-palette__accessible-label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .text-style-palette pk-tooltip {
+            display: contents;
+        }
+
         /* Full toolbar replace (slot=toolbar on host when hasCustomToolbar). */
         .toolbar ::slotted([slot='toolbar']) {
             display: contents;

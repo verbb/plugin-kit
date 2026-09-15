@@ -28,7 +28,7 @@ scroll-lock settings, optional Craft host bridge) before children render.
 
 ## Shadow DOM
 
-For Craft CP screens that need style isolation from Craft chrome, use `mountShadowApp`:
+For Craft CP screens that need style isolation from the surrounding Craft interface, use `mountShadowApp`:
 
 ```tsx
 import pluginKitStyles from '@verbb/plugin-kit-react/style.css?inline';
@@ -74,7 +74,7 @@ Skip it when the screen only uses UI primitives.
 
 ## `configurePluginKitReact()`
 
-Same config as the Provider, for secondary mounts (e.g. Craft chrome slots) that need a
+Same config as the Provider, for secondary mounts (e.g. slots in the Craft control panel interface) that need a
 different `portalContainer` without wrapping another tree. Prefer the Provider for the
 main app.
 

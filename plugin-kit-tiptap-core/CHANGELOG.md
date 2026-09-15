@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Added
+- Official TextStyle support for font family, font size, text color, background color, and line height, plus constrained `textStyle.fontVariantCaps` support and the built-in `small-caps` toolbar command.
+- Configurable default option sets for Plugin Kit's TextStyle toolbar menus.
+- Application-level TipTap extension and toolbar-control registries for adding custom nodes, marks, behaviour, commands, labels, icons, and active/visibility state to Plugin Kit editors and read-only content surfaces.
+- A serializable `registerTiptapTextStyleDefinition()` API for allowlisted `font-variant-caps` and `text-transform` attributes with automatic controls.
+
+### Changed
+- Pin the shared TipTap and ProseMirror dependency graph to `3.22.4` so consumers cannot resolve an unqualified mixed editor runtime.
+
 ## 2.0.16 - 2026-09-09
 
 ### Changed

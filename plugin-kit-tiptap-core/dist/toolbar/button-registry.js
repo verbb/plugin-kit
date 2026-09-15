@@ -1,3 +1,4 @@
+import { getRegisteredTiptapToolbarControl, isRegisteredTiptapToolbarControl } from "../registry.js";
 //#region src/toolbar/button-registry.ts
 var HEADING_LEVELS = [
 	1,
@@ -8,6 +9,7 @@ var HEADING_LEVELS = [
 	6
 ];
 function isTiptapButtonName(value) {
+	if (isRegisteredTiptapToolbarControl(value)) return true;
 	if (HEADING_LEVELS.some((level) => value === `h${level}`)) return true;
 	return [
 		"bold",
@@ -16,6 +18,11 @@ function isTiptapButtonName(value) {
 		"strikethrough",
 		"subscript",
 		"superscript",
+		"small-caps",
+		"font-family",
+		"font-size",
+		"text-color",
+		"line-height",
 		"unordered-list",
 		"ordered-list",
 		"blockquote",
@@ -37,6 +44,8 @@ function isTiptapButtonName(value) {
 	].includes(value);
 }
 function isTiptapButtonActive(editor, buttonName) {
+	const registered = getRegisteredTiptapToolbarControl(buttonName);
+	if (registered) return registered.isActive?.(editor) ?? false;
 	if (!isTiptapButtonName(buttonName)) return false;
 	const headingMatch = buttonName.match(/^h([1-6])$/);
 	if (headingMatch) {
@@ -50,6 +59,7 @@ function isTiptapButtonActive(editor, buttonName) {
 		case "strikethrough": return editor.isActive("strike");
 		case "subscript": return editor.isActive("subscript");
 		case "superscript": return editor.isActive("superscript");
+		case "small-caps": return editor.isActive("textStyle", { fontVariantCaps: "small-caps" });
 		case "unordered-list": return editor.isActive("bulletList");
 		case "ordered-list": return editor.isActive("orderedList");
 		case "blockquote": return editor.isActive("blockquote");
@@ -66,6 +76,8 @@ function isTiptapButtonActive(editor, buttonName) {
 	}
 }
 function runTiptapButton(editor, buttonName, options = {}) {
+	const registered = getRegisteredTiptapToolbarControl(buttonName);
+	if (registered) return registered.run(editor) !== false;
 	if (!isTiptapButtonName(buttonName)) return false;
 	const chain = editor.chain().focus();
 	const headingMatch = buttonName.match(/^h([1-6])$/);
@@ -80,6 +92,7 @@ function runTiptapButton(editor, buttonName, options = {}) {
 		case "strikethrough": return chain.toggleStrike().run();
 		case "subscript": return chain.toggleSubscript().run();
 		case "superscript": return chain.toggleSuperscript().run();
+		case "small-caps": return chain.toggleSmallCaps().run();
 		case "unordered-list": return chain.toggleBulletList().run();
 		case "ordered-list": return chain.toggleOrderedList().run();
 		case "blockquote": return chain.toggleBlockquote().run();

@@ -15,7 +15,7 @@ This surface is intentionally small: app configuration, the Craft host bridge, c
 | Symbol | Notes |
 | --- | --- |
 | `PluginKitProvider`, `usePluginKitConfig` | Provider-based config for a React tree (preferred). |
-| `configure` / `configurePluginKitReact` | Imperative config — secondary mounts (e.g. Craft chrome slots). |
+| `configure` / `configurePluginKitReact` | Imperative config — secondary mounts (e.g. slots in the Craft control panel interface). |
 | `mountShadowApp` | Shadow-root mount helper (re-export of the `@verbb/plugin-kit-web` implementation). |
 | `createCraftHostBridge` | Craft CP bridge factory for `hostBridge`. |
 | `PluginKitReactConfig`, `PluginKitProviderProps`, `TranslateFunction`, `MountShadowAppOptions`, `ShadowAppMount` | Types. |

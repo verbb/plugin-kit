@@ -1,5 +1,5 @@
 import { PropertyValues } from 'lit';
-import { ToolbarNode } from '@verbb/plugin-kit-tiptap-core';
+import { ToolbarNode, TiptapTextStyleToolbarConfig } from '@verbb/plugin-kit-tiptap-core';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
 /**
  * TipTap document editor with a Craft-styled toolbar.
@@ -30,6 +30,8 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     buttons: string | string[];
     /** Structured toolbar config — JSON string attribute, or a node array from React. */
     toolbar: string | ToolbarNode[] | null;
+    /** Values shown by the optional TextStyle toolbar controls. */
+    textStyleOptions: TiptapTextStyleToolbarConfig | null;
     linkOptions: string | null;
     linkSelectorStorageKeyPrefix?: string;
     rows: number;
@@ -105,6 +107,14 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     private getToolbarButtonLabel;
     private renderToolbarTooltip;
     private renderToolbarButton;
+    private get textStyleToolbarConfig();
+    private getTextStyleValue;
+    private setTextStyleValue;
+    private getTextStyleOptionLabel;
+    private renderTextStyleOptions;
+    private renderTextStylePaletteOptions;
+    private handleTextStylePaletteKeyDown;
+    private renderTextStyleToolbar;
     private handleCraftLink;
     private getToolbarGroupId;
     private renderToolbarSeparator;

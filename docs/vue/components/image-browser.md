@@ -137,7 +137,7 @@ Host-driven catalog warm. Set `loading` until `items` / `groups` arrive — the 
 | `panel-body` | Scrollable results region | `::part(panel-body)` |
 | `panel-input` | Search input | `::part(panel-input)` |
 | `panel-search` | Search field container | `::part(panel-search)` |
-| `root` | Filled control chrome (trigger + clear + chevron) | `::part(root)` |
+| `root` | Filled control surface (trigger + clear + chevron) | `::part(root)` |
 | `trigger` | Opens the panel (preview + label) | `::part(trigger)` |
 
 ### Dependencies

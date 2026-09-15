@@ -11,6 +11,8 @@ export type PkDropdownItemType = 'normal' | 'checkbox' | 'radio';
  *
  * @csspart item - Menu item button
  * @csspart prefix - Leading icon wrapper (hidden when empty)
+ * @csspart label - Item label wrapper
+ * @csspart check - Checkbox/radio selected indicator
  */
 export declare class PkDropdownItem extends PkElement {
     static styles: import('lit').CSSResult[];
@@ -23,7 +25,7 @@ export declare class PkDropdownItem extends PkElement {
     submenuOpen: boolean;
     /**
      * Roving highlight index for keyboard nav (`active`).
-     * Visual chrome uses `:focus-visible` / hover — not this flag — so mouse-open
+     * Visual styling uses `:focus-visible` / hover — not this flag — so mouse-open
      * does not paint the first item selected (initial open).
      */
     active: boolean;

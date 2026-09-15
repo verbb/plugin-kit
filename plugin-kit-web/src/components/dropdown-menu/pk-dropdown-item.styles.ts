@@ -183,7 +183,9 @@ export const pkDropdownItemStyles = [
         .submenu-panel {
             width: max-content;
             min-width: 8rem;
-            overflow: hidden;
+            max-height: var(--pk-popup-available-height, calc(100dvh - 20px));
+            overflow: auto;
+            overscroll-behavior: contain;
             padding: 4px 0;
             border-radius: var(--pk-radius-md);
             background: var(--pk-color-white);

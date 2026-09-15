@@ -1,5 +1,7 @@
 import { Editor } from '@tiptap/core';
-export type TiptapButtonName = 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript' | 'unordered-list' | 'ordered-list' | 'blockquote' | 'highlight' | 'code' | 'code-block' | 'hr' | 'line-break' | 'align-left' | 'align-center' | 'align-right' | 'align-justify' | 'clear-format' | 'undo' | 'redo' | 'link' | 'table' | 'variableTag' | `h${1 | 2 | 3 | 4 | 5 | 6}`;
+export type BuiltInTiptapButtonName = 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript' | 'small-caps' | 'font-family' | 'font-size' | 'text-color' | 'line-height' | 'unordered-list' | 'ordered-list' | 'blockquote' | 'highlight' | 'code' | 'code-block' | 'hr' | 'line-break' | 'align-left' | 'align-center' | 'align-right' | 'align-justify' | 'clear-format' | 'undo' | 'redo' | 'link' | 'table' | 'variableTag' | `h${1 | 2 | 3 | 4 | 5 | 6}`;
+/** Registered control IDs remain strings while preserving autocomplete for stock controls. */
+export type TiptapButtonName = BuiltInTiptapButtonName | (string & {});
 export type TiptapTableInsertOptions = {
     rows?: number;
     cols?: number;

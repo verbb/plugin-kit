@@ -25,7 +25,7 @@ scroll-lock settings, optional Craft host bridge) before children render.
 
 ## Shadow DOM
 
-For Craft CP screens that need style isolation from Craft chrome, use `mountShadowApp`:
+For Craft CP screens that need style isolation from the surrounding Craft interface, use `mountShadowApp`:
 
 ```ts
 import pluginKitStyles from '@verbb/plugin-kit-web/plugin-kit.css?inline';

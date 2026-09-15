@@ -80,7 +80,7 @@ export declare class PkDialog extends PkElement {
     private syncHasTriggerAttribute;
     private onTriggerSlotChange;
     private onTriggerClick;
-    /** Re-render when footer actions are added/removed so the chrome is not shown empty. */
+    /** Re-render when footer actions are added/removed so the footer is not shown empty. */
     private onFooterSlotChange;
     render(): import('lit-html').TemplateResult<1>;
 }

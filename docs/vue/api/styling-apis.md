@@ -6,7 +6,7 @@ Prefer the Vue package CSS entry (mirrors React):
 import '@verbb/plugin-kit-vue/style.css';
 ```
 
-That sheet pulls in web tokens, FOUCE cloak, and overlay light-DOM chrome. You can still import `@verbb/plugin-kit-web/plugin-kit.css` directly when you want the full web bundle.
+That sheet pulls in web tokens, the FOUCE cloak, and overlay light-DOM styles. You can still import `@verbb/plugin-kit-web/plugin-kit.css` directly when you want the full web bundle.
 
 ## Tailwind
 

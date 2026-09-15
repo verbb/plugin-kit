@@ -8,9 +8,10 @@ import { defineConfig } from 'vitepress';
 import { getPluginKitReactViteDevAliases } from '../../plugin-kit-react/vite-dev.mjs';
 
 const monorepoRoot = fileURLToPath(new URL('../..', import.meta.url));
+const verbbRoot = path.resolve(monorepoRoot, '../..');
 const pluginKitWebSrc = path.join(monorepoRoot, 'plugin-kit-web/src');
-const vitepressTheme = fileURLToPath(new URL('../../../../formie-react/verbb-vitepress-theme/src/index.ts', import.meta.url));
-const formieNodeModules = fileURLToPath(new URL('../../../../formie-react/formie-plugin-repo/node_modules', import.meta.url));
+const vitepressTheme = path.join(verbbRoot, 'verbb-vitepress-theme/verbb-vitepress-theme/src/index.ts');
+const formieNodeModules = path.join(verbbRoot, 'formie/react/node_modules');
 
 const monorepoRequire = createRequire(path.join(monorepoRoot, 'package.json'));
 const docsRequire = createRequire(path.join(monorepoRoot, 'docs/package.json'));
@@ -479,6 +480,12 @@ export default defineConfig({
                 {
                     text: 'Components',
                     items: webComponentItems,
+                },
+                {
+                    text: 'Guides',
+                    items: [
+                        { text: 'Extending TipTap', link: '/web/guides/tiptap-extensibility' },
+                    ],
                 },
             ],
             '/vue/': [

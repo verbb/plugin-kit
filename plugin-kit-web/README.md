@@ -17,7 +17,7 @@ Full Craft wiring (Vite + asset bundle + Twig) is in the [Web quick start](https
 Prefer **family side-effect imports** so TipTap, CodeMirror, and other heavy surfaces stay out of the graph until you ask for them:
 
 ```ts
-import '@verbb/plugin-kit-web/plugin-kit.css'; // tokens + FOUCE + overlay chrome
+import '@verbb/plugin-kit-web/plugin-kit.css'; // tokens + FOUCE + overlay styles
 
 import '@verbb/plugin-kit-web/components/button.js';
 import '@verbb/plugin-kit-web/components/dropdown-menu.js';
@@ -74,7 +74,7 @@ await button?.updateComplete;
 
 | Import | Purpose |
 |--------|---------|
-| `@verbb/plugin-kit-web/plugin-kit.css` | **Recommended** — tokens + FOUCE + overlay chrome |
+| `@verbb/plugin-kit-web/plugin-kit.css` | **Recommended** — tokens + FOUCE + overlay styles |
 | `@verbb/plugin-kit-web/tokens.css` | Design tokens on `:root` only |
 | `@verbb/plugin-kit-web/utilities/fouce.css` | FOUCE alone (already included in `plugin-kit.css`) |
 

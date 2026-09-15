@@ -209,7 +209,7 @@ var PkInputGroup = class PkInputGroup extends PkElement {
 		this.toggleAttribute("data-block-layout", blockLayout);
 	}
 	/**
-	* Mirror control invalid/disabled onto the host so shadow styles can paint shell chrome
+	* Mirror control invalid/disabled onto the host so shadow styles can paint the shell
 	* without `:host(:has(…))` (unreliable for light-DOM slotted children in Chromium).
 	*/
 	syncControlChromeState() {

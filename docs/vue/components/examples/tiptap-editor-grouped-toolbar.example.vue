@@ -4,15 +4,16 @@ import type { ToolbarNode } from '@verbb/plugin-kit-tiptap-core';
 import { TiptapEditor } from '@verbb/plugin-kit-vue/components';
 
 const groupedToolbar: ToolbarNode[] = [
-    { type: 'group', group: { preset: 'headings', headingLevels: [1, 2, 3, 4] } },
-    { type: 'group', group: { preset: 'formatting', headingLevels: [1, 2, 3, 4] } },
-    { type: 'button', name: 'h2' },
+    {
+        type: 'group',
+        group: {
+            label: 'Text style',
+            icon: 'bold',
+            items: ['paragraph', '|', 'h2', 'bold', 'italic', 'underline', 'small-caps'],
+        },
+    },
     { type: 'separator' },
-    { type: 'button', name: 'bold' },
-    { type: 'button', name: 'italic' },
     { type: 'group', group: { preset: 'lists' } },
-    { type: 'button', name: 'unordered-list' },
-    { type: 'separator' },
     { type: 'group', group: { preset: 'align' } },
     { type: 'button', name: 'link' },
     { type: 'button', name: 'undo' },
@@ -27,7 +28,7 @@ const initialValue = JSON.stringify([
     },
     {
         type: 'paragraph',
-        content: [{ type: 'text', text: 'Use preset dropdowns or standalone buttons for the same actions.' }],
+        content: [{ type: 'text', text: 'Mix custom groups, preset groups, and standalone controls.' }],
     },
 ]);
 

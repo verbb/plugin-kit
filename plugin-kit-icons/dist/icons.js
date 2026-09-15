@@ -325,6 +325,11 @@ var share = {
 	height: 512,
 	path: "M307.8 18.4c-12 5-19.8 16.6-19.8 29.6l0 80-112 0c-97.2 0-176 78.8-176 176 0 113.3 81.5 163.9 100.2 174.1 2.5 1.4 5.3 1.9 8.1 1.9 10.9 0 19.7-8.9 19.7-19.7 0-7.5-4.3-14.4-9.8-19.5-9.4-8.8-22.2-26.4-22.2-56.7 0-53 43-96 96-96l96 0 0 80c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-9.2-9.2-22.9-11.9-34.9-6.9z"
 };
+var smallCaps = {
+	width: 576,
+	height: 512,
+	path: "M32 448L160 64h64l128 384h-64l-32-96H128l-32 96H32zm117.3-160h85.3L192 160l-42.7 128zM336 448l80-240h48l80 240h-48l-16-48h-80l-16 48h-48zm80-96h48l-24-72-24 72z"
+};
 var sliders = {
 	width: 512,
 	height: 512,
@@ -458,6 +463,7 @@ var icons = {
 	arrowsRotate,
 	magnifyingGlass,
 	share,
+	smallCaps,
 	sliders,
 	strikethrough,
 	subscript,
@@ -470,6 +476,6 @@ var icons = {
 	xmark
 };
 //#endregion
-export { alignCenter, alignJustify, alignLeft, alignRight, arrowDown, arrowLeft, arrowRight, arrowRotateLeft, arrowRotateRight, arrowUp, arrowUpRightFromSquare, arrowsRotate, asterisk, bold, bracketsCurly, calendar, caretDown, caretUp, check, chevronDown, chevronLeft, chevronRight, chevronUp, circle, circleCheck, circleExclamation, circleInfo, circlePlus, clipboard, clock, clone, code, copy, download, ellipsis, ellipsisVertical, eye, fileDashedLine, flagCheckered, gear, gripDots, gripDotsVertical, gripMove, h1, h2, h3, h4, h5, h6, heading, highlighter, house, icons, italic, lightbulb, link, list, listOl, listUl, lock, magnifyingGlass, minus, paragraph, pen, penToSquare, plus, quoteRight, share, sliders, strikethrough, subscript, superscript, table, textSlash, trash, triangleExclamation, underline, xmark };
+export { alignCenter, alignJustify, alignLeft, alignRight, arrowDown, arrowLeft, arrowRight, arrowRotateLeft, arrowRotateRight, arrowUp, arrowUpRightFromSquare, arrowsRotate, asterisk, bold, bracketsCurly, calendar, caretDown, caretUp, check, chevronDown, chevronLeft, chevronRight, chevronUp, circle, circleCheck, circleExclamation, circleInfo, circlePlus, clipboard, clock, clone, code, copy, download, ellipsis, ellipsisVertical, eye, fileDashedLine, flagCheckered, gear, gripDots, gripDotsVertical, gripMove, h1, h2, h3, h4, h5, h6, heading, highlighter, house, icons, italic, lightbulb, link, list, listOl, listUl, lock, magnifyingGlass, minus, paragraph, pen, penToSquare, plus, quoteRight, share, sliders, smallCaps, strikethrough, subscript, superscript, table, textSlash, trash, triangleExclamation, underline, xmark };
 
 //# sourceMappingURL=icons.js.map

@@ -1,12 +1,21 @@
 import type { Editor } from '@tiptap/core';
+import {
+    getRegisteredTiptapToolbarControl,
+    isRegisteredTiptapToolbarControl,
+} from '../registry.js';
 
-export type TiptapButtonName =
+export type BuiltInTiptapButtonName =
     | 'bold'
     | 'italic'
     | 'underline'
     | 'strikethrough'
     | 'subscript'
     | 'superscript'
+    | 'small-caps'
+    | 'font-family'
+    | 'font-size'
+    | 'text-color'
+    | 'line-height'
     | 'unordered-list'
     | 'ordered-list'
     | 'blockquote'
@@ -27,6 +36,9 @@ export type TiptapButtonName =
     | 'variableTag'
     | `h${1 | 2 | 3 | 4 | 5 | 6}`;
 
+/** Registered control IDs remain strings while preserving autocomplete for stock controls. */
+export type TiptapButtonName = BuiltInTiptapButtonName | (string & {});
+
 export type TiptapTableInsertOptions = {
     rows?: number;
     cols?: number;
@@ -40,6 +52,10 @@ export type RunTiptapButtonOptions = {
 const HEADING_LEVELS = [1, 2, 3, 4, 5, 6] as const;
 
 export function isTiptapButtonName(value: string): value is TiptapButtonName {
+    if (isRegisteredTiptapToolbarControl(value)) {
+        return true;
+    }
+
     if (HEADING_LEVELS.some((level) => value === `h${level}`)) {
         return true;
     }
@@ -51,6 +67,11 @@ export function isTiptapButtonName(value: string): value is TiptapButtonName {
         'strikethrough',
         'subscript',
         'superscript',
+        'small-caps',
+        'font-family',
+        'font-size',
+        'text-color',
+        'line-height',
         'unordered-list',
         'ordered-list',
         'blockquote',
@@ -73,6 +94,11 @@ export function isTiptapButtonName(value: string): value is TiptapButtonName {
 }
 
 export function isTiptapButtonActive(editor: Editor, buttonName: string): boolean {
+    const registered = getRegisteredTiptapToolbarControl(buttonName);
+    if (registered) {
+        return registered.isActive?.(editor) ?? false;
+    }
+
     if (!isTiptapButtonName(buttonName)) {
         return false;
     }
@@ -96,6 +122,8 @@ export function isTiptapButtonActive(editor: Editor, buttonName: string): boolea
             return editor.isActive('subscript');
         case 'superscript':
             return editor.isActive('superscript');
+        case 'small-caps':
+            return editor.isActive('textStyle', { fontVariantCaps: 'small-caps' });
         case 'unordered-list':
             return editor.isActive('bulletList');
         case 'ordered-list':
@@ -130,6 +158,11 @@ export function runTiptapButton(
     buttonName: string,
     options: RunTiptapButtonOptions = {},
 ): boolean {
+    const registered = getRegisteredTiptapToolbarControl(buttonName);
+    if (registered) {
+        return registered.run(editor) !== false;
+    }
+
     if (!isTiptapButtonName(buttonName)) {
         return false;
     }
@@ -155,6 +188,8 @@ export function runTiptapButton(
             return chain.toggleSubscript().run();
         case 'superscript':
             return chain.toggleSuperscript().run();
+        case 'small-caps':
+            return chain.toggleSmallCaps().run();
         case 'unordered-list':
             return chain.toggleBulletList().run();
         case 'ordered-list':

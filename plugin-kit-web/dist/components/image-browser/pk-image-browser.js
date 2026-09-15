@@ -1,2 +1,2 @@
-import { t as PkImageBrowser } from "../../chunks/pk-image-browser-BXFDfch3.js";
+import { t as PkImageBrowser } from "../../chunks/pk-image-browser-DwiCFOIG.js";
 export { PkImageBrowser };

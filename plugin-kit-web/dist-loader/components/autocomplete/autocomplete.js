@@ -1,18 +1,18 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "../../chunks/pk-a11y-CjB4-U-R.js";
 import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-CyzwylQ7.js";
-import { Y as xmark } from "../../chunks/svg-BiAlXtCn.js";
+import { X as xmark } from "../../chunks/svg-Bz-bXZn7.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
 import { t as HasSlotController } from "../../chunks/has-slot-BGJeJdHr.js";
 import { t as PkClearEvent } from "../../chunks/pk-clear-BMZUzwDt.js";
-import { n as renderIconHtml } from "../../chunks/render-BKfL_WRl.js";
+import { n as renderIconHtml } from "../../chunks/render-Bnzcxfss.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C3tSQ3UR.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-duCg9-CH.js";
-import "../../chunks/pk-popup-BooGjXgH.js";
-import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "../../chunks/popup-pointer-caPc8kwB.js";
-import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS } from "../../chunks/sync-listbox-separators-Dk_E_IVa.js";
-import { i as waitForPopupContentExitAnimation, n as AsyncOptionFetcher, r as syncFilteredOptions, t as matchesOptionFilter } from "../../chunks/option-filter-Z7bomRrK.js";
+import "../../chunks/pk-popup-CrxxR-Hb.js";
+import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "../../chunks/popup-pointer-Ck28WdVP.js";
+import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS } from "../../chunks/sync-listbox-separators-Ch5krDUs.js";
+import { i as waitForPopupContentExitAnimation, n as AsyncOptionFetcher, r as syncFilteredOptions, t as matchesOptionFilter } from "../../chunks/option-filter-Bc5aNNT0.js";
 //#region src/components/autocomplete/pk-autocomplete.styles.ts
 /**
 * Autocomplete chrome matches `pk-input` (text field), not Combobox’s slate

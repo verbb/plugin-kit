@@ -30,6 +30,8 @@ type PkDropdownMenuSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
  *
  * @csspart item - Menu item button
  * @csspart prefix - Leading icon wrapper (hidden when empty)
+ * @csspart label - Item label wrapper
+ * @csspart check - Checkbox/radio selected indicator
  */
 @customElement('pk-dropdown-item')
 export class PkDropdownItem extends PkElement {
@@ -58,7 +60,7 @@ export class PkDropdownItem extends PkElement {
 
     /**
      * Roving highlight index for keyboard nav (`active`).
-     * Visual chrome uses `:focus-visible` / hover — not this flag — so mouse-open
+     * Visual styling uses `:focus-visible` / hover — not this flag — so mouse-open
      * does not paint the first item selected (initial open).
      */
     @property({ type: Boolean })
@@ -284,9 +286,9 @@ export class PkDropdownItem extends PkElement {
                     <slot name="start"></slot>
                     <slot name="prefix"></slot>
                 </span>
-                <span class="label"><slot></slot></span>
+                <span part="label" class="label"><slot></slot></span>
                 <span class="details"><slot name="details"></slot></span>
-                ${showCheck ? html`<span class="check" aria-hidden="true">${unsafeSVG(CHECK_ICON)}</span>` : nothing}
+                ${showCheck ? html`<span part="check" class="check" aria-hidden="true">${unsafeSVG(CHECK_ICON)}</span>` : nothing}
                 ${hasSubmenu ? html`<span class="submenu-icon" aria-hidden="true">${unsafeSVG(SUBMENU_ICON)}</span>` : nothing}
             </button>
             ${hasSubmenu ? html`
@@ -298,6 +300,8 @@ export class PkDropdownItem extends PkElement {
                     .skidding=${-4}
                     flip
                     shift
+                    auto-size="vertical"
+                    .autoSizePadding=${10}
                     hover-bridge
                     style="--pk-popup-z-index: 1001"
                 >

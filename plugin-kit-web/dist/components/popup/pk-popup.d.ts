@@ -46,6 +46,10 @@ export declare class PkPopup extends PkElement {
     arrowPlacement: 'start' | 'end' | 'center' | 'anchor';
     arrowPadding: number;
     sync?: 'width' | 'height' | 'both';
+    /** Constrain the popup to the available collision boundary on the selected axes. */
+    autoSize?: 'horizontal' | 'vertical' | 'both';
+    /** Space retained between an auto-sized popup and its collision boundary. */
+    autoSizePadding: number;
     /** When false, the popup is positioned once and not tracked on scroll/resize. */
     anchorTracking: boolean;
     hoverBridge: boolean;

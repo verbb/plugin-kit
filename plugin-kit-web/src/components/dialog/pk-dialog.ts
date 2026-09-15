@@ -451,7 +451,7 @@ export class PkDialog extends PkElement {
         this.open = true;
     };
 
-    /** Re-render when footer actions are added/removed so the chrome is not shown empty. */
+    /** Re-render when footer actions are added/removed so the footer is not shown empty. */
     private onFooterSlotChange = (): void => {
         this.requestUpdate();
     };

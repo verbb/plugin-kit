@@ -1,3 +1,5 @@
+import { getRegisteredTiptapToolbarControl } from '@verbb/plugin-kit-tiptap-core';
+
 import {
     alignCenter,
     alignJustify,
@@ -25,6 +27,7 @@ import {
     minus,
     paragraph,
     quoteRight,
+    smallCaps,
     strikethrough,
     subscript,
     superscript,
@@ -43,6 +46,7 @@ export const TOOLBAR_ICONS: Record<string, string> = {
     strikethrough: renderIconHtml(strikethrough),
     subscript: renderIconHtml(subscript),
     superscript: renderIconHtml(superscript),
+    'small-caps': renderIconHtml(smallCaps),
     code: renderIconHtml(bracketsCurly),
     'code-block': renderIconHtml(code),
     highlight: renderIconHtml(highlighter),
@@ -77,6 +81,11 @@ export const TOOLBAR_LABELS: Record<string, string> = {
     strikethrough: 'Strikethrough',
     subscript: 'Subscript',
     superscript: 'Superscript',
+    'small-caps': 'Small caps',
+    'font-family': 'Font family',
+    'font-size': 'Font size',
+    'text-color': 'Text and background color',
+    'line-height': 'Line height',
     code: 'Inline code',
     'code-block': 'Code block',
     highlight: 'Highlight',
@@ -104,12 +113,21 @@ export const TOOLBAR_LABELS: Record<string, string> = {
 };
 
 export function getToolbarMenuItemLabel(buttonName: string): string {
-    return TOOLBAR_LABELS[buttonName] ?? buttonName;
+    return TOOLBAR_LABELS[buttonName]
+        ?? getRegisteredTiptapToolbarControl(buttonName)?.label
+        ?? buttonName;
+}
+
+export function getToolbarButtonIcon(buttonName: string): string | undefined {
+    const registeredIcon = getRegisteredTiptapToolbarControl(buttonName)?.icon;
+
+    return TOOLBAR_ICONS[buttonName]
+        ?? (registeredIcon ? renderIconHtml(registeredIcon) : undefined);
 }
 
 /** Prefix icon for `pk-dropdown-item` — SVG must carry `slot="prefix"` directly. */
 export function createToolbarPrefixIcon(buttonName: string): SVGSVGElement | null {
-    const iconHtml = TOOLBAR_ICONS[buttonName];
+    const iconHtml = getToolbarButtonIcon(buttonName);
 
     if (!iconHtml) {
         return null;

@@ -32,7 +32,7 @@ results only help complete the value.
 
 ## With Field warning
 
-Existence checks belong to the plugin. Field chrome can show a soft warning while
+Existence checks belong to the plugin. The field can show a soft warning while
 still saving a path that does not exist yet.
 
 <ComponentPreview src="./examples/autocomplete-field-warning.preview.tsx" />

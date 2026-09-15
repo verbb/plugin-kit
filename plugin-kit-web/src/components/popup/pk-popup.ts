@@ -137,6 +137,14 @@ export class PkPopup extends PkElement {
     @property()
     sync?: 'width' | 'height' | 'both';
 
+    /** Constrain the popup to the available collision boundary on the selected axes. */
+    @property({ attribute: 'auto-size' })
+    autoSize?: 'horizontal' | 'vertical' | 'both';
+
+    /** Space retained between an auto-sized popup and its collision boundary. */
+    @property({ attribute: 'auto-size-padding', type: Number })
+    autoSizePadding = 8;
+
     /** When false, the popup is positioned once and not tracked on scroll/resize. */
     @property({ attribute: 'anchor-tracking', type: Boolean })
     anchorTracking = true;
@@ -245,6 +253,40 @@ export class PkPopup extends PkElement {
                     padding: this.shiftPadding,
                 }),
             );
+        }
+
+        if (this.autoSize) {
+            middleware.push(
+                size({
+                    boundary: scrollBoundary,
+                    padding: this.autoSizePadding,
+                    apply: ({ availableHeight, availableWidth }) => {
+                        const constrainWidth = this.autoSize === 'horizontal' || this.autoSize === 'both';
+                        const constrainHeight = this.autoSize === 'vertical' || this.autoSize === 'both';
+
+                        if (constrainWidth) {
+                            floatingElement.style.setProperty(
+                                '--pk-popup-available-width',
+                                `${Math.max(0, Math.floor(availableWidth))}px`,
+                            );
+                        } else {
+                            floatingElement.style.removeProperty('--pk-popup-available-width');
+                        }
+
+                        if (constrainHeight) {
+                            floatingElement.style.setProperty(
+                                '--pk-popup-available-height',
+                                `${Math.max(0, Math.floor(availableHeight))}px`,
+                            );
+                        } else {
+                            floatingElement.style.removeProperty('--pk-popup-available-height');
+                        }
+                    },
+                }),
+            );
+        } else {
+            floatingElement.style.removeProperty('--pk-popup-available-width');
+            floatingElement.style.removeProperty('--pk-popup-available-height');
         }
 
         if (this.arrow && arrowTarget) {

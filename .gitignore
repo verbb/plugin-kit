@@ -43,6 +43,7 @@ node_modules
 # VITEPRESS (dev cache + build output — not source)
 **/.vitepress/cache
 **/.vitepress/dist
+**/.vitepress/config.*.timestamp-*.mjs
 
 # PRIVATE DEV APPS (published packages commit dist/ intentionally)
 /plugin-kit-playground/dist

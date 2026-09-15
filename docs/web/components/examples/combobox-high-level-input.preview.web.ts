@@ -104,7 +104,7 @@ export default defineWebPreview({
     label: 'Higher-Level Input API',
     title: 'Higher-level input API example',
     layout: 'stack',
-    // Copyable snippet stays the controls; delay chrome + fetch wiring live in html/enhance.
+    // Copyable snippet stays the controls; delay UI + fetch wiring live in html/enhance.
     code: `${staticMarkup}\n\n${asyncMarkup}`,
     html: `
 <div style="display:flex;flex-direction:column;gap:16px">

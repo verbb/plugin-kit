@@ -69,6 +69,7 @@ export declare const quoteRight: PkIcon;
 export declare const arrowsRotate: PkIcon;
 export declare const magnifyingGlass: PkIcon;
 export declare const share: PkIcon;
+export declare const smallCaps: PkIcon;
 export declare const sliders: PkIcon;
 export declare const strikethrough: PkIcon;
 export declare const subscript: PkIcon;
@@ -150,6 +151,7 @@ export declare const icons: {
     readonly arrowsRotate: PkIcon;
     readonly magnifyingGlass: PkIcon;
     readonly share: PkIcon;
+    readonly smallCaps: PkIcon;
     readonly sliders: PkIcon;
     readonly strikethrough: PkIcon;
     readonly subscript: PkIcon;

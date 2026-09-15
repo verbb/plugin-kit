@@ -30,7 +30,7 @@ export const valuePreviewStackStyle: CSSProperties = {
     fontSize: '14px',
 };
 
-/** Color input demo chrome — inline styles for preview shadow hosts (matches Web docs). */
+/** Color input demo framing — inline styles for preview shadow hosts (matches Web docs). */
 export const colorInputDemoStackStyle: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',

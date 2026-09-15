@@ -6,6 +6,7 @@ import Strike from '@tiptap/extension-strike';
 import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
 import Underline from '@tiptap/extension-underline';
+import { TextStyleKit } from '@tiptap/extension-text-style';
 
 import Blockquote from '@tiptap/extension-blockquote';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -27,24 +28,29 @@ import Dropcursor from '@tiptap/extension-dropcursor';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import History from '@tiptap/extension-history';
 import TextAlign from '@tiptap/extension-text-align';
-import type { NodeViewRenderer } from '@tiptap/core';
+import type { Extensions, NodeViewRenderer } from '@tiptap/core';
 
 import { createLinkExtension } from '../links/extension.js';
 import { createVariableTagExtension } from './variable-tag.js';
 import { OneLinerDocument } from './one-liner-document.js';
+import { FontVariantCaps } from './font-variant-caps.js';
+import { getRegisteredTiptapExtensions, type TiptapDocumentSurface } from '../registry.js';
 
 export type CreateTiptapExtensionsOptions = {
     trailingCursorText?: string;
     variableTagNodeView?: NodeViewRenderer;
     includeVariableTag?: boolean;
+    /** Select registered extensions for an editable editor or read-only renderer. */
+    surface?: TiptapDocumentSurface;
 };
 
 export const createTiptapExtensions = ({
     trailingCursorText = '\u200B',
     variableTagNodeView,
     includeVariableTag = true,
+    surface = 'editor',
 }: CreateTiptapExtensionsOptions = {}) => {
-    const extensions = [
+    const extensions: Extensions = [
         Document,
         Dropcursor,
         Gapcursor,
@@ -60,6 +66,8 @@ export const createTiptapExtensions = ({
         Subscript,
         Superscript,
         Underline,
+        TextStyleKit,
+        FontVariantCaps,
 
         Blockquote,
         BulletList,
@@ -84,6 +92,8 @@ export const createTiptapExtensions = ({
             addNodeView: variableTagNodeView,
         }));
     }
+
+    extensions.push(...getRegisteredTiptapExtensions(surface));
 
     return extensions;
 };

@@ -73,8 +73,10 @@ export const pkDropdownMenuStyles = [
                 flex-direction: column;
                 width: max-content;
                 min-width: 8rem;
+                max-height: var(--pk-popup-available-height, calc(100dvh - 20px));
                 margin: 0;
                 overflow: auto;
+                overscroll-behavior: contain;
                 padding: 4px 0;
                 border: 0;
                 border-radius: var(--pk-radius-md);

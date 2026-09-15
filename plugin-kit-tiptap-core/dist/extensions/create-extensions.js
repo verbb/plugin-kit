@@ -1,6 +1,8 @@
 import { createLinkExtension } from "../links/extension.js";
 import { createVariableTagExtension } from "./variable-tag.js";
 import { OneLinerDocument } from "./one-liner-document.js";
+import { FontVariantCaps } from "./font-variant-caps.js";
+import { getRegisteredTiptapExtensions } from "../registry.js";
 import Bold from "@tiptap/extension-bold";
 import Code from "@tiptap/extension-code";
 import Highlight from "@tiptap/extension-highlight";
@@ -9,6 +11,7 @@ import Strike from "@tiptap/extension-strike";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Underline from "@tiptap/extension-underline";
+import { TextStyleKit } from "@tiptap/extension-text-style";
 import Blockquote from "@tiptap/extension-blockquote";
 import BulletList from "@tiptap/extension-bullet-list";
 import CodeBlock from "@tiptap/extension-code-block";
@@ -29,7 +32,7 @@ import Gapcursor from "@tiptap/extension-gapcursor";
 import History from "@tiptap/extension-history";
 import TextAlign from "@tiptap/extension-text-align";
 //#region src/extensions/create-extensions.ts
-var createTiptapExtensions = ({ trailingCursorText = "​", variableTagNodeView, includeVariableTag = true } = {}) => {
+var createTiptapExtensions = ({ trailingCursorText = "​", variableTagNodeView, includeVariableTag = true, surface = "editor" } = {}) => {
 	const extensions = [
 		Document,
 		Dropcursor,
@@ -45,6 +48,8 @@ var createTiptapExtensions = ({ trailingCursorText = "​", variableTagNodeView,
 		Subscript,
 		Superscript,
 		Underline,
+		TextStyleKit,
+		FontVariantCaps,
 		Blockquote,
 		BulletList,
 		CodeBlock,
@@ -74,6 +79,7 @@ var createTiptapExtensions = ({ trailingCursorText = "​", variableTagNodeView,
 		trailingCursorText,
 		addNodeView: variableTagNodeView
 	}));
+	extensions.push(...getRegisteredTiptapExtensions(surface));
 	return extensions;
 };
 var createTiptapInputExtensions = ({ trailingCursorText = "​", variableTagNodeView } = {}) => {

@@ -1,6 +1,6 @@
 # `@verbb/plugin-kit-codemirror-core`
 
-Shared CodeMirror 6 setup for Plugin Kit code-editor surfaces — languages, theme chrome, and a small host helper.
+Shared CodeMirror 6 setup for Plugin Kit code-editor surfaces — languages, theme styling, and a small host helper.
 
 You normally consume this through `<pk-code-editor>` / React `CodeEditor` / Vue `CodeEditor`. Use this package when you need the extensions or host without the web component.
 
@@ -14,9 +14,9 @@ npm install @verbb/plugin-kit-codemirror-core
 
 | Export | Purpose |
 |--------|---------|
-| `createCodeEditorExtensions` | Language + chrome extensions for a given mode |
+| `createCodeEditorExtensions` | Language and theme extensions for a given mode |
 | `createLanguageExtension` | Single-language helper |
-| `codeEditorTheme` / colour constants | Shared CP-looking editor chrome |
+| `codeEditorTheme` / colour constants | Shared CP-style editor theme |
 | `CodeMirrorHost` | Mount / teardown helper for a CodeMirror view |
 | `computeCodeEditorMinHeight` | Layout helper from line count |
 

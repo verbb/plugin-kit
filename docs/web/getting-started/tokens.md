@@ -30,7 +30,7 @@ Override appearance via:
 
 ## React / Vue note
 
-Adapters ship a convenience stylesheet (`@verbb/plugin-kit-react/style.css` / `@verbb/plugin-kit-vue/style.css`) that loads tokens, FOUCE, and overlay chrome. You can also import `@verbb/plugin-kit-web/plugin-kit.css` (or the individual sheets) yourself — importing a facade registers its custom element.
+Adapters ship a convenience stylesheet (`@verbb/plugin-kit-react/style.css` / `@verbb/plugin-kit-vue/style.css`) that loads tokens, FOUCE, and overlay styles. You can also import `@verbb/plugin-kit-web/plugin-kit.css` (or the individual sheets) yourself — importing a facade registers its custom element.
 
 ## FOUCE
 

@@ -1,8 +1,8 @@
 import { c as r, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-CyzwylQ7.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
-import { k as Editor } from "../../chunks/tiptap-Db7MTUH1.js";
-import { C as contentToValue, E as valueToContent, T as flattenVariableOptions, i as createVariableTagDomNodeView, j as createTiptapInputExtensions, n as tiptapInputProseMirrorStyles, w as dedupeVariableOptions } from "../../chunks/tiptap.styles-BFGP4eTV.js";
+import { A as Editor } from "../../chunks/tiptap-CgXkiK8d.js";
+import { C as contentToValue, E as valueToContent, M as createTiptapInputExtensions, T as flattenVariableOptions, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles, w as dedupeVariableOptions } from "../../chunks/tiptap.styles-C0E1NpSx.js";
 //#region src/components/tiptap/pk-tiptap-input.styles.ts
 var pkTiptapInputStyles = i`
     @layer pk-component {
