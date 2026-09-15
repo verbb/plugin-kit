@@ -34,7 +34,8 @@ if (!tarballDir || !isAbsolute(tarballDir)) {
     throw new Error('PACKAGE_TARBALL_DIR must be the absolute path to validated tarballs.');
 }
 
-const output = (command, args) => execFileSync(command, args, { encoding: 'utf8' }).trim();
+// Capture expected registry 404s for classification rather than printing them as CI failures.
+const output = (command, args) => execFileSync(command, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 const head = output('git', ['rev-parse', 'HEAD']);
 
 if (head !== expectedSha) {
@@ -96,40 +97,48 @@ const publishedVersion = (packageName) => {
     }
 };
 
-const waitForPublishedVersion = async (packageName) => {
-    const deadline = Date.now() + 5 * 60_000;
+const latestAcceptedVersion = (packageName) => {
+    // npm exposes dist-tags while a newly accepted version is still being scanned.
+    const tags = output('npm', ['dist-tag', 'ls', packageName, '--registry', registry, '--prefer-online']);
+    const latest = tags.match(/^latest:\s*(\S+)$/m)?.[1];
+
+    if (!latest) {
+        throw new Error(`Could not read the latest npm dist-tag for ${packageName}; publication stopped.`);
+    }
+
+    return latest;
+};
+
+const waitForAcceptedVersion = async (packageName) => {
+    const deadline = Date.now() + 2 * 60_000;
 
     while (true) {
-        const visible = publishedVersion(packageName);
+        const accepted = latestAcceptedVersion(packageName);
 
-        if (visible === expectedVersion) {
+        if (accepted === expectedVersion) {
             return;
         }
 
-        if (visible) {
-            throw new Error(`${packageName} registry returned unexpected version ${visible}.`);
-        }
-
         if (Date.now() >= deadline) {
-            throw new Error(`${packageName}@${expectedVersion} was accepted by npm but is still not visible after five minutes. Check the registry before retrying.`);
+            throw new Error(`${packageName}@${expectedVersion} was accepted by npm but its latest dist-tag did not update after two minutes. Check npm before retrying.`);
         }
 
-        console.log(`${packageName}@${expectedVersion} is still processing on npm; checking again in 10 seconds...`);
+        console.log(`${packageName}@${expectedVersion} is accepted but its dist-tag is still updating; checking again in 10 seconds...`);
         await new Promise((resolve) => setTimeout(resolve, 10_000));
     }
 };
 
-// A retry after a partial release must never attempt to republish versions already live.
+// A retry must skip both installable versions and versions accepted but still being scanned.
 for (const packageName of packages) {
     const existing = publishedVersion(packageName);
 
-    if (existing === expectedVersion) {
-        console.log(`Already published: ${packageName}@${expectedVersion}`);
-        continue;
+    if (existing && existing !== expectedVersion) {
+        throw new Error(`${packageName} registry returned unexpected version ${existing}.`);
     }
 
-    if (existing) {
-        throw new Error(`${packageName} registry returned unexpected version ${existing}.`);
+    if (existing === expectedVersion || latestAcceptedVersion(packageName) === expectedVersion) {
+        console.log(`Already accepted by npm: ${packageName}@${expectedVersion}`);
+        continue;
     }
 
     console.log(`Publishing ${packageName}@${expectedVersion} from ${head}...`);
@@ -137,7 +146,7 @@ for (const packageName of packages) {
         stdio: 'inherit',
     });
 
-    await waitForPublishedVersion(packageName);
+    await waitForAcceptedVersion(packageName);
 }
 
-console.log(`All eight Plugin Kit packages are published at ${expectedVersion}.`);
+console.log(`All eight Plugin Kit packages were accepted by npm at ${expectedVersion}. They may still be undergoing registry scanning before becoming installable.`);
