@@ -97,38 +97,8 @@ const publishedVersion = (packageName) => {
     }
 };
 
-const latestAcceptedVersion = (packageName) => {
-    // npm exposes dist-tags while a newly accepted version is still being scanned.
-    const tags = output('npm', ['dist-tag', 'ls', packageName, '--registry', registry, '--prefer-online']);
-    const latest = tags.match(/^latest:\s*(\S+)$/m)?.[1];
-
-    if (!latest) {
-        throw new Error(`Could not read the latest npm dist-tag for ${packageName}; publication stopped.`);
-    }
-
-    return latest;
-};
-
-const waitForAcceptedVersion = async (packageName) => {
-    const deadline = Date.now() + 2 * 60_000;
-
-    while (true) {
-        const accepted = latestAcceptedVersion(packageName);
-
-        if (accepted === expectedVersion) {
-            return;
-        }
-
-        if (Date.now() >= deadline) {
-            throw new Error(`${packageName}@${expectedVersion} was accepted by npm but its latest dist-tag did not update after two minutes. Check npm before retrying.`);
-        }
-
-        console.log(`${packageName}@${expectedVersion} is accepted but its dist-tag is still updating; checking again in 10 seconds...`);
-        await new Promise((resolve) => setTimeout(resolve, 10_000));
-    }
-};
-
-// A retry must skip both installable versions and versions accepted but still being scanned.
+// npm publish returning successfully means the tarball was accepted; registry visibility follows scanning.
+// Retry only after accepted versions become visible; npm may reject a pending duplicate before then.
 for (const packageName of packages) {
     const existing = publishedVersion(packageName);
 
@@ -136,8 +106,8 @@ for (const packageName of packages) {
         throw new Error(`${packageName} registry returned unexpected version ${existing}.`);
     }
 
-    if (existing === expectedVersion || latestAcceptedVersion(packageName) === expectedVersion) {
-        console.log(`Already accepted by npm: ${packageName}@${expectedVersion}`);
+    if (existing === expectedVersion) {
+        console.log(`Already visible on npm: ${packageName}@${expectedVersion}`);
         continue;
     }
 
@@ -146,7 +116,7 @@ for (const packageName of packages) {
         stdio: 'inherit',
     });
 
-    await waitForAcceptedVersion(packageName);
+    console.log(`Accepted by npm: ${packageName}@${expectedVersion}. Registry scanning may delay installation.`);
 }
 
 console.log(`All eight Plugin Kit packages were accepted by npm at ${expectedVersion}. They may still be undergoing registry scanning before becoming installable.`);
