@@ -9,7 +9,7 @@ import {
     list,
     pen,
     plus,
-    search,
+    magnifyingGlass,
     share,
     asterisk,
     copy,
@@ -34,7 +34,7 @@ export const playgroundIconAdd = renderIconHtml(plus);
 
 export const playgroundIconPen = renderIconHtml(pen);
 
-export const playgroundIconSearch = renderIconHtml(search);
+export const playgroundIconSearch = renderIconHtml(magnifyingGlass);
 
 export const playgroundIconHouse = renderIconHtml(house);
 
