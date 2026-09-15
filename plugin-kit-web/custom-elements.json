@@ -1936,672 +1936,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/button/pk-button.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Craft-aligned action button.",
-          "name": "PkButton",
-          "cssProperties": [
-            {
-              "description": "Control height (also min-height).",
-              "name": "--pk-btn-height",
-              "default": "var(--pk-btn-height-default)"
-            },
-            {
-              "description": "Label font size.",
-              "name": "--pk-btn-font",
-              "default": "var(--pk-btn-font-default)"
-            },
-            {
-              "description": "Horizontal padding.",
-              "name": "--pk-btn-padding-inline",
-              "default": "var(--pk-btn-padding-inline-default)"
-            },
-            {
-              "description": "Vertical padding override.",
-              "name": "--pk-btn-padding-block",
-              "default": "0"
-            },
-            {
-              "description": "Start/end slot glyph size.",
-              "name": "--pk-btn-icon-size",
-              "default": "var(--pk-btn-icon-size-default)"
-            },
-            {
-              "description": "Gap between icons and label.",
-              "name": "--pk-btn-icon-gap",
-              "default": "var(--pk-btn-icon-gap-default)"
-            },
-            {
-              "description": "Built-in caret glyph size.",
-              "name": "--pk-btn-caret-size",
-              "default": "var(--pk-btn-caret-size-default)"
-            },
-            {
-              "description": "Border radius.",
-              "name": "--pk-btn-radius",
-              "default": "var(--pk-btn-radius-default)"
-            },
-            {
-              "description": "Background fill (filled variants).",
-              "name": "--pk-btn-fill"
-            },
-            {
-              "description": "Hover fill.",
-              "name": "--pk-btn-fill-hover"
-            },
-            {
-              "description": "Active / pressed fill.",
-              "name": "--pk-btn-fill-active"
-            },
-            {
-              "description": "Foreground color on filled variants.",
-              "name": "--pk-btn-on"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The native button / link element",
-              "name": "base"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Button label",
-              "name": ""
-            },
-            {
-              "description": "Leading icon or prefix",
-              "name": "start"
-            },
-            {
-              "description": "Trailing icon or suffix",
-              "name": "end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "shadowRootOptions",
-              "type": {
-                "text": "ShadowRootInit"
-              },
-              "static": true,
-              "default": "{ mode: 'open', delegatesFocus: true, }",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "PkButtonVariant"
-              },
-              "default": "'default'",
-              "description": "Visual treatment — filled, outline, link, etc.",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "PkButtonSize"
-              },
-              "default": "'default'",
-              "description": "Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides.",
-              "attribute": "size",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and blocks activation.",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "loading",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Shows an inline spinner and prevents activation while busy.",
-              "attribute": "loading",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "spinnerSize",
-              "type": {
-                "text": "PkSpinnerSize | undefined"
-              },
-              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
-              "attribute": "spinner-size",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "spinnerVariant",
-              "type": {
-                "text": "PkSpinnerVariant | undefined"
-              },
-              "description": "Loading spinner visual style. Defaults from the button variant when unset.",
-              "attribute": "spinner-variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "spinnerTone",
-              "type": {
-                "text": "PkSpinnerTone | undefined"
-              },
-              "description": "Loading spinner tone. Defaults from the button variant when unset.",
-              "attribute": "spinner-tone",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "withCaret",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Shows a disclosure caret after the label.",
-              "attribute": "with-caret",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "groupTrigger",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Compact chevron-only trigger for grouped split actions — Craft `.menubtn`.\n\nNot a variant or size: set this boolean on the disclosure end-cap in a split group.\nHides label/icons and draws a CSS `::after` chevron (0.4375rem, 2px borders).\nInherits `variant`/`size` from sibling buttons; inline padding narrows to 8px.\nDo not pass a chevron icon — use `icon` + a start-slot icon for a padless square control.",
-              "attribute": "group-trigger",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "icon",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Compact icon density: padless box that hugs the glyph (no square hit target).\n\nPrefer default icon-only usage for action rows — without this flag, icon-only\nbuttons are square (`width`/`height` = size height) with the glyph from\n`--pk-btn-icon-size`. Use `icon` for dense × / ⋯ in cells.\nFor one-off dimensions use `size=\"none\"` and set `--pk-btn-*` on the host.",
-              "attribute": "icon",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "When set, renders as an anchor instead of a button.",
-              "attribute": "href"
-            },
-            {
-              "kind": "field",
-              "name": "target",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Anchor `target` when `href` is set.",
-              "attribute": "target"
-            },
-            {
-              "kind": "field",
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Anchor `rel` when `href` is set.",
-              "attribute": "rel"
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Native `name` when used as a submit/reset control.",
-              "attribute": "name"
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Native `value` when used as a submit control.",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Accessible name for icon-only / unlabeled controls.\nApplied as `aria-label` — never as HTML `title` (no native hover tooltip).\nPrefer the `aria-label` attribute when setting from markup; `title` remains\nas a concise alias for the same accessible name.",
-              "attribute": "title"
-            },
-            {
-              "kind": "field",
-              "name": "ariaLabel",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Accessible name — wins over title when both are set.",
-              "attribute": "aria-label"
-            },
-            {
-              "kind": "field",
-              "name": "type",
-              "type": {
-                "text": "'button' | 'submit' | 'reset'"
-              },
-              "default": "'button'",
-              "description": "Native button type — ignored when `href` is set.",
-              "attribute": "type"
-            },
-            {
-              "kind": "field",
-              "name": "form",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "HTML form owner id — same as native `<button form=\"…\">`.\nNeeded when the submit control lives outside the `<form>` (e.g. dialog footer).",
-              "attribute": "form",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "hasDefaultSlotContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "hasStartSlotContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "hasEndSlotContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "defaultSlotChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "iconSlotChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                },
-                {
-                  "name": "which",
-                  "type": {
-                    "text": "'start' | 'end'"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "startSlotChanged",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "endSlotChanged",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "buttonClasses",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "resolveAssociatedForm",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "HTMLFormElement | null"
-                }
-              },
-              "description": "Resolve the light-DOM form for submit/reset.\nPrefer `form` id (dialog footer submitters), then ancestor `<form>`.\nNever target Craft’s `#main` shell."
-            },
-            {
-              "kind": "field",
-              "name": "handleHostClick",
-              "privacy": "private",
-              "description": "Shadow inner `<button type=\"submit|reset\">` is not a form owner for an\nancestor light-DOM `<form>` — bridge click → `requestSubmit` / `reset`.\nSkip Craft’s `#main` shell form (same guard as implicit Enter submit)."
-            },
-            {
-              "kind": "method",
-              "name": "renderInner",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "spinnerSize",
-                  "type": {
-                    "text": "PkSpinnerSize"
-                  }
-                },
-                {
-                  "name": "spinnerVariant",
-                  "type": {
-                    "text": "PkSpinnerVariant"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "pkRenderFailed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleRenderFailure",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "error",
-                  "type": {
-                    "text": "unknown"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "variant",
-              "type": {
-                "text": "PkButtonVariant"
-              },
-              "default": "'default'",
-              "description": "Visual treatment — filled, outline, link, etc.",
-              "fieldName": "variant"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "PkButtonSize"
-              },
-              "default": "'default'",
-              "description": "Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides.",
-              "fieldName": "size"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disables the control and blocks activation.",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "loading",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Shows an inline spinner and prevents activation while busy.",
-              "fieldName": "loading"
-            },
-            {
-              "name": "spinner-size",
-              "type": {
-                "text": "PkSpinnerSize | undefined"
-              },
-              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
-              "fieldName": "spinnerSize"
-            },
-            {
-              "name": "spinner-variant",
-              "type": {
-                "text": "PkSpinnerVariant | undefined"
-              },
-              "description": "Loading spinner visual style. Defaults from the button variant when unset.",
-              "fieldName": "spinnerVariant"
-            },
-            {
-              "name": "spinner-tone",
-              "type": {
-                "text": "PkSpinnerTone | undefined"
-              },
-              "description": "Loading spinner tone. Defaults from the button variant when unset.",
-              "fieldName": "spinnerTone"
-            },
-            {
-              "name": "with-caret",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Shows a disclosure caret after the label.",
-              "fieldName": "withCaret"
-            },
-            {
-              "name": "group-trigger",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Compact chevron-only trigger for grouped split actions — Craft `.menubtn`.\n\nNot a variant or size: set this boolean on the disclosure end-cap in a split group.\nHides label/icons and draws a CSS `::after` chevron (0.4375rem, 2px borders).\nInherits `variant`/`size` from sibling buttons; inline padding narrows to 8px.\nDo not pass a chevron icon — use `icon` + a start-slot icon for a padless square control.",
-              "fieldName": "groupTrigger"
-            },
-            {
-              "name": "icon",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Compact icon density: padless box that hugs the glyph (no square hit target).\n\nPrefer default icon-only usage for action rows — without this flag, icon-only\nbuttons are square (`width`/`height` = size height) with the glyph from\n`--pk-btn-icon-size`. Use `icon` for dense × / ⋯ in cells.\nFor one-off dimensions use `size=\"none\"` and set `--pk-btn-*` on the host.",
-              "fieldName": "icon"
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "When set, renders as an anchor instead of a button.",
-              "fieldName": "href"
-            },
-            {
-              "name": "target",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Anchor `target` when `href` is set.",
-              "fieldName": "target"
-            },
-            {
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Anchor `rel` when `href` is set.",
-              "fieldName": "rel"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Native `name` when used as a submit/reset control.",
-              "fieldName": "name"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Native `value` when used as a submit control.",
-              "fieldName": "value"
-            },
-            {
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Accessible name for icon-only / unlabeled controls.\nApplied as `aria-label` — never as HTML `title` (no native hover tooltip).\nPrefer the `aria-label` attribute when setting from markup; `title` remains\nas a concise alias for the same accessible name.",
-              "fieldName": "title"
-            },
-            {
-              "name": "aria-label",
-              "type": {
-                "text": "string | null"
-              },
-              "default": "null",
-              "description": "Accessible name — wins over title when both are set.",
-              "fieldName": "ariaLabel"
-            },
-            {
-              "name": "type",
-              "type": {
-                "text": "'button' | 'submit' | 'reset'"
-              },
-              "default": "'button'",
-              "description": "Native button type — ignored when `href` is set.",
-              "fieldName": "type"
-            },
-            {
-              "name": "form",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "HTML form owner id — same as native `<button form=\"…\">`.\nNeeded when the submit control lives outside the `<form>` (e.g. dialog footer).",
-              "fieldName": "form"
-            }
-          ],
-          "superclass": {
-            "name": "PkElement",
-            "module": "/src/base/pk-element.js"
-          },
-          "dependencies": [
-            {
-              "name": "pk-spinner",
-              "description": "Loading indicator rendered while `loading` is set."
-            }
-          ],
-          "tagName": "pk-button",
-          "customElement": true,
-          "events": [
-            {
-              "name": "pk-error",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "inheritedFrom": {
-                "name": "PkElement",
-                "module": "src/base/pk-element.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PkSpinnerSize",
-          "declaration": {
-            "name": "PkSpinnerSize",
-            "module": "src/components/button/pk-button.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "PkButton",
-          "declaration": {
-            "name": "PkButton",
-            "module": "src/components/button/pk-button.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "pk-button",
-          "declaration": {
-            "name": "PkButton",
-            "module": "src/components/button/pk-button.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/button-group/pk-button-group-separator.ts",
       "declarations": [
         {
@@ -4308,6 +3642,672 @@
           "declaration": {
             "name": "PkCalendar",
             "module": "src/components/calendar/pk-calendar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/button/pk-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Craft-aligned action button.",
+          "name": "PkButton",
+          "cssProperties": [
+            {
+              "description": "Control height (also min-height).",
+              "name": "--pk-btn-height",
+              "default": "var(--pk-btn-height-default)"
+            },
+            {
+              "description": "Label font size.",
+              "name": "--pk-btn-font",
+              "default": "var(--pk-btn-font-default)"
+            },
+            {
+              "description": "Horizontal padding.",
+              "name": "--pk-btn-padding-inline",
+              "default": "var(--pk-btn-padding-inline-default)"
+            },
+            {
+              "description": "Vertical padding override.",
+              "name": "--pk-btn-padding-block",
+              "default": "0"
+            },
+            {
+              "description": "Start/end slot glyph size.",
+              "name": "--pk-btn-icon-size",
+              "default": "var(--pk-btn-icon-size-default)"
+            },
+            {
+              "description": "Gap between icons and label.",
+              "name": "--pk-btn-icon-gap",
+              "default": "var(--pk-btn-icon-gap-default)"
+            },
+            {
+              "description": "Built-in caret glyph size.",
+              "name": "--pk-btn-caret-size",
+              "default": "var(--pk-btn-caret-size-default)"
+            },
+            {
+              "description": "Border radius.",
+              "name": "--pk-btn-radius",
+              "default": "var(--pk-btn-radius-default)"
+            },
+            {
+              "description": "Background fill (filled variants).",
+              "name": "--pk-btn-fill"
+            },
+            {
+              "description": "Hover fill.",
+              "name": "--pk-btn-fill-hover"
+            },
+            {
+              "description": "Active / pressed fill.",
+              "name": "--pk-btn-fill-active"
+            },
+            {
+              "description": "Foreground color on filled variants.",
+              "name": "--pk-btn-on"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The native button / link element",
+              "name": "base"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Button label",
+              "name": ""
+            },
+            {
+              "description": "Leading icon or prefix",
+              "name": "start"
+            },
+            {
+              "description": "Trailing icon or suffix",
+              "name": "end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "PkButtonVariant"
+              },
+              "default": "'default'",
+              "description": "Visual treatment — filled, outline, link, etc.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "PkButtonSize"
+              },
+              "default": "'default'",
+              "description": "Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and blocks activation.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows an inline spinner and prevents activation while busy.",
+              "attribute": "loading",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "spinnerSize",
+              "type": {
+                "text": "PkSpinnerSize | undefined"
+              },
+              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
+              "attribute": "spinner-size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "spinnerVariant",
+              "type": {
+                "text": "PkSpinnerVariant | undefined"
+              },
+              "description": "Loading spinner visual style. Defaults from the button variant when unset.",
+              "attribute": "spinner-variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "spinnerTone",
+              "type": {
+                "text": "PkSpinnerTone | undefined"
+              },
+              "description": "Loading spinner tone. Defaults from the button variant when unset.",
+              "attribute": "spinner-tone",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "withCaret",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a disclosure caret after the label.",
+              "attribute": "with-caret",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "groupTrigger",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Compact chevron-only trigger for grouped split actions — Craft `.menubtn`.\n\nNot a variant or size: set this boolean on the disclosure end-cap in a split group.\nHides label/icons and draws a CSS `::after` chevron (0.4375rem, 2px borders).\nInherits `variant`/`size` from sibling buttons; inline padding narrows to 8px.\nDo not pass a chevron icon — use `icon` + a start-slot icon for a padless square control.",
+              "attribute": "group-trigger",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Compact icon density: padless box that hugs the glyph (no square hit target).\n\nPrefer default icon-only usage for action rows — without this flag, icon-only\nbuttons are square (`width`/`height` = size height) with the glyph from\n`--pk-btn-icon-size`. Use `icon` for dense × / ⋯ in cells.\nFor one-off dimensions use `size=\"none\"` and set `--pk-btn-*` on the host.",
+              "attribute": "icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When set, renders as an anchor instead of a button.",
+              "attribute": "href"
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Anchor `target` when `href` is set.",
+              "attribute": "target"
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Anchor `rel` when `href` is set.",
+              "attribute": "rel"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `name` when used as a submit/reset control.",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `value` when used as a submit control.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for icon-only / unlabeled controls.\nApplied as `aria-label` — never as HTML `title` (no native hover tooltip).\nPrefer the `aria-label` attribute when setting from markup; `title` remains\nas a concise alias for the same accessible name.",
+              "attribute": "title"
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabel",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Accessible name — wins over title when both are set.",
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'button' | 'submit' | 'reset'"
+              },
+              "default": "'button'",
+              "description": "Native button type — ignored when `href` is set.",
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "HTML form owner id — same as native `<button form=\"…\">`.\nNeeded when the submit control lives outside the `<form>` (e.g. dialog footer).",
+              "attribute": "form",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hasDefaultSlotContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "hasStartSlotContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "hasEndSlotContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "defaultSlotChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "iconSlotChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                },
+                {
+                  "name": "which",
+                  "type": {
+                    "text": "'start' | 'end'"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "startSlotChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "endSlotChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "buttonClasses",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "resolveAssociatedForm",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "HTMLFormElement | null"
+                }
+              },
+              "description": "Resolve the light-DOM form for submit/reset.\nPrefer `form` id (dialog footer submitters), then ancestor `<form>`.\nNever target Craft’s `#main` shell."
+            },
+            {
+              "kind": "field",
+              "name": "handleHostClick",
+              "privacy": "private",
+              "description": "Shadow inner `<button type=\"submit|reset\">` is not a form owner for an\nancestor light-DOM `<form>` — bridge click → `requestSubmit` / `reset`.\nSkip Craft’s `#main` shell form (same guard as implicit Enter submit)."
+            },
+            {
+              "kind": "method",
+              "name": "renderInner",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "spinnerSize",
+                  "type": {
+                    "text": "PkSpinnerSize"
+                  }
+                },
+                {
+                  "name": "spinnerVariant",
+                  "type": {
+                    "text": "PkSpinnerVariant"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "PkButtonVariant"
+              },
+              "default": "'default'",
+              "description": "Visual treatment — filled, outline, link, etc.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "PkButtonSize"
+              },
+              "default": "'default'",
+              "description": "Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides.",
+              "fieldName": "size"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and blocks activation.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows an inline spinner and prevents activation while busy.",
+              "fieldName": "loading"
+            },
+            {
+              "name": "spinner-size",
+              "type": {
+                "text": "PkSpinnerSize | undefined"
+              },
+              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
+              "fieldName": "spinnerSize"
+            },
+            {
+              "name": "spinner-variant",
+              "type": {
+                "text": "PkSpinnerVariant | undefined"
+              },
+              "description": "Loading spinner visual style. Defaults from the button variant when unset.",
+              "fieldName": "spinnerVariant"
+            },
+            {
+              "name": "spinner-tone",
+              "type": {
+                "text": "PkSpinnerTone | undefined"
+              },
+              "description": "Loading spinner tone. Defaults from the button variant when unset.",
+              "fieldName": "spinnerTone"
+            },
+            {
+              "name": "with-caret",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a disclosure caret after the label.",
+              "fieldName": "withCaret"
+            },
+            {
+              "name": "group-trigger",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Compact chevron-only trigger for grouped split actions — Craft `.menubtn`.\n\nNot a variant or size: set this boolean on the disclosure end-cap in a split group.\nHides label/icons and draws a CSS `::after` chevron (0.4375rem, 2px borders).\nInherits `variant`/`size` from sibling buttons; inline padding narrows to 8px.\nDo not pass a chevron icon — use `icon` + a start-slot icon for a padless square control.",
+              "fieldName": "groupTrigger"
+            },
+            {
+              "name": "icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Compact icon density: padless box that hugs the glyph (no square hit target).\n\nPrefer default icon-only usage for action rows — without this flag, icon-only\nbuttons are square (`width`/`height` = size height) with the glyph from\n`--pk-btn-icon-size`. Use `icon` for dense × / ⋯ in cells.\nFor one-off dimensions use `size=\"none\"` and set `--pk-btn-*` on the host.",
+              "fieldName": "icon"
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When set, renders as an anchor instead of a button.",
+              "fieldName": "href"
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Anchor `target` when `href` is set.",
+              "fieldName": "target"
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Anchor `rel` when `href` is set.",
+              "fieldName": "rel"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `name` when used as a submit/reset control.",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `value` when used as a submit control.",
+              "fieldName": "value"
+            },
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for icon-only / unlabeled controls.\nApplied as `aria-label` — never as HTML `title` (no native hover tooltip).\nPrefer the `aria-label` attribute when setting from markup; `title` remains\nas a concise alias for the same accessible name.",
+              "fieldName": "title"
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Accessible name — wins over title when both are set.",
+              "fieldName": "ariaLabel"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "'button' | 'submit' | 'reset'"
+              },
+              "default": "'button'",
+              "description": "Native button type — ignored when `href` is set.",
+              "fieldName": "type"
+            },
+            {
+              "name": "form",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "HTML form owner id — same as native `<button form=\"…\">`.\nNeeded when the submit control lives outside the `<form>` (e.g. dialog footer).",
+              "fieldName": "form"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "dependencies": [
+            {
+              "name": "pk-spinner",
+              "description": "Loading indicator rendered while `loading` is set."
+            }
+          ],
+          "tagName": "pk-button",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkSpinnerSize",
+          "declaration": {
+            "name": "PkSpinnerSize",
+            "module": "src/components/button/pk-button.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PkButton",
+          "declaration": {
+            "name": "PkButton",
+            "module": "src/components/button/pk-button.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-button",
+          "declaration": {
+            "name": "PkButton",
+            "module": "src/components/button/pk-button.ts"
           }
         }
       ]
