@@ -1244,7 +1244,12 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 	moveRow(rowIndex, direction) {
 		const target = rowIndex + direction;
 		if (this.disabled || target < 0 || target >= this.internalRows.length) return;
+		const rowId = String(this.internalRows[rowIndex]._id);
+		const trigger = this.renderRoot.querySelector(`tr[data-row-id="${CSS.escape(rowId)}"] pk-button[slot="trigger"]`);
 		this.commitReorder(rowIndex, target);
+		this.updateComplete.then(() => {
+			if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+		});
 	}
 	commitReorder(fromIndex, toIndex) {
 		if (this.disabled || fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= this.internalRows.length || toIndex >= this.internalRows.length) return;
@@ -1499,7 +1504,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 radio-group=${item.radioGroup ?? nothing}
                 ?checked=${Boolean(item.checked)}
                 ?disabled=${this.disabled || Boolean(item.disabled)}
-                @click=${() => {
+                @pk-select=${() => {
 				if (this.disabled || item.disabled) return;
 				this.dispatchEvent(new CustomEvent("pk-row-menu-select", {
 					detail: {
@@ -1580,7 +1585,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                     ${this.allowInsert ? html`
                                             <pk-dropdown-item
                                                 ?disabled=${insertDisabled}
-                                                @click=${() => {
+                                                @pk-select=${() => {
 			this.insertRowAt(rowIndex);
 		}}
                                             >
@@ -1589,7 +1594,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                             </pk-dropdown-item>
                                             <pk-dropdown-item
                                                 ?disabled=${insertDisabled}
-                                                @click=${() => {
+                                                @pk-select=${() => {
 			this.insertRowAt(rowIndex + 1);
 		}}
                                             >
@@ -1599,7 +1604,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                     ${this.allowReorder ? html`
                                             <pk-dropdown-item
                                                 ?disabled=${this.disabled || rowIndex === 0}
-                                                @click=${() => {
+                                                @pk-select=${() => {
 			this.moveRow(rowIndex, -1);
 		}}
                                             >
@@ -1608,7 +1613,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                             </pk-dropdown-item>
                                             <pk-dropdown-item
                                                 ?disabled=${this.disabled || rowIndex === rowCount - 1}
-                                                @click=${() => {
+                                                @pk-select=${() => {
 			this.moveRow(rowIndex, 1);
 		}}
                                             >
@@ -1719,4 +1724,4 @@ PkEditableTable = __decorate([customElement("pk-editable-table")], PkEditableTab
 //#endregion
 export { nextRowId as a, isCustomColumn as i, BUILTIN_COLUMN_TYPES as n, getCustomCellSlotName as r, PkEditableTable as t };
 
-//# sourceMappingURL=pk-editable-table-BoqfveXO.js.map
+//# sourceMappingURL=pk-editable-table-BubcKCBn.js.map

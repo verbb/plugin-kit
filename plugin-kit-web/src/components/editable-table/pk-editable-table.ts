@@ -762,7 +762,19 @@ export class PkEditableTable extends PkFormAssociatedElement {
             return;
         }
 
+        const rowId = String(this.internalRows[rowIndex]._id);
+        const trigger = this.renderRoot.querySelector<HTMLElement>(
+            `tr[data-row-id="${CSS.escape(rowId)}"] pk-button[slot="trigger"]`,
+        );
         this.commitReorder(rowIndex, target);
+
+        // Moving the focused row can blur its trigger after the menu closes.
+        // Restore focus once Lit has placed the row in its new position.
+        void this.updateComplete.then(() => {
+            if (trigger?.isConnected) {
+                trigger.focus({ preventScroll: true });
+            }
+        });
     }
 
     private commitReorder(fromIndex: number, toIndex: number): void {
@@ -1159,7 +1171,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 radio-group=${item.radioGroup ?? nothing}
                 ?checked=${Boolean(item.checked)}
                 ?disabled=${this.disabled || Boolean(item.disabled)}
-                @click=${() => {
+                @pk-select=${() => {
                     if (this.disabled || item.disabled) {
                         return;
                     }
@@ -1263,14 +1275,14 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         ? html`
                                             <pk-dropdown-item
                                                 ?disabled=${insertDisabled}
-                                                @click=${() => { this.insertRowAt(rowIndex); }}
+                                                @pk-select=${() => { this.insertRowAt(rowIndex); }}
                                             >
                                                 ${unsafeHTML(START_PLUS_ICON)}
                                                 Insert above
                                             </pk-dropdown-item>
                                             <pk-dropdown-item
                                                 ?disabled=${insertDisabled}
-                                                @click=${() => { this.insertRowAt(rowIndex + 1); }}
+                                                @pk-select=${() => { this.insertRowAt(rowIndex + 1); }}
                                             >
                                                 ${unsafeHTML(START_PLUS_ICON)}
                                                 Insert below
@@ -1280,14 +1292,14 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         ? html`
                                             <pk-dropdown-item
                                                 ?disabled=${this.disabled || rowIndex === 0}
-                                                @click=${() => { this.moveRow(rowIndex, -1); }}
+                                                @pk-select=${() => { this.moveRow(rowIndex, -1); }}
                                             >
                                                 ${unsafeHTML(START_ARROW_UP_ICON)}
                                                 Move up
                                             </pk-dropdown-item>
                                             <pk-dropdown-item
                                                 ?disabled=${this.disabled || rowIndex === rowCount - 1}
-                                                @click=${() => { this.moveRow(rowIndex, 1); }}
+                                                @pk-select=${() => { this.moveRow(rowIndex, 1); }}
                                             >
                                                 ${unsafeHTML(START_ARROW_DOWN_ICON)}
                                                 Move down

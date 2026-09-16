@@ -53,7 +53,7 @@ import { t as PkDatePicker } from "./pk-date-picker-BEAd4Ngl.js";
 import { t as PkOption } from "./pk-option-DQZHV9jL.js";
 import { t as PkSelect } from "./pk-select-CdQdhnZN.js";
 import { t as PkTimePicker } from "./pk-time-picker-CebRqydV.js";
-import { t as PkEditableTable } from "./pk-editable-table-BoqfveXO.js";
+import { t as PkEditableTable } from "./pk-editable-table-BubcKCBn.js";
 import { t as PkField } from "./pk-field-UAlMq6mQ.js";
 import "../components/field.js";
 import { t as PkPopover } from "./pk-popover-D3jkHfwB.js";
@@ -145,4 +145,4 @@ function registerAll() {
 //#endregion
 export { registerAll as t };
 
-//# sourceMappingURL=register-aJw-9RWi.js.map
+//# sourceMappingURL=register-Bw9kG690.js.map

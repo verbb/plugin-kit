@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Editable table row actions regression</title></head>
+<body>
+    <pk-editable-table id="table" style="display:block;width:720px"></pk-editable-table>
+    <output id="row-order"></output>
+    <output id="change-count">0</output>
+    <output id="action-count">0</output>
+    <output id="last-action"></output>
+    <script type="module">
+        import '@verbb/plugin-kit-web/components/editable-table/pk-editable-table.js';
+
+        const table = document.querySelector('#table');
+        const output = (id, value) => { document.getElementById(id).textContent = String(value); };
+        const rows = () => output('row-order', table.rows.map((row) => row.name).join('|'));
+        let changes = 0;
+        let actions = 0;
+        table.columns = [{ name: 'name', label: 'Name', type: 'singleline' }];
+        table.allowInsert = true;
+        table.allowReorder = true;
+        table.newRowDefaults = { name: 'New' };
+        table.getRowMenuItems = () => [
+            { action: 'inspect', label: 'Inspect' },
+            { action: 'locked', label: 'Locked', disabled: true },
+            { action: 'review', label: 'Mark reviewed', type: 'checkbox' },
+        ];
+        table.addEventListener('pk-change', () => {
+            output('change-count', ++changes);
+            rows();
+        });
+        table.addEventListener('pk-row-menu-select', (event) => {
+            output('action-count', ++actions);
+            output('last-action', JSON.stringify({
+                action: event.detail.action,
+                rowIndex: event.detail.rowIndex,
+                name: event.detail.row.name,
+            }));
+        });
+        window.resetFixture = async (options = {}) => {
+            table.disabled = options.disabled ?? false;
+            table.maxRows = options.maxRows ?? null;
+            table.rows = ['Alpha', 'Beta', 'Gamma'].map((name, i) => ({ _id: `row${i}`, name }));
+            changes = actions = 0;
+            output('change-count', 0);
+            output('action-count', 0);
+            output('last-action', '');
+            await table.updateComplete;
+            rows();
+        };
+        await window.resetFixture();
+        document.body.dataset.ready = 'true';
+    </script>
+</body>
+</html>
