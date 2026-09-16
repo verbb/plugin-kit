@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.18 - 2026-09-16
+
 ### Fixed
 - Editable table row menus now perform insert, move and custom actions when selected with the keyboard, and retain focus after moving a row.
 
