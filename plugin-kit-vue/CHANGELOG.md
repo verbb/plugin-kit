@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fixed the Vue setup documentation to load ES modules in Craft, resolve published asset URLs, and provide complete starter examples.
+
 ## 2.0.18 - 2026-09-16
 
 ### Changed

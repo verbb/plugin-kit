@@ -24,8 +24,11 @@ If nothing renders at all, check these first:
 This is the minimum safe pattern:
 
 ```tsx
+import '@verbb/plugin-kit-react/style.css';
+
 import { createRoot } from 'react-dom/client';
 import { PluginKitProvider } from '@verbb/plugin-kit-react';
+import { App } from './App';
 
 const container = document.getElementById('my-plugin-root');
 
@@ -40,6 +43,20 @@ if (container) {
 
 If the selector is wrong, React will never mount.
 
+## If the Browser Reports a Module Error
+
+`Cannot use 'import.meta' outside a module` or `Cannot use import statement outside a module` means the browser is loading ES-module output as a classic script. In the asset bundle’s `init()`, before `parent::init()`, set:
+
+```php
+$this->jsOptions = ['type' => 'module'];
+```
+
+Keep the ES-module output from the [Quick Start](./quick-start.md). An IIFE build is an alternative for a classic-script integration, but is not required for this setup.
+
+## If Lazy-Loaded Assets Return 404
+
+Set `base: ''` at the top level of your Vite config and rebuild. Craft publishes assets under `cpresources`, so generated JavaScript and CSS URLs must resolve relative to that published location. Check the failing URL in the Network panel; it should point inside the same published resource directory as your entry.
+
 ## If the page renders but looks unstyled
 
 This usually means the CSS did not load where the app is rendering.
@@ -49,7 +66,7 @@ Check which setup you are using:
 - **Light DOM:** make sure your entry imports `@verbb/plugin-kit-react/style.css`
 - **Shadow DOM:** make sure you passed styles into `mountShadowApp({ styles })`, not just the page
 
-If `<pk-*>` elements flash as plain text before upgrading, FOUCE CSS did not load early enough — import `style.css` in your entry so Vite emits it in `<head>`.
+If `<pk-*>` elements flash as plain text before upgrading, FOUCE CSS did not load early enough — import `style.css` in your entry and register the emitted CSS in your Craft asset bundle so it loads in the page head.
 
 ## If Craft-specific features fail
 

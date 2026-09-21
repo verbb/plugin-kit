@@ -7,7 +7,7 @@ When a first Vue integration is not working, the problem is usually in the conne
 - Does your Craft page actually register the asset bundle?
 - Does the page output the mount element your Vue entry is looking for?
 - Did your Vite build produce the same filenames your asset bundle registers?
-- Did you import `@verbb/plugin-kit-web/plugin-kit.css` (or inject tokens + FOUCE into a shadow root)?
+- Did you import `@verbb/plugin-kit-vue/style.css` (or inject tokens + FOUCE into a shadow root)?
 - Are you loading the page inside the Craft control panel, where `window.Craft` exists?
 
 ## If the page is blank
@@ -18,6 +18,8 @@ When a first Vue integration is not working, the problem is usually in the conne
 4. Confirm your Vue entry guards against a missing element.
 
 ```ts
+import '@verbb/plugin-kit-vue/style.css';
+
 import { createApp, h } from 'vue';
 import { PluginKitProvider } from '@verbb/plugin-kit-vue';
 import App from './App.vue';
@@ -35,9 +37,23 @@ if (container) {
 }
 ```
 
+## If the Browser Reports a Module Error
+
+`Cannot use 'import.meta' outside a module` or `Cannot use import statement outside a module` means the browser is loading ES-module output as a classic script. In the asset bundle’s `init()`, before `parent::init()`, set:
+
+```php
+$this->jsOptions = ['type' => 'module'];
+```
+
+Keep the ES-module output from the [Quick Start](./quick-start.md). An IIFE build is an alternative for a classic-script integration, but is not required for this setup.
+
+## If Lazy-Loaded Assets Return 404
+
+Set `base: ''` at the top level of your Vite config and rebuild. Craft publishes assets under `cpresources`, so generated JavaScript and CSS URLs must resolve relative to that published location. Check the failing URL in the Network panel; it should point inside the same published resource directory as your entry.
+
 ## If the page renders but looks unstyled
 
-- **Light DOM:** make sure your entry imports `@verbb/plugin-kit-web/plugin-kit.css`
+- **Light DOM:** make sure your entry imports `@verbb/plugin-kit-vue/style.css`
 - **Shadow DOM:** make sure you passed styles into `mountShadowApp({ styles })`, not just the page
 
 If `<pk-*>` elements flash as plain text before upgrading, FOUCE CSS did not load early enough.

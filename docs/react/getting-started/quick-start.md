@@ -6,11 +6,11 @@ You do not need an existing React app before you start. What you do need is a sm
 
 ## Requirements
 
-- **Node** `>= 20`
+- **Node** 20.19+ on the 20.x release line, or 22.12+ (required by Vite)
 - a Craft plugin where you can add a frontend folder and an asset bundle
 - a CP page, settings screen, utility, or template where you can render a mount element
 
-## What you are setting up
+## What You Are Setting Up
 
 At a high level, you are connecting four pieces:
 
@@ -19,7 +19,7 @@ At a high level, you are connecting four pieces:
 3. a Craft `AssetBundle` that loads those built files in the CP
 4. a DOM element that React can mount into
 
-## Recommended folder shape
+## Recommended Folder Shape
 
 There is no single required folder layout, but a structure like this keeps the PHP side and frontend side easy to understand:
 
@@ -51,7 +51,7 @@ cd path/to/my-plugin
 
 If your plugin uses a different frontend folder, adjust the paths to match.
 
-## 1. Create a frontend package
+## 1. Create a Frontend Package
 
 Create and enter the frontend folder from the example structure:
 
@@ -64,11 +64,12 @@ From `my-plugin/src/web/assets/cp`, create a `package.json` and install the depe
 
 ```bash
 npm init -y
+npm pkg set type=module
 npm install react react-dom @verbb/plugin-kit-react @verbb/plugin-kit-web
 npm install -D vite @vitejs/plugin-react typescript @types/react @types/react-dom
 ```
 
-## 2. Create a simple Vite config
+## 2. Create a Simple Vite Config
 
 For a first integration, keep the output predictable so your Craft asset bundle can point to fixed filenames.
 
@@ -79,6 +80,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '',
   plugins: [react()],
   build: {
     outDir: 'dist',
@@ -86,6 +88,7 @@ export default defineConfig({
     rollupOptions: {
       input: 'src/my-plugin-cp.tsx',
       output: {
+        format: 'es',
         entryFileNames: 'my-plugin-cp.js',
         assetFileNames: 'my-plugin-cp[extname]',
       },
@@ -94,11 +97,13 @@ export default defineConfig({
 });
 ```
 
-This keeps the first setup easy to follow. Once everything is working, you can move to hashed filenames or a manifest-based approach if that fits your plugin better.
+`base: ''` keeps generated asset URLs relative, so lazy-loaded JavaScript and CSS resolve correctly after Craft publishes `dist/` into `cpresources`. The build produces ES modules; the asset bundle below loads them with `type="module"`. This is the same ES-module loading approach used by our plugin CP screens.
+
+The fixed entry and CSS filenames keep this first screen easy to register. If you add multiple entries or shared CSS later, use a Vite manifest and register each entry’s imported CSS as well. Our larger plugins use a manifest-aware loader for that step; you do not need one for this example.
 
 You do not need a Craft-specific Vite plugin just to get started. Any Vite setup that outputs browser-ready JS and CSS files will work. If you already have a Craft-focused Vite workflow you like, you can keep using it.
 
-## 3. Create your first React files
+## 3. Create Your First React Files
 
 Create `my-plugin/src/web/assets/cp/src/App.tsx`:
 
@@ -107,7 +112,7 @@ import { Button } from '@verbb/plugin-kit-react/components';
 
 export function App() {
   return (
-    <div className="flex flex-col gap-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h1>My first React screen</h1>
       <p>This UI is being rendered inside the Craft control panel.</p>
       <Button>It works</Button>
@@ -126,22 +131,26 @@ import { PluginKitProvider } from '@verbb/plugin-kit-react';
 
 import { App } from './App';
 
-createRoot(document.querySelector('#my-plugin-root')!).render(
-  <PluginKitProvider translationCategory="my-plugin">
-    <App />
-  </PluginKitProvider>,
-);
+const container = document.getElementById('my-plugin-root');
+
+if (container) {
+  createRoot(container).render(
+    <PluginKitProvider translationCategory="my-plugin">
+      <App />
+    </PluginKitProvider>,
+  );
+}
 ```
 
-This entry file does three important things:
+The example uses inline layout styles, so it does not require Tailwind. The entry file:
 
 1. loads design tokens and FOUCE (hides `<pk-*>` until they upgrade)
 2. mounts a normal React tree — importing `<Button>` (etc.) registers its custom element
 3. applies shared config via `PluginKitProvider` (translations default to `Craft.t` when present)
 
-Pass `hostBridge: createCraftHostBridge()` only when the screen calls Craft action/selector helpers. Use `mountShadowApp` when the screen needs a shadow root — see [Creating a React app](../app/creating-a-react-app.md).
+Add `hostBridge={createCraftHostBridge()}` to the provider when using Kit helpers for Craft requests or element selectors. Use `mountShadowApp` when the screen needs a shadow root — see [Creating a React app](../app/creating-a-react-app.md).
 
-## 4. Build the frontend files
+## 4. Build the Frontend Files
 
 From `my-plugin/src/web/assets/cp`, run:
 
@@ -151,7 +160,7 @@ npx vite build
 
 After that, your frontend folder should contain built files in `my-plugin/src/web/assets/cp/dist`, such as `my-plugin-cp.js` and `my-plugin-cp.css`.
 
-## 5. Register the built files in Craft
+## 5. Register the Built Files in Craft
 
 Create an asset bundle class in your plugin, for example `my-plugin/src/web/assets/cp/MyPluginCpAsset.php`:
 
@@ -171,6 +180,7 @@ class MyPluginCpAsset extends AssetBundle
             CpAsset::class,
         ];
         $this->js = ['my-plugin-cp.js'];
+        $this->jsOptions = ['type' => 'module'];
         $this->css = ['my-plugin-cp.css'];
 
         parent::init();
@@ -182,7 +192,9 @@ Update the namespace, alias, and class name to match your plugin.
 
 The important part is that `sourcePath` points at the built frontend output, and the `js` and `css` arrays match the filenames your Vite build created.
 
-## 6. Render a mount element in the CP
+`jsOptions` is required for this ES-module build. Without `type="module"`, browser errors can include `Cannot use 'import.meta' outside a module` or `Cannot use import statement outside a module`. Keep the module format and script type together.
+
+## 6. Render a Mount Element in the CP
 
 On the Craft side, register the asset bundle and output the element your React entry file will target. For example, add this to the template for your CP page, such as `my-plugin/src/templates/settings.twig`:
 
@@ -202,16 +214,15 @@ At this point, the flow is:
 4. React finds `#my-plugin-root`
 5. your app mounts into that element
 
-## 7. Passing simple data from PHP to React
+Open the CP page. You should see “My first React screen” and a styled “It works” button. If either is missing, check [Testing and Debugging](./testing-and-debugging.md) before continuing.
 
-Once the mount is working, the next common step is passing a little data from PHP into the page.
+## 7. Passing Data from PHP to React
 
-One simple way to do that is with `data-*` attributes in your CP template:
+Replace the mount element in your CP template with this version, keeping the asset bundle registration:
 
 ```twig
 {% set options = {
   pluginName: "My Plugin",
-  canSave: true,
 } %}
 
 <div
@@ -220,11 +231,14 @@ One simple way to do that is with `data-*` attributes in your CP template:
 ></div>
 ```
 
-Then read it in your entry file, `my-plugin/src/web/assets/cp/src/my-plugin-cp.tsx`:
+Replace `src/my-plugin-cp.tsx` with the following entry to read the settings and pass the name to your app:
 
 ```tsx
+import '@verbb/plugin-kit-react/style.css';
+
 import { createRoot } from 'react-dom/client';
 import { PluginKitProvider } from '@verbb/plugin-kit-react';
+import { App } from './App';
 
 const container = document.getElementById('my-plugin-root');
 
@@ -233,16 +247,32 @@ if (container) {
 
   createRoot(container).render(
     <PluginKitProvider translationCategory="my-plugin">
-      <App settings={settings} />
+      <App pluginName={settings.pluginName ?? 'My Plugin'} />
     </PluginKitProvider>,
   );
 }
 ```
 
-You do not need to solve every server-to-client data pattern on day one. Start small, prove the integration works, then expand from there.
+Then replace `src/App.tsx` so it accepts and displays that prop:
 
-## Next steps
+```tsx
+import { Button } from '@verbb/plugin-kit-react/components';
 
-1. Read [CSS setup](./css-setup.md) to decide whether your app should stay in the normal DOM or move into Shadow DOM.
-2. Read [Creating a React app](../app/creating-a-react-app.md) for the frontend concepts in more detail.
-3. Read [React App APIs](../api/react-app-apis.md) when you start using package-level React app helpers.
+type AppProps = {
+  pluginName: string;
+};
+
+export function App({ pluginName }: AppProps) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <h1>{pluginName}</h1>
+      <p>This name came from the Craft template.</p>
+      <Button>It works</Button>
+    </div>
+  );
+}
+```
+
+Rebuild with `npx vite build` and reload the CP page. You should see “My Plugin” from the template and the styled button. In the browser’s Network panel, check that the JavaScript and CSS load from Craft’s published resources without errors.
+
+For a larger screen, follow [Creating a React App](../app/creating-a-react-app.md) to add Shadow DOM isolation or a Craft host bridge as needed. The same asset bundle and module build still apply.
