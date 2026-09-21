@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.19 - 2026-09-21
+
 ### Fixed
 - Fixed the React setup documentation to load ES modules in Craft, resolve published asset URLs, and provide complete starter examples.
 
