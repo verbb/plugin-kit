@@ -1,6 +1,6 @@
 {
     "name": "@verbb/plugin-kit-web",
-    "version": "2.0.19",
+    "version": "2.0.20",
     "repository": {
         "url": "git+https://github.com/verbb/plugin-kit.git"
     },
@@ -1027,18 +1027,18 @@
     },
     "peerDependencies": {
         "@floating-ui/dom": "^1.7.3",
-        "@verbb/plugin-kit-core": "^2.0.19",
-        "@verbb/plugin-kit-icons": "^2.0.19",
+        "@verbb/plugin-kit-core": "^2.0.20",
+        "@verbb/plugin-kit-icons": "^2.0.20",
         "lit": "^3.3.0"
     },
     "license": "MIT",
     "dependencies": {
         "@floating-ui/dom": "^1.7.3",
         "@tiptap/core": "3.22.4",
-        "@verbb/plugin-kit-codemirror-core": "2.0.19",
-        "@verbb/plugin-kit-core": "^2.0.19",
-        "@verbb/plugin-kit-icons": "^2.0.19",
-        "@verbb/plugin-kit-tiptap-core": "^2.0.19",
+        "@verbb/plugin-kit-codemirror-core": "2.0.20",
+        "@verbb/plugin-kit-core": "^2.0.20",
+        "@verbb/plugin-kit-icons": "^2.0.20",
+        "@verbb/plugin-kit-tiptap-core": "^2.0.20",
         "composed-offset-position": "^0.0.6",
         "lit": "^3.3.0"
     },
