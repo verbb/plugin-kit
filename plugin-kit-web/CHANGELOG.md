@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Image browsers with no selected value no longer highlight their first option when opened.
+
 ## 2.0.19 - 2026-09-21
 
 ### Changed

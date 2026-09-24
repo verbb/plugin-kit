@@ -842,8 +842,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 			this.highlightedIndex = -1;
 			return;
 		}
-		const selectedIdx = items.findIndex((item) => item.value === this.value);
-		this.highlightedIndex = selectedIdx >= 0 ? selectedIdx : 0;
+		this.highlightedIndex = items.findIndex((item) => item.value === this.value);
 	}
 	setHighlightedIndex(index) {
 		const items = this.flatVisibleItems();

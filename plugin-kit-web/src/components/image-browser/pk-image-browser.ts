@@ -288,7 +288,7 @@ export class PkImageBrowser extends PkFormAssociatedElement {
             this.scrollHighlightedIntoView();
         }
 
-        // Catalog arrived while the panel is open — seat highlight on selection / first cell.
+        // Catalog arrived while the panel is open — restore the selected cell when available.
         if (this.open && changed.has('loading') && !this.loading) {
             this.resetHighlightForOpenCatalog();
         }
@@ -479,8 +479,7 @@ export class PkImageBrowser extends PkFormAssociatedElement {
             return;
         }
 
-        const selectedIdx = items.findIndex((item) => item.value === this.value);
-        this.highlightedIndex = selectedIdx >= 0 ? selectedIdx : 0;
+        this.highlightedIndex = items.findIndex((item) => item.value === this.value);
     }
 
     private setHighlightedIndex(index: number): void {

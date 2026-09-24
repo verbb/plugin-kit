@@ -848,8 +848,7 @@ var PkImageBrowser = class PkImageBrowser extends PkFormAssociatedElement {
 			this.highlightedIndex = -1;
 			return;
 		}
-		const selectedIdx = items.findIndex((item) => item.value === this.value);
-		this.highlightedIndex = selectedIdx >= 0 ? selectedIdx : 0;
+		this.highlightedIndex = items.findIndex((item) => item.value === this.value);
 	}
 	setHighlightedIndex(index) {
 		const items = this.flatVisibleItems();
@@ -1361,4 +1360,4 @@ PkImageBrowser = __decorate([customElement("pk-image-browser")], PkImageBrowser)
 //#endregion
 export { PkImageBrowser as t };
 
-//# sourceMappingURL=pk-image-browser-DwiCFOIG.js.map
+//# sourceMappingURL=pk-image-browser-DP-9Eyk8.js.map
