@@ -107,6 +107,7 @@ function monorepoNodeModules(): Plugin {
 const reactGettingStarted = [
     { text: 'Overview', link: '/react/' },
     { text: 'Quick Start', link: '/react/getting-started/quick-start' },
+    { text: 'Local Development', link: '/react/getting-started/local-development' },
     { text: 'CSS Setup', link: '/react/getting-started/css-setup' },
     { text: 'Testing and Debugging', link: '/react/getting-started/testing-and-debugging' },
 ];
@@ -494,6 +495,7 @@ export default defineConfig({
                     items: [
                         { text: 'Overview', link: '/vue/getting-started/overview' },
                         { text: 'Quick Start', link: '/vue/getting-started/quick-start' },
+                        { text: 'Local Development', link: '/vue/getting-started/local-development' },
                         { text: 'CSS Setup', link: '/vue/getting-started/css-setup' },
                         { text: 'Testing and Debugging', link: '/vue/getting-started/testing-and-debugging' },
                     ],

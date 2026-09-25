@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added a local development guide for Vite’s dev server, automatic frontend updates, and watch builds in Craft.
+
 ## 2.0.20 - 2026-09-24
 
 ### Changed

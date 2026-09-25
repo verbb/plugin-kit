@@ -78,9 +78,9 @@ export default defineConfig({
 });
 ```
 
-`base: ''` keeps generated asset URLs relative, so lazy-loaded JavaScript and CSS resolve correctly after Craft publishes `dist/` into `cpresources`. The build produces ES modules; the asset bundle below loads them with `type="module"`. This is the same ES-module loading approach used by our plugin CP screens.
+`base: ''` keeps generated asset URLs relative, so lazy-loaded JavaScript and CSS resolve correctly after Craft publishes `dist/` into `cpresources`. The build produces ES modules; the asset bundle below loads them with `type="module"`.
 
-The fixed entry and CSS filenames keep this first screen easy to register. If you add multiple entries or shared CSS later, use a Vite manifest and register each entry’s imported CSS as well. Our larger plugins use a manifest-aware loader for that step; you do not need one for this example.
+The fixed entry and CSS filenames keep this first screen easy to register. If you add multiple entries or shared CSS later, use a Vite manifest and register each entry’s imported CSS as well. You do not need a manifest loader for this example.
 
 ## 3. Create Your First Vue Files
 
@@ -244,5 +244,7 @@ defineProps<{ pluginName: string }>();
 ```
 
 Rebuild with `npx vite build` and reload the CP page. You should see “My Plugin” from the template and the styled button. In the browser’s Network panel, check that the JavaScript and CSS load from Craft’s published resources without errors.
+
+To update your app while editing, follow [Local Development](./local-development.md) to connect Craft to Vite’s dev server.
 
 For a larger screen, follow [Creating a Vue App](../app/creating-a-vue-app.md) to add Shadow DOM isolation or a Craft host bridge as needed. The same asset bundle and module build still apply.
