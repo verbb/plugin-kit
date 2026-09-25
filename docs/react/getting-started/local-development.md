@@ -22,7 +22,7 @@ server: {
 
 Replace `http://my-site.test` with your Craft page’s origin: its scheme, hostname, and port if present, without a path. `strictPort` keeps Vite on the port the asset bundle expects.
 
-If your Craft site uses HTTPS, serve Vite over HTTPS with a trusted local certificate or an HTTPS proxy too. Use that HTTPS URL in `server.origin` and the environment setting below. See Vite’s [HTTPS](https://vite.dev/config/server-options#server-https) and [HMR connection options](https://vite.dev/config/server-options#server-hmr) for your local setup.
+If your Craft site uses HTTPS, serve Vite over HTTPS with a trusted local certificate or an HTTPS proxy too. Use that HTTPS URL in `server.origin` and the environment setting below. See Vite’s [HTTPS](https://vite.dev/config/server-options#server-https) and [HMR connection options](https://vite.dev/config/server-options#server-hmr) for your local setup. For DDEV, follow [Using DDEV](#using-ddev) below.
 
 ## 2. Enable React Refresh
 
@@ -91,6 +91,60 @@ npx vite
 Leave the command running and reload your Craft CP page once. Edit some text in `src/App.tsx` and save: it should update in the browser without manually rebuilding or refreshing.
 
 If the page is blank, check that the browser can reach the Vite URL and that `cors.origin` matches the Craft page. If you change the Vite URL or port, update both the config and `.env`.
+
+## Using DDEV
+
+If you run Vite inside DDEV, use these settings in place of the localhost settings above. Your plugin’s files must be available inside the DDEV container. Keep the same asset bundle and entry file.
+
+Add this entry to your Craft project’s `.ddev/config.yaml`. If `web_extra_exposed_ports` already exists, append the entry to its list:
+
+```yaml
+web_extra_exposed_ports:
+  - name: vitecp
+    container_port: 5173
+    http_port: 5173
+    https_port: 5174
+```
+
+Vite listens on port `5173` inside the container. Your browser connects through DDEV on HTTPS port `5174`; use that port in the public Vite URL. DDEV handles the HTTPS certificate.
+
+Replace the `server` block in your plugin’s `src/web/assets/cp/vite.config.ts` with:
+
+```ts
+server: {
+  host: '0.0.0.0',
+  port: 5173,
+  strictPort: true,
+  allowedHosts: ['my-site.ddev.site'],
+  origin: 'https://my-site.ddev.site:5174',
+  cors: {
+    origin: 'https://my-site.ddev.site',
+  },
+},
+```
+
+Replace `my-site.ddev.site` with your Craft site’s hostname. `cors.origin` must match the origin you use to open the Craft control panel. Set the public Vite URL in your Craft project’s local `.env`:
+
+```dotenv
+MY_PLUGIN_VITE_URL=https://my-site.ddev.site:5174
+```
+
+From your Craft project folder, apply the DDEV configuration and open a shell inside the container:
+
+```bash
+ddev restart
+ddev ssh
+```
+
+In that shell, change to your plugin’s `src/web/assets/cp` folder and run:
+
+```bash
+npx vite
+```
+
+Leave Vite running. Open `https://my-site.ddev.site:5174/@vite/client` in your browser: it should return JavaScript. Reload your normal Craft CP page, then edit a component to check that it updates automatically.
+
+If these ports are already in use, choose unused ports and update the matching Vite settings and `.env` URL. See [DDEV’s Vite setup guide](https://ddev.readthedocs.io/en/stable/users/usage/vite/) for more configuration options.
 
 ## What Updates Automatically?
 
