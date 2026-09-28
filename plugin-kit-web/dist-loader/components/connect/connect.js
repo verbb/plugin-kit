@@ -1,10 +1,10 @@
 import { c as r, d as i, f as A, l as n, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate } from "../../chunks/pk-base-CyzwylQ7.js";
-import "../../chunks/pk-icon-Bph-EBqp.js";
-import "../../chunks/pk-button-saBDszJV.js";
-import "../../chunks/pk-dialog-C6aaPokv.js";
+import { c as __decorate } from "../../chunks/pk-base-B2MqxErC.js";
+import "../../chunks/pk-icon-_1F1aL74.js";
+import "../../chunks/pk-button-Dfm23jEC.js";
+import "../../chunks/pk-dialog-BtrH5Ke0.js";
 import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-k61snd3X.js";
-import "../../chunks/pk-status-D2g_77m_.js";
+import "../../chunks/pk-status-B8UvjIp2.js";
 //#region src/components/connect/pk-connect.ts
 var pkStatusForState = (status) => {
 	if (status === "connected") return "on";

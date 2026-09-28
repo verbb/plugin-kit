@@ -113,7 +113,13 @@ export abstract class PkFormAssociatedElement extends PkElement {
             this.setState('disabled', Boolean(this.disabled));
         }
 
-        if (changed.has('value') || changed.has('disabled') || changed.has('required') || changed.has('name')) {
+        if (
+            changed.has('value') ||
+            changed.has('checked') ||
+            changed.has('disabled') ||
+            changed.has('required') ||
+            changed.has('name')
+        ) {
             this.syncFormValue();
         }
 

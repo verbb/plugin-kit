@@ -1,7 +1,7 @@
 import { c as r, l as n, m as i, o, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-CyzwylQ7.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B2MqxErC.js";
 import { m as check } from "../../chunks/svg-Bz-bXZn7.js";
-import "../../chunks/pk-button-saBDszJV.js";
+import "../../chunks/pk-button-Dfm23jEC.js";
 import { n as renderIconHtml } from "../../chunks/render-Bnzcxfss.js";
 //#region src/events/pk-copy.ts
 /** Emitted when copy-button successfully copies text. */

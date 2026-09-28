@@ -1,2 +1,2 @@
-import { t as PkDropdownLabel } from "../../chunks/pk-dropdown-label-Cg32UgRe.js";
+import { t as PkDropdownLabel } from "../../chunks/pk-dropdown-label-TbLj4bHK.js";
 export { PkDropdownLabel };

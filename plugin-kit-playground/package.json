@@ -8,7 +8,8 @@
         "test:nested-overlays": "node scripts/repro-nested-overlays.mjs",
         "test:nested-overlays:headed": "HEADLESS=0 node scripts/repro-nested-overlays.mjs",
         "test:nested-overlays:chrome": "HEADLESS=0 CHROME_CHANNEL=chrome node scripts/repro-nested-overlays.mjs",
-        "test:editable-table-menu": "node scripts/test-editable-table-menu.mjs"
+        "test:editable-table-menu": "node scripts/test-editable-table-menu.mjs",
+        "test:form-associated-toggles": "node scripts/test-form-associated-toggles.mjs"
     },
     "dependencies": {
         "@verbb/plugin-kit-react": "*",
