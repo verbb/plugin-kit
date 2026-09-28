@@ -1,9 +1,9 @@
-import { t as icons_exports } from "./icons-BR8JcQj2.js";
-import { s as customElement, t as __decorate } from "./decorate-R0X811qp.js";
-import { t as createIconElement } from "./render-Dvc3MHQR.js";
-import "./pk-option-DQZHV9jL.js";
-import { n as pkSelectStyles, t as PkSelect } from "./pk-select-ZaHWtZ7p.js";
-import { css } from "lit";
+import { m as i, u as customElement } from "./lit-DpLik9Rf.js";
+import { c as __decorate } from "./pk-base-B2MqxErC.js";
+import { v as clock } from "./svg-Bz-bXZn7.js";
+import { t as createIconElement } from "./render-Bnzcxfss.js";
+import "./pk-option-DATPm0Bo.js";
+import { n as pkSelectStyles, t as PkSelect } from "./pk-select-DpcvbzUL.js";
 //#region src/utils/time-options.ts
 var timeOptionsCache = null;
 function resolveTimepickerOptions() {
@@ -47,7 +47,7 @@ function generateTimeOptions() {
 }
 //#endregion
 //#region src/components/time-picker/pk-time-picker.styles.ts
-var pkTimePickerStyles = css`
+var pkTimePickerStyles = i`
     @layer pk-component {
         :host {
             display: inline-block;
@@ -216,7 +216,7 @@ var PkTimePicker = class PkTimePicker extends PkSelect {
 	}
 	ensureClockIcon() {
 		if (this.querySelector("[slot=\"start\"]")) return;
-		const icon = createIconElement(icons_exports.clock);
+		const icon = createIconElement(clock);
 		icon.setAttribute("slot", "start");
 		this.prepend(icon);
 	}
@@ -224,5 +224,3 @@ var PkTimePicker = class PkTimePicker extends PkSelect {
 PkTimePicker = __decorate([customElement("pk-time-picker")], PkTimePicker);
 //#endregion
 export { PkTimePicker as t };
-
-//# sourceMappingURL=pk-time-picker-O-fT70ZJ.js.map

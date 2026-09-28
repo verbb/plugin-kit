@@ -53,6 +53,7 @@ export class PkRadioGroup extends PkFormAssociatedElement {
         return this._value ?? this.defaultValue ?? '';
     }
 
+    @state()
     set value(val: string | null) {
         this._value = val == null ? null : String(val);
         this.valueHasChanged = true;

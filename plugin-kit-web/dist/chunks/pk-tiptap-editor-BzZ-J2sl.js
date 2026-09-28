@@ -3,7 +3,7 @@ import { a as query, i as property, o as state, s as customElement, t as __decor
 import "./pk-button-BrH4u4Qr.js";
 import { t as PkFormAssociatedElement } from "./pk-form-associated-element-GxX5lbnk.js";
 import { t as MirrorValidator } from "./mirror-validator-DCjNYrrx.js";
-import "./pk-checkbox-CFlc3pyY.js";
+import "./pk-checkbox-13ArHSmt.js";
 import { t as formControlStyles } from "./form-control.styles-BQdimE5o.js";
 import { n as renderIconHtml } from "./render-Dvc3MHQR.js";
 import { i as uniqueId } from "./focus-aa5dlv8k.js";
@@ -1405,4 +1405,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-DgwPzirC.js.map
+//# sourceMappingURL=pk-tiptap-editor-BzZ-J2sl.js.map

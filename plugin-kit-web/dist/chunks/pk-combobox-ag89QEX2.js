@@ -1004,6 +1004,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 			this.syncSelectedOptionMeta();
 			this.applySelection();
 		}
+		if (changed.has("values") || changed.has("multiple")) this.syncFormValue();
 		super.updated(changed);
 	}
 	get validationTarget() {
@@ -1969,4 +1970,4 @@ PkCombobox = __decorate([customElement("pk-combobox")], PkCombobox);
 //#endregion
 export { PkCreateEvent as n, PkCombobox as t };
 
-//# sourceMappingURL=pk-combobox-BWMmXxLA.js.map
+//# sourceMappingURL=pk-combobox-ag89QEX2.js.map

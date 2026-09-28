@@ -102,6 +102,10 @@ export class PkCheckbox extends PkFormAssociatedElement {
             return;
         }
 
+        if (changed.has('checkboxValue')) {
+            this.syncFormValue();
+        }
+
         if (changed.has('indeterminate') || changed.has('checked')) {
             this.input.indeterminate = this.indeterminate;
             this.input.checked = this.checked;

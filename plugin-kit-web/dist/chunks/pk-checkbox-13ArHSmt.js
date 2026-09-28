@@ -1,11 +1,13 @@
-import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "./lit-DpLik9Rf.js";
-import { c as __decorate, i as PkFormAssociatedElement, r as checkboxControlStyles } from "./pk-base-B2MqxErC.js";
-import { t as RequiredValidator } from "./required-validator-0XwZtX9k.js";
-import { t as HasSlotController } from "./has-slot-BGJeJdHr.js";
+import { a as query, i as property, o as state, s as customElement, t as __decorate } from "./decorate-R0X811qp.js";
+import { t as PkFormAssociatedElement } from "./pk-form-associated-element-GxX5lbnk.js";
+import { t as RequiredValidator } from "./required-validator-CEg8dvjS.js";
+import { t as HasSlotController } from "./has-slot-8BvCt_qo.js";
+import { css, html, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
 //#region src/icons/checkbox-indicators.ts
 /** Craft checkbox tick — matches plugin-kit-react Checkbox.tsx */
 function renderCheckboxCheckIcon() {
-	return b`
+	return html`
         <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" viewBox="0 0 640 640">
             <path
                 fill="currentColor"
@@ -16,13 +18,95 @@ function renderCheckboxCheckIcon() {
 }
 /** Craft checkbox indeterminate mark — matches plugin-kit-react Checkbox.tsx */
 function renderCheckboxIndeterminateIcon() {
-	return b`
+	return html`
         <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" viewBox="0 0 640 640">
             <path fill="currentColor" d="M96 352V288H544V352H96z" />
         </svg>
     `;
 }
-var pkCheckboxStyles = [checkboxControlStyles, i`
+var pkCheckboxStyles = [css`
+    @layer pk-component {
+        .control {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-sizing: border-box;
+            width: var(--pk-checkbox-size);
+            height: var(--pk-checkbox-size);
+            border: 1px solid var(--pk-checkbox-border-color, #c0cbd9);
+            border-radius: var(--pk-radius-sm);
+            background: var(--pk-color-white);
+            cursor: pointer;
+            transition: border-color 0.12s ease, box-shadow 0.12s ease;
+        }
+
+        :host([disabled]) .control {
+            cursor: not-allowed;
+        }
+
+        .input:focus-visible + .control {
+            border-color: var(--pk-color-sky-600);
+            box-shadow: 0 0 0 1px var(--pk-color-sky-600), 0 0 4px 0 hsl(from var(--pk-color-sky-600) h s l / 0.7);
+        }
+
+        :host([invalid]) .control,
+        .input[aria-invalid='true'] + .control {
+            border-color: var(--pk-color-rose-600);
+        }
+
+        :host([invalid]) .input:focus-visible + .control,
+        .input[aria-invalid='true']:focus-visible + .control {
+            border-color: var(--pk-color-rose-600);
+            box-shadow: 0 0 0 1px var(--pk-color-rose-600), 0 0 4px 0 hsl(from var(--pk-color-rose-600) h s l / 0.7);
+        }
+
+        .indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pk-color-gray-900);
+        }
+
+        .icon-check,
+        .icon-indeterminate {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .icon-check svg {
+            width: 14px;
+            height: 14px;
+            transform: translateY(1px) scale(1.2);
+        }
+
+        .icon-indeterminate svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        :host([checked]) .icon-check,
+        .input:checked + .control .icon-check {
+            opacity: 1;
+        }
+
+        :host([indeterminate]) .icon-check,
+        .input:indeterminate + .control .icon-check {
+            opacity: 0;
+        }
+
+        :host([indeterminate]) .icon-indeterminate,
+        .input:indeterminate + .control .icon-indeterminate {
+            opacity: 1;
+        }
+    }
+`, css`
     @layer pk-component {
         :host {
             display: inline-flex;
@@ -160,6 +244,7 @@ var PkCheckbox = class PkCheckbox extends PkFormAssociatedElement {
 			super.updated(changed);
 			return;
 		}
+		if (changed.has("checkboxValue")) this.syncFormValue();
 		if (changed.has("indeterminate") || changed.has("checked")) {
 			this.input.indeterminate = this.indeterminate;
 			this.input.checked = this.checked;
@@ -194,10 +279,10 @@ var PkCheckbox = class PkCheckbox extends PkFormAssociatedElement {
 	render() {
 		const hasLabel = this.hasDefaultSlotContent;
 		const hasHint = Boolean(this.hint) || this.hasSlotController.test("hint", this.withHint);
-		return b`
+		return html`
             <label
                 part="base"
-                class=${e({
+                class=${classMap({
 			root: true,
 			"root--with-hint": hasHint
 		})}
@@ -209,65 +294,67 @@ var PkCheckbox = class PkCheckbox extends PkFormAssociatedElement {
                     .checked=${this.checked}
                     ?disabled=${this.disabled}
                     ?required=${this.required}
-                    name=${this.name ?? A}
+                    name=${this.name ?? nothing}
                     value=${this.checkboxValue}
-                    aria-labelledby=${hasLabel ? "label" : A}
-                    aria-describedby=${hasHint ? "hint" : A}
-                    aria-label=${!hasLabel ? this.ariaLabel ?? A : A}
-                    aria-invalid=${this.invalid ? "true" : A}
+                    aria-labelledby=${hasLabel ? "label" : nothing}
+                    aria-describedby=${hasHint ? "hint" : nothing}
+                    aria-label=${!hasLabel ? this.ariaLabel ?? nothing : nothing}
+                    aria-invalid=${this.invalid ? "true" : nothing}
                     @change=${this.handleChange}
                 />
                 <span part="control" class="control">
                     <span part="checked-icon" class="icon-check">${renderCheckboxCheckIcon()}</span>
                     <span part="indeterminate-icon" class="icon-indeterminate">${renderCheckboxIndeterminateIcon()}</span>
                 </span>
-                ${hasLabel || hasHint ? b`
+                ${hasLabel || hasHint ? html`
                         <span class="text">
-                            ${hasLabel ? b`
+                            ${hasLabel ? html`
                                     <span part="label" class="label" id="label">
                                         <slot @slotchange=${this.defaultSlotChanged}></slot>
                                     </span>
-                                ` : b`<slot @slotchange=${this.defaultSlotChanged} hidden></slot>`}
-                            ${hasHint ? b`
+                                ` : html`<slot @slotchange=${this.defaultSlotChanged} hidden></slot>`}
+                            ${hasHint ? html`
                                     <span part="hint" class="hint" id="hint">
                                         <slot name="hint">${this.hint}</slot>
                                     </span>
-                                ` : A}
+                                ` : nothing}
                         </span>
-                    ` : b`<slot @slotchange=${this.defaultSlotChanged} hidden></slot>`}
+                    ` : html`<slot @slotchange=${this.defaultSlotChanged} hidden></slot>`}
             </label>
         `;
 	}
 };
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkCheckbox.prototype, "checked", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkCheckbox.prototype, "indeterminate", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkCheckbox.prototype, "disabled", void 0);
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkCheckbox.prototype, "invalid", void 0);
-__decorate([n()], PkCheckbox.prototype, "checkboxValue", void 0);
-__decorate([n({
+__decorate([property()], PkCheckbox.prototype, "checkboxValue", void 0);
+__decorate([property({
 	attribute: "default-checked",
 	type: Boolean
 })], PkCheckbox.prototype, "defaultChecked", void 0);
-__decorate([n({ attribute: "aria-label" })], PkCheckbox.prototype, "ariaLabel", void 0);
-__decorate([n()], PkCheckbox.prototype, "hint", void 0);
-__decorate([n({
+__decorate([property({ attribute: "aria-label" })], PkCheckbox.prototype, "ariaLabel", void 0);
+__decorate([property()], PkCheckbox.prototype, "hint", void 0);
+__decorate([property({
 	type: Boolean,
 	attribute: "with-hint"
 })], PkCheckbox.prototype, "withHint", void 0);
-__decorate([e$1(".input")], PkCheckbox.prototype, "input", void 0);
-__decorate([r()], PkCheckbox.prototype, "hasDefaultSlotContent", void 0);
+__decorate([query(".input")], PkCheckbox.prototype, "input", void 0);
+__decorate([state()], PkCheckbox.prototype, "hasDefaultSlotContent", void 0);
 PkCheckbox = __decorate([customElement("pk-checkbox")], PkCheckbox);
 //#endregion
 export { PkCheckbox as t };
+
+//# sourceMappingURL=pk-checkbox-13ArHSmt.js.map

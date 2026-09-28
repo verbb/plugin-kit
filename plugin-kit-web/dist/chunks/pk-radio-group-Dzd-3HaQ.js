@@ -231,6 +231,7 @@ var PkRadioGroup = class PkRadioGroup extends PkFormAssociatedElement {
         `;
 	}
 };
+__decorate([state()], PkRadioGroup.prototype, "value", null);
 __decorate([property({
 	attribute: "value",
 	reflect: true
@@ -249,4 +250,4 @@ PkRadioGroup = __decorate([customElement("pk-radio-group")], PkRadioGroup);
 //#endregion
 export { PkRadioGroup as t };
 
-//# sourceMappingURL=pk-radio-group-D6uCUSR9.js.map
+//# sourceMappingURL=pk-radio-group-Dzd-3HaQ.js.map

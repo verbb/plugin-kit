@@ -228,6 +228,7 @@ var PkRadioGroup = class PkRadioGroup extends PkFormAssociatedElement {
         `;
 	}
 };
+__decorate([r()], PkRadioGroup.prototype, "value", null);
 __decorate([n({
 	attribute: "value",
 	reflect: true

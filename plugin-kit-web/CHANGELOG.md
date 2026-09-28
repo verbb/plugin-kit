@@ -3,7 +3,7 @@
 ## Unreleased
 
 ### Fixed
-- Checkbox and lightswitch form values now update when their checked state changes. ([#1](https://github.com/verbb/plugin-kit/issues/1))
+- Checkbox, lightswitch, radio group, multi-select and multi-combobox form values now update when their submitted state changes. ([#1](https://github.com/verbb/plugin-kit/issues/1))
 
 ## 2.0.20 - 2026-09-24
 

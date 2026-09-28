@@ -1,14 +1,24 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><title>Form-associated toggle regression</title></head>
+<head><meta charset="utf-8"><title>Form-associated value regression</title></head>
 <body>
     <script type="module">
         import '@verbb/plugin-kit-web/components/checkbox/pk-checkbox.js';
+        import '@verbb/plugin-kit-web/components/combobox/pk-combobox.js';
         import '@verbb/plugin-kit-web/components/lightswitch/pk-lightswitch.js';
+        import '@verbb/plugin-kit-web/components/radio-group/pk-radio.js';
+        import '@verbb/plugin-kit-web/components/radio-group/pk-radio-group.js';
+        import '@verbb/plugin-kit-web/components/select/pk-option.js';
+        import '@verbb/plugin-kit-web/components/select/pk-select.js';
 
         await Promise.all([
             customElements.whenDefined('pk-checkbox'),
+            customElements.whenDefined('pk-combobox'),
             customElements.whenDefined('pk-lightswitch'),
+            customElements.whenDefined('pk-option'),
+            customElements.whenDefined('pk-radio'),
+            customElements.whenDefined('pk-radio-group'),
+            customElements.whenDefined('pk-select'),
         ]);
         document.body.dataset.ready = 'true';
     </script>

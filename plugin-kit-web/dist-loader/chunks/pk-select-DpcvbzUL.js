@@ -576,6 +576,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
 	}
 	updated(changed) {
 		if (changed.has("value") || changed.has("values") || changed.has("multiple")) this.applySelection();
+		if (changed.has("values") || changed.has("multiple")) this.syncFormValue();
 		super.updated(changed);
 	}
 	getOptionElements() {

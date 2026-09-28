@@ -998,6 +998,7 @@ var PkCombobox = class PkCombobox extends PkFormAssociatedElement {
 			this.syncSelectedOptionMeta();
 			this.applySelection();
 		}
+		if (changed.has("values") || changed.has("multiple")) this.syncFormValue();
 		super.updated(changed);
 	}
 	get validationTarget() {

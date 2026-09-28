@@ -255,6 +255,10 @@ export class PkSelect extends PkFormAssociatedElement {
             this.applySelection();
         }
 
+        if (changed.has('values') || changed.has('multiple')) {
+            this.syncFormValue();
+        }
+
         super.updated(changed);
     }
 

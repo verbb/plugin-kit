@@ -582,6 +582,7 @@ var PkSelect = class PkSelect extends PkFormAssociatedElement {
 	}
 	updated(changed) {
 		if (changed.has("value") || changed.has("values") || changed.has("multiple")) this.applySelection();
+		if (changed.has("values") || changed.has("multiple")) this.syncFormValue();
 		super.updated(changed);
 	}
 	getOptionElements() {
@@ -1128,4 +1129,4 @@ PkSelect = __decorate([customElement("pk-select")], PkSelect);
 //#endregion
 export { pkSelectStyles as n, PkSelect as t };
 
-//# sourceMappingURL=pk-select-ZaHWtZ7p.js.map
+//# sourceMappingURL=pk-select-b5S5WKc-.js.map
