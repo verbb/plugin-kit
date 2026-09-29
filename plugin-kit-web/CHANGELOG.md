@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.22 - 2026-09-29
+
 ### Fixed
 - Craft element links in `<pk-tiptap-editor>` now open the Craft element selector with the required Craft global context. ([#2](https://github.com/verbb/plugin-kit/issues/2))
 
