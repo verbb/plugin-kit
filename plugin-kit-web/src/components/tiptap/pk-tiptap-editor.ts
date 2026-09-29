@@ -184,9 +184,11 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     })
     textStyleOptions: TiptapTextStyleToolbarConfig | null = null;
 
+    /** JSON configuration for Craft entry, asset, category, or custom element links. */
     @property({ attribute: 'link-options' })
     linkOptions: string | null = null;
 
+    /** Required storage-key prefix when Craft element link options are enabled. */
     @property({ attribute: 'link-selector-storage-key-prefix' })
     linkSelectorStorageKeyPrefix?: string;
 

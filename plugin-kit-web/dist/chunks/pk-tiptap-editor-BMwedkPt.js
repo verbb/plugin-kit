@@ -93,9 +93,9 @@ var TiptapEditorHost = class {
 //#region src/components/tiptap/tiptap-utils.ts
 function createCraftElementSelectorHost() {
 	return { openElementSelector: (elementType, options) => {
-		const open = window.Craft?.createElementSelectorModal;
-		if (!open) throw new Error("Craft element selector is not available in this environment.");
-		open(elementType, options);
+		const craft = window.Craft;
+		if (!craft?.createElementSelectorModal) throw new Error("Craft element selector is not available in this environment.");
+		craft.createElementSelectorModal(elementType, options);
 	} };
 }
 function parseLinkOptionsAttribute(raw) {
@@ -1405,4 +1405,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-BzZ-J2sl.js.map
+//# sourceMappingURL=pk-tiptap-editor-BMwedkPt.js.map

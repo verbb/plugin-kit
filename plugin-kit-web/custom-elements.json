@@ -35811,6 +35811,7 @@
                 "text": "string | null"
               },
               "default": "null",
+              "description": "JSON configuration for Craft entry, asset, category, or custom element links.",
               "attribute": "link-options"
             },
             {
@@ -35819,6 +35820,7 @@
               "type": {
                 "text": "string | undefined"
               },
+              "description": "Required storage-key prefix when Craft element link options are enabled.",
               "attribute": "link-selector-storage-key-prefix"
             },
             {
@@ -37319,6 +37321,7 @@
                 "text": "string | null"
               },
               "default": "null",
+              "description": "JSON configuration for Craft entry, asset, category, or custom element links.",
               "fieldName": "linkOptions"
             },
             {
@@ -37326,6 +37329,7 @@
               "type": {
                 "text": "string | undefined"
               },
+              "description": "Required storage-key prefix when Craft element link options are enabled.",
               "fieldName": "linkSelectorStorageKeyPrefix"
             },
             {

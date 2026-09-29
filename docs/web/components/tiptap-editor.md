@@ -135,6 +135,32 @@ A group accepts `label`, `icon`, and `items`, or `preset` with optional `heading
 
 <ComponentPreview src="./examples/tiptap-editor-grouped-toolbar.preview.web.ts" />
 
+## Craft Element Links
+
+Inside the Craft control panel, the link menu can open Craft's element selector for entries, assets, categories, or another element type. Include `link` in the toolbar, pass the selector configuration as JSON through `link-options`, and set `link-selector-storage-key-prefix` to a stable value for the editor:
+
+```html
+<pk-tiptap-editor
+    buttons="bold,italic,link"
+    link-options='{"elementSiteId":1,"linkToEntry":{"elementType":"craft\\elements\\Entry","refHandle":"entry"}}'
+    link-selector-storage-key-prefix="acme.article-body"
+></pk-tiptap-editor>
+```
+
+The named object form supports `linkToEntry`, `linkToAsset`, and `linkToCategory`. Each option requires `elementType`, the fully qualified Craft element class, and `refHandle`, the handle written into the selected element's reference fragment. You can also provide `sources` to limit the available element sources and `criteria` to apply element-query criteria. Set the top-level `elementSiteId` when the selector should open for a particular site.
+
+Use the array form when you need custom menu labels or another element type. Each item uses the same fields and adds `optionTitle`:
+
+```html
+<pk-tiptap-editor
+    buttons="link"
+    link-options='[{"optionTitle":"Link to a product","elementType":"craft\\elements\\Entry","refHandle":"entry","sources":["section:NEWS_SECTION_UID"],"criteria":{"status":"enabled"}}]'
+    link-selector-storage-key-prefix="acme.product-description"
+></pk-tiptap-editor>
+```
+
+`link-selector-storage-key-prefix` is required whenever element link options are configured. Plugin Kit appends the element type to this prefix for Craft's selector storage key; choosing an element link throws an error when the prefix is missing. The selector also requires Craft's `window.Craft.createElementSelectorModal` API, so element link options are intended for control-panel pages where Craft has loaded that API.
+
 ## Extending TipTap
 
 Plugin Kit supports application-level registration of TipTap nodes, marks, behaviour extensions, and stock-toolbar-compatible controls. Registration has schema and server-rendering implications, so it is documented separately in [Extending TipTap](/web/guides/tiptap-extensibility).
@@ -160,8 +186,8 @@ Plugin Kit supports application-level registration of TipTap nodes, marks, behav
 | `disabled` | Disables the control and excludes it from constraint validation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `invalid` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `invalidContentMessage` `invalid-content-message` | <small><strong>Type</strong> <code>string</code></small> |
-| `linkOptions` `link-options` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
-| `linkSelectorStorageKeyPrefix` `link-selector-storage-key-prefix` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
+| `linkOptions` `link-options` | JSON configuration for Craft entry, asset, category, or custom element links.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `linkSelectorStorageKeyPrefix` `link-selector-storage-key-prefix` | Required storage-key prefix when Craft element link options are enabled.<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `name` | Name submitted with form data.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `placeholder` | <small><strong>Type</strong> <code>string</code></small> |
 | `readonly` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |

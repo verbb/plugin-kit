@@ -20,6 +20,8 @@ See the canonical [toolbar control reference](/web/components/tiptap-editor#avai
 
 Font family, font size, text color, background color, line height, and small caps are built in but opt-in. See the canonical [TextStyle controls](/web/components/tiptap-editor#textstyle-controls) for IDs, defaults, and the `textStyleOptions` prop shape.
 
+Craft element links use the canonical [`linkOptions` JSON schema and storage-key requirements](/web/components/tiptap-editor#craft-element-links). Pass the configuration as a JSON string and provide `linkSelectorStorageKeyPrefix` when enabling an element selector.
+
 ## Grouped Toolbar
 
 The `toolbar` prop accepts a JSON array of buttons, separators (`"|"`), and group objects. Groups use a `preset` (or custom `items`) to open a dropdown cluster.
@@ -90,8 +92,8 @@ Groups can be mixed with standalone buttons and top-level separators in the same
 | `invalid` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `isInvalid` | Alias for `invalid`. |
 | `invalidContentMessage` | <small><strong>Type</strong> <code>string</code></small> |
-| `linkOptions` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
-| `linkSelectorStorageKeyPrefix` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
+| `linkOptions` | JSON configuration for Craft entry, asset, category, or custom element links.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `linkSelectorStorageKeyPrefix` | Required storage-key prefix when Craft element link options are enabled.<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `name` | Name submitted with form data.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `placeholder` | <small><strong>Type</strong> <code>string</code></small> |
 | `readonly` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |

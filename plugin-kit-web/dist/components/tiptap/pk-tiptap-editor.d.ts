@@ -32,7 +32,9 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     toolbar: string | ToolbarNode[] | null;
     /** Values shown by the optional TextStyle toolbar controls. */
     textStyleOptions: TiptapTextStyleToolbarConfig | null;
+    /** JSON configuration for Craft entry, asset, category, or custom element links. */
     linkOptions: string | null;
+    /** Required storage-key prefix when Craft element link options are enabled. */
     linkSelectorStorageKeyPrefix?: string;
     rows: number;
     placeholder: string;

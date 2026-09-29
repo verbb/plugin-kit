@@ -16,13 +16,14 @@ declare global {
 export function createCraftElementSelectorHost(): ElementSelectorHost {
     return {
         openElementSelector: (elementType, options) => {
-            const open = window.Craft?.createElementSelectorModal;
+            const craft = window.Craft;
 
-            if (!open) {
+            if (!craft?.createElementSelectorModal) {
                 throw new Error('Craft element selector is not available in this environment.');
             }
 
-            open(elementType, options);
+            // Craft reads its selector registry through `this`, so preserve the global as receiver.
+            craft.createElementSelectorModal(elementType, options);
         },
     };
 }

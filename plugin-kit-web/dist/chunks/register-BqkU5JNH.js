@@ -79,7 +79,7 @@ import "../components/select.js";
 import "../components/time-picker.js";
 import "../components/spinner.js";
 import { t as PkTiptapContent } from "./pk-tiptap-content-CL8smjGi.js";
-import { t as PkTiptapEditor } from "./pk-tiptap-editor-BzZ-J2sl.js";
+import { t as PkTiptapEditor } from "./pk-tiptap-editor-BMwedkPt.js";
 import { t as PkTiptapInput } from "./pk-tiptap-input-YKg4VLp_.js";
 import "@verbb/plugin-kit-icons/all.js";
 //#region src/register.ts
@@ -145,4 +145,4 @@ function registerAll() {
 //#endregion
 export { registerAll as t };
 
-//# sourceMappingURL=register-C6_F-VwU.js.map
+//# sourceMappingURL=register-BqkU5JNH.js.map
