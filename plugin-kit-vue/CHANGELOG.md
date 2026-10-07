@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.23 - 2026-10-07
+
 ### Added
 - Add the `Alert` facade for Plugin Kit's shared semantic alert component, including variants, visual appearances, small, default, and large sizes, dismissal, actions, and diagnostic details.
 - Add the `StatePanel` facade for shared empty and replacement states, including small, default, and large sizes.

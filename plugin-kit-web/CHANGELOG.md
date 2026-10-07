@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.23 - 2026-10-07
+
 ### Added
 - Add `<pk-alert>` with semantic variants, visual appearances, `sm`/`default`/`lg` sizes, optional icons and dismissal, actions, collapsible details, and copyable diagnostic content.
 - Add `<pk-state-panel>` for centered empty, informational, success, warning, and error replacement states, with `sm`/`default`/`lg` sizes, icons, actions, and copyable details.

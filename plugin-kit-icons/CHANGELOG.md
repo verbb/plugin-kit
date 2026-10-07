@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.23 - 2026-10-07
+
 ### Added
 - Add the Formie-style `emptySet` icon for shared empty and unavailable content states.
 
