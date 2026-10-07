@@ -1,6 +1,6 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { c as r, f as A, l as n, m as i, p as b, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B2MqxErC.js";
+import { c as customElement, f as A, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
 //#region src/components/tabs/pk-tabs.styles.ts
 /**
 * Variant tokens are defined on `pk-tabs` and inherited by slotted

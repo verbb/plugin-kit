@@ -11,6 +11,19 @@ export const pkCopyButtonStyles = css`
             padding-inline: 0;
             width: var(--pk-btn-height-default);
             min-width: var(--pk-btn-height-default);
+            border-color: var(--pk-copy-button-border-color);
+            border-radius: var(--pk-copy-button-radius);
+            background: var(--pk-copy-button-background);
+            color: var(--pk-copy-button-color);
+        }
+
+        pk-button::part(base):hover:not(:disabled) {
+            border-color: var(
+                --pk-copy-button-hover-border-color,
+                var(--pk-copy-button-border-color)
+            );
+            background: var(--pk-copy-button-hover-background);
+            color: var(--pk-copy-button-hover-color, var(--pk-copy-button-color));
         }
 
         /*

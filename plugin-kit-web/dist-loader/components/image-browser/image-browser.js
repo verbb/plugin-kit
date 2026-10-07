@@ -1,18 +1,18 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { a as o, c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-B2MqxErC.js";
-import "../../chunks/pk-spinner-Dk_LbvHW.js";
-import { X as xmark, h as chevronDown } from "../../chunks/svg-Bz-bXZn7.js";
-import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
-import { t as RequiredValidator } from "../../chunks/required-validator-0XwZtX9k.js";
-import { t as PkClearEvent } from "../../chunks/pk-clear-BMZUzwDt.js";
-import { n as renderIconHtml } from "../../chunks/render-Bnzcxfss.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C3tSQ3UR.js";
-import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
-import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-duCg9-CH.js";
-import "../../chunks/pk-popup-CUuGs8r_.js";
-import "../../chunks/pk-tooltip-DcF9J5GT.js";
-import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Ck28WdVP.js";
+import { a as e$1, c as customElement, f as A, i as e, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-Om6X9ab5.js";
+import { h as chevronDown, tt as xmark } from "../../chunks/svg-C6YcJMk9.js";
+import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
+import "../../chunks/pk-spinner-BmnrA60m.js";
+import { t as MirrorValidator } from "../../chunks/mirror-validator-BZoyx7AK.js";
+import { t as RequiredValidator } from "../../chunks/required-validator-DMEBzDge.js";
+import { t as PkClearEvent } from "../../chunks/pk-clear-FL0sxtcd.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-D0pkTQyI.js";
+import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-D8yf2MIO.js";
+import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-Ij5wHNQv.js";
+import "../../chunks/pk-popup-zbFPNexs.js";
+import "../../chunks/pk-tooltip-b61LGESU.js";
+import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-CQLA4u6o.js";
 //#region src/components/image-browser/pk-image-browser.styles.ts
 /**
 * Presentational static image / icon browser.

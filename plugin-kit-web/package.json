@@ -82,6 +82,16 @@
             "import": "./dist/icons/index.js"
         },
         "./package.json": "./package.json",
+        "./components/alert/pk-alert.js": {
+            "types": "./dist/components/alert/pk-alert.d.ts",
+            "import": "./dist/components/alert/pk-alert.js",
+            "default": "./dist/components/alert/pk-alert.js"
+        },
+        "./components/alert/pk-alert": {
+            "types": "./dist/components/alert/pk-alert.d.ts",
+            "import": "./dist/components/alert/pk-alert.js",
+            "default": "./dist/components/alert/pk-alert.js"
+        },
         "./components/autocomplete/pk-autocomplete.js": {
             "types": "./dist/components/autocomplete/pk-autocomplete.d.ts",
             "import": "./dist/components/autocomplete/pk-autocomplete.js",
@@ -502,6 +512,16 @@
             "import": "./dist/components/spinner/pk-spinner.js",
             "default": "./dist/components/spinner/pk-spinner.js"
         },
+        "./components/state-panel/pk-state-panel.js": {
+            "types": "./dist/components/state-panel/pk-state-panel.d.ts",
+            "import": "./dist/components/state-panel/pk-state-panel.js",
+            "default": "./dist/components/state-panel/pk-state-panel.js"
+        },
+        "./components/state-panel/pk-state-panel": {
+            "types": "./dist/components/state-panel/pk-state-panel.d.ts",
+            "import": "./dist/components/state-panel/pk-state-panel.js",
+            "default": "./dist/components/state-panel/pk-state-panel.js"
+        },
         "./components/status/pk-status.js": {
             "types": "./dist/components/status/pk-status.d.ts",
             "import": "./dist/components/status/pk-status.js",
@@ -631,6 +651,16 @@
             "types": "./dist/components/tooltip/pk-tooltip.d.ts",
             "import": "./dist/components/tooltip/pk-tooltip.js",
             "default": "./dist/components/tooltip/pk-tooltip.js"
+        },
+        "./components/alert.js": {
+            "types": "./dist/components/alert.d.ts",
+            "import": "./dist/components/alert.js",
+            "default": "./dist/components/alert.js"
+        },
+        "./components/alert": {
+            "types": "./dist/components/alert.d.ts",
+            "import": "./dist/components/alert.js",
+            "default": "./dist/components/alert.js"
         },
         "./components/autocomplete.js": {
             "types": "./dist/components/autocomplete.d.ts",
@@ -911,6 +941,16 @@
             "types": "./dist/components/spinner.d.ts",
             "import": "./dist/components/spinner.js",
             "default": "./dist/components/spinner.js"
+        },
+        "./components/state-panel.js": {
+            "types": "./dist/components/state-panel.d.ts",
+            "import": "./dist/components/state-panel.js",
+            "default": "./dist/components/state-panel.js"
+        },
+        "./components/state-panel": {
+            "types": "./dist/components/state-panel.d.ts",
+            "import": "./dist/components/state-panel.js",
+            "default": "./dist/components/state-panel.js"
         },
         "./components/status.js": {
             "types": "./dist/components/status.d.ts",

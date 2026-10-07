@@ -1,12 +1,12 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, u as isTopDismissible } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { c as r, f as A, i as e, l as n, m as i, p as b, s as e$1, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-B2MqxErC.js";
-import { r as buttonGroupCornerRoleStyles } from "../../chunks/button-group-item.styles-CsBQ3Cyh.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C3tSQ3UR.js";
-import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-WlEXnS85.js";
-import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-duCg9-CH.js";
-import { n as resolveElementById } from "../../chunks/pk-popup-CUuGs8r_.js";
-import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Ck28WdVP.js";
+import { a as e$1, c as customElement, f as A, i as e, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
+import { r as buttonGroupCornerRoleStyles } from "../../chunks/button-group-item.styles-CXLuiMeZ.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-D0pkTQyI.js";
+import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-D8yf2MIO.js";
+import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-Ij5wHNQv.js";
+import { n as resolveElementById } from "../../chunks/pk-popup-zbFPNexs.js";
+import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-CQLA4u6o.js";
 //#region src/components/popover/pk-popover.styles.ts
 var pkPopoverStyles = [
 	buttonGroupCornerRoleStyles(),

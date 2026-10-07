@@ -921,6 +921,688 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/alert/pk-alert.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Semantic notice for feedback, warnings and recoverable failures.",
+          "name": "PkAlert",
+          "cssProperties": [
+            {
+              "description": "Accent, title and icon colour.",
+              "name": "--pk-alert-accent"
+            },
+            {
+              "description": "Alert background.",
+              "name": "--pk-alert-background"
+            },
+            {
+              "description": "Alert and divider border colour.",
+              "name": "--pk-alert-border"
+            },
+            {
+              "description": "Alert host colour.",
+              "name": "--pk-alert-color"
+            },
+            {
+              "description": "Primary content colour.",
+              "name": "--pk-alert-body-color"
+            },
+            {
+              "description": "Heading colour.",
+              "name": "--pk-alert-title-color"
+            },
+            {
+              "description": "Heading font size.",
+              "name": "--pk-alert-title-size"
+            },
+            {
+              "description": "Alert inner padding.",
+              "name": "--pk-alert-padding"
+            },
+            {
+              "description": "Alert corner radius.",
+              "name": "--pk-alert-radius"
+            },
+            {
+              "description": "Maximum height of slotted `pre` details.",
+              "name": "--pk-alert-details-max-height"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Alert container.",
+              "name": "base"
+            },
+            {
+              "description": "Icon, content and dismiss-button row.",
+              "name": "notice"
+            },
+            {
+              "description": "Icon wrapper.",
+              "name": "icon"
+            },
+            {
+              "description": "Heading and message wrapper.",
+              "name": "content"
+            },
+            {
+              "description": "Alert heading.",
+              "name": "title"
+            },
+            {
+              "description": "Default content wrapper.",
+              "name": "body"
+            },
+            {
+              "description": "Dismiss button.",
+              "name": "dismiss-button"
+            },
+            {
+              "description": "Alert actions wrapper.",
+              "name": "actions"
+            },
+            {
+              "description": "Collapsible details element.",
+              "name": "details"
+            },
+            {
+              "description": "Details disclosure label.",
+              "name": "details-summary"
+            },
+            {
+              "description": "Details content wrapper.",
+              "name": "details-content"
+            },
+            {
+              "description": "Copy-details button.",
+              "name": "copy-button"
+            },
+            {
+              "description": "Copy result status.",
+              "name": "copy-status"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Alert heading. Takes precedence over the `heading` property.",
+              "name": "title"
+            },
+            {
+              "description": "Custom icon. The component supplies a variant icon by default.",
+              "name": "icon"
+            },
+            {
+              "description": "Alert message or other primary content.",
+              "name": ""
+            },
+            {
+              "description": "Optional primary alert actions.",
+              "name": "actions"
+            },
+            {
+              "description": "Optional content inside the collapsible details region.",
+              "name": "details"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "hasSlotController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController( this, 'title', 'icon', 'actions', 'details', )"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "PkAlertVariant"
+              },
+              "default": "'info'",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "PkAlertSize"
+              },
+              "default": "'default'",
+              "description": "Overall density, including typography, icons, spacing, details, and actions.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "appearance",
+              "type": {
+                "text": "PkAlertAppearance"
+              },
+              "default": "'accent'",
+              "description": "Visual treatment, independent from the alert's semantic variant.",
+              "attribute": "appearance",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "hideIcon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "dismissible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "dismissible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "announce",
+              "type": {
+                "text": "PkAlertAnnouncement"
+              },
+              "default": "'off'",
+              "attribute": "announce",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "detailsLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details'",
+              "attribute": "details-label"
+            },
+            {
+              "kind": "field",
+              "name": "detailsOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "details-open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copyable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "copyable",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copyLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy details'",
+              "attribute": "copy-label"
+            },
+            {
+              "kind": "field",
+              "name": "copiedLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details copied.'",
+              "attribute": "copied-label"
+            },
+            {
+              "kind": "field",
+              "name": "copyErrorLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy failed. Select the details and copy them manually.'",
+              "attribute": "copy-error-label"
+            },
+            {
+              "kind": "field",
+              "name": "dismissLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Dismiss'",
+              "attribute": "dismiss-label"
+            },
+            {
+              "kind": "field",
+              "name": "detailsSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "copyButton",
+              "type": {
+                "text": "PkCopyButton | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "copyStatus",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "copyFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "copyStatusResetTimer",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "hasTitle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasDetails",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "detailsValue",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "resetCopyStatusLater",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "showCopySuccess",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "showCopyError",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleCopySuccess",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleCopyError",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "selectDetails",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "copyDetails",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "description": "Copy the plain text assigned to the details slot."
+            },
+            {
+              "kind": "method",
+              "name": "dismiss",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Request dismissal and hide the alert unless the event is prevented."
+            },
+            {
+              "kind": "method",
+              "name": "show",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Show an alert hidden by `dismiss()`."
+            },
+            {
+              "kind": "method",
+              "name": "handleDetailsToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderIcon",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "PkCopyErrorEvent"
+              }
+            },
+            {
+              "description": "Emitted before a dismissible alert hides. Prevent to keep it visible.",
+              "name": "pk-dismiss"
+            },
+            {
+              "description": "Emitted when the details are copied successfully.",
+              "name": "pk-copy"
+            },
+            {
+              "description": "Emitted when the details cannot be copied.",
+              "name": "pk-copy-error"
+            },
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "PkAlertVariant"
+              },
+              "default": "'info'",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "PkAlertSize"
+              },
+              "default": "'default'",
+              "description": "Overall density, including typography, icons, spacing, details, and actions.",
+              "fieldName": "size"
+            },
+            {
+              "name": "appearance",
+              "type": {
+                "text": "PkAlertAppearance"
+              },
+              "default": "'accent'",
+              "description": "Visual treatment, independent from the alert's semantic variant.",
+              "fieldName": "appearance"
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "hide-icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideIcon"
+            },
+            {
+              "name": "dismissible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "dismissible"
+            },
+            {
+              "name": "announce",
+              "type": {
+                "text": "PkAlertAnnouncement"
+              },
+              "default": "'off'",
+              "fieldName": "announce"
+            },
+            {
+              "name": "details-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details'",
+              "fieldName": "detailsLabel"
+            },
+            {
+              "name": "details-open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "detailsOpen"
+            },
+            {
+              "name": "copyable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "copyable"
+            },
+            {
+              "name": "copy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy details'",
+              "fieldName": "copyLabel"
+            },
+            {
+              "name": "copied-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details copied.'",
+              "fieldName": "copiedLabel"
+            },
+            {
+              "name": "copy-error-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy failed. Select the details and copy them manually.'",
+              "fieldName": "copyErrorLabel"
+            },
+            {
+              "name": "dismiss-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Dismiss'",
+              "fieldName": "dismissLabel"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "dependencies": [
+            {
+              "name": "pk-copy-button",
+              "description": "Compact copy-details action."
+            }
+          ],
+          "tagName": "pk-alert",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkAlert",
+          "declaration": {
+            "name": "PkAlert",
+            "module": "src/components/alert/pk-alert.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-alert",
+          "declaration": {
+            "name": "PkAlert",
+            "module": "src/components/alert/pk-alert.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/autocomplete/pk-autocomplete.ts",
       "declarations": [
         {
@@ -12226,10 +12908,44 @@
           "kind": "class",
           "description": "Copy button — copies text to the clipboard and briefly shows a check icon.\n\nPlace in `slot=\"end\"` on `<pk-input>` (or another control with an end adornment)\nfor an in-control treatment that matches combobox / image-browser trailing actions.",
           "name": "PkCopyButton",
+          "cssProperties": [
+            {
+              "description": "Trigger background override.",
+              "name": "--pk-copy-button-background"
+            },
+            {
+              "description": "Trigger border colour override.",
+              "name": "--pk-copy-button-border-color"
+            },
+            {
+              "description": "Trigger foreground colour override.",
+              "name": "--pk-copy-button-color"
+            },
+            {
+              "description": "Trigger hover background override.",
+              "name": "--pk-copy-button-hover-background"
+            },
+            {
+              "description": "Trigger hover border colour override.",
+              "name": "--pk-copy-button-hover-border-color"
+            },
+            {
+              "description": "Trigger hover foreground colour override.",
+              "name": "--pk-copy-button-hover-color"
+            },
+            {
+              "description": "Trigger corner radius override.",
+              "name": "--pk-copy-button-radius"
+            }
+          ],
           "cssParts": [
             {
               "description": "Trigger button",
               "name": "button"
+            },
+            {
+              "description": "Copy icon shown before copying",
+              "name": "copy-icon"
             },
             {
               "description": "Success icon shown after copying",
@@ -12238,11 +12954,18 @@
           ],
           "slots": [
             {
-              "description": "Copy icon (SVG supplied by the consumer)",
+              "description": "Custom copy icon. The component supplies a copy icon by default.",
               "name": "icon"
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "hasSlotController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController(this, 'icon')"
+            },
             {
               "kind": "field",
               "name": "value",
@@ -12284,6 +13007,26 @@
             },
             {
               "kind": "field",
+              "name": "ariaLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy'",
+              "description": "Accessible name shown while the copy action is available.",
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "copiedLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copied'",
+              "description": "Accessible name shown briefly after copying succeeds.",
+              "attribute": "copied-label"
+            },
+            {
+              "kind": "field",
               "name": "copied",
               "type": {
                 "text": "boolean"
@@ -12316,13 +13059,13 @@
             },
             {
               "kind": "method",
-              "name": "handleCopy",
-              "privacy": "private",
+              "name": "copy",
               "return": {
                 "type": {
                   "text": "Promise<void>"
                 }
-              }
+              },
+              "description": "Copy the configured value and emit the corresponding result event."
             },
             {
               "kind": "field",
@@ -12438,6 +13181,24 @@
               },
               "default": "'transparent'",
               "fieldName": "variant"
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy'",
+              "description": "Accessible name shown while the copy action is available.",
+              "fieldName": "ariaLabel"
+            },
+            {
+              "name": "copied-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copied'",
+              "description": "Accessible name shown briefly after copying succeeds.",
+              "fieldName": "copiedLabel"
             }
           ],
           "superclass": {
@@ -30333,6 +31094,637 @@
           "declaration": {
             "name": "PkSpinner",
             "module": "src/components/spinner/pk-spinner.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/state-panel/pk-state-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Centered replacement surface for empty, unavailable, completed or failed content regions.",
+          "name": "PkStatePanel",
+          "cssProperties": [
+            {
+              "description": "Variant accent colour.",
+              "name": "--pk-state-panel-accent"
+            },
+            {
+              "description": "Primary content colour.",
+              "name": "--pk-state-panel-body-color"
+            },
+            {
+              "description": "Heading colour.",
+              "name": "--pk-state-panel-title-color"
+            },
+            {
+              "description": "Heading font size.",
+              "name": "--pk-state-panel-title-size"
+            },
+            {
+              "description": "Icon container background.",
+              "name": "--pk-state-panel-icon-background"
+            },
+            {
+              "description": "Icon container width and height.",
+              "name": "--pk-state-panel-icon-shell-size"
+            },
+            {
+              "description": "Icon width and height.",
+              "name": "--pk-state-panel-icon-size"
+            },
+            {
+              "description": "Icon container radius.",
+              "name": "--pk-state-panel-icon-radius"
+            },
+            {
+              "description": "Maximum content width.",
+              "name": "--pk-state-panel-content-width"
+            },
+            {
+              "description": "Minimum component height.",
+              "name": "--pk-state-panel-min-height"
+            },
+            {
+              "description": "Component padding.",
+              "name": "--pk-state-panel-padding"
+            },
+            {
+              "description": "Maximum height of slotted `pre` details.",
+              "name": "--pk-state-panel-details-max-height"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Centered state container.",
+              "name": "base"
+            },
+            {
+              "description": "Icon background container.",
+              "name": "icon-shell"
+            },
+            {
+              "description": "Icon wrapper.",
+              "name": "icon"
+            },
+            {
+              "description": "State heading.",
+              "name": "title"
+            },
+            {
+              "description": "Default content wrapper.",
+              "name": "body"
+            },
+            {
+              "description": "Collapsible details element.",
+              "name": "details"
+            },
+            {
+              "description": "Details disclosure label.",
+              "name": "details-summary"
+            },
+            {
+              "description": "Details content wrapper.",
+              "name": "details-content"
+            },
+            {
+              "description": "Copy-details button.",
+              "name": "copy-button"
+            },
+            {
+              "description": "Copy result status.",
+              "name": "copy-status"
+            },
+            {
+              "description": "Actions wrapper.",
+              "name": "actions"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Custom heading content. Takes precedence over the `heading` property.",
+              "name": "title"
+            },
+            {
+              "description": "Custom icon. The component supplies a variant icon by default.",
+              "name": "icon"
+            },
+            {
+              "description": "State description or other primary content.",
+              "name": ""
+            },
+            {
+              "description": "Optional content inside the collapsible details region.",
+              "name": "details"
+            },
+            {
+              "description": "Optional buttons or links.",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "hasSlotController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController( this, 'title', 'icon', 'details', 'actions', )"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "PkStatePanelVariant"
+              },
+              "default": "'empty'",
+              "description": "Semantic colour and fallback icon for the replacement state.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "PkStatePanelSize"
+              },
+              "default": "'default'",
+              "description": "Overall density, including typography, icons, spacing, details, and actions.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "PkStatePanelHeadingLevel"
+              },
+              "default": "2",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Registered icon name. A custom `icon` slot takes precedence.",
+              "attribute": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "hideIcon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "announce",
+              "type": {
+                "text": "PkStatePanelAnnouncement"
+              },
+              "default": "'off'",
+              "attribute": "announce",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "detailsLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details'",
+              "attribute": "details-label"
+            },
+            {
+              "kind": "field",
+              "name": "detailsOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "details-open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copyable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "copyable",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copyLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy details'",
+              "attribute": "copy-label"
+            },
+            {
+              "kind": "field",
+              "name": "copiedLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details copied.'",
+              "attribute": "copied-label"
+            },
+            {
+              "kind": "field",
+              "name": "copyErrorLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy failed. Select the details and copy them manually.'",
+              "attribute": "copy-error-label"
+            },
+            {
+              "kind": "field",
+              "name": "detailsSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "copyButton",
+              "type": {
+                "text": "PkCopyButton | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "copyStatus",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "copyFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "copyStatusResetTimer",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "hasTitle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "detailsValue",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "resetCopyStatusLater",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "showCopySuccess",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "showCopyError",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleCopySuccess",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleCopyError",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "selectDetails",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "copyDetails",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "description": "Copy the plain text assigned to the details slot."
+            },
+            {
+              "kind": "method",
+              "name": "handleDetailsToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderIcon",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "PkCopyErrorEvent"
+              }
+            },
+            {
+              "description": "Emitted when the details are copied successfully.",
+              "name": "pk-copy"
+            },
+            {
+              "description": "Emitted when the details cannot be copied.",
+              "name": "pk-copy-error"
+            },
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "PkStatePanelVariant"
+              },
+              "default": "'empty'",
+              "description": "Semantic colour and fallback icon for the replacement state.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "PkStatePanelSize"
+              },
+              "default": "'default'",
+              "description": "Overall density, including typography, icons, spacing, details, and actions.",
+              "fieldName": "size"
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "PkStatePanelHeadingLevel"
+              },
+              "default": "2",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Registered icon name. A custom `icon` slot takes precedence.",
+              "fieldName": "icon"
+            },
+            {
+              "name": "hide-icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideIcon"
+            },
+            {
+              "name": "announce",
+              "type": {
+                "text": "PkStatePanelAnnouncement"
+              },
+              "default": "'off'",
+              "fieldName": "announce"
+            },
+            {
+              "name": "details-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details'",
+              "fieldName": "detailsLabel"
+            },
+            {
+              "name": "details-open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "detailsOpen"
+            },
+            {
+              "name": "copyable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "copyable"
+            },
+            {
+              "name": "copy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy details'",
+              "fieldName": "copyLabel"
+            },
+            {
+              "name": "copied-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Details copied.'",
+              "fieldName": "copiedLabel"
+            },
+            {
+              "name": "copy-error-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Copy failed. Select the details and copy them manually.'",
+              "fieldName": "copyErrorLabel"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "dependencies": [
+            {
+              "name": "pk-copy-button",
+              "description": "Compact copy-details action."
+            }
+          ],
+          "tagName": "pk-state-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkStatePanel",
+          "declaration": {
+            "name": "PkStatePanel",
+            "module": "src/components/state-panel/pk-state-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-state-panel",
+          "declaration": {
+            "name": "PkStatePanel",
+            "module": "src/components/state-panel/pk-state-panel.ts"
           }
         }
       ]

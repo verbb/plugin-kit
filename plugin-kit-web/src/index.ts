@@ -1,3 +1,5 @@
+export * from './components/alert/index.js';
+export * from './components/state-panel/index.js';
 export * from './components/button/index.js';
 export * from './components/button-group/index.js';
 export * from './components/checkbox/index.js';
@@ -39,6 +41,7 @@ export { PkInvalidEvent } from './events/pk-invalid.js';
 export { PkRepositionEvent } from './events/pk-reposition.js';
 export { PkShowEvent, PkAfterShowEvent, PkHideEvent, PkAfterHideEvent } from './events/overlay-lifecycle.js';
 export { PkCopyEvent, PkCopyErrorEvent } from './events/pk-copy.js';
+export { PkDismissEvent } from './events/pk-dismiss.js';
 export { PkCreateEvent } from './events/pk-create.js';
 export { copyToClipboard, resolveCopyValue } from './utils/copy-to-clipboard.js';
 export { configurePluginKitWeb, type PluginKitWebConfig } from './utils/config.js';

@@ -1,6 +1,8 @@
 // Full-library path: every curated glyph is available to `<pk-icon icon="…">`.
 import '@verbb/plugin-kit-icons/all.js';
 
+import { PkAlert } from './components/alert/pk-alert.js';
+import { PkStatePanel } from './components/state-panel/pk-state-panel.js';
 import { PkButton } from './components/button/pk-button.js';
 import { PkButtonGroup } from './components/button-group/pk-button-group.js';
 import { PkButtonGroupSeparator } from './components/button-group/pk-button-group-separator.js';
@@ -55,6 +57,8 @@ import { PkToggle } from './components/toggle/pk-toggle.js';
 import { PkToggleGroup } from './components/toggle-group/pk-toggle-group.js';
 import { PkTooltip } from './components/tooltip/pk-tooltip.js';
 
+export * from './components/alert/index.js';
+export * from './components/state-panel/index.js';
 export * from './components/button/index.js';
 export * from './components/button-group/index.js';
 export * from './components/checkbox/index.js';
@@ -88,6 +92,8 @@ export * from './components/time-picker/index.js';
 export * from './components/tiptap/index.js';
 
 export {
+    PkAlert,
+    PkStatePanel,
     PkButton,
     PkButtonGroup,
     PkButtonGroupSeparator,
@@ -142,6 +148,8 @@ export {
 };
 
 const COMPONENTS: [string, CustomElementConstructor][] = [
+    ['pk-alert', PkAlert],
+    ['pk-state-panel', PkStatePanel],
     ['pk-spinner', PkSpinner],
     ['pk-icon', PkIcon],
     ['pk-button', PkButton],

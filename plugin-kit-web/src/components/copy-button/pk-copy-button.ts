@@ -4,7 +4,8 @@ import { customElement, property, state } from '../../decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
 import { PkCopyErrorEvent, PkCopyEvent } from '../../events/pk-copy.js';
-import { check, renderIconHtml } from '../../icons/index.js';
+import { check, copy, renderIconHtml } from '../../icons/index.js';
+import { HasSlotController } from '../../internal/has-slot.js';
 import { copyToClipboard, resolveCopyValue } from '../../utils/copy-to-clipboard.js';
 import type { PkButtonVariant } from '../button/pk-button.js';
 import '../button/pk-button.js';
@@ -13,6 +14,10 @@ import { pkCopyButtonStyles } from './pk-copy-button.styles.js';
 const SUCCESS_ICON = renderIconHtml(check).replace(
     '<svg',
     '<svg slot="start" part="success-icon"',
+);
+const COPY_ICON = renderIconHtml(copy).replace(
+    '<svg',
+    '<svg slot="start" part="copy-icon"',
 );
 
 const COPIED_RESET_MS = 2000;
@@ -23,17 +28,28 @@ const COPIED_RESET_MS = 2000;
  * Place in `slot="end"` on `<pk-input>` (or another control with an end adornment)
  * for an in-control treatment that matches combobox / image-browser trailing actions.
  *
- * @slot icon - Copy icon (SVG supplied by the consumer)
+ * @slot icon - Custom copy icon. The component supplies a copy icon by default.
  *
  * @event pk-copy - Emitted when text is copied successfully
  * @event pk-copy-error - Emitted when copying fails
  *
  * @csspart button - Trigger button
+ * @csspart copy-icon - Copy icon shown before copying
  * @csspart success-icon - Success icon shown after copying
+ *
+ * @cssproperty --pk-copy-button-background - Trigger background override.
+ * @cssproperty --pk-copy-button-border-color - Trigger border colour override.
+ * @cssproperty --pk-copy-button-color - Trigger foreground colour override.
+ * @cssproperty --pk-copy-button-hover-background - Trigger hover background override.
+ * @cssproperty --pk-copy-button-hover-border-color - Trigger hover border colour override.
+ * @cssproperty --pk-copy-button-hover-color - Trigger hover foreground colour override.
+ * @cssproperty --pk-copy-button-radius - Trigger corner radius override.
  */
 @customElement('pk-copy-button')
 export class PkCopyButton extends PkElement {
     static override styles = pkCopyButtonStyles;
+
+    private readonly hasSlotController = new HasSlotController(this, 'icon');
 
     @property()
     value = '';
@@ -50,6 +66,14 @@ export class PkCopyButton extends PkElement {
 
     @property({ reflect: true })
     variant: PkButtonVariant = 'transparent';
+
+    /** Accessible name shown while the copy action is available. */
+    @property({ attribute: 'aria-label' })
+    ariaLabel = 'Copy';
+
+    /** Accessible name shown briefly after copying succeeds. */
+    @property({ attribute: 'copied-label' })
+    copiedLabel = 'Copied';
 
     @state()
     private copied = false;
@@ -70,7 +94,8 @@ export class PkCopyButton extends PkElement {
         this.resetTimer = window.setTimeout(this.resetCopied, COPIED_RESET_MS);
     }
 
-    private async handleCopy(): Promise<void> {
+    /** Copy the configured value and emit the corresponding result event. */
+    async copy(): Promise<void> {
         if (this.disabled) {
             return;
         }
@@ -103,13 +128,15 @@ export class PkCopyButton extends PkElement {
                 variant=${inControl ? 'none' : this.variant}
                 size=${inControl ? 'none' : 'default'}
                 ?icon=${inControl}
-                aria-label="Copy"
+                aria-label=${this.copied ? this.copiedLabel : this.ariaLabel}
                 ?disabled=${this.disabled}
-                @click=${this.handleCopy}
+                @click=${this.copy}
             >
                 ${this.copied
                     ? unsafeHTML(SUCCESS_ICON)
-                    : html`<slot name="icon" slot="start"></slot>`}
+                    : this.hasSlotController.test('icon')
+                      ? html`<slot name="icon" slot="start"></slot>`
+                      : unsafeHTML(COPY_ICON)}
             </pk-button>
         `;
     }

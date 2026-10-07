@@ -5,6 +5,8 @@ import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissible
 * Module paths are relative to the directory that contains plugin-kit.loader.js.
 */
 var COMPONENT_MODULE_PATHS = {
+	"pk-alert": "components/alert/alert.js",
+	"pk-state-panel": "components/state-panel/state-panel.js",
 	"pk-spinner": "components/spinner/spinner.js",
 	"pk-icon": "components/icon/icon.js",
 	"pk-button": "components/button/button.js",
@@ -63,6 +65,8 @@ var COMPONENT_MODULE_PATHS = {
 };
 /** Vite loader-build entries: output key → source module. */
 var LOADER_COMPONENT_ENTRIES = {
+	"components/alert/alert": "src/components/alert/pk-alert.ts",
+	"components/state-panel/state-panel": "src/components/state-panel/pk-state-panel.ts",
 	"components/spinner/spinner": "src/components/spinner/pk-spinner.ts",
 	"components/icon/icon": "src/components/icon/pk-icon-loader.ts",
 	"components/button/button": "src/components/button/pk-button.ts",

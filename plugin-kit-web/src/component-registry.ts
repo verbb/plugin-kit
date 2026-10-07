@@ -3,6 +3,8 @@
  * Module paths are relative to the directory that contains plugin-kit.loader.js.
  */
 export const COMPONENT_MODULE_PATHS: Record<string, string> = {
+    'pk-alert': 'components/alert/alert.js',
+    'pk-state-panel': 'components/state-panel/state-panel.js',
     'pk-spinner': 'components/spinner/spinner.js',
     'pk-icon': 'components/icon/icon.js',
     'pk-button': 'components/button/button.js',
@@ -68,6 +70,8 @@ export const PK_COMPONENT_TAGS: readonly string[] = Object.keys(COMPONENT_MODULE
 
 /** Vite loader-build entries: output key → source module. */
 export const LOADER_COMPONENT_ENTRIES: Record<string, string> = {
+    'components/alert/alert': 'src/components/alert/pk-alert.ts',
+    'components/state-panel/state-panel': 'src/components/state-panel/pk-state-panel.ts',
     'components/spinner/spinner': 'src/components/spinner/pk-spinner.ts',
     // Loader ships the full icon set; bundler family `components/icon.js` stays opt-in.
     'components/icon/icon': 'src/components/icon/pk-icon-loader.ts',
@@ -160,6 +164,8 @@ export type PkComponentTag = keyof typeof BUNDLER_TAG_IMPORT_PATHS;
  * TipTap stays split — importing one surface must not pull the other two.
  */
 export const COMPONENT_FAMILY_ENTRIES: Record<string, string> = {
+    'alert': 'src/components/alert/index.ts',
+    'state-panel': 'src/components/state-panel/index.ts',
     'button': 'src/components/button/index.ts',
     'button-group': 'src/components/button-group/index.ts',
     'calendar': 'src/components/calendar/index.ts',

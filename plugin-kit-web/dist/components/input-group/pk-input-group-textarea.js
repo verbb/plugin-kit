@@ -1,2 +1,2 @@
-import { t as PkInputGroupTextarea } from "../../chunks/pk-input-group-textarea-Cl2FNuw-.js";
+import { t as PkInputGroupTextarea } from "../../chunks/pk-input-group-textarea-DOG1NIlE.js";
 export { PkInputGroupTextarea };

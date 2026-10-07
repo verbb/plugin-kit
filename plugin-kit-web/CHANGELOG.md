@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Added
+- Add `<pk-alert>` with semantic variants, visual appearances, `sm`/`default`/`lg` sizes, optional icons and dismissal, actions, collapsible details, and copyable diagnostic content.
+- Add `<pk-state-panel>` for centered empty, informational, success, warning, and error replacement states, with `sm`/`default`/`lg` sizes, icons, actions, and copyable details.
+
+### Changed
+- `<pk-copy-button>` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+
 ## 2.0.22 - 2026-09-29
 
 ### Fixed

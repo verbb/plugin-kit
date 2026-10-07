@@ -1,21 +1,21 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { a as o, c as r, f as A, l as n, m as i, p as b, s as e, u as customElement } from "../../chunks/lit-DpLik9Rf.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-B2MqxErC.js";
-import { A as heading, D as h4, E as h3, F as link, G as superscript, H as smallCaps, I as listOl, J as triangleExclamation, K as table, L as listUl, N as italic, O as h5, R as minus, T as h2, U as strikethrough, V as quoteRight, W as subscript, Y as underline, a as alignRight, c as arrowRotateRight, d as bold, f as bracketsCurly, h as chevronDown, i as alignLeft, j as highlighter, k as h6, n as alignCenter, q as textSlash, r as alignJustify, s as arrowRotateLeft, w as h1, x as fileDashedLine, y as code, z as paragraph } from "../../chunks/svg-Bz-bXZn7.js";
-import "../../chunks/pk-button-Dfm23jEC.js";
-import { t as MirrorValidator } from "../../chunks/mirror-validator-C5XrXPaq.js";
-import "../../chunks/pk-checkbox-BDoq3xg0.js";
-import "../../chunks/pk-input-DvBrD7Md.js";
-import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-CgXkiK8d.js";
-import { A as resolveTiptapTextStyleToolbarConfig, D as getFatalTiptapContentError, N as getRegisteredTiptapToolbarControl, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, j as createTiptapExtensions, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-C0E1NpSx.js";
-import { n as renderIconHtml } from "../../chunks/render-Bnzcxfss.js";
-import "../../chunks/pk-field-BM0XD9Ij.js";
-import "../../chunks/pk-dialog-BtrH5Ke0.js";
-import "../../chunks/pk-dropdown-item-D8tfEU-k.js";
-import "../../chunks/pk-dropdown-label-TbLj4bHK.js";
-import "../../chunks/pk-dropdown-menu-C4GDW5pE.js";
+import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-Om6X9ab5.js";
+import { $ as triangleExclamation, A as h2, B as link, E as fileDashedLine, F as heading, H as listUl, I as highlighter, J as strikethrough, K as quoteRight, M as h4, N as h5, P as h6, Q as textSlash, R as italic, S as code, U as minus, V as listOl, W as paragraph, X as superscript, Y as subscript, Z as table, a as alignRight, c as arrowRotateRight, d as bold, et as underline, f as bracketsCurly, h as chevronDown, i as alignLeft, j as h3, k as h1, n as alignCenter, q as smallCaps, r as alignJustify, s as arrowRotateLeft } from "../../chunks/svg-C6YcJMk9.js";
+import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
+import "../../chunks/pk-field-DzggayrX.js";
+import "../../chunks/pk-button-nSZxt8_B.js";
+import { t as MirrorValidator } from "../../chunks/mirror-validator-BZoyx7AK.js";
+import "../../chunks/pk-checkbox-qwUxIY9C.js";
+import "../../chunks/pk-input-Cqa1QeyV.js";
+import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-Dg1NaOOh.js";
+import { A as resolveTiptapTextStyleToolbarConfig, D as getFatalTiptapContentError, N as getRegisteredTiptapToolbarControl, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, j as createTiptapExtensions, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BXWYOxmE.js";
+import "../../chunks/pk-dialog-CZchQpUE.js";
+import "../../chunks/pk-dropdown-item-CwJPukH6.js";
+import "../../chunks/pk-dropdown-label-DL-bq1xe.js";
+import "../../chunks/pk-dropdown-menu-QRpCEuYp.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-DcF9J5GT.js";
+import "../../chunks/pk-tooltip-b61LGESU.js";
 //#region src/components/tiptap/tiptap-editor-host.ts
 function serializeTiptapDocumentContent(content) {
 	return JSON.stringify(normalizeContentArray(content));

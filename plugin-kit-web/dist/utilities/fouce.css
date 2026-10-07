@@ -8,6 +8,8 @@
 
     /* Tier 1a: reserve space for in-flow pk-* elements until they upgrade. */
     :is(
+        pk-alert,
+        pk-state-panel,
         pk-spinner,
         pk-icon,
         pk-button,

@@ -1,3 +1,5 @@
+/** Register `pk-alert` only (async side-effect import). */
+export declare function registerPkAlert(): Promise<void>;
 /** Register `pk-autocomplete` only (async side-effect import). */
 export declare function registerPkAutocomplete(): Promise<void>;
 /** Register `pk-button` only (async side-effect import). */
@@ -82,6 +84,8 @@ export declare function registerPkSelect(): Promise<void>;
 export declare function registerPkSeparator(): Promise<void>;
 /** Register `pk-spinner` only (async side-effect import). */
 export declare function registerPkSpinner(): Promise<void>;
+/** Register `pk-state-panel` only (async side-effect import). */
+export declare function registerPkStatePanel(): Promise<void>;
 /** Register `pk-status` only (async side-effect import). */
 export declare function registerPkStatus(): Promise<void>;
 /** Register `pk-tab` only (async side-effect import). */
