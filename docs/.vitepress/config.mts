@@ -117,6 +117,7 @@ const reactAppItems = [
 ];
 
 const reactComponentItems = [
+    { text: 'Alert', link: '/react/components/alert' },
     { text: 'Autocomplete', link: '/react/components/autocomplete' },
     { text: 'Button', link: '/react/components/button' },
     { text: 'Button Group', link: '/react/components/button-group' },
@@ -144,6 +145,7 @@ const reactComponentItems = [
     { text: 'Select', link: '/react/components/select' },
     { text: 'Separator', link: '/react/components/separator' },
     { text: 'Spinner', link: '/react/components/spinner' },
+    { text: 'State Panel', link: '/react/components/state-panel' },
     { text: 'Status', link: '/react/components/status' },
     { text: 'Tabs', link: '/react/components/tabs' },
     { text: 'Textarea', link: '/react/components/textarea' },
@@ -166,6 +168,7 @@ const vueComponentItems = reactComponentItems
 
 /** Web nav is canonical; React/Vue mirror the documented component set (minus React-only wrappers). */
 const webComponentItems = [
+    { text: 'Alert', link: '/web/components/alert' },
     { text: 'Autocomplete', link: '/web/components/autocomplete' },
     { text: 'Button', link: '/web/components/button' },
     { text: 'Button Group', link: '/web/components/button-group' },
@@ -193,6 +196,7 @@ const webComponentItems = [
     { text: 'Select', link: '/web/components/select' },
     { text: 'Separator', link: '/web/components/separator' },
     { text: 'Spinner', link: '/web/components/spinner' },
+    { text: 'State Panel', link: '/web/components/state-panel' },
     { text: 'Status', link: '/web/components/status' },
     { text: 'Tabs', link: '/web/components/tabs' },
     { text: 'Textarea', link: '/web/components/textarea' },

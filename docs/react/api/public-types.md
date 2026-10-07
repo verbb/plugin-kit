@@ -35,7 +35,7 @@ Node/index shapes (**`SchemaNode`**, **`SchemaRenderable`**, **`FieldEntry`**, *
 
 ## App error UI (`@verbb/plugin-kit-react/utils`)
 
-- **`AppErrorBoundaryProps`**, **`LargeErrorStateProps`**, **`StatePanelProps`**, **`StatePanelAction`**, **`StatePanelVariant`**
+- **`AppErrorBoundaryProps`**, **`ErrorStateProps`**
 
 ## Exhaustive signatures
 

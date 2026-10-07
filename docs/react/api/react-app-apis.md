@@ -76,21 +76,29 @@ Import from **`@verbb/plugin-kit-react/utils`**.
 | Export | Purpose |
 | --- | --- |
 | `AppErrorBoundary` | Class boundary that catches React render/lifecycle errors and paints a fallback. |
-| `LargeErrorState` | Error `StatePanel` + optional stack details. |
-| `StatePanel` | Centered empty / error / success / info surface. |
+| `ErrorState` | Error adapter over the shared `StatePanel`, with optional stack details. |
+
+When `message` is supplied, it remains the user-facing copy. Technical exception details stay collapsed and can be copied for support. Use `copyLabel`, `copiedLabel`, and `copyErrorLabel` to translate the copy control and its status messages.
+
+Set `size="sm"` for a compact replacement state or `size="lg"` for a prominent content region. The size is passed through to the shared `StatePanel`, including its details, copy control, and action button.
 
 ```tsx
 import { AppErrorBoundary } from '@verbb/plugin-kit-react/utils';
 
 <AppErrorBoundary
   consoleLabel="My builder crashed:"
-  title={Craft.t('my-plugin', 'Something went wrong')}
+  heading={Craft.t('my-plugin', 'Something went wrong')}
   message={Craft.t('my-plugin', 'The builder failed to load. Please refresh the page or try again.')}
   detailsLabel={Craft.t('my-plugin', 'Show error details')}
+  copyLabel={Craft.t('my-plugin', 'Copy error details')}
+  copiedLabel={Craft.t('my-plugin', 'Error details copied.')}
+  copyErrorLabel={Craft.t('my-plugin', 'Copy failed. Select the details and copy them manually.')}
   reloadLabel={Craft.t('my-plugin', 'Reload')}
 >
   <App />
 </AppErrorBoundary>
 ```
 
-Register icons the fallback uses (at least `triangle-exclamation` for the error variant).
+Use `ErrorState` directly when a request or content region fails without crashing its React tree. Import the general-purpose `StatePanel` from `@verbb/plugin-kit-react/components` for empty, informational, success, and warning states.
+
+The fallback's semantic icon is built in; registry setup is only needed when supplying a custom named icon.

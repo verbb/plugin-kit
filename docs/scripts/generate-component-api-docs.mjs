@@ -35,6 +35,7 @@ const API_END = '<!-- pk-api:end -->';
  */
 /** @type {Record<string, { tags: string[] }>} */
 const PAGE_APIS = {
+    'alert.md': { tags: ['pk-alert'] },
     'button.md': { tags: ['pk-button'] },
     'button-group.md': { tags: ['pk-button-group'] },
     'calendar.md': { tags: ['pk-calendar'] },
@@ -71,6 +72,7 @@ const PAGE_APIS = {
     'select.md': { tags: ['pk-select', 'pk-option', 'pk-option-group'] },
     'separator.md': { tags: ['pk-separator'] },
     'spinner.md': { tags: ['pk-spinner'] },
+    'state-panel.md': { tags: ['pk-state-panel'] },
     'status.md': { tags: ['pk-status'] },
     'tabs.md': { tags: ['pk-tabs', 'pk-tab', 'pk-tab-heading', 'pk-tab-panel'] },
     'textarea.md': { tags: ['pk-textarea'] },
@@ -110,6 +112,8 @@ const EVENT_DENY = new Set([
  * are omitted so internal overrides do not leak into docs.
  */
 const METHOD_ALLOW = new Set([
+    'copyDetails',
+    'dismiss',
     'show',
     'hide',
     'checkValidity',
