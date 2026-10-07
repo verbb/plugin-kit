@@ -75,7 +75,7 @@ const defaultIcons = {
  * @cssproperty --pk-alert-title-size - Heading font size.
  * @cssproperty --pk-alert-padding - Alert inner padding.
  * @cssproperty --pk-alert-radius - Alert corner radius.
- * @cssproperty --pk-alert-details-max-height - Maximum height of slotted `pre` details.
+ * @cssproperty --pk-alert-details-max-height - Maximum height of diagnostic details.
  *
  * @dependency pk-copy-button - Compact copy-details action.
  */
@@ -338,21 +338,25 @@ export class PkAlert extends PkElement {
                         >
                             <summary part="details-summary">${this.detailsLabel}</summary>
                             <div part="details-content" class="details-content">
-                                <slot name="details"></slot>
-                                ${this.copyable
-                                    ? html`
-                                        <pk-copy-button
-                                            part="copy-button"
-                                            class="copy"
-                                            variant="transparent"
-                                            aria-label=${this.copyLabel}
-                                            .copiedLabel=${this.copiedLabel}
-                                            .value=${this.detailsValue}
-                                            @pk-copy=${this.handleCopySuccess}
-                                            @pk-copy-error=${this.handleCopyError}
-                                        ></pk-copy-button>
-                                    `
-                                    : nothing}
+                                <div class="details-scroll">
+                                    ${this.copyable
+                                        ? html`
+                                            <div class="copy-overlay">
+                                                <pk-copy-button
+                                                    part="copy-button"
+                                                    class="copy"
+                                                    variant="transparent"
+                                                    aria-label=${this.copyLabel}
+                                                    .copiedLabel=${this.copiedLabel}
+                                                    .value=${this.detailsValue}
+                                                    @pk-copy=${this.handleCopySuccess}
+                                                    @pk-copy-error=${this.handleCopyError}
+                                                ></pk-copy-button>
+                                            </div>
+                                        `
+                                        : nothing}
+                                    <slot name="details"></slot>
+                                </div>
                             </div>
 
                             ${this.copyable

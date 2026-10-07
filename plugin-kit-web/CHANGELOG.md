@@ -7,10 +7,11 @@
 - Add `<pk-state-panel>` for centered empty, informational, success, warning, and error replacement states, with `sm`/`default`/`lg` sizes, icons, actions, and copyable details.
 
 ### Changed
-- `<pk-copy-button>` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+- `<pk-copy-button>` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment with a subdued neutral colour inset within diagnostic details.
+- Alert uses stronger semantic borders, while Alert and State Panel use the Craft-aligned teal palette for success states.
 
 ### Fixed
-- Alert and State Panel copy-details controls no longer overlap native scrollbars in overflowing diagnostic content.
+- Alert and State Panel copy-details controls now stay aligned inside diagnostic content without overlapping native scrollbars or reserving an empty action rail.
 
 ## 2.0.22 - 2026-09-29
 

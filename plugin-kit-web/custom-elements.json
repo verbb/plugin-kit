@@ -965,7 +965,7 @@
               "name": "--pk-alert-radius"
             },
             {
-              "description": "Maximum height of slotted `pre` details.",
+              "description": "Maximum height of diagnostic details.",
               "name": "--pk-alert-details-max-height"
             }
           ],
@@ -31152,7 +31152,7 @@
               "name": "--pk-state-panel-padding"
             },
             {
-              "description": "Maximum height of slotted `pre` details.",
+              "description": "Maximum height of diagnostic details.",
               "name": "--pk-state-panel-details-max-height"
             }
           ],

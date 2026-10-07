@@ -22,13 +22,19 @@ Use the default size for ordinary control-panel feedback. `sm` fits compact sett
 
 ## Details and Copying
 
-Put secondary or technical information in the `details` slot so the primary message stays concise. Set `copyable` when the details need to be shared or retained elsewhere. The component adds a compact, variant-coloured copy button inside the details area and copies the slot's plain text. Its icon changes to a check after success, the result is announced, and failures remain visibly explained.
+Put secondary or technical information in the `details` slot so the primary message stays concise. Set `copyable` when the details need to be shared or retained elsewhere. The component adds a compact copy button with a subdued neutral colour inside the details area and copies the slot's plain text. Its icon changes to a check after success, the result is announced, and failures remain visibly explained.
 
 Content in the `actions` slot belongs to the consumer. The alert scales default-sized Plugin Kit buttons with its `size`, but the button's own variant continues to control its appearance.
 
 Use `announce="polite"` for asynchronous updates that can wait and `announce="assertive"` only for an urgent failure that interrupts the current task. Static alerts should keep the default `announce="off"` value.
 
 <ComponentPreview src="./examples/alert-details.preview.web.ts" />
+
+### Scrolling Details
+
+Large diagnostic output scrolls once it reaches the details area's maximum height. The copy control remains inset within the scrolling content, so a native scrollbar only affects its alignment when one is present.
+
+<ComponentPreview src="./examples/alert-scrolling-details.preview.web.ts" />
 
 ## Icons and Dismissal
 
@@ -98,7 +104,7 @@ Set `dismissible` only when hiding the alert won't conceal a condition that stil
 | `--pk-alert-body-color` | Primary content colour. |
 | `--pk-alert-border` | Alert and divider border colour. |
 | `--pk-alert-color` | Alert host colour. |
-| `--pk-alert-details-max-height` | Maximum height of slotted `pre` details. |
+| `--pk-alert-details-max-height` | Maximum height of diagnostic details. |
 | `--pk-alert-padding` | Alert inner padding. |
 | `--pk-alert-radius` | Alert corner radius. |
 | `--pk-alert-title-color` | Heading colour. |

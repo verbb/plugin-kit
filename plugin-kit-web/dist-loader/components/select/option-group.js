@@ -1,6 +1,6 @@
 import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { c as customElement, m as i, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
+import { c as customElement, m as i, p as b, s as n } from "../../chunks/lit-BMrUz4Cb.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BMUw-18C.js";
 //#region src/components/select/pk-option-group.styles.ts
 var pkOptionGroupStyles = i`
     @layer pk-component {

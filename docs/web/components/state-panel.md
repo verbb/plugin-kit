@@ -32,6 +32,12 @@ Use the `error` variant when the panel replaces content that failed to load or r
 
 <ComponentPreview src="./examples/state-panel-error.preview.web.ts" />
 
+### Scrolling Details
+
+Large diagnostic output scrolls once it reaches the details area's maximum height. The copy control remains inset within the scrolling content, so a native scrollbar only affects its alignment when one is present.
+
+<ComponentPreview src="./examples/state-panel-scrolling-details.preview.web.ts" />
+
 Use `announce="polite"` for an asynchronous state change that can wait and `announce="assertive"` only for an urgent failure. Static states should keep the default `announce="off"` value.
 
 <!-- pk-api:begin -->
@@ -86,7 +92,7 @@ Use `announce="polite"` for an asynchronous state change that can wait and `anno
 | `--pk-state-panel-accent` | Variant accent colour. |
 | `--pk-state-panel-body-color` | Primary content colour. |
 | `--pk-state-panel-content-width` | Maximum content width. |
-| `--pk-state-panel-details-max-height` | Maximum height of slotted `pre` details. |
+| `--pk-state-panel-details-max-height` | Maximum height of diagnostic details. |
 | `--pk-state-panel-icon-background` | Icon container background. |
 | `--pk-state-panel-icon-radius` | Icon container radius. |
 | `--pk-state-panel-icon-shell-size` | Icon container width and height. |

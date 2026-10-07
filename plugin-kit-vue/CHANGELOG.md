@@ -7,7 +7,7 @@
 - Add the `StatePanel` facade for shared empty and replacement states, including small, default, and large sizes.
 
 ### Changed
-- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment with a subdued neutral colour inset within diagnostic details.
 
 ## 2.0.22 - 2026-09-29
 

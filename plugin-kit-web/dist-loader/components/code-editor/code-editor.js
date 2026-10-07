@@ -1,13 +1,13 @@
-import { a as e, c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-Om6X9ab5.js";
+import { a as e, c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-BMrUz4Cb.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BMUw-18C.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BZoyx7AK.js";
-import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-DSFgFJ7j.js";
-//#region @verbb/plugin-kit-codemirror-core/dist/constants.js
+import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-X34SGsrL.js";
+//#region ../../../../Users/joshcrawford/verbb/plugin-kit/plugin-kit/plugin-kit-codemirror-core/dist/constants.js
 function computeCodeEditorMinHeight(rows = 12) {
 	return `${Math.max(Number(rows) || 12, 4) * 18 + 12}px`;
 }
 //#endregion
-//#region @verbb/plugin-kit-codemirror-core/dist/languages.js
+//#region ../../../../Users/joshcrawford/verbb/plugin-kit/plugin-kit/plugin-kit-codemirror-core/dist/languages.js
 function languageUsesSyntaxHelpers(language) {
 	return language !== "text";
 }
@@ -21,7 +21,7 @@ function createLanguageExtension(language) {
 	}
 }
 //#endregion
-//#region @verbb/plugin-kit-codemirror-core/dist/theme.js
+//#region ../../../../Users/joshcrawford/verbb/plugin-kit/plugin-kit/plugin-kit-codemirror-core/dist/theme.js
 /** Editor content surface — matches @uiw/react-codemirror default light theme. */
 var CODE_EDITOR_SURFACE_BG = "#ffffff";
 /** Gutter strip beside line numbers. */
@@ -71,7 +71,7 @@ var codeEditorTheme = EditorView.theme({
 	".cm-selectionBackground, &.cm-focused .cm-selectionBackground, ::selection": { backgroundColor: `rgba(59, 130, 246, 0.35) !important` }
 });
 //#endregion
-//#region @verbb/plugin-kit-codemirror-core/dist/extensions.js
+//#region ../../../../Users/joshcrawford/verbb/plugin-kit/plugin-kit/plugin-kit-codemirror-core/dist/extensions.js
 function createEditorSetupExtensions(language, showLineNumbers) {
 	const usesSyntaxHelpers = languageUsesSyntaxHelpers(language);
 	const extensions = [
@@ -118,7 +118,7 @@ function createCodeEditorExtensions({ language = "html", tabSize = 4, lineNumber
 	return extensions;
 }
 //#endregion
-//#region @verbb/plugin-kit-codemirror-core/dist/host.js
+//#region ../../../../Users/joshcrawford/verbb/plugin-kit/plugin-kit/plugin-kit-codemirror-core/dist/host.js
 var CodeMirrorHost = class {
 	view = null;
 	editableCompartment = new Compartment();

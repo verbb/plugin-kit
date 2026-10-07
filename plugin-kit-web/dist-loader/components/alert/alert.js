@@ -1,8 +1,8 @@
-import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
-import { i as PkCopyEvent, n as copyToClipboard, r as PkCopyErrorEvent } from "../../chunks/pk-copy-button-CoN83ilF.js";
-import { $ as triangleExclamation, b as circleInfo, tt as xmark, v as circleCheck, y as circleExclamation } from "../../chunks/svg-C6YcJMk9.js";
-import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
+import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-BMrUz4Cb.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BMUw-18C.js";
+import { i as PkCopyEvent, n as copyToClipboard, r as PkCopyErrorEvent } from "../../chunks/pk-copy-button-B0upsPfJ.js";
+import { $ as triangleExclamation, b as circleInfo, tt as xmark, v as circleCheck, y as circleExclamation } from "../../chunks/svg-D9hLZeTK.js";
+import { n as renderIconHtml } from "../../chunks/render-Dl4L6iwi.js";
 import { t as HasSlotController } from "../../chunks/has-slot-BvdEcnpm.js";
 //#region src/events/pk-dismiss.ts
 /** Emitted before a dismissible component hides itself. Prevent to keep it visible. */
@@ -28,7 +28,7 @@ var pkAlertStyles = i`
             line-height: var(--pk-line-height);
             --pk-alert-accent: var(--pk-color-sky-600);
             --pk-alert-background: var(--pk-color-sky-50);
-            --pk-alert-border: var(--pk-color-sky-200);
+            --pk-alert-border: var(--pk-color-sky-300);
             --pk-alert-color: var(--pk-color-sky-800);
             --_pk-alert-font-size: var(--pk-font-size-sm);
             --_pk-alert-padding: 0.625rem 0.75rem;
@@ -48,7 +48,6 @@ var pkAlertStyles = i`
             --_pk-alert-copy-button-size: var(--pk-btn-height-xs);
             --_pk-alert-copy-icon-size: var(--pk-btn-icon-size-xs);
             --_pk-alert-copy-inset: 0.375rem;
-            --_pk-alert-copy-scrollbar-clearance: 1rem;
             --_pk-alert-copy-radius: var(--pk-radius-md);
             --_pk-alert-copy-status-size: 0.6875rem;
             --_pk-alert-action-height: var(--pk-btn-height-sm);
@@ -137,28 +136,28 @@ var pkAlertStyles = i`
         :host([variant='success']) {
             --pk-alert-accent: var(--pk-color-teal-600);
             --pk-alert-background: var(--pk-color-teal-50);
-            --pk-alert-border: var(--pk-color-teal-200);
+            --pk-alert-border: var(--pk-color-teal-400);
             --pk-alert-color: var(--pk-color-teal-800);
         }
 
         :host([variant='neutral']) {
             --pk-alert-accent: var(--pk-color-gray-600);
             --pk-alert-background: var(--pk-color-gray-50);
-            --pk-alert-border: var(--pk-color-gray-200);
+            --pk-alert-border: var(--pk-color-gray-300);
             --pk-alert-color: var(--pk-color-gray-800);
         }
 
         :host([variant='warning']) {
             --pk-alert-accent: var(--pk-color-amber-600);
             --pk-alert-background: var(--pk-color-amber-50);
-            --pk-alert-border: var(--pk-color-amber-200);
+            --pk-alert-border: var(--pk-color-amber-300);
             --pk-alert-color: var(--pk-color-amber-800);
         }
 
         :host([variant='error']) {
             --pk-alert-accent: var(--pk-color-red-600);
             --pk-alert-background: var(--pk-color-red-50);
-            --pk-alert-border: var(--pk-color-red-200);
+            --pk-alert-border: var(--pk-color-red-300);
             --pk-alert-color: var(--pk-color-red-800);
         }
 
@@ -310,6 +309,10 @@ var pkAlertStyles = i`
             margin-top: var(--_pk-alert-details-content-margin-top);
         }
 
+        .details-scroll {
+            min-width: 0;
+        }
+
         .details-content ::slotted(pre) {
             box-sizing: border-box;
             max-height: var(--pk-alert-details-max-height, 16rem);
@@ -333,33 +336,56 @@ var pkAlertStyles = i`
         }
 
         :host([copyable]) .details-content ::slotted(pre) {
-            scrollbar-gutter: stable;
+            max-height: none;
             padding-inline-end: calc(
                 var(--_pk-alert-details-pre-padding) + var(--_pk-alert-copy-button-size) +
-                    var(--_pk-alert-copy-inset) +
-                    var(--_pk-alert-copy-scrollbar-clearance)
+                    var(--_pk-alert-copy-inset)
             );
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        :host([copyable]) .details-content {
+            overflow: hidden;
+            border: 1px solid var(--pk-color-gray-200);
+            border-radius: var(--_pk-alert-details-pre-radius);
+            background: var(--pk-color-white);
+        }
+
+        :host([copyable]) .details-scroll {
+            position: relative;
+            max-height: var(--pk-alert-details-max-height, 16rem);
+            overflow: auto;
+        }
+
+        .copy-overlay {
+            position: sticky;
+            z-index: 1;
+            top: 0;
+            display: flex;
+            justify-content: flex-end;
+            height: 0;
+            pointer-events: none;
         }
 
         .copy {
-            position: absolute;
-            z-index: 1;
-            inset-block-start: var(--_pk-alert-copy-inset);
-            /* Keep the control clear of native scrollbars without changing its inset treatment. */
-            inset-inline-end: calc(
-                var(--_pk-alert-copy-inset) +
-                    var(--_pk-alert-copy-scrollbar-clearance)
-            );
+            flex: none;
+            margin-block-start: var(--_pk-alert-copy-inset);
+            margin-inline-end: var(--_pk-alert-copy-inset);
+            pointer-events: auto;
             --pk-btn-height-default: var(--_pk-alert-copy-button-size);
             --pk-btn-icon-size-default: var(--_pk-alert-copy-icon-size);
             --pk-btn-radius-default: var(--_pk-alert-copy-radius);
             --pk-copy-button-background: var(--pk-color-white);
             --pk-copy-button-border-color: transparent;
             --pk-copy-button-hover-border-color: transparent;
-            --pk-copy-button-color: var(--pk-alert-accent);
+            --pk-copy-button-color: var(--pk-color-gray-300);
+            --pk-copy-button-hover-color: var(--pk-color-gray-500);
             --pk-copy-button-hover-background: color-mix(
                 in srgb,
-                var(--pk-alert-accent) 6%,
+                var(--pk-color-gray-300) 6%,
                 var(--pk-color-white)
             );
         }
@@ -564,19 +590,23 @@ var PkAlert = class PkAlert extends PkElement {
                         >
                             <summary part="details-summary">${this.detailsLabel}</summary>
                             <div part="details-content" class="details-content">
-                                <slot name="details"></slot>
-                                ${this.copyable ? b`
-                                        <pk-copy-button
-                                            part="copy-button"
-                                            class="copy"
-                                            variant="transparent"
-                                            aria-label=${this.copyLabel}
-                                            .copiedLabel=${this.copiedLabel}
-                                            .value=${this.detailsValue}
-                                            @pk-copy=${this.handleCopySuccess}
-                                            @pk-copy-error=${this.handleCopyError}
-                                        ></pk-copy-button>
-                                    ` : A}
+                                <div class="details-scroll">
+                                    ${this.copyable ? b`
+                                            <div class="copy-overlay">
+                                                <pk-copy-button
+                                                    part="copy-button"
+                                                    class="copy"
+                                                    variant="transparent"
+                                                    aria-label=${this.copyLabel}
+                                                    .copiedLabel=${this.copiedLabel}
+                                                    .value=${this.detailsValue}
+                                                    @pk-copy=${this.handleCopySuccess}
+                                                    @pk-copy-error=${this.handleCopyError}
+                                                ></pk-copy-button>
+                                            </div>
+                                        ` : A}
+                                    <slot name="details"></slot>
+                                </div>
                             </div>
 
                             ${this.copyable ? b`

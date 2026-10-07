@@ -39,7 +39,7 @@ export type PkAlertSize = 'sm' | 'default' | 'lg';
  * @cssproperty --pk-alert-title-size - Heading font size.
  * @cssproperty --pk-alert-padding - Alert inner padding.
  * @cssproperty --pk-alert-radius - Alert corner radius.
- * @cssproperty --pk-alert-details-max-height - Maximum height of slotted `pre` details.
+ * @cssproperty --pk-alert-details-max-height - Maximum height of diagnostic details.
  *
  * @dependency pk-copy-button - Compact copy-details action.
  */

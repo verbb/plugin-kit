@@ -42,7 +42,6 @@ export const pkStatePanelStyles = css`
             --_pk-state-panel-copy-button-size: var(--pk-btn-height-xs);
             --_pk-state-panel-copy-icon-size: var(--pk-btn-icon-size-xs);
             --_pk-state-panel-copy-inset: 0.375rem;
-            --_pk-state-panel-copy-scrollbar-clearance: 1rem;
             --_pk-state-panel-copy-radius: var(--pk-radius-md);
             --_pk-state-panel-copy-status-size: 0.6875rem;
             --_pk-state-panel-actions-gap: 0.4375rem;
@@ -130,8 +129,8 @@ export const pkStatePanelStyles = css`
         }
 
         :host([variant='success']) {
-            --pk-state-panel-accent: var(--pk-color-emerald-600);
-            --pk-state-panel-icon-background: var(--pk-color-emerald-50);
+            --pk-state-panel-accent: var(--pk-color-teal-600);
+            --pk-state-panel-icon-background: var(--pk-color-teal-50);
         }
 
         :host([variant='warning']) {
@@ -240,6 +239,10 @@ export const pkStatePanelStyles = css`
             text-align: start;
         }
 
+        .details-scroll {
+            min-width: 0;
+        }
+
         .details-content ::slotted(pre) {
             box-sizing: border-box;
             max-height: var(
@@ -265,34 +268,60 @@ export const pkStatePanelStyles = css`
         }
 
         :host([copyable]) .details-content ::slotted(pre) {
-            scrollbar-gutter: stable;
+            max-height: none;
             padding-inline-end: calc(
                 var(--_pk-state-panel-details-pre-padding) +
                     var(--_pk-state-panel-copy-button-size) +
-                    var(--_pk-state-panel-copy-inset) +
-                    var(--_pk-state-panel-copy-scrollbar-clearance)
+                    var(--_pk-state-panel-copy-inset)
             );
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        :host([copyable]) .details-content {
+            overflow: hidden;
+            border: 1px solid var(--pk-color-gray-200);
+            border-radius: var(--_pk-state-panel-details-pre-radius);
+            background: var(--pk-color-white);
+        }
+
+        :host([copyable]) .details-scroll {
+            position: relative;
+            max-height: var(
+                --pk-state-panel-details-max-height,
+                var(--_pk-state-panel-details-max-height)
+            );
+            overflow: auto;
+        }
+
+        .copy-overlay {
+            position: sticky;
+            z-index: 1;
+            top: 0;
+            display: flex;
+            justify-content: flex-end;
+            height: 0;
+            pointer-events: none;
         }
 
         .copy {
-            position: absolute;
-            z-index: 1;
-            inset-block-start: var(--_pk-state-panel-copy-inset);
-            /* Keep the control clear of native scrollbars without changing its inset treatment. */
-            inset-inline-end: calc(
-                var(--_pk-state-panel-copy-inset) +
-                    var(--_pk-state-panel-copy-scrollbar-clearance)
-            );
+            flex: none;
+            margin-block-start: var(--_pk-state-panel-copy-inset);
+            margin-inline-end: var(--_pk-state-panel-copy-inset);
+            pointer-events: auto;
             --pk-btn-height-default: var(--_pk-state-panel-copy-button-size);
             --pk-btn-icon-size-default: var(--_pk-state-panel-copy-icon-size);
             --pk-btn-radius-default: var(--_pk-state-panel-copy-radius);
             --pk-copy-button-background: var(--pk-color-white);
             --pk-copy-button-border-color: transparent;
             --pk-copy-button-hover-border-color: transparent;
-            --pk-copy-button-color: var(--pk-state-panel-accent);
+            --pk-copy-button-color: var(--pk-color-gray-300);
+            --pk-copy-button-hover-color: var(--pk-color-gray-500);
             --pk-copy-button-hover-background: color-mix(
                 in srgb,
-                var(--pk-state-panel-accent) 6%,
+                var(--pk-color-gray-300) 6%,
                 var(--pk-color-white)
             );
         }

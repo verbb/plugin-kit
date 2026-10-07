@@ -38,7 +38,7 @@ export type PkStatePanelSize = 'sm' | 'default' | 'lg';
  * @cssproperty --pk-state-panel-content-width - Maximum content width.
  * @cssproperty --pk-state-panel-min-height - Minimum component height.
  * @cssproperty --pk-state-panel-padding - Component padding.
- * @cssproperty --pk-state-panel-details-max-height - Maximum height of slotted `pre` details.
+ * @cssproperty --pk-state-panel-details-max-height - Maximum height of diagnostic details.
  *
  * @dependency pk-copy-button - Compact copy-details action.
  */

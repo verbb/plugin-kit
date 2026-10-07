@@ -8,7 +8,7 @@
 - Add the `ErrorState` React utility for presenting normalized errors through the shared `StatePanel` component.
 
 ### Changed
-- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment with a subdued neutral colour inset within diagnostic details.
 - `AppErrorBoundary` now follows the canonical State Panel API with `heading` and a single `className`; the previous `title`, `containerClassName`, and `contentClassName` props are removed.
 
 ### Fixed
