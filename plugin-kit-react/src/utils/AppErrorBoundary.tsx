@@ -1,16 +1,20 @@
+import type { PkStatePanelSize } from '@verbb/plugin-kit-web/components/state-panel/pk-state-panel.js';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
-import { LargeErrorState } from './LargeErrorState.js';
+import { ErrorState } from './ErrorState.js';
 
 export type AppErrorBoundaryProps = {
     children: ReactNode;
     consoleLabel?: string;
-    title?: string;
+    heading?: string;
     message?: string;
     detailsLabel?: string;
+    copyLabel?: string;
+    copiedLabel?: string;
+    copyErrorLabel?: string;
     reloadLabel?: string;
-    containerClassName?: string;
-    contentClassName?: string;
+    size?: PkStatePanelSize;
+    className?: string;
 };
 
 type State = {
@@ -19,18 +23,16 @@ type State = {
 };
 
 /**
- * Class error boundary for full React CP apps. Renders {@link LargeErrorState}
- * on catch — the shared Formie / Navigation / CP Nav crash pattern.
+ * Class error boundary for full React CP apps. Renders {@link ErrorState} on catch.
  */
 export class AppErrorBoundary extends Component<AppErrorBoundaryProps, State> {
     state: State = { hasError: false, error: null };
 
-    static getDerivedStateFromError(): Partial<State> {
-        return { hasError: true };
+    static getDerivedStateFromError(error: Error): State {
+        return { hasError: true, error };
     }
 
     componentDidCatch(error: Error, info: ErrorInfo): void {
-        this.setState({ error });
         console.error(this.props.consoleLabel || 'React app crashed:', error, info);
     }
 
@@ -40,26 +42,32 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, State> {
         }
 
         const {
-            title,
+            heading,
             message,
             detailsLabel,
+            copyLabel,
+            copiedLabel,
+            copyErrorLabel,
             reloadLabel,
-            containerClassName = 'flex flex-1 items-center justify-center py-12',
-            contentClassName = 'flex flex-col items-center justify-center text-center',
+            size,
+            className,
         } = this.props;
 
         return (
-            <LargeErrorState
+            <ErrorState
                 error={this.state.error}
-                title={title}
+                heading={heading}
                 message={message}
                 detailsLabel={detailsLabel}
+                copyLabel={copyLabel}
+                copiedLabel={copiedLabel}
+                copyErrorLabel={copyErrorLabel}
                 actionLabel={reloadLabel}
+                size={size}
                 onAction={() => {
                     window.location.reload();
                 }}
-                containerClassName={containerClassName}
-                contentClassName={contentClassName}
+                className={className}
             />
         );
     }

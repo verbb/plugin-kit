@@ -1,0 +1,1 @@
+{"version":3,"file":"StatePanel.d.ts","sourceRoot":"","sources":["../../src/components/StatePanel.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAC1B,OAAO,EAAE,YAAY,EAAE,MAAM,gEAAgE,CAAC;AAI9F,4FAA4F;AAC5F,eAAO,MAAM,mBAAmB;;;EAQ9B,CAAC;AAEH,eAAO,MAAM,UAAU;;;EAAsB,CAAC;AAC9C,MAAM,MAAM,eAAe,GAAG,KAAK,CAAC,cAAc,CAAC,OAAO,mBAAmB,CAAC,CAAC"}

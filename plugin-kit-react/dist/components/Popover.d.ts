@@ -12,7 +12,7 @@ type PkPopoverElementProps = React.ComponentProps<typeof PkPopoverElement>;
  * React facade over `<pk-popover>`. Behavior and styles live in the web component.
  * Nested select/tooltip/popover `pk-open-change` is ignored — same as `Dialog`.
  */
-export declare const Popover: React.ForwardRefExoticComponent<Omit<Omit<React.HTMLAttributes<PkPopover>, "anchor" | "open" | "updated" | "render" | "connectedCallback" | "createRenderRoot" | "performUpdate" | "renderOptions" | "disconnectedCallback" | "renderRoot" | "isUpdatePending" | "hasUpdated" | "addController" | "removeController" | "attributeChangedCallback" | "requestUpdate" | "updateComplete" | "for" | "onPkShow" | "onPkAfterShow" | "onPkHide" | "onPkAfterHide" | "onPkOpenChange" | "placement" | "sideOffset" | "flush" | "withArrow" | "willUpdate" | "closePopover"> & {
+export declare const Popover: React.ForwardRefExoticComponent<Omit<Omit<React.HTMLAttributes<PkPopover>, "anchor" | "open" | "disconnectedCallback" | "render" | "connectedCallback" | "createRenderRoot" | "performUpdate" | "renderOptions" | "renderRoot" | "isUpdatePending" | "hasUpdated" | "addController" | "removeController" | "attributeChangedCallback" | "requestUpdate" | "updateComplete" | "updated" | "for" | "onPkShow" | "onPkAfterShow" | "onPkHide" | "onPkAfterHide" | "onPkOpenChange" | "placement" | "sideOffset" | "flush" | "withArrow" | "willUpdate" | "closePopover"> & {
     onPkShow?: ((e: Event) => void) | undefined;
     onPkAfterShow?: ((e: Event) => void) | undefined;
     onPkHide?: ((e: Event) => void) | undefined;

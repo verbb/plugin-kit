@@ -7,6 +7,5 @@ export { getPortalClassName, getPortalContainer, getPortalMountNode, getPortalTa
 export { getHostBridge, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, setHostBridge, type HostElementSelectorOptions, type HostRequestConfig, type HostRequestMethod, type HostSelectedElement, type PluginKitHostBridge, } from '@verbb/plugin-kit-core';
 export { setTranslateFunction, setTranslationCategory, translate, type TranslateParams, } from '@verbb/plugin-kit-forms';
 export { AppErrorBoundary, type AppErrorBoundaryProps } from './AppErrorBoundary.js';
-export { LargeErrorState, type LargeErrorStateProps } from './LargeErrorState.js';
-export { StatePanel, type StatePanelAction, type StatePanelProps, type StatePanelVariant, } from './StatePanel.js';
+export { ErrorState, type ErrorStateProps } from './ErrorState.js';
 //# sourceMappingURL=index.d.ts.map

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Added
+- Add the `Alert` facade for Plugin Kit's shared semantic alert component, including variants, visual appearances, small, default, and large sizes, dismissal, actions, and diagnostic details.
+- Add the `StatePanel` facade for shared empty and replacement states, including small, default, and large sizes.
+
+### Changed
+- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+
 ## 2.0.22 - 2026-09-29
 
 ### Changed

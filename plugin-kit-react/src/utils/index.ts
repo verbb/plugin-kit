@@ -53,10 +53,4 @@ export {
 } from '@verbb/plugin-kit-forms';
 
 export { AppErrorBoundary, type AppErrorBoundaryProps } from './AppErrorBoundary.js';
-export { LargeErrorState, type LargeErrorStateProps } from './LargeErrorState.js';
-export {
-    StatePanel,
-    type StatePanelAction,
-    type StatePanelProps,
-    type StatePanelVariant,
-} from './StatePanel.js';
+export { ErrorState, type ErrorStateProps } from './ErrorState.js';

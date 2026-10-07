@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Added
+- Add the `Alert` facade for Plugin Kit's shared semantic alert component, including variants, visual appearances, small, default, and large sizes, dismissal, actions, and diagnostic details.
+- Add the `StatePanel` facade for shared empty and replacement states, including small, default, and large sizes.
+- Add the `ErrorState` React utility for presenting normalized errors through the shared `StatePanel` component.
+
+### Changed
+- `CopyButton` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
+- `AppErrorBoundary` now follows the canonical State Panel API with `heading` and a single `className`; the previous `title`, `containerClassName`, and `contentClassName` props are removed.
+
+### Fixed
+- Fixed `AppErrorBoundary` exposing technical exception messages instead of supplied user-facing copy, and moved its collapsed, copyable error details onto the shared `StatePanel` component.
+
+### Removed
+- Removed the React-only `LargeErrorState` and legacy `utils/StatePanel` APIs. Use `ErrorState` from `@verbb/plugin-kit-react/utils` for normalized errors and `StatePanel` from `@verbb/plugin-kit-react/components` for general replacement states.
+
 ## 2.0.22 - 2026-09-29
 
 ### Changed

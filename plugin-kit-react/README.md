@@ -59,7 +59,7 @@ Keep a document-level `style.css` (or `plugin-kit.css`) import for FOUCE before 
 
 ### Icons
 
-`<Icon icon="…">` uses an opt-in registry — register named glyphs, or import `@verbb/plugin-kit-icons/all.js` for the full set:
+`<Icon icon="…">` uses an opt-in registry — register named glyphs, or import `@verbb/plugin-kit-icons/all.js` for the full set. Components with built-in semantic icons, such as `Alert` and `StatePanel`, render those defaults without registry setup:
 
 ```ts
 import { registerIcons, plus, gear } from '@verbb/plugin-kit-icons';
@@ -94,7 +94,7 @@ import { CheckboxInput, RadioGroupInput, SelectInput } from '@verbb/plugin-kit-r
 | `@verbb/plugin-kit-react` | Provider + common re-exports |
 | `@verbb/plugin-kit-react/components` | UI facades (`Button`, TipTap, EditableTable, …) |
 | `@verbb/plugin-kit-react/forms` | SchemaForm UI + registry (engine in `@verbb/plugin-kit-forms`) |
-| `@verbb/plugin-kit-react/utils` | `mountShadowApp`, `createCraftHostBridge`, `configure`, `cn`, `AppErrorBoundary`, `LargeErrorState`, `StatePanel` |
+| `@verbb/plugin-kit-react/utils` | `mountShadowApp`, `createCraftHostBridge`, `configure`, `cn`, `AppErrorBoundary`, `ErrorState` |
 | `@verbb/plugin-kit-react/hooks` | `useTranslation` |
 | `@verbb/plugin-kit-react/app` | Provider / configure (parity with Vue `/app`) |
 | `@verbb/plugin-kit-react/style.css` | Tokens + FOUCE + overlay styles |
