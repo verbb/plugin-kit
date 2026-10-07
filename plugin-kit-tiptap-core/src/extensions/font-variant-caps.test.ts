@@ -44,7 +44,7 @@ describe('FontVariantCaps', () => {
             text: 'NASA',
         });
         expect(editor.getHTML()).toBe(
-            '<p style="text-align: start;"><span style="font-variant-caps: small-caps;">NASA</span></p>',
+            '<p><span style="font-variant-caps: small-caps;">NASA</span></p>',
         );
     });
 
@@ -69,8 +69,43 @@ describe('FontVariantCaps', () => {
             },
         }]);
         expect(editor.getHTML()).toBe(
-            '<p style="text-align: start;"><span style="color: red;">NASA</span></p>',
+            '<p><span style="color: red;">NASA</span></p>',
         );
+    });
+
+    it('omits the default logical alignment while preserving explicit alignment', () => {
+        const editor = createEditor('<p>Aligned</p>');
+
+        expect(editor.getJSON().content?.[0]?.attrs).toEqual({ textAlign: 'start' });
+        expect(editor.getHTML()).toBe('<p>Aligned</p>');
+
+        editor.commands.selectAll();
+        expect(editor.commands.setTextAlign('right')).toBe(true);
+        expect(editor.getHTML()).toBe('<p style="text-align: right;">Aligned</p>');
+    });
+
+    it('does not render extra CSS declarations from stored text styles', () => {
+        const editor = new Editor({
+            extensions: createTiptapExtensions({ includeVariableTag: false }),
+            content: {
+                type: 'doc',
+                content: [{
+                    type: 'paragraph',
+                    content: [{
+                        type: 'text',
+                        text: 'Safe',
+                        marks: [{
+                            type: 'textStyle',
+                            attrs: { color: 'red; position: fixed' },
+                        }],
+                    }],
+                }],
+            },
+        });
+
+        editors.push(editor);
+        expect(editor.getHTML()).not.toContain('position');
+        expect(editor.getHTML()).not.toContain('color: red');
     });
 
     it('round-trips the official TextStyle extensions alongside small caps', () => {

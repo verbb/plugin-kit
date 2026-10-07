@@ -24,8 +24,5 @@
         "docs:dev": "npm run docs:dev -w @verbb/plugin-kit-docs",
         "docs:build": "npm run docs:build -w @verbb/plugin-kit-docs",
         "release:publish-prepared": "node ./scripts/publish-prepared.mjs"
-    },
-    "devDependencies": {
-        "concurrently": "^9.2.4"
     }
 }
