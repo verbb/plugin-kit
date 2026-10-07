@@ -32,6 +32,8 @@ export declare const code: PkIcon;
 export declare const copy: PkIcon;
 export declare const download: PkIcon;
 export declare const ellipsis: PkIcon;
+/** Empty-set symbol for empty or unavailable content states. */
+export declare const emptySet: PkIcon;
 export declare const eye: PkIcon;
 export declare const fileDashedLine: PkIcon;
 export declare const flagCheckered: PkIcon;
@@ -118,6 +120,7 @@ export declare const icons: {
     readonly download: PkIcon;
     readonly ellipsis: PkIcon;
     readonly ellipsisVertical: PkIcon;
+    readonly emptySet: PkIcon;
     readonly eye: PkIcon;
     readonly fileDashedLine: PkIcon;
     readonly flagCheckered: PkIcon;

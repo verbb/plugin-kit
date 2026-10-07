@@ -164,6 +164,12 @@ var ellipsis = {
 	height: 512,
 	path: "M0 256a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm168 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm224-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
 };
+/** Empty-set symbol for empty or unavailable content states. */
+var emptySet = {
+	width: 512,
+	height: 512,
+	path: "M502.6 54.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L413 53.8C369.6 20.1 315.2 0 256 0 114.6 0 0 114.6 0 256 0 315.2 20.1 369.6 53.8 413L9.4 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L99 458.2c43.3 33.7 97.8 53.8 157 53.8 141.4 0 256-114.6 256-256 0-59.2-20.1-113.6-53.8-157l44.4-44.4zM367.2 99.5L99.5 367.2C77.1 335.9 64 297.5 64 256 64 150 150 64 256 64 297.5 64 335.9 77.1 367.2 99.5zm-222.5 313L412.5 144.8c22.4 31.4 35.5 69.8 35.5 111.2 0 106-86 192-192 192-41.5 0-79.9-13.1-111.2-35.5z"
+};
 var eye = {
 	width: 576,
 	height: 512,
@@ -430,6 +436,7 @@ var icons = {
 	download,
 	ellipsis,
 	ellipsisVertical,
+	emptySet,
 	eye,
 	fileDashedLine,
 	flagCheckered,
@@ -476,6 +483,6 @@ var icons = {
 	xmark
 };
 //#endregion
-export { alignCenter, alignJustify, alignLeft, alignRight, arrowDown, arrowLeft, arrowRight, arrowRotateLeft, arrowRotateRight, arrowUp, arrowUpRightFromSquare, arrowsRotate, asterisk, bold, bracketsCurly, calendar, caretDown, caretUp, check, chevronDown, chevronLeft, chevronRight, chevronUp, circle, circleCheck, circleExclamation, circleInfo, circlePlus, clipboard, clock, clone, code, copy, download, ellipsis, ellipsisVertical, eye, fileDashedLine, flagCheckered, gear, gripDots, gripDotsVertical, gripMove, h1, h2, h3, h4, h5, h6, heading, highlighter, house, icons, italic, lightbulb, link, list, listOl, listUl, lock, magnifyingGlass, minus, paragraph, pen, penToSquare, plus, quoteRight, share, sliders, smallCaps, strikethrough, subscript, superscript, table, textSlash, trash, triangleExclamation, underline, xmark };
+export { alignCenter, alignJustify, alignLeft, alignRight, arrowDown, arrowLeft, arrowRight, arrowRotateLeft, arrowRotateRight, arrowUp, arrowUpRightFromSquare, arrowsRotate, asterisk, bold, bracketsCurly, calendar, caretDown, caretUp, check, chevronDown, chevronLeft, chevronRight, chevronUp, circle, circleCheck, circleExclamation, circleInfo, circlePlus, clipboard, clock, clone, code, copy, download, ellipsis, ellipsisVertical, emptySet, eye, fileDashedLine, flagCheckered, gear, gripDots, gripDotsVertical, gripMove, h1, h2, h3, h4, h5, h6, heading, highlighter, house, icons, italic, lightbulb, link, list, listOl, listUl, lock, magnifyingGlass, minus, paragraph, pen, penToSquare, plus, quoteRight, share, sliders, smallCaps, strikethrough, subscript, superscript, table, textSlash, trash, triangleExclamation, underline, xmark };
 
 //# sourceMappingURL=icons.js.map
