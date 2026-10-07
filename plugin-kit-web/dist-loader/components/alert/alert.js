@@ -48,6 +48,7 @@ var pkAlertStyles = i`
             --_pk-alert-copy-button-size: var(--pk-btn-height-xs);
             --_pk-alert-copy-icon-size: var(--pk-btn-icon-size-xs);
             --_pk-alert-copy-inset: 0.375rem;
+            --_pk-alert-copy-scrollbar-clearance: 1rem;
             --_pk-alert-copy-radius: var(--pk-radius-md);
             --_pk-alert-copy-status-size: 0.6875rem;
             --_pk-alert-action-height: var(--pk-btn-height-sm);
@@ -332,9 +333,11 @@ var pkAlertStyles = i`
         }
 
         :host([copyable]) .details-content ::slotted(pre) {
+            scrollbar-gutter: stable;
             padding-inline-end: calc(
                 var(--_pk-alert-details-pre-padding) + var(--_pk-alert-copy-button-size) +
-                    var(--_pk-alert-copy-inset)
+                    var(--_pk-alert-copy-inset) +
+                    var(--_pk-alert-copy-scrollbar-clearance)
             );
         }
 
@@ -342,7 +345,11 @@ var pkAlertStyles = i`
             position: absolute;
             z-index: 1;
             inset-block-start: var(--_pk-alert-copy-inset);
-            inset-inline-end: var(--_pk-alert-copy-inset);
+            /* Keep the control clear of native scrollbars without changing its inset treatment. */
+            inset-inline-end: calc(
+                var(--_pk-alert-copy-inset) +
+                    var(--_pk-alert-copy-scrollbar-clearance)
+            );
             --pk-btn-height-default: var(--_pk-alert-copy-button-size);
             --pk-btn-icon-size-default: var(--_pk-alert-copy-icon-size);
             --pk-btn-radius-default: var(--_pk-alert-copy-radius);

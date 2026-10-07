@@ -9,6 +9,9 @@
 ### Changed
 - `<pk-copy-button>` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment inset within diagnostic details.
 
+### Fixed
+- Alert and State Panel copy-details controls no longer overlap native scrollbars in overflowing diagnostic content.
+
 ## 2.0.22 - 2026-09-29
 
 ### Fixed
