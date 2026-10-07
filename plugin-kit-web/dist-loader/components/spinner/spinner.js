@@ -1,2 +1,2 @@
-import { t as PkSpinner } from "../../chunks/pk-spinner-C7gqaDQ9.js";
+import { t as PkSpinner } from "../../chunks/pk-spinner-BmnrA60m.js";
 export { PkSpinner };

@@ -32,7 +32,6 @@ export declare class PkConnect extends LitElement {
     labelClose: string;
     private isDirty;
     private loading;
-    private showDetails;
     private unwatchDirty;
     private errorDialog;
     createRenderRoot(): HTMLElement | DocumentFragment;

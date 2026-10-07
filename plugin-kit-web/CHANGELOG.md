@@ -9,6 +9,7 @@
 ### Changed
 - `<pk-copy-button>` now supplies its own copy icon and configurable accessible success label, and Alert and State Panel use its compact copy-to-check treatment with a subdued neutral colour inset within diagnostic details.
 - Alert uses stronger semantic borders, while Alert and State Panel use the Craft-aligned teal palette for success states.
+- `<pk-connect>` now presents connection failures through the shared large State Panel, including collapsible and copyable diagnostic details.
 
 ### Fixed
 - Alert and State Panel copy-details controls now stay aligned inside diagnostic content without overlapping native scrollbars or reserving an empty action rail.

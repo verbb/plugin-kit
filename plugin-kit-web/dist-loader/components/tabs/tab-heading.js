@@ -1,5 +1,5 @@
-import { c as customElement, m as i, p as b } from "../../chunks/lit-BMrUz4Cb.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BMUw-18C.js";
+import { c as customElement, m as i, p as b } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
 //#region src/components/tabs/pk-tab-heading.styles.ts
 var pkTabHeadingStyles = i`
     @layer pk-component {

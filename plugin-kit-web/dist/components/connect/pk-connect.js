@@ -1,6 +1,7 @@
 import { i as property, o as state, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
 import "../../chunks/pk-button-DCtNLEPr.js";
 import "../icon/pk-icon.js";
+import "../../chunks/pk-state-panel-DPP7t-er.js";
 import "../../chunks/pk-status-CYcadu0Q.js";
 import "../../chunks/pk-dialog-CFU850OH.js";
 import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-ciqZMK3B.js";
@@ -35,7 +36,6 @@ var PkConnect = class PkConnect extends LitElement {
 		this.labelClose = "Close";
 		this.isDirty = false;
 		this.loading = false;
-		this.showDetails = false;
 		this.unwatchDirty = null;
 		this.errorDialog = null;
 	}
@@ -103,7 +103,6 @@ var PkConnect = class PkConnect extends LitElement {
 	}
 	setModalOpen(open) {
 		this.fieldHost?.classList.toggle("pk-connect-field--modal-open", open);
-		if (!open) this.showDetails = false;
 	}
 	ensureErrorDialog() {
 		if (this.errorDialog) return this.errorDialog;
@@ -114,60 +113,39 @@ var PkConnect = class PkConnect extends LitElement {
 			`<pk-button slot="trigger" type="button" variant="none" size="none" icon class="pk-connect-dialog__close" data-dialog="close" aria-label="${escapeCpHtml(this.labelClose)}">`,
 			"<pk-icon icon=\"xmark\"></pk-icon>",
 			"</pk-button>",
-			"<div class=\"pk-connection-error\">",
-			"<div class=\"pk-connection-error__stack\">",
-			"<div class=\"pk-connection-error__icon\"><pk-icon icon=\"triangle-exclamation\"></pk-icon></div>",
-			"<h3 class=\"pk-connection-error__heading\"></h3>",
-			"<p class=\"pk-connection-error__message\"></p>",
-			"<div class=\"pk-connection-error__details hidden\">",
-			"<button type=\"button\" class=\"pk-connection-error__details-toggle\">",
-			"<pk-icon icon=\"chevron-right\"></pk-icon>",
-			`<span class="pk-connection-error__details-label">${escapeCpHtml(this.labelShowDetails)}</span>`,
-			"</button>",
-			"<div class=\"pk-connection-error__trace hidden\"></div>",
-			"</div>",
-			"</div>",
+			"<div class=\"pk-connect-dialog__content\">",
+			"<pk-state-panel class=\"pk-connect-dialog__state\" variant=\"error\" size=\"lg\" announce=\"assertive\">",
+			"<span class=\"pk-connect-dialog__message\"></span>",
+			"</pk-state-panel>",
 			"</div>"
 		].join("");
 		document.body.appendChild(dialog);
-		const detailsToggle = dialog.querySelector(".pk-connection-error__details-toggle");
-		const traceEl = dialog.querySelector(".pk-connection-error__trace");
-		const detailsLabel = dialog.querySelector(".pk-connection-error__details-label");
-		dialog.querySelector(".pk-connection-error__details");
-		const chevron = dialog.querySelector("pk-icon");
-		detailsToggle?.addEventListener("click", () => {
-			this.showDetails = !this.showDetails;
-			traceEl?.classList.toggle("hidden", !this.showDetails);
-			chevron?.classList.toggle("is-open", this.showDetails);
-			if (detailsLabel) detailsLabel.textContent = this.showDetails ? this.labelHideDetails : this.labelShowDetails;
-		});
 		dialog.addEventListener("pk-open-change", (event) => {
 			const open = Boolean(event.detail?.open);
 			this.setModalOpen(open);
-			if (!open) {
-				traceEl?.classList.add("hidden");
-				chevron?.classList.remove("is-open");
-				if (detailsLabel) detailsLabel.textContent = this.labelShowDetails;
-			}
 		});
 		this.errorDialog = dialog;
 		return dialog;
 	}
 	showErrorModal(error) {
 		const dialog = this.ensureErrorDialog();
-		const heading = dialog.querySelector(".pk-connection-error__heading");
-		const message = dialog.querySelector(".pk-connection-error__message");
-		const detailsWrap = dialog.querySelector(".pk-connection-error__details");
-		const traceEl = dialog.querySelector(".pk-connection-error__trace");
-		if (heading) heading.textContent = error.heading || this.labelErrorHeading;
+		const statePanel = dialog.querySelector("pk-state-panel");
+		const message = dialog.querySelector(".pk-connect-dialog__message");
 		if (message) message.textContent = error.text || this.labelGenericError;
-		const trace = error.traceAsString || error.trace || "";
-		if (trace && detailsWrap && traceEl) {
-			detailsWrap.classList.remove("hidden");
-			traceEl.innerHTML = trace;
-			traceEl.classList.add("hidden");
-		} else detailsWrap?.classList.add("hidden");
-		this.showDetails = false;
+		const trace = error.traceAsArray.length > 0 ? error.traceAsArray.join("\n") : (error.traceAsString || error.trace || "").replace(/<br\s*\/?>/gi, "\n");
+		dialog.querySelector("[slot=\"details\"]")?.remove();
+		if (statePanel) {
+			statePanel.heading = error.heading || this.labelErrorHeading;
+			statePanel.detailsLabel = this.labelShowDetails;
+			statePanel.detailsOpen = false;
+			statePanel.copyable = Boolean(trace);
+			if (trace) {
+				const details = document.createElement("pre");
+				details.slot = "details";
+				details.textContent = trace;
+				statePanel.appendChild(details);
+			}
+		}
 		dialog.open = true;
 		this.setModalOpen(true);
 	}
@@ -251,7 +229,6 @@ __decorate([property({ attribute: "label-hide-details" })], PkConnect.prototype,
 __decorate([property({ attribute: "label-close" })], PkConnect.prototype, "labelClose", void 0);
 __decorate([state()], PkConnect.prototype, "isDirty", void 0);
 __decorate([state()], PkConnect.prototype, "loading", void 0);
-__decorate([state()], PkConnect.prototype, "showDetails", void 0);
 PkConnect = __decorate([customElement("pk-connect")], PkConnect);
 //#endregion
 export { PkConnect };

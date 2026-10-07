@@ -1,18 +1,18 @@
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { a as e$1, c as customElement, f as A, i as e, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-BMrUz4Cb.js";
-import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-BMUw-18C.js";
-import { tt as xmark } from "../../chunks/svg-D9hLZeTK.js";
-import { n as renderIconHtml } from "../../chunks/render-Dl4L6iwi.js";
+import { a as e$1, c as customElement, f as A, i as e, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
+import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-Om6X9ab5.js";
+import { tt as xmark } from "../../chunks/svg-C6YcJMk9.js";
+import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
 import { t as HasSlotController } from "../../chunks/has-slot-BvdEcnpm.js";
-import { t as MirrorValidator } from "../../chunks/mirror-validator-BZoyx7AK.js";
-import { t as PkClearEvent } from "../../chunks/pk-clear-FL0sxtcd.js";
-import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-D0pkTQyI.js";
-import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-D8yf2MIO.js";
-import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-D6YUmJ0t.js";
-import "../../chunks/pk-popup-BIp67z62.js";
-import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "../../chunks/popup-pointer-CQLA4u6o.js";
-import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS } from "../../chunks/sync-listbox-separators-B5TgTRJK.js";
-import { i as waitForPopupContentExitAnimation, n as AsyncOptionFetcher, r as syncFilteredOptions, t as matchesOptionFilter } from "../../chunks/option-filter-CcFqaWfQ.js";
+import { t as MirrorValidator } from "../../chunks/mirror-validator-9X0wdFnh.js";
+import { t as PkClearEvent } from "../../chunks/pk-clear-BL8m1NyC.js";
+import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-CSIBJZgQ.js";
+import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-BQdKabXq.js";
+import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-CWR2mend.js";
+import "../../chunks/pk-popup-BrLT_4kD.js";
+import { n as isPointerInsideOverlay, t as isEventInsideOverlay } from "../../chunks/popup-pointer-BNwlPGKA.js";
+import { a as isListboxTypeToSelectKey, i as handleListboxKeyDown, n as LISTBOX_NAVIGATION_KEYS } from "../../chunks/sync-listbox-separators-rbu8jrAa.js";
+import { i as waitForPopupContentExitAnimation, n as AsyncOptionFetcher, r as syncFilteredOptions, t as matchesOptionFilter } from "../../chunks/option-filter-DH11hDpV.js";
 //#region src/components/autocomplete/pk-autocomplete.styles.ts
 /**
 * Autocomplete chrome matches `pk-input` (text field), not Combobox’s slate

@@ -12563,15 +12563,6 @@
             },
             {
               "kind": "field",
-              "name": "showDetails",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
               "name": "unwatchDirty",
               "type": {
                 "text": "(() => void) | null"

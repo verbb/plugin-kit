@@ -16,16 +16,15 @@ import { PkConnect } from '../components/connect/pk-connect.js';
 import { PkConnectOauth } from '../components/connect/pk-connect-oauth.js';
 import { PkDialog } from '../components/dialog/pk-dialog.js';
 import { PkIcon } from '../components/icon/pk-icon.js';
+import { PkStatePanel } from '../components/state-panel/pk-state-panel.js';
 import { PkStatus } from '../components/status/pk-status.js';
 
 import {
-    chevronRight,
     registerIcons,
-    triangleExclamation,
     xmark,
 } from '@verbb/plugin-kit-icons';
 
-const CP_CONNECT_CTORS = [PkButton, PkConnect, PkConnectOauth, PkDialog, PkIcon, PkStatus] as const;
+const CP_CONNECT_CTORS = [PkButton, PkConnect, PkConnectOauth, PkDialog, PkIcon, PkStatePanel, PkStatus] as const;
 
 const CP_CONNECT_TAGS = [
     'pk-icon',
@@ -33,14 +32,13 @@ const CP_CONNECT_TAGS = [
     'pk-connect',
     'pk-connect-oauth',
     'pk-dialog',
+    'pk-state-panel',
     'pk-status',
 ] as const;
 
 /** Register connect row WCs + CSS for Craft CP source/integration edit screens. */
 export async function registerCpConnectKit(): Promise<void> {
     registerIcons({
-        chevronRight,
-        triangleExclamation,
         xmark,
     });
 
