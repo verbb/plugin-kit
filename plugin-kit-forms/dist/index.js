@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 	}
 	return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", {
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule || !__hasOwnProp.call(mod, "default") ? __defProp(target, "default", {
 	value: mod,
 	enumerable: true
 }) : target, mod));
@@ -1148,7 +1148,7 @@ var require_PromiseSync = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	var _interopRequireDefault = require_interopRequireDefault();
 	var _classCallCheck2 = _interopRequireDefault(require_classCallCheck());
 	var _createClass2 = _interopRequireDefault(require_createClass());
-	var PromiseSync = /* @__PURE__ */ function() {
+	var PromiseSync = /*#__PURE__*/ function() {
 		function PromiseSync(fn) {
 			(0, _classCallCheck2.default)(this, PromiseSync);
 			fn(this._resolve.bind(this), this._reject.bind(this));
@@ -1187,9 +1187,10 @@ var require_PromiseSync = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			{
 				key: "_resolve",
 				value: function _resolve(val) {
-					if (val instanceof PromiseSync) if (val.error) this._reject(val.error);
-					else this._resolve(val.value);
-					else {
+					if (val instanceof PromiseSync) {
+						if (val.error) this._reject(val.error);
+						else this._resolve(val.value);
+					} else {
 						this.value = val;
 						this.error = void 0;
 					}
@@ -1498,7 +1499,7 @@ var import_Jexl = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expor
 	* xpath-like drilldown into native Javascript objects.
 	* @constructor
 	*/
-	var Jexl = /* @__PURE__ */ function() {
+	var Jexl = /*#__PURE__*/ function() {
 		function Jexl() {
 			(0, _classCallCheck2.default)(this, Jexl);
 			this.expr = this.expr.bind(this);
@@ -1897,7 +1898,7 @@ var requiredRichTextRule = (value, label) => {
 };
 //#endregion
 //#region src/rules/requiredRules.ts
-var REQUIRED_RULE_NAMES = new Set(["required", "requiredRichText"]);
+var REQUIRED_RULE_NAMES = /* @__PURE__ */ new Set(["required", "requiredRichText"]);
 var isRequiredRuleName = (ruleName) => {
 	return REQUIRED_RULE_NAMES.has(ruleName);
 };

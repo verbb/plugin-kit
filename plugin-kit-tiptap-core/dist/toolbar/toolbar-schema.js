@@ -12,7 +12,7 @@ var PRESET_DEFAULT_ICONS = {
 	lists: "unordered-list",
 	align: "align-left"
 };
-var VALID_PRESETS = new Set([
+var VALID_PRESETS = /* @__PURE__ */ new Set([
 	"formatting",
 	"headings",
 	"lists",
@@ -28,7 +28,7 @@ function getToolbarGroupDefaultIcon(group) {
 	if (group.preset) return PRESET_DEFAULT_ICONS[group.preset];
 	return getToolbarGroupItems(group)[0] ?? "bold";
 }
-var SEPARATOR_TOKENS = new Set(["|", "separator"]);
+var SEPARATOR_TOKENS = /* @__PURE__ */ new Set(["|", "separator"]);
 function isToolbarSeparatorToken(value) {
 	return SEPARATOR_TOKENS.has(value);
 }

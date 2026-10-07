@@ -1,21 +1,597 @@
-import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-Om6X9ab5.js";
-import { $ as triangleExclamation, A as h2, B as link, E as fileDashedLine, F as heading, H as listUl, I as highlighter, J as strikethrough, K as quoteRight, M as h4, N as h5, P as h6, Q as textSlash, R as italic, S as code, U as minus, V as listOl, W as paragraph, X as superscript, Y as subscript, Z as table, a as alignRight, c as arrowRotateRight, d as bold, et as underline, f as bracketsCurly, h as chevronDown, i as alignLeft, j as h3, k as h1, n as alignCenter, q as smallCaps, r as alignJustify, s as arrowRotateLeft } from "../../chunks/svg-C6YcJMk9.js";
-import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
-import "../../chunks/pk-field-DzggayrX.js";
-import "../../chunks/pk-button-nSZxt8_B.js";
-import { t as MirrorValidator } from "../../chunks/mirror-validator-9X0wdFnh.js";
-import "../../chunks/pk-checkbox-CYUcOnco.js";
-import "../../chunks/pk-input-C1peOijH.js";
-import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-BhYH5Dva.js";
-import { A as resolveTiptapTextStyleToolbarConfig, D as getFatalTiptapContentError, N as getRegisteredTiptapToolbarControl, O as normalizeContentArray, S as openCraftElementLinkSelector, _ as getLinkOpenInNewTab, a as getToolbarGroupDefaultIcon, b as getCraftLinkOptions, c as isFormattingToolbarPreset, d as parseToolbarConfig, f as runToolbarButton, g as getLinkEditState, h as applyLinkToEditor, i as createVariableTagDomNodeView, j as createTiptapExtensions, k as valueToContent, l as isHeadingsOnlyToolbarPreset, m as isTiptapButtonActive, o as getToolbarGroupMenuItems, p as toolbarIncludesButton, r as tiptapProseMirrorStyles, s as getToolbarGroupTriggerState, u as isToolbarButtonActive, v as getSelectedText, x as getLinkOptionsElementSiteId, y as unsetLinkFromEditor } from "../../chunks/tiptap.styles-BckAim0_.js";
-import "../../chunks/pk-dialog-BWo6iDnY.js";
-import "../../chunks/pk-dropdown-item-CbujjI8U.js";
-import "../../chunks/pk-dropdown-label-9X4ctyES.js";
-import "../../chunks/pk-dropdown-menu-D1KpGuqU.js";
+import "../../chunks/pk-field-Pg61fxBR.js";
+import { n as uniqueId } from "../../chunks/pk-a11y-mGj0G5AE.js";
+import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BGegy7-X.js";
+import { $ as triangleExclamation, A as h2, B as link, E as fileDashedLine, F as heading, H as listUl, I as highlighter, J as strikethrough, K as quoteRight, M as h4, N as h5, P as h6, Q as textSlash, R as italic, S as code, U as minus, V as listOl, W as paragraph, X as superscript, Y as subscript, Z as table, a as alignRight, c as arrowRotateRight, d as bold, et as underline, f as bracketsCurly, h as chevronDown, i as alignLeft, j as h3, k as h1, n as alignCenter, q as smallCaps, r as alignJustify, s as arrowRotateLeft } from "../../chunks/svg-BRgqS9vA.js";
+import { n as renderIconHtml } from "../../chunks/render-D9G_a_c2.js";
+import "../../chunks/pk-button-DV9Tk5Pd.js";
+import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
+import "../../chunks/pk-checkbox-DhP0iMoP.js";
+import "../../chunks/pk-input-Cj5s8eBT.js";
+import { F as getMarkRange, n as getMarkRange$1, r as posToDOMRect, t as Editor } from "../../chunks/tiptap-uppXgD5k.js";
+import { a as resolveTiptapTextStyleToolbarConfig, c as getRegisteredTiptapToolbarControl, i as createVariableTagDomNodeView, l as isRegisteredTiptapToolbarControl, o as createTiptapExtensions, r as tiptapProseMirrorStyles } from "../../chunks/tiptap.styles-CyqI_Wrl.js";
+import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
+import "../../chunks/pk-dialog-BJs5fVHS.js";
+import "../../chunks/pk-dropdown-item-Bs5NZDRh.js";
+import "../../chunks/pk-dropdown-label-Cpl9-bzB.js";
+import "../../chunks/pk-dropdown-menu-CLrfuD3i.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-CqwQfOPV.js";
+import "../../chunks/pk-tooltip-DStkplzy.js";
+//#region ../plugin-kit-tiptap-core/dist/links/craft-element.js
+function isLinkOptionsArray(value) {
+	return Array.isArray(value) && value.length > 0;
+}
+function getCraftLinkOptions(linkOptions) {
+	if (!linkOptions) return [];
+	if (isLinkOptionsArray(linkOptions)) return linkOptions;
+	const items = [];
+	if (linkOptions.linkToEntry) items.push({
+		...linkOptions.linkToEntry,
+		optionTitle: "Link to an entry"
+	});
+	if (linkOptions.linkToAsset) items.push({
+		...linkOptions.linkToAsset,
+		optionTitle: "Link to an asset"
+	});
+	if (linkOptions.linkToCategory) items.push({
+		...linkOptions.linkToCategory,
+		optionTitle: "Link to a category"
+	});
+	return items;
+}
+function getLinkOptionsElementSiteId(linkOptions) {
+	if (!linkOptions || isLinkOptionsArray(linkOptions)) return;
+	return linkOptions.elementSiteId;
+}
+/**
+* Build a Craft element link URL with the standard ref fragment:
+* `https://example.com/page#refHandle:123@1`
+*/
+function buildCraftElementLinkUrl(element, refHandle) {
+	return `${element.url || ""}#${refHandle}:${element.id}@${element.siteId}`;
+}
+function buildCraftElementSelectorStorageKey(linkSelectorStorageKeyPrefix, elementType) {
+	return `${linkSelectorStorageKeyPrefix}.${elementType}`;
+}
+/** Open Craft's element selector modal and return a Plugin Kit link URL on selection. */
+function openCraftElementLinkSelector({ config, elementSiteId, linkSelectorStorageKeyPrefix, getSelectedText, onSelect, host }) {
+	if (!linkSelectorStorageKeyPrefix) throw new Error("Craft element links require \"linkSelectorStorageKeyPrefix\".");
+	host.openElementSelector(config.elementType, {
+		storageKey: buildCraftElementSelectorStorageKey(linkSelectorStorageKeyPrefix, config.elementType),
+		sources: config.sources,
+		criteria: config.criteria,
+		defaultSiteId: elementSiteId,
+		autoFocusSearchBox: false,
+		onSelect: (elements) => {
+			if (!elements?.length) return;
+			const [element] = elements;
+			onSelect({
+				url: buildCraftElementLinkUrl(element, config.refHandle),
+				text: getSelectedText() || element.label || ""
+			});
+		},
+		closeOtherModals: false
+	});
+}
+//#endregion
+//#region ../plugin-kit-tiptap-core/dist/links/commands.js
+function buildLinkMarkAttributes(url, openInNewTab) {
+	const linkAttrs = { href: url };
+	if (openInNewTab) linkAttrs.target = "_blank";
+	return linkAttrs;
+}
+function getSelectedText(editor) {
+	const { from, to } = editor.state.selection;
+	return editor.state.doc.textBetween(from, to, " ");
+}
+function getLinkOpenInNewTab(editor) {
+	return editor.isActive("link") && editor.getAttributes("link").target === "_blank";
+}
+function getLinkEditState(editor) {
+	const { href } = editor.getAttributes("link");
+	const { state } = editor;
+	const linkType = state.schema.marks.link;
+	const range = getMarkRange(state.selection.$from, linkType);
+	const from = range?.from ?? state.selection.from;
+	const to = range?.to ?? state.selection.to;
+	const text = editor.state.doc.textBetween(from, to, " ");
+	return {
+		from,
+		to,
+		href: href ?? "",
+		text,
+		openInNewTab: getLinkOpenInNewTab(editor)
+	};
+}
+function applyLinkToEditor(editor, params) {
+	const { url, text, openInNewTab, from: fromParam, to: toParam } = params;
+	const chain = editor.chain().focus();
+	const linkAttrs = buildLinkMarkAttributes(url, openInNewTab);
+	const content = {
+		type: "text",
+		text: text.trim() || url,
+		marks: [{
+			type: "link",
+			attrs: linkAttrs
+		}]
+	};
+	if (typeof fromParam === "number" && typeof toParam === "number" && fromParam !== toParam) {
+		chain.insertContentAt({
+			from: fromParam,
+			to: toParam
+		}, [content]).run();
+		return;
+	}
+	const { from, to } = editor.state.selection;
+	if (editor.state.doc.textBetween(from, to, " ")) {
+		chain.extendMarkRange("link").setLink(linkAttrs).run();
+		return;
+	}
+	chain.insertContent([content]).run();
+}
+function unsetLinkFromEditor(editor) {
+	editor.chain().focus().extendMarkRange("link").unsetLink().run();
+}
+//#endregion
+//#region ../plugin-kit-tiptap-core/dist/toolbar/button-registry.js
+var HEADING_LEVELS = [
+	1,
+	2,
+	3,
+	4,
+	5,
+	6
+];
+function isTiptapButtonName(value) {
+	if (isRegisteredTiptapToolbarControl(value)) return true;
+	if (HEADING_LEVELS.some((level) => value === `h${level}`)) return true;
+	return [
+		"bold",
+		"italic",
+		"underline",
+		"strikethrough",
+		"subscript",
+		"superscript",
+		"small-caps",
+		"font-family",
+		"font-size",
+		"text-color",
+		"line-height",
+		"unordered-list",
+		"ordered-list",
+		"blockquote",
+		"highlight",
+		"code",
+		"code-block",
+		"hr",
+		"line-break",
+		"align-left",
+		"align-center",
+		"align-right",
+		"align-justify",
+		"clear-format",
+		"undo",
+		"redo",
+		"link",
+		"table",
+		"variableTag"
+	].includes(value);
+}
+function isTiptapButtonActive(editor, buttonName) {
+	const registered = getRegisteredTiptapToolbarControl(buttonName);
+	if (registered) return registered.isActive?.(editor) ?? false;
+	if (!isTiptapButtonName(buttonName)) return false;
+	const headingMatch = buttonName.match(/^h([1-6])$/);
+	if (headingMatch) {
+		const level = Number(headingMatch[1]);
+		return editor.isActive("heading", { level });
+	}
+	switch (buttonName) {
+		case "bold": return editor.isActive("bold");
+		case "italic": return editor.isActive("italic");
+		case "underline": return editor.isActive("underline");
+		case "strikethrough": return editor.isActive("strike");
+		case "subscript": return editor.isActive("subscript");
+		case "superscript": return editor.isActive("superscript");
+		case "small-caps": return editor.isActive("textStyle", { fontVariantCaps: "small-caps" });
+		case "unordered-list": return editor.isActive("bulletList");
+		case "ordered-list": return editor.isActive("orderedList");
+		case "blockquote": return editor.isActive("blockquote");
+		case "highlight": return editor.isActive("highlight");
+		case "code": return editor.isActive("code");
+		case "code-block": return editor.isActive("codeBlock");
+		case "align-left": return editor.isActive({ textAlign: "left" });
+		case "align-center": return editor.isActive({ textAlign: "center" });
+		case "align-right": return editor.isActive({ textAlign: "right" });
+		case "align-justify": return editor.isActive({ textAlign: "justify" });
+		case "link": return editor.isActive("link");
+		case "variableTag": return editor.isActive("variableTag");
+		default: return false;
+	}
+}
+function runTiptapButton(editor, buttonName, options = {}) {
+	const registered = getRegisteredTiptapToolbarControl(buttonName);
+	if (registered) return registered.run(editor) !== false;
+	if (!isTiptapButtonName(buttonName)) return false;
+	const chain = editor.chain().focus();
+	const headingMatch = buttonName.match(/^h([1-6])$/);
+	if (headingMatch) {
+		const level = Number(headingMatch[1]);
+		return chain.toggleHeading({ level }).run();
+	}
+	switch (buttonName) {
+		case "bold": return chain.toggleBold().run();
+		case "italic": return chain.toggleItalic().run();
+		case "underline": return chain.toggleUnderline().run();
+		case "strikethrough": return chain.toggleStrike().run();
+		case "subscript": return chain.toggleSubscript().run();
+		case "superscript": return chain.toggleSuperscript().run();
+		case "small-caps": return chain.toggleSmallCaps().run();
+		case "unordered-list": return chain.toggleBulletList().run();
+		case "ordered-list": return chain.toggleOrderedList().run();
+		case "blockquote": return chain.toggleBlockquote().run();
+		case "highlight": return chain.toggleHighlight().run();
+		case "code": return chain.toggleCode().run();
+		case "code-block": return chain.toggleCodeBlock().run();
+		case "hr": return chain.setHorizontalRule().run();
+		case "line-break": return chain.setHardBreak().run();
+		case "align-left": return chain.setTextAlign("left").run();
+		case "align-center": return chain.setTextAlign("center").run();
+		case "align-right": return chain.setTextAlign("right").run();
+		case "align-justify": return chain.setTextAlign("justify").run();
+		case "clear-format": return chain.clearNodes().unsetAllMarks().run();
+		case "undo": return chain.undo().run();
+		case "redo": return chain.redo().run();
+		case "table": {
+			const tableOptions = options.tableOptions ?? {};
+			return chain.insertTable({
+				rows: tableOptions.rows ?? 3,
+				cols: tableOptions.cols ?? 3,
+				withHeaderRow: tableOptions.withHeaderRow ?? true
+			}).run();
+		}
+		case "link":
+		case "variableTag": return false;
+		default: return false;
+	}
+}
+//#endregion
+//#region ../plugin-kit-tiptap-core/dist/toolbar/toolbar-schema.js
+var DEFAULT_HEADING_LEVELS = [
+	1,
+	2,
+	3,
+	4
+];
+var PRESET_DEFAULT_ICONS = {
+	formatting: "paragraph",
+	headings: "heading",
+	lists: "unordered-list",
+	align: "align-left"
+};
+var VALID_PRESETS = /* @__PURE__ */ new Set([
+	"formatting",
+	"headings",
+	"lists",
+	"align"
+]);
+function isFormattingToolbarPreset(preset) {
+	return preset === "formatting";
+}
+function isHeadingsOnlyToolbarPreset(preset) {
+	return preset === "headings";
+}
+function getToolbarGroupDefaultIcon(group) {
+	if (group.preset) return PRESET_DEFAULT_ICONS[group.preset];
+	return getToolbarGroupItems(group)[0] ?? "bold";
+}
+var SEPARATOR_TOKENS = /* @__PURE__ */ new Set(["|", "separator"]);
+function isToolbarSeparatorToken(value) {
+	return SEPARATOR_TOKENS.has(value);
+}
+function expandPresetItems(group) {
+	if (group.items?.length) return group.items.filter((item) => typeof item === "string" && isTiptapButtonName(item));
+	switch (group.preset) {
+		case "formatting": return [
+			...(group.headingLevels ?? DEFAULT_HEADING_LEVELS).map((level) => `h${level}`),
+			"blockquote",
+			"code-block"
+		];
+		case "headings": return (group.headingLevels ?? DEFAULT_HEADING_LEVELS).map((level) => `h${level}`);
+		case "lists": return ["unordered-list", "ordered-list"];
+		case "align": return [
+			"align-left",
+			"align-center",
+			"align-right",
+			"align-justify"
+		];
+		default: return [];
+	}
+}
+function getToolbarGroupItems(group) {
+	return expandPresetItems(group);
+}
+function flattenToolbarButtonNames(nodes) {
+	const names = [];
+	nodes.forEach((node) => {
+		if (node.type === "button") {
+			names.push(node.name);
+			return;
+		}
+		if (node.type === "group") names.push(...getToolbarGroupItems(node.group));
+	});
+	return names;
+}
+function toolbarIncludesButton(nodes, buttonName) {
+	return flattenToolbarButtonNames(nodes).includes(buttonName);
+}
+function normalizeGroupItemDefinition(raw) {
+	if (typeof raw === "string") {
+		const token = raw.trim();
+		if (!token) return null;
+		if (isToolbarSeparatorToken(token)) return token;
+		if (token === "paragraph") return "paragraph";
+		return normalizeButtonName(token);
+	}
+	if (!raw || typeof raw !== "object") return null;
+	const record = raw;
+	if (record.type === "separator") return { type: "separator" };
+	if (record.type === "item" && typeof record.name === "string") {
+		if (record.name === "paragraph") return "paragraph";
+		return normalizeButtonName(record.name);
+	}
+	return null;
+}
+function normalizeGroupItemDefinitions(raw) {
+	return raw.map((item) => normalizeGroupItemDefinition(item)).filter((item) => item !== null);
+}
+function isGroupItemSeparator(item) {
+	return item === "|" || item === "separator" || typeof item === "object" && item.type === "separator";
+}
+function isToolbarGroupMenuButton(item) {
+	return !isGroupItemSeparator(item);
+}
+function groupItemDefinitionsToMenuEntries(items) {
+	return items.flatMap((item) => {
+		if (isGroupItemSeparator(item)) return [{ type: "separator" }];
+		if (!isToolbarGroupMenuButton(item)) return [];
+		return [{
+			type: "item",
+			name: item
+		}];
+	});
+}
+function getToolbarGroupMenuButtons(group) {
+	return getToolbarGroupMenuItems(group).filter((entry) => entry.type === "item").map((entry) => entry.name);
+}
+function normalizeButtonName(value) {
+	return isTiptapButtonName(value) ? value : null;
+}
+function normalizeHeadingLevels(value) {
+	if (!Array.isArray(value)) return;
+	const levels = value.map((level) => Number(level)).filter((level) => [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6
+	].includes(level));
+	return levels.length > 0 ? levels : void 0;
+}
+function normalizeToolbarGroup(raw) {
+	const source = typeof raw.group === "object" && raw.group !== null ? raw.group : raw;
+	const preset = typeof source.preset === "string" ? source.preset : void 0;
+	const label = typeof source.label === "string" ? source.label : void 0;
+	const iconRaw = typeof source.icon === "string" ? source.icon : void 0;
+	const icon = iconRaw ? normalizeButtonName(iconRaw) ?? void 0 : void 0;
+	const headingLevels = normalizeHeadingLevels(source.headingLevels);
+	const items = Array.isArray(source.items) ? normalizeGroupItemDefinitions(source.items) : void 0;
+	if (!preset && !items?.length) return null;
+	if (preset && !VALID_PRESETS.has(preset)) return null;
+	return {
+		type: "group",
+		group: {
+			...label ? { label } : {},
+			...icon ? { icon } : {},
+			...preset ? { preset } : {},
+			...items?.length ? { items } : {},
+			...headingLevels ? { headingLevels } : {}
+		}
+	};
+}
+function normalizeToolbarNode(raw) {
+	if (typeof raw === "string") {
+		const token = raw.trim();
+		if (!token) return null;
+		if (isToolbarSeparatorToken(token)) return { type: "separator" };
+		const buttonName = normalizeButtonName(token);
+		return buttonName ? {
+			type: "button",
+			name: buttonName
+		} : null;
+	}
+	if (!raw || typeof raw !== "object") return null;
+	const record = raw;
+	if (record.type === "separator") return { type: "separator" };
+	if (record.type === "button" && typeof record.name === "string") {
+		const buttonName = normalizeButtonName(record.name);
+		return buttonName ? {
+			type: "button",
+			name: buttonName
+		} : null;
+	}
+	if (record.type === "group" || record.preset || record.items || record.group) return normalizeToolbarGroup(record);
+	if (typeof record.button === "string") {
+		const buttonName = normalizeButtonName(record.button);
+		return buttonName ? {
+			type: "button",
+			name: buttonName
+		} : null;
+	}
+	return null;
+}
+function normalizeToolbarNodes(raw) {
+	return raw.map((item) => normalizeToolbarNode(item)).filter((item) => item !== null);
+}
+function parseToolbarConfig(input) {
+	if (input === null || input === void 0 || input === "") return [{
+		type: "button",
+		name: "bold"
+	}, {
+		type: "button",
+		name: "italic"
+	}];
+	if (Array.isArray(input)) {
+		const normalized = normalizeToolbarNodes(input);
+		return normalized.length > 0 ? normalized : [{
+			type: "button",
+			name: "bold"
+		}, {
+			type: "button",
+			name: "italic"
+		}];
+	}
+	if (typeof input === "string") {
+		const trimmed = input.trim();
+		if (!trimmed) return [{
+			type: "button",
+			name: "bold"
+		}, {
+			type: "button",
+			name: "italic"
+		}];
+		if (trimmed.startsWith("[")) try {
+			const parsed = JSON.parse(trimmed);
+			return Array.isArray(parsed) ? parseToolbarConfig(parsed) : parseToolbarConfig(null);
+		} catch {
+			return parseToolbarConfig(null);
+		}
+		return parseToolbarConfig(trimmed.split(",").map((token) => token.trim()).filter(Boolean));
+	}
+	return parseToolbarConfig(null);
+}
+function runToolbarButton(editor, buttonName, options = {}) {
+	if (buttonName === "paragraph") return editor.chain().focus().setParagraph().run();
+	return runTiptapButton(editor, buttonName, options);
+}
+function isToolbarButtonActive(editor, buttonName) {
+	if (buttonName === "paragraph") return editor.isActive("paragraph") && !editor.isActive("heading");
+	return isTiptapButtonActive(editor, buttonName);
+}
+function getActiveHeadingLevel(editor) {
+	for (const level of [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6
+	]) if (editor.isActive("heading", { level })) return level;
+	return null;
+}
+function getToolbarGroupTriggerState(editor, group) {
+	const fallbackIcon = group.icon ?? getToolbarGroupDefaultIcon(group);
+	const menuButtons = getToolbarGroupMenuButtons(group);
+	if (isHeadingsOnlyToolbarPreset(group.preset)) {
+		const activeLevel = getActiveHeadingLevel(editor);
+		if (activeLevel) {
+			const name = `h${activeLevel}`;
+			return {
+				activeName: name,
+				label: `H${activeLevel}`,
+				isActive: true,
+				icon: name
+			};
+		}
+		return {
+			activeName: null,
+			label: "",
+			isActive: false,
+			icon: "heading"
+		};
+	}
+	if (isFormattingToolbarPreset(group.preset)) {
+		const activeLevel = getActiveHeadingLevel(editor);
+		if (activeLevel) {
+			const name = `h${activeLevel}`;
+			return {
+				activeName: name,
+				label: `H${activeLevel}`,
+				isActive: true,
+				icon: name
+			};
+		}
+		if (isToolbarButtonActive(editor, "blockquote")) return {
+			activeName: "blockquote",
+			label: "",
+			isActive: true,
+			icon: "blockquote"
+		};
+		if (isToolbarButtonActive(editor, "code-block")) return {
+			activeName: "code-block",
+			label: "",
+			isActive: true,
+			icon: "code-block"
+		};
+		return {
+			activeName: "paragraph",
+			label: "Text",
+			isActive: isToolbarButtonActive(editor, "paragraph"),
+			icon: "paragraph"
+		};
+	}
+	const activeName = menuButtons.find((name) => isToolbarButtonActive(editor, name)) ?? null;
+	if (activeName) {
+		const icon = activeName === "paragraph" ? "paragraph" : isTiptapButtonName(activeName) ? activeName : fallbackIcon;
+		return {
+			activeName: activeName === "paragraph" ? "paragraph" : activeName,
+			label: activeName === "paragraph" ? "Text" : group.label ?? activeName,
+			isActive: true,
+			icon
+		};
+	}
+	return {
+		activeName: null,
+		label: group.label ?? "",
+		isActive: false,
+		icon: fallbackIcon
+	};
+}
+function getFormattingHeadingLevels(group) {
+	return group.headingLevels ?? DEFAULT_HEADING_LEVELS;
+}
+function getFormattingMenuEntries(group) {
+	return [
+		{
+			type: "item",
+			name: "paragraph"
+		},
+		{ type: "separator" },
+		...getFormattingHeadingLevels(group).map((level) => ({
+			type: "item",
+			name: `h${level}`
+		})),
+		{ type: "separator" },
+		{
+			type: "item",
+			name: "blockquote"
+		},
+		{
+			type: "item",
+			name: "code-block"
+		}
+	];
+}
+function getToolbarGroupMenuItems(group) {
+	if (group.items?.length) return groupItemDefinitionsToMenuEntries(group.items);
+	if (isFormattingToolbarPreset(group.preset)) return getFormattingMenuEntries(group);
+	return getToolbarGroupItems(group).map((name) => ({
+		type: "item",
+		name
+	}));
+}
+//#endregion
 //#region src/components/tiptap/tiptap-editor-host.ts
 function serializeTiptapDocumentContent(content) {
 	return JSON.stringify(normalizeContentArray(content));
@@ -795,7 +1371,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 			return;
 		}
 		const linkType = editor.state.schema.marks.link;
-		const range = getMarkRange(editor.state.selection.$from, linkType);
+		const range = getMarkRange$1(editor.state.selection.$from, linkType);
 		if (!range) {
 			this.linkBubbleVisible = false;
 			return;
@@ -1037,9 +1613,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 			case "backgroundColor":
 				value ? chain.setBackgroundColor(value).run() : chain.unsetBackgroundColor().run();
 				break;
-			case "lineHeight":
-				value ? chain.setLineHeight(value).run() : chain.unsetLineHeight().run();
-				break;
+			case "lineHeight": value ? chain.setLineHeight(value).run() : chain.unsetLineHeight().run();
 		}
 	}
 	getTextStyleOptionLabel(options, value) {

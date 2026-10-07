@@ -21,7 +21,9 @@ function optionalBoolean(name, value) {
 }
 function cellHasError(cellErrors, fieldName, rowIndex, columnName) {
 	if (!cellErrors) return false;
-	const errors = (fieldName ? cellErrors[`${fieldName}.${rowIndex}.${columnName}`] : void 0) ?? cellErrors[`${rowIndex}.${columnName}`];
+	const prefixed = fieldName ? cellErrors[`${fieldName}.${rowIndex}.${columnName}`] : void 0;
+	const bare = cellErrors[`${rowIndex}.${columnName}`];
+	const errors = prefixed ?? bare;
 	if (!errors) return false;
 	return Array.isArray(errors) ? errors.length > 0 : Boolean(errors);
 }

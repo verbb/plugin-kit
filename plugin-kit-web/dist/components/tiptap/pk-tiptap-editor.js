@@ -1,2 +1,2 @@
-import { t as PkTiptapEditor } from "../../chunks/pk-tiptap-editor-BeuyzH5l.js";
+import { t as PkTiptapEditor } from "../../chunks/pk-tiptap-editor-y_QyNSR-.js";
 export { PkTiptapEditor };

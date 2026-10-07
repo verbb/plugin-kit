@@ -61,7 +61,8 @@ var SchemaItem = memo(({ field, children }) => {
 		if (!form?.store?.subscribe) return;
 		return form.store.subscribe(() => {
 			const { values } = form.store.state;
-			setShouldShow(resolveVisibility(values));
+			const isVisible = resolveVisibility(values);
+			setShouldShow(isVisible);
 		});
 	}, [
 		field.if,
@@ -181,7 +182,8 @@ var normalizeServerErrors = (rawErrors) => {
 		}
 		if (!node || typeof node !== "object") return;
 		Object.entries(node).forEach(([key, value]) => {
-			collectErrors(value, path ? `${path}.${key}` : key);
+			const nextPath = path ? `${path}.${key}` : key;
+			collectErrors(value, nextPath);
 		});
 	};
 	if (Array.isArray(rawErrors)) {
@@ -196,9 +198,10 @@ var normalizeServerErrors = (rawErrors) => {
 	return normalized;
 };
 var useStoreSelector = (store, selector, fallbackValue) => {
-	return useSyncExternalStore(store ? store.subscribe.bind(store) : (() => {
+	const subscribe = store ? store.subscribe.bind(store) : (() => {
 		return () => {};
-	}), () => {
+	});
+	return useSyncExternalStore(subscribe, () => {
 		return store ? selector(store.state) : fallbackValue;
 	}, () => {
 		return store ? selector(store.state) : fallbackValue;
@@ -318,7 +321,7 @@ var useSchemaFormEngine = ({ schemaIndex = null, defaultValues = {}, errors, onC
 				groupedMessages.push(String(message));
 			});
 		});
-		return Array.from(new Set([...rootErrors, ...groupedMessages]));
+		return Array.from(/* @__PURE__ */ new Set([...rootErrors, ...groupedMessages]));
 	};
 	const handleSubmit = async () => {
 		const errorsMap = validationEngine.validate(store.state.values)?.fields || {};

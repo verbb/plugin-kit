@@ -1,5 +1,5 @@
 //#region src/registry.ts
-var CORE_EXTENSION_NAMES = new Set([
+var CORE_EXTENSION_NAMES = /* @__PURE__ */ new Set([
 	"backgroundColor",
 	"blockquote",
 	"bold",
@@ -40,7 +40,7 @@ var CORE_EXTENSION_NAMES = new Set([
 	"undoRedo",
 	"variableTag"
 ]);
-var STOCK_TOOLBAR_CONTROL_IDS = new Set([
+var STOCK_TOOLBAR_CONTROL_IDS = /* @__PURE__ */ new Set([
 	"bold",
 	"italic",
 	"underline",

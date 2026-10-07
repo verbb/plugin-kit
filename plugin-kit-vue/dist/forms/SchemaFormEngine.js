@@ -34,7 +34,8 @@ var normalizeServerErrors = (rawErrors) => {
 		}
 		if (!isRecord(node)) return;
 		Object.entries(node).forEach(([key, value]) => {
-			collectErrors(value, path ? `${path}.${key}` : key);
+			const nextPath = path ? `${path}.${key}` : key;
+			collectErrors(value, nextPath);
 		});
 	};
 	if (Array.isArray(rawErrors)) {
@@ -98,8 +99,9 @@ var buildConditionData = (form, field, values) => {
 	};
 };
 var renderSchemaItem = (schemaItem, index, form) => {
+	const key = typeof schemaItem._id === "string" ? schemaItem._id : `schema-item-${index}`;
 	return h(SchemaItem, {
-		key: typeof schemaItem._id === "string" ? schemaItem._id : `schema-item-${index}`,
+		key,
 		field: schemaItem,
 		form
 	}, { default: () => h(SchemaRenderer, { schema: schemaItem }) });
@@ -163,7 +165,8 @@ var SchemaItem = defineComponent({
 			shouldShow.value = resolveVisibility(props.form.store.state.values);
 		};
 		update();
-		onBeforeUnmount(props.form.store.subscribe(update));
+		const unsubscribe = props.form.store.subscribe(update);
+		onBeforeUnmount(unsubscribe);
 		return () => {
 			if (!shouldShow.value) return props.field.hideOnIf ? h("div", { style: { display: "none" } }, slots.default?.()) : null;
 			return slots.default?.();
@@ -253,7 +256,7 @@ var useSchemaFormEngine = ({ schemaIndex = null, defaultValues = {}, errors, onC
 				groupedMessages.push(String(message));
 			});
 		});
-		return Array.from(new Set([...rootErrors, ...groupedMessages]));
+		return Array.from(/* @__PURE__ */ new Set([...rootErrors, ...groupedMessages]));
 	};
 	const handleSubmit = async () => {
 		const errorsMap = validationEngine.validate(store.state.values)?.fields || {};
@@ -304,9 +307,10 @@ var useSchemaFormEngine = ({ schemaIndex = null, defaultValues = {}, errors, onC
 		getConditionContext: (values, field) => getConditionContext?.(values, field) || {}
 	};
 	formRef.value = form;
-	onBeforeUnmount(store.subscribe(() => {
+	const unsubscribeChange = store.subscribe(() => {
 		onChangeHandler?.(store.state.values);
-	}));
+	});
+	onBeforeUnmount(unsubscribeChange);
 	const normalized = normalizeServerErrors(errors);
 	if (Object.keys(normalized).length) store.setErrors(normalized);
 	if (parentForm && parentPath) {

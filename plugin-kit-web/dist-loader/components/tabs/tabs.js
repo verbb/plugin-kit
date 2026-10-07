@@ -1,6 +1,6 @@
-import { n as uniqueId } from "../../chunks/pk-a11y-CjB4-U-R.js";
-import { c as customElement, f as A, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
+import { n as uniqueId } from "../../chunks/pk-a11y-mGj0G5AE.js";
+import { c as customElement, f as A, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
 //#region src/components/tabs/pk-tabs.styles.ts
 /**
 * Variant tokens are defined on `pk-tabs` and inherited by slotted
@@ -479,9 +479,10 @@ var PkTabs = class PkTabs extends PkElement {
 			}
 			const next = enabled[nextIndex];
 			if (!next) return;
-			if (this.activation === "auto") if (next.value !== this.value) this.selectTab(next.value);
-			else next.focusControl();
-			else {
+			if (this.activation === "auto") {
+				if (next.value !== this.value) this.selectTab(next.value);
+				else next.focusControl();
+			} else {
 				this.focusedValue = next.value;
 				this.applySelection();
 				next.focusControl();
@@ -584,8 +585,9 @@ var PkTabs = class PkTabs extends PkElement {
 	}
 	render() {
 		const orientation = this.getEffectiveOrientation();
+		const placement = this.getEffectivePlacement();
 		return b`
-            <div part="base" class="tabs pk-tabs" data-placement=${this.getEffectivePlacement()}>
+            <div part="base" class="tabs pk-tabs" data-placement=${placement}>
                 <div
                     part="list"
                     class="list pk-tabs__list"

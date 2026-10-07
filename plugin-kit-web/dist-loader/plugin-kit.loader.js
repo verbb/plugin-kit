@@ -1,4 +1,4 @@
-import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-CjB4-U-R.js";
+import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-mGj0G5AE.js";
 //#region src/component-registry.ts
 /**
 * Canonical tag → loader module path mapping for the autoloader.
@@ -63,6 +63,7 @@ var COMPONENT_MODULE_PATHS = {
 	"pk-connect-oauth": "components/connect/connect-oauth.js",
 	"pk-editable-table": "components/editable-table/editable-table.js"
 };
+Object.keys(COMPONENT_MODULE_PATHS);
 /** Vite loader-build entries: output key → source module. */
 var LOADER_COMPONENT_ENTRIES = {
 	"components/alert/alert": "src/components/alert/pk-alert.ts",

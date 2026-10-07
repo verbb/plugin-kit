@@ -1,5 +1,5 @@
-import { a as e, c as customElement, f as A, m as i, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
+import { a as e, c as customElement, f as A, m as i, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
 //#region src/components/button-group/pk-button-group.styles.ts
 var pkButtonGroupStyles = i`
     @layer pk-component {
@@ -265,8 +265,8 @@ var GROUP_ITEM_LAST = "data-pk-group-item-last";
 var GROUP_INTERNAL_TRAIL = "data-pk-group-internal-trail";
 var GROUP_BTN_LAST = "data-pk-group-btn-last";
 var GROUP_ORIENTATION_ATTR = "data-pk-group-orientation";
-var GROUP_SEPARATOR_TAGS = new Set(["PK-SEPARATOR", "PK-BUTTON-GROUP-SEPARATOR"]);
-var OVERLAY_WRAPPER_TAGS = new Set(["PK-POPOVER", "PK-DROPDOWN-MENU"]);
+var GROUP_SEPARATOR_TAGS = /* @__PURE__ */ new Set(["PK-SEPARATOR", "PK-BUTTON-GROUP-SEPARATOR"]);
+var OVERLAY_WRAPPER_TAGS = /* @__PURE__ */ new Set(["PK-POPOVER", "PK-DROPDOWN-MENU"]);
 /** Boolean attribute defaulting to true — absent means on; `separators="false"` opts out. */
 var separatorsConverter = {
 	fromAttribute(value) {
@@ -297,7 +297,7 @@ function getCornerTargets(element, surface) {
 }
 function collectSyncTargets(element) {
 	const surface = getLayoutTarget(element);
-	return [...new Set([...getLayoutTargets(element), ...getCornerTargets(element, surface)])];
+	return [.../* @__PURE__ */ new Set([...getLayoutTargets(element), ...getCornerTargets(element, surface)])];
 }
 function clearLayoutAttrs(element) {
 	for (const target of collectSyncTargets(element)) {
@@ -346,8 +346,10 @@ var PkButtonGroup = class PkButtonGroup extends PkElement {
 			this.setAttribute("aria-orientation", this.orientation);
 			this.scheduleSyncGroupLayout();
 		}
-		if (changed.has("label")) if (this.label) this.setAttribute("aria-label", this.label);
-		else this.removeAttribute("aria-label");
+		if (changed.has("label")) {
+			if (this.label) this.setAttribute("aria-label", this.label);
+			else this.removeAttribute("aria-label");
+		}
 		if (changed.has("separators") || changed.has("exclusive")) this.scheduleSyncGroupLayout();
 	}
 	scheduleSyncGroupLayout() {

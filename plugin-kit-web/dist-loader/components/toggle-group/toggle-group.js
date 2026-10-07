@@ -1,5 +1,5 @@
-import { c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
+import { c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
 //#region src/components/toggle-group/pk-toggle-group.styles.ts
 var pkToggleGroupStyles = i`
     @layer pk-component {
@@ -132,8 +132,10 @@ var PkToggleGroup = class PkToggleGroup extends PkElement {
 			if (!itemValue) continue;
 			const selected = this.value.includes(itemValue);
 			item.setAttribute("aria-pressed", selected ? "true" : "false");
-			if (item.tagName === "PK-TOGGLE") if (selected) item.setAttribute("pressed", "");
-			else item.removeAttribute("pressed");
+			if (item.tagName === "PK-TOGGLE") {
+				if (selected) item.setAttribute("pressed", "");
+				else item.removeAttribute("pressed");
+			}
 		}
 	}
 	render() {

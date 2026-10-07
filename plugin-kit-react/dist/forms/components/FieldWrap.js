@@ -29,36 +29,37 @@ var FieldWrap = Object.assign(({ name, label, instructions, required, warning, c
 	}, () => {
 		return {};
 	});
+	const errors = useMemo(() => {
+		if (name && typeof form?.getGroupedErrorsForPath === "function") return form.getGroupedErrorsForPath(name) || [];
+		if (!nestedFieldNames.length) return [];
+		const groupedErrors = [];
+		nestedFieldNames.forEach((fieldPath) => {
+			(errorMap[fieldPath] || []).forEach((message) => {
+				groupedErrors.push(formatWrapperMessage(String(message), label || name || fieldName));
+			});
+			Object.entries(errorMap).forEach(([errorPath, messages]) => {
+				if (!errorPath.startsWith(`${fieldPath}.`)) return;
+				(messages || []).forEach((message) => {
+					groupedErrors.push(formatWrapperMessage(String(message), label || name || fieldName));
+				});
+			});
+		});
+		return Array.from(new Set(groupedErrors));
+	}, [
+		errorMap,
+		fieldName,
+		form,
+		label,
+		name,
+		nestedFieldNames
+	]);
 	return /* @__PURE__ */ jsx(FieldLayout, {
 		name: fieldName,
 		label,
 		instructions,
 		required,
 		warning,
-		errors: useMemo(() => {
-			if (name && typeof form?.getGroupedErrorsForPath === "function") return form.getGroupedErrorsForPath(name) || [];
-			if (!nestedFieldNames.length) return [];
-			const groupedErrors = [];
-			nestedFieldNames.forEach((fieldPath) => {
-				(errorMap[fieldPath] || []).forEach((message) => {
-					groupedErrors.push(formatWrapperMessage(String(message), label || name || fieldName));
-				});
-				Object.entries(errorMap).forEach(([errorPath, messages]) => {
-					if (!errorPath.startsWith(`${fieldPath}.`)) return;
-					(messages || []).forEach((message) => {
-						groupedErrors.push(formatWrapperMessage(String(message), label || name || fieldName));
-					});
-				});
-			});
-			return Array.from(new Set(groupedErrors));
-		}, [
-			errorMap,
-			fieldName,
-			form,
-			label,
-			name,
-			nestedFieldNames
-		]),
+		errors,
 		children: /* @__PURE__ */ jsx("div", {
 			"data-pk-field-wrap-controls": "",
 			style: {

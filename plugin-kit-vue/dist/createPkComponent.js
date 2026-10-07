@@ -28,6 +28,6 @@ function createPkComponentFamily(family) {
 	return components;
 }
 //#endregion
-export { createPkComponent, createPkComponentFamily };
+export { createPkComponent, createPkComponentFamily, pkTagToComponentName };
 
 //# sourceMappingURL=createPkComponent.js.map

@@ -1,9 +1,9 @@
-import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-s6aadvWG.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Om6X9ab5.js";
-import { i as PkCopyEvent, n as copyToClipboard, r as PkCopyErrorEvent } from "../../chunks/pk-copy-button-CoN83ilF.js";
-import { $ as triangleExclamation, b as circleInfo, tt as xmark, v as circleCheck, y as circleExclamation } from "../../chunks/svg-C6YcJMk9.js";
-import { n as renderIconHtml } from "../../chunks/render-BuA2YeZN.js";
-import { t as HasSlotController } from "../../chunks/has-slot-BvdEcnpm.js";
+import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
+import { i as PkCopyEvent, n as copyToClipboard, r as PkCopyErrorEvent } from "../../chunks/pk-copy-button-D6tPuhJ3.js";
+import { $ as triangleExclamation, b as circleInfo, tt as xmark, v as circleCheck, y as circleExclamation } from "../../chunks/svg-BRgqS9vA.js";
+import { n as renderIconHtml } from "../../chunks/render-D9G_a_c2.js";
+import { t as HasSlotController } from "../../chunks/has-slot-DJv86HKx.js";
 //#region src/events/pk-dismiss.ts
 /** Emitted before a dismissible component hides itself. Prevent to keep it visible. */
 var PkDismissEvent = class extends Event {
@@ -538,7 +538,8 @@ var PkAlert = class PkAlert extends PkElement {
 	}
 	renderIcon() {
 		if (this.hideIcon) return A;
-		return b`<span part="icon" class="icon" aria-hidden="true">${this.hasSlotController.test("icon") ? b`<slot name="icon"></slot>` : o(renderIconHtml(defaultIcons[this.variant] ?? defaultIcons.info))}</span>`;
+		const icon = this.hasSlotController.test("icon") ? b`<slot name="icon"></slot>` : o(renderIconHtml(defaultIcons[this.variant] ?? defaultIcons.info));
+		return b`<span part="icon" class="icon" aria-hidden="true">${icon}</span>`;
 	}
 	render() {
 		const role = this.announce === "assertive" ? "alert" : this.announce === "polite" ? "status" : A;

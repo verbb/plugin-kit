@@ -1,2 +1,2 @@
-import { t as createRegisterComponents } from "./chunks/register-components-Dcdn1e3S.js";
+import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 export { createRegisterComponents };

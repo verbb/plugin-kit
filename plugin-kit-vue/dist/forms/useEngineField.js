@@ -3,9 +3,10 @@ import { computed, onBeforeUnmount, ref } from "vue";
 var EMPTY_ERRORS = [];
 var useEngineField = (form, name) => {
 	const version = ref(0);
-	onBeforeUnmount(form.store.subscribe(() => {
+	const unsubscribe = form.store.subscribe(() => {
 		version.value += 1;
-	}));
+	});
+	onBeforeUnmount(unsubscribe);
 	const value = computed(() => {
 		version.value;
 		return form.getFieldValue(name);

@@ -1,3 +1,3 @@
-import { n as resolveSpinnerVariant, t as getButtonSpinnerSize } from "../chunks/spinner-utils-Co_4X3ip.js";
-import { t as PkSpinner } from "../chunks/pk-spinner-CN365srE.js";
+import { n as resolveSpinnerVariant, t as getButtonSpinnerSize } from "../chunks/spinner-utils-DXwIxQ6z.js";
+import { t as PkSpinner } from "../chunks/pk-spinner-Bxkn4iVO.js";
 export { PkSpinner, getButtonSpinnerSize, resolveSpinnerVariant };

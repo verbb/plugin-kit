@@ -1,10 +1,11 @@
-import { i as property, o as state, s as customElement, t as __decorate } from "../../chunks/decorate-R0X811qp.js";
-import "../../chunks/pk-button-DCtNLEPr.js";
+import { i as customElement, t as __decorate } from "../../chunks/decorate-Br_PE9pq.js";
+import { r as state, t as property } from "../../chunks/decorators-BkErmuYK.js";
+import "../../chunks/pk-button-ntSVrer_.js";
 import "../icon/pk-icon.js";
-import "../../chunks/pk-state-panel-DPP7t-er.js";
-import "../../chunks/pk-status-CYcadu0Q.js";
-import "../../chunks/pk-dialog-CFU850OH.js";
-import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-ciqZMK3B.js";
+import "../../chunks/pk-state-panel-BTo2xiug.js";
+import "../../chunks/pk-status-CdiRBRyh.js";
+import "../../chunks/pk-dialog-C7KZGpQs.js";
+import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-oKhxa_m2.js";
 import { LitElement, html, nothing } from "lit";
 import { buildConnectPayload, escapeCpHtml, resolveConnectError, sendCpConnectRequest, serializeCpForm, watchCpFormDirty } from "@verbb/plugin-kit-core";
 //#region src/components/connect/pk-connect.ts

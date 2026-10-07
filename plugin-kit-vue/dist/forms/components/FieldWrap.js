@@ -48,9 +48,10 @@ var FieldWrap = Object.assign(defineComponent({
 	setup(props, { slots }) {
 		const form = useSchemaEngineContext();
 		const version = ref(0);
-		onBeforeUnmount(form.store.subscribe(() => {
+		const unsubscribe = form.store.subscribe(() => {
 			version.value += 1;
-		}));
+		});
+		onBeforeUnmount(unsubscribe);
 		const fieldName = computed(() => props.name || props.label || "field");
 		const nestedFieldNames = computed(() => {
 			return Array.from(collectSchemaFieldNames(props.schemaNode?.children || []));

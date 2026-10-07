@@ -3,9 +3,10 @@ import { evaluateCondition } from "@verbb/plugin-kit-forms";
 //#region src/forms/fields/options.ts
 var useFilteredOptions = (form, field) => {
 	const version = ref(0);
-	onBeforeUnmount(form.store.subscribe(() => {
+	const unsubscribe = form.store.subscribe(() => {
 		version.value += 1;
-	}));
+	});
+	onBeforeUnmount(unsubscribe);
 	return computed(() => {
 		version.value;
 		const scopePath = typeof field._scopePath === "string" ? field._scopePath : "";

@@ -2,7 +2,7 @@ import { registerTiptapExtension, registerTiptapToolbarControl } from "./registr
 import { Extension } from "@tiptap/core";
 //#region src/text-style-definition.ts
 var SAFE_TEXT_STYLE_VALUES = {
-	"font-variant-caps": new Set([
+	"font-variant-caps": /* @__PURE__ */ new Set([
 		"small-caps",
 		"all-small-caps",
 		"petite-caps",
@@ -10,13 +10,13 @@ var SAFE_TEXT_STYLE_VALUES = {
 		"unicase",
 		"titling-caps"
 	]),
-	"text-transform": new Set([
+	"text-transform": /* @__PURE__ */ new Set([
 		"uppercase",
 		"lowercase",
 		"capitalize"
 	])
 };
-var CORE_TEXT_STYLE_ATTRIBUTES = new Set([
+var CORE_TEXT_STYLE_ATTRIBUTES = /* @__PURE__ */ new Set([
 	"backgroundColor",
 	"color",
 	"fontFamily",

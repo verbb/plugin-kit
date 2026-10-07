@@ -10,7 +10,7 @@ import { createComponent } from "@lit/react";
 *
 * For React < 19, delegates unchanged to `@lit/react`.
 */
-var reservedReactProperties = new Set([
+var reservedReactProperties = /* @__PURE__ */ new Set([
 	"children",
 	"localName",
 	"ref",
@@ -22,11 +22,12 @@ function addOrUpdateEventListener(node, event, listener) {
 	let events = listenedEvents.get(node);
 	if (events === void 0) listenedEvents.set(node, events = /* @__PURE__ */ new Map());
 	let handler = events.get(event);
-	if (listener !== void 0) if (handler === void 0) {
-		events.set(event, handler = { handleEvent: listener });
-		node.addEventListener(event, handler);
-	} else handler.handleEvent = listener;
-	else if (handler !== void 0) {
+	if (listener !== void 0) {
+		if (handler === void 0) {
+			events.set(event, handler = { handleEvent: listener });
+			node.addEventListener(event, handler);
+		} else handler.handleEvent = listener;
+	} else if (handler !== void 0) {
 		events.delete(event);
 		node.removeEventListener(event, handler);
 	}

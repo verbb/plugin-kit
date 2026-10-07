@@ -27,6 +27,6 @@ var loadBuiltinFormField = async (name) => {
 	return loader();
 };
 //#endregion
-export { isBuiltinFormFieldType, loadBuiltinFormField };
+export { builtinFormFieldLoaders, isBuiltinFormFieldType, loadBuiltinFormField };
 
 //# sourceMappingURL=builtin-field-loaders.js.map
