@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Updated the package build and test toolchain to Vite 8.3.3 and Vitest 5.0.3.
+
 ## 2.0.23 - 2026-10-07
 
 ### Changed

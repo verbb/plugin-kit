@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+- Updated the TipTap editor runtime from 3.22.4 to 3.31.4.
+- Updated the package build toolchain to Vite 8.3.3.
+
 ## 2.0.23 - 2026-10-07
 
 ### Added

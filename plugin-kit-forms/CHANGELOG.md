@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Updated the package build toolchain to Vite 8.3.3.
+
 ## 2.0.23 - 2026-10-07
 
 ### Changed

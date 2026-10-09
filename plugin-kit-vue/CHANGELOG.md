@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Updated the adapter development toolchain to Vite 8.3.3 and Vue 3.5.43.
+
 ## 2.0.23 - 2026-10-07
 
 ### Added
