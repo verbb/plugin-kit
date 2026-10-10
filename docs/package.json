@@ -16,6 +16,7 @@
         "@fortawesome/react-fontawesome": "^3.3.1",
         "@tailwindcss/typography": "^0.5.20",
         "@tailwindcss/vite": "^4.2.4",
+        "@tiptap/core": "3.31.4",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@verbb/vitepress-theme": "1.0.0",
