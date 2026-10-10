@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.24 - 2026-10-09
+
 ### Changed
 - Updated the pinned TipTap and ProseMirror runtime from 3.22.4 to 3.31.4 while preserving Plugin Kit's supported text-style and table HTML serialization behavior.
 - Updated the package build and test toolchain to Vite 8.3.3 and Vitest 5.0.3.
