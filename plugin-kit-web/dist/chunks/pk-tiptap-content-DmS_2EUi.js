@@ -1,6 +1,6 @@
 import { i as customElement, n as PkElement, t as __decorate } from "./decorate-Br_PE9pq.js";
 import { n as query, t as property } from "./decorators-BkErmuYK.js";
-import { i as createVariableTagDomNodeView, t as tiptapContentProseMirrorStyles } from "./tiptap.styles-Q4ED1nBw.js";
+import { i as createVariableTagDomNodeView, t as tiptapContentProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
 import { css, html } from "lit";
 import { Editor } from "@tiptap/core";
 import { createTiptapExtensions, valueToContent } from "@verbb/plugin-kit-tiptap-core";
@@ -76,4 +76,4 @@ PkTiptapContent = __decorate([customElement("pk-tiptap-content")], PkTiptapConte
 //#endregion
 export { PkTiptapContent as t };
 
-//# sourceMappingURL=pk-tiptap-content-C2qzGQKj.js.map
+//# sourceMappingURL=pk-tiptap-content-DmS_2EUi.js.map

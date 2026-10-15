@@ -8,8 +8,8 @@ import "../../chunks/pk-button-DV9Tk5Pd.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
 import "../../chunks/pk-checkbox-DhP0iMoP.js";
 import "../../chunks/pk-input-Cj5s8eBT.js";
-import { F as getMarkRange, n as getMarkRange$1, r as posToDOMRect, t as Editor } from "../../chunks/tiptap-uppXgD5k.js";
-import { a as resolveTiptapTextStyleToolbarConfig, c as getRegisteredTiptapToolbarControl, i as createVariableTagDomNodeView, l as isRegisteredTiptapToolbarControl, o as createTiptapExtensions, r as tiptapProseMirrorStyles } from "../../chunks/tiptap.styles-CyqI_Wrl.js";
+import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
+import { a as resolveTiptapTextStyleToolbarConfig, c as getRegisteredTiptapToolbarControl, i as createVariableTagDomNodeView, l as isRegisteredTiptapToolbarControl, o as createTiptapExtensions, r as tiptapProseMirrorStyles } from "../../chunks/tiptap.styles-CZUkf2K6.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
 import "../../chunks/pk-dialog-BJs5fVHS.js";
 import "../../chunks/pk-dropdown-item-Bs5NZDRh.js";
@@ -1371,7 +1371,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 			return;
 		}
 		const linkType = editor.state.schema.marks.link;
-		const range = getMarkRange$1(editor.state.selection.$from, linkType);
+		const range = getMarkRange(editor.state.selection.$from, linkType);
 		if (!range) {
 			this.linkBubbleVisible = false;
 			return;

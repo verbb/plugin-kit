@@ -16,7 +16,7 @@ import "./pk-dropdown-label-BdZLeizJ.js";
 import "../components/dropdown-menu/pk-dropdown-separator.js";
 import "./pk-field--PCE9nOd.js";
 import "./pk-tooltip-Cvv2f7T5.js";
-import { i as createVariableTagDomNodeView, r as tiptapProseMirrorStyles } from "./tiptap.styles-Q4ED1nBw.js";
+import { i as createVariableTagDomNodeView, r as tiptapProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
 import { css, html, nothing } from "lit";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import { Editor, getMarkRange, posToDOMRect } from "@tiptap/core";
@@ -1404,4 +1404,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-y_QyNSR-.js.map
+//# sourceMappingURL=pk-tiptap-editor-DCgHtgoi.js.map

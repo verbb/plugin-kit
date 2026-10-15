@@ -1,6 +1,6 @@
 import { n as uniqueId } from "./pk-a11y-mGj0G5AE.js";
 import { m as i } from "./lit-B6nFKgbW.js";
-import { A as src_default$7, C as src_default$14, D as src_default$10, E as src_default$11, I as NodeSelection, L as Plugin, M as src_default, N as Extension, O as src_default$9, P as Node, R as PluginKey, S as TextStyleKit, T as src_default$12, _ as src_default$18, a as src_default$25, b as src_default$16, c as src_default$5, d as src_default$24, f as Table, g as src_default$19, h as src_default$20, i as src_default$26, j as src_default$1, k as src_default$8, l as src_default$22, m as src_default$21, o as src_default$3, p as src_default$4, s as src_default$2, u as src_default$23, v as src_default$6, w as src_default$13, x as src_default$15, y as src_default$17, z as TextSelection } from "./tiptap-uppXgD5k.js";
+import { C as src_default$11, D as src_default$7, E as src_default$8, F as NodeSelection, I as Plugin, L as PluginKey, M as Node, O as src_default$1, R as TextSelection, S as src_default$12, T as src_default$9, _ as src_default$16, a as src_default$5, b as src_default$14, c as src_default$24, d as src_default$21, f as src_default$20, g as src_default$17, h as src_default$6, i as src_default$2, j as Extension, k as src_default, l as Table, m as src_default$18, n as src_default$25, o as src_default$22, p as src_default$19, r as src_default$3, s as src_default$23, t as src_default$26, u as src_default$4, v as src_default$15, w as src_default$10, x as src_default$13, y as TextStyleKit } from "./tiptap-DYSRDaas.js";
 //#region ../plugin-kit-tiptap-core/dist/links/extension.js
 /** Shared Tiptap link mark configuration for Plugin Kit editors. */
 function createLinkExtension() {
@@ -714,6 +714,25 @@ var variableTagStyles = i`
         cursor: pointer;
         line-height: 0;
         appearance: none;
+    }
+
+    /* Keep the configure action's keyboard indicator around the whole chip,
+     * while the separate remove action identifies only its own hit area. */
+    .pk-variable-tag:has(> .pk-variable-tag__label:focus-visible) {
+        /* The transparent outline remains visible in forced-colors mode. */
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(123, 140, 232, 0.5);
+    }
+
+    .pk-variable-tag__label:focus-visible {
+        outline: none;
+    }
+
+    .pk-variable-tag__remove:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: -3px;
+        border-radius: 2px;
     }
 
     .pk-variable-tag__remove svg {

@@ -1,13 +1,13 @@
 import { C as keyName, S as base } from "./codemirror-C_TTKlG1.js";
-//#region ../plugin-kit-tiptap-core/node_modules/@tiptap/core/dist/rolldown-runtime-D7D4PA-g.js
-var __defProp$1 = Object.defineProperty;
-var __exportAll$1 = (all, no_symbols) => {
+//#region ../node_modules/@tiptap/core/dist/rolldown-runtime-D7D4PA-g.js
+var __defProp = Object.defineProperty;
+var __exportAll = (all, no_symbols) => {
 	let target = {};
-	for (var name in all) __defProp$1(target, name, {
+	for (var name in all) __defProp(target, name, {
 		get: all[name],
 		enumerable: true
 	});
-	if (!no_symbols) __defProp$1(target, Symbol.toStringTag, { value: "Module" });
+	if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
 	return target;
 };
 //#endregion
@@ -467,7 +467,7 @@ information (such as the target of the link). Marks are created
 through a `Schema`, which controls which types exist and which
 attributes they have.
 */
-var Mark$2 = class Mark$2 {
+var Mark$1 = class Mark$1 {
 	/**
 	@internal
 	*/
@@ -561,8 +561,8 @@ var Mark$2 = class Mark$2 {
 	unsorted array of marks.
 	*/
 	static setFrom(marks) {
-		if (!marks || Array.isArray(marks) && marks.length == 0) return Mark$2.none;
-		if (marks instanceof Mark$2) return [marks];
+		if (!marks || Array.isArray(marks) && marks.length == 0) return Mark$1.none;
+		if (marks instanceof Mark$1) return [marks];
 		let copy = marks.slice();
 		copy.sort((a, b) => a.type.rank - b.type.rank);
 		return copy;
@@ -571,7 +571,7 @@ var Mark$2 = class Mark$2 {
 /**
 The empty set of marks.
 */
-Mark$2.none = [];
+Mark$1.none = [];
 /**
 Error type raised by [`Node.replace`](https://prosemirror.net/docs/ref/#model.Node.replace) when
 given an invalid replacement.
@@ -914,7 +914,7 @@ var ResolvedPos = class ResolvedPos {
 	*/
 	marks() {
 		let parent = this.parent, index = this.index();
-		if (parent.content.size == 0) return Mark$2.none;
+		if (parent.content.size == 0) return Mark$1.none;
 		if (this.textOffset) return parent.child(index).marks;
 		let main = parent.maybeChild(index - 1), other = parent.maybeChild(index);
 		if (!main) {
@@ -1096,7 +1096,7 @@ var Node$2 = class Node$2 {
 	/**
 	@internal
 	*/
-	constructor(type, attrs, content, marks = Mark$2.none) {
+	constructor(type, attrs, content, marks = Mark$1.none) {
 		this.type = type;
 		this.attrs = attrs;
 		this.marks = marks;
@@ -1214,7 +1214,7 @@ var Node$2 = class Node$2 {
 	attributes, and marks.
 	*/
 	hasMarkup(type, attrs, marks) {
-		return this.type == type && compareDeep(this.attrs, attrs || type.defaultAttrs || emptyAttrs) && Mark$2.sameSet(this.marks, marks || Mark$2.none);
+		return this.type == type && compareDeep(this.attrs, attrs || type.defaultAttrs || emptyAttrs) && Mark$1.sameSet(this.marks, marks || Mark$1.none);
 	}
 	/**
 	Create a new node with the same markup as this node, containing
@@ -1443,13 +1443,13 @@ var Node$2 = class Node$2 {
 	check() {
 		this.type.checkContent(this.content);
 		this.type.checkAttrs(this.attrs);
-		let copy = Mark$2.none;
+		let copy = Mark$1.none;
 		for (let i = 0; i < this.marks.length; i++) {
 			let mark = this.marks[i];
 			mark.type.checkAttrs(mark.attrs);
 			copy = mark.addToSet(copy);
 		}
-		if (!Mark$2.sameSet(copy, this.marks)) throw new RangeError(`Invalid collection of marks for node ${this.type.name}: ${this.marks.map((m) => m.type.name)}`);
+		if (!Mark$1.sameSet(copy, this.marks)) throw new RangeError(`Invalid collection of marks for node ${this.type.name}: ${this.marks.map((m) => m.type.name)}`);
 		this.content.forEach((node) => node.check());
 	}
 	/**
@@ -2058,7 +2058,7 @@ var NodeType$1 = class NodeType$1 {
 	*/
 	create(attrs = null, content, marks) {
 		if (this.isText) throw new Error("NodeType.create can't construct text nodes");
-		return new Node$2(this, this.computeAttrs(attrs), Fragment.from(content), Mark$2.setFrom(marks));
+		return new Node$2(this, this.computeAttrs(attrs), Fragment.from(content), Mark$1.setFrom(marks));
 	}
 	/**
 	Like [`create`](https://prosemirror.net/docs/ref/#model.NodeType.create), but check the given content
@@ -2068,7 +2068,7 @@ var NodeType$1 = class NodeType$1 {
 	createChecked(attrs = null, content, marks) {
 		content = Fragment.from(content);
 		this.checkContent(content);
-		return new Node$2(this, this.computeAttrs(attrs), content, Mark$2.setFrom(marks));
+		return new Node$2(this, this.computeAttrs(attrs), content, Mark$1.setFrom(marks));
 	}
 	/**
 	Like [`create`](https://prosemirror.net/docs/ref/#model.NodeType.create), but see if it is
@@ -2089,7 +2089,7 @@ var NodeType$1 = class NodeType$1 {
 		let matched = this.contentMatch.matchFragment(content);
 		let after = matched && matched.fillBefore(Fragment.empty, true);
 		if (!after) return null;
-		return new Node$2(this, attrs, content.append(after), Mark$2.setFrom(marks));
+		return new Node$2(this, attrs, content.append(after), Mark$1.setFrom(marks));
 	}
 	/**
 	Returns true if the given fragment is valid content for this node
@@ -2138,7 +2138,7 @@ var NodeType$1 = class NodeType$1 {
 		for (let i = 0; i < marks.length; i++) if (!this.allowsMarkType(marks[i].type)) {
 			if (!copy) copy = marks.slice(0, i);
 		} else if (copy) copy.push(marks[i]);
-		return !copy ? marks : copy.length ? copy : Mark$2.none;
+		return !copy ? marks : copy.length ? copy : Mark$1.none;
 	}
 	/**
 	@internal
@@ -2188,7 +2188,7 @@ var MarkType = class MarkType {
 		this.attrs = initAttrs(name, spec.attrs);
 		this.excluded = null;
 		let defaults = defaultAttrs(this.attrs);
-		this.instance = defaults ? new Mark$2(this, defaults) : null;
+		this.instance = defaults ? new Mark$1(this, defaults) : null;
 	}
 	/**
 	Create a mark of this type. `attrs` may be `null` or an object
@@ -2197,7 +2197,7 @@ var MarkType = class MarkType {
 	*/
 	create(attrs = null) {
 		if (!attrs && this.instance) return this.instance;
-		return new Mark$2(this, computeAttrs(this.attrs, attrs));
+		return new Mark$1(this, computeAttrs(this.attrs, attrs));
 	}
 	/**
 	@internal
@@ -2286,7 +2286,7 @@ var Schema = class {
 			type.excluded = excl == null ? [type] : excl == "" ? [] : gatherMarks(this, excl.split(" "));
 		}
 		this.nodeFromJSON = (json) => Node$2.fromJSON(this, json);
-		this.markFromJSON = (json) => Mark$2.fromJSON(this, json);
+		this.markFromJSON = (json) => Mark$1.fromJSON(this, json);
 		this.topNodeType = this.nodes[this.spec.topNode || "doc"];
 		this.cached.wrappings = Object.create(null);
 	}
@@ -2308,7 +2308,7 @@ var Schema = class {
 	*/
 	text(text, marks) {
 		let type = this.nodes.text;
-		return new TextNode(type, type.defaultAttrs, text, Mark$2.setFrom(marks));
+		return new TextNode(type, type.defaultAttrs, text, Mark$1.setFrom(marks));
 	}
 	/**
 	Create a mark with the given type and attributes.
@@ -2386,7 +2386,7 @@ var DOMParser = class DOMParser {
 	*/
 	parse(dom, options = {}) {
 		let context = new ParseContext(this, options, false);
-		context.addAll(dom, Mark$2.none, options.from, options.to);
+		context.addAll(dom, Mark$1.none, options.from, options.to);
 		return context.finish();
 	}
 	/**
@@ -2399,7 +2399,7 @@ var DOMParser = class DOMParser {
 	*/
 	parseSlice(dom, options = {}) {
 		let context = new ParseContext(this, options, true);
-		context.addAll(dom, Mark$2.none, options.from, options.to);
+		context.addAll(dom, Mark$1.none, options.from, options.to);
 		return Slice.maxOpen(context.finish());
 	}
 	/**
@@ -2533,7 +2533,7 @@ var NodeContext = class {
 		this.solid = solid;
 		this.options = options;
 		this.content = [];
-		this.activeMarks = Mark$2.none;
+		this.activeMarks = Mark$1.none;
 		this.match = match || (options & OPT_OPEN_LEFT ? null : type.contentMatch);
 	}
 	findWrapping(node) {
@@ -2579,9 +2579,9 @@ var ParseContext = class {
 		this.localPreserveWS = false;
 		let topNode = options.topNode, topContext;
 		let topOptions = wsOptionsFor(null, options.preserveWhitespace, 0) | (isOpen ? OPT_OPEN_LEFT : 0);
-		if (topNode) topContext = new NodeContext(topNode.type, topNode.attrs, Mark$2.none, true, options.topMatch || topNode.type.contentMatch, topOptions);
-		else if (isOpen) topContext = new NodeContext(null, null, Mark$2.none, true, null, topOptions);
-		else topContext = new NodeContext(parser.schema.topNodeType, null, Mark$2.none, true, null, topOptions);
+		if (topNode) topContext = new NodeContext(topNode.type, topNode.attrs, Mark$1.none, true, options.topMatch || topNode.type.contentMatch, topOptions);
+		else if (isOpen) topContext = new NodeContext(null, null, Mark$1.none, true, null, topOptions);
+		else topContext = new NodeContext(parser.schema.topNodeType, null, Mark$1.none, true, null, topOptions);
 		this.nodes = [topContext];
 		this.find = options.findPositions;
 		this.needsBlock = false;
@@ -2744,7 +2744,7 @@ var ParseContext = class {
 			this.closeExtra();
 			let top = this.top;
 			if (top.match) top.match = top.match.matchType(node.type);
-			let nodeMarks = Mark$2.none;
+			let nodeMarks = Mark$1.none;
 			for (let m of innerMarks.concat(node.marks)) if (top.type ? top.type.allowsMarkType(m.type) : markMayApply(m.type, node.type)) nodeMarks = m.addToSet(nodeMarks);
 			top.content.push(node.mark(nodeMarks));
 			return true;
@@ -2762,7 +2762,7 @@ var ParseContext = class {
 		top.match = top.match && top.match.matchType(type);
 		let options = wsOptionsFor(type, preserveWS, top.options);
 		if (top.options & OPT_OPEN_LEFT && top.content.length == 0) options |= OPT_OPEN_LEFT;
-		let applyMarks = Mark$2.none;
+		let applyMarks = Mark$1.none;
 		marks = marks.filter((m) => {
 			if (top.type ? top.type.allowsMarkType(m.type) : markMayApply(m.type, type)) {
 				applyMarks = m.addToSet(applyMarks);
@@ -4525,7 +4525,7 @@ function replaceRangeWith(tr, from, to, node) {
 	}
 	tr.replaceRange(from, to, new Slice(Fragment.from(node), 0, 0));
 }
-function deleteRange$2(tr, from, to) {
+function deleteRange$1(tr, from, to) {
 	let $from = tr.doc.resolve(from), $to = tr.doc.resolve(to);
 	if ($from.parent.isTextblock && $to.parent.isTextblock && $from.start() != $to.start() && $from.parentOffset == 0 && $to.parentOffset == 0) {
 		let shared = $from.sharedDepth(to), isolated = false;
@@ -4814,7 +4814,7 @@ var Transform = class {
 	parent nodes until a valid replace is found.
 	*/
 	deleteRange(from, to) {
-		deleteRange$2(this, from, to);
+		deleteRange$1(this, from, to);
 		return this;
 	}
 	/**
@@ -4891,7 +4891,7 @@ var Transform = class {
 	removeNodeMark(pos, mark) {
 		let node = this.doc.nodeAt(pos);
 		if (!node) throw new RangeError("No node at position " + pos);
-		if (mark instanceof Mark$2) {
+		if (mark instanceof Mark$1) {
 			if (mark.isInSet(node.marks)) this.step(new RemoveNodeMarkStep(pos, mark));
 		} else {
 			let set = node.marks, found, steps = [];
@@ -5024,7 +5024,7 @@ var Selection$1 = class {
 		for (let i = 0; i < ranges.length; i++) {
 			let { $from, $to } = ranges[i], mapping = tr.mapping.slice(mapFrom);
 			tr.replaceRange(mapping.map($from.pos), mapping.map($to.pos), i ? Slice.empty : content);
-			if (i == 0) selectionToInsertionEnd$2(tr, mapFrom, (lastNode ? lastNode.isInline : lastParent && lastParent.isTextblock) ? -1 : 1);
+			if (i == 0) selectionToInsertionEnd$1(tr, mapFrom, (lastNode ? lastNode.isInline : lastParent && lastParent.isTextblock) ? -1 : 1);
 		}
 	}
 	/**
@@ -5039,7 +5039,7 @@ var Selection$1 = class {
 			if (i) tr.deleteRange(from, to);
 			else {
 				tr.replaceRangeWith(from, to, node);
-				selectionToInsertionEnd$2(tr, mapFrom, node.isInline ? -1 : 1);
+				selectionToInsertionEnd$1(tr, mapFrom, node.isInline ? -1 : 1);
 			}
 		}
 	}
@@ -5375,7 +5375,7 @@ function findSelectionIn(doc, node, pos, index, dir, text = false) {
 	}
 	return null;
 }
-function selectionToInsertionEnd$2(tr, startLen, bias) {
+function selectionToInsertionEnd$1(tr, startLen, bias) {
 	let last = tr.steps.length - 1;
 	if (last < startLen) return;
 	let step = tr.steps[last];
@@ -5469,7 +5469,7 @@ var Transaction = class extends Transform {
 	this is already the case.
 	*/
 	ensureMarks(marks) {
-		if (!Mark$2.sameSet(this.storedMarks || this.selection.$from.marks(), marks)) this.setStoredMarks(marks);
+		if (!Mark$1.sameSet(this.storedMarks || this.selection.$from.marks(), marks)) this.setStoredMarks(marks);
 		return this;
 	}
 	/**
@@ -5519,7 +5519,7 @@ var Transaction = class extends Transform {
 	*/
 	replaceSelectionWith(node, inheritMarks = true) {
 		let selection = this.selection;
-		if (inheritMarks) node = node.mark(this.storedMarks || (selection.empty ? selection.$from.marks() : selection.$from.marksAcross(selection.$to) || Mark$2.none));
+		if (inheritMarks) node = node.mark(this.storedMarks || (selection.empty ? selection.$from.marks() : selection.$from.marksAcross(selection.$to) || Mark$1.none));
 		selection.replaceWith(this, node);
 		return this;
 	}
@@ -5906,7 +5906,7 @@ var PluginKey = class {
 /**
 Delete the selection, if there is one.
 */
-var deleteSelection$2 = (state, dispatch) => {
+var deleteSelection$1 = (state, dispatch) => {
 	if (state.selection.empty) return false;
 	if (dispatch) dispatch(state.tr.deleteSelection().scrollIntoView());
 	return true;
@@ -6158,7 +6158,7 @@ var newlineInCode = (state, dispatch) => {
 	if (dispatch) dispatch(state.tr.insertText("\n").scrollIntoView());
 	return true;
 };
-function defaultBlockAt$2(match) {
+function defaultBlockAt$1(match) {
 	for (let i = 0; i < match.edgeCount; i++) {
 		let { type } = match.edge(i);
 		if (type.isTextblock && !type.hasRequiredAttrs()) return type;
@@ -6173,7 +6173,7 @@ default block after the code block, and move the cursor there.
 var exitCode = (state, dispatch) => {
 	let { $head, $anchor } = state.selection;
 	if (!$head.parent.type.spec.code || !$head.sameParent($anchor)) return false;
-	let above = $head.node(-1), after = $head.indexAfter(-1), type = defaultBlockAt$2(above.contentMatchAt(after));
+	let above = $head.node(-1), after = $head.indexAfter(-1), type = defaultBlockAt$1(above.contentMatchAt(after));
 	if (!type || !above.canReplaceWith(after, after, type)) return false;
 	if (dispatch) {
 		let pos = $head.after(), tr = state.tr.replaceWith(pos, pos, type.createAndFill());
@@ -6189,7 +6189,7 @@ it is its parent's first child) or after it.
 var createParagraphNear = (state, dispatch) => {
 	let sel = state.selection, { $from, $to } = sel;
 	if (sel instanceof AllSelection || $from.parent.inlineContent || $to.parent.inlineContent) return false;
-	let type = defaultBlockAt$2($to.parent.contentMatchAt($to.indexAfter()));
+	let type = defaultBlockAt$1($to.parent.contentMatchAt($to.indexAfter()));
 	if (!type || !type.isTextblock) return false;
 	if (dispatch) {
 		let side = (!$from.parentOffset && $to.index() < $to.parent.childCount ? $from : $to).pos;
@@ -6236,7 +6236,7 @@ function splitBlockAs(splitNode) {
 		for (let d = $from.depth;; d--) if ($from.node(d).isBlock) {
 			atEnd = $from.end(d) == $from.pos + ($from.depth - d);
 			atStart = $from.start(d) == $from.pos - ($from.depth - d);
-			deflt = defaultBlockAt$2($from.node(d - 1).contentMatchAt($from.indexAfter(d - 1)));
+			deflt = defaultBlockAt$1($from.node(d - 1).contentMatchAt($from.indexAfter(d - 1)));
 			let splitType = splitNode && splitNode($to.parent, atEnd, $from);
 			types.unshift(splitType || (atEnd && deflt ? { type: deflt } : null));
 			splitDepth = d;
@@ -6267,7 +6267,7 @@ function splitBlockAs(splitNode) {
 Split the parent block of the selection. If the selection is a text
 selection, also delete its content.
 */
-var splitBlock$2 = splitBlockAs();
+var splitBlock$1 = splitBlockAs();
 /**
 Move the selection to the node wrapping the current selection, if
 any. (Will not select the document node.)
@@ -6283,7 +6283,7 @@ var selectParentNode = (state, dispatch) => {
 /**
 Select the whole document.
 */
-var selectAll$2 = (state, dispatch) => {
+var selectAll$1 = (state, dispatch) => {
 	if (dispatch) dispatch(state.tr.setSelection(new AllSelection(state.doc)));
 	return true;
 };
@@ -6416,8 +6416,8 @@ function chainCommands(...commands) {
 		return false;
 	};
 }
-var backspace = chainCommands(deleteSelection$2, joinBackward, selectNodeBackward);
-var del = chainCommands(deleteSelection$2, joinForward, selectNodeForward);
+var backspace = chainCommands(deleteSelection$1, joinBackward, selectNodeBackward);
+var del = chainCommands(deleteSelection$1, joinForward, selectNodeForward);
 /**
 A basic keymap containing bindings not specific to any schema.
 Binds the following keys (when multiple commands are listed, they
@@ -6431,14 +6431,14 @@ are chained with [`chainCommands`](https://prosemirror.net/docs/ref/#commands.ch
 * **Mod-a** to `selectAll`
 */
 var pcBaseKeymap = {
-	"Enter": chainCommands(newlineInCode, createParagraphNear, liftEmptyBlock, splitBlock$2),
+	"Enter": chainCommands(newlineInCode, createParagraphNear, liftEmptyBlock, splitBlock$1),
 	"Mod-Enter": exitCode,
 	"Backspace": backspace,
 	"Mod-Backspace": backspace,
 	"Shift-Backspace": backspace,
 	"Delete": del,
 	"Mod-Delete": del,
-	"Mod-a": selectAll$2
+	"Mod-a": selectAll$1
 };
 /**
 A copy of `pcBaseKeymap` that also binds **Ctrl-h** like Backspace,
@@ -7691,7 +7691,7 @@ var NodeViewDesc = class NodeViewDesc extends ViewDesc {
 		let updater = new ViewTreeUpdater(this, localComposition && localComposition.node, view);
 		iterDeco(this.node, this.innerDeco, (widget, i, insideNode) => {
 			if (widget.spec.marks) updater.syncToMarks(widget.spec.marks, inline, view, i);
-			else if (widget.type.side >= 0 && !insideNode) updater.syncToMarks(i == this.node.childCount ? Mark$2.none : this.node.child(i).marks, inline, view, i);
+			else if (widget.type.side >= 0 && !insideNode) updater.syncToMarks(i == this.node.childCount ? Mark$1.none : this.node.child(i).marks, inline, view, i);
 			updater.placeWidget(widget, view, off);
 		}, (child, outerDeco, innerDeco, i) => {
 			updater.syncToMarks(child.marks, inline, view, i);
@@ -11247,7 +11247,7 @@ function checkStateComponent(plugin) {
 //#region ../node_modules/prosemirror-keymap/dist/index.js
 var mac = typeof navigator != "undefined" && /Mac|iP(hone|[oa]d)/.test(navigator.platform);
 var windows = typeof navigator != "undefined" && /Win/.test(navigator.platform);
-function normalizeKeyName$2(name) {
+function normalizeKeyName$1(name) {
 	let parts = name.split(/-(?!$)/), result = parts[parts.length - 1];
 	if (result == "Space") result = " ";
 	let alt, ctrl, shift, meta;
@@ -11270,7 +11270,7 @@ function normalizeKeyName$2(name) {
 }
 function normalize(map) {
 	let copy = Object.create(null);
-	for (let prop in map) copy[normalizeKeyName$2(prop)] = map[prop];
+	for (let prop in map) copy[normalizeKeyName$1(prop)] = map[prop];
 	return copy;
 }
 function modifiers(name, event, shift = true) {
@@ -11798,13 +11798,13 @@ function isHistoryTransaction(tr) {
 	return tr.getMeta(historyKey) != null;
 }
 //#endregion
-//#region ../plugin-kit-tiptap-core/node_modules/@tiptap/core/dist/index.js
+//#region ../node_modules/@tiptap/core/dist/index.js
 /**
 * Takes a Transaction & Editor State and turns it into a chainable state object
 * @param config The transaction and state to create the chainable state from
 * @returns A chainable Editor state object
 */
-function createChainableState$1(config) {
+function createChainableState(config) {
 	const { state, transaction } = config;
 	let { selection } = transaction;
 	let { doc } = transaction;
@@ -11834,7 +11834,7 @@ function createChainableState$1(config) {
 		}
 	};
 }
-var CommandManager$1 = class CommandManager {
+var CommandManager = class CommandManager {
 	constructor(props) {
 		this.editor = props.editor;
 		this.rawCommands = this.editor.extensionManager.commands;
@@ -11942,7 +11942,7 @@ var CommandManager$1 = class CommandManager {
 			tr,
 			editor,
 			view,
-			state: createChainableState$1({
+			state: createChainableState({
 				state,
 				transaction: tr
 			}),
@@ -11958,7 +11958,7 @@ var CommandManager$1 = class CommandManager {
 		return props;
 	}
 };
-var blur$1 = () => ({ editor, view }) => {
+var blur = () => ({ editor, view }) => {
 	requestAnimationFrame(() => {
 		if (!editor.isDestroyed) {
 			var _window;
@@ -11968,10 +11968,10 @@ var blur$1 = () => ({ editor, view }) => {
 	});
 	return true;
 };
-var clearContent$1 = (emitUpdate = true) => ({ commands }) => {
+var clearContent = (emitUpdate = true) => ({ commands }) => {
 	return commands.setContent("", { emitUpdate });
 };
-var clearNodes$1 = () => ({ state, tr, dispatch }) => {
+var clearNodes = () => ({ state, tr, dispatch }) => {
 	const { selection } = tr;
 	const { ranges } = selection;
 	if (!dispatch) return true;
@@ -11993,13 +11993,13 @@ var clearNodes$1 = () => ({ state, tr, dispatch }) => {
 	});
 	return true;
 };
-var command$1 = (fn) => (props) => {
+var command = (fn) => (props) => {
 	return fn(props);
 };
-var createParagraphNear$1$1 = () => ({ state, dispatch }) => {
+var createParagraphNear$1 = () => ({ state, dispatch }) => {
 	return createParagraphNear(state, dispatch);
 };
-var cut$1 = (originRange, targetPos) => ({ editor, tr }) => {
+var cut = (originRange, targetPos) => ({ editor, tr }) => {
 	const { state } = editor;
 	const contentSlice = state.doc.slice(originRange.from, originRange.to);
 	tr.deleteRange(originRange.from, originRange.to);
@@ -12008,7 +12008,7 @@ var cut$1 = (originRange, targetPos) => ({ editor, tr }) => {
 	tr.setSelection(new TextSelection(tr.doc.resolve(Math.max(newPos - 1, 0))));
 	return true;
 };
-var deleteCurrentNode$1 = () => ({ tr, dispatch }) => {
+var deleteCurrentNode = () => ({ tr, dispatch }) => {
 	const { selection } = tr;
 	const currentNode = selection.$anchor.node();
 	if (currentNode.content.size > 0) return false;
@@ -12023,15 +12023,15 @@ var deleteCurrentNode$1 = () => ({ tr, dispatch }) => {
 	}
 	return false;
 };
-function getNodeType$1(nameOrType, schema) {
+function getNodeType(nameOrType, schema) {
 	if (typeof nameOrType === "string") {
 		if (!schema.nodes[nameOrType]) throw Error(`There is no node type named '${nameOrType}'. Maybe you forgot to add the extension?`);
 		return schema.nodes[nameOrType];
 	}
 	return nameOrType;
 }
-var deleteNode$1 = (typeOrName) => ({ tr, state, dispatch }) => {
-	const type = getNodeType$1(typeOrName, state.schema);
+var deleteNode = (typeOrName) => ({ tr, state, dispatch }) => {
+	const type = getNodeType(typeOrName, state.schema);
 	const $pos = tr.selection.$anchor;
 	for (let depth = $pos.depth; depth > 0; depth -= 1) if ($pos.node(depth).type === type) {
 		if (dispatch) {
@@ -12043,7 +12043,7 @@ var deleteNode$1 = (typeOrName) => ({ tr, state, dispatch }) => {
 	}
 	return false;
 };
-var deleteRange$1 = (range) => ({ tr, dispatch }) => {
+var deleteRange = (range) => ({ tr, dispatch }) => {
 	const { from, to } = range;
 	if (dispatch) tr.delete(from, to);
 	return true;
@@ -12052,7 +12052,7 @@ var deleteRange$1 = (range) => ({ tr, dispatch }) => {
 * Check if a node has text content based on its content specification.
 * Returns true if the node's content spec matches text* or text+ patterns.
 */
-var hasTextContent$1 = (nodeSpec) => {
+var hasTextContent = (nodeSpec) => {
 	if (!nodeSpec.content) return false;
 	return /^text(\*|\+)/.test(nodeSpec.content);
 };
@@ -12065,11 +12065,11 @@ var hasTextContent$1 = (nodeSpec) => {
 * @param side - Which side to expand ('left' or 'right')
 * @returns The expanded position for deletion
 */
-var expandSelectionForSide$1 = ($pos, schema, side) => {
+var expandSelectionForSide = ($pos, schema, side) => {
 	if (!$pos.parent.isInline) return $pos.pos;
 	if (side === "left" && $pos.pos > $pos.start() || side === "right" && $pos.pos < $pos.end()) return $pos.pos;
 	const parentContent = schema.nodes[$pos.parent.type.name].spec;
-	if (!hasTextContent$1(parentContent)) return $pos.pos;
+	if (!hasTextContent(parentContent)) return $pos.pos;
 	return side === "left" ? $pos.start() - 1 : $pos.end() + 1;
 };
 /**
@@ -12078,13 +12078,13 @@ var expandSelectionForSide$1 = ($pos, schema, side) => {
 * so we need to expand the selection to include the entire node.
 * See: https://code.haverbeke.berlin/prosemirror/prosemirror/issues/1365
 */
-var expandSelectionForInlineText$1 = ($from, $to, schema) => {
+var expandSelectionForInlineText = ($from, $to, schema) => {
 	return {
-		from: expandSelectionForSide$1($from, schema, "left"),
-		to: expandSelectionForSide$1($to, schema, "right")
+		from: expandSelectionForSide($from, schema, "left"),
+		to: expandSelectionForSide($to, schema, "right")
 	};
 };
-var deleteSelection$1 = () => ({ state, dispatch }) => {
+var deleteSelection = () => ({ state, dispatch }) => {
 	if (state.selection.empty) return false;
 	if (dispatch) {
 		const tr = state.tr;
@@ -12092,7 +12092,7 @@ var deleteSelection$1 = () => ({ state, dispatch }) => {
 		const mapFrom = tr.steps.length;
 		ranges.forEach((range) => {
 			const mapping = tr.mapping.slice(mapFrom);
-			const { from, to } = expandSelectionForInlineText$1(tr.doc.resolve(mapping.map(range.$from.pos)), tr.doc.resolve(mapping.map(range.$to.pos)), state.schema);
+			const { from, to } = expandSelectionForInlineText(tr.doc.resolve(mapping.map(range.$from.pos)), tr.doc.resolve(mapping.map(range.$to.pos)), state.schema);
 			tr.deleteRange(from, to);
 		});
 		if (!tr.selection.empty) tr.setSelection(TextSelection.near(tr.doc.resolve(tr.selection.from)));
@@ -12101,13 +12101,13 @@ var deleteSelection$1 = () => ({ state, dispatch }) => {
 	}
 	return true;
 };
-var enter$1 = () => ({ commands }) => {
+var enter = () => ({ commands }) => {
 	return commands.keyboardShortcut("Enter");
 };
-var exitCode$1$1 = () => ({ state, dispatch }) => {
+var exitCode$1 = () => ({ state, dispatch }) => {
 	return exitCode(state, dispatch);
 };
-function isRegExp$1(value) {
+function isRegExp(value) {
 	return Object.prototype.toString.call(value) === "[object RegExp]";
 }
 /**
@@ -12115,27 +12115,27 @@ function isRegExp$1(value) {
 * @param object1 Object
 * @param object2 Object
 */
-function objectIncludes$1(object1, object2, options = { strict: true }) {
+function objectIncludes(object1, object2, options = { strict: true }) {
 	const keys = Object.keys(object2);
 	if (!keys.length) return true;
 	return keys.every((key) => {
 		if (options.strict) return object2[key] === object1[key];
-		if (isRegExp$1(object2[key])) return object2[key].test(object1[key]);
+		if (isRegExp(object2[key])) return object2[key].test(object1[key]);
 		return object2[key] === object1[key];
 	});
 }
-function findMarkInSet$1(marks, type, attributes = {}) {
+function findMarkInSet(marks, type, attributes = {}) {
 	return marks.find((item) => {
-		return item.type === type && objectIncludes$1(Object.fromEntries(Object.keys(attributes).map((k) => [k, item.attrs[k]])), attributes);
+		return item.type === type && objectIncludes(Object.fromEntries(Object.keys(attributes).map((k) => [k, item.attrs[k]])), attributes);
 	});
 }
-function isMarkInSet$1(marks, type, attributes = {}) {
-	return !!findMarkInSet$1(marks, type, attributes);
+function isMarkInSet(marks, type, attributes = {}) {
+	return !!findMarkInSet(marks, type, attributes);
 }
 /**
 * Get the range of a mark at a resolved position.
 */
-function getMarkRange$1($pos, type, attributes) {
+function getMarkRange($pos, type, attributes) {
 	if (!$pos || !type) return;
 	let start = $pos.parent.childAfter($pos.parentOffset);
 	if (!start.node || !start.node.marks.some((mark) => mark.type === type)) start = $pos.parent.childBefore($pos.parentOffset);
@@ -12144,16 +12144,16 @@ function getMarkRange$1($pos, type, attributes) {
 		const firstMark = start.node.marks.find((mark) => mark.type === type);
 		if (firstMark) attributes = firstMark.attrs;
 	}
-	if (!findMarkInSet$1([...start.node.marks], type, attributes)) return;
+	if (!findMarkInSet([...start.node.marks], type, attributes)) return;
 	let startIndex = start.index;
 	let startPos = $pos.start() + start.offset;
 	let endIndex = startIndex + 1;
 	let endPos = startPos + start.node.nodeSize;
-	while (startIndex > 0 && isMarkInSet$1([...$pos.parent.child(startIndex - 1).marks], type, attributes)) {
+	while (startIndex > 0 && isMarkInSet([...$pos.parent.child(startIndex - 1).marks], type, attributes)) {
 		startIndex -= 1;
 		startPos -= $pos.parent.child(startIndex).nodeSize;
 	}
-	while (endIndex < $pos.parent.childCount && isMarkInSet$1([...$pos.parent.child(endIndex).marks], type, attributes)) {
+	while (endIndex < $pos.parent.childCount && isMarkInSet([...$pos.parent.child(endIndex).marks], type, attributes)) {
 		endPos += $pos.parent.child(endIndex).nodeSize;
 		endIndex += 1;
 	}
@@ -12162,19 +12162,19 @@ function getMarkRange$1($pos, type, attributes) {
 		to: endPos
 	};
 }
-function getMarkType$1(nameOrType, schema) {
+function getMarkType(nameOrType, schema) {
 	if (typeof nameOrType === "string") {
 		if (!schema.marks[nameOrType]) throw Error(`There is no mark type named '${nameOrType}'. Maybe you forgot to add the extension?`);
 		return schema.marks[nameOrType];
 	}
 	return nameOrType;
 }
-var extendMarkRange$1 = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
-	const type = getMarkType$1(typeOrName, state.schema);
+var extendMarkRange = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
+	const type = getMarkType(typeOrName, state.schema);
 	const { doc, selection } = tr;
 	const { $from, from, to } = selection;
 	if (dispatch) {
-		const range = getMarkRange$1($from, type, attributes);
+		const range = getMarkRange($from, type, attributes);
 		if (range && range.from <= from && range.to >= to) {
 			const newSelection = TextSelection.create(doc, range.from, range.to);
 			tr.setSelection(newSelection);
@@ -12182,18 +12182,18 @@ var extendMarkRange$1 = (typeOrName, attributes) => ({ tr, state, dispatch }) =>
 	}
 	return true;
 };
-var first$1 = (commands) => (props) => {
+var first = (commands) => (props) => {
 	const items = typeof commands === "function" ? commands(props) : commands;
 	for (let i = 0; i < items.length; i += 1) if (items[i](props)) return true;
 	return false;
 };
-function isTextSelection$1(value) {
+function isTextSelection(value) {
 	return value instanceof TextSelection;
 }
-function minMax$1(value = 0, min = 0, max = 0) {
+function minMax(value = 0, min = 0, max = 0) {
 	return Math.min(Math.max(value, min), max);
 }
-function resolveFocusPosition$1(doc, position = null) {
+function resolveFocusPosition(doc, position = null) {
 	if (!position) return null;
 	const selectionAtStart = Selection$1.atStart(doc);
 	const selectionAtEnd = Selection$1.atEnd(doc);
@@ -12201,13 +12201,13 @@ function resolveFocusPosition$1(doc, position = null) {
 	if (position === "end") return selectionAtEnd;
 	const minPos = selectionAtStart.from;
 	const maxPos = selectionAtEnd.to;
-	if (position === "all") return TextSelection.create(doc, minMax$1(0, minPos, maxPos), minMax$1(doc.content.size, minPos, maxPos));
-	return TextSelection.create(doc, minMax$1(position, minPos, maxPos), minMax$1(position, minPos, maxPos));
+	if (position === "all") return TextSelection.create(doc, minMax(0, minPos, maxPos), minMax(doc.content.size, minPos, maxPos));
+	return TextSelection.create(doc, minMax(position, minPos, maxPos), minMax(position, minPos, maxPos));
 }
-function isAndroid$1() {
+function isAndroid() {
 	return ["Android"].includes(navigator.platform) || /android/i.test(navigator.userAgent);
 }
-function isiOS$1() {
+function isiOS() {
 	return [
 		"iPad Simulator",
 		"iPhone Simulator",
@@ -12225,17 +12225,17 @@ function isiOS$1() {
 *   // Safari-specific handling
 * }
 */
-function isSafari$1() {
+function isSafari() {
 	return typeof navigator !== "undefined" ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false;
 }
-var focus$1 = (position = null, options = {}) => ({ editor, view, tr, dispatch }) => {
+var focus = (position = null, options = {}) => ({ editor, view, tr, dispatch }) => {
 	options = {
 		scrollIntoView: true,
 		...options
 	};
 	const delayedFocus = () => {
-		if (isiOS$1() || isAndroid$1()) view.dom.focus();
-		if (isSafari$1() && !isiOS$1() && !isAndroid$1()) view.dom.focus({ preventScroll: true });
+		if (isiOS() || isAndroid()) view.dom.focus();
+		if (isSafari() && !isiOS() && !isAndroid()) view.dom.focus({ preventScroll: true });
 		requestAnimationFrame(() => {
 			if (!editor.isDestroyed) {
 				view.focus();
@@ -12248,11 +12248,11 @@ var focus$1 = (position = null, options = {}) => ({ editor, view, tr, dispatch }
 	} catch {
 		return false;
 	}
-	if (dispatch && position === null && !isTextSelection$1(editor.state.selection)) {
+	if (dispatch && position === null && !isTextSelection(editor.state.selection)) {
 		delayedFocus();
 		return true;
 	}
-	const selection = resolveFocusPosition$1(tr.doc, position) || editor.state.selection;
+	const selection = resolveFocusPosition(tr.doc, position) || editor.state.selection;
 	const isSameSelection = editor.state.selection.eq(selection);
 	if (dispatch) {
 		if (!isSameSelection) tr.setSelection(selection);
@@ -12261,32 +12261,32 @@ var focus$1 = (position = null, options = {}) => ({ editor, view, tr, dispatch }
 	}
 	return true;
 };
-var forEach$1 = (items, fn) => (props) => {
+var forEach = (items, fn) => (props) => {
 	return items.every((item, index) => fn(item, {
 		...props,
 		index
 	}));
 };
-var insertContent$1 = (value, options) => ({ tr, commands }) => {
+var insertContent = (value, options) => ({ tr, commands }) => {
 	return commands.insertContentAt({
 		from: tr.selection.from,
 		to: tr.selection.to
 	}, value, options);
 };
-var removeWhitespaces$1 = (node) => {
+var removeWhitespaces = (node) => {
 	const children = node.childNodes;
 	for (let i = children.length - 1; i >= 0; i -= 1) {
 		const child = children[i];
 		if (child.nodeType === 3 && child.nodeValue && /^(\n\s\s|\n)$/.test(child.nodeValue)) node.removeChild(child);
-		else if (child.nodeType === 1) removeWhitespaces$1(child);
+		else if (child.nodeType === 1) removeWhitespaces(child);
 	}
 	return node;
 };
-function elementFromString$1(value) {
+function elementFromString(value) {
 	if (typeof window === "undefined") throw new Error("[tiptap error]: there is no window object available, so this function cannot be used");
 	const wrappedValue = `<body>${value}</body>`;
 	const html = new window.DOMParser().parseFromString(wrappedValue, "text/html").body;
-	return removeWhitespaces$1(html);
+	return removeWhitespaces(html);
 }
 /**
 * Checks whether a value is already a ProseMirror node or fragment. Looks for the
@@ -12297,7 +12297,7 @@ function elementFromString$1(value) {
 * isProseMirrorContent(editor.state.doc)
 * ```
 */
-function isProseMirrorContent$1(value) {
+function isProseMirrorContent(value) {
 	return typeof (value === null || value === void 0 ? void 0 : value.nodesBetween) === "function";
 }
 /**
@@ -12307,8 +12307,8 @@ function isProseMirrorContent$1(value) {
 * @param options Options for the parser
 * @returns The created Prosemirror node or fragment
 */
-function createNodeFromContent$1(content, schema, options) {
-	if (isProseMirrorContent$1(content)) return content;
+function createNodeFromContent(content, schema, options) {
+	if (isProseMirrorContent(content)) return content;
 	const isJSONContent = typeof content === "object" && content !== null;
 	options = {
 		slice: true,
@@ -12324,7 +12324,7 @@ function createNodeFromContent$1(content, schema, options) {
 	} catch (error) {
 		if (options.errorOnInvalidContent) throw new Error("[tiptap error]: Invalid JSON content", { cause: error });
 		console.warn("[tiptap warn]: Invalid content.", "Passed value:", content, "Error:", error);
-		return createNodeFromContent$1("", schema, options);
+		return createNodeFromContent("", schema, options);
 	}
 	if (isTextContent) {
 		if (options.errorOnInvalidContent) {
@@ -12346,15 +12346,15 @@ function createNodeFromContent$1(content, schema, options) {
 					}]
 				} })
 			});
-			if (options.slice) DOMParser.fromSchema(contentCheckSchema).parseSlice(elementFromString$1(content), options.parseOptions);
-			else DOMParser.fromSchema(contentCheckSchema).parse(elementFromString$1(content), options.parseOptions);
+			if (options.slice) DOMParser.fromSchema(contentCheckSchema).parseSlice(elementFromString(content), options.parseOptions);
+			else DOMParser.fromSchema(contentCheckSchema).parse(elementFromString(content), options.parseOptions);
 			if (options.errorOnInvalidContent && hasInvalidContent) throw new Error("[tiptap error]: Invalid HTML content", { cause: /* @__PURE__ */ new Error(`Invalid element found: ${invalidContent}`) });
 		}
 		const parser = DOMParser.fromSchema(schema);
-		if (options.slice) return parser.parseSlice(elementFromString$1(content), options.parseOptions).content;
-		return parser.parse(elementFromString$1(content), options.parseOptions);
+		if (options.slice) return parser.parseSlice(elementFromString(content), options.parseOptions).content;
+		return parser.parse(elementFromString(content), options.parseOptions);
 	}
-	return createNodeFromContent$1("", schema, options);
+	return createNodeFromContent("", schema, options);
 }
 /**
 * Checks whether a node or fragment is a fragment. Looks for a missing `type` field,
@@ -12365,10 +12365,10 @@ function createNodeFromContent$1(content, schema, options) {
 * isFragment(editor.state.doc.content)
 * ```
 */
-function isFragment$1(nodeOrFragment) {
+function isFragment(nodeOrFragment) {
 	return !("type" in nodeOrFragment);
 }
-function selectionToInsertionEnd$1(tr, startLen, bias) {
+function selectionToInsertionEnd(tr, startLen, bias) {
 	const last = tr.steps.length - 1;
 	if (last < startLen) return;
 	const step = tr.steps[last];
@@ -12380,7 +12380,7 @@ function selectionToInsertionEnd$1(tr, startLen, bias) {
 	});
 	tr.setSelection(Selection$1.near(tr.doc.resolve(end), bias));
 }
-var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor }) => {
+var insertContentAt = (position, value, options) => ({ tr, dispatch, editor }) => {
 	if (dispatch) {
 		options = {
 			parseOptions: editor.options.parseOptions,
@@ -12404,7 +12404,7 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 			...options.parseOptions
 		};
 		if (!options.errorOnInvalidContent && !editor.options.enableContentCheck && editor.options.emitContentError) try {
-			createNodeFromContent$1(value, editor.schema, {
+			createNodeFromContent(value, editor.schema, {
 				parseOptions,
 				errorOnInvalidContent: true
 			});
@@ -12413,7 +12413,7 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 		}
 		try {
 			var _options$errorOnInval;
-			content = createNodeFromContent$1(value, editor.schema, {
+			content = createNodeFromContent(value, editor.schema, {
 				parseOptions,
 				errorOnInvalidContent: (_options$errorOnInval = options.errorOnInvalidContent) !== null && _options$errorOnInval !== void 0 ? _options$errorOnInval : editor.options.enableContentCheck
 			});
@@ -12430,7 +12430,7 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 		};
 		let isOnlyTextContent = true;
 		let isOnlyBlockContent = true;
-		const nodes = isFragment$1(content) ? content.content : [content];
+		const nodes = isFragment(content) ? content.content : [content];
 		nodes.forEach((node) => {
 			node.check();
 			isOnlyTextContent = isOnlyTextContent ? node.isText && node.marks.length === 0 : false;
@@ -12446,7 +12446,7 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 		let newContent;
 		if (isOnlyTextContent) {
 			if (Array.isArray(value)) newContent = value.map((item) => item.text || "").join("");
-			else if (isProseMirrorContent$1(value)) newContent = nodes.map((node) => {
+			else if (isProseMirrorContent(value)) newContent = nodes.map((node) => {
 				var _node$text;
 				return (_node$text = node.text) !== null && _node$text !== void 0 ? _node$text : "";
 			}).join("");
@@ -12463,7 +12463,7 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 			if (fromSelectionAtStart && isTextSelection && hasContent && isOnlyBlockContent) from = Math.max(0, from - 1);
 			tr.replaceWith(from, to, nodes);
 		}
-		if (options.updateSelection) selectionToInsertionEnd$1(tr, tr.steps.length - 1, -1);
+		if (options.updateSelection) selectionToInsertionEnd(tr, tr.steps.length - 1, -1);
 		if (options.applyInputRules) tr.setMeta("applyInputRules", {
 			from,
 			text: newContent
@@ -12480,59 +12480,59 @@ var insertContentAt$1 = (position, value, options) => ({ tr, dispatch, editor })
 * @param match The content match to get the default block type from
 * @returns The default block type or null
 */
-function defaultBlockAt$1(match) {
+function defaultBlockAt(match) {
 	for (let i = 0; i < match.edgeCount; i += 1) {
 		const { type } = match.edge(i);
 		if (type.isTextblock && !type.hasRequiredAttrs()) return type;
 	}
 	return null;
 }
-var insertDefaultBlock$1 = (options = {}) => ({ tr, dispatch, editor }) => {
+var insertDefaultBlock = (options = {}) => ({ tr, dispatch, editor }) => {
 	const { pos, attrs, content, updateSelection = true } = options;
 	let $pos;
 	if (typeof pos === "number") $pos = tr.doc.resolve(pos);
 	else if (pos) $pos = pos;
 	else $pos = tr.selection.$from;
-	const defaultType = defaultBlockAt$1($pos.parent.contentMatchAt($pos.index()));
+	const defaultType = defaultBlockAt($pos.parent.contentMatchAt($pos.index()));
 	if (!defaultType) return false;
 	const validAttrKeys = Object.keys(defaultType.spec.attrs || {});
 	const filteredAttrs = attrs ? Object.fromEntries(Object.entries(attrs).filter(([key]) => validAttrKeys.includes(key))) : {};
 	let node;
 	if (content) {
-		const parsed = createNodeFromContent$1(content, editor.schema);
+		const parsed = createNodeFromContent(content, editor.schema);
 		node = defaultType.createAndFill(filteredAttrs, parsed);
 	} else node = defaultType.createAndFill(filteredAttrs);
 	if (!node) return false;
 	if (dispatch) {
 		tr.insert($pos.pos, node);
-		if (updateSelection) selectionToInsertionEnd$1(tr, tr.steps.length - 1, -1);
+		if (updateSelection) selectionToInsertionEnd(tr, tr.steps.length - 1, -1);
 	}
 	return true;
 };
-var joinUp$1$1 = () => ({ state, dispatch }) => {
+var joinUp$1 = () => ({ state, dispatch }) => {
 	return joinUp(state, dispatch);
 };
-var joinDown$1$1 = () => ({ state, dispatch }) => {
+var joinDown$1 = () => ({ state, dispatch }) => {
 	return joinDown(state, dispatch);
 };
-var joinBackward$1$1 = () => ({ state, dispatch }) => {
+var joinBackward$1 = () => ({ state, dispatch }) => {
 	return joinBackward(state, dispatch);
 };
-var joinForward$1$1 = () => ({ state, dispatch }) => {
+var joinForward$1 = () => ({ state, dispatch }) => {
 	return joinForward(state, dispatch);
 };
-var canJoinItemsAt$1 = (doc, pos) => {
+var canJoinItemsAt = (doc, pos) => {
 	const $pos = doc.resolve(pos);
 	const before = $pos.nodeBefore;
 	const after = $pos.nodeAfter;
 	if (!before || !after) return false;
 	return !before.type.spec.isolating && !after.type.spec.isolating;
 };
-var joinItemBackward$1 = () => ({ state, dispatch, tr }) => {
+var joinItemBackward = () => ({ state, dispatch, tr }) => {
 	try {
 		const point = joinPoint(state.doc, state.selection.$from.pos, -1);
 		if (point === null || point === void 0) return false;
-		if (!canJoinItemsAt$1(state.doc, point)) return false;
+		if (!canJoinItemsAt(state.doc, point)) return false;
 		tr.join(point, 2);
 		if (dispatch) dispatch(tr);
 		return true;
@@ -12540,11 +12540,11 @@ var joinItemBackward$1 = () => ({ state, dispatch, tr }) => {
 		return false;
 	}
 };
-var joinItemForward$1 = () => ({ state, dispatch, tr }) => {
+var joinItemForward = () => ({ state, dispatch, tr }) => {
 	try {
 		const point = joinPoint(state.doc, state.selection.$from.pos, 1);
 		if (point === null || point === void 0) return false;
-		if (!canJoinItemsAt$1(state.doc, point)) return false;
+		if (!canJoinItemsAt(state.doc, point)) return false;
 		tr.join(point, 2);
 		if (dispatch) dispatch(tr);
 		return true;
@@ -12552,16 +12552,16 @@ var joinItemForward$1 = () => ({ state, dispatch, tr }) => {
 		return false;
 	}
 };
-var joinTextblockBackward$1$1 = () => ({ state, dispatch }) => {
+var joinTextblockBackward$1 = () => ({ state, dispatch }) => {
 	return joinTextblockBackward(state, dispatch);
 };
-var joinTextblockForward$1$1 = () => ({ state, dispatch }) => {
+var joinTextblockForward$1 = () => ({ state, dispatch }) => {
 	return joinTextblockForward(state, dispatch);
 };
-function isMacOS$1() {
+function isMacOS() {
 	return typeof navigator !== "undefined" ? /Mac/.test(navigator.platform) : false;
 }
-function normalizeKeyName$1(name) {
+function normalizeKeyName(name) {
 	const parts = name.split(/-(?!$)/);
 	let result = parts[parts.length - 1];
 	if (result === "Space") result = " ";
@@ -12576,7 +12576,7 @@ function normalizeKeyName$1(name) {
 		else if (/^(c|ctrl|control)$/i.test(mod)) ctrl = true;
 		else if (/^s(hift)?$/i.test(mod)) shift = true;
 		else if (/^mod$/i.test(mod)) {
-			if (isiOS$1() || isMacOS$1()) meta = true;
+			if (isiOS() || isMacOS()) meta = true;
 			else ctrl = true;
 		} else throw new Error(`Unrecognized modifier name: ${mod}`);
 	}
@@ -12586,8 +12586,8 @@ function normalizeKeyName$1(name) {
 	if (shift) result = `Shift-${result}`;
 	return result;
 }
-var keyboardShortcut$1 = (name) => ({ editor, view, tr, dispatch }) => {
-	const keys = normalizeKeyName$1(name).split(/-(?!$)/);
+var keyboardShortcut = (name) => ({ editor, view, tr, dispatch }) => {
+	const keys = normalizeKeyName(name).split(/-(?!$)/);
 	const key = keys.find((item) => ![
 		"Alt",
 		"Ctrl",
@@ -12612,9 +12612,9 @@ var keyboardShortcut$1 = (name) => ({ editor, view, tr, dispatch }) => {
 	});
 	return true;
 };
-function isNodeActive$1(state, typeOrName, attributes = {}) {
+function isNodeActive(state, typeOrName, attributes = {}) {
 	const { from, to, empty } = state.selection;
-	const type = typeOrName ? getNodeType$1(typeOrName, state.schema) : null;
+	const type = typeOrName ? getNodeType(typeOrName, state.schema) : null;
 	const nodeRanges = [];
 	state.doc.nodesBetween(from, to, (node, pos) => {
 		if (node.isText) return;
@@ -12630,21 +12630,21 @@ function isNodeActive$1(state, typeOrName, attributes = {}) {
 	const matchedNodeRanges = nodeRanges.filter((nodeRange) => {
 		if (!type) return true;
 		return type.name === nodeRange.node.type.name;
-	}).filter((nodeRange) => objectIncludes$1(nodeRange.node.attrs, attributes, { strict: false }));
+	}).filter((nodeRange) => objectIncludes(nodeRange.node.attrs, attributes, { strict: false }));
 	if (empty) return !!matchedNodeRanges.length;
 	return matchedNodeRanges.reduce((sum, nodeRange) => sum + nodeRange.to - nodeRange.from, 0) >= selectionRange;
 }
-var lift$1$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	if (!isNodeActive$1(state, getNodeType$1(typeOrName, state.schema), attributes)) return false;
+var lift$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
+	if (!isNodeActive(state, getNodeType(typeOrName, state.schema), attributes)) return false;
 	return lift(state, dispatch);
 };
-var liftEmptyBlock$1$1 = () => ({ state, dispatch }) => {
+var liftEmptyBlock$1 = () => ({ state, dispatch }) => {
 	return liftEmptyBlock(state, dispatch);
 };
-var liftListItem$1$1 = (typeOrName) => ({ state, dispatch }) => {
-	return liftListItem(getNodeType$1(typeOrName, state.schema))(state, dispatch);
+var liftListItem$1 = (typeOrName) => ({ state, dispatch }) => {
+	return liftListItem(getNodeType(typeOrName, state.schema))(state, dispatch);
 };
-var newlineInCode$1$1 = () => ({ state, dispatch }) => {
+var newlineInCode$1 = () => ({ state, dispatch }) => {
 	return newlineInCode(state, dispatch);
 };
 /**
@@ -12653,7 +12653,7 @@ var newlineInCode$1$1 = () => ({ state, dispatch }) => {
 * @param schema The Prosemiror schema to search in
 * @returns The type of the schema item (`node` or `mark`), or null if it doesn't exist
 */
-function getSchemaTypeNameByName$1(name, schema) {
+function getSchemaTypeNameByName(name, schema) {
 	if (schema.nodes[name]) return "node";
 	if (schema.marks[name]) return "mark";
 	return null;
@@ -12663,61 +12663,61 @@ function getSchemaTypeNameByName$1(name, schema) {
 * @param obj Object
 * @param key Key to remove
 */
-function deleteProps$1(obj, propOrProps) {
+function deleteProps(obj, propOrProps) {
 	const props = typeof propOrProps === "string" ? [propOrProps] : propOrProps;
 	return Object.keys(obj).reduce((newObj, prop) => {
 		if (!props.includes(prop)) newObj[prop] = obj[prop];
 		return newObj;
 	}, {});
 }
-var resetAttributes$1 = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
+var resetAttributes = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
 	let nodeType = null;
 	let markType = null;
-	const schemaType = getSchemaTypeNameByName$1(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
+	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
 	if (!schemaType) return false;
-	if (schemaType === "node") nodeType = getNodeType$1(typeOrName, state.schema);
-	if (schemaType === "mark") markType = getMarkType$1(typeOrName, state.schema);
+	if (schemaType === "node") nodeType = getNodeType(typeOrName, state.schema);
+	if (schemaType === "mark") markType = getMarkType(typeOrName, state.schema);
 	let canReset = false;
 	tr.selection.ranges.forEach((range) => {
 		state.doc.nodesBetween(range.$from.pos, range.$to.pos, (node, pos) => {
 			if (nodeType && nodeType === node.type) {
 				canReset = true;
-				if (dispatch) tr.setNodeMarkup(pos, void 0, deleteProps$1(node.attrs, attributes));
+				if (dispatch) tr.setNodeMarkup(pos, void 0, deleteProps(node.attrs, attributes));
 			}
 			if (markType && node.marks.length) node.marks.forEach((mark) => {
 				if (markType === mark.type) {
 					canReset = true;
-					if (dispatch) tr.addMark(pos, pos + node.nodeSize, markType.create(deleteProps$1(mark.attrs, attributes)));
+					if (dispatch) tr.addMark(pos, pos + node.nodeSize, markType.create(deleteProps(mark.attrs, attributes)));
 				}
 			});
 		});
 	});
 	return canReset;
 };
-var scrollIntoView$1 = () => ({ tr, dispatch }) => {
+var scrollIntoView = () => ({ tr, dispatch }) => {
 	if (dispatch) tr.scrollIntoView();
 	return true;
 };
-var selectAll$1 = () => ({ tr, dispatch }) => {
+var selectAll = () => ({ tr, dispatch }) => {
 	if (dispatch) {
 		const selection = new AllSelection(tr.doc);
 		tr.setSelection(selection);
 	}
 	return true;
 };
-var selectNodeBackward$1$1 = () => ({ state, dispatch }) => {
+var selectNodeBackward$1 = () => ({ state, dispatch }) => {
 	return selectNodeBackward(state, dispatch);
 };
-var selectNodeForward$1$1 = () => ({ state, dispatch }) => {
+var selectNodeForward$1 = () => ({ state, dispatch }) => {
 	return selectNodeForward(state, dispatch);
 };
-var selectParentNode$1$1 = () => ({ state, dispatch }) => {
+var selectParentNode$1 = () => ({ state, dispatch }) => {
 	return selectParentNode(state, dispatch);
 };
-var selectTextblockEnd$1$1 = () => ({ state, dispatch }) => {
+var selectTextblockEnd$1 = () => ({ state, dispatch }) => {
 	return selectTextblockEnd(state, dispatch);
 };
-var selectTextblockStart$1$1 = () => ({ state, dispatch }) => {
+var selectTextblockStart$1 = () => ({ state, dispatch }) => {
 	return selectTextblockStart(state, dispatch);
 };
 /**
@@ -12727,19 +12727,19 @@ var selectTextblockStart$1$1 = () => ({ state, dispatch }) => {
 * @param parseOptions Options for the parser
 * @returns The created Prosemirror document node
 */
-function createDocument$1(content, schema, parseOptions = {}, options = {}) {
-	return createNodeFromContent$1(content, schema, {
+function createDocument(content, schema, parseOptions = {}, options = {}) {
+	return createNodeFromContent(content, schema, {
 		slice: false,
 		parseOptions,
 		errorOnInvalidContent: options.errorOnInvalidContent
 	});
 }
-var setContent$1 = (content, { errorOnInvalidContent, emitUpdate = true, parseOptions = {} } = {}) => ({ editor, tr, dispatch, commands }) => {
+var setContent = (content, { errorOnInvalidContent, emitUpdate = true, parseOptions = {} } = {}) => ({ editor, tr, dispatch, commands }) => {
 	const { doc } = tr;
 	if (parseOptions.preserveWhitespace !== "full") {
-		const document = createDocument$1(content, editor.schema, parseOptions, { errorOnInvalidContent: errorOnInvalidContent !== null && errorOnInvalidContent !== void 0 ? errorOnInvalidContent : editor.options.enableContentCheck });
+		const document = createDocument(content, editor.schema, parseOptions, { errorOnInvalidContent: errorOnInvalidContent !== null && errorOnInvalidContent !== void 0 ? errorOnInvalidContent : editor.options.enableContentCheck });
 		if (dispatch) {
-			const nodes = isFragment$1(document) ? document.content : [document];
+			const nodes = isFragment(document) ? document.content : [document];
 			tr.replaceWith(0, doc.content.size, nodes).setMeta("preventUpdate", !emitUpdate);
 		}
 		return true;
@@ -12753,8 +12753,8 @@ var setContent$1 = (content, { errorOnInvalidContent, emitUpdate = true, parseOp
 		errorOnInvalidContent: errorOnInvalidContent !== null && errorOnInvalidContent !== void 0 ? errorOnInvalidContent : editor.options.enableContentCheck
 	});
 };
-function getMarkAttributes$1(state, typeOrName) {
-	const type = getMarkType$1(typeOrName, state.schema);
+function getMarkAttributes(state, typeOrName) {
+	const type = getMarkType(typeOrName, state.schema);
 	const { from, to, empty } = state.selection;
 	const marks = [];
 	if (empty) {
@@ -12773,7 +12773,7 @@ function getMarkAttributes$1(state, typeOrName) {
 * @param transactions The transactions to combine
 * @returns A new `Transform` with all steps of the passed transactions
 */
-function combineTransactionSteps$1(oldDoc, transactions) {
+function combineTransactionSteps(oldDoc, transactions) {
 	const transform = new Transform(oldDoc);
 	transactions.forEach((transaction) => {
 		transaction.steps.forEach((step) => {
@@ -12808,7 +12808,7 @@ function findChildrenInRange(node, range, predicate) {
 * findParentNodeClosestToPos($from, node => node.type.name === 'paragraph')
 * ```
 */
-function findParentNodeClosestToPos$1($pos, predicate) {
+function findParentNodeClosestToPos($pos, predicate) {
 	for (let i = $pos.depth; i > 0; i -= 1) {
 		const node = $pos.node(i);
 		if (predicate(node)) return {
@@ -12827,8 +12827,8 @@ function findParentNodeClosestToPos$1($pos, predicate) {
 * findParentNode(node => node.type.name === 'paragraph')
 * ```
 */
-function findParentNode$1(predicate) {
-	return (selection) => findParentNodeClosestToPos$1(selection.$from, predicate);
+function findParentNode(predicate) {
+	return (selection) => findParentNodeClosestToPos(selection.$from, predicate);
 }
 /**
 * Returns a field from an extension
@@ -12837,11 +12837,11 @@ function findParentNode$1(predicate) {
 * @param context The context object that should be passed as `this` into the function
 * @returns The field value
 */
-function getExtensionField$1(extension, field, context) {
-	if (extension.config[field] === void 0 && extension.parent) return getExtensionField$1(extension.parent, field, context);
+function getExtensionField(extension, field, context) {
+	if (extension.config[field] === void 0 && extension.parent) return getExtensionField(extension.parent, field, context);
 	if (typeof extension.config[field] === "function") return extension.config[field].bind({
 		...context,
-		parent: extension.parent ? getExtensionField$1(extension.parent, field, context) : null
+		parent: extension.parent ? getExtensionField(extension.parent, field, context) : null
 	});
 	return extension.config[field];
 }
@@ -12850,24 +12850,24 @@ function getExtensionField$1(extension, field, context) {
 * @param extensions An array of Tiptap extensions
 * @returns A flattened array of Tiptap extensions
 */
-function flattenExtensions$1(extensions) {
+function flattenExtensions(extensions) {
 	return extensions.map((extension) => {
-		const addExtensions = getExtensionField$1(extension, "addExtensions", {
+		const addExtensions = getExtensionField(extension, "addExtensions", {
 			name: extension.name,
 			options: extension.options,
 			storage: extension.storage
 		});
-		if (addExtensions) return [extension, ...flattenExtensions$1(addExtensions())];
+		if (addExtensions) return [extension, ...flattenExtensions(addExtensions())];
 		return extension;
 	}).flat(10);
 }
-function getHTMLFromFragment$1(fragment, schema) {
+function getHTMLFromFragment(fragment, schema) {
 	const documentFragment = DOMSerializer.fromSchema(schema).serializeFragment(fragment);
 	const container = document.implementation.createHTMLDocument().createElement("div");
 	container.appendChild(documentFragment);
 	return container.innerHTML;
 }
-function isFunction$1(value) {
+function isFunction(value) {
 	return typeof value === "function";
 }
 /**
@@ -12877,17 +12877,17 @@ function isFunction$1(value) {
 * @param context Optional context to bind to function.
 * @param props Optional props to pass to function.
 */
-function callOrReturn$1(value, context = void 0, ...props) {
-	if (isFunction$1(value)) {
+function callOrReturn(value, context = void 0, ...props) {
+	if (isFunction(value)) {
 		if (context) return value.bind(context)(...props);
 		return value(...props);
 	}
 	return value;
 }
-function isEmptyObject$1(value = {}) {
+function isEmptyObject(value = {}) {
 	return Object.keys(value).length === 0 && value.constructor === Object;
 }
-function splitExtensions$1(extensions) {
+function splitExtensions(extensions) {
 	return {
 		baseExtensions: extensions.filter((extension) => extension.type === "extension"),
 		nodeExtensions: extensions.filter((extension) => extension.type === "node"),
@@ -12898,9 +12898,9 @@ function splitExtensions$1(extensions) {
 * Get a list of all extension attributes defined in `addAttribute` and `addGlobalAttribute`.
 * @param extensions List of extensions
 */
-function getAttributesFromExtensions$1(extensions) {
+function getAttributesFromExtensions(extensions) {
 	const extensionAttributes = [];
-	const { nodeExtensions, markExtensions } = splitExtensions$1(extensions);
+	const { nodeExtensions, markExtensions } = splitExtensions(extensions);
 	const nodeAndMarkExtensions = [...nodeExtensions, ...markExtensions];
 	const defaultAttribute = {
 		default: null,
@@ -12915,7 +12915,7 @@ function getAttributesFromExtensions$1(extensions) {
 	const markExtensionTypes = markExtensions.map((ext) => ext.name);
 	const allExtensionTypes = [...nodeExtensionTypes, ...markExtensionTypes];
 	extensions.forEach((extension) => {
-		const addGlobalAttributes = getExtensionField$1(extension, "addGlobalAttributes", {
+		const addGlobalAttributes = getExtensionField(extension, "addGlobalAttributes", {
 			name: extension.name,
 			options: extension.options,
 			storage: extension.storage,
@@ -12944,7 +12944,7 @@ function getAttributesFromExtensions$1(extensions) {
 		});
 	});
 	nodeAndMarkExtensions.forEach((extension) => {
-		const addAttributes = getExtensionField$1(extension, "addAttributes", {
+		const addAttributes = getExtensionField(extension, "addAttributes", {
 			name: extension.name,
 			options: extension.options,
 			storage: extension.storage
@@ -12968,7 +12968,7 @@ function getAttributesFromExtensions$1(extensions) {
 	return extensionAttributes;
 }
 /** Splits a CSS style string into declarations, ignoring semicolons inside quotes/parentheses. */
-function splitStyleDeclarations$1(styles) {
+function splitStyleDeclarations(styles) {
 	const result = [];
 	let current = "";
 	let inSingleQuote = false;
@@ -13010,9 +13010,9 @@ function splitStyleDeclarations$1(styles) {
 	return result;
 }
 /** Yields property/value pairs from a style string. */
-function parseStyleEntries$1(styles) {
+function parseStyleEntries(styles) {
 	const pairs = [];
-	const declarations = splitStyleDeclarations$1(styles || "");
+	const declarations = splitStyleDeclarations(styles || "");
 	const numDeclarations = declarations.length;
 	for (let i = 0; i < numDeclarations; i += 1) {
 		const declaration = declarations[i];
@@ -13024,7 +13024,7 @@ function parseStyleEntries$1(styles) {
 	}
 	return pairs;
 }
-function mergeAttributes$1(...objects) {
+function mergeAttributes(...objects) {
 	return objects.filter((item) => !!item).reduce((items, item) => {
 		const mergedAttributes = { ...items };
 		Object.entries(item).forEach(([key, value]) => {
@@ -13047,20 +13047,20 @@ function mergeAttributes$1(...objects) {
 				const insertClasses = valueClasses.filter((valueClass) => !existingClasses.includes(valueClass));
 				mergedAttributes[key] = [...existingClasses, ...insertClasses].join(" ");
 			} else if (key === "style") {
-				const styleMap = new Map([...parseStyleEntries$1(mergedAttributes[key]), ...parseStyleEntries$1(value)]);
+				const styleMap = new Map([...parseStyleEntries(mergedAttributes[key]), ...parseStyleEntries(value)]);
 				mergedAttributes[key] = Array.from(styleMap.entries()).map(([property, val]) => `${property}: ${val}`).join("; ");
 			} else mergedAttributes[key] = value;
 		});
 		return mergedAttributes;
 	}, {});
 }
-function getRenderedAttributes$1(nodeOrMark, extensionAttributes) {
+function getRenderedAttributes(nodeOrMark, extensionAttributes) {
 	return extensionAttributes.filter((attribute) => attribute.type === nodeOrMark.type.name).filter((item) => item.attribute.rendered).map((item) => {
 		if (!item.attribute.renderHTML) return { [item.name]: nodeOrMark.attrs[item.name] };
 		return item.attribute.renderHTML(nodeOrMark.attrs) || {};
-	}).reduce((attributes, attribute) => mergeAttributes$1(attributes, attribute), {});
+	}).reduce((attributes, attribute) => mergeAttributes(attributes, attribute), {});
 }
-function fromString$1(value) {
+function fromString(value) {
 	if (typeof value !== "string") return value;
 	if (value.match(/^[+-]?(?:\d*\.)?\d+$/)) return Number(value);
 	if (value === "true") return true;
@@ -13073,7 +13073,7 @@ function fromString$1(value) {
 * @param parseRule ProseMirror ParseRule
 * @param extensionAttributes List of attributes to inject
 */
-function injectExtensionAttributesToParseRule$1(parseRule, extensionAttributes) {
+function injectExtensionAttributesToParseRule(parseRule, extensionAttributes) {
 	if ("style" in parseRule) return parseRule;
 	return {
 		...parseRule,
@@ -13081,7 +13081,7 @@ function injectExtensionAttributesToParseRule$1(parseRule, extensionAttributes) 
 			const oldAttributes = parseRule.getAttrs ? parseRule.getAttrs(node) : parseRule.attrs;
 			if (oldAttributes === false) return false;
 			const newAttributes = extensionAttributes.reduce((items, item) => {
-				const value = item.attribute.parseHTML ? item.attribute.parseHTML(node) : fromString$1(node.getAttribute(item.name));
+				const value = item.attribute.parseHTML ? item.attribute.parseHTML(node) : fromString(node.getAttribute(item.name));
 				if (value === null || value === void 0) return items;
 				return {
 					...items,
@@ -13095,9 +13095,9 @@ function injectExtensionAttributesToParseRule$1(parseRule, extensionAttributes) 
 		}
 	};
 }
-function cleanUpSchemaItem$1(data) {
+function cleanUpSchemaItem(data) {
 	return Object.fromEntries(Object.entries(data).filter(([key, value]) => {
-		if (key === "attrs" && isEmptyObject$1(value)) return false;
+		if (key === "attrs" && isEmptyObject(value)) return false;
 		return value !== null && value !== void 0;
 	}));
 }
@@ -13106,7 +13106,7 @@ function cleanUpSchemaItem$1(data) {
 * @param extensionAttribute The extension attribute to build the spec for
 * @returns A tuple of [attributeName, spec]
 */
-function buildAttributeSpec$1(extensionAttribute) {
+function buildAttributeSpec(extensionAttribute) {
 	var _extensionAttribute$a, _extensionAttribute$a2;
 	const spec = {};
 	if (!(extensionAttribute === null || extensionAttribute === void 0 || (_extensionAttribute$a = extensionAttribute.attribute) === null || _extensionAttribute$a === void 0 ? void 0 : _extensionAttribute$a.isRequired) && "default" in ((extensionAttribute === null || extensionAttribute === void 0 ? void 0 : extensionAttribute.attribute) || {})) spec.default = extensionAttribute.attribute.default;
@@ -13119,12 +13119,12 @@ function buildAttributeSpec$1(extensionAttribute) {
 * @param editor The editor instance
 * @returns A Prosemirror schema
 */
-function getSchemaByResolvedExtensions$1(extensions, editor) {
+function getSchemaByResolvedExtensions(extensions, editor) {
 	var _nodeExtensions$find;
-	const allAttributes = getAttributesFromExtensions$1(extensions);
-	const { nodeExtensions, markExtensions } = splitExtensions$1(extensions);
+	const allAttributes = getAttributesFromExtensions(extensions);
+	const { nodeExtensions, markExtensions } = splitExtensions(extensions);
 	return new Schema({
-		topNode: (_nodeExtensions$find = nodeExtensions.find((extension) => getExtensionField$1(extension, "topNode"))) === null || _nodeExtensions$find === void 0 ? void 0 : _nodeExtensions$find.name,
+		topNode: (_nodeExtensions$find = nodeExtensions.find((extension) => getExtensionField(extension, "topNode"))) === null || _nodeExtensions$find === void 0 ? void 0 : _nodeExtensions$find.name,
 		nodes: Object.fromEntries(nodeExtensions.map((extension) => {
 			const extensionAttributes = allAttributes.filter((attribute) => attribute.type === extension.name);
 			const context = {
@@ -13133,36 +13133,36 @@ function getSchemaByResolvedExtensions$1(extensions, editor) {
 				storage: extension.storage,
 				editor
 			};
-			const schema = cleanUpSchemaItem$1({
+			const schema = cleanUpSchemaItem({
 				...extensions.reduce((fields, e) => {
-					const extendNodeSchema = getExtensionField$1(e, "extendNodeSchema", context);
+					const extendNodeSchema = getExtensionField(e, "extendNodeSchema", context);
 					return {
 						...fields,
 						...extendNodeSchema ? extendNodeSchema(extension) : {}
 					};
 				}, {}),
-				content: callOrReturn$1(getExtensionField$1(extension, "content", context)),
-				marks: callOrReturn$1(getExtensionField$1(extension, "marks", context)),
-				group: callOrReturn$1(getExtensionField$1(extension, "group", context)),
-				inline: callOrReturn$1(getExtensionField$1(extension, "inline", context)),
-				atom: callOrReturn$1(getExtensionField$1(extension, "atom", context)),
-				selectable: callOrReturn$1(getExtensionField$1(extension, "selectable", context)),
-				draggable: callOrReturn$1(getExtensionField$1(extension, "draggable", context)),
-				code: callOrReturn$1(getExtensionField$1(extension, "code", context)),
-				whitespace: callOrReturn$1(getExtensionField$1(extension, "whitespace", context)),
-				linebreakReplacement: callOrReturn$1(getExtensionField$1(extension, "linebreakReplacement", context)),
-				defining: callOrReturn$1(getExtensionField$1(extension, "defining", context)),
-				isolating: callOrReturn$1(getExtensionField$1(extension, "isolating", context)),
-				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec$1))
+				content: callOrReturn(getExtensionField(extension, "content", context)),
+				marks: callOrReturn(getExtensionField(extension, "marks", context)),
+				group: callOrReturn(getExtensionField(extension, "group", context)),
+				inline: callOrReturn(getExtensionField(extension, "inline", context)),
+				atom: callOrReturn(getExtensionField(extension, "atom", context)),
+				selectable: callOrReturn(getExtensionField(extension, "selectable", context)),
+				draggable: callOrReturn(getExtensionField(extension, "draggable", context)),
+				code: callOrReturn(getExtensionField(extension, "code", context)),
+				whitespace: callOrReturn(getExtensionField(extension, "whitespace", context)),
+				linebreakReplacement: callOrReturn(getExtensionField(extension, "linebreakReplacement", context)),
+				defining: callOrReturn(getExtensionField(extension, "defining", context)),
+				isolating: callOrReturn(getExtensionField(extension, "isolating", context)),
+				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec))
 			});
-			const parseHTML = callOrReturn$1(getExtensionField$1(extension, "parseHTML", context));
-			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule$1(parseRule, extensionAttributes));
-			const renderHTML = getExtensionField$1(extension, "renderHTML", context);
+			const parseHTML = callOrReturn(getExtensionField(extension, "parseHTML", context));
+			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule(parseRule, extensionAttributes));
+			const renderHTML = getExtensionField(extension, "renderHTML", context);
 			if (renderHTML) schema.toDOM = (node) => renderHTML({
 				node,
-				HTMLAttributes: getRenderedAttributes$1(node, extensionAttributes)
+				HTMLAttributes: getRenderedAttributes(node, extensionAttributes)
 			});
-			const renderText = getExtensionField$1(extension, "renderText", context);
+			const renderText = getExtensionField(extension, "renderText", context);
 			if (renderText) schema.toText = renderText;
 			return [extension.name, schema];
 		})),
@@ -13174,27 +13174,27 @@ function getSchemaByResolvedExtensions$1(extensions, editor) {
 				storage: extension.storage,
 				editor
 			};
-			const schema = cleanUpSchemaItem$1({
+			const schema = cleanUpSchemaItem({
 				...extensions.reduce((fields, e) => {
-					const extendMarkSchema = getExtensionField$1(e, "extendMarkSchema", context);
+					const extendMarkSchema = getExtensionField(e, "extendMarkSchema", context);
 					return {
 						...fields,
 						...extendMarkSchema ? extendMarkSchema(extension) : {}
 					};
 				}, {}),
-				inclusive: callOrReturn$1(getExtensionField$1(extension, "inclusive", context)),
-				excludes: callOrReturn$1(getExtensionField$1(extension, "excludes", context)),
-				group: callOrReturn$1(getExtensionField$1(extension, "group", context)),
-				spanning: callOrReturn$1(getExtensionField$1(extension, "spanning", context)),
-				code: callOrReturn$1(getExtensionField$1(extension, "code", context)),
-				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec$1))
+				inclusive: callOrReturn(getExtensionField(extension, "inclusive", context)),
+				excludes: callOrReturn(getExtensionField(extension, "excludes", context)),
+				group: callOrReturn(getExtensionField(extension, "group", context)),
+				spanning: callOrReturn(getExtensionField(extension, "spanning", context)),
+				code: callOrReturn(getExtensionField(extension, "code", context)),
+				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec))
 			});
-			const parseHTML = callOrReturn$1(getExtensionField$1(extension, "parseHTML", context));
-			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule$1(parseRule, extensionAttributes));
-			const renderHTML = getExtensionField$1(extension, "renderHTML", context);
+			const parseHTML = callOrReturn(getExtensionField(extension, "parseHTML", context));
+			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule(parseRule, extensionAttributes));
+			const renderHTML = getExtensionField(extension, "renderHTML", context);
 			if (renderHTML) schema.toDOM = (mark) => renderHTML({
 				mark,
-				HTMLAttributes: getRenderedAttributes$1(mark, extensionAttributes)
+				HTMLAttributes: getRenderedAttributes(mark, extensionAttributes)
 			});
 			return [extension.name, schema];
 		}))
@@ -13203,7 +13203,7 @@ function getSchemaByResolvedExtensions$1(extensions, editor) {
 /**
 * Find duplicates in an array.
 */
-function findDuplicates$1(items) {
+function findDuplicates(items) {
 	const filtered = items.filter((el, index) => items.indexOf(el) !== index);
 	return Array.from(new Set(filtered));
 }
@@ -13212,11 +13212,11 @@ function findDuplicates$1(items) {
 * @param extensions An array of Tiptap extensions
 * @returns A sorted array of Tiptap extensions by priority
 */
-function sortExtensions$1(extensions) {
+function sortExtensions(extensions) {
 	const defaultPriority = 100;
 	return extensions.sort((a, b) => {
-		const priorityA = getExtensionField$1(a, "priority") || defaultPriority;
-		const priorityB = getExtensionField$1(b, "priority") || defaultPriority;
+		const priorityA = getExtensionField(a, "priority") || defaultPriority;
+		const priorityB = getExtensionField(b, "priority") || defaultPriority;
 		if (priorityA > priorityB) return -1;
 		if (priorityA < priorityB) return 1;
 		return 0;
@@ -13228,9 +13228,9 @@ function sortExtensions$1(extensions) {
 * @param extensions An array of Tiptap extensions
 * @returns An flattened and sorted array of Tiptap extensions
 */
-function resolveExtensions$1(extensions) {
-	const resolvedExtensions = sortExtensions$1(flattenExtensions$1(extensions));
-	const duplicatedNames = findDuplicates$1(resolvedExtensions.map((extension) => extension.name));
+function resolveExtensions(extensions) {
+	const resolvedExtensions = sortExtensions(flattenExtensions(extensions));
+	const duplicatedNames = findDuplicates(resolvedExtensions.map((extension) => extension.name));
 	if (duplicatedNames.length) console.warn(`[tiptap warn]: Duplicate extension names found: [${duplicatedNames.map((item) => `'${item}'`).join(", ")}]. This can lead to issues.`);
 	return resolvedExtensions;
 }
@@ -13242,7 +13242,7 @@ function resolveExtensions$1(extensions) {
 * @param options Options for the text serializer & block separator
 * @returns The text between the two positions
 */
-function getTextBetween$1(startNode, range, options) {
+function getTextBetween(startNode, range, options) {
 	const { from, to } = range;
 	const { blockSeparator = "\n\n", textSerializers = {} } = options || {};
 	let text = "";
@@ -13267,15 +13267,30 @@ function getTextBetween$1(startNode, range, options) {
 	return text;
 }
 /**
+* Gets the text of a Prosemirror node
+* @param node The Prosemirror node
+* @param options Options for the text serializer & block separator
+* @returns The text of the node
+* @example ```js
+* const text = getText(node, { blockSeparator: '\n' })
+* ```
+*/
+function getText(node, options) {
+	return getTextBetween(node, {
+		from: 0,
+		to: node.content.size
+	}, options);
+}
+/**
 * Find text serializers `toText` in a Prosemirror schema
 * @param schema The Prosemirror schema to search in
 * @returns A record of text serializers by node name
 */
-function getTextSerializersFromSchema$1(schema) {
+function getTextSerializersFromSchema(schema) {
 	return Object.fromEntries(Object.entries(schema.nodes).filter(([, node]) => node.spec.toText).map(([name, node]) => [name, node.spec.toText]));
 }
-function getNodeAttributes$1(state, typeOrName) {
-	const type = getNodeType$1(typeOrName, state.schema);
+function getNodeAttributes(state, typeOrName) {
+	const type = getNodeType(typeOrName, state.schema);
 	const { from, to } = state.selection;
 	const nodes = [];
 	state.doc.nodesBetween(from, to, (node) => {
@@ -13291,17 +13306,17 @@ function getNodeAttributes$1(state, typeOrName) {
 * @param typeOrName The node or mark type or name
 * @returns The attributes of the node or mark or an empty object
 */
-function getAttributes$1(state, typeOrName) {
-	const schemaType = getSchemaTypeNameByName$1(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
-	if (schemaType === "node") return getNodeAttributes$1(state, typeOrName);
-	if (schemaType === "mark") return getMarkAttributes$1(state, typeOrName);
+function getAttributes(state, typeOrName) {
+	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
+	if (schemaType === "node") return getNodeAttributes(state, typeOrName);
+	if (schemaType === "mark") return getMarkAttributes(state, typeOrName);
 	return {};
 }
 /**
 * Removes duplicated values within an array.
 * Supports numbers, strings and objects.
 */
-function removeDuplicates$1(array, by = JSON.stringify) {
+function removeDuplicates(array, by = JSON.stringify) {
 	const seen = {};
 	return array.filter((item) => {
 		const key = by(item);
@@ -13312,8 +13327,8 @@ function removeDuplicates$1(array, by = JSON.stringify) {
 * Removes duplicated ranges and ranges that are
 * fully captured by other ranges.
 */
-function simplifyChangedRanges$1(changes) {
-	const uniqueChanges = removeDuplicates$1(changes);
+function simplifyChangedRanges(changes) {
+	const uniqueChanges = removeDuplicates(changes);
 	return uniqueChanges.length === 1 ? uniqueChanges : uniqueChanges.filter((change, index) => {
 		return !uniqueChanges.filter((_, i) => i !== index).some((otherChange) => {
 			return change.oldRange.from >= otherChange.oldRange.from && change.oldRange.to <= otherChange.oldRange.to && change.newRange.from >= otherChange.newRange.from && change.newRange.to <= otherChange.newRange.to;
@@ -13324,7 +13339,7 @@ function simplifyChangedRanges$1(changes) {
 * Returns a list of changed ranges
 * based on the first and last state of all steps.
 */
-function getChangedRanges$1(transform) {
+function getChangedRanges(transform) {
 	const { mapping, steps } = transform;
 	const changes = [];
 	mapping.maps.forEach((stepMap, index) => {
@@ -13359,12 +13374,12 @@ function getChangedRanges$1(transform) {
 			});
 		});
 	});
-	return simplifyChangedRanges$1(changes);
+	return simplifyChangedRanges(changes);
 }
 function getMarksBetween(from, to, doc) {
 	const marks = [];
 	if (from === to) doc.resolve(from).marks().forEach((mark) => {
-		const range = getMarkRange$1(doc.resolve(from), mark.type);
+		const range = getMarkRange(doc.resolve(from), mark.type);
 		if (!range) return;
 		marks.push({
 			mark,
@@ -13438,7 +13453,7 @@ var getPreviousBlockSibling = ($pos) => {
 * @param schema The Prosemiror schema to search in
 * @returns The node or mark type, or null if it doesn't exist
 */
-function getSchemaTypeByName$1(name, schema) {
+function getSchemaTypeByName(name, schema) {
 	return schema.nodes[name] || schema.marks[name] || null;
 }
 /**
@@ -13448,7 +13463,7 @@ function getSchemaTypeByName$1(name, schema) {
 * @param attributes The attributes of the extension
 * @returns The splitted attributes
 */
-function getSplittedAttributes$1(extensionAttributes, typeName, attributes) {
+function getSplittedAttributes(extensionAttributes, typeName, attributes) {
 	return Object.fromEntries(Object.entries(attributes).filter(([name]) => {
 		const extensionAttribute = extensionAttributes.find((item) => {
 			return item.type === typeName && item.name === name;
@@ -13463,7 +13478,7 @@ function getSplittedAttributes$1(extensionAttributes, typeName, attributes) {
 * @param maxMatch The maximum number of characters to match
 * @returns The text content
 */
-var getTextContentFromNodes$1 = ($from, maxMatch = 500) => {
+var getTextContentFromNodes = ($from, maxMatch = 500) => {
 	let textBefore = "";
 	const sliceEndPos = $from.parentOffset;
 	$from.parent.nodesBetween(Math.max(0, sliceEndPos - maxMatch), sliceEndPos, (node, pos, parent, index) => {
@@ -13478,13 +13493,13 @@ var getTextContentFromNodes$1 = ($from, maxMatch = 500) => {
 	});
 	return textBefore;
 };
-function isMarkActive$1(state, typeOrName, attributes = {}) {
+function isMarkActive(state, typeOrName, attributes = {}) {
 	const { empty, ranges } = state.selection;
-	const type = typeOrName ? getMarkType$1(typeOrName, state.schema) : null;
+	const type = typeOrName ? getMarkType(typeOrName, state.schema) : null;
 	if (empty) return !!(state.storedMarks || state.selection.$from.marks()).filter((mark) => {
 		if (!type) return true;
 		return type.name === mark.type.name;
-	}).find((mark) => objectIncludes$1(mark.attrs, attributes, { strict: false }));
+	}).find((mark) => objectIncludes(mark.attrs, attributes, { strict: false }));
 	let selectionRange = 0;
 	const markRanges = [];
 	ranges.forEach(({ $from, $to }) => {
@@ -13508,17 +13523,24 @@ function isMarkActive$1(state, typeOrName, attributes = {}) {
 	const matchedRange = markRanges.filter((markRange) => {
 		if (!type) return true;
 		return type.name === markRange.mark.type.name;
-	}).filter((markRange) => objectIncludes$1(markRange.mark.attrs, attributes, { strict: false })).reduce((sum, markRange) => sum + markRange.to - markRange.from, 0);
+	}).filter((markRange) => objectIncludes(markRange.mark.attrs, attributes, { strict: false })).reduce((sum, markRange) => sum + markRange.to - markRange.from, 0);
 	const excludedRange = markRanges.filter((markRange) => {
 		if (!type) return true;
 		return markRange.mark.type !== type && markRange.mark.type.excludes(type);
 	}).reduce((sum, markRange) => sum + markRange.to - markRange.from, 0);
 	return (matchedRange > 0 ? matchedRange + excludedRange : matchedRange) >= selectionRange;
 }
+function isActive(state, name, attributes = {}) {
+	if (!name) return isNodeActive(state, null, attributes) || isMarkActive(state, null, attributes);
+	const schemaType = getSchemaTypeNameByName(name, state.schema);
+	if (schemaType === "node") return isNodeActive(state, name, attributes);
+	if (schemaType === "mark") return isMarkActive(state, name, attributes);
+	return false;
+}
 var isAtEndOfNode = (state, nodeType) => {
 	const { $from, $to, $anchor } = state.selection;
 	if (nodeType) {
-		const parentNode = findParentNode$1((node) => node.type.name === nodeType)(state.selection);
+		const parentNode = findParentNode((node) => node.type.name === nodeType)(state.selection);
 		if (!parentNode) return false;
 		const $parentPos = state.doc.resolve(parentNode.pos + 1);
 		if ($anchor.pos + 1 === $parentPos.end()) return true;
@@ -13532,17 +13554,17 @@ var isAtStartOfNode = (state) => {
 	if ($from.parentOffset > 0 || $from.pos !== $to.pos) return false;
 	return true;
 };
-function isExtensionRulesEnabled$1(extension, enabled) {
+function isExtensionRulesEnabled(extension, enabled) {
 	if (Array.isArray(enabled)) return enabled.some((enabledExtension) => {
 		return (typeof enabledExtension === "string" ? enabledExtension : enabledExtension.name) === extension.name;
 	});
 	return enabled;
 }
-function isList$1(name, extensions) {
-	const { nodeExtensions } = splitExtensions$1(extensions);
+function isList(name, extensions) {
+	const { nodeExtensions } = splitExtensions(extensions);
 	const extension = nodeExtensions.find((item) => item.name === name);
 	if (!extension) return false;
-	const group = callOrReturn$1(getExtensionField$1(extension, "group", {
+	const group = callOrReturn(getExtensionField(extension, "group", {
 		name: extension.name,
 		options: extension.options,
 		storage: extension.storage
@@ -13553,7 +13575,7 @@ function isList$1(name, extensions) {
 /**
 * Returns true if the given prosemirror node is empty.
 */
-function isNodeEmpty$1(node, { checkChildren = true, ignoreWhitespace = false } = {}) {
+function isNodeEmpty(node, { checkChildren = true, ignoreWhitespace = false } = {}) {
 	if (ignoreWhitespace) {
 		if (node.type.name === "hardBreak") return true;
 		if (node.isText) {
@@ -13568,7 +13590,7 @@ function isNodeEmpty$1(node, { checkChildren = true, ignoreWhitespace = false } 
 		let isContentEmpty = true;
 		node.content.forEach((childNode) => {
 			if (isContentEmpty === false) return;
-			if (!isNodeEmpty$1(childNode, {
+			if (!isNodeEmpty(childNode, {
 				ignoreWhitespace,
 				checkChildren
 			})) isContentEmpty = false;
@@ -13580,10 +13602,80 @@ function isNodeEmpty$1(node, { checkChildren = true, ignoreWhitespace = false } 
 function isNodeSelection(value) {
 	return value instanceof NodeSelection;
 }
-function canSetMark$1(state, tr, newMarkType) {
+/**
+* A class that represents a mappable position in the editor. It can be extended
+* by other extensions to add additional position mapping capabilities.
+*/
+var MappablePosition = class MappablePosition {
+	constructor(position) {
+		this.position = position;
+	}
+	/**
+	* Creates a MappablePosition from a JSON object.
+	*/
+	static fromJSON(json) {
+		return new MappablePosition(json.position);
+	}
+	/**
+	* Converts the MappablePosition to a JSON object.
+	*/
+	toJSON() {
+		return { position: this.position };
+	}
+};
+/**
+* Calculates the new position after applying a transaction.
+*
+* @returns The new mappable position and the map result.
+*/
+function getUpdatedPosition(position, transaction) {
+	const mapResult = transaction.mapping.mapResult(position.position);
+	return {
+		position: new MappablePosition(mapResult.pos),
+		mapResult
+	};
+}
+/**
+* Creates a MappablePosition from a position number. This is the default
+* implementation for Tiptap core. It can be overridden by other Tiptap
+* extensions.
+*
+* @param position The position (as a number) where the MappablePosition will be created.
+* @returns A new MappablePosition instance at the given position.
+*/
+function createMappablePosition(position) {
+	return new MappablePosition(position);
+}
+function posToDOMRect(view, from, to) {
+	const minPos = 0;
+	const maxPos = view.state.doc.content.size;
+	const resolvedFrom = minMax(from, minPos, maxPos);
+	const resolvedEnd = minMax(to, minPos, maxPos);
+	const start = view.coordsAtPos(resolvedFrom);
+	const end = view.coordsAtPos(resolvedEnd, -1);
+	const top = Math.min(start.top, end.top);
+	const bottom = Math.max(start.bottom, end.bottom);
+	const left = Math.min(start.left, end.left);
+	const right = Math.max(start.right, end.right);
+	const data = {
+		top,
+		bottom,
+		left,
+		right,
+		width: right - left,
+		height: bottom - top,
+		x: left,
+		y: top
+	};
+	return {
+		...data,
+		toJSON: () => data
+	};
+}
+function canSetMark(state, tr, newMarkType) {
 	const { selection } = tr;
 	let cursor = null;
-	if (isTextSelection$1(selection)) cursor = selection.$cursor;
+	if (isTextSelection(selection)) cursor = selection.$cursor;
 	if (cursor) {
 		var _state$storedMarks;
 		const currentMarks = (_state$storedMarks = state.storedMarks) !== null && _state$storedMarks !== void 0 ? _state$storedMarks : cursor.marks();
@@ -13604,13 +13696,13 @@ function canSetMark$1(state, tr, newMarkType) {
 		return someNodeSupportsMark;
 	});
 }
-var setMark$1 = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
+var setMark = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
 	const { selection } = tr;
 	const { empty, ranges } = selection;
-	const type = getMarkType$1(typeOrName, state.schema);
+	const type = getMarkType(typeOrName, state.schema);
 	if (dispatch) {
 		if (empty) {
-			const oldAttributes = getMarkAttributes$1(state, type);
+			const oldAttributes = getMarkAttributes(state, type);
 			tr.addStoredMark(type.create({
 				...oldAttributes,
 				...attributes
@@ -13631,14 +13723,14 @@ var setMark$1 = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
 			});
 		});
 	}
-	return canSetMark$1(state, tr, type);
+	return canSetMark(state, tr, type);
 };
-var setMeta$1 = (key, value) => ({ tr }) => {
+var setMeta = (key, value) => ({ tr }) => {
 	tr.setMeta(key, value);
 	return true;
 };
-var setNode$1 = (typeOrName, attributes = {}) => ({ state, dispatch, chain }) => {
-	const type = getNodeType$1(typeOrName, state.schema);
+var setNode = (typeOrName, attributes = {}) => ({ state, dispatch, chain }) => {
+	const type = getNodeType(typeOrName, state.schema);
 	let attributesToCopy;
 	if (state.selection.$anchor.sameParent(state.selection.$head)) attributesToCopy = state.selection.$anchor.parent.attrs;
 	if (!type.isTextblock) {
@@ -13658,16 +13750,16 @@ var setNode$1 = (typeOrName, attributes = {}) => ({ state, dispatch, chain }) =>
 		})(updatedState, dispatch);
 	}).run();
 };
-var setNodeSelection$1 = (position) => ({ tr, dispatch }) => {
+var setNodeSelection = (position) => ({ tr, dispatch }) => {
 	if (dispatch) {
 		const { doc } = tr;
-		const from = minMax$1(position, 0, doc.content.size);
+		const from = minMax(position, 0, doc.content.size);
 		const selection = NodeSelection.create(doc, from);
 		tr.setSelection(selection);
 	}
 	return true;
 };
-var setTextDirection$1 = (direction, position) => ({ tr, state, dispatch }) => {
+var setTextDirection = (direction, position) => ({ tr, state, dispatch }) => {
 	const { selection } = state;
 	let from;
 	let to;
@@ -13690,7 +13782,7 @@ var setTextDirection$1 = (direction, position) => ({ tr, state, dispatch }) => {
 	});
 	return true;
 };
-var setTextSelection$1 = (position) => ({ tr, dispatch }) => {
+var setTextSelection = (position) => ({ tr, dispatch }) => {
 	if (dispatch) {
 		const { doc } = tr;
 		const { from, to } = typeof position === "number" ? {
@@ -13699,39 +13791,39 @@ var setTextSelection$1 = (position) => ({ tr, dispatch }) => {
 		} : position;
 		const minPos = TextSelection.atStart(doc).from;
 		const maxPos = TextSelection.atEnd(doc).to;
-		const resolvedFrom = minMax$1(from, minPos, maxPos);
-		const resolvedEnd = minMax$1(to, minPos, maxPos);
+		const resolvedFrom = minMax(from, minPos, maxPos);
+		const resolvedEnd = minMax(to, minPos, maxPos);
 		const selection = TextSelection.create(doc, resolvedFrom, resolvedEnd);
 		tr.setSelection(selection);
 	}
 	return true;
 };
-var sinkListItem$1$1 = (typeOrName) => ({ state, dispatch }) => {
-	return sinkListItem(getNodeType$1(typeOrName, state.schema))(state, dispatch);
+var sinkListItem$1 = (typeOrName) => ({ state, dispatch }) => {
+	return sinkListItem(getNodeType(typeOrName, state.schema))(state, dispatch);
 };
-function ensureMarks$1(state, splittableMarks) {
+function ensureMarks(state, splittableMarks) {
 	const marks = state.storedMarks || state.selection.$to.parentOffset && state.selection.$from.marks();
 	if (marks) {
 		const filteredMarks = marks.filter((mark) => splittableMarks === null || splittableMarks === void 0 ? void 0 : splittableMarks.includes(mark.type.name));
 		state.tr.ensureMarks(filteredMarks);
 	}
 }
-var splitBlock$1 = ({ keepMarks = true } = {}) => ({ tr, state, dispatch, editor }) => {
+var splitBlock = ({ keepMarks = true } = {}) => ({ tr, state, dispatch, editor }) => {
 	const { selection, doc } = tr;
 	const { $from, $to } = selection;
 	const extensionAttributes = editor.extensionManager.attributes;
-	const newAttributes = getSplittedAttributes$1(extensionAttributes, $from.node().type.name, $from.node().attrs);
+	const newAttributes = getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs);
 	if (selection instanceof NodeSelection && selection.node.isBlock) {
 		if (!$from.parentOffset || !canSplit(doc, $from.pos)) return false;
 		if (dispatch) {
-			if (keepMarks) ensureMarks$1(state, editor.extensionManager.splittableMarks);
+			if (keepMarks) ensureMarks(state, editor.extensionManager.splittableMarks);
 			tr.split($from.pos).scrollIntoView();
 		}
 		return true;
 	}
 	if (!$from.parent.isBlock) return false;
 	const atEnd = $to.parentOffset === $to.parent.content.size;
-	const deflt = $from.depth === 0 ? void 0 : defaultBlockAt$1($from.node(-1).contentMatchAt($from.indexAfter(-1)));
+	const deflt = $from.depth === 0 ? void 0 : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
 	let types = atEnd && deflt ? [{
 		type: deflt,
 		attrs: newAttributes
@@ -13761,13 +13853,13 @@ var splitBlock$1 = ({ keepMarks = true } = {}) => ({ tr, state, dispatch, editor
 				if ($from.node(-1).canReplaceWith($first.index(), $first.index() + 1, deflt)) tr.setNodeMarkup(tr.mapping.slice(mapFrom).map($from.before()), deflt);
 			}
 		}
-		if (keepMarks) ensureMarks$1(state, editor.extensionManager.splittableMarks);
+		if (keepMarks) ensureMarks(state, editor.extensionManager.splittableMarks);
 		tr.scrollIntoView();
 	}
 	return can;
 };
-var splitListItem$1 = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch, editor }) => {
-	const type = getNodeType$1(typeOrName, state.schema);
+var splitListItem = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch, editor }) => {
+	const type = getNodeType(typeOrName, state.schema);
 	const { $from, $to } = state.selection;
 	const node = state.selection.node;
 	if (node && node.isBlock || $from.depth < 2 || !$from.sameParent($to)) return false;
@@ -13783,7 +13875,7 @@ var splitListItem$1 = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch
 			for (let d = $from.depth - depthBefore; d >= $from.depth - 3; d -= 1) wrap = Fragment.from($from.node(d).copy(wrap));
 			const depthAfter = $from.indexAfter(-1) < $from.node(-2).childCount ? 1 : $from.indexAfter(-2) < $from.node(-3).childCount ? 2 : 3;
 			const newNextTypeAttributes = {
-				...getSplittedAttributes$1(extensionAttributes, $from.node().type.name, $from.node().attrs),
+				...getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs),
 				...overrideAttrs
 			};
 			const nextType = ((_type$contentMatch$de = type.contentMatch.defaultType) === null || _type$contentMatch$de === void 0 ? void 0 : _type$contentMatch$de.createAndFill(newNextTypeAttributes)) || void 0;
@@ -13802,11 +13894,11 @@ var splitListItem$1 = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch
 	}
 	const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
 	const newTypeAttributes = {
-		...getSplittedAttributes$1(extensionAttributes, grandParent.type.name, grandParent.attrs),
+		...getSplittedAttributes(extensionAttributes, grandParent.type.name, grandParent.attrs),
 		...overrideAttrs
 	};
 	const newNextTypeAttributes = {
-		...getSplittedAttributes$1(extensionAttributes, $from.node().type.name, $from.node().attrs),
+		...getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs),
 		...overrideAttrs
 	};
 	const splitsAtStartOfItem = $from.parentOffset === 0 && $from.index(-1) === 0;
@@ -13840,39 +13932,39 @@ var splitListItem$1 = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch
 * Normalise a list type attribute for comparison.
 * Treats null, undefined, and "1" as equivalent (the default numeric type).
 */
-function normalizeListType$1(type) {
+function normalizeListType(type) {
 	return !type || type === "1" ? null : type;
 }
 /**
 * Check if two list type attributes are compatible for joining.
 * Lists can only join when they have the same type (both default, or both the same non-default type).
 */
-function areListTypesCompatible$1(typeA, typeB) {
-	return normalizeListType$1(typeA) === normalizeListType$1(typeB);
+function areListTypesCompatible(typeA, typeB) {
+	return normalizeListType(typeA) === normalizeListType(typeB);
 }
-var joinListBackwards$1 = (tr, listType) => {
-	const list = findParentNode$1((node) => node.type === listType)(tr.selection);
+var joinListBackwards = (tr, listType) => {
+	const list = findParentNode((node) => node.type === listType)(tr.selection);
 	if (!list) return true;
 	const before = tr.doc.resolve(Math.max(0, list.pos - 1)).before(list.depth);
 	if (before === void 0) return true;
 	const nodeBefore = tr.doc.nodeAt(before);
 	if (!(list.node.type === (nodeBefore === null || nodeBefore === void 0 ? void 0 : nodeBefore.type) && canJoin(tr.doc, list.pos))) return true;
-	if (!areListTypesCompatible$1(list.node.attrs.type, nodeBefore === null || nodeBefore === void 0 ? void 0 : nodeBefore.attrs.type)) return true;
+	if (!areListTypesCompatible(list.node.attrs.type, nodeBefore === null || nodeBefore === void 0 ? void 0 : nodeBefore.attrs.type)) return true;
 	tr.join(list.pos);
 	return true;
 };
-var joinListForwards$1 = (tr, listType) => {
-	const list = findParentNode$1((node) => node.type === listType)(tr.selection);
+var joinListForwards = (tr, listType) => {
+	const list = findParentNode((node) => node.type === listType)(tr.selection);
 	if (!list) return true;
 	const after = tr.doc.resolve(list.start).after(list.depth);
 	if (after === void 0) return true;
 	const nodeAfter = tr.doc.nodeAt(after);
 	if (!(list.node.type === (nodeAfter === null || nodeAfter === void 0 ? void 0 : nodeAfter.type) && canJoin(tr.doc, after))) return true;
-	if (!areListTypesCompatible$1(list.node.attrs.type, nodeAfter === null || nodeAfter === void 0 ? void 0 : nodeAfter.attrs.type)) return true;
+	if (!areListTypesCompatible(list.node.attrs.type, nodeAfter === null || nodeAfter === void 0 ? void 0 : nodeAfter.attrs.type)) return true;
 	tr.join(after);
 	return true;
 };
-function createInnerSelectionForWholeDocList$1(tr) {
+function createInnerSelectionForWholeDocList(tr) {
 	const doc = tr.doc;
 	const list = doc.firstChild;
 	if (!list) return null;
@@ -13880,20 +13972,20 @@ function createInnerSelectionForWholeDocList$1(tr) {
 	const $end = doc.resolve(list.nodeSize - 1);
 	return TextSelection.between($start, $end);
 }
-var toggleList$1 = (listTypeOrName, itemTypeOrName, keepMarks, attributes = {}) => ({ editor, tr, state, dispatch, chain, commands, can }) => {
+var toggleList = (listTypeOrName, itemTypeOrName, keepMarks, attributes = {}) => ({ editor, tr, state, dispatch, chain, commands, can }) => {
 	const { extensions, splittableMarks } = editor.extensionManager;
-	const listType = getNodeType$1(listTypeOrName, state.schema);
-	const itemType = getNodeType$1(itemTypeOrName, state.schema);
+	const listType = getNodeType(listTypeOrName, state.schema);
+	const itemType = getNodeType(itemTypeOrName, state.schema);
 	const { selection, storedMarks } = state;
 	const { $from, $to } = selection;
 	const range = $from.blockRange($to);
 	const marks = storedMarks || selection.$to.parentOffset && selection.$from.marks();
 	if (!range) return false;
-	const parentList = findParentNode$1((node) => isList$1(node.type.name, extensions))(selection);
+	const parentList = findParentNode((node) => isList(node.type.name, extensions))(selection);
 	const isAllSelection = selection.from === 0 && selection.to === state.doc.content.size;
 	const topLevelNodes = state.doc.content.content;
 	const soleTopLevelNode = topLevelNodes.length === 1 ? topLevelNodes[0] : null;
-	const allSelectionList = isAllSelection && soleTopLevelNode && isList$1(soleTopLevelNode.type.name, extensions) ? {
+	const allSelectionList = isAllSelection && soleTopLevelNode && isList(soleTopLevelNode.type.name, extensions) ? {
 		node: soleTopLevelNode,
 		pos: 0,
 		depth: 0
@@ -13904,7 +13996,7 @@ var toggleList$1 = (listTypeOrName, itemTypeOrName, keepMarks, attributes = {}) 
 	if ((isInsideExistingList || hasWholeDocSelectedList) && currentList) {
 		if (currentList.node.type === listType) {
 			if (isAllSelection && hasWholeDocSelectedList) return chain().command(({ tr: trx, dispatch: disp }) => {
-				const nextSelection = createInnerSelectionForWholeDocList$1(trx);
+				const nextSelection = createInnerSelectionForWholeDocList(trx);
 				if (!nextSelection) return false;
 				trx.setSelection(nextSelection);
 				if (disp) disp(trx);
@@ -13912,33 +14004,33 @@ var toggleList$1 = (listTypeOrName, itemTypeOrName, keepMarks, attributes = {}) 
 			}).liftListItem(itemType).run();
 			return commands.liftListItem(itemType);
 		}
-		if (isList$1(currentList.node.type.name, extensions) && listType.validContent(currentList.node.content)) return chain().command(() => {
+		if (isList(currentList.node.type.name, extensions) && listType.validContent(currentList.node.content)) return chain().command(() => {
 			tr.setNodeMarkup(currentList.pos, listType);
 			return true;
-		}).command(() => joinListBackwards$1(tr, listType)).command(() => joinListForwards$1(tr, listType)).run();
+		}).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
 	}
 	if (!keepMarks || !marks || !dispatch) return chain().command(() => {
 		if (can().wrapInList(listType, attributes)) return true;
 		return commands.clearNodes();
-	}).wrapInList(listType, attributes).command(() => joinListBackwards$1(tr, listType)).command(() => joinListForwards$1(tr, listType)).run();
+	}).wrapInList(listType, attributes).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
 	return chain().command(() => {
 		const canWrapInList = can().wrapInList(listType, attributes);
 		const filteredMarks = marks.filter((mark) => splittableMarks.includes(mark.type.name));
 		tr.ensureMarks(filteredMarks);
 		if (canWrapInList) return true;
 		return commands.clearNodes();
-	}).wrapInList(listType, attributes).command(() => joinListBackwards$1(tr, listType)).command(() => joinListForwards$1(tr, listType)).run();
+	}).wrapInList(listType, attributes).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
 };
-var toggleMark$1 = (typeOrName, attributes = {}, options = {}) => ({ state, commands }) => {
+var toggleMark = (typeOrName, attributes = {}, options = {}) => ({ state, commands }) => {
 	const { extendEmptyMarkRange = false } = options;
-	const type = getMarkType$1(typeOrName, state.schema);
-	if (isMarkActive$1(state, type, attributes)) return commands.unsetMark(type, { extendEmptyMarkRange });
+	const type = getMarkType(typeOrName, state.schema);
+	if (isMarkActive(state, type, attributes)) return commands.unsetMark(type, { extendEmptyMarkRange });
 	return commands.setMark(type, attributes);
 };
-var toggleNode$1 = (typeOrName, toggleTypeOrName, attributes = {}) => ({ state, commands }) => {
-	const type = getNodeType$1(typeOrName, state.schema);
-	const toggleType = getNodeType$1(toggleTypeOrName, state.schema);
-	const isActive = isNodeActive$1(state, type, attributes);
+var toggleNode = (typeOrName, toggleTypeOrName, attributes = {}) => ({ state, commands }) => {
+	const type = getNodeType(typeOrName, state.schema);
+	const toggleType = getNodeType(toggleTypeOrName, state.schema);
+	const isActive = isNodeActive(state, type, attributes);
 	let attributesToCopy;
 	if (state.selection.$anchor.sameParent(state.selection.$head)) attributesToCopy = state.selection.$anchor.parent.attrs;
 	if (isActive) return commands.setNode(toggleType, attributesToCopy);
@@ -13947,12 +14039,12 @@ var toggleNode$1 = (typeOrName, toggleTypeOrName, attributes = {}) => ({ state, 
 		...attributes
 	});
 };
-var toggleWrap$1 = (typeOrName, attributes = {}) => ({ state, commands }) => {
-	const type = getNodeType$1(typeOrName, state.schema);
-	if (isNodeActive$1(state, type, attributes)) return commands.lift(type);
+var toggleWrap = (typeOrName, attributes = {}) => ({ state, commands }) => {
+	const type = getNodeType(typeOrName, state.schema);
+	if (isNodeActive(state, type, attributes)) return commands.lift(type);
 	return commands.wrapIn(type, attributes);
 };
-var undoInputRule$1 = () => ({ state, dispatch }) => {
+var undoInputRule = () => ({ state, dispatch }) => {
 	const plugins = state.plugins;
 	for (let i = 0; i < plugins.length; i += 1) {
 		const plugin = plugins[i];
@@ -13972,7 +14064,7 @@ var undoInputRule$1 = () => ({ state, dispatch }) => {
 	}
 	return false;
 };
-var unsetAllMarks$1 = (options = {}) => ({ tr, dispatch, editor }) => {
+var unsetAllMarks = (options = {}) => ({ tr, dispatch, editor }) => {
 	const { ignoreClearable = false } = options;
 	const { selection } = tr;
 	const { empty, ranges } = selection;
@@ -13986,16 +14078,16 @@ var unsetAllMarks$1 = (options = {}) => ({ tr, dispatch, editor }) => {
 	}
 	return true;
 };
-var unsetMark$1 = (typeOrName, options = {}) => ({ tr, state, dispatch }) => {
+var unsetMark = (typeOrName, options = {}) => ({ tr, state, dispatch }) => {
 	const { extendEmptyMarkRange = false } = options;
 	const { selection } = tr;
-	const type = getMarkType$1(typeOrName, state.schema);
+	const type = getMarkType(typeOrName, state.schema);
 	const { $from, empty, ranges } = selection;
 	if (!dispatch) return true;
 	if (empty && extendEmptyMarkRange) {
 		var _$from$marks$find;
 		let { from, to } = selection;
-		const range = getMarkRange$1($from, type, (_$from$marks$find = $from.marks().find((mark) => mark.type === type)) === null || _$from$marks$find === void 0 ? void 0 : _$from$marks$find.attrs);
+		const range = getMarkRange($from, type, (_$from$marks$find = $from.marks().find((mark) => mark.type === type)) === null || _$from$marks$find === void 0 ? void 0 : _$from$marks$find.attrs);
 		if (range) {
 			from = range.from;
 			to = range.to;
@@ -14007,7 +14099,7 @@ var unsetMark$1 = (typeOrName, options = {}) => ({ tr, state, dispatch }) => {
 	tr.removeStoredMark(type);
 	return true;
 };
-var unsetTextDirection$1 = (position) => ({ tr, state, dispatch }) => {
+var unsetTextDirection = (position) => ({ tr, state, dispatch }) => {
 	const { selection } = state;
 	let from;
 	let to;
@@ -14029,13 +14121,13 @@ var unsetTextDirection$1 = (position) => ({ tr, state, dispatch }) => {
 	});
 	return true;
 };
-var updateAttributes$1 = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
+var updateAttributes = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
 	let nodeType = null;
 	let markType = null;
-	const schemaType = getSchemaTypeNameByName$1(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
+	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
 	if (!schemaType) return false;
-	if (schemaType === "node") nodeType = getNodeType$1(typeOrName, state.schema);
-	if (schemaType === "mark") markType = getMarkType$1(typeOrName, state.schema);
+	if (schemaType === "node") nodeType = getNodeType(typeOrName, state.schema);
+	if (schemaType === "mark") markType = getMarkType(typeOrName, state.schema);
 	let canUpdate = false;
 	tr.selection.ranges.forEach((range) => {
 		const from = range.$from.pos;
@@ -14099,89 +14191,89 @@ var updateAttributes$1 = (typeOrName, attributes = {}) => ({ tr, state, dispatch
 	});
 	return canUpdate;
 };
-var DECORATION_MANAGER_PLUGIN_KEY$1 = new PluginKey("__tiptap_decorations__");
-var updateDecorations$1 = (extensionName) => ({ tr, dispatch }) => {
-	if (dispatch) tr.setMeta(DECORATION_MANAGER_PLUGIN_KEY$1, {
+var DECORATION_MANAGER_PLUGIN_KEY = new PluginKey("__tiptap_decorations__");
+var updateDecorations = (extensionName) => ({ tr, dispatch }) => {
+	if (dispatch) tr.setMeta(DECORATION_MANAGER_PLUGIN_KEY, {
 		type: "force",
 		name: extensionName
 	});
 	return true;
 };
-var wrapIn$1$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	return wrapIn(getNodeType$1(typeOrName, state.schema), attributes)(state, dispatch);
+var wrapIn$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
+	return wrapIn(getNodeType(typeOrName, state.schema), attributes)(state, dispatch);
 };
-var wrapInList$1$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	return wrapInList(getNodeType$1(typeOrName, state.schema), attributes)(state, dispatch);
+var wrapInList$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
+	return wrapInList(getNodeType(typeOrName, state.schema), attributes)(state, dispatch);
 };
-var commands_exports$1 = /* @__PURE__ */ __exportAll$1({
-	blur: () => blur$1,
-	clearContent: () => clearContent$1,
-	clearNodes: () => clearNodes$1,
-	command: () => command$1,
-	createParagraphNear: () => createParagraphNear$1$1,
-	cut: () => cut$1,
-	deleteCurrentNode: () => deleteCurrentNode$1,
-	deleteNode: () => deleteNode$1,
-	deleteRange: () => deleteRange$1,
-	deleteSelection: () => deleteSelection$1,
-	enter: () => enter$1,
-	exitCode: () => exitCode$1$1,
-	extendMarkRange: () => extendMarkRange$1,
-	first: () => first$1,
-	focus: () => focus$1,
-	forEach: () => forEach$1,
-	insertContent: () => insertContent$1,
-	insertContentAt: () => insertContentAt$1,
-	insertDefaultBlock: () => insertDefaultBlock$1,
-	joinBackward: () => joinBackward$1$1,
-	joinDown: () => joinDown$1$1,
-	joinForward: () => joinForward$1$1,
-	joinItemBackward: () => joinItemBackward$1,
-	joinItemForward: () => joinItemForward$1,
-	joinTextblockBackward: () => joinTextblockBackward$1$1,
-	joinTextblockForward: () => joinTextblockForward$1$1,
-	joinUp: () => joinUp$1$1,
-	keyboardShortcut: () => keyboardShortcut$1,
-	lift: () => lift$1$1,
-	liftEmptyBlock: () => liftEmptyBlock$1$1,
-	liftListItem: () => liftListItem$1$1,
-	newlineInCode: () => newlineInCode$1$1,
-	resetAttributes: () => resetAttributes$1,
-	scrollIntoView: () => scrollIntoView$1,
-	selectAll: () => selectAll$1,
-	selectNodeBackward: () => selectNodeBackward$1$1,
-	selectNodeForward: () => selectNodeForward$1$1,
-	selectParentNode: () => selectParentNode$1$1,
-	selectTextblockEnd: () => selectTextblockEnd$1$1,
-	selectTextblockStart: () => selectTextblockStart$1$1,
-	setContent: () => setContent$1,
-	setMark: () => setMark$1,
-	setMeta: () => setMeta$1,
-	setNode: () => setNode$1,
-	setNodeSelection: () => setNodeSelection$1,
-	setTextDirection: () => setTextDirection$1,
-	setTextSelection: () => setTextSelection$1,
-	sinkListItem: () => sinkListItem$1$1,
-	splitBlock: () => splitBlock$1,
-	splitListItem: () => splitListItem$1,
-	toggleList: () => toggleList$1,
-	toggleMark: () => toggleMark$1,
-	toggleNode: () => toggleNode$1,
-	toggleWrap: () => toggleWrap$1,
-	undoInputRule: () => undoInputRule$1,
-	unsetAllMarks: () => unsetAllMarks$1,
-	unsetMark: () => unsetMark$1,
-	unsetTextDirection: () => unsetTextDirection$1,
-	updateAttributes: () => updateAttributes$1,
-	updateDecorations: () => updateDecorations$1,
-	wrapIn: () => wrapIn$1$1,
-	wrapInList: () => wrapInList$1$1
+var commands_exports = /* @__PURE__ */ __exportAll({
+	blur: () => blur,
+	clearContent: () => clearContent,
+	clearNodes: () => clearNodes,
+	command: () => command,
+	createParagraphNear: () => createParagraphNear$1,
+	cut: () => cut,
+	deleteCurrentNode: () => deleteCurrentNode,
+	deleteNode: () => deleteNode,
+	deleteRange: () => deleteRange,
+	deleteSelection: () => deleteSelection,
+	enter: () => enter,
+	exitCode: () => exitCode$1,
+	extendMarkRange: () => extendMarkRange,
+	first: () => first,
+	focus: () => focus,
+	forEach: () => forEach,
+	insertContent: () => insertContent,
+	insertContentAt: () => insertContentAt,
+	insertDefaultBlock: () => insertDefaultBlock,
+	joinBackward: () => joinBackward$1,
+	joinDown: () => joinDown$1,
+	joinForward: () => joinForward$1,
+	joinItemBackward: () => joinItemBackward,
+	joinItemForward: () => joinItemForward,
+	joinTextblockBackward: () => joinTextblockBackward$1,
+	joinTextblockForward: () => joinTextblockForward$1,
+	joinUp: () => joinUp$1,
+	keyboardShortcut: () => keyboardShortcut,
+	lift: () => lift$1,
+	liftEmptyBlock: () => liftEmptyBlock$1,
+	liftListItem: () => liftListItem$1,
+	newlineInCode: () => newlineInCode$1,
+	resetAttributes: () => resetAttributes,
+	scrollIntoView: () => scrollIntoView,
+	selectAll: () => selectAll,
+	selectNodeBackward: () => selectNodeBackward$1,
+	selectNodeForward: () => selectNodeForward$1,
+	selectParentNode: () => selectParentNode$1,
+	selectTextblockEnd: () => selectTextblockEnd$1,
+	selectTextblockStart: () => selectTextblockStart$1,
+	setContent: () => setContent,
+	setMark: () => setMark,
+	setMeta: () => setMeta,
+	setNode: () => setNode,
+	setNodeSelection: () => setNodeSelection,
+	setTextDirection: () => setTextDirection,
+	setTextSelection: () => setTextSelection,
+	sinkListItem: () => sinkListItem$1,
+	splitBlock: () => splitBlock,
+	splitListItem: () => splitListItem,
+	toggleList: () => toggleList,
+	toggleMark: () => toggleMark,
+	toggleNode: () => toggleNode,
+	toggleWrap: () => toggleWrap,
+	undoInputRule: () => undoInputRule,
+	unsetAllMarks: () => unsetAllMarks,
+	unsetMark: () => unsetMark,
+	unsetTextDirection: () => unsetTextDirection,
+	updateAttributes: () => updateAttributes,
+	updateDecorations: () => updateDecorations,
+	wrapIn: () => wrapIn$1,
+	wrapInList: () => wrapInList$1
 });
 /**
 * Tracks which editors are running decoration create() callbacks inside state.apply,
 * using a private WeakMap to keep this off the public Editor surface.
 */
-var depthByEditor$1 = /* @__PURE__ */ new WeakMap();
+var depthByEditor = /* @__PURE__ */ new WeakMap();
 /**
 * Marks callback as decoration-apply work for editor, so editor.state can warn
 * about stale reads. Counts depth to handle nested applies.
@@ -14192,24 +14284,70 @@ var depthByEditor$1 = /* @__PURE__ */ new WeakMap();
 * @example
 * runInDecorationApplyScope(editor, () => spec.create({ editor, state, view }))
 */
-function runInDecorationApplyScope$1(editor, callback) {
+function runInDecorationApplyScope(editor, callback) {
 	var _depthByEditor$get;
-	depthByEditor$1.set(editor, ((_depthByEditor$get = depthByEditor$1.get(editor)) !== null && _depthByEditor$get !== void 0 ? _depthByEditor$get : 0) + 1);
+	depthByEditor.set(editor, ((_depthByEditor$get = depthByEditor.get(editor)) !== null && _depthByEditor$get !== void 0 ? _depthByEditor$get : 0) + 1);
 	try {
 		return callback();
 	} finally {
 		var _depthByEditor$get2;
-		const remaining = ((_depthByEditor$get2 = depthByEditor$1.get(editor)) !== null && _depthByEditor$get2 !== void 0 ? _depthByEditor$get2 : 1) - 1;
-		if (remaining > 0) depthByEditor$1.set(editor, remaining);
-		else depthByEditor$1.delete(editor);
+		const remaining = ((_depthByEditor$get2 = depthByEditor.get(editor)) !== null && _depthByEditor$get2 !== void 0 ? _depthByEditor$get2 : 1) - 1;
+		if (remaining > 0) depthByEditor.set(editor, remaining);
+		else depthByEditor.delete(editor);
 	}
 }
+/**
+* Whether the editor is currently inside a decoration apply scope.
+*
+* @param editor The editor to check
+* @returns `true` while decoration create() callbacks run
+* @example
+* if (isInDecorationApplyScope(editor)) {
+*   // reads of editor.state are stale here
+* }
+*/
+function isInDecorationApplyScope(editor) {
+	return depthByEditor.has(editor);
+}
+var EventEmitter = class {
+	constructor() {
+		this.callbacks = {};
+	}
+	on(event, fn) {
+		if (!this.callbacks[event]) this.callbacks[event] = [];
+		this.callbacks[event].push(fn);
+		return this;
+	}
+	emit(event, ...args) {
+		const callbacks = this.callbacks[event];
+		if (callbacks) callbacks.forEach((callback) => callback.apply(this, args));
+		return this;
+	}
+	off(event, fn) {
+		const callbacks = this.callbacks[event];
+		if (callbacks) {
+			if (fn) this.callbacks[event] = callbacks.filter((callback) => callback !== fn);
+			else delete this.callbacks[event];
+		}
+		return this;
+	}
+	once(event, fn) {
+		const onceFn = (...args) => {
+			this.off(event, onceFn);
+			fn.apply(this, args);
+		};
+		return this.on(event, onceFn);
+	}
+	removeAllListeners() {
+		this.callbacks = {};
+	}
+};
 /**
 * Whether the editor runs in a development build. Use it to guard warnings so
 * bundlers can drop them from production output.
 */
-var isDev$1 = typeof process !== "undefined" && process.env.NODE_ENV !== "production";
-function isWidgetDecoration$1(decoration) {
+var isDev = typeof process !== "undefined" && process.env.NODE_ENV !== "production";
+function isWidgetDecoration(decoration) {
 	return decoration.kind === "widget";
 }
 /**
@@ -14218,12 +14356,12 @@ function isWidgetDecoration$1(decoration) {
 * @param extensionName The name of the extension that created the decorations.
 * @returns The converted decorations and the widget keys.
 */
-function decorationsToPMDecorations$1(decorations, extensionName) {
+function decorationsToPMDecorations(decorations, extensionName) {
 	const pmDecorations = [];
 	const widgetKeys = /* @__PURE__ */ new Set();
 	for (const decoration of decorations) {
 		if (decoration.kind === "widget") {
-			if (isWidgetDecoration$1(decoration)) widgetKeys.add(decoration.key);
+			if (isWidgetDecoration(decoration)) widgetKeys.add(decoration.key);
 		}
 		pmDecorations.push(decoration.toPMDecoration(extensionName));
 	}
@@ -14239,8 +14377,8 @@ function decorationsToPMDecorations$1(decorations, extensionName) {
 * @param extensionName The name of the extension that created the decorations.
 * @returns The built decoration set and the widget keys.
 */
-function buildDecorationSet$1(doc, decorations, extensionName) {
-	const { decorations: pmDecorations, widgetKeys } = decorationsToPMDecorations$1(decorations, extensionName);
+function buildDecorationSet(doc, decorations, extensionName) {
+	const { decorations: pmDecorations, widgetKeys } = decorationsToPMDecorations(decorations, extensionName);
 	return {
 		set: DecorationSet.create(doc, pmDecorations),
 		widgetKeys
@@ -14260,7 +14398,7 @@ function buildDecorationSet$1(doc, decorations, extensionName) {
 * rangeOwnsPosition({ position: 5, from: 5, to: 10, docSize: 10 }) // true
 * rangeOwnsPosition({ position: 10, from: 5, to: 10, docSize: 10 }) // true, end of document
 */
-function rangeOwnsPosition$1({ position, from, to, docSize }) {
+function rangeOwnsPosition({ position, from, to, docSize }) {
 	if (position < from) return false;
 	if (position < to) return true;
 	return position === to && to === docSize;
@@ -14272,9 +14410,9 @@ function rangeOwnsPosition$1({ position, from, to, docSize }) {
 * @param options The decorations, the range, and the warning bookkeeping.
 * @returns The filtered decorations.
 */
-function filterOutOfRangeDecorations$1({ decorations, from, to, docSize, extensionName, warnedExtensions }) {
+function filterOutOfRangeDecorations({ decorations, from, to, docSize, extensionName, warnedExtensions }) {
 	return decorations.filter((decoration) => {
-		if (rangeOwnsPosition$1({
+		if (rangeOwnsPosition({
 			position: decoration.anchor,
 			from,
 			to,
@@ -14293,7 +14431,7 @@ function filterOutOfRangeDecorations$1({ decorations, from, to, docSize, extensi
 * @param decoration The decoration to extract the key from.
 * @returns The widget key, or undefined if the decoration has no key.
 */
-function widgetKeyOf$1(decoration) {
+function widgetKeyOf(decoration) {
 	var _decoration$spec;
 	const key = (_decoration$spec = decoration.spec) === null || _decoration$spec === void 0 ? void 0 : _decoration$spec.key;
 	return typeof key === "string" ? key : void 0;
@@ -14303,12 +14441,12 @@ function widgetKeyOf$1(decoration) {
 * @param decorationSet The merged decoration set to inspect.
 * @returns The duplicate keys and their producing extensions.
 */
-function findDuplicateWidgetKeys$1(decorationSet) {
+function findDuplicateWidgetKeys(decorationSet) {
 	const extensionsByKey = /* @__PURE__ */ new Map();
 	const counts = /* @__PURE__ */ new Map();
 	for (const decoration of decorationSet.find()) {
 		var _extensionName, _extensionsByKey$get, _counts$get;
-		const key = widgetKeyOf$1(decoration);
+		const key = widgetKeyOf(decoration);
 		if (!key) continue;
 		const extension = (_extensionName = decoration.spec.extensionName) !== null && _extensionName !== void 0 ? _extensionName : "unknown";
 		const extensions = (_extensionsByKey$get = extensionsByKey.get(key)) !== null && _extensionsByKey$get !== void 0 ? _extensionsByKey$get : /* @__PURE__ */ new Set();
@@ -14337,7 +14475,7 @@ function findDuplicateWidgetKeys$1(decorationSet) {
 *   rebuildBlockAt(step.pos)
 * }
 */
-function isAttrStep$1(step) {
+function isAttrStep(step) {
 	return step.jsonID === "attr";
 }
 /**
@@ -14345,12 +14483,12 @@ function isAttrStep$1(step) {
 * @param step The step to check.
 * @returns True if the step has a resolvable changed range, false otherwise.
 */
-function hasResolvableChangedRange$1(step) {
+function hasResolvableChangedRange(step) {
 	let hasMappedRange = false;
 	step.getMap().forEach(() => {
 		hasMappedRange = true;
 	});
-	if (hasMappedRange || isAttrStep$1(step)) return true;
+	if (hasMappedRange || isAttrStep(step)) return true;
 	const positionalStep = step;
 	return typeof positionalStep.from === "number" && typeof positionalStep.to === "number";
 }
@@ -14358,7 +14496,7 @@ function hasResolvableChangedRange$1(step) {
 * Expands a changed range to the top-level blocks it touches. Blocks are
 * ordered, so the walk stops as soon as it passes the range.
 */
-function blockRangeFor$1(doc, changed) {
+function blockRangeFor(doc, changed) {
 	let from = null;
 	let to = 0;
 	let nodeStart = 0;
@@ -14383,11 +14521,11 @@ function blockRangeFor$1(doc, changed) {
 * @param doc The new document after the transaction.
 * @returns The block ranges to recompute, or a full-recompute signal.
 */
-function getRebuildRanges$1(tr, doc) {
-	if (tr.steps.some((step) => !hasResolvableChangedRange$1(step))) return { type: "full" };
-	const newRanges = getChangedRanges$1(tr).map(({ newRange }) => newRange);
+function getRebuildRanges(tr, doc) {
+	if (tr.steps.some((step) => !hasResolvableChangedRange(step))) return { type: "full" };
+	const newRanges = getChangedRanges(tr).map(({ newRange }) => newRange);
 	tr.steps.forEach((step, index) => {
-		if (!isAttrStep$1(step)) return;
+		if (!isAttrStep(step)) return;
 		const mapping = tr.mapping.slice(index);
 		newRanges.push({
 			from: mapping.map(step.pos, -1),
@@ -14396,7 +14534,7 @@ function getRebuildRanges$1(tr, doc) {
 	});
 	const ranges = [];
 	for (const newRange of newRanges) {
-		const blockRange = blockRangeFor$1(doc, newRange);
+		const blockRange = blockRangeFor(doc, newRange);
 		if (blockRange) ranges.push(blockRange);
 	}
 	ranges.sort((a, b) => a.from - b.from);
@@ -14420,7 +14558,7 @@ function getRebuildRanges$1(tr, doc) {
 * @param widgetKeys The set of widget keys to prune.
 * @returns The mapped decoration set.
 */
-function mapDecorationSet$1(set, mapping, doc, widgetKeys) {
+function mapDecorationSet(set, mapping, doc, widgetKeys) {
 	return set.map(mapping, doc, { onRemove: (removedSpec) => {
 		const key = removedSpec === null || removedSpec === void 0 ? void 0 : removedSpec.key;
 		if (typeof key === "string") widgetKeys.delete(key);
@@ -14434,12 +14572,12 @@ function mapDecorationSet$1(set, mapping, doc, widgetKeys) {
 * @param tr The transaction to map through.
 * @returns The updated decoration set and widget keys.
 */
-function mapDecorations$1(name, previous, tr) {
+function mapDecorations(name, previous, tr) {
 	var _previous$decorationS, _previous$widgetKeysB;
 	const previousSet = (_previous$decorationS = previous.decorationSetsByExtension[name]) !== null && _previous$decorationS !== void 0 ? _previous$decorationS : DecorationSet.empty;
 	const widgetKeys = new Set((_previous$widgetKeysB = previous.widgetKeysByExtension[name]) !== null && _previous$widgetKeysB !== void 0 ? _previous$widgetKeysB : []);
 	return {
-		set: mapDecorationSet$1(previousSet, tr.mapping, tr.doc, widgetKeys),
+		set: mapDecorationSet(previousSet, tr.mapping, tr.doc, widgetKeys),
 		widgetKeys
 	};
 }
@@ -14449,7 +14587,7 @@ function mapDecorations$1(name, previous, tr) {
 * @param decorationSetsByExtension The decoration sets to merge.
 * @returns The merged decoration set.
 */
-function mergeDecorationSets$1(doc, decorationSetsByExtension) {
+function mergeDecorationSets(doc, decorationSetsByExtension) {
 	const allDecorations = Object.values(decorationSetsByExtension).flatMap((set) => set.find());
 	return DecorationSet.create(doc, allDecorations);
 }
@@ -14458,7 +14596,7 @@ function mergeDecorationSets$1(doc, decorationSetsByExtension) {
 * @param widgetKeysByExtension The widget keys to union.
 * @returns The unioned widget keys.
 */
-function unionWidgetKeys$1(widgetKeysByExtension) {
+function unionWidgetKeys(widgetKeysByExtension) {
 	const merged = /* @__PURE__ */ new Set();
 	for (const keys of Object.values(widgetKeysByExtension)) for (const key of keys) merged.add(key);
 	return merged;
@@ -14468,7 +14606,7 @@ function unionWidgetKeys$1(widgetKeysByExtension) {
 * @param name The name of the extension.
 * @param spec The decoration spec to validate
 */
-function validateDecorationSpec$1(name, spec) {
+function validateDecorationSpec(name, spec) {
 	var _update;
 	switch ((_update = spec.update) !== null && _update !== void 0 ? _update : "document") {
 		case "document":
@@ -14491,23 +14629,23 @@ function validateDecorationSpec$1(name, spec) {
 * @param forced Whether recomputation was forced.
 * @returns `true` if the decoration should be recomputed.
 */
-function shouldRecomputeDecoration$1(spec, props, forced) {
+function shouldRecomputeDecoration(spec, props, forced) {
 	if (forced) return true;
 	if (spec.update === "manual") return false;
 	return spec.shouldUpdate ? spec.shouldUpdate(props) : props.tr.docChanged;
 }
-var EMPTY_KEYS$1 = /* @__PURE__ */ new Set();
-var DecorationManager$1 = class {
+var EMPTY_KEYS = /* @__PURE__ */ new Set();
+var DecorationManager = class {
 	constructor(options) {
 		this.warnedWidgetKeys = /* @__PURE__ */ new Set();
 		this.warnedOutOfRangeExtensions = /* @__PURE__ */ new Set();
 		this.handleBeforeTransaction = ({ nextState }) => {
-			const state = DECORATION_MANAGER_PLUGIN_KEY$1.getState(nextState);
+			const state = DECORATION_MANAGER_PLUGIN_KEY.getState(nextState);
 			if (state) this.warnDuplicateWidgetKeys(state);
 		};
 		this.editor = options.editor;
 		this.entries = this.resolveEntries(options.entries);
-		this.entries.forEach(({ name, spec }) => validateDecorationSpec$1(name, spec));
+		this.entries.forEach(({ name, spec }) => validateDecorationSpec(name, spec));
 		this.plugin = this.entries.length > 0 ? this.createPlugin() : null;
 		this.editor.on("beforeTransaction", this.handleBeforeTransaction);
 	}
@@ -14520,7 +14658,7 @@ var DecorationManager$1 = class {
 	*/
 	liveWidgetKeys() {
 		var _DECORATION_MANAGER_P, _DECORATION_MANAGER_P2;
-		return (_DECORATION_MANAGER_P = (_DECORATION_MANAGER_P2 = DECORATION_MANAGER_PLUGIN_KEY$1.getState(this.editor.state)) === null || _DECORATION_MANAGER_P2 === void 0 ? void 0 : _DECORATION_MANAGER_P2.widgetKeys) !== null && _DECORATION_MANAGER_P !== void 0 ? _DECORATION_MANAGER_P : EMPTY_KEYS$1;
+		return (_DECORATION_MANAGER_P = (_DECORATION_MANAGER_P2 = DECORATION_MANAGER_PLUGIN_KEY.getState(this.editor.state)) === null || _DECORATION_MANAGER_P2 === void 0 ? void 0 : _DECORATION_MANAGER_P2.widgetKeys) !== null && _DECORATION_MANAGER_P !== void 0 ? _DECORATION_MANAGER_P : EMPTY_KEYS;
 	}
 	/**
 	* The mounted editor view, or `null` when destroyed. Decoration callbacks
@@ -14553,7 +14691,7 @@ var DecorationManager$1 = class {
 	createPlugin() {
 		const { editor, entries } = this;
 		return new Plugin({
-			key: DECORATION_MANAGER_PLUGIN_KEY$1,
+			key: DECORATION_MANAGER_PLUGIN_KEY,
 			state: {
 				init: (_config, state) => {
 					const decorationSetsByExtension = {};
@@ -14567,28 +14705,28 @@ var DecorationManager$1 = class {
 						decorationSetsByExtension,
 						widgetKeysByExtension,
 						mergedDecorationSet: this.buildMergedSet(state.doc, decorationSetsByExtension),
-						widgetKeys: unionWidgetKeys$1(widgetKeysByExtension)
+						widgetKeys: unionWidgetKeys(widgetKeysByExtension)
 					};
 					this.warnDuplicateWidgetKeys(managerState);
 					return managerState;
 				},
 				apply: (tr, previous, oldState, newState) => {
-					const meta = tr.getMeta(DECORATION_MANAGER_PLUGIN_KEY$1);
+					const meta = tr.getMeta(DECORATION_MANAGER_PLUGIN_KEY);
 					const forceAll = (meta === null || meta === void 0 ? void 0 : meta.type) === "force" && !meta.name;
 					const forceName = (meta === null || meta === void 0 ? void 0 : meta.type) === "force" ? meta.name : void 0;
 					const decorationSetsByExtension = {};
 					const widgetKeysByExtension = {};
 					const recomputedNames = /* @__PURE__ */ new Set();
-					runInDecorationApplyScope$1(editor, () => {
+					runInDecorationApplyScope(editor, () => {
 						for (const { name, spec } of entries) {
 							const forced = forceAll || forceName === name;
-							if (!shouldRecomputeDecoration$1(spec, {
+							if (!shouldRecomputeDecoration(spec, {
 								editor,
 								tr,
 								oldState,
 								newState
 							}, forced)) {
-								const result = mapDecorations$1(name, previous, tr);
+								const result = mapDecorations(name, previous, tr);
 								decorationSetsByExtension[name] = result.set;
 								widgetKeysByExtension[name] = result.widgetKeys;
 							} else if (spec.update === "changedRanges" && tr.docChanged && !forced) {
@@ -14615,13 +14753,13 @@ var DecorationManager$1 = class {
 							decorationSetsByExtension,
 							recomputedNames
 						}),
-						widgetKeys: unionWidgetKeys$1(widgetKeysByExtension)
+						widgetKeys: unionWidgetKeys(widgetKeysByExtension)
 					};
 				}
 			},
 			props: { decorations(state) {
 				var _DECORATION_MANAGER_P3, _DECORATION_MANAGER_P4;
-				return (_DECORATION_MANAGER_P3 = (_DECORATION_MANAGER_P4 = DECORATION_MANAGER_PLUGIN_KEY$1.getState(state)) === null || _DECORATION_MANAGER_P4 === void 0 ? void 0 : _DECORATION_MANAGER_P4.mergedDecorationSet) !== null && _DECORATION_MANAGER_P3 !== void 0 ? _DECORATION_MANAGER_P3 : DecorationSet.empty;
+				return (_DECORATION_MANAGER_P3 = (_DECORATION_MANAGER_P4 = DECORATION_MANAGER_PLUGIN_KEY.getState(state)) === null || _DECORATION_MANAGER_P4 === void 0 ? void 0 : _DECORATION_MANAGER_P4.mergedDecorationSet) !== null && _DECORATION_MANAGER_P3 !== void 0 ? _DECORATION_MANAGER_P3 : DecorationSet.empty;
 			} }
 		});
 	}
@@ -14635,7 +14773,7 @@ var DecorationManager$1 = class {
 	* @returns The updated decoration set and widget keys
 	*/
 	applyChangedRangesRecompute(name, spec, previous, tr, newState) {
-		const resolution = getRebuildRanges$1(tr, newState.doc);
+		const resolution = getRebuildRanges(tr, newState.doc);
 		if (resolution.type === "full") return this.buildFullSet(name, spec, newState);
 		return this.rebuildRanges(name, spec, previous, tr, newState, resolution.ranges);
 	}
@@ -14655,21 +14793,21 @@ var DecorationManager$1 = class {
 		var _previous$decorationS, _previous$widgetKeysB;
 		const previousSet = (_previous$decorationS = previous.decorationSetsByExtension[name]) !== null && _previous$decorationS !== void 0 ? _previous$decorationS : DecorationSet.empty;
 		const widgetKeys = new Set((_previous$widgetKeysB = previous.widgetKeysByExtension[name]) !== null && _previous$widgetKeysB !== void 0 ? _previous$widgetKeysB : []);
-		let set = mapDecorationSet$1(previousSet, tr.mapping, tr.doc, widgetKeys);
+		let set = mapDecorationSet(previousSet, tr.mapping, tr.doc, widgetKeys);
 		const docSize = newState.doc.content.size;
 		for (const { from, to } of ranges) {
-			const stale = set.find(from, to).filter((decoration) => rangeOwnsPosition$1({
+			const stale = set.find(from, to).filter((decoration) => rangeOwnsPosition({
 				position: decoration.from,
 				from,
 				to,
 				docSize
 			}));
 			for (const decoration of stale) {
-				const key = widgetKeyOf$1(decoration);
+				const key = widgetKeyOf(decoration);
 				if (key) widgetKeys.delete(key);
 			}
 			set = set.remove(stale);
-			const { decorations: pmDecorations, widgetKeys: addedKeys } = decorationsToPMDecorations$1(filterOutOfRangeDecorations$1({
+			const { decorations: pmDecorations, widgetKeys: addedKeys } = decorationsToPMDecorations(filterOutOfRangeDecorations({
 				decorations: this.runCreate(name, "createInRange", () => spec.createInRange({
 					editor: this.editor,
 					state: newState,
@@ -14704,7 +14842,7 @@ var DecorationManager$1 = class {
 			state,
 			view: this.mountedView
 		}));
-		return buildDecorationSet$1(state.doc, decorations, name);
+		return buildDecorationSet(state.doc, decorations, name);
 	}
 	/**
 	* Runs a decoration callback and swallows anything it throws. These run inside
@@ -14723,12 +14861,12 @@ var DecorationManager$1 = class {
 		}
 	}
 	warnDuplicateWidgetKeys(state) {
-		if (!isDev$1) return;
+		if (!isDev) return;
 		if (state.widgetKeys.size === 0) {
 			this.warnedWidgetKeys.clear();
 			return;
 		}
-		const duplicateKeys = findDuplicateWidgetKeys$1(state.mergedDecorationSet);
+		const duplicateKeys = findDuplicateWidgetKeys(state.mergedDecorationSet);
 		const nextWarningKeys = new Set(duplicateKeys.map(({ key }) => key));
 		for (const { key, extensions } of duplicateKeys) {
 			if (this.warnedWidgetKeys.has(key)) continue;
@@ -14747,7 +14885,7 @@ var DecorationManager$1 = class {
 	buildMergedSet(doc, decorationSetsByExtension) {
 		const names = Object.keys(decorationSetsByExtension);
 		if (names.length === 1) return decorationSetsByExtension[names[0]];
-		return mergeDecorationSets$1(doc, decorationSetsByExtension);
+		return mergeDecorationSets(doc, decorationSetsByExtension);
 	}
 	/**
 	* Computes the merged DecorationSet after apply. Single extension skips the
@@ -14757,7 +14895,7 @@ var DecorationManager$1 = class {
 	mergeAfterApply({ entries, previous, tr, decorationSetsByExtension, recomputedNames }) {
 		if (entries.length === 1) return decorationSetsByExtension[entries[0].name];
 		if (recomputedNames.size === 0) return previous.mergedDecorationSet.map(tr.mapping, tr.doc);
-		return mergeDecorationSets$1(tr.doc, decorationSetsByExtension);
+		return mergeDecorationSets(tr.doc, decorationSetsByExtension);
 	}
 };
 function canInsertNode(state, nodeType) {
@@ -14774,6 +14912,16 @@ function canInsertNode(state, nodeType) {
 		depth -= 1;
 	}
 	return false;
+}
+function createStyleTag(style, nonce, suffix) {
+	const tiptapStyleTag = document.querySelector(`style[data-tiptap-style${suffix ? `-${suffix}` : ""}]`);
+	if (tiptapStyleTag !== null) return tiptapStyleTag;
+	const styleNode = document.createElement("style");
+	if (nonce) styleNode.setAttribute("nonce", nonce);
+	styleNode.setAttribute(`data-tiptap-style${suffix ? `-${suffix}` : ""}`, "");
+	styleNode.innerHTML = style;
+	document.getElementsByTagName("head")[0].appendChild(styleNode);
+	return styleNode;
 }
 /**
 * Read a CSS property value directly from an element's raw inline `style`
@@ -14809,14 +14957,14 @@ function getStyleProperty(element, propertyName) {
 	}
 	return null;
 }
-function isNumber$1(value) {
+function isNumber(value) {
 	return typeof value === "number";
 }
-function getType$1(value) {
+function getType(value) {
 	return Object.prototype.toString.call(value).slice(8, -1);
 }
-function isPlainObject$1(value) {
-	if (getType$1(value) !== "Object") return false;
+function isPlainObject(value) {
+	if (getType(value) !== "Object") return false;
 	return value.constructor === Object && Object.getPrototypeOf(value) === Object.prototype;
 }
 /**
@@ -15010,15 +15158,15 @@ function renderNestedMarkdownContent(node, h, prefixOrGenerator, ctx, options) {
 	});
 	return output;
 }
-function mergeDeep$1(target, source) {
+function mergeDeep(target, source) {
 	const output = { ...target };
-	if (isPlainObject$1(target) && isPlainObject$1(source)) Object.keys(source).forEach((key) => {
-		if (isPlainObject$1(source[key]) && isPlainObject$1(target[key])) output[key] = mergeDeep$1(target[key], source[key]);
+	if (isPlainObject(target) && isPlainObject(source)) Object.keys(source).forEach((key) => {
+		if (isPlainObject(source[key]) && isPlainObject(target[key])) output[key] = mergeDeep(target[key], source[key]);
 		else output[key] = source[key];
 	});
 	return output;
 }
-function updateMarkViewAttributes$1(checkMark, editor, attrs = {}) {
+function updateMarkViewAttributes(checkMark, editor, attrs = {}) {
 	const { state } = editor;
 	const { doc, tr } = state;
 	const thisMark = checkMark;
@@ -15054,8 +15202,8 @@ var InputRule = class {
 		this.undoable = (_config$undoable = config.undoable) !== null && _config$undoable !== void 0 ? _config$undoable : true;
 	}
 };
-var inputRuleMatcherHandler$1 = (text, find) => {
-	if (isRegExp$1(find)) return find.exec(text);
+var inputRuleMatcherHandler = (text, find) => {
+	if (isRegExp(find)) return find.exec(text);
 	const inputRuleMatch = find(text);
 	if (!inputRuleMatch) return null;
 	const result = [inputRuleMatch.text];
@@ -15071,7 +15219,7 @@ var inputRuleMatcherHandler$1 = (text, find) => {
 /**
 * Prepares the typed text so the rule handler can inspect the resulting document.
 */
-function createRuleTransaction$1(config) {
+function createRuleTransaction(config) {
 	const { editor, from, to, text, insertText } = config;
 	if (!insertText) return {
 		inputTransaction: null,
@@ -15090,10 +15238,10 @@ function createRuleTransaction$1(config) {
 /**
 * Runs a matching rule and dispatches the typed text before its conversion.
 */
-function applyRule$1(config) {
+function applyRule(config) {
 	const { editor, from, to, text, rule, match, plugin, insertText } = config;
 	const { view } = editor;
-	const { inputTransaction, tr } = createRuleTransaction$1({
+	const { inputTransaction, tr } = createRuleTransaction({
 		editor,
 		from,
 		to,
@@ -15101,7 +15249,7 @@ function applyRule$1(config) {
 		insertText
 	});
 	const inputEnd = inputTransaction ? from + text.length : to;
-	const state = createChainableState$1({
+	const state = createChainableState({
 		state: view.state,
 		transaction: tr
 	});
@@ -15109,7 +15257,7 @@ function applyRule$1(config) {
 		from: from - (match[0].length - text.length),
 		to: inputEnd
 	};
-	const { commands, chain, can } = new CommandManager$1({
+	const { commands, chain, can } = new CommandManager({
 		editor,
 		state
 	});
@@ -15139,24 +15287,24 @@ function applyRule$1(config) {
 /**
 * Checks that the part of a match already in the document has matching positions.
 */
-function matchesDocument$1($from, match, text) {
+function matchesDocument($from, match, text) {
 	const matchedDocLength = match[0].length - text.length;
 	if (matchedDocLength <= 0) return true;
 	const matchStartOffset = $from.parentOffset - matchedDocLength;
 	return matchStartOffset >= 0 && $from.parent.textBetween(matchStartOffset, $from.parentOffset) === match[0].slice(0, matchedDocLength);
 }
-function run$1$3(config) {
+function run$1$1(config) {
 	var _ref;
 	const { editor, from, to, text, rules, plugin, insertText } = config;
 	const { view } = editor;
 	if (view.composing) return false;
 	const $from = view.state.doc.resolve(from);
 	if ($from.parent.type.spec.code || !!((_ref = $from.nodeBefore || $from.nodeAfter) === null || _ref === void 0 ? void 0 : _ref.marks.find((mark) => mark.type.spec.code))) return false;
-	const textBefore = getTextContentFromNodes$1($from) + text;
+	const textBefore = getTextContentFromNodes($from) + text;
 	for (const rule of rules) {
-		const match = inputRuleMatcherHandler$1(textBefore, rule.find);
-		if (!match || !matchesDocument$1($from, match, text)) continue;
-		if (applyRule$1({
+		const match = inputRuleMatcherHandler(textBefore, rule.find);
+		if (!match || !matchesDocument($from, match, text)) continue;
+		if (applyRule({
 			editor,
 			from,
 			to,
@@ -15174,7 +15322,7 @@ function run$1$3(config) {
 * input that matches any of the given rules to trigger the rule’s
 * action.
 */
-function inputRulesPlugin$1(props) {
+function inputRulesPlugin(props) {
 	const { editor, rules } = props;
 	const plugin = new Plugin({
 		state: {
@@ -15188,10 +15336,10 @@ function inputRulesPlugin$1(props) {
 				if (!!simulatedInputMeta) setTimeout(() => {
 					let { text } = simulatedInputMeta;
 					if (typeof text === "string") text = text;
-					else text = getHTMLFromFragment$1(Fragment.from(text), state.schema);
+					else text = getHTMLFromFragment(Fragment.from(text), state.schema);
 					const { from } = simulatedInputMeta;
 					const to = from + text.length;
-					run$1$3({
+					run$1$1({
 						editor,
 						from,
 						to,
@@ -15205,7 +15353,7 @@ function inputRulesPlugin$1(props) {
 		},
 		props: {
 			handleTextInput(view, from, to, text) {
-				return run$1$3({
+				return run$1$1({
 					editor,
 					from,
 					to,
@@ -15218,7 +15366,7 @@ function inputRulesPlugin$1(props) {
 			handleDOMEvents: { compositionend: (view) => {
 				setTimeout(() => {
 					const { $cursor } = view.state.selection;
-					if ($cursor) run$1$3({
+					if ($cursor) run$1$1({
 						editor,
 						from: $cursor.pos,
 						to: $cursor.pos,
@@ -15232,7 +15380,7 @@ function inputRulesPlugin$1(props) {
 			handleKeyDown(view, event) {
 				if (event.key !== "Enter") return false;
 				const { $cursor } = view.state.selection;
-				if ($cursor) return run$1$3({
+				if ($cursor) return run$1$1({
 					editor,
 					from: $cursor.pos,
 					to: $cursor.pos,
@@ -15247,7 +15395,7 @@ function inputRulesPlugin$1(props) {
 	});
 	return plugin;
 }
-var Extendable$1 = class {
+var Extendable = class {
 	constructor(config = {}) {
 		this.type = "extendable";
 		this.parent = null;
@@ -15261,10 +15409,10 @@ var Extendable$1 = class {
 		this.name = this.config.name;
 	}
 	get options() {
-		return { ...callOrReturn$1(getExtensionField$1(this, "addOptions", { name: this.name })) };
+		return { ...callOrReturn(getExtensionField(this, "addOptions", { name: this.name })) };
 	}
 	get storage() {
-		return { ...callOrReturn$1(getExtensionField$1(this, "addStorage", {
+		return { ...callOrReturn(getExtensionField(this, "addStorage", {
 			name: this.name,
 			options: this.options
 		})) };
@@ -15273,7 +15421,7 @@ var Extendable$1 = class {
 		const extension = this.extend({
 			...this.config,
 			addOptions: () => {
-				return mergeDeep$1(this.options, options);
+				return mergeDeep(this.options, options);
 			}
 		});
 		extension.name = this.name;
@@ -15296,7 +15444,7 @@ var Extendable$1 = class {
 * The Mark class is used to create custom mark extensions.
 * @see https://tiptap.dev/api/extensions#create-a-new-extension
 */
-var Mark$1 = class Mark extends Extendable$1 {
+var Mark = class Mark extends Extendable {
 	constructor(..._args) {
 		super(..._args);
 		this.type = "mark";
@@ -15341,8 +15489,8 @@ var PasteRule = class {
 		this.handler = config.handler;
 	}
 };
-var pasteRuleMatcherHandler$1 = (text, find, event) => {
-	if (isRegExp$1(find)) return [...text.matchAll(find)];
+var pasteRuleMatcherHandler = (text, find, event) => {
+	if (isRegExp(find)) return [...text.matchAll(find)];
 	const matches = find(text, event);
 	if (!matches) return [];
 	return matches.map((pasteRuleMatch) => {
@@ -15357,9 +15505,9 @@ var pasteRuleMatcherHandler$1 = (text, find, event) => {
 		return result;
 	});
 };
-function run$4(config) {
+function run$2(config) {
 	const { editor, state, from, to, rule, pasteEvent, dropEvent } = config;
-	const { commands, chain, can } = new CommandManager$1({
+	const { commands, chain, can } = new CommandManager({
 		editor,
 		state
 	});
@@ -15371,7 +15519,7 @@ function run$4(config) {
 		const resolvedFrom = Math.max(from, pos);
 		const resolvedTo = Math.min(to, pos + contentSize);
 		if (resolvedFrom >= resolvedTo) return;
-		pasteRuleMatcherHandler$1(node.isText ? node.text || "" : node.textBetween(resolvedFrom - pos, resolvedTo - pos, void 0, "￼"), rule.find, pasteEvent).forEach((match) => {
+		pasteRuleMatcherHandler(node.isText ? node.text || "" : node.textBetween(resolvedFrom - pos, resolvedTo - pos, void 0, "￼"), rule.find, pasteEvent).forEach((match) => {
 			if (match.index === void 0) return;
 			const start = resolvedFrom + match.index + 1;
 			const end = start + match[0].length;
@@ -15394,8 +15542,8 @@ function run$4(config) {
 	});
 	return handlers.every((handler) => handler !== null);
 }
-var tiptapDragFromOtherEditor$1 = null;
-var createClipboardPasteEvent$1 = (text) => {
+var tiptapDragFromOtherEditor = null;
+var createClipboardPasteEvent = (text) => {
 	var _event$clipboardData;
 	const event = new ClipboardEvent("paste", { clipboardData: new DataTransfer() });
 	(_event$clipboardData = event.clipboardData) === null || _event$clipboardData === void 0 || _event$clipboardData.setData("text/html", text);
@@ -15406,7 +15554,7 @@ var createClipboardPasteEvent$1 = (text) => {
 * text that matches any of the given rules to trigger the rule’s
 * action.
 */
-function pasteRulesPlugin$1(props) {
+function pasteRulesPlugin(props) {
 	const { editor, rules } = props;
 	let dragSourceElement = null;
 	let isPastedFromProseMirror = false;
@@ -15420,11 +15568,11 @@ function pasteRulesPlugin$1(props) {
 	}
 	const processEvent = ({ state, from, to, rule, pasteEvt }) => {
 		const tr = state.tr;
-		const chainableState = createChainableState$1({
+		const chainableState = createChainableState({
 			state,
 			transaction: tr
 		});
-		if (!run$4({
+		if (!run$2({
 			editor,
 			state: chainableState,
 			from: Math.max(from - 1, 0),
@@ -15442,7 +15590,7 @@ function pasteRulesPlugin$1(props) {
 		return tr;
 	};
 	editor.on("destroy", () => {
-		if (tiptapDragFromOtherEditor$1 === editor) tiptapDragFromOtherEditor$1 = null;
+		if (tiptapDragFromOtherEditor === editor) tiptapDragFromOtherEditor = null;
 	});
 	return rules.map((rule) => {
 		return new Plugin({
@@ -15450,10 +15598,10 @@ function pasteRulesPlugin$1(props) {
 				const handleDragstart = (event) => {
 					var _view$dom$parentEleme;
 					dragSourceElement = ((_view$dom$parentEleme = view.dom.parentElement) === null || _view$dom$parentEleme === void 0 ? void 0 : _view$dom$parentEleme.contains(event.target)) ? view.dom.parentElement : null;
-					if (dragSourceElement) tiptapDragFromOtherEditor$1 = editor;
+					if (dragSourceElement) tiptapDragFromOtherEditor = editor;
 				};
 				const handleDragend = () => {
-					if (tiptapDragFromOtherEditor$1) tiptapDragFromOtherEditor$1 = null;
+					if (tiptapDragFromOtherEditor) tiptapDragFromOtherEditor = null;
 				};
 				window.addEventListener("dragstart", handleDragstart);
 				window.addEventListener("dragend", handleDragend);
@@ -15467,7 +15615,7 @@ function pasteRulesPlugin$1(props) {
 					isDroppedFromProseMirror = dragSourceElement === view.dom.parentElement;
 					dropEvent = event;
 					if (!isDroppedFromProseMirror) {
-						const dragFromOtherEditor = tiptapDragFromOtherEditor$1;
+						const dragFromOtherEditor = tiptapDragFromOtherEditor;
 						if (dragFromOtherEditor === null || dragFromOtherEditor === void 0 ? void 0 : dragFromOtherEditor.isEditable) setTimeout(() => {
 							if (dragFromOtherEditor.isDestroyed) return;
 							const selection = dragFromOtherEditor.state.selection;
@@ -15497,10 +15645,10 @@ function pasteRulesPlugin$1(props) {
 				if (isSimulatedPaste) {
 					let { text } = simulatedPasteMeta;
 					if (typeof text === "string") text = text;
-					else text = getHTMLFromFragment$1(Fragment.from(text), state.schema);
+					else text = getHTMLFromFragment(Fragment.from(text), state.schema);
 					const { from } = simulatedPasteMeta;
 					const to = from + text.length;
-					const pasteEvt = createClipboardPasteEvent$1(text);
+					const pasteEvt = createClipboardPasteEvent(text);
 					return processEvent({
 						rule,
 						state,
@@ -15511,7 +15659,7 @@ function pasteRulesPlugin$1(props) {
 				}
 				const from = oldState.doc.content.findDiffStart(state.doc.content);
 				const to = oldState.doc.content.findDiffEnd(state.doc.content);
-				if (!isNumber$1(from) || !to || from === to.b) return;
+				if (!isNumber(from) || !to || from === to.b) return;
 				return processEvent({
 					rule,
 					state,
@@ -15523,15 +15671,15 @@ function pasteRulesPlugin$1(props) {
 		});
 	});
 }
-var ExtensionManager$1 = class {
+var ExtensionManager = class {
 	constructor(extensions, editor) {
 		this.splittableMarks = [];
 		this.nonClearableMarks = [];
 		this.decorationManager = null;
 		this.editor = editor;
 		this.baseExtensions = extensions;
-		this.extensions = resolveExtensions$1(extensions);
-		this.schema = getSchemaByResolvedExtensions$1(this.extensions, editor);
+		this.extensions = resolveExtensions(extensions);
+		this.schema = getSchemaByResolvedExtensions(this.extensions, editor);
 		this.setupExtensions();
 	}
 	/**
@@ -15540,12 +15688,12 @@ var ExtensionManager$1 = class {
 	*/
 	get commands() {
 		return this.extensions.reduce((commands, extension) => {
-			const addCommands = getExtensionField$1(extension, "addCommands", {
+			const addCommands = getExtensionField(extension, "addCommands", {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor: this.editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			});
 			if (!addCommands) return commands;
 			return {
@@ -15560,18 +15708,18 @@ var ExtensionManager$1 = class {
 	*/
 	get plugins() {
 		const { editor } = this;
-		const allPlugins = sortExtensions$1([...this.extensions].reverse()).flatMap((extension) => {
+		const allPlugins = sortExtensions([...this.extensions].reverse()).flatMap((extension) => {
 			const context = {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			};
 			const plugins = [];
-			const addKeyboardShortcuts = getExtensionField$1(extension, "addKeyboardShortcuts", context);
+			const addKeyboardShortcuts = getExtensionField(extension, "addKeyboardShortcuts", context);
 			let defaultBindings = {};
-			if (extension.type === "mark" && getExtensionField$1(extension, "exitable", context)) defaultBindings.ArrowRight = () => Mark$1.handleExit({
+			if (extension.type === "mark" && getExtensionField(extension, "exitable", context)) defaultBindings.ArrowRight = () => Mark.handleExit({
 				editor,
 				mark: extension
 			});
@@ -15586,11 +15734,11 @@ var ExtensionManager$1 = class {
 			}
 			const keyMapPlugin = keymap(defaultBindings);
 			plugins.push(keyMapPlugin);
-			const addInputRules = getExtensionField$1(extension, "addInputRules", context);
-			if (isExtensionRulesEnabled$1(extension, editor.options.enableInputRules) && addInputRules) {
+			const addInputRules = getExtensionField(extension, "addInputRules", context);
+			if (isExtensionRulesEnabled(extension, editor.options.enableInputRules) && addInputRules) {
 				const rules = addInputRules();
 				if (rules && rules.length) {
-					const inputResult = inputRulesPlugin$1({
+					const inputResult = inputRulesPlugin({
 						editor,
 						rules
 					});
@@ -15598,18 +15746,18 @@ var ExtensionManager$1 = class {
 					plugins.push(...inputPlugins);
 				}
 			}
-			const addPasteRules = getExtensionField$1(extension, "addPasteRules", context);
-			if (isExtensionRulesEnabled$1(extension, editor.options.enablePasteRules) && addPasteRules) {
+			const addPasteRules = getExtensionField(extension, "addPasteRules", context);
+			if (isExtensionRulesEnabled(extension, editor.options.enablePasteRules) && addPasteRules) {
 				const rules = addPasteRules();
 				if (rules && rules.length) {
-					const pasteRules = pasteRulesPlugin$1({
+					const pasteRules = pasteRulesPlugin({
 						editor,
 						rules
 					});
 					plugins.push(...pasteRules);
 				}
 			}
-			const addProseMirrorPlugins = getExtensionField$1(extension, "addProseMirrorPlugins", context);
+			const addProseMirrorPlugins = getExtensionField(extension, "addProseMirrorPlugins", context);
 			if (addProseMirrorPlugins) {
 				const proseMirrorPlugins = addProseMirrorPlugins();
 				plugins.push(...proseMirrorPlugins);
@@ -15633,12 +15781,12 @@ var ExtensionManager$1 = class {
 		(_this$decorationManag = this.decorationManager) === null || _this$decorationManag === void 0 || _this$decorationManag.destroy();
 		const entries = [];
 		this.extensions.forEach((extension) => {
-			const addDecorations = getExtensionField$1(extension, "addDecorations", {
+			const addDecorations = getExtensionField(extension, "addDecorations", {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			});
 			if (!addDecorations) return;
 			entries.push({
@@ -15646,7 +15794,7 @@ var ExtensionManager$1 = class {
 				addDecorations
 			});
 		});
-		this.decorationManager = new DecorationManager$1({
+		this.decorationManager = new DecorationManager({
 			editor,
 			entries
 		});
@@ -15657,7 +15805,7 @@ var ExtensionManager$1 = class {
 	* @returns An array of attributes
 	*/
 	get attributes() {
-		return getAttributesFromExtensions$1(this.extensions);
+		return getAttributesFromExtensions(this.extensions);
 	}
 	/**
 	* Get all node views from the extensions.
@@ -15665,21 +15813,21 @@ var ExtensionManager$1 = class {
 	*/
 	get nodeViews() {
 		const { editor } = this;
-		const { nodeExtensions } = splitExtensions$1(this.extensions);
-		return Object.fromEntries(nodeExtensions.filter((extension) => !!getExtensionField$1(extension, "addNodeView")).map((extension) => {
+		const { nodeExtensions } = splitExtensions(this.extensions);
+		return Object.fromEntries(nodeExtensions.filter((extension) => !!getExtensionField(extension, "addNodeView")).map((extension) => {
 			const extensionAttributes = this.attributes.filter((attribute) => attribute.type === extension.name);
-			const addNodeView = getExtensionField$1(extension, "addNodeView", {
+			const addNodeView = getExtensionField(extension, "addNodeView", {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getNodeType$1(extension.name, this.schema)
+				type: getNodeType(extension.name, this.schema)
 			});
 			if (!addNodeView) return [];
 			const nodeViewResult = addNodeView();
 			if (!nodeViewResult) return [];
 			const nodeview = (node, view, getPos, decorations, innerDecorations) => {
-				const HTMLAttributes = getRenderedAttributes$1(node, extensionAttributes);
+				const HTMLAttributes = getRenderedAttributes(node, extensionAttributes);
 				return nodeViewResult({
 					node,
 					view,
@@ -15701,15 +15849,15 @@ var ExtensionManager$1 = class {
 	*/
 	dispatchTransaction(baseDispatch) {
 		const { editor } = this;
-		return sortExtensions$1([...this.extensions].reverse()).reduceRight((next, extension) => {
+		return sortExtensions([...this.extensions].reverse()).reduceRight((next, extension) => {
 			const context = {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			};
-			const dispatchTransaction = getExtensionField$1(extension, "dispatchTransaction", context);
+			const dispatchTransaction = getExtensionField(extension, "dispatchTransaction", context);
 			if (!dispatchTransaction) return next;
 			return (transaction) => {
 				dispatchTransaction.call(context, {
@@ -15726,15 +15874,15 @@ var ExtensionManager$1 = class {
 	*/
 	transformPastedHTML(baseTransform) {
 		const { editor } = this;
-		return sortExtensions$1([...this.extensions]).reduce((transform, extension) => {
+		return sortExtensions([...this.extensions]).reduce((transform, extension) => {
 			const context = {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			};
-			const extensionTransform = getExtensionField$1(extension, "transformPastedHTML", context);
+			const extensionTransform = getExtensionField(extension, "transformPastedHTML", context);
 			if (!extensionTransform) return transform;
 			return (html, view) => {
 				const transformedHtml = transform(html, view);
@@ -15744,19 +15892,19 @@ var ExtensionManager$1 = class {
 	}
 	get markViews() {
 		const { editor } = this;
-		const { markExtensions } = splitExtensions$1(this.extensions);
-		return Object.fromEntries(markExtensions.filter((extension) => !!getExtensionField$1(extension, "addMarkView")).map((extension) => {
+		const { markExtensions } = splitExtensions(this.extensions);
+		return Object.fromEntries(markExtensions.filter((extension) => !!getExtensionField(extension, "addMarkView")).map((extension) => {
 			const extensionAttributes = this.attributes.filter((attribute) => attribute.type === extension.name);
-			const addMarkView = getExtensionField$1(extension, "addMarkView", {
+			const addMarkView = getExtensionField(extension, "addMarkView", {
 				name: extension.name,
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor,
-				type: getMarkType$1(extension.name, this.schema)
+				type: getMarkType(extension.name, this.schema)
 			});
 			if (!addMarkView) return [];
 			const markView = (mark, view, inline) => {
-				const HTMLAttributes = getRenderedAttributes$1(mark, extensionAttributes);
+				const HTMLAttributes = getRenderedAttributes(mark, extensionAttributes);
 				return addMarkView()({
 					mark,
 					view,
@@ -15765,7 +15913,7 @@ var ExtensionManager$1 = class {
 					extension,
 					HTMLAttributes,
 					updateAttributes: (attrs) => {
-						updateMarkViewAttributes$1(mark, editor, attrs);
+						updateMarkViewAttributes(mark, editor, attrs);
 					}
 				});
 			};
@@ -15816,21 +15964,21 @@ var ExtensionManager$1 = class {
 				options: extension.options,
 				storage: this.editor.extensionStorage[extension.name],
 				editor: this.editor,
-				type: getSchemaTypeByName$1(extension.name, this.schema)
+				type: getSchemaTypeByName(extension.name, this.schema)
 			};
 			if (extension.type === "mark") {
 				var _callOrReturn, _callOrReturn2;
-				if ((_callOrReturn = callOrReturn$1(getExtensionField$1(extension, "keepOnSplit", context))) !== null && _callOrReturn !== void 0 ? _callOrReturn : true) this.splittableMarks.push(extension.name);
-				if (!((_callOrReturn2 = callOrReturn$1(getExtensionField$1(extension, "clearable", context))) !== null && _callOrReturn2 !== void 0 ? _callOrReturn2 : true)) this.nonClearableMarks.push(extension.name);
+				if ((_callOrReturn = callOrReturn(getExtensionField(extension, "keepOnSplit", context))) !== null && _callOrReturn !== void 0 ? _callOrReturn : true) this.splittableMarks.push(extension.name);
+				if (!((_callOrReturn2 = callOrReturn(getExtensionField(extension, "clearable", context))) !== null && _callOrReturn2 !== void 0 ? _callOrReturn2 : true)) this.nonClearableMarks.push(extension.name);
 			}
-			const onBeforeCreate = getExtensionField$1(extension, "onBeforeCreate", context);
-			const onCreate = getExtensionField$1(extension, "onCreate", context);
-			const onUpdate = getExtensionField$1(extension, "onUpdate", context);
-			const onSelectionUpdate = getExtensionField$1(extension, "onSelectionUpdate", context);
-			const onTransaction = getExtensionField$1(extension, "onTransaction", context);
-			const onFocus = getExtensionField$1(extension, "onFocus", context);
-			const onBlur = getExtensionField$1(extension, "onBlur", context);
-			const onDestroy = getExtensionField$1(extension, "onDestroy", context);
+			const onBeforeCreate = getExtensionField(extension, "onBeforeCreate", context);
+			const onCreate = getExtensionField(extension, "onCreate", context);
+			const onUpdate = getExtensionField(extension, "onUpdate", context);
+			const onSelectionUpdate = getExtensionField(extension, "onSelectionUpdate", context);
+			const onTransaction = getExtensionField(extension, "onTransaction", context);
+			const onFocus = getExtensionField(extension, "onFocus", context);
+			const onBlur = getExtensionField(extension, "onBlur", context);
+			const onDestroy = getExtensionField(extension, "onDestroy", context);
 			if (onBeforeCreate) this.editor.on("beforeCreate", onBeforeCreate);
 			if (onCreate) this.editor.on("create", onCreate);
 			if (onUpdate) this.editor.on("update", onUpdate);
@@ -15842,14 +15990,14 @@ var ExtensionManager$1 = class {
 		});
 	}
 };
-ExtensionManager$1.resolve = resolveExtensions$1;
-ExtensionManager$1.sort = sortExtensions$1;
-ExtensionManager$1.flatten = flattenExtensions$1;
+ExtensionManager.resolve = resolveExtensions;
+ExtensionManager.sort = sortExtensions;
+ExtensionManager.flatten = flattenExtensions;
 /**
 * The Extension class is the base class for all extensions.
 * @see https://tiptap.dev/api/extensions#create-a-new-extension
 */
-var Extension$1 = class Extension extends Extendable$1 {
+var Extension = class Extension extends Extendable {
 	constructor(..._args) {
 		super(..._args);
 		this.type = "extension";
@@ -15870,7 +16018,7 @@ var Extension$1 = class Extension extends Extendable$1 {
 		return super.extend(resolvedConfig);
 	}
 };
-Extension$1.create({
+var ClipboardTextSerializer = Extension.create({
 	name: "clipboardTextSerializer",
 	addOptions() {
 		return { blockSeparator: void 0 };
@@ -15882,13 +16030,13 @@ Extension$1.create({
 				const { editor } = this;
 				const { state, schema } = editor;
 				const { doc, selection } = state;
-				const textSerializers = getTextSerializersFromSchema$1(schema);
+				const textSerializers = getTextSerializersFromSchema(schema);
 				const { blockSeparator } = this.options;
 				const options = {
 					...blockSeparator !== void 0 ? { blockSeparator } : {},
 					textSerializers
 				};
-				return [...selection.ranges].sort((a, b) => a.$from.pos - b.$from.pos).map(({ $from, $to }) => getTextBetween$1(doc, {
+				return [...selection.ranges].sort((a, b) => a.$from.pos - b.$from.pos).map(({ $from, $to }) => getTextBetween(doc, {
 					from: $from.pos,
 					to: $to.pos
 				}, options)).join(blockSeparator !== null && blockSeparator !== void 0 ? blockSeparator : "\n\n");
@@ -15896,21 +16044,24 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+var Commands = Extension.create({
 	name: "commands",
 	addCommands() {
-		return { ...commands_exports$1 };
+		return { ...commands_exports };
 	}
 });
-Extension$1.create({
+/**
+* This extension allows you to be notified when the user deletes content you are interested in.
+*/
+var Delete = Extension.create({
 	name: "delete",
 	onUpdate({ transaction, appendedTransactions }) {
 		var _this$editor$options$4, _this$editor$options$5;
 		const callback = () => {
 			var _this$editor$options$, _this$editor$options$2, _this$editor$options$3;
 			if ((_this$editor$options$ = (_this$editor$options$2 = this.editor.options.coreExtensionOptions) === null || _this$editor$options$2 === void 0 || (_this$editor$options$2 = _this$editor$options$2.delete) === null || _this$editor$options$2 === void 0 || (_this$editor$options$3 = _this$editor$options$2.filterTransaction) === null || _this$editor$options$3 === void 0 ? void 0 : _this$editor$options$3.call(_this$editor$options$2, transaction)) !== null && _this$editor$options$ !== void 0 ? _this$editor$options$ : transaction.getMeta("y-sync$")) return;
-			const nextTransaction = combineTransactionSteps$1(transaction.before, [transaction, ...appendedTransactions]);
-			getChangedRanges$1(nextTransaction).forEach((change) => {
+			const nextTransaction = combineTransactionSteps(transaction.before, [transaction, ...appendedTransactions]);
+			getChangedRanges(nextTransaction).forEach((change) => {
 				if (nextTransaction.mapping.mapResult(change.oldRange.from).deletedAfter && nextTransaction.mapping.mapResult(change.oldRange.to).deletedBefore) nextTransaction.before.nodesBetween(change.oldRange.from, change.oldRange.to, (node, from) => {
 					const to = from + node.nodeSize - 2;
 					const isFullyWithinRange = change.oldRange.from <= from && to <= change.oldRange.to;
@@ -15965,7 +16116,7 @@ Extension$1.create({
 		else callback();
 	}
 });
-Extension$1.create({
+var Drop = Extension.create({
 	name: "drop",
 	addProseMirrorPlugins() {
 		return [new Plugin({
@@ -15981,7 +16132,7 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+var Editable = Extension.create({
 	name: "editable",
 	addProseMirrorPlugins() {
 		return [new Plugin({
@@ -15990,13 +16141,13 @@ Extension$1.create({
 		})];
 	}
 });
-var focusEventsPluginKey$1 = new PluginKey("focusEvents");
-Extension$1.create({
+var focusEventsPluginKey = new PluginKey("focusEvents");
+var FocusEvents = Extension.create({
 	name: "focusEvents",
 	addProseMirrorPlugins() {
 		const { editor } = this;
 		return [new Plugin({
-			key: focusEventsPluginKey$1,
+			key: focusEventsPluginKey,
 			props: { handleDOMEvents: {
 				focus: (view, event) => {
 					editor.isFocused = true;
@@ -16014,7 +16165,7 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+var Keymap = Extension.create({
 	name: "keymap",
 	addKeyboardShortcuts() {
 		const handleBackspace = () => this.editor.commands.first(({ commands }) => [
@@ -16068,7 +16219,7 @@ Extension$1.create({
 			"Ctrl-a": () => this.editor.commands.selectTextblockStart(),
 			"Ctrl-e": () => this.editor.commands.selectTextblockEnd()
 		};
-		if (isiOS$1() || isMacOS$1()) return macKeymap;
+		if (isiOS() || isMacOS()) return macKeymap;
 		return pcKeymap;
 	},
 	addProseMirrorPlugins() {
@@ -16083,13 +16234,13 @@ Extension$1.create({
 				const allFrom = Selection$1.atStart(oldState.doc).from;
 				const allEnd = Selection$1.atEnd(oldState.doc).to;
 				if (empty || !(from === allFrom && to === allEnd)) return;
-				if (!isNodeEmpty$1(newState.doc)) return;
+				if (!isNodeEmpty(newState.doc)) return;
 				const tr = newState.tr;
-				const state = createChainableState$1({
+				const state = createChainableState({
 					state: newState,
 					transaction: tr
 				});
-				const { commands } = new CommandManager$1({
+				const { commands } = new CommandManager({
 					editor: this.editor,
 					state
 				});
@@ -16100,7 +16251,7 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+var Paste = Extension.create({
 	name: "paste",
 	addProseMirrorPlugins() {
 		return [new Plugin({
@@ -16115,7 +16266,25 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+/**
+* The Tabindex extension adds a configurable tabindex attribute to the editor.
+*
+* By default, the editor gets tabindex="0" when editable. This can be customized
+* via coreExtensionOptions to support specific focus ordering requirements in forms
+* or to enable focusing on non-editable editors.
+*
+* @example
+* ```ts
+* new Editor({
+*   coreExtensionOptions: {
+*     tabindex: {
+*       value: '-1',
+*     },
+*   },
+* })
+* ```
+*/
+var Tabindex = Extension.create({
 	name: "tabindex",
 	addOptions() {
 		return { value: void 0 };
@@ -16131,14 +16300,22 @@ Extension$1.create({
 		})];
 	}
 });
-Extension$1.create({
+/**
+* The TextDirection extension adds support for setting text direction (LTR/RTL/auto)
+* on all nodes in the editor.
+*
+* This extension adds a global `dir` attribute to all node types, which can be used
+* to control bidirectional text rendering. The direction can be set globally via
+* editor options or per-node using commands.
+*/
+var TextDirection = Extension.create({
 	name: "textDirection",
 	addOptions() {
 		return { direction: void 0 };
 	},
 	addGlobalAttributes() {
 		if (!this.options.direction) return [];
-		const { nodeExtensions } = splitExtensions$1(this.extensions);
+		const { nodeExtensions } = splitExtensions(this.extensions);
 		return [{
 			types: nodeExtensions.filter((extension) => extension.name !== "text").map((extension) => extension.name),
 			attributes: { dir: {
@@ -16166,6 +16343,781 @@ Extension$1.create({
 		})];
 	}
 });
+var hasChecked = false;
+/**
+* Warns once when prosemirror-model is loaded twice
+* @param schema The editor schema
+* @returns void
+* @example ```js
+* warnOnDuplicatedProseMirrorModel(editor.schema)
+* ```
+*/
+function warnOnDuplicatedProseMirrorModel(schema) {
+	if (hasChecked) return;
+	hasChecked = true;
+	let content;
+	try {
+		content = ReplaceStep.fromJSON(schema, {
+			from: 0,
+			to: 0
+		}).slice.content;
+	} catch {
+		return;
+	}
+	if (content instanceof Fragment) return;
+	console.warn("[tiptap warn]: prosemirror-model is loaded more than once. Wrapping and splitting nodes will fail. Deduplicate it in your lock file, or alias it to a single copy in your bundler.");
+}
+var NodePos = class NodePos {
+	get name() {
+		return this.node.type.name;
+	}
+	constructor(pos, editor, isBlock = false, node = null) {
+		this.currentNode = null;
+		this.actualDepth = null;
+		this.isBlock = isBlock;
+		this.resolvedPos = pos;
+		this.editor = editor;
+		this.currentNode = node;
+	}
+	get node() {
+		return this.currentNode || this.resolvedPos.node();
+	}
+	get element() {
+		return this.editor.view.domAtPos(this.pos).node;
+	}
+	get depth() {
+		var _this$actualDepth;
+		return (_this$actualDepth = this.actualDepth) !== null && _this$actualDepth !== void 0 ? _this$actualDepth : this.resolvedPos.depth;
+	}
+	get pos() {
+		return this.resolvedPos.pos;
+	}
+	get content() {
+		return this.node.content;
+	}
+	set content(content) {
+		let from = this.from;
+		let to = this.to;
+		if (this.isBlock) {
+			if (this.content.size === 0) {
+				console.error(`You can’t set content on a block node. Tried to set content on ${this.name} at ${this.pos}`);
+				return;
+			}
+			from = this.from + 1;
+			to = this.to - 1;
+		}
+		this.editor.commands.insertContentAt({
+			from,
+			to
+		}, content);
+	}
+	get attributes() {
+		return this.node.attrs;
+	}
+	get textContent() {
+		return this.node.textContent;
+	}
+	get size() {
+		return this.node.nodeSize;
+	}
+	get from() {
+		if (this.isBlock) return this.pos;
+		return this.resolvedPos.start(this.resolvedPos.depth);
+	}
+	get range() {
+		return {
+			from: this.from,
+			to: this.to
+		};
+	}
+	get to() {
+		if (this.isBlock) return this.pos + this.size;
+		return this.resolvedPos.end(this.resolvedPos.depth) + (this.node.isText ? 0 : 1);
+	}
+	get parent() {
+		if (this.depth === 0) return null;
+		const parentPos = this.resolvedPos.start(this.resolvedPos.depth - 1);
+		const $pos = this.resolvedPos.doc.resolve(parentPos);
+		return new NodePos($pos, this.editor);
+	}
+	get before() {
+		let $pos = this.resolvedPos.doc.resolve(this.from - (this.isBlock ? 1 : 2));
+		if ($pos.depth !== this.depth) $pos = this.resolvedPos.doc.resolve(this.from - 3);
+		return new NodePos($pos, this.editor);
+	}
+	get after() {
+		let $pos = this.resolvedPos.doc.resolve(this.to + (this.isBlock ? 2 : 1));
+		if ($pos.depth !== this.depth) $pos = this.resolvedPos.doc.resolve(this.to + 3);
+		return new NodePos($pos, this.editor);
+	}
+	get children() {
+		const children = [];
+		this.node.content.forEach((node, offset) => {
+			const isBlock = node.isBlock && !node.isTextblock;
+			const isNonTextAtom = node.isAtom && !node.isText;
+			const isInline = node.isInline;
+			const targetPos = this.pos + offset + (isNonTextAtom ? 0 : 1);
+			if (targetPos < 0 || targetPos > this.resolvedPos.doc.nodeSize - 2) return;
+			const $pos = this.resolvedPos.doc.resolve(targetPos);
+			if (!isBlock && !isInline && $pos.depth <= this.depth) return;
+			const childNodePos = new NodePos($pos, this.editor, isBlock, isBlock || isInline ? node : null);
+			if (isBlock) childNodePos.actualDepth = this.depth + 1;
+			children.push(childNodePos);
+		});
+		return children;
+	}
+	get firstChild() {
+		return this.children[0] || null;
+	}
+	get lastChild() {
+		const children = this.children;
+		return children[children.length - 1] || null;
+	}
+	closest(selector, attributes = {}) {
+		let node = null;
+		let currentNode = this.parent;
+		while (currentNode && !node) {
+			if (currentNode.node.type.name === selector) {
+				if (Object.keys(attributes).length > 0) {
+					const nodeAttributes = currentNode.node.attrs;
+					const attrKeys = Object.keys(attributes);
+					for (let index = 0; index < attrKeys.length; index += 1) {
+						const key = attrKeys[index];
+						if (nodeAttributes[key] !== attributes[key]) break;
+					}
+				} else node = currentNode;
+			}
+			currentNode = currentNode.parent;
+		}
+		return node;
+	}
+	querySelector(selector, attributes = {}) {
+		return this.querySelectorAll(selector, attributes, true)[0] || null;
+	}
+	querySelectorAll(selector, attributes = {}, firstItemOnly = false) {
+		let nodes = [];
+		if (!this.children || this.children.length === 0) return nodes;
+		const attrKeys = Object.keys(attributes);
+		/**
+		* Finds all children recursively that match the selector and attributes
+		* If firstItemOnly is true, it will return the first item found
+		*/
+		this.children.forEach((childPos) => {
+			if (firstItemOnly && nodes.length > 0) return;
+			if (childPos.node.type.name === selector) {
+				if (attrKeys.every((key) => attributes[key] === childPos.node.attrs[key])) nodes.push(childPos);
+			}
+			if (firstItemOnly && nodes.length > 0) return;
+			nodes = nodes.concat(childPos.querySelectorAll(selector, attributes, firstItemOnly));
+		});
+		return nodes;
+	}
+	setAttribute(attributes) {
+		const { tr } = this.editor.state;
+		tr.setNodeMarkup(this.from, void 0, {
+			...this.node.attrs,
+			...attributes
+		});
+		this.editor.view.dispatch(tr);
+	}
+};
+var style = `.ProseMirror {
+  position: relative;
+}
+
+.ProseMirror {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  -webkit-font-variant-ligatures: none;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+}
+
+.ProseMirror [contenteditable="false"] {
+  white-space: normal;
+}
+
+.ProseMirror [contenteditable="false"] [contenteditable="true"] {
+  white-space: pre-wrap;
+}
+
+.ProseMirror pre {
+  white-space: pre-wrap;
+}
+
+img.ProseMirror-separator {
+  display: inline !important;
+  border: none !important;
+  margin: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ProseMirror-gapcursor {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  margin: 0;
+}
+
+.ProseMirror-gapcursor:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid black;
+  animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+}
+
+@keyframes ProseMirror-cursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.ProseMirror-hideselection *::selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection * {
+  caret-color: transparent;
+}
+
+.ProseMirror-focused .ProseMirror-gapcursor {
+  display: block;
+}`;
+var Editor = class extends EventEmitter {
+	constructor(options = {}) {
+		super();
+		this.css = null;
+		this.className = "tiptap";
+		this.editorView = null;
+		this.isFocused = false;
+		this.destroyed = false;
+		this.isInitialized = false;
+		this.extensionStorage = {};
+		this.instanceId = Math.random().toString(36).slice(2, 9);
+		this.hasWarnedStaleDecorationRead = false;
+		this.options = {
+			element: typeof document !== "undefined" ? document.createElement("div") : null,
+			content: "",
+			injectCSS: true,
+			injectNonce: void 0,
+			extensions: [],
+			autofocus: false,
+			editable: true,
+			textDirection: void 0,
+			editorProps: {},
+			parseOptions: {},
+			coreExtensionOptions: {},
+			enableInputRules: true,
+			enablePasteRules: true,
+			enableCoreExtensions: true,
+			enableContentCheck: false,
+			emitContentError: false,
+			onBeforeCreate: () => null,
+			onCreate: () => null,
+			onMount: () => null,
+			onUnmount: () => null,
+			onUpdate: () => null,
+			onSelectionUpdate: () => null,
+			onTransaction: () => null,
+			onFocus: () => null,
+			onBlur: () => null,
+			onDestroy: () => null,
+			onContentError: ({ error }) => {
+				throw error;
+			},
+			onPaste: () => null,
+			onDrop: () => null,
+			onDelete: () => null,
+			enableExtensionDispatchTransaction: true
+		};
+		this.isCapturingTransaction = false;
+		this.capturedTransaction = null;
+		this.utils = {
+			getUpdatedPosition,
+			createMappablePosition
+		};
+		this.setOptions(options);
+		this.createExtensionManager();
+		this.createCommandManager();
+		this.createSchema();
+		this.on("beforeCreate", this.options.onBeforeCreate);
+		this.emit("beforeCreate", { editor: this });
+		this.on("mount", this.options.onMount);
+		this.on("unmount", this.options.onUnmount);
+		this.on("contentError", this.options.onContentError);
+		this.on("create", this.options.onCreate);
+		this.on("update", this.options.onUpdate);
+		this.on("selectionUpdate", this.options.onSelectionUpdate);
+		this.on("transaction", this.options.onTransaction);
+		this.on("focus", this.options.onFocus);
+		this.on("blur", this.options.onBlur);
+		this.on("destroy", this.options.onDestroy);
+		this.on("drop", ({ event, slice, moved }) => this.options.onDrop(event, slice, moved));
+		this.on("paste", ({ event, slice }) => this.options.onPaste(event, slice));
+		this.on("delete", this.options.onDelete);
+		const initialDoc = this.createDoc();
+		if (!this.editorState) {
+			const selection = resolveFocusPosition(initialDoc, this.options.autofocus);
+			this.editorState = EditorState.create({
+				doc: initialDoc,
+				schema: this.schema,
+				selection: selection || void 0
+			});
+		}
+		warnOnDuplicatedProseMirrorModel(this.schema);
+		if (this.options.element) this.mount(this.options.element);
+	}
+	/**
+	* Attach the editor to the DOM, creating a new editor view.
+	*/
+	mount(el) {
+		if (typeof document === "undefined") throw new Error(`[tiptap error]: The editor cannot be mounted because there is no 'document' defined in this environment.`);
+		this.createView(el);
+		this.emit("mount", { editor: this });
+		if (this.css && !document.head.contains(this.css)) document.head.appendChild(this.css);
+		window.setTimeout(() => {
+			if (this.isDestroyed) return;
+			if (this.options.autofocus !== false && this.options.autofocus !== null) this.commands.focus(this.options.autofocus);
+			this.emit("create", { editor: this });
+			this.isInitialized = true;
+		}, 0);
+	}
+	/**
+	* Remove the editor from the DOM, but still allow remounting at a different point in time
+	*/
+	unmount() {
+		if (this.editorView) {
+			this.editorState = this.editorView.state;
+			const dom = this.editorView.dom;
+			if (dom === null || dom === void 0 ? void 0 : dom.editor) delete dom.editor;
+			this.editorView.destroy();
+		}
+		this.editorView = null;
+		this.isInitialized = false;
+		if (this.css && !document.querySelectorAll(`.${this.className}`).length) try {
+			if (typeof this.css.remove === "function") this.css.remove();
+			else if (this.css.parentNode) this.css.parentNode.removeChild(this.css);
+		} catch (error) {
+			console.warn("Failed to remove CSS element:", error);
+		}
+		this.css = null;
+		this.emit("unmount", { editor: this });
+	}
+	/**
+	* Returns the editor storage.
+	*/
+	get storage() {
+		return this.extensionStorage;
+	}
+	/**
+	* An object of all registered commands.
+	*/
+	get commands() {
+		return this.commandManager.commands;
+	}
+	/**
+	* Create a command chain to call multiple commands at once.
+	*/
+	chain() {
+		if (!this.commandManager) return CommandManager.createFakeChain();
+		return this.commandManager.chain();
+	}
+	/**
+	* Check if a command or a command chain can be executed. Without executing it.
+	*/
+	can() {
+		if (!this.commandManager) return CommandManager.createFallbackCan();
+		return this.commandManager.can();
+	}
+	/**
+	* Inject CSS styles.
+	*/
+	injectCSS() {
+		if (this.options.injectCSS && typeof document !== "undefined") this.css = createStyleTag(style, this.options.injectNonce);
+	}
+	/**
+	* Update editor options.
+	*
+	* @param options A list of options
+	*/
+	setOptions(options = {}) {
+		this.options = {
+			...this.options,
+			...options
+		};
+		if (!this.editorView || !this.state || this.isDestroyed) return;
+		if (this.options.editorProps) this.view.setProps({
+			...this.options.editorProps,
+			attributes: this.getEditorViewAttributes()
+		});
+		this.view.updateState(this.state);
+	}
+	/**
+	* Update editable state of the editor.
+	*/
+	setEditable(editable, emitUpdate = true) {
+		this.setOptions({ editable });
+		if (emitUpdate) this.emit("update", {
+			editor: this,
+			transaction: this.state.tr,
+			appendedTransactions: []
+		});
+	}
+	/**
+	* Returns whether the editor is editable.
+	*/
+	get isEditable() {
+		return this.options.editable && this.view && this.view.editable;
+	}
+	/**
+	* Returns the editor view.
+	*/
+	get view() {
+		if (this.editorView) return this.editorView;
+		return new Proxy({
+			state: this.editorState,
+			updateState: (state) => {
+				this.editorState = state;
+			},
+			dispatch: (tr) => {
+				this.dispatchTransaction(tr);
+			},
+			composing: false,
+			dragging: null,
+			editable: true,
+			isDestroyed: false
+		}, { get: (obj, key) => {
+			if (this.editorView) return this.editorView[key];
+			if (key === "state") return this.editorState;
+			if (key in obj) return Reflect.get(obj, key);
+			throw new Error(`[tiptap error]: The editor view is not available. Cannot access view['${key}']. The editor may not be mounted yet.`);
+		} });
+	}
+	/**
+	* Returns the editor state.
+	*/
+	get state() {
+		if (isDev && !this.hasWarnedStaleDecorationRead && isInDecorationApplyScope(this)) {
+			this.hasWarnedStaleDecorationRead = true;
+			console.warn("[tiptap warn]: `editor.state` was read while decoration `create()` was running. It returns the pre-transaction document. Use the `state` argument passed to `create()` instead. Helpers like `editor.isActive()` read `editor.state` too, so pass `state` to their standalone versions instead of calling them on the editor.");
+		}
+		if (this.editorView) this.editorState = this.view.state;
+		return this.editorState;
+	}
+	/**
+	* Register a ProseMirror plugin.
+	*
+	* @param plugin A ProseMirror plugin
+	* @param handlePlugins Control how to merge the plugin into the existing plugins.
+	* @returns The new editor state
+	*/
+	registerPlugin(plugin, handlePlugins) {
+		const plugins = isFunction(handlePlugins) ? handlePlugins(plugin, [...this.state.plugins]) : [...this.state.plugins, plugin];
+		const state = this.state.reconfigure({ plugins });
+		this.view.updateState(state);
+		return state;
+	}
+	/**
+	* Unregister a ProseMirror plugin.
+	*
+	* @param nameOrPluginKeyToRemove The plugins name
+	* @returns The new editor state or undefined if the editor is destroyed
+	*/
+	unregisterPlugin(nameOrPluginKeyToRemove) {
+		if (this.isDestroyed) return;
+		const prevPlugins = this.state.plugins;
+		let plugins = prevPlugins;
+		[].concat(nameOrPluginKeyToRemove).forEach((nameOrPluginKey) => {
+			const name = typeof nameOrPluginKey === "string" ? `${nameOrPluginKey}$` : nameOrPluginKey.key;
+			plugins = plugins.filter((plugin) => !plugin.key.startsWith(name));
+		});
+		if (prevPlugins.length === plugins.length) return;
+		const state = this.state.reconfigure({ plugins });
+		this.view.updateState(state);
+		return state;
+	}
+	/**
+	* Creates an extension manager.
+	*/
+	createExtensionManager() {
+		var _this$options$coreExt, _this$options$coreExt2;
+		const allExtensions = [...this.options.enableCoreExtensions ? [
+			Editable,
+			ClipboardTextSerializer.configure({ blockSeparator: (_this$options$coreExt = this.options.coreExtensionOptions) === null || _this$options$coreExt === void 0 || (_this$options$coreExt = _this$options$coreExt.clipboardTextSerializer) === null || _this$options$coreExt === void 0 ? void 0 : _this$options$coreExt.blockSeparator }),
+			Commands,
+			FocusEvents,
+			Keymap,
+			Tabindex.configure({ value: (_this$options$coreExt2 = this.options.coreExtensionOptions) === null || _this$options$coreExt2 === void 0 || (_this$options$coreExt2 = _this$options$coreExt2.tabindex) === null || _this$options$coreExt2 === void 0 ? void 0 : _this$options$coreExt2.value }),
+			Drop,
+			Paste,
+			Delete,
+			TextDirection.configure({ direction: this.options.textDirection })
+		].filter((ext) => {
+			if (typeof this.options.enableCoreExtensions === "object") return this.options.enableCoreExtensions[ext.name] !== false;
+			return true;
+		}) : [], ...this.options.extensions].filter((extension) => {
+			return [
+				"extension",
+				"node",
+				"mark"
+			].includes(extension === null || extension === void 0 ? void 0 : extension.type);
+		});
+		this.extensionManager = new ExtensionManager(allExtensions, this);
+	}
+	/**
+	* Creates an command manager.
+	*/
+	createCommandManager() {
+		this.commandManager = new CommandManager({ editor: this });
+	}
+	/**
+	* Creates a ProseMirror schema.
+	*/
+	createSchema() {
+		this.schema = this.extensionManager.schema;
+	}
+	/**
+	* Creates the initial document.
+	*/
+	createDoc() {
+		let doc;
+		try {
+			doc = createDocument(this.options.content, this.schema, this.options.parseOptions, { errorOnInvalidContent: this.options.enableContentCheck });
+		} catch (e) {
+			if (!(e instanceof Error) || !["[tiptap error]: Invalid JSON content", "[tiptap error]: Invalid HTML content"].includes(e.message)) throw e;
+			const fallbackDoc = createDocument(this.options.content, this.schema, this.options.parseOptions, { errorOnInvalidContent: false });
+			this.editorState = EditorState.create({
+				doc: fallbackDoc,
+				schema: this.schema,
+				selection: resolveFocusPosition(fallbackDoc, this.options.autofocus) || void 0
+			});
+			this.emit("contentError", {
+				editor: this,
+				error: e,
+				disableCollaboration: () => {
+					if ("collaboration" in this.storage && typeof this.storage.collaboration === "object" && this.storage.collaboration) this.storage.collaboration.isDisabled = true;
+					this.options.extensions = this.options.extensions.filter((extension) => extension.name !== "collaboration");
+					this.createExtensionManager();
+				}
+			});
+			return this.editorState.doc;
+		}
+		return doc;
+	}
+	/**
+	* Returns the attributes for the editor element.
+	* Merges the default `role="textbox"` with the attributes from `editorProps`,
+	* so the role is kept no matter when the props are applied.
+	*/
+	getEditorViewAttributes() {
+		var _this$options$editorP;
+		const attributes = (_this$options$editorP = this.options.editorProps) === null || _this$options$editorP === void 0 ? void 0 : _this$options$editorP.attributes;
+		if (isFunction(attributes)) return (state) => ({
+			role: "textbox",
+			...attributes(state)
+		});
+		return {
+			role: "textbox",
+			...attributes
+		};
+	}
+	/**
+	* Creates a ProseMirror view.
+	*/
+	createView(element) {
+		const { editorProps, enableExtensionDispatchTransaction } = this.options;
+		const baseDispatch = editorProps.dispatchTransaction || this.dispatchTransaction.bind(this);
+		const dispatch = enableExtensionDispatchTransaction ? this.extensionManager.dispatchTransaction(baseDispatch) : baseDispatch;
+		const baseTransformPastedHTML = editorProps.transformPastedHTML;
+		const transformPastedHTML = this.extensionManager.transformPastedHTML(baseTransformPastedHTML);
+		this.editorView = new EditorView(element, {
+			...editorProps,
+			attributes: this.getEditorViewAttributes(),
+			dispatchTransaction: dispatch,
+			transformPastedHTML,
+			state: this.editorState,
+			markViews: this.extensionManager.markViews,
+			nodeViews: this.extensionManager.nodeViews
+		});
+		const newState = this.state.reconfigure({ plugins: this.extensionManager.plugins });
+		this.view.updateState(newState);
+		this.prependClass();
+		this.injectCSS();
+		const dom = this.view.dom;
+		dom.editor = this;
+	}
+	/**
+	* Creates all node and mark views.
+	*/
+	createNodeViews() {
+		if (this.view.isDestroyed) return;
+		this.view.setProps({
+			markViews: this.extensionManager.markViews,
+			nodeViews: this.extensionManager.nodeViews
+		});
+	}
+	/**
+	* Prepend class name to element.
+	*/
+	prependClass() {
+		this.view.dom.className = `${this.className} ${this.view.dom.className}`;
+	}
+	captureTransaction(fn) {
+		this.isCapturingTransaction = true;
+		fn();
+		this.isCapturingTransaction = false;
+		const tr = this.capturedTransaction;
+		this.capturedTransaction = null;
+		return tr;
+	}
+	/**
+	* The callback over which to send transactions (state updates) produced by the view.
+	*
+	* @param transaction An editor state transaction
+	*/
+	dispatchTransaction(transaction) {
+		if (this.view.isDestroyed) return;
+		if (this.isCapturingTransaction) {
+			if (!this.capturedTransaction) {
+				this.capturedTransaction = transaction;
+				return;
+			}
+			transaction.steps.forEach((step) => {
+				var _this$capturedTransac;
+				return (_this$capturedTransac = this.capturedTransaction) === null || _this$capturedTransac === void 0 ? void 0 : _this$capturedTransac.step(step);
+			});
+			return;
+		}
+		const { state, transactions } = this.state.applyTransaction(transaction);
+		const selectionHasChanged = !this.state.selection.eq(state.selection);
+		const rootTrWasApplied = transactions.includes(transaction);
+		const prevState = this.state;
+		this.emit("beforeTransaction", {
+			editor: this,
+			transaction,
+			nextState: state
+		});
+		if (!rootTrWasApplied) return;
+		this.view.updateState(state);
+		this.emit("transaction", {
+			editor: this,
+			transaction,
+			appendedTransactions: transactions.slice(1)
+		});
+		if (selectionHasChanged) this.emit("selectionUpdate", {
+			editor: this,
+			transaction
+		});
+		const mostRecentFocusTr = transactions.findLast((tr) => tr.getMeta("focus") || tr.getMeta("blur"));
+		const focus = mostRecentFocusTr === null || mostRecentFocusTr === void 0 ? void 0 : mostRecentFocusTr.getMeta("focus");
+		const blur = mostRecentFocusTr === null || mostRecentFocusTr === void 0 ? void 0 : mostRecentFocusTr.getMeta("blur");
+		if (focus) this.emit("focus", {
+			editor: this,
+			event: focus.event,
+			transaction: mostRecentFocusTr
+		});
+		if (blur) this.emit("blur", {
+			editor: this,
+			event: blur.event,
+			transaction: mostRecentFocusTr
+		});
+		if (transaction.getMeta("preventUpdate") || !transactions.some((tr) => tr.docChanged) || prevState.doc.eq(state.doc)) return;
+		this.emit("update", {
+			editor: this,
+			transaction,
+			appendedTransactions: transactions.slice(1)
+		});
+	}
+	/**
+	* Get attributes of the currently selected node or mark.
+	*/
+	getAttributes(nameOrType) {
+		return getAttributes(this.state, nameOrType);
+	}
+	isActive(nameOrAttributes, attributesOrUndefined) {
+		const name = typeof nameOrAttributes === "string" ? nameOrAttributes : null;
+		const attributes = typeof nameOrAttributes === "string" ? attributesOrUndefined : nameOrAttributes;
+		return isActive(this.state, name, attributes);
+	}
+	/**
+	* Get the document as JSON.
+	*/
+	getJSON() {
+		return this.state.doc.toJSON();
+	}
+	/**
+	* Get the document as HTML.
+	*/
+	getHTML() {
+		return getHTMLFromFragment(this.state.doc.content, this.schema);
+	}
+	/**
+	* Get the document as text.
+	*/
+	getText(options) {
+		const { blockSeparator = "\n\n", textSerializers = {} } = options || {};
+		return getText(this.state.doc, {
+			blockSeparator,
+			textSerializers: {
+				...getTextSerializersFromSchema(this.schema),
+				...textSerializers
+			}
+		});
+	}
+	/**
+	* Check if there is no content.
+	*/
+	get isEmpty() {
+		return isNodeEmpty(this.state.doc);
+	}
+	/**
+	* Destroy the editor.
+	*/
+	destroy() {
+		if (this.destroyed) return;
+		this.destroyed = true;
+		this.emit("destroy");
+		this.unmount();
+		this.removeAllListeners();
+		this.extensionManager.destroy();
+		this.extensionManager = null;
+		this.schema = null;
+		this.commandManager = null;
+		this.extensionStorage = {};
+	}
+	/**
+	* Check if the editor is already destroyed.
+	*/
+	get isDestroyed() {
+		var _this$editorView$isDe, _this$editorView;
+		return (_this$editorView$isDe = (_this$editorView = this.editorView) === null || _this$editorView === void 0 ? void 0 : _this$editorView.isDestroyed) !== null && _this$editorView$isDe !== void 0 ? _this$editorView$isDe : true;
+	}
+	$node(selector, attributes) {
+		var _this$$doc;
+		return ((_this$$doc = this.$doc) === null || _this$$doc === void 0 ? void 0 : _this$$doc.querySelector(selector, attributes)) || null;
+	}
+	$nodes(selector, attributes) {
+		var _this$$doc2;
+		return ((_this$$doc2 = this.$doc) === null || _this$$doc2 === void 0 ? void 0 : _this$$doc2.querySelectorAll(selector, attributes)) || null;
+	}
+	$pos(pos) {
+		const $pos = this.state.doc.resolve(pos);
+		const node = pos > 0 && $pos.nodeAfter && !$pos.nodeAfter.isText && $pos.nodeAfter.isAtom ? $pos.nodeAfter : null;
+		return new NodePos($pos, this, false, node);
+	}
+	get $doc() {
+		return this.$pos(0);
+	}
+};
 /**
 * Build an input rule that adds a mark when the
 * matched text is typed into it.
@@ -16175,7 +17127,7 @@ function markInputRule(config) {
 	return new InputRule({
 		find: config.find,
 		handler: ({ state, range, match }) => {
-			const attributes = callOrReturn$1(config.getAttributes, void 0, match);
+			const attributes = callOrReturn(config.getAttributes, void 0, match);
 			if (attributes === false || attributes === null) return null;
 			const { tr } = state;
 			const captureGroup = match[match.length - 1];
@@ -16206,7 +17158,7 @@ function nodeInputRule(config) {
 	return new InputRule({
 		find: config.find,
 		handler: ({ state, range, match }) => {
-			const attributes = callOrReturn$1(config.getAttributes, void 0, match) || {};
+			const attributes = callOrReturn(config.getAttributes, void 0, match) || {};
 			const { tr } = state;
 			const start = range.from;
 			let end = range.to;
@@ -16239,7 +17191,7 @@ function textblockTypeInputRule(config) {
 		find: config.find,
 		handler: ({ state, range, match }) => {
 			const $start = state.doc.resolve(range.from);
-			const attributes = callOrReturn$1(config.getAttributes, void 0, match) || {};
+			const attributes = callOrReturn(config.getAttributes, void 0, match) || {};
 			if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), config.type)) return null;
 			state.tr.delete(range.from, range.to).setBlockType(range.from, range.from, config.type, attributes);
 		},
@@ -16265,7 +17217,7 @@ function wrappingInputRule(config) {
 	return new InputRule({
 		find: config.find,
 		handler: ({ state, range, match, chain }) => {
-			const attributes = callOrReturn$1(config.getAttributes, void 0, match) || {};
+			const attributes = callOrReturn(config.getAttributes, void 0, match) || {};
 			const tr = state.tr.delete(range.from, range.to);
 			const blockRange = tr.doc.resolve(range.from).blockRange();
 			const wrapping = blockRange && findWrapping(blockRange, config.type, attributes);
@@ -16295,7 +17247,7 @@ function wrappingInputRule(config) {
 * The Node class is used to create custom node extensions.
 * @see https://tiptap.dev/api/extensions#create-a-new-extension
 */
-var Node$1 = class Node extends Extendable$1 {
+var Node$1 = class Node extends Extendable {
 	constructor(..._args) {
 		super(..._args);
 		this.type = "node";
@@ -16325,7 +17277,7 @@ function markPasteRule(config) {
 	return new PasteRule({
 		find: config.find,
 		handler: ({ state, range, match, pasteEvent }) => {
-			const attributes = callOrReturn$1(config.getAttributes, void 0, match, pasteEvent);
+			const attributes = callOrReturn(config.getAttributes, void 0, match, pasteEvent);
 			if (attributes === false || attributes === null) return null;
 			const { tr } = state;
 			const captureGroup = match[match.length - 1];
@@ -16906,7 +17858,7 @@ composition of that string.
 @param {string} str input string to scan
 @return {Token[]} list of tokens, each with a type and value
 */
-function run$1$1(start, str) {
+function run$1(start, str) {
 	const iterable = stringToArray(str.replace(/[A-Z]/g, (c) => c.toLowerCase()));
 	const charCount = iterable.length;
 	const tokens = [];
@@ -17616,7 +18568,7 @@ function init$1({ groups }) {
 * @param {Token[]} tokens list of scanned tokens
 * @returns {MultiToken[]}
 */
-function run$2(start, input, tokens) {
+function run(start, input, tokens) {
 	let len = tokens.length;
 	let cursor = 0;
 	let multis = [];
@@ -17753,9 +18705,9 @@ function init() {
 */
 function tokenize(str) {
 	if (!INIT.initialized) init();
-	return run$2(INIT.parser.start, str, run$1$1(INIT.scanner.start, str));
+	return run(INIT.parser.start, str, run$1(INIT.scanner.start, str));
 }
-tokenize.scan = run$1$1;
+tokenize.scan = run$1;
 /**
 * Find a list of linkable items in the given string.
 * @param {string} str string to find links in
@@ -17840,7 +18792,7 @@ function autolink(options) {
 			*/
 			if (!docChanges || preventAutolink) return;
 			const { tr } = newState;
-			const transform = combineTransactionSteps$1(oldState.doc, [...transactions]);
+			const transform = combineTransactionSteps(oldState.doc, [...transactions]);
 			if (!transactions.some(isHistoryTransaction)) {
 				const insertedRanges = [];
 				transform.steps.forEach((step, index) => {
@@ -17856,7 +18808,7 @@ function autolink(options) {
 				insertedRanges.sort((left, right) => right.to - left.to);
 				insertedRanges.forEach((range) => unlinkTrailingWhitespace(tr, range, options.type));
 			}
-			getChangedRanges$1(transform).forEach(({ newRange }) => {
+			getChangedRanges(transform).forEach(({ newRange }) => {
 				const nodesInChangedRanges = findChildrenInRange(newState.doc, newRange, (node) => node.isTextblock);
 				let textBlock;
 				let textBeforeWhitespace;
@@ -17915,7 +18867,7 @@ function clickHandler(options) {
 			if (options.enableClickSelection) handled = options.editor.commands.extendMarkRange(options.type.name);
 			if (options.openOnClick) {
 				var _link$href, _link$target;
-				const attrs = getAttributes$1(view.state, options.type.name);
+				const attrs = getAttributes(view.state, options.type.name);
 				const href = (_link$href = link.href) !== null && _link$href !== void 0 ? _link$href : attrs.href;
 				const target = (_link$target = link.target) !== null && _link$target !== void 0 ? _link$target : attrs.target;
 				if (href) {
@@ -18089,7 +19041,7 @@ function isAllowedUri(uri, protocols) {
 	});
 	return !uri || uri.replace(UNICODE_WHITESPACE_REGEX_GLOBAL, "").match(new RegExp(`^(?:(?:${allowedProtocols.map((protocol) => protocol.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")).join("|")}):|[^a-z]|[a-z0-9+.\\-]+(?:[^a-z+.\\-:]|$))`, "i"));
 }
-var src_default$26 = Mark$1.create({
+var src_default$26 = Mark.create({
 	name: "link",
 	priority: 1e3,
 	keepOnSplit: false,
@@ -18176,7 +19128,7 @@ var src_default$26 = Mark$1.create({
 			defaultProtocol: this.options.defaultProtocol
 		})) return [
 			"a",
-			mergeAttributes$1(this.options.HTMLAttributes, {
+			mergeAttributes(this.options.HTMLAttributes, {
 				...HTMLAttributes,
 				href: ""
 			}),
@@ -18184,7 +19136,7 @@ var src_default$26 = Mark$1.create({
 		];
 		return [
 			"a",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18314,7 +19266,7 @@ var src_default$25 = Node$1.create({
 	}
 });
 //#endregion
-//#region ../plugin-kit-tiptap-core/node_modules/@tiptap/core/dist/jsx-runtime/jsx-runtime.js
+//#region ../node_modules/@tiptap/core/dist/jsx-runtime/jsx-runtime.js
 var jsxElements = /* @__PURE__ */ new WeakSet();
 var jsxFragments = /* @__PURE__ */ new WeakSet();
 /** Create a new JSX element from the given spec */
@@ -18385,7 +19337,7 @@ var underscoreInputRegex$1 = /(?:^|\s)(__(?!\s+__)((?:[^_]+))__(?!\s+__))$/;
 * Matches bold text via `__` while pasting.
 */
 var underscorePasteRegex$1 = /(?:^|\s)(__(?!\s+__)((?:[^_]+))__(?!\s+__))/g;
-var src_default$24 = Mark$1.create({
+var src_default$24 = Mark.create({
 	name: "bold",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18409,7 +19361,7 @@ var src_default$24 = Mark$1.create({
 	},
 	renderHTML({ HTMLAttributes }) {
 		return /* @__PURE__ */ h("strong", {
-			...mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			...mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			children: /* @__PURE__ */ h("slot", {})
 		});
 	},
@@ -18504,7 +19456,7 @@ function shortestUnusedBacktickRun(text) {
 	while (runs.has(length)) length += 1;
 	return length;
 }
-var src_default$23 = Mark$1.create({
+var src_default$23 = Mark.create({
 	name: "code",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18518,7 +19470,7 @@ var src_default$23 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"code",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18576,7 +19528,7 @@ var inputRegex$3 = /(?:^|\s)(==(?!\s+==)((?:[^=]+))==(?!\s+==))$/;
 * Matches a highlight to a ==highlight== on paste.
 */
 var pasteRegex$1 = /(?:^|\s)(==(?!\s+==)((?:[^=]+))==(?!\s+==))/g;
-var src_default$22 = Mark$1.create({
+var src_default$22 = Mark.create({
 	name: "highlight",
 	addOptions() {
 		return {
@@ -18604,7 +19556,7 @@ var src_default$22 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"mark",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18679,7 +19631,7 @@ var underscoreInputRegex = /(?:^|\s)(_(?!\s+_)((?:[^_]+))_(?!\s+_))$/;
 * Matches an italic to a _italic_ on paste.
 */
 var underscorePasteRegex = /(?:^|\s)(_(?!\s+_)((?:[^_]+))_(?!\s+_))/g;
-var src_default$21 = Mark$1.create({
+var src_default$21 = Mark.create({
 	name: "italic",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18701,7 +19653,7 @@ var src_default$21 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"em",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18764,7 +19716,7 @@ var inputRegex$2 = /(?:^|\s)(~~(?!\s+~~)((?:[^~]+))~~(?!\s+~~))$/;
 * Matches a strike to a ~~strike~~ on paste.
 */
 var pasteRegex = /(?:^|\s)(~~(?!\s+~~)((?:[^~]+))~~(?!\s+~~))/g;
-var src_default$20 = Mark$1.create({
+var src_default$20 = Mark.create({
 	name: "strike",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18784,7 +19736,7 @@ var src_default$20 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"s",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18824,7 +19776,7 @@ var src_default$20 = Mark$1.create({
 		})];
 	}
 });
-var src_default$19 = Mark$1.create({
+var src_default$19 = Mark.create({
 	name: "subscript",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18841,7 +19793,7 @@ var src_default$19 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"sub",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18862,7 +19814,7 @@ var src_default$19 = Mark$1.create({
 		return { "Mod-,": () => this.editor.commands.toggleSubscript() };
 	}
 });
-var src_default$18 = Mark$1.create({
+var src_default$18 = Mark.create({
 	name: "superscript",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18879,7 +19831,7 @@ var src_default$18 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"sup",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18900,7 +19852,7 @@ var src_default$18 = Mark$1.create({
 		return { "Mod-.": () => this.editor.commands.toggleSuperscript() };
 	}
 });
-var src_default$17 = Mark$1.create({
+var src_default$17 = Mark.create({
 	name: "underline",
 	addOptions() {
 		return { HTMLAttributes: {} };
@@ -18915,7 +19867,7 @@ var src_default$17 = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"u",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -18995,7 +19947,7 @@ var mergeNestedSpanStyles = (element) => {
 * for the `text-color` and `font-family` extensions.
 * @see https://www.tiptap.dev/api/marks/text-style
 */
-var TextStyle = Mark$1.create({
+var TextStyle = Mark.create({
 	name: "textStyle",
 	priority: 101,
 	addOptions() {
@@ -19018,7 +19970,7 @@ var TextStyle = Mark$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"span",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -19042,7 +19994,7 @@ var TextStyle = Mark$1.create({
 * This extension allows you to color your text.
 * @see https://tiptap.dev/api/extensions/background-color
 */
-var BackgroundColor = Extension$1.create({
+var BackgroundColor = Extension.create({
 	name: "backgroundColor",
 	addOptions() {
 		return { types: ["textStyle"] };
@@ -19079,7 +20031,7 @@ var BackgroundColor = Extension$1.create({
 * This extension allows you to color your text.
 * @see https://tiptap.dev/api/extensions/color
 */
-var Color = Extension$1.create({
+var Color = Extension.create({
 	name: "color",
 	addOptions() {
 		return { types: ["textStyle"] };
@@ -19116,7 +20068,7 @@ var Color = Extension$1.create({
 * This extension allows you to set a font family for text.
 * @see https://www.tiptap.dev/api/extensions/font-family
 */
-var FontFamily = Extension$1.create({
+var FontFamily = Extension.create({
 	name: "fontFamily",
 	addOptions() {
 		return { types: ["textStyle"] };
@@ -19152,7 +20104,7 @@ var FontFamily = Extension$1.create({
 * This extension allows you to set a font size for text.
 * @see https://www.tiptap.dev/api/extensions/font-size
 */
-var FontSize = Extension$1.create({
+var FontSize = Extension.create({
 	name: "fontSize",
 	addOptions() {
 		return { types: ["textStyle"] };
@@ -19188,7 +20140,7 @@ var FontSize = Extension$1.create({
 * This extension allows you to set the line-height for text.
 * @see https://www.tiptap.dev/api/extensions/line-height
 */
-var LineHeight = Extension$1.create({
+var LineHeight = Extension.create({
 	name: "lineHeight",
 	addOptions() {
 		return { types: ["textStyle"] };
@@ -19225,7 +20177,7 @@ var LineHeight = Extension$1.create({
 *
 * It’s a good starting point for building your own table in Tiptap.
 */
-var TextStyleKit = Extension$1.create({
+var TextStyleKit = Extension.create({
 	name: "textStyleKit",
 	addExtensions() {
 		const extensions = [];
@@ -19299,7 +20251,7 @@ var src_default$16 = Node$1.create({
 	},
 	renderHTML({ HTMLAttributes }) {
 		return /* @__PURE__ */ h("blockquote", {
-			...mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			...mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			children: /* @__PURE__ */ h("slot", {})
 		});
 	},
@@ -19382,7 +20334,7 @@ var BulletList = Node$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"ul",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -19541,7 +20493,7 @@ var handleDeleteBranchingNestedList = (editor, itemName, wrapperNames) => {
 * Kept separate from the list item node so Enter/Tab shortcuts keep their default priority.
 */
 var createBranchingListDeleteKeymap = (itemName, wrapperNames) => {
-	return Extension$1.create({
+	return Extension.create({
 		name: `${itemName}BranchingDeleteKeymap`,
 		priority: 101,
 		addKeyboardShortcuts() {
@@ -19764,7 +20716,7 @@ var ListItem = Node$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"li",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -19830,7 +20782,7 @@ var ListItem = Node$1.create({
 });
 var findListItemPos = (typeOrName, state) => {
 	const { $from } = state.selection;
-	const nodeType = getNodeType$1(typeOrName, state.schema);
+	const nodeType = getNodeType(typeOrName, state.schema);
 	let currentNode = null;
 	let currentDepth = $from.depth;
 	let currentPos = $from.pos;
@@ -19865,7 +20817,7 @@ var hasListBefore = (editorState, name, parentListTypes) => {
 var handleBackspace = (editor, name, parentListTypes) => {
 	if (editor.commands.undoInputRule()) return true;
 	if (editor.state.selection.from !== editor.state.selection.to) return false;
-	if (!isNodeActive$1(editor.state, name) && hasListBefore(editor.state, name, parentListTypes)) {
+	if (!isNodeActive(editor.state, name) && hasListBefore(editor.state, name, parentListTypes)) {
 		const { $anchor } = editor.state.selection;
 		const $listPos = editor.state.doc.resolve($anchor.before() - 1);
 		const listDescendants = [];
@@ -19883,7 +20835,7 @@ var handleBackspace = (editor, name, parentListTypes) => {
 			to: $anchor.end() + 1
 		}, $lastItemPos.end()).joinForward().run();
 	}
-	if (!isNodeActive$1(editor.state, name)) return false;
+	if (!isNodeActive(editor.state, name)) return false;
 	if (!isAtStartOfNode(editor.state)) return false;
 	const { $from } = editor.state.selection;
 	const itemDepth = $from.depth - 1;
@@ -19905,7 +20857,7 @@ var nextListIsHigher = (typeOrName, state) => {
 	return false;
 };
 var handleDelete = (editor, name) => {
-	if (!isNodeActive$1(editor.state, name)) return false;
+	if (!isNodeActive(editor.state, name)) return false;
 	if (!isAtEndOfNode(editor.state, name)) return false;
 	const { selection } = editor.state;
 	const { $from, $to } = selection;
@@ -19921,7 +20873,7 @@ var handleTab = (editor, name, parentListTypes) => {
 	const { $from } = selection;
 	if ($from.parentOffset !== 0) return false;
 	if (!$from.parent.isTextblock) return false;
-	if (isNodeActive$1(state, name)) return false;
+	if (isNodeActive(state, name)) return false;
 	const previous = getPreviousBlockSibling($from);
 	if (!previous || !parentListTypes.includes(previous.type.name)) return false;
 	const lastItem = previous.lastChild;
@@ -19947,7 +20899,7 @@ var handleTab = (editor, name, parentListTypes) => {
 * try to join paragraphs from two list items into a single list item.
 * @see https://www.tiptap.dev/api/extensions/list-keymap
 */
-var ListKeymap = Extension$1.create({
+var ListKeymap = Extension.create({
 	name: "listKeymap",
 	addOptions() {
 		return { listTypes: [{
@@ -20365,7 +21317,7 @@ var OrderedList = Node$1.create({
 	},
 	renderHTML({ HTMLAttributes }) {
 		const { start, type, ...attributesWithoutType } = HTMLAttributes;
-		const attrs = mergeAttributes$1(this.options.HTMLAttributes, attributesWithoutType);
+		const attrs = mergeAttributes(this.options.HTMLAttributes, attributesWithoutType);
 		if (start !== 1) attrs.start = start;
 		if (type && type !== "1") attrs.type = type;
 		return [
@@ -20525,7 +21477,7 @@ var TaskItem = Node$1.create({
 	renderHTML({ node, HTMLAttributes }) {
 		return [
 			"li",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes, { "data-type": this.name }),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { "data-type": this.name }),
 			[
 				"label",
 				["input", {
@@ -20624,7 +21576,7 @@ var TaskItem = Node$1.create({
 					checkbox.checked = updatedNode.attrs.checked;
 					updateA11Y(updatedNode);
 					const extensionAttributes = editor.extensionManager.attributes;
-					const newHTMLAttributes = getRenderedAttributes$1(updatedNode, extensionAttributes);
+					const newHTMLAttributes = getRenderedAttributes(updatedNode, extensionAttributes);
 					const newKeys = new Set(Object.keys(newHTMLAttributes));
 					const staticAttrs = this.options.HTMLAttributes;
 					prevRenderedAttributeKeys.forEach((key) => {
@@ -20678,7 +21630,7 @@ var TaskList = Node$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"ul",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes, { "data-type": this.name }),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { "data-type": this.name }),
 			0
 		];
 	},
@@ -20767,7 +21719,7 @@ var TaskList = Node$1.create({
 		return { "Mod-Shift-9": () => this.editor.commands.toggleTaskList() };
 	}
 });
-Extension$1.create({
+Extension.create({
 	name: "listKit",
 	addExtensions() {
 		const extensions = [];
@@ -20836,7 +21788,7 @@ var src_default$14 = Node$1.create({
 	renderHTML({ node, HTMLAttributes }) {
 		return [
 			"pre",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			[
 				"code",
 				{ class: node.attrs.language ? this.options.languageClassPrefix + node.attrs.language : null },
@@ -21036,7 +21988,7 @@ var src_default$13 = Node$1.create({
 		return [{ tag: "br" }];
 	},
 	renderHTML({ HTMLAttributes }) {
-		return ["br", mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes)];
+		return ["br", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
 	},
 	renderText() {
 		return "\n";
@@ -21103,7 +22055,7 @@ var src_default$12 = Node$1.create({
 	renderHTML({ node, HTMLAttributes }) {
 		return [
 			`h${this.options.levels.includes(node.attrs.level) ? node.attrs.level : this.options.levels[0]}`,
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -21158,7 +22110,7 @@ var src_default$11 = Node$1.create({
 		return [{ tag: "hr" }];
 	},
 	renderHTML({ HTMLAttributes }) {
-		return ["hr", mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes)];
+		return ["hr", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
 	},
 	markdownTokenName: "hr",
 	parseMarkdown: (token, helpers) => {
@@ -21237,7 +22189,7 @@ var src_default$8 = Node$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"p",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	},
@@ -23357,7 +24309,7 @@ var TableCell = Node$1.create({
 		}, { tag: "td" }];
 	},
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes);
+		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes);
 		omitDefaultSpanAttribute(attributes, HTMLAttributes, "colspan");
 		omitDefaultSpanAttribute(attributes, HTMLAttributes, "rowspan");
 		return [
@@ -23398,7 +24350,7 @@ var TableHeader = Node$1.create({
 		}, { tag: "th" }];
 	},
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes);
+		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes);
 		omitDefaultSpanAttribute(attributes, HTMLAttributes, "colspan");
 		omitDefaultSpanAttribute(attributes, HTMLAttributes, "rowspan");
 		return [
@@ -23425,7 +24377,7 @@ var TableRow = Node$1.create({
 	renderHTML({ HTMLAttributes }) {
 		return [
 			"tr",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
 			0
 		];
 	}
@@ -23572,7 +24524,7 @@ var deleteTableWhenAllCellsSelected = ({ editor }) => {
 	const { selection } = editor.state;
 	if (!isCellSelection(selection)) return false;
 	let cellCount = 0;
-	const table = findParentNodeClosestToPos$1(selection.ranges[0].$from, (node) => {
+	const table = findParentNodeClosestToPos(selection.ranges[0].$from, (node) => {
 		return node.type.name === "table";
 	});
 	table === null || table === void 0 || table.node.descendants((node) => {
@@ -23585,7 +24537,7 @@ var deleteTableWhenAllCellsSelected = ({ editor }) => {
 };
 function keepCursorInTable(tr, tablePos) {
 	const mappedTablePos = tr.mapping.map(tablePos);
-	const stillInTable = findParentNodeClosestToPos$1(tr.selection.$from, (node) => node.type.name === "table");
+	const stillInTable = findParentNodeClosestToPos(tr.selection.$from, (node) => node.type.name === "table");
 	if ((stillInTable === null || stillInTable === void 0 ? void 0 : stillInTable.pos) === mappedTablePos) return;
 	const tableNode = tr.doc.nodeAt(mappedTablePos);
 	if (!tableNode) return;
@@ -23789,7 +24741,7 @@ var Table = Node$1.create({
 		}
 		const table = [
 			"table",
-			mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes, { style: getTableStyle() }),
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { style: getTableStyle() }),
 			colgroup,
 			["tbody", 0]
 		];
@@ -23879,7 +24831,7 @@ var Table = Node$1.create({
 				return addColumnAfter(state, dispatch);
 			},
 			deleteColumn: () => ({ state, dispatch }) => {
-				const table = findParentNodeClosestToPos$1(state.selection.$from, (node) => node.type.name === "table");
+				const table = findParentNodeClosestToPos(state.selection.$from, (node) => node.type.name === "table");
 				return deleteColumn(state, dispatch && ((tr) => {
 					if (table) keepCursorInTable(tr, table.pos);
 					dispatch(tr);
@@ -23892,7 +24844,7 @@ var Table = Node$1.create({
 				return addRowAfter(state, dispatch);
 			},
 			deleteRow: () => ({ state, dispatch }) => {
-				const table = findParentNodeClosestToPos$1(state.selection.$from, (node) => node.type.name === "table");
+				const table = findParentNodeClosestToPos(state.selection.$from, (node) => node.type.name === "table");
 				return deleteRow(state, dispatch && ((tr) => {
 					if (table) keepCursorInTable(tr, table.pos);
 					dispatch(tr);
@@ -23974,19 +24926,19 @@ var Table = Node$1.create({
 		const View = this.options.View;
 		if (isResizable || !View) return null;
 		return ({ node, view, HTMLAttributes }) => {
-			const mergedAttributes = mergeAttributes$1(this.options.HTMLAttributes, HTMLAttributes);
+			const mergedAttributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes);
 			return new View(node, this.options.cellMinWidth, view, mergedAttributes);
 		};
 	},
 	extendNodeSchema(extension) {
-		return { tableRole: callOrReturn$1(getExtensionField$1(extension, "tableRole", {
+		return { tableRole: callOrReturn(getExtensionField(extension, "tableRole", {
 			name: extension.name,
 			options: extension.options,
 			storage: extension.storage
 		})) };
 	}
 });
-Extension$1.create({
+Extension.create({
 	name: "tableKit",
 	addExtensions() {
 		const extensions = [];
@@ -24374,7 +25326,7 @@ function drawGapCursor(state) {
 	node.className = "ProseMirror-gapcursor";
 	return DecorationSet.create(state.doc, [Decoration.widget(state.selection.head, node, { key: "gapcursor" })]);
 }
-Extension$1.create({
+Extension.create({
 	name: "characterCount",
 	addOptions() {
 		return {
@@ -24455,7 +25407,7 @@ Extension$1.create({
 * in-between nodes.
 * @see https://tiptap.dev/api/extensions/dropcursor
 */
-var Dropcursor = Extension$1.create({
+var Dropcursor = Extension.create({
 	name: "dropCursor",
 	addOptions() {
 		return {
@@ -24468,7 +25420,7 @@ var Dropcursor = Extension$1.create({
 		return [dropCursor(this.options)];
 	}
 });
-Extension$1.create({
+Extension.create({
 	name: "focus",
 	addOptions() {
 		return {
@@ -24509,14 +25461,14 @@ Extension$1.create({
 * where no content is present, for example inbetween nodes.
 * @see https://tiptap.dev/api/extensions/gapcursor
 */
-var Gapcursor = Extension$1.create({
+var Gapcursor = Extension.create({
 	name: "gapCursor",
 	addProseMirrorPlugins() {
 		return [gapCursor()];
 	},
 	extendNodeSchema(extension) {
 		var _callOrReturn;
-		return { allowGapCursor: (_callOrReturn = callOrReturn$1(getExtensionField$1(extension, "allowGapCursor", {
+		return { allowGapCursor: (_callOrReturn = callOrReturn(getExtensionField(extension, "allowGapCursor", {
 			name: extension.name,
 			options: extension.options,
 			storage: extension.storage
@@ -24567,7 +25519,7 @@ function scanRangeForDecorations({ editor, options, dataAttribute, doc, selectio
 	const isEmptyDoc = editor.isEmpty;
 	doc.nodesBetween(from, to, (node, pos) => {
 		const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
-		const isEmpty = !node.isLeaf && isNodeEmpty$1(node);
+		const isEmpty = !node.isLeaf && isNodeEmpty(node);
 		if (!node.type.isTextblock) return options.includeChildren;
 		if ((hasAnchor || !options.showOnlyCurrent) && isEmpty) decorations.push(createPlaceholderDecoration({
 			editor,
@@ -24609,7 +25561,7 @@ function buildPlaceholderDecorations({ editor, options, dataAttribute, doc, sele
 		const resolved = doc.resolve(anchor);
 		const node = resolved.depth > 0 ? resolved.node(1) : resolved.nodeAfter;
 		const nodeStart = resolved.depth > 0 ? resolved.before(1) : anchor;
-		if (node && node.type.isTextblock && isNodeEmpty$1(node)) {
+		if (node && node.type.isTextblock && isNodeEmpty(node)) {
 			const hasAnchor = anchor >= nodeStart && anchor <= nodeStart + node.nodeSize;
 			decorations.push(createPlaceholderDecoration({
 				editor,
@@ -24729,7 +25681,7 @@ function collectBlocksForChange(doc, change) {
 function collectRescanRanges(tr, oldState, newState) {
 	const ranges = [];
 	if (tr.docChanged) {
-		const changes = getChangedRanges$1(tr);
+		const changes = getChangedRanges(tr);
 		for (const change of changes) ranges.push(...collectBlocksForChange(newState.doc, change.newRange));
 	}
 	if (tr.selectionSet) {
@@ -24844,7 +25796,7 @@ function createPlaceholderPlugin({ editor, options }) {
 		} }
 	});
 }
-Extension$1.create({
+Extension.create({
 	name: "placeholder",
 	addOptions() {
 		return {
@@ -24889,7 +25841,7 @@ function clearDomSelection() {
 function restoreDomSelection(view) {
 	view.focus();
 }
-Extension$1.create({
+Extension.create({
 	name: "selection",
 	addOptions() {
 		return { className: "selection" };
@@ -24924,7 +25876,7 @@ Extension$1.create({
 function nodeEqualsType({ types, node }) {
 	return node && Array.isArray(types) && types.includes(node.type) || (node === null || node === void 0 ? void 0 : node.type) === types;
 }
-Extension$1.create({
+Extension.create({
 	name: "trailingNode",
 	addOptions() {
 		return {
@@ -24978,7 +25930,7 @@ Extension$1.create({
 *
 * `@tiptap/extension-collaboration` uses its own history implementation.
 */
-var UndoRedo = Extension$1.create({
+var UndoRedo = Extension.create({
 	name: "undoRedo",
 	addOptions() {
 		return {
@@ -25018,7 +25970,7 @@ var src_default$2 = Gapcursor;
 //#endregion
 //#region ../plugin-kit-tiptap-core/node_modules/@tiptap/extension-history/dist/index.js
 var src_default$1 = UndoRedo;
-var src_default = Extension$1.create({
+var src_default = Extension.create({
 	name: "textAlign",
 	addOptions() {
 		return {
@@ -25074,4971 +26026,4 @@ var src_default = Extension$1.create({
 	}
 });
 //#endregion
-//#region node_modules/@tiptap/core/dist/rolldown-runtime-D7D4PA-g.js
-var __defProp = Object.defineProperty;
-var __exportAll = (all, no_symbols) => {
-	let target = {};
-	for (var name in all) __defProp(target, name, {
-		get: all[name],
-		enumerable: true
-	});
-	if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
-	return target;
-};
-//#endregion
-//#region node_modules/@tiptap/core/dist/index.js
-/**
-* Takes a Transaction & Editor State and turns it into a chainable state object
-* @param config The transaction and state to create the chainable state from
-* @returns A chainable Editor state object
-*/
-function createChainableState(config) {
-	const { state, transaction } = config;
-	let { selection } = transaction;
-	let { doc } = transaction;
-	let { storedMarks } = transaction;
-	return {
-		...state,
-		apply: state.apply.bind(state),
-		applyTransaction: state.applyTransaction.bind(state),
-		plugins: state.plugins,
-		schema: state.schema,
-		reconfigure: state.reconfigure.bind(state),
-		toJSON: state.toJSON.bind(state),
-		get storedMarks() {
-			return storedMarks;
-		},
-		get selection() {
-			return selection;
-		},
-		get doc() {
-			return doc;
-		},
-		get tr() {
-			selection = transaction.selection;
-			doc = transaction.doc;
-			storedMarks = transaction.storedMarks;
-			return transaction;
-		}
-	};
-}
-var CommandManager = class CommandManager {
-	constructor(props) {
-		this.editor = props.editor;
-		this.rawCommands = this.editor.extensionManager.commands;
-		this.customState = props.state;
-	}
-	get hasCustomState() {
-		return !!this.customState;
-	}
-	get state() {
-		return this.customState || this.editor.state;
-	}
-	get commands() {
-		const { rawCommands, editor, state } = this;
-		const { view } = editor;
-		const { tr } = state;
-		const props = this.buildProps(tr);
-		return Object.fromEntries(Object.entries(rawCommands).map(([name, command]) => {
-			const method = (...args) => {
-				const callback = command(...args)(props);
-				if (!tr.getMeta("preventDispatch") && !this.hasCustomState) view.dispatch(tr);
-				return callback;
-			};
-			return [name, method];
-		}));
-	}
-	get chain() {
-		return () => this.createChain();
-	}
-	get can() {
-		return () => this.createCan();
-	}
-	createChain(startTr, shouldDispatch = true) {
-		const { rawCommands, editor, state } = this;
-		const { view } = editor;
-		const callbacks = [];
-		const hasStartTransaction = !!startTr;
-		const tr = startTr || state.tr;
-		const run = () => {
-			if (!hasStartTransaction && shouldDispatch && !tr.getMeta("preventDispatch") && !this.hasCustomState) view.dispatch(tr);
-			return callbacks.every((callback) => callback === true);
-		};
-		const chain = {
-			...Object.fromEntries(Object.entries(rawCommands).map(([name, command]) => {
-				const chainedCommand = (...args) => {
-					const props = this.buildProps(tr, shouldDispatch);
-					const callback = command(...args)(props);
-					callbacks.push(callback);
-					return chain;
-				};
-				return [name, chainedCommand];
-			})),
-			run
-		};
-		return chain;
-	}
-	/**
-	* Creates a chain that safely returns `false` when run.
-	* @returns A non-dispatching command chain.
-	* @example
-	* const chain = CommandManager.createFakeChain()
-	* chain.focus().run() // false
-	*/
-	static createFakeChain() {
-		const chain = new Proxy({}, { get: (_target, property) => {
-			if (property === "then") return;
-			if (property === "run") return () => false;
-			return () => chain;
-		} });
-		return chain;
-	}
-	createCan(startTr) {
-		const { rawCommands, state } = this;
-		const dispatch = false;
-		const tr = startTr || state.tr;
-		const props = this.buildProps(tr, dispatch);
-		return {
-			...Object.fromEntries(Object.entries(rawCommands).map(([name, command]) => {
-				return [name, (...args) => command(...args)({
-					...props,
-					dispatch: void 0
-				})];
-			})),
-			chain: () => this.createChain(tr, dispatch)
-		};
-	}
-	/**
-	* Creates capability checks that safely return `false`.
-	* @returns A non-dispatching capability checker.
-	* @example
-	* const can = CommandManager.createFallbackCan()
-	* can.focus() // false
-	*/
-	static createFallbackCan() {
-		const chain = CommandManager.createFakeChain();
-		return new Proxy({ chain: () => chain }, { get: (target, property) => {
-			if (property === "then") return;
-			if (property === "chain") return target.chain;
-			return () => false;
-		} });
-	}
-	buildProps(tr, shouldDispatch = true) {
-		const { rawCommands, editor, state } = this;
-		const { view } = editor;
-		const props = {
-			tr,
-			editor,
-			view,
-			state: createChainableState({
-				state,
-				transaction: tr
-			}),
-			dispatch: shouldDispatch ? () => void 0 : void 0,
-			chain: () => this.createChain(tr, shouldDispatch),
-			can: () => this.createCan(tr),
-			get commands() {
-				return Object.fromEntries(Object.entries(rawCommands).map(([name, command]) => {
-					return [name, (...args) => command(...args)(props)];
-				}));
-			}
-		};
-		return props;
-	}
-};
-var blur = () => ({ editor, view }) => {
-	requestAnimationFrame(() => {
-		if (!editor.isDestroyed) {
-			var _window;
-			view.dom.blur();
-			(_window = window) === null || _window === void 0 || (_window = _window.getSelection()) === null || _window === void 0 || _window.removeAllRanges();
-		}
-	});
-	return true;
-};
-var clearContent = (emitUpdate = true) => ({ commands }) => {
-	return commands.setContent("", { emitUpdate });
-};
-var clearNodes = () => ({ state, tr, dispatch }) => {
-	const { selection } = tr;
-	const { ranges } = selection;
-	if (!dispatch) return true;
-	ranges.forEach(({ $from, $to }) => {
-		state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
-			if (node.type.isText) return;
-			const { doc, mapping } = tr;
-			const $mappedFrom = doc.resolve(mapping.map(pos));
-			const $mappedTo = doc.resolve(mapping.map(pos + node.nodeSize));
-			const nodeRange = $mappedFrom.blockRange($mappedTo);
-			if (!nodeRange) return;
-			const targetLiftDepth = liftTarget(nodeRange);
-			if (node.type.isTextblock) {
-				const { defaultType } = $mappedFrom.parent.contentMatchAt($mappedFrom.index());
-				tr.setNodeMarkup(nodeRange.start, defaultType);
-			}
-			if (targetLiftDepth || targetLiftDepth === 0) tr.lift(nodeRange, targetLiftDepth);
-		});
-	});
-	return true;
-};
-var command = (fn) => (props) => {
-	return fn(props);
-};
-var createParagraphNear$1 = () => ({ state, dispatch }) => {
-	return createParagraphNear(state, dispatch);
-};
-var cut = (originRange, targetPos) => ({ editor, tr }) => {
-	const { state } = editor;
-	const contentSlice = state.doc.slice(originRange.from, originRange.to);
-	tr.deleteRange(originRange.from, originRange.to);
-	const newPos = tr.mapping.map(targetPos);
-	tr.insert(newPos, contentSlice.content);
-	tr.setSelection(new TextSelection(tr.doc.resolve(Math.max(newPos - 1, 0))));
-	return true;
-};
-var deleteCurrentNode = () => ({ tr, dispatch }) => {
-	const { selection } = tr;
-	const currentNode = selection.$anchor.node();
-	if (currentNode.content.size > 0) return false;
-	const $pos = tr.selection.$anchor;
-	for (let depth = $pos.depth; depth > 0; depth -= 1) if ($pos.node(depth).type === currentNode.type) {
-		if (dispatch) {
-			const from = $pos.before(depth);
-			const to = $pos.after(depth);
-			tr.delete(from, to).scrollIntoView();
-		}
-		return true;
-	}
-	return false;
-};
-function getNodeType(nameOrType, schema) {
-	if (typeof nameOrType === "string") {
-		if (!schema.nodes[nameOrType]) throw Error(`There is no node type named '${nameOrType}'. Maybe you forgot to add the extension?`);
-		return schema.nodes[nameOrType];
-	}
-	return nameOrType;
-}
-var deleteNode = (typeOrName) => ({ tr, state, dispatch }) => {
-	const type = getNodeType(typeOrName, state.schema);
-	const $pos = tr.selection.$anchor;
-	for (let depth = $pos.depth; depth > 0; depth -= 1) if ($pos.node(depth).type === type) {
-		if (dispatch) {
-			const from = $pos.before(depth);
-			const to = $pos.after(depth);
-			tr.delete(from, to).scrollIntoView();
-		}
-		return true;
-	}
-	return false;
-};
-var deleteRange = (range) => ({ tr, dispatch }) => {
-	const { from, to } = range;
-	if (dispatch) tr.delete(from, to);
-	return true;
-};
-/**
-* Check if a node has text content based on its content specification.
-* Returns true if the node's content spec matches text* or text+ patterns.
-*/
-var hasTextContent = (nodeSpec) => {
-	if (!nodeSpec.content) return false;
-	return /^text(\*|\+)/.test(nodeSpec.content);
-};
-/**
-* Expand selection position for a specific side (left or right) to handle inline text nodes.
-* This function checks if the position is within an inline node with text content and
-* expands it to include the entire node boundaries for proper deletion.
-* @param $pos - The resolved position to expand
-* @param schema - The ProseMirror schema
-* @param side - Which side to expand ('left' or 'right')
-* @returns The expanded position for deletion
-*/
-var expandSelectionForSide = ($pos, schema, side) => {
-	if (!$pos.parent.isInline) return $pos.pos;
-	if (side === "left" && $pos.pos > $pos.start() || side === "right" && $pos.pos < $pos.end()) return $pos.pos;
-	const parentContent = schema.nodes[$pos.parent.type.name].spec;
-	if (!hasTextContent(parentContent)) return $pos.pos;
-	return side === "left" ? $pos.start() - 1 : $pos.end() + 1;
-};
-/**
-* Expand selection range to properly handle deletion of inline text nodes.
-* Inline text nodes don't collapse correctly when text inside is deleted,
-* so we need to expand the selection to include the entire node.
-* See: https://code.haverbeke.berlin/prosemirror/prosemirror/issues/1365
-*/
-var expandSelectionForInlineText = ($from, $to, schema) => {
-	return {
-		from: expandSelectionForSide($from, schema, "left"),
-		to: expandSelectionForSide($to, schema, "right")
-	};
-};
-var deleteSelection = () => ({ state, dispatch }) => {
-	if (state.selection.empty) return false;
-	if (dispatch) {
-		const tr = state.tr;
-		const { ranges } = state.selection;
-		const mapFrom = tr.steps.length;
-		ranges.forEach((range) => {
-			const mapping = tr.mapping.slice(mapFrom);
-			const { from, to } = expandSelectionForInlineText(tr.doc.resolve(mapping.map(range.$from.pos)), tr.doc.resolve(mapping.map(range.$to.pos)), state.schema);
-			tr.deleteRange(from, to);
-		});
-		if (!tr.selection.empty) tr.setSelection(TextSelection.near(tr.doc.resolve(tr.selection.from)));
-		tr.scrollIntoView();
-		dispatch(tr);
-	}
-	return true;
-};
-var enter = () => ({ commands }) => {
-	return commands.keyboardShortcut("Enter");
-};
-var exitCode$1 = () => ({ state, dispatch }) => {
-	return exitCode(state, dispatch);
-};
-function isRegExp(value) {
-	return Object.prototype.toString.call(value) === "[object RegExp]";
-}
-/**
-* Check if object1 includes object2
-* @param object1 Object
-* @param object2 Object
-*/
-function objectIncludes(object1, object2, options = { strict: true }) {
-	const keys = Object.keys(object2);
-	if (!keys.length) return true;
-	return keys.every((key) => {
-		if (options.strict) return object2[key] === object1[key];
-		if (isRegExp(object2[key])) return object2[key].test(object1[key]);
-		return object2[key] === object1[key];
-	});
-}
-function findMarkInSet(marks, type, attributes = {}) {
-	return marks.find((item) => {
-		return item.type === type && objectIncludes(Object.fromEntries(Object.keys(attributes).map((k) => [k, item.attrs[k]])), attributes);
-	});
-}
-function isMarkInSet(marks, type, attributes = {}) {
-	return !!findMarkInSet(marks, type, attributes);
-}
-/**
-* Get the range of a mark at a resolved position.
-*/
-function getMarkRange($pos, type, attributes) {
-	if (!$pos || !type) return;
-	let start = $pos.parent.childAfter($pos.parentOffset);
-	if (!start.node || !start.node.marks.some((mark) => mark.type === type)) start = $pos.parent.childBefore($pos.parentOffset);
-	if (!start.node || !start.node.marks.some((mark) => mark.type === type)) return;
-	if (!attributes) {
-		const firstMark = start.node.marks.find((mark) => mark.type === type);
-		if (firstMark) attributes = firstMark.attrs;
-	}
-	if (!findMarkInSet([...start.node.marks], type, attributes)) return;
-	let startIndex = start.index;
-	let startPos = $pos.start() + start.offset;
-	let endIndex = startIndex + 1;
-	let endPos = startPos + start.node.nodeSize;
-	while (startIndex > 0 && isMarkInSet([...$pos.parent.child(startIndex - 1).marks], type, attributes)) {
-		startIndex -= 1;
-		startPos -= $pos.parent.child(startIndex).nodeSize;
-	}
-	while (endIndex < $pos.parent.childCount && isMarkInSet([...$pos.parent.child(endIndex).marks], type, attributes)) {
-		endPos += $pos.parent.child(endIndex).nodeSize;
-		endIndex += 1;
-	}
-	return {
-		from: startPos,
-		to: endPos
-	};
-}
-function getMarkType(nameOrType, schema) {
-	if (typeof nameOrType === "string") {
-		if (!schema.marks[nameOrType]) throw Error(`There is no mark type named '${nameOrType}'. Maybe you forgot to add the extension?`);
-		return schema.marks[nameOrType];
-	}
-	return nameOrType;
-}
-var extendMarkRange = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
-	const type = getMarkType(typeOrName, state.schema);
-	const { doc, selection } = tr;
-	const { $from, from, to } = selection;
-	if (dispatch) {
-		const range = getMarkRange($from, type, attributes);
-		if (range && range.from <= from && range.to >= to) {
-			const newSelection = TextSelection.create(doc, range.from, range.to);
-			tr.setSelection(newSelection);
-		}
-	}
-	return true;
-};
-var first = (commands) => (props) => {
-	const items = typeof commands === "function" ? commands(props) : commands;
-	for (let i = 0; i < items.length; i += 1) if (items[i](props)) return true;
-	return false;
-};
-function isTextSelection(value) {
-	return value instanceof TextSelection;
-}
-function minMax(value = 0, min = 0, max = 0) {
-	return Math.min(Math.max(value, min), max);
-}
-function resolveFocusPosition(doc, position = null) {
-	if (!position) return null;
-	const selectionAtStart = Selection$1.atStart(doc);
-	const selectionAtEnd = Selection$1.atEnd(doc);
-	if (position === "start" || position === true) return selectionAtStart;
-	if (position === "end") return selectionAtEnd;
-	const minPos = selectionAtStart.from;
-	const maxPos = selectionAtEnd.to;
-	if (position === "all") return TextSelection.create(doc, minMax(0, minPos, maxPos), minMax(doc.content.size, minPos, maxPos));
-	return TextSelection.create(doc, minMax(position, minPos, maxPos), minMax(position, minPos, maxPos));
-}
-function isAndroid() {
-	return ["Android"].includes(navigator.platform) || /android/i.test(navigator.userAgent);
-}
-function isiOS() {
-	return [
-		"iPad Simulator",
-		"iPhone Simulator",
-		"iPod Simulator",
-		"iPad",
-		"iPhone",
-		"iPod"
-	].includes(navigator.platform) || navigator.userAgent.includes("Mac") && "ontouchend" in document;
-}
-/**
-* Detects if the current browser is Safari (but not iOS Safari or Chrome).
-* @returns `true` if the browser is Safari, `false` otherwise.
-* @example
-* if (isSafari()) {
-*   // Safari-specific handling
-* }
-*/
-function isSafari() {
-	return typeof navigator !== "undefined" ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false;
-}
-var focus = (position = null, options = {}) => ({ editor, view, tr, dispatch }) => {
-	options = {
-		scrollIntoView: true,
-		...options
-	};
-	const delayedFocus = () => {
-		if (isiOS() || isAndroid()) view.dom.focus();
-		if (isSafari() && !isiOS() && !isAndroid()) view.dom.focus({ preventScroll: true });
-		requestAnimationFrame(() => {
-			if (!editor.isDestroyed) {
-				view.focus();
-				if (options === null || options === void 0 ? void 0 : options.scrollIntoView) editor.commands.scrollIntoView();
-			}
-		});
-	};
-	try {
-		if (view.hasFocus() && position === null || position === false) return true;
-	} catch {
-		return false;
-	}
-	if (dispatch && position === null && !isTextSelection(editor.state.selection)) {
-		delayedFocus();
-		return true;
-	}
-	const selection = resolveFocusPosition(tr.doc, position) || editor.state.selection;
-	const isSameSelection = editor.state.selection.eq(selection);
-	if (dispatch) {
-		if (!isSameSelection) tr.setSelection(selection);
-		if (isSameSelection && tr.storedMarks) tr.setStoredMarks(tr.storedMarks);
-		delayedFocus();
-	}
-	return true;
-};
-var forEach = (items, fn) => (props) => {
-	return items.every((item, index) => fn(item, {
-		...props,
-		index
-	}));
-};
-var insertContent = (value, options) => ({ tr, commands }) => {
-	return commands.insertContentAt({
-		from: tr.selection.from,
-		to: tr.selection.to
-	}, value, options);
-};
-var removeWhitespaces = (node) => {
-	const children = node.childNodes;
-	for (let i = children.length - 1; i >= 0; i -= 1) {
-		const child = children[i];
-		if (child.nodeType === 3 && child.nodeValue && /^(\n\s\s|\n)$/.test(child.nodeValue)) node.removeChild(child);
-		else if (child.nodeType === 1) removeWhitespaces(child);
-	}
-	return node;
-};
-function elementFromString(value) {
-	if (typeof window === "undefined") throw new Error("[tiptap error]: there is no window object available, so this function cannot be used");
-	const wrappedValue = `<body>${value}</body>`;
-	const html = new window.DOMParser().parseFromString(wrappedValue, "text/html").body;
-	return removeWhitespaces(html);
-}
-/**
-* Checks whether a value is already a ProseMirror node or fragment. Looks for the
-* `nodesBetween` method, because `instanceof` fails when prosemirror-model is loaded twice.
-* @param value Any value that could be passed as content
-* @returns True for a node or a fragment, false for JSON, HTML and everything else
-* @example ```js
-* isProseMirrorContent(editor.state.doc)
-* ```
-*/
-function isProseMirrorContent(value) {
-	return typeof (value === null || value === void 0 ? void 0 : value.nodesBetween) === "function";
-}
-/**
-* Takes a JSON or HTML content and creates a Prosemirror node or fragment from it.
-* @param content The JSON or HTML content to create the node from
-* @param schema The Prosemirror schema to use for the node
-* @param options Options for the parser
-* @returns The created Prosemirror node or fragment
-*/
-function createNodeFromContent(content, schema, options) {
-	if (isProseMirrorContent(content)) return content;
-	const isJSONContent = typeof content === "object" && content !== null;
-	options = {
-		slice: true,
-		parseOptions: {},
-		...options
-	};
-	const isTextContent = typeof content === "string";
-	if (isJSONContent) try {
-		if (Array.isArray(content) && content.length > 0) return Fragment.fromArray(content.map((item) => schema.nodeFromJSON(item)));
-		const node = schema.nodeFromJSON(content);
-		if (options.errorOnInvalidContent) node.check();
-		return node;
-	} catch (error) {
-		if (options.errorOnInvalidContent) throw new Error("[tiptap error]: Invalid JSON content", { cause: error });
-		console.warn("[tiptap warn]: Invalid content.", "Passed value:", content, "Error:", error);
-		return createNodeFromContent("", schema, options);
-	}
-	if (isTextContent) {
-		if (options.errorOnInvalidContent) {
-			let hasInvalidContent = false;
-			let invalidContent = "";
-			const contentCheckSchema = new Schema({
-				topNode: schema.spec.topNode,
-				marks: schema.spec.marks,
-				nodes: schema.spec.nodes.append({ __tiptap__private__unknown__catch__all__node: {
-					content: "inline*",
-					group: "block",
-					parseDOM: [{
-						tag: "*",
-						getAttrs: (e) => {
-							hasInvalidContent = true;
-							invalidContent = typeof e === "string" ? e : e.outerHTML;
-							return null;
-						}
-					}]
-				} })
-			});
-			if (options.slice) DOMParser.fromSchema(contentCheckSchema).parseSlice(elementFromString(content), options.parseOptions);
-			else DOMParser.fromSchema(contentCheckSchema).parse(elementFromString(content), options.parseOptions);
-			if (options.errorOnInvalidContent && hasInvalidContent) throw new Error("[tiptap error]: Invalid HTML content", { cause: /* @__PURE__ */ new Error(`Invalid element found: ${invalidContent}`) });
-		}
-		const parser = DOMParser.fromSchema(schema);
-		if (options.slice) return parser.parseSlice(elementFromString(content), options.parseOptions).content;
-		return parser.parse(elementFromString(content), options.parseOptions);
-	}
-	return createNodeFromContent("", schema, options);
-}
-/**
-* Checks whether a node or fragment is a fragment. Looks for a missing `type` field,
-* because `instanceof` fails when prosemirror-model is loaded twice.
-* @param nodeOrFragment A ProseMirror node or fragment
-* @returns True for a fragment, false for a node
-* @example ```js
-* isFragment(editor.state.doc.content)
-* ```
-*/
-function isFragment(nodeOrFragment) {
-	return !("type" in nodeOrFragment);
-}
-function selectionToInsertionEnd(tr, startLen, bias) {
-	const last = tr.steps.length - 1;
-	if (last < startLen) return;
-	const step = tr.steps[last];
-	if (!(step instanceof ReplaceStep || step instanceof ReplaceAroundStep)) return;
-	const map = tr.mapping.maps[last];
-	let end = 0;
-	map.forEach((_from, _to, _newFrom, newTo) => {
-		if (end === 0) end = newTo;
-	});
-	tr.setSelection(Selection$1.near(tr.doc.resolve(end), bias));
-}
-var insertContentAt = (position, value, options) => ({ tr, dispatch, editor }) => {
-	if (dispatch) {
-		options = {
-			parseOptions: editor.options.parseOptions,
-			updateSelection: true,
-			applyInputRules: false,
-			applyPasteRules: false,
-			...options
-		};
-		let content;
-		const emitContentError = (error) => {
-			editor.emit("contentError", {
-				editor,
-				error,
-				disableCollaboration: () => {
-					if ("collaboration" in editor.storage && typeof editor.storage.collaboration === "object" && editor.storage.collaboration) editor.storage.collaboration.isDisabled = true;
-				}
-			});
-		};
-		const parseOptions = {
-			preserveWhitespace: "full",
-			...options.parseOptions
-		};
-		if (!options.errorOnInvalidContent && !editor.options.enableContentCheck && editor.options.emitContentError) try {
-			createNodeFromContent(value, editor.schema, {
-				parseOptions,
-				errorOnInvalidContent: true
-			});
-		} catch (e) {
-			emitContentError(e);
-		}
-		try {
-			var _options$errorOnInval;
-			content = createNodeFromContent(value, editor.schema, {
-				parseOptions,
-				errorOnInvalidContent: (_options$errorOnInval = options.errorOnInvalidContent) !== null && _options$errorOnInval !== void 0 ? _options$errorOnInval : editor.options.enableContentCheck
-			});
-		} catch (e) {
-			emitContentError(e);
-			return false;
-		}
-		let { from, to } = typeof position === "number" ? {
-			from: position,
-			to: position
-		} : {
-			from: position.from,
-			to: position.to
-		};
-		let isOnlyTextContent = true;
-		let isOnlyBlockContent = true;
-		const nodes = isFragment(content) ? content.content : [content];
-		nodes.forEach((node) => {
-			node.check();
-			isOnlyTextContent = isOnlyTextContent ? node.isText && node.marks.length === 0 : false;
-			isOnlyBlockContent = isOnlyBlockContent ? node.isBlock : false;
-		});
-		if (from === to && isOnlyBlockContent) {
-			const { parent } = tr.doc.resolve(from);
-			if (parent.isTextblock && !parent.type.spec.code && !parent.childCount) {
-				from -= 1;
-				to += 1;
-			}
-		}
-		let newContent;
-		if (isOnlyTextContent) {
-			if (Array.isArray(value)) newContent = value.map((item) => item.text || "").join("");
-			else if (isProseMirrorContent(value)) newContent = nodes.map((node) => {
-				var _node$text;
-				return (_node$text = node.text) !== null && _node$text !== void 0 ? _node$text : "";
-			}).join("");
-			else if (typeof value === "object" && !!value && !!value.text) newContent = value.text;
-			else newContent = value;
-			tr.insertText(newContent, from, to);
-		} else {
-			newContent = Fragment.from(nodes);
-			const $from = tr.doc.resolve(from);
-			const $fromNode = $from.node();
-			const fromSelectionAtStart = $from.parentOffset === 0;
-			const isTextSelection = $fromNode.isText || $fromNode.isTextblock;
-			const hasContent = $fromNode.content.size > 0;
-			if (fromSelectionAtStart && isTextSelection && hasContent && isOnlyBlockContent) from = Math.max(0, from - 1);
-			tr.replaceWith(from, to, nodes);
-		}
-		if (options.updateSelection) selectionToInsertionEnd(tr, tr.steps.length - 1, -1);
-		if (options.applyInputRules) tr.setMeta("applyInputRules", {
-			from,
-			text: newContent
-		});
-		if (options.applyPasteRules) tr.setMeta("applyPasteRules", {
-			from,
-			text: newContent
-		});
-	}
-	return true;
-};
-/**
-* Gets the default block type at a given match
-* @param match The content match to get the default block type from
-* @returns The default block type or null
-*/
-function defaultBlockAt(match) {
-	for (let i = 0; i < match.edgeCount; i += 1) {
-		const { type } = match.edge(i);
-		if (type.isTextblock && !type.hasRequiredAttrs()) return type;
-	}
-	return null;
-}
-var insertDefaultBlock = (options = {}) => ({ tr, dispatch, editor }) => {
-	const { pos, attrs, content, updateSelection = true } = options;
-	let $pos;
-	if (typeof pos === "number") $pos = tr.doc.resolve(pos);
-	else if (pos) $pos = pos;
-	else $pos = tr.selection.$from;
-	const defaultType = defaultBlockAt($pos.parent.contentMatchAt($pos.index()));
-	if (!defaultType) return false;
-	const validAttrKeys = Object.keys(defaultType.spec.attrs || {});
-	const filteredAttrs = attrs ? Object.fromEntries(Object.entries(attrs).filter(([key]) => validAttrKeys.includes(key))) : {};
-	let node;
-	if (content) {
-		const parsed = createNodeFromContent(content, editor.schema);
-		node = defaultType.createAndFill(filteredAttrs, parsed);
-	} else node = defaultType.createAndFill(filteredAttrs);
-	if (!node) return false;
-	if (dispatch) {
-		tr.insert($pos.pos, node);
-		if (updateSelection) selectionToInsertionEnd(tr, tr.steps.length - 1, -1);
-	}
-	return true;
-};
-var joinUp$1 = () => ({ state, dispatch }) => {
-	return joinUp(state, dispatch);
-};
-var joinDown$1 = () => ({ state, dispatch }) => {
-	return joinDown(state, dispatch);
-};
-var joinBackward$1 = () => ({ state, dispatch }) => {
-	return joinBackward(state, dispatch);
-};
-var joinForward$1 = () => ({ state, dispatch }) => {
-	return joinForward(state, dispatch);
-};
-var canJoinItemsAt = (doc, pos) => {
-	const $pos = doc.resolve(pos);
-	const before = $pos.nodeBefore;
-	const after = $pos.nodeAfter;
-	if (!before || !after) return false;
-	return !before.type.spec.isolating && !after.type.spec.isolating;
-};
-var joinItemBackward = () => ({ state, dispatch, tr }) => {
-	try {
-		const point = joinPoint(state.doc, state.selection.$from.pos, -1);
-		if (point === null || point === void 0) return false;
-		if (!canJoinItemsAt(state.doc, point)) return false;
-		tr.join(point, 2);
-		if (dispatch) dispatch(tr);
-		return true;
-	} catch {
-		return false;
-	}
-};
-var joinItemForward = () => ({ state, dispatch, tr }) => {
-	try {
-		const point = joinPoint(state.doc, state.selection.$from.pos, 1);
-		if (point === null || point === void 0) return false;
-		if (!canJoinItemsAt(state.doc, point)) return false;
-		tr.join(point, 2);
-		if (dispatch) dispatch(tr);
-		return true;
-	} catch {
-		return false;
-	}
-};
-var joinTextblockBackward$1 = () => ({ state, dispatch }) => {
-	return joinTextblockBackward(state, dispatch);
-};
-var joinTextblockForward$1 = () => ({ state, dispatch }) => {
-	return joinTextblockForward(state, dispatch);
-};
-function isMacOS() {
-	return typeof navigator !== "undefined" ? /Mac/.test(navigator.platform) : false;
-}
-function normalizeKeyName(name) {
-	const parts = name.split(/-(?!$)/);
-	let result = parts[parts.length - 1];
-	if (result === "Space") result = " ";
-	let alt;
-	let ctrl;
-	let shift;
-	let meta;
-	for (let i = 0; i < parts.length - 1; i += 1) {
-		const mod = parts[i];
-		if (/^(cmd|meta|m)$/i.test(mod)) meta = true;
-		else if (/^a(lt)?$/i.test(mod)) alt = true;
-		else if (/^(c|ctrl|control)$/i.test(mod)) ctrl = true;
-		else if (/^s(hift)?$/i.test(mod)) shift = true;
-		else if (/^mod$/i.test(mod)) {
-			if (isiOS() || isMacOS()) meta = true;
-			else ctrl = true;
-		} else throw new Error(`Unrecognized modifier name: ${mod}`);
-	}
-	if (alt) result = `Alt-${result}`;
-	if (ctrl) result = `Ctrl-${result}`;
-	if (meta) result = `Meta-${result}`;
-	if (shift) result = `Shift-${result}`;
-	return result;
-}
-var keyboardShortcut = (name) => ({ editor, view, tr, dispatch }) => {
-	const keys = normalizeKeyName(name).split(/-(?!$)/);
-	const key = keys.find((item) => ![
-		"Alt",
-		"Ctrl",
-		"Meta",
-		"Shift"
-	].includes(item));
-	const event = new KeyboardEvent("keydown", {
-		key: key === "Space" ? " " : key,
-		altKey: keys.includes("Alt"),
-		ctrlKey: keys.includes("Ctrl"),
-		metaKey: keys.includes("Meta"),
-		shiftKey: keys.includes("Shift"),
-		bubbles: true,
-		cancelable: true
-	});
-	const capturedTransaction = editor.captureTransaction(() => {
-		view.someProp("handleKeyDown", (f) => f(view, event));
-	});
-	capturedTransaction === null || capturedTransaction === void 0 || capturedTransaction.steps.forEach((step) => {
-		const newStep = step.map(tr.mapping);
-		if (newStep && dispatch) tr.maybeStep(newStep);
-	});
-	return true;
-};
-function isNodeActive(state, typeOrName, attributes = {}) {
-	const { from, to, empty } = state.selection;
-	const type = typeOrName ? getNodeType(typeOrName, state.schema) : null;
-	const nodeRanges = [];
-	state.doc.nodesBetween(from, to, (node, pos) => {
-		if (node.isText) return;
-		const relativeFrom = Math.max(from, pos);
-		const relativeTo = Math.min(to, pos + node.nodeSize);
-		nodeRanges.push({
-			node,
-			from: relativeFrom,
-			to: relativeTo
-		});
-	});
-	const selectionRange = to - from;
-	const matchedNodeRanges = nodeRanges.filter((nodeRange) => {
-		if (!type) return true;
-		return type.name === nodeRange.node.type.name;
-	}).filter((nodeRange) => objectIncludes(nodeRange.node.attrs, attributes, { strict: false }));
-	if (empty) return !!matchedNodeRanges.length;
-	return matchedNodeRanges.reduce((sum, nodeRange) => sum + nodeRange.to - nodeRange.from, 0) >= selectionRange;
-}
-var lift$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	if (!isNodeActive(state, getNodeType(typeOrName, state.schema), attributes)) return false;
-	return lift(state, dispatch);
-};
-var liftEmptyBlock$1 = () => ({ state, dispatch }) => {
-	return liftEmptyBlock(state, dispatch);
-};
-var liftListItem$1 = (typeOrName) => ({ state, dispatch }) => {
-	return liftListItem(getNodeType(typeOrName, state.schema))(state, dispatch);
-};
-var newlineInCode$1 = () => ({ state, dispatch }) => {
-	return newlineInCode(state, dispatch);
-};
-/**
-* Get the type of a schema item by its name.
-* @param name The name of the schema item
-* @param schema The Prosemiror schema to search in
-* @returns The type of the schema item (`node` or `mark`), or null if it doesn't exist
-*/
-function getSchemaTypeNameByName(name, schema) {
-	if (schema.nodes[name]) return "node";
-	if (schema.marks[name]) return "mark";
-	return null;
-}
-/**
-* Remove a property or an array of properties from an object
-* @param obj Object
-* @param key Key to remove
-*/
-function deleteProps(obj, propOrProps) {
-	const props = typeof propOrProps === "string" ? [propOrProps] : propOrProps;
-	return Object.keys(obj).reduce((newObj, prop) => {
-		if (!props.includes(prop)) newObj[prop] = obj[prop];
-		return newObj;
-	}, {});
-}
-var resetAttributes = (typeOrName, attributes) => ({ tr, state, dispatch }) => {
-	let nodeType = null;
-	let markType = null;
-	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
-	if (!schemaType) return false;
-	if (schemaType === "node") nodeType = getNodeType(typeOrName, state.schema);
-	if (schemaType === "mark") markType = getMarkType(typeOrName, state.schema);
-	let canReset = false;
-	tr.selection.ranges.forEach((range) => {
-		state.doc.nodesBetween(range.$from.pos, range.$to.pos, (node, pos) => {
-			if (nodeType && nodeType === node.type) {
-				canReset = true;
-				if (dispatch) tr.setNodeMarkup(pos, void 0, deleteProps(node.attrs, attributes));
-			}
-			if (markType && node.marks.length) node.marks.forEach((mark) => {
-				if (markType === mark.type) {
-					canReset = true;
-					if (dispatch) tr.addMark(pos, pos + node.nodeSize, markType.create(deleteProps(mark.attrs, attributes)));
-				}
-			});
-		});
-	});
-	return canReset;
-};
-var scrollIntoView = () => ({ tr, dispatch }) => {
-	if (dispatch) tr.scrollIntoView();
-	return true;
-};
-var selectAll = () => ({ tr, dispatch }) => {
-	if (dispatch) {
-		const selection = new AllSelection(tr.doc);
-		tr.setSelection(selection);
-	}
-	return true;
-};
-var selectNodeBackward$1 = () => ({ state, dispatch }) => {
-	return selectNodeBackward(state, dispatch);
-};
-var selectNodeForward$1 = () => ({ state, dispatch }) => {
-	return selectNodeForward(state, dispatch);
-};
-var selectParentNode$1 = () => ({ state, dispatch }) => {
-	return selectParentNode(state, dispatch);
-};
-var selectTextblockEnd$1 = () => ({ state, dispatch }) => {
-	return selectTextblockEnd(state, dispatch);
-};
-var selectTextblockStart$1 = () => ({ state, dispatch }) => {
-	return selectTextblockStart(state, dispatch);
-};
-/**
-* Create a new Prosemirror document node from content.
-* @param content The JSON or HTML content to create the document from
-* @param schema The Prosemirror schema to use for the document
-* @param parseOptions Options for the parser
-* @returns The created Prosemirror document node
-*/
-function createDocument(content, schema, parseOptions = {}, options = {}) {
-	return createNodeFromContent(content, schema, {
-		slice: false,
-		parseOptions,
-		errorOnInvalidContent: options.errorOnInvalidContent
-	});
-}
-var setContent = (content, { errorOnInvalidContent, emitUpdate = true, parseOptions = {} } = {}) => ({ editor, tr, dispatch, commands }) => {
-	const { doc } = tr;
-	if (parseOptions.preserveWhitespace !== "full") {
-		const document = createDocument(content, editor.schema, parseOptions, { errorOnInvalidContent: errorOnInvalidContent !== null && errorOnInvalidContent !== void 0 ? errorOnInvalidContent : editor.options.enableContentCheck });
-		if (dispatch) {
-			const nodes = isFragment(document) ? document.content : [document];
-			tr.replaceWith(0, doc.content.size, nodes).setMeta("preventUpdate", !emitUpdate);
-		}
-		return true;
-	}
-	if (dispatch) tr.setMeta("preventUpdate", !emitUpdate);
-	return commands.insertContentAt({
-		from: 0,
-		to: doc.content.size
-	}, content, {
-		parseOptions,
-		errorOnInvalidContent: errorOnInvalidContent !== null && errorOnInvalidContent !== void 0 ? errorOnInvalidContent : editor.options.enableContentCheck
-	});
-};
-function getMarkAttributes(state, typeOrName) {
-	const type = getMarkType(typeOrName, state.schema);
-	const { from, to, empty } = state.selection;
-	const marks = [];
-	if (empty) {
-		if (state.storedMarks) marks.push(...state.storedMarks);
-		marks.push(...state.selection.$head.marks());
-	} else state.doc.nodesBetween(from, to, (node) => {
-		marks.push(...node.marks);
-	});
-	const mark = marks.find((markItem) => markItem.type.name === type.name);
-	if (!mark) return {};
-	return { ...mark.attrs };
-}
-/**
-* Returns a new `Transform` based on all steps of the passed transactions.
-* @param oldDoc The Prosemirror node to start from
-* @param transactions The transactions to combine
-* @returns A new `Transform` with all steps of the passed transactions
-*/
-function combineTransactionSteps(oldDoc, transactions) {
-	const transform = new Transform(oldDoc);
-	transactions.forEach((transaction) => {
-		transaction.steps.forEach((step) => {
-			transform.step(step);
-		});
-	});
-	return transform;
-}
-/**
-* Finds the closest parent node to a resolved position that matches a predicate.
-* @param $pos The resolved position to search from
-* @param predicate The predicate to match
-* @returns The closest parent node to the resolved position that matches the predicate
-* @example ```js
-* findParentNodeClosestToPos($from, node => node.type.name === 'paragraph')
-* ```
-*/
-function findParentNodeClosestToPos($pos, predicate) {
-	for (let i = $pos.depth; i > 0; i -= 1) {
-		const node = $pos.node(i);
-		if (predicate(node)) return {
-			pos: i > 0 ? $pos.before(i) : 0,
-			start: $pos.start(i),
-			depth: i,
-			node
-		};
-	}
-}
-/**
-* Finds the closest parent node to the current selection that matches a predicate.
-* @param predicate The predicate to match
-* @returns A command that finds the closest parent node to the current selection that matches the predicate
-* @example ```js
-* findParentNode(node => node.type.name === 'paragraph')
-* ```
-*/
-function findParentNode(predicate) {
-	return (selection) => findParentNodeClosestToPos(selection.$from, predicate);
-}
-/**
-* Returns a field from an extension
-* @param extension The Tiptap extension
-* @param field The field, for example `renderHTML` or `priority`
-* @param context The context object that should be passed as `this` into the function
-* @returns The field value
-*/
-function getExtensionField(extension, field, context) {
-	if (extension.config[field] === void 0 && extension.parent) return getExtensionField(extension.parent, field, context);
-	if (typeof extension.config[field] === "function") return extension.config[field].bind({
-		...context,
-		parent: extension.parent ? getExtensionField(extension.parent, field, context) : null
-	});
-	return extension.config[field];
-}
-/**
-* Create a flattened array of extensions by traversing the `addExtensions` field.
-* @param extensions An array of Tiptap extensions
-* @returns A flattened array of Tiptap extensions
-*/
-function flattenExtensions(extensions) {
-	return extensions.map((extension) => {
-		const addExtensions = getExtensionField(extension, "addExtensions", {
-			name: extension.name,
-			options: extension.options,
-			storage: extension.storage
-		});
-		if (addExtensions) return [extension, ...flattenExtensions(addExtensions())];
-		return extension;
-	}).flat(10);
-}
-function getHTMLFromFragment(fragment, schema) {
-	const documentFragment = DOMSerializer.fromSchema(schema).serializeFragment(fragment);
-	const container = document.implementation.createHTMLDocument().createElement("div");
-	container.appendChild(documentFragment);
-	return container.innerHTML;
-}
-function isFunction(value) {
-	return typeof value === "function";
-}
-/**
-* Optionally calls `value` as a function.
-* Otherwise it is returned directly.
-* @param value Function or any value.
-* @param context Optional context to bind to function.
-* @param props Optional props to pass to function.
-*/
-function callOrReturn(value, context = void 0, ...props) {
-	if (isFunction(value)) {
-		if (context) return value.bind(context)(...props);
-		return value(...props);
-	}
-	return value;
-}
-function isEmptyObject(value = {}) {
-	return Object.keys(value).length === 0 && value.constructor === Object;
-}
-function splitExtensions(extensions) {
-	return {
-		baseExtensions: extensions.filter((extension) => extension.type === "extension"),
-		nodeExtensions: extensions.filter((extension) => extension.type === "node"),
-		markExtensions: extensions.filter((extension) => extension.type === "mark")
-	};
-}
-/**
-* Get a list of all extension attributes defined in `addAttribute` and `addGlobalAttribute`.
-* @param extensions List of extensions
-*/
-function getAttributesFromExtensions(extensions) {
-	const extensionAttributes = [];
-	const { nodeExtensions, markExtensions } = splitExtensions(extensions);
-	const nodeAndMarkExtensions = [...nodeExtensions, ...markExtensions];
-	const defaultAttribute = {
-		default: null,
-		validate: void 0,
-		rendered: true,
-		renderHTML: null,
-		parseHTML: null,
-		keepOnSplit: true,
-		isRequired: false
-	};
-	const nodeExtensionTypes = nodeExtensions.filter((ext) => ext.name !== "text").map((ext) => ext.name);
-	const markExtensionTypes = markExtensions.map((ext) => ext.name);
-	const allExtensionTypes = [...nodeExtensionTypes, ...markExtensionTypes];
-	extensions.forEach((extension) => {
-		const addGlobalAttributes = getExtensionField(extension, "addGlobalAttributes", {
-			name: extension.name,
-			options: extension.options,
-			storage: extension.storage,
-			extensions: nodeAndMarkExtensions
-		});
-		if (!addGlobalAttributes) return;
-		addGlobalAttributes().forEach((globalAttribute) => {
-			let resolvedTypes;
-			if (Array.isArray(globalAttribute.types)) resolvedTypes = globalAttribute.types;
-			else if (globalAttribute.types === "*") resolvedTypes = allExtensionTypes;
-			else if (globalAttribute.types === "nodes") resolvedTypes = nodeExtensionTypes;
-			else if (globalAttribute.types === "marks") resolvedTypes = markExtensionTypes;
-			else resolvedTypes = [];
-			resolvedTypes.forEach((type) => {
-				Object.entries(globalAttribute.attributes).forEach(([name, attribute]) => {
-					extensionAttributes.push({
-						type,
-						name,
-						attribute: {
-							...defaultAttribute,
-							...attribute
-						}
-					});
-				});
-			});
-		});
-	});
-	nodeAndMarkExtensions.forEach((extension) => {
-		const addAttributes = getExtensionField(extension, "addAttributes", {
-			name: extension.name,
-			options: extension.options,
-			storage: extension.storage
-		});
-		if (!addAttributes) return;
-		const attributes = addAttributes();
-		Object.entries(attributes).forEach(([name, attribute]) => {
-			const mergedAttr = {
-				...defaultAttribute,
-				...attribute
-			};
-			if (typeof (mergedAttr === null || mergedAttr === void 0 ? void 0 : mergedAttr.default) === "function") mergedAttr.default = mergedAttr.default();
-			if ((mergedAttr === null || mergedAttr === void 0 ? void 0 : mergedAttr.isRequired) && (mergedAttr === null || mergedAttr === void 0 ? void 0 : mergedAttr.default) === void 0) delete mergedAttr.default;
-			extensionAttributes.push({
-				type: extension.name,
-				name,
-				attribute: mergedAttr
-			});
-		});
-	});
-	return extensionAttributes;
-}
-/** Splits a CSS style string into declarations, ignoring semicolons inside quotes/parentheses. */
-function splitStyleDeclarations(styles) {
-	const result = [];
-	let current = "";
-	let inSingleQuote = false;
-	let inDoubleQuote = false;
-	let parenDepth = 0;
-	const length = styles.length;
-	for (let i = 0; i < length; i += 1) {
-		const char = styles[i];
-		if (char === "'" && !inDoubleQuote) {
-			inSingleQuote = !inSingleQuote;
-			current += char;
-			continue;
-		}
-		if (char === "\"" && !inSingleQuote) {
-			inDoubleQuote = !inDoubleQuote;
-			current += char;
-			continue;
-		}
-		if (!inSingleQuote && !inDoubleQuote) {
-			if (char === "(") {
-				parenDepth += 1;
-				current += char;
-				continue;
-			}
-			if (char === ")" && parenDepth > 0) {
-				parenDepth -= 1;
-				current += char;
-				continue;
-			}
-			if (char === ";" && parenDepth === 0) {
-				result.push(current);
-				current = "";
-				continue;
-			}
-		}
-		current += char;
-	}
-	if (current) result.push(current);
-	return result;
-}
-/** Yields property/value pairs from a style string. */
-function parseStyleEntries(styles) {
-	const pairs = [];
-	const declarations = splitStyleDeclarations(styles || "");
-	const numDeclarations = declarations.length;
-	for (let i = 0; i < numDeclarations; i += 1) {
-		const declaration = declarations[i];
-		const firstColonIndex = declaration.indexOf(":");
-		if (firstColonIndex === -1) continue;
-		const property = declaration.slice(0, firstColonIndex).trim();
-		const value = declaration.slice(firstColonIndex + 1).trim();
-		if (property && value) pairs.push([property, value]);
-	}
-	return pairs;
-}
-function mergeAttributes(...objects) {
-	return objects.filter((item) => !!item).reduce((items, item) => {
-		const mergedAttributes = { ...items };
-		Object.entries(item).forEach(([key, value]) => {
-			if (key === "__proto__") {
-				Object.defineProperty(mergedAttributes, key, {
-					configurable: true,
-					enumerable: true,
-					value,
-					writable: true
-				});
-				return;
-			}
-			if (!mergedAttributes[key]) {
-				mergedAttributes[key] = value;
-				return;
-			}
-			if (key === "class") {
-				const valueClasses = value ? String(value).split(" ") : [];
-				const existingClasses = mergedAttributes[key] ? mergedAttributes[key].split(" ") : [];
-				const insertClasses = valueClasses.filter((valueClass) => !existingClasses.includes(valueClass));
-				mergedAttributes[key] = [...existingClasses, ...insertClasses].join(" ");
-			} else if (key === "style") {
-				const styleMap = new Map([...parseStyleEntries(mergedAttributes[key]), ...parseStyleEntries(value)]);
-				mergedAttributes[key] = Array.from(styleMap.entries()).map(([property, val]) => `${property}: ${val}`).join("; ");
-			} else mergedAttributes[key] = value;
-		});
-		return mergedAttributes;
-	}, {});
-}
-function getRenderedAttributes(nodeOrMark, extensionAttributes) {
-	return extensionAttributes.filter((attribute) => attribute.type === nodeOrMark.type.name).filter((item) => item.attribute.rendered).map((item) => {
-		if (!item.attribute.renderHTML) return { [item.name]: nodeOrMark.attrs[item.name] };
-		return item.attribute.renderHTML(nodeOrMark.attrs) || {};
-	}).reduce((attributes, attribute) => mergeAttributes(attributes, attribute), {});
-}
-function fromString(value) {
-	if (typeof value !== "string") return value;
-	if (value.match(/^[+-]?(?:\d*\.)?\d+$/)) return Number(value);
-	if (value === "true") return true;
-	if (value === "false") return false;
-	return value;
-}
-/**
-* This function merges extension attributes into parserule attributes (`attrs` or `getAttrs`).
-* Cancels when `getAttrs` returned `false`.
-* @param parseRule ProseMirror ParseRule
-* @param extensionAttributes List of attributes to inject
-*/
-function injectExtensionAttributesToParseRule(parseRule, extensionAttributes) {
-	if ("style" in parseRule) return parseRule;
-	return {
-		...parseRule,
-		getAttrs: (node) => {
-			const oldAttributes = parseRule.getAttrs ? parseRule.getAttrs(node) : parseRule.attrs;
-			if (oldAttributes === false) return false;
-			const newAttributes = extensionAttributes.reduce((items, item) => {
-				const value = item.attribute.parseHTML ? item.attribute.parseHTML(node) : fromString(node.getAttribute(item.name));
-				if (value === null || value === void 0) return items;
-				return {
-					...items,
-					[item.name]: value
-				};
-			}, {});
-			return {
-				...oldAttributes,
-				...newAttributes
-			};
-		}
-	};
-}
-function cleanUpSchemaItem(data) {
-	return Object.fromEntries(Object.entries(data).filter(([key, value]) => {
-		if (key === "attrs" && isEmptyObject(value)) return false;
-		return value !== null && value !== void 0;
-	}));
-}
-/**
-* Builds an attribute spec tuple for ProseMirror schema from an extension attribute.
-* @param extensionAttribute The extension attribute to build the spec for
-* @returns A tuple of [attributeName, spec]
-*/
-function buildAttributeSpec(extensionAttribute) {
-	var _extensionAttribute$a, _extensionAttribute$a2;
-	const spec = {};
-	if (!(extensionAttribute === null || extensionAttribute === void 0 || (_extensionAttribute$a = extensionAttribute.attribute) === null || _extensionAttribute$a === void 0 ? void 0 : _extensionAttribute$a.isRequired) && "default" in ((extensionAttribute === null || extensionAttribute === void 0 ? void 0 : extensionAttribute.attribute) || {})) spec.default = extensionAttribute.attribute.default;
-	if ((extensionAttribute === null || extensionAttribute === void 0 || (_extensionAttribute$a2 = extensionAttribute.attribute) === null || _extensionAttribute$a2 === void 0 ? void 0 : _extensionAttribute$a2.validate) !== void 0) spec.validate = extensionAttribute.attribute.validate;
-	return [extensionAttribute.name, spec];
-}
-/**
-* Creates a new Prosemirror schema based on the given extensions.
-* @param extensions An array of Tiptap extensions
-* @param editor The editor instance
-* @returns A Prosemirror schema
-*/
-function getSchemaByResolvedExtensions(extensions, editor) {
-	var _nodeExtensions$find;
-	const allAttributes = getAttributesFromExtensions(extensions);
-	const { nodeExtensions, markExtensions } = splitExtensions(extensions);
-	return new Schema({
-		topNode: (_nodeExtensions$find = nodeExtensions.find((extension) => getExtensionField(extension, "topNode"))) === null || _nodeExtensions$find === void 0 ? void 0 : _nodeExtensions$find.name,
-		nodes: Object.fromEntries(nodeExtensions.map((extension) => {
-			const extensionAttributes = allAttributes.filter((attribute) => attribute.type === extension.name);
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: extension.storage,
-				editor
-			};
-			const schema = cleanUpSchemaItem({
-				...extensions.reduce((fields, e) => {
-					const extendNodeSchema = getExtensionField(e, "extendNodeSchema", context);
-					return {
-						...fields,
-						...extendNodeSchema ? extendNodeSchema(extension) : {}
-					};
-				}, {}),
-				content: callOrReturn(getExtensionField(extension, "content", context)),
-				marks: callOrReturn(getExtensionField(extension, "marks", context)),
-				group: callOrReturn(getExtensionField(extension, "group", context)),
-				inline: callOrReturn(getExtensionField(extension, "inline", context)),
-				atom: callOrReturn(getExtensionField(extension, "atom", context)),
-				selectable: callOrReturn(getExtensionField(extension, "selectable", context)),
-				draggable: callOrReturn(getExtensionField(extension, "draggable", context)),
-				code: callOrReturn(getExtensionField(extension, "code", context)),
-				whitespace: callOrReturn(getExtensionField(extension, "whitespace", context)),
-				linebreakReplacement: callOrReturn(getExtensionField(extension, "linebreakReplacement", context)),
-				defining: callOrReturn(getExtensionField(extension, "defining", context)),
-				isolating: callOrReturn(getExtensionField(extension, "isolating", context)),
-				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec))
-			});
-			const parseHTML = callOrReturn(getExtensionField(extension, "parseHTML", context));
-			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule(parseRule, extensionAttributes));
-			const renderHTML = getExtensionField(extension, "renderHTML", context);
-			if (renderHTML) schema.toDOM = (node) => renderHTML({
-				node,
-				HTMLAttributes: getRenderedAttributes(node, extensionAttributes)
-			});
-			const renderText = getExtensionField(extension, "renderText", context);
-			if (renderText) schema.toText = renderText;
-			return [extension.name, schema];
-		})),
-		marks: Object.fromEntries(markExtensions.map((extension) => {
-			const extensionAttributes = allAttributes.filter((attribute) => attribute.type === extension.name);
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: extension.storage,
-				editor
-			};
-			const schema = cleanUpSchemaItem({
-				...extensions.reduce((fields, e) => {
-					const extendMarkSchema = getExtensionField(e, "extendMarkSchema", context);
-					return {
-						...fields,
-						...extendMarkSchema ? extendMarkSchema(extension) : {}
-					};
-				}, {}),
-				inclusive: callOrReturn(getExtensionField(extension, "inclusive", context)),
-				excludes: callOrReturn(getExtensionField(extension, "excludes", context)),
-				group: callOrReturn(getExtensionField(extension, "group", context)),
-				spanning: callOrReturn(getExtensionField(extension, "spanning", context)),
-				code: callOrReturn(getExtensionField(extension, "code", context)),
-				attrs: Object.fromEntries(extensionAttributes.map(buildAttributeSpec))
-			});
-			const parseHTML = callOrReturn(getExtensionField(extension, "parseHTML", context));
-			if (parseHTML) schema.parseDOM = parseHTML.map((parseRule) => injectExtensionAttributesToParseRule(parseRule, extensionAttributes));
-			const renderHTML = getExtensionField(extension, "renderHTML", context);
-			if (renderHTML) schema.toDOM = (mark) => renderHTML({
-				mark,
-				HTMLAttributes: getRenderedAttributes(mark, extensionAttributes)
-			});
-			return [extension.name, schema];
-		}))
-	});
-}
-/**
-* Find duplicates in an array.
-*/
-function findDuplicates(items) {
-	const filtered = items.filter((el, index) => items.indexOf(el) !== index);
-	return Array.from(new Set(filtered));
-}
-/**
-* Sort extensions by priority.
-* @param extensions An array of Tiptap extensions
-* @returns A sorted array of Tiptap extensions by priority
-*/
-function sortExtensions(extensions) {
-	const defaultPriority = 100;
-	return extensions.sort((a, b) => {
-		const priorityA = getExtensionField(a, "priority") || defaultPriority;
-		const priorityB = getExtensionField(b, "priority") || defaultPriority;
-		if (priorityA > priorityB) return -1;
-		if (priorityA < priorityB) return 1;
-		return 0;
-	});
-}
-/**
-* Returns a flattened and sorted extension list while
-* also checking for duplicated extensions and warns the user.
-* @param extensions An array of Tiptap extensions
-* @returns An flattened and sorted array of Tiptap extensions
-*/
-function resolveExtensions(extensions) {
-	const resolvedExtensions = sortExtensions(flattenExtensions(extensions));
-	const duplicatedNames = findDuplicates(resolvedExtensions.map((extension) => extension.name));
-	if (duplicatedNames.length) console.warn(`[tiptap warn]: Duplicate extension names found: [${duplicatedNames.map((item) => `'${item}'`).join(", ")}]. This can lead to issues.`);
-	return resolvedExtensions;
-}
-/**
-* Gets the text between two positions in a Prosemirror node
-* and serializes it using the given text serializers and block separator (see getText)
-* @param startNode The Prosemirror node to start from
-* @param range The range of the text to get
-* @param options Options for the text serializer & block separator
-* @returns The text between the two positions
-*/
-function getTextBetween(startNode, range, options) {
-	const { from, to } = range;
-	const { blockSeparator = "\n\n", textSerializers = {} } = options || {};
-	let text = "";
-	startNode.nodesBetween(from, to, (node, pos, parent, index) => {
-		if (node.isBlock && pos > from) text += blockSeparator;
-		const textSerializer = textSerializers === null || textSerializers === void 0 ? void 0 : textSerializers[node.type.name];
-		if (textSerializer) {
-			if (parent) text += textSerializer({
-				node,
-				pos,
-				parent,
-				index,
-				range
-			});
-			return false;
-		}
-		if (node.isText) {
-			var _node$text;
-			text += node === null || node === void 0 || (_node$text = node.text) === null || _node$text === void 0 ? void 0 : _node$text.slice(Math.max(from, pos) - pos, to - pos);
-		}
-	});
-	return text;
-}
-/**
-* Gets the text of a Prosemirror node
-* @param node The Prosemirror node
-* @param options Options for the text serializer & block separator
-* @returns The text of the node
-* @example ```js
-* const text = getText(node, { blockSeparator: '\n' })
-* ```
-*/
-function getText(node, options) {
-	return getTextBetween(node, {
-		from: 0,
-		to: node.content.size
-	}, options);
-}
-/**
-* Find text serializers `toText` in a Prosemirror schema
-* @param schema The Prosemirror schema to search in
-* @returns A record of text serializers by node name
-*/
-function getTextSerializersFromSchema(schema) {
-	return Object.fromEntries(Object.entries(schema.nodes).filter(([, node]) => node.spec.toText).map(([name, node]) => [name, node.spec.toText]));
-}
-function getNodeAttributes(state, typeOrName) {
-	const type = getNodeType(typeOrName, state.schema);
-	const { from, to } = state.selection;
-	const nodes = [];
-	state.doc.nodesBetween(from, to, (node) => {
-		nodes.push(node);
-	});
-	const node = nodes.reverse().find((nodeItem) => nodeItem.type.name === type.name);
-	if (!node) return {};
-	return { ...node.attrs };
-}
-/**
-* Get node or mark attributes by type or name on the current editor state
-* @param state The current editor state
-* @param typeOrName The node or mark type or name
-* @returns The attributes of the node or mark or an empty object
-*/
-function getAttributes(state, typeOrName) {
-	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
-	if (schemaType === "node") return getNodeAttributes(state, typeOrName);
-	if (schemaType === "mark") return getMarkAttributes(state, typeOrName);
-	return {};
-}
-/**
-* Removes duplicated values within an array.
-* Supports numbers, strings and objects.
-*/
-function removeDuplicates(array, by = JSON.stringify) {
-	const seen = {};
-	return array.filter((item) => {
-		const key = by(item);
-		return Object.prototype.hasOwnProperty.call(seen, key) ? false : seen[key] = true;
-	});
-}
-/**
-* Removes duplicated ranges and ranges that are
-* fully captured by other ranges.
-*/
-function simplifyChangedRanges(changes) {
-	const uniqueChanges = removeDuplicates(changes);
-	return uniqueChanges.length === 1 ? uniqueChanges : uniqueChanges.filter((change, index) => {
-		return !uniqueChanges.filter((_, i) => i !== index).some((otherChange) => {
-			return change.oldRange.from >= otherChange.oldRange.from && change.oldRange.to <= otherChange.oldRange.to && change.newRange.from >= otherChange.newRange.from && change.newRange.to <= otherChange.newRange.to;
-		});
-	});
-}
-/**
-* Returns a list of changed ranges
-* based on the first and last state of all steps.
-*/
-function getChangedRanges(transform) {
-	const { mapping, steps } = transform;
-	const changes = [];
-	mapping.maps.forEach((stepMap, index) => {
-		const ranges = [];
-		if (!stepMap.ranges.length) {
-			const { from, to } = steps[index];
-			if (from === void 0 || to === void 0) return;
-			ranges.push({
-				from,
-				to
-			});
-		} else stepMap.forEach((from, to) => {
-			ranges.push({
-				from,
-				to
-			});
-		});
-		ranges.forEach(({ from, to }) => {
-			const newStart = mapping.slice(index).map(from, -1);
-			const newEnd = mapping.slice(index).map(to);
-			const oldStart = mapping.invert().map(newStart, -1);
-			const oldEnd = mapping.invert().map(newEnd);
-			changes.push({
-				oldRange: {
-					from: oldStart,
-					to: oldEnd
-				},
-				newRange: {
-					from: newStart,
-					to: newEnd
-				}
-			});
-		});
-	});
-	return simplifyChangedRanges(changes);
-}
-/**
-* Tries to get a node or mark type by its name.
-* @param name The name of the node or mark type
-* @param schema The Prosemiror schema to search in
-* @returns The node or mark type, or null if it doesn't exist
-*/
-function getSchemaTypeByName(name, schema) {
-	return schema.nodes[name] || schema.marks[name] || null;
-}
-/**
-* Return attributes of an extension that should be splitted by keepOnSplit flag
-* @param extensionAttributes Array of extension attributes
-* @param typeName The type of the extension
-* @param attributes The attributes of the extension
-* @returns The splitted attributes
-*/
-function getSplittedAttributes(extensionAttributes, typeName, attributes) {
-	return Object.fromEntries(Object.entries(attributes).filter(([name]) => {
-		const extensionAttribute = extensionAttributes.find((item) => {
-			return item.type === typeName && item.name === name;
-		});
-		if (!extensionAttribute) return false;
-		return extensionAttribute.attribute.keepOnSplit;
-	}));
-}
-/**
-* Returns the text content of a resolved prosemirror position
-* @param $from The resolved position to get the text content from
-* @param maxMatch The maximum number of characters to match
-* @returns The text content
-*/
-var getTextContentFromNodes = ($from, maxMatch = 500) => {
-	let textBefore = "";
-	const sliceEndPos = $from.parentOffset;
-	$from.parent.nodesBetween(Math.max(0, sliceEndPos - maxMatch), sliceEndPos, (node, pos, parent, index) => {
-		var _node$type$spec$toTex, _node$type$spec;
-		const chunk = ((_node$type$spec$toTex = (_node$type$spec = node.type.spec).toText) === null || _node$type$spec$toTex === void 0 ? void 0 : _node$type$spec$toTex.call(_node$type$spec, {
-			node,
-			pos,
-			parent,
-			index
-		})) || node.textContent || "%leaf%";
-		textBefore += node.isAtom && !node.isText ? chunk : chunk.slice(0, Math.max(0, sliceEndPos - pos));
-	});
-	return textBefore;
-};
-function isMarkActive(state, typeOrName, attributes = {}) {
-	const { empty, ranges } = state.selection;
-	const type = typeOrName ? getMarkType(typeOrName, state.schema) : null;
-	if (empty) return !!(state.storedMarks || state.selection.$from.marks()).filter((mark) => {
-		if (!type) return true;
-		return type.name === mark.type.name;
-	}).find((mark) => objectIncludes(mark.attrs, attributes, { strict: false }));
-	let selectionRange = 0;
-	const markRanges = [];
-	ranges.forEach(({ $from, $to }) => {
-		const from = $from.pos;
-		const to = $to.pos;
-		state.doc.nodesBetween(from, to, (node, pos) => {
-			if (type && node.inlineContent && !node.type.allowsMarkType(type)) return false;
-			if (!node.isText && !node.marks.length) return;
-			const relativeFrom = Math.max(from, pos);
-			const relativeTo = Math.min(to, pos + node.nodeSize);
-			const range = relativeTo - relativeFrom;
-			selectionRange += range;
-			markRanges.push(...node.marks.map((mark) => ({
-				mark,
-				from: relativeFrom,
-				to: relativeTo
-			})));
-		});
-	});
-	if (selectionRange === 0) return false;
-	const matchedRange = markRanges.filter((markRange) => {
-		if (!type) return true;
-		return type.name === markRange.mark.type.name;
-	}).filter((markRange) => objectIncludes(markRange.mark.attrs, attributes, { strict: false })).reduce((sum, markRange) => sum + markRange.to - markRange.from, 0);
-	const excludedRange = markRanges.filter((markRange) => {
-		if (!type) return true;
-		return markRange.mark.type !== type && markRange.mark.type.excludes(type);
-	}).reduce((sum, markRange) => sum + markRange.to - markRange.from, 0);
-	return (matchedRange > 0 ? matchedRange + excludedRange : matchedRange) >= selectionRange;
-}
-function isActive(state, name, attributes = {}) {
-	if (!name) return isNodeActive(state, null, attributes) || isMarkActive(state, null, attributes);
-	const schemaType = getSchemaTypeNameByName(name, state.schema);
-	if (schemaType === "node") return isNodeActive(state, name, attributes);
-	if (schemaType === "mark") return isMarkActive(state, name, attributes);
-	return false;
-}
-function isExtensionRulesEnabled(extension, enabled) {
-	if (Array.isArray(enabled)) return enabled.some((enabledExtension) => {
-		return (typeof enabledExtension === "string" ? enabledExtension : enabledExtension.name) === extension.name;
-	});
-	return enabled;
-}
-function isList(name, extensions) {
-	const { nodeExtensions } = splitExtensions(extensions);
-	const extension = nodeExtensions.find((item) => item.name === name);
-	if (!extension) return false;
-	const group = callOrReturn(getExtensionField(extension, "group", {
-		name: extension.name,
-		options: extension.options,
-		storage: extension.storage
-	}));
-	if (typeof group !== "string") return false;
-	return group.split(" ").includes("list");
-}
-/**
-* Returns true if the given prosemirror node is empty.
-*/
-function isNodeEmpty(node, { checkChildren = true, ignoreWhitespace = false } = {}) {
-	if (ignoreWhitespace) {
-		if (node.type.name === "hardBreak") return true;
-		if (node.isText) {
-			var _node$text;
-			return !/\S/.test((_node$text = node.text) !== null && _node$text !== void 0 ? _node$text : "");
-		}
-	}
-	if (node.isText) return !node.text;
-	if (node.isAtom || node.isLeaf) return false;
-	if (node.content.childCount === 0) return true;
-	if (checkChildren) {
-		let isContentEmpty = true;
-		node.content.forEach((childNode) => {
-			if (isContentEmpty === false) return;
-			if (!isNodeEmpty(childNode, {
-				ignoreWhitespace,
-				checkChildren
-			})) isContentEmpty = false;
-		});
-		return isContentEmpty;
-	}
-	return false;
-}
-/**
-* A class that represents a mappable position in the editor. It can be extended
-* by other extensions to add additional position mapping capabilities.
-*/
-var MappablePosition = class MappablePosition {
-	constructor(position) {
-		this.position = position;
-	}
-	/**
-	* Creates a MappablePosition from a JSON object.
-	*/
-	static fromJSON(json) {
-		return new MappablePosition(json.position);
-	}
-	/**
-	* Converts the MappablePosition to a JSON object.
-	*/
-	toJSON() {
-		return { position: this.position };
-	}
-};
-/**
-* Calculates the new position after applying a transaction.
-*
-* @returns The new mappable position and the map result.
-*/
-function getUpdatedPosition(position, transaction) {
-	const mapResult = transaction.mapping.mapResult(position.position);
-	return {
-		position: new MappablePosition(mapResult.pos),
-		mapResult
-	};
-}
-/**
-* Creates a MappablePosition from a position number. This is the default
-* implementation for Tiptap core. It can be overridden by other Tiptap
-* extensions.
-*
-* @param position The position (as a number) where the MappablePosition will be created.
-* @returns A new MappablePosition instance at the given position.
-*/
-function createMappablePosition(position) {
-	return new MappablePosition(position);
-}
-function posToDOMRect(view, from, to) {
-	const minPos = 0;
-	const maxPos = view.state.doc.content.size;
-	const resolvedFrom = minMax(from, minPos, maxPos);
-	const resolvedEnd = minMax(to, minPos, maxPos);
-	const start = view.coordsAtPos(resolvedFrom);
-	const end = view.coordsAtPos(resolvedEnd, -1);
-	const top = Math.min(start.top, end.top);
-	const bottom = Math.max(start.bottom, end.bottom);
-	const left = Math.min(start.left, end.left);
-	const right = Math.max(start.right, end.right);
-	const data = {
-		top,
-		bottom,
-		left,
-		right,
-		width: right - left,
-		height: bottom - top,
-		x: left,
-		y: top
-	};
-	return {
-		...data,
-		toJSON: () => data
-	};
-}
-function canSetMark(state, tr, newMarkType) {
-	const { selection } = tr;
-	let cursor = null;
-	if (isTextSelection(selection)) cursor = selection.$cursor;
-	if (cursor) {
-		var _state$storedMarks;
-		const currentMarks = (_state$storedMarks = state.storedMarks) !== null && _state$storedMarks !== void 0 ? _state$storedMarks : cursor.marks();
-		return cursor.parent.type.allowsMarkType(newMarkType) && (!!newMarkType.isInSet(currentMarks) || !currentMarks.some((mark) => mark.type.excludes(newMarkType)));
-	}
-	const { ranges } = selection;
-	return ranges.some(({ $from, $to }) => {
-		let someNodeSupportsMark = $from.depth === 0 ? state.doc.inlineContent && state.doc.type.allowsMarkType(newMarkType) : false;
-		state.doc.nodesBetween($from.pos, $to.pos, (node, _pos, parent) => {
-			if (someNodeSupportsMark) return false;
-			if (node.isInline) {
-				const parentAllowsMarkType = !parent || parent.type.allowsMarkType(newMarkType);
-				const currentMarksAllowMarkType = !!newMarkType.isInSet(node.marks) || !node.marks.some((otherMark) => otherMark.type.excludes(newMarkType));
-				someNodeSupportsMark = parentAllowsMarkType && currentMarksAllowMarkType;
-			}
-			return !someNodeSupportsMark;
-		});
-		return someNodeSupportsMark;
-	});
-}
-var setMark = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
-	const { selection } = tr;
-	const { empty, ranges } = selection;
-	const type = getMarkType(typeOrName, state.schema);
-	if (dispatch) {
-		if (empty) {
-			const oldAttributes = getMarkAttributes(state, type);
-			tr.addStoredMark(type.create({
-				...oldAttributes,
-				...attributes
-			}));
-		} else ranges.forEach((range) => {
-			const from = range.$from.pos;
-			const to = range.$to.pos;
-			state.doc.nodesBetween(from, to, (node, pos) => {
-				const trimmedFrom = Math.max(pos, from);
-				const trimmedTo = Math.min(pos + node.nodeSize, to);
-				if (node.marks.find((mark) => mark.type === type)) node.marks.forEach((mark) => {
-					if (type === mark.type) tr.addMark(trimmedFrom, trimmedTo, type.create({
-						...mark.attrs,
-						...attributes
-					}));
-				});
-				else tr.addMark(trimmedFrom, trimmedTo, type.create(attributes));
-			});
-		});
-	}
-	return canSetMark(state, tr, type);
-};
-var setMeta = (key, value) => ({ tr }) => {
-	tr.setMeta(key, value);
-	return true;
-};
-var setNode = (typeOrName, attributes = {}) => ({ state, dispatch, chain }) => {
-	const type = getNodeType(typeOrName, state.schema);
-	let attributesToCopy;
-	if (state.selection.$anchor.sameParent(state.selection.$head)) attributesToCopy = state.selection.$anchor.parent.attrs;
-	if (!type.isTextblock) {
-		console.warn("[tiptap warn]: Currently \"setNode()\" only supports text block nodes.");
-		return false;
-	}
-	return chain().command(({ commands }) => {
-		if (setBlockType(type, {
-			...attributesToCopy,
-			...attributes
-		})(state)) return true;
-		return commands.clearNodes();
-	}).command(({ state: updatedState }) => {
-		return setBlockType(type, {
-			...attributesToCopy,
-			...attributes
-		})(updatedState, dispatch);
-	}).run();
-};
-var setNodeSelection = (position) => ({ tr, dispatch }) => {
-	if (dispatch) {
-		const { doc } = tr;
-		const from = minMax(position, 0, doc.content.size);
-		const selection = NodeSelection.create(doc, from);
-		tr.setSelection(selection);
-	}
-	return true;
-};
-var setTextDirection = (direction, position) => ({ tr, state, dispatch }) => {
-	const { selection } = state;
-	let from;
-	let to;
-	if (typeof position === "number") {
-		from = position;
-		to = position;
-	} else if (position && "from" in position && "to" in position) {
-		from = position.from;
-		to = position.to;
-	} else {
-		from = selection.from;
-		to = selection.to;
-	}
-	if (dispatch) tr.doc.nodesBetween(from, to, (node, pos) => {
-		if (node.isText) return;
-		tr.setNodeMarkup(pos, void 0, {
-			...node.attrs,
-			dir: direction
-		});
-	});
-	return true;
-};
-var setTextSelection = (position) => ({ tr, dispatch }) => {
-	if (dispatch) {
-		const { doc } = tr;
-		const { from, to } = typeof position === "number" ? {
-			from: position,
-			to: position
-		} : position;
-		const minPos = TextSelection.atStart(doc).from;
-		const maxPos = TextSelection.atEnd(doc).to;
-		const resolvedFrom = minMax(from, minPos, maxPos);
-		const resolvedEnd = minMax(to, minPos, maxPos);
-		const selection = TextSelection.create(doc, resolvedFrom, resolvedEnd);
-		tr.setSelection(selection);
-	}
-	return true;
-};
-var sinkListItem$1 = (typeOrName) => ({ state, dispatch }) => {
-	return sinkListItem(getNodeType(typeOrName, state.schema))(state, dispatch);
-};
-function ensureMarks(state, splittableMarks) {
-	const marks = state.storedMarks || state.selection.$to.parentOffset && state.selection.$from.marks();
-	if (marks) {
-		const filteredMarks = marks.filter((mark) => splittableMarks === null || splittableMarks === void 0 ? void 0 : splittableMarks.includes(mark.type.name));
-		state.tr.ensureMarks(filteredMarks);
-	}
-}
-var splitBlock = ({ keepMarks = true } = {}) => ({ tr, state, dispatch, editor }) => {
-	const { selection, doc } = tr;
-	const { $from, $to } = selection;
-	const extensionAttributes = editor.extensionManager.attributes;
-	const newAttributes = getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs);
-	if (selection instanceof NodeSelection && selection.node.isBlock) {
-		if (!$from.parentOffset || !canSplit(doc, $from.pos)) return false;
-		if (dispatch) {
-			if (keepMarks) ensureMarks(state, editor.extensionManager.splittableMarks);
-			tr.split($from.pos).scrollIntoView();
-		}
-		return true;
-	}
-	if (!$from.parent.isBlock) return false;
-	const atEnd = $to.parentOffset === $to.parent.content.size;
-	const deflt = $from.depth === 0 ? void 0 : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
-	let types = atEnd && deflt ? [{
-		type: deflt,
-		attrs: newAttributes
-	}] : void 0;
-	const deletedTr = selection instanceof TextSelection && !selection.empty ? EditorState.create({
-		doc: tr.doc,
-		selection
-	}).tr.deleteSelection() : null;
-	const splitDoc = deletedTr ? deletedTr.doc : tr.doc;
-	const splitPos = deletedTr ? deletedTr.mapping.map($from.pos) : $from.pos;
-	let can = canSplit(splitDoc, splitPos, 1, types);
-	if (!types && !can && canSplit(splitDoc, splitPos, 1, deflt ? [{ type: deflt }] : void 0)) {
-		can = true;
-		types = deflt ? [{
-			type: deflt,
-			attrs: newAttributes
-		}] : void 0;
-	}
-	if (dispatch) {
-		if (can) {
-			const mapFrom = tr.steps.length;
-			if (selection instanceof TextSelection) tr.deleteSelection();
-			tr.split(tr.mapping.slice(mapFrom).map($from.pos), 1, types);
-			if (deflt && !atEnd && !$from.parentOffset && $from.parent.type !== deflt) {
-				const first = tr.mapping.slice(mapFrom).map($from.before());
-				const $first = tr.doc.resolve(first);
-				if ($from.node(-1).canReplaceWith($first.index(), $first.index() + 1, deflt)) tr.setNodeMarkup(tr.mapping.slice(mapFrom).map($from.before()), deflt);
-			}
-		}
-		if (keepMarks) ensureMarks(state, editor.extensionManager.splittableMarks);
-		tr.scrollIntoView();
-	}
-	return can;
-};
-var splitListItem = (typeOrName, overrideAttrs = {}) => ({ tr, state, dispatch, editor }) => {
-	const type = getNodeType(typeOrName, state.schema);
-	const { $from, $to } = state.selection;
-	const node = state.selection.node;
-	if (node && node.isBlock || $from.depth < 2 || !$from.sameParent($to)) return false;
-	const grandParent = $from.node(-1);
-	if (grandParent.type !== type) return false;
-	const extensionAttributes = editor.extensionManager.attributes;
-	if ($from.parent.content.size === 0 && $from.node(-1).childCount === $from.indexAfter(-1)) {
-		if ($from.depth === 2 || $from.node(-3).type !== type || $from.index(-2) !== $from.node(-2).childCount - 1) return false;
-		if (dispatch) {
-			var _type$contentMatch$de;
-			let wrap = Fragment.empty;
-			const depthBefore = $from.index(-1) ? 1 : $from.index(-2) ? 2 : 3;
-			for (let d = $from.depth - depthBefore; d >= $from.depth - 3; d -= 1) wrap = Fragment.from($from.node(d).copy(wrap));
-			const depthAfter = $from.indexAfter(-1) < $from.node(-2).childCount ? 1 : $from.indexAfter(-2) < $from.node(-3).childCount ? 2 : 3;
-			const newNextTypeAttributes = {
-				...getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs),
-				...overrideAttrs
-			};
-			const nextType = ((_type$contentMatch$de = type.contentMatch.defaultType) === null || _type$contentMatch$de === void 0 ? void 0 : _type$contentMatch$de.createAndFill(newNextTypeAttributes)) || void 0;
-			wrap = wrap.append(Fragment.from(type.createAndFill(null, nextType) || void 0));
-			const start = $from.before($from.depth - (depthBefore - 1));
-			tr.replace(start, $from.after(-depthAfter), new Slice(wrap, 4 - depthBefore, 0));
-			let sel = -1;
-			tr.doc.nodesBetween(start, tr.doc.content.size, (n, pos) => {
-				if (sel > -1) return false;
-				if (n.isTextblock && n.content.size === 0) sel = pos + 1;
-			});
-			if (sel > -1) tr.setSelection(TextSelection.near(tr.doc.resolve(sel)));
-			tr.scrollIntoView();
-		}
-		return true;
-	}
-	const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
-	const newTypeAttributes = {
-		...getSplittedAttributes(extensionAttributes, grandParent.type.name, grandParent.attrs),
-		...overrideAttrs
-	};
-	const newNextTypeAttributes = {
-		...getSplittedAttributes(extensionAttributes, $from.node().type.name, $from.node().attrs),
-		...overrideAttrs
-	};
-	const splitsAtStartOfItem = $from.parentOffset === 0 && $from.index(-1) === 0;
-	const itemStart = $from.before(-1);
-	tr.delete($from.pos, $to.pos);
-	const trailingTypeAttributes = splitsAtStartOfItem ? grandParent.attrs : newTypeAttributes;
-	const types = nextType ? [{
-		type,
-		attrs: trailingTypeAttributes
-	}, {
-		type: nextType,
-		attrs: newNextTypeAttributes
-	}] : [{
-		type,
-		attrs: trailingTypeAttributes
-	}];
-	if (!canSplit(tr.doc, $from.pos, 2)) return false;
-	if (dispatch) {
-		const { selection, storedMarks } = state;
-		const { splittableMarks } = editor.extensionManager;
-		const marks = storedMarks || selection.$to.parentOffset && selection.$from.marks();
-		tr.split($from.pos, 2, types).scrollIntoView();
-		if (splitsAtStartOfItem) tr.setNodeMarkup(itemStart, void 0, newTypeAttributes);
-		if (!marks || !dispatch) return true;
-		const filteredMarks = marks.filter((mark) => splittableMarks.includes(mark.type.name));
-		tr.ensureMarks(filteredMarks);
-	}
-	return true;
-};
-/**
-* Normalise a list type attribute for comparison.
-* Treats null, undefined, and "1" as equivalent (the default numeric type).
-*/
-function normalizeListType(type) {
-	return !type || type === "1" ? null : type;
-}
-/**
-* Check if two list type attributes are compatible for joining.
-* Lists can only join when they have the same type (both default, or both the same non-default type).
-*/
-function areListTypesCompatible(typeA, typeB) {
-	return normalizeListType(typeA) === normalizeListType(typeB);
-}
-var joinListBackwards = (tr, listType) => {
-	const list = findParentNode((node) => node.type === listType)(tr.selection);
-	if (!list) return true;
-	const before = tr.doc.resolve(Math.max(0, list.pos - 1)).before(list.depth);
-	if (before === void 0) return true;
-	const nodeBefore = tr.doc.nodeAt(before);
-	if (!(list.node.type === (nodeBefore === null || nodeBefore === void 0 ? void 0 : nodeBefore.type) && canJoin(tr.doc, list.pos))) return true;
-	if (!areListTypesCompatible(list.node.attrs.type, nodeBefore === null || nodeBefore === void 0 ? void 0 : nodeBefore.attrs.type)) return true;
-	tr.join(list.pos);
-	return true;
-};
-var joinListForwards = (tr, listType) => {
-	const list = findParentNode((node) => node.type === listType)(tr.selection);
-	if (!list) return true;
-	const after = tr.doc.resolve(list.start).after(list.depth);
-	if (after === void 0) return true;
-	const nodeAfter = tr.doc.nodeAt(after);
-	if (!(list.node.type === (nodeAfter === null || nodeAfter === void 0 ? void 0 : nodeAfter.type) && canJoin(tr.doc, after))) return true;
-	if (!areListTypesCompatible(list.node.attrs.type, nodeAfter === null || nodeAfter === void 0 ? void 0 : nodeAfter.attrs.type)) return true;
-	tr.join(after);
-	return true;
-};
-function createInnerSelectionForWholeDocList(tr) {
-	const doc = tr.doc;
-	const list = doc.firstChild;
-	if (!list) return null;
-	const $start = doc.resolve(1);
-	const $end = doc.resolve(list.nodeSize - 1);
-	return TextSelection.between($start, $end);
-}
-var toggleList = (listTypeOrName, itemTypeOrName, keepMarks, attributes = {}) => ({ editor, tr, state, dispatch, chain, commands, can }) => {
-	const { extensions, splittableMarks } = editor.extensionManager;
-	const listType = getNodeType(listTypeOrName, state.schema);
-	const itemType = getNodeType(itemTypeOrName, state.schema);
-	const { selection, storedMarks } = state;
-	const { $from, $to } = selection;
-	const range = $from.blockRange($to);
-	const marks = storedMarks || selection.$to.parentOffset && selection.$from.marks();
-	if (!range) return false;
-	const parentList = findParentNode((node) => isList(node.type.name, extensions))(selection);
-	const isAllSelection = selection.from === 0 && selection.to === state.doc.content.size;
-	const topLevelNodes = state.doc.content.content;
-	const soleTopLevelNode = topLevelNodes.length === 1 ? topLevelNodes[0] : null;
-	const allSelectionList = isAllSelection && soleTopLevelNode && isList(soleTopLevelNode.type.name, extensions) ? {
-		node: soleTopLevelNode,
-		pos: 0,
-		depth: 0
-	} : null;
-	const currentList = parentList !== null && parentList !== void 0 ? parentList : allSelectionList;
-	const isInsideExistingList = !!parentList && range.depth >= 1 && range.depth - parentList.depth <= 1;
-	const hasWholeDocSelectedList = !!allSelectionList;
-	if ((isInsideExistingList || hasWholeDocSelectedList) && currentList) {
-		if (currentList.node.type === listType) {
-			if (isAllSelection && hasWholeDocSelectedList) return chain().command(({ tr: trx, dispatch: disp }) => {
-				const nextSelection = createInnerSelectionForWholeDocList(trx);
-				if (!nextSelection) return false;
-				trx.setSelection(nextSelection);
-				if (disp) disp(trx);
-				return true;
-			}).liftListItem(itemType).run();
-			return commands.liftListItem(itemType);
-		}
-		if (isList(currentList.node.type.name, extensions) && listType.validContent(currentList.node.content)) return chain().command(() => {
-			tr.setNodeMarkup(currentList.pos, listType);
-			return true;
-		}).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
-	}
-	if (!keepMarks || !marks || !dispatch) return chain().command(() => {
-		if (can().wrapInList(listType, attributes)) return true;
-		return commands.clearNodes();
-	}).wrapInList(listType, attributes).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
-	return chain().command(() => {
-		const canWrapInList = can().wrapInList(listType, attributes);
-		const filteredMarks = marks.filter((mark) => splittableMarks.includes(mark.type.name));
-		tr.ensureMarks(filteredMarks);
-		if (canWrapInList) return true;
-		return commands.clearNodes();
-	}).wrapInList(listType, attributes).command(() => joinListBackwards(tr, listType)).command(() => joinListForwards(tr, listType)).run();
-};
-var toggleMark = (typeOrName, attributes = {}, options = {}) => ({ state, commands }) => {
-	const { extendEmptyMarkRange = false } = options;
-	const type = getMarkType(typeOrName, state.schema);
-	if (isMarkActive(state, type, attributes)) return commands.unsetMark(type, { extendEmptyMarkRange });
-	return commands.setMark(type, attributes);
-};
-var toggleNode = (typeOrName, toggleTypeOrName, attributes = {}) => ({ state, commands }) => {
-	const type = getNodeType(typeOrName, state.schema);
-	const toggleType = getNodeType(toggleTypeOrName, state.schema);
-	const isActive = isNodeActive(state, type, attributes);
-	let attributesToCopy;
-	if (state.selection.$anchor.sameParent(state.selection.$head)) attributesToCopy = state.selection.$anchor.parent.attrs;
-	if (isActive) return commands.setNode(toggleType, attributesToCopy);
-	return commands.setNode(type, {
-		...attributesToCopy,
-		...attributes
-	});
-};
-var toggleWrap = (typeOrName, attributes = {}) => ({ state, commands }) => {
-	const type = getNodeType(typeOrName, state.schema);
-	if (isNodeActive(state, type, attributes)) return commands.lift(type);
-	return commands.wrapIn(type, attributes);
-};
-var undoInputRule = () => ({ state, dispatch }) => {
-	const plugins = state.plugins;
-	for (let i = 0; i < plugins.length; i += 1) {
-		const plugin = plugins[i];
-		let undoable;
-		if (plugin.spec.isInputRules && (undoable = plugin.getState(state))) {
-			if (dispatch) {
-				const tr = state.tr;
-				const toUndo = undoable.transform;
-				for (let j = toUndo.steps.length - 1; j >= 0; j -= 1) tr.step(toUndo.steps[j].invert(toUndo.docs[j]));
-				if (undoable.text) {
-					const marks = tr.doc.resolve(undoable.from).marks();
-					tr.replaceWith(undoable.from, undoable.to, state.schema.text(undoable.text, marks));
-				} else tr.delete(undoable.from, undoable.to);
-			}
-			return true;
-		}
-	}
-	return false;
-};
-var unsetAllMarks = (options = {}) => ({ tr, dispatch, editor }) => {
-	const { ignoreClearable = false } = options;
-	const { selection } = tr;
-	const { empty, ranges } = selection;
-	if (empty) return true;
-	const { nonClearableMarks } = editor.extensionManager;
-	if (dispatch) {
-		const clearableMarkTypes = Object.values(editor.schema.marks).filter((markType) => ignoreClearable || !nonClearableMarks.includes(markType.name));
-		ranges.forEach((range) => {
-			for (const markType of clearableMarkTypes) tr.removeMark(range.$from.pos, range.$to.pos, markType);
-		});
-	}
-	return true;
-};
-var unsetMark = (typeOrName, options = {}) => ({ tr, state, dispatch }) => {
-	const { extendEmptyMarkRange = false } = options;
-	const { selection } = tr;
-	const type = getMarkType(typeOrName, state.schema);
-	const { $from, empty, ranges } = selection;
-	if (!dispatch) return true;
-	if (empty && extendEmptyMarkRange) {
-		var _$from$marks$find;
-		let { from, to } = selection;
-		const range = getMarkRange($from, type, (_$from$marks$find = $from.marks().find((mark) => mark.type === type)) === null || _$from$marks$find === void 0 ? void 0 : _$from$marks$find.attrs);
-		if (range) {
-			from = range.from;
-			to = range.to;
-		}
-		tr.removeMark(from, to, type);
-	} else ranges.forEach((range) => {
-		tr.removeMark(range.$from.pos, range.$to.pos, type);
-	});
-	tr.removeStoredMark(type);
-	return true;
-};
-var unsetTextDirection = (position) => ({ tr, state, dispatch }) => {
-	const { selection } = state;
-	let from;
-	let to;
-	if (typeof position === "number") {
-		from = position;
-		to = position;
-	} else if (position && "from" in position && "to" in position) {
-		from = position.from;
-		to = position.to;
-	} else {
-		from = selection.from;
-		to = selection.to;
-	}
-	if (dispatch) tr.doc.nodesBetween(from, to, (node, pos) => {
-		if (node.isText) return;
-		const newAttrs = { ...node.attrs };
-		delete newAttrs.dir;
-		tr.setNodeMarkup(pos, void 0, newAttrs);
-	});
-	return true;
-};
-var updateAttributes = (typeOrName, attributes = {}) => ({ tr, state, dispatch }) => {
-	let nodeType = null;
-	let markType = null;
-	const schemaType = getSchemaTypeNameByName(typeof typeOrName === "string" ? typeOrName : typeOrName.name, state.schema);
-	if (!schemaType) return false;
-	if (schemaType === "node") nodeType = getNodeType(typeOrName, state.schema);
-	if (schemaType === "mark") markType = getMarkType(typeOrName, state.schema);
-	let canUpdate = false;
-	tr.selection.ranges.forEach((range) => {
-		const from = range.$from.pos;
-		const to = range.$to.pos;
-		let lastPos;
-		let lastNode;
-		let trimmedFrom;
-		let trimmedTo;
-		if (tr.selection.empty) state.doc.nodesBetween(from, to, (node, pos) => {
-			if (nodeType && nodeType === node.type) {
-				canUpdate = true;
-				trimmedFrom = Math.max(pos, from);
-				trimmedTo = Math.min(pos + node.nodeSize, to);
-				lastPos = pos;
-				lastNode = node;
-			}
-		});
-		else state.doc.nodesBetween(from, to, (node, pos) => {
-			if (pos < from && nodeType && nodeType === node.type) {
-				canUpdate = true;
-				trimmedFrom = Math.max(pos, from);
-				trimmedTo = Math.min(pos + node.nodeSize, to);
-				lastPos = pos;
-				lastNode = node;
-			}
-			if (pos >= from && pos <= to) {
-				if (nodeType && nodeType === node.type) {
-					canUpdate = true;
-					if (dispatch) tr.setNodeMarkup(pos, void 0, {
-						...node.attrs,
-						...attributes
-					});
-				}
-				if (markType && node.marks.length) node.marks.forEach((mark) => {
-					if (markType === mark.type) {
-						canUpdate = true;
-						if (dispatch) {
-							const trimmedFrom2 = Math.max(pos, from);
-							const trimmedTo2 = Math.min(pos + node.nodeSize, to);
-							tr.addMark(trimmedFrom2, trimmedTo2, markType.create({
-								...mark.attrs,
-								...attributes
-							}));
-						}
-					}
-				});
-			}
-		});
-		if (lastNode) {
-			if (lastPos !== void 0 && dispatch) tr.setNodeMarkup(lastPos, void 0, {
-				...lastNode.attrs,
-				...attributes
-			});
-			if (markType && lastNode.marks.length) lastNode.marks.forEach((mark) => {
-				if (markType === mark.type && dispatch) tr.addMark(trimmedFrom, trimmedTo, markType.create({
-					...mark.attrs,
-					...attributes
-				}));
-			});
-		}
-	});
-	return canUpdate;
-};
-var DECORATION_MANAGER_PLUGIN_KEY = new PluginKey("__tiptap_decorations__");
-var updateDecorations = (extensionName) => ({ tr, dispatch }) => {
-	if (dispatch) tr.setMeta(DECORATION_MANAGER_PLUGIN_KEY, {
-		type: "force",
-		name: extensionName
-	});
-	return true;
-};
-var wrapIn$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	return wrapIn(getNodeType(typeOrName, state.schema), attributes)(state, dispatch);
-};
-var wrapInList$1 = (typeOrName, attributes = {}) => ({ state, dispatch }) => {
-	return wrapInList(getNodeType(typeOrName, state.schema), attributes)(state, dispatch);
-};
-var commands_exports = /* @__PURE__ */ __exportAll({
-	blur: () => blur,
-	clearContent: () => clearContent,
-	clearNodes: () => clearNodes,
-	command: () => command,
-	createParagraphNear: () => createParagraphNear$1,
-	cut: () => cut,
-	deleteCurrentNode: () => deleteCurrentNode,
-	deleteNode: () => deleteNode,
-	deleteRange: () => deleteRange,
-	deleteSelection: () => deleteSelection,
-	enter: () => enter,
-	exitCode: () => exitCode$1,
-	extendMarkRange: () => extendMarkRange,
-	first: () => first,
-	focus: () => focus,
-	forEach: () => forEach,
-	insertContent: () => insertContent,
-	insertContentAt: () => insertContentAt,
-	insertDefaultBlock: () => insertDefaultBlock,
-	joinBackward: () => joinBackward$1,
-	joinDown: () => joinDown$1,
-	joinForward: () => joinForward$1,
-	joinItemBackward: () => joinItemBackward,
-	joinItemForward: () => joinItemForward,
-	joinTextblockBackward: () => joinTextblockBackward$1,
-	joinTextblockForward: () => joinTextblockForward$1,
-	joinUp: () => joinUp$1,
-	keyboardShortcut: () => keyboardShortcut,
-	lift: () => lift$1,
-	liftEmptyBlock: () => liftEmptyBlock$1,
-	liftListItem: () => liftListItem$1,
-	newlineInCode: () => newlineInCode$1,
-	resetAttributes: () => resetAttributes,
-	scrollIntoView: () => scrollIntoView,
-	selectAll: () => selectAll,
-	selectNodeBackward: () => selectNodeBackward$1,
-	selectNodeForward: () => selectNodeForward$1,
-	selectParentNode: () => selectParentNode$1,
-	selectTextblockEnd: () => selectTextblockEnd$1,
-	selectTextblockStart: () => selectTextblockStart$1,
-	setContent: () => setContent,
-	setMark: () => setMark,
-	setMeta: () => setMeta,
-	setNode: () => setNode,
-	setNodeSelection: () => setNodeSelection,
-	setTextDirection: () => setTextDirection,
-	setTextSelection: () => setTextSelection,
-	sinkListItem: () => sinkListItem$1,
-	splitBlock: () => splitBlock,
-	splitListItem: () => splitListItem,
-	toggleList: () => toggleList,
-	toggleMark: () => toggleMark,
-	toggleNode: () => toggleNode,
-	toggleWrap: () => toggleWrap,
-	undoInputRule: () => undoInputRule,
-	unsetAllMarks: () => unsetAllMarks,
-	unsetMark: () => unsetMark,
-	unsetTextDirection: () => unsetTextDirection,
-	updateAttributes: () => updateAttributes,
-	updateDecorations: () => updateDecorations,
-	wrapIn: () => wrapIn$1,
-	wrapInList: () => wrapInList$1
-});
-/**
-* Tracks which editors are running decoration create() callbacks inside state.apply,
-* using a private WeakMap to keep this off the public Editor surface.
-*/
-var depthByEditor = /* @__PURE__ */ new WeakMap();
-/**
-* Marks callback as decoration-apply work for editor, so editor.state can warn
-* about stale reads. Counts depth to handle nested applies.
-*
-* @param editor The editor the decorations belong to
-* @param callback The work to run inside the scope
-* @returns Whatever `callback` returns
-* @example
-* runInDecorationApplyScope(editor, () => spec.create({ editor, state, view }))
-*/
-function runInDecorationApplyScope(editor, callback) {
-	var _depthByEditor$get;
-	depthByEditor.set(editor, ((_depthByEditor$get = depthByEditor.get(editor)) !== null && _depthByEditor$get !== void 0 ? _depthByEditor$get : 0) + 1);
-	try {
-		return callback();
-	} finally {
-		var _depthByEditor$get2;
-		const remaining = ((_depthByEditor$get2 = depthByEditor.get(editor)) !== null && _depthByEditor$get2 !== void 0 ? _depthByEditor$get2 : 1) - 1;
-		if (remaining > 0) depthByEditor.set(editor, remaining);
-		else depthByEditor.delete(editor);
-	}
-}
-/**
-* Whether the editor is currently inside a decoration apply scope.
-*
-* @param editor The editor to check
-* @returns `true` while decoration create() callbacks run
-* @example
-* if (isInDecorationApplyScope(editor)) {
-*   // reads of editor.state are stale here
-* }
-*/
-function isInDecorationApplyScope(editor) {
-	return depthByEditor.has(editor);
-}
-var EventEmitter = class {
-	constructor() {
-		this.callbacks = {};
-	}
-	on(event, fn) {
-		if (!this.callbacks[event]) this.callbacks[event] = [];
-		this.callbacks[event].push(fn);
-		return this;
-	}
-	emit(event, ...args) {
-		const callbacks = this.callbacks[event];
-		if (callbacks) callbacks.forEach((callback) => callback.apply(this, args));
-		return this;
-	}
-	off(event, fn) {
-		const callbacks = this.callbacks[event];
-		if (callbacks) {
-			if (fn) this.callbacks[event] = callbacks.filter((callback) => callback !== fn);
-			else delete this.callbacks[event];
-		}
-		return this;
-	}
-	once(event, fn) {
-		const onceFn = (...args) => {
-			this.off(event, onceFn);
-			fn.apply(this, args);
-		};
-		return this.on(event, onceFn);
-	}
-	removeAllListeners() {
-		this.callbacks = {};
-	}
-};
-/**
-* Whether the editor runs in a development build. Use it to guard warnings so
-* bundlers can drop them from production output.
-*/
-var isDev = typeof process !== "undefined" && process.env.NODE_ENV !== "production";
-function isWidgetDecoration(decoration) {
-	return decoration.kind === "widget";
-}
-/**
-* Converts a list of decorations to ProseMirror decorations.
-* @param decorations The decorations to convert.
-* @param extensionName The name of the extension that created the decorations.
-* @returns The converted decorations and the widget keys.
-*/
-function decorationsToPMDecorations(decorations, extensionName) {
-	const pmDecorations = [];
-	const widgetKeys = /* @__PURE__ */ new Set();
-	for (const decoration of decorations) {
-		if (decoration.kind === "widget") {
-			if (isWidgetDecoration(decoration)) widgetKeys.add(decoration.key);
-		}
-		pmDecorations.push(decoration.toPMDecoration(extensionName));
-	}
-	return {
-		decorations: pmDecorations,
-		widgetKeys
-	};
-}
-/**
-* Builds a DecorationSet from a list of decorations.
-* @param doc The document to build the decoration set for.
-* @param decorations The decorations to build the set from.
-* @param extensionName The name of the extension that created the decorations.
-* @returns The built decoration set and the widget keys.
-*/
-function buildDecorationSet(doc, decorations, extensionName) {
-	const { decorations: pmDecorations, widgetKeys } = decorationsToPMDecorations(decorations, extensionName);
-	return {
-		set: DecorationSet.create(doc, pmDecorations),
-		widgetKeys
-	};
-}
-/**
-* Whether the block range `[from, to)` owns a decoration at `position`.
-*
-* `to` is the next block's start, so that block owns it. The last block is the
-* exception: nothing follows it, so it owns the end of the document.
-*
-* @param options The position, the range, and the document size.
-* @returns True when the range owns the position.
-* @example
-* // <p>foo</p><p>bar</p>, blocks [0, 5] and [5, 10]
-* rangeOwnsPosition({ position: 5, from: 0, to: 5, docSize: 10 }) // false, block 2 owns it
-* rangeOwnsPosition({ position: 5, from: 5, to: 10, docSize: 10 }) // true
-* rangeOwnsPosition({ position: 10, from: 5, to: 10, docSize: 10 }) // true, end of document
-*/
-function rangeOwnsPosition({ position, from, to, docSize }) {
-	if (position < from) return false;
-	if (position < to) return true;
-	return position === to && to === docSize;
-}
-/**
-* Filter decorations the block range `[from, to)` does not own.
-* Must match the stale sweep in `DecorationManager.rebuildRanges`.
-*
-* @param options The decorations, the range, and the warning bookkeeping.
-* @returns The filtered decorations.
-*/
-function filterOutOfRangeDecorations({ decorations, from, to, docSize, extensionName, warnedExtensions }) {
-	return decorations.filter((decoration) => {
-		if (rangeOwnsPosition({
-			position: decoration.anchor,
-			from,
-			to,
-			docSize
-		})) return true;
-		if (decoration.anchor === to) return false;
-		if (!warnedExtensions.has(extensionName)) {
-			warnedExtensions.add(extensionName);
-			console.warn(`[tiptap warn]: Extension "${extensionName}" returned a decoration outside the requested range [${from}, ${to}). It was ignored.`);
-		}
-		return false;
-	});
-}
-/**
-* Extracts the widget key from a decoration spec.
-* @param decoration The decoration to extract the key from.
-* @returns The widget key, or undefined if the decoration has no key.
-*/
-function widgetKeyOf(decoration) {
-	var _decoration$spec;
-	const key = (_decoration$spec = decoration.spec) === null || _decoration$spec === void 0 ? void 0 : _decoration$spec.key;
-	return typeof key === "string" ? key : void 0;
-}
-/**
-* Finds widget keys which are still duplicated in the final decoration set.
-* @param decorationSet The merged decoration set to inspect.
-* @returns The duplicate keys and their producing extensions.
-*/
-function findDuplicateWidgetKeys(decorationSet) {
-	const extensionsByKey = /* @__PURE__ */ new Map();
-	const counts = /* @__PURE__ */ new Map();
-	for (const decoration of decorationSet.find()) {
-		var _extensionName, _extensionsByKey$get, _counts$get;
-		const key = widgetKeyOf(decoration);
-		if (!key) continue;
-		const extension = (_extensionName = decoration.spec.extensionName) !== null && _extensionName !== void 0 ? _extensionName : "unknown";
-		const extensions = (_extensionsByKey$get = extensionsByKey.get(key)) !== null && _extensionsByKey$get !== void 0 ? _extensionsByKey$get : /* @__PURE__ */ new Set();
-		extensions.add(extension);
-		extensionsByKey.set(key, extensions);
-		counts.set(key, ((_counts$get = counts.get(key)) !== null && _counts$get !== void 0 ? _counts$get : 0) + 1);
-	}
-	return Array.from(extensionsByKey, ([key, extensions]) => ({
-		key,
-		extensions
-	})).filter(({ key }) => {
-		var _counts$get2;
-		return ((_counts$get2 = counts.get(key)) !== null && _counts$get2 !== void 0 ? _counts$get2 : 0) > 1;
-	});
-}
-/**
-* Whether a step only sets a node attribute.
-*
-* Matched by `jsonID` rather than `instanceof`, which fails when two copies of
-* prosemirror-transform are loaded.
-*
-* @param step The step to check.
-* @returns `true` for an `AttrStep`, which carries the target node's position.
-* @example
-* if (isAttrStep(step)) {
-*   rebuildBlockAt(step.pos)
-* }
-*/
-function isAttrStep(step) {
-	return step.jsonID === "attr";
-}
-/**
-* Check if a step has a resolvable changed range.
-* @param step The step to check.
-* @returns True if the step has a resolvable changed range, false otherwise.
-*/
-function hasResolvableChangedRange(step) {
-	let hasMappedRange = false;
-	step.getMap().forEach(() => {
-		hasMappedRange = true;
-	});
-	if (hasMappedRange || isAttrStep(step)) return true;
-	const positionalStep = step;
-	return typeof positionalStep.from === "number" && typeof positionalStep.to === "number";
-}
-/**
-* Expands a changed range to the top-level blocks it touches. Blocks are
-* ordered, so the walk stops as soon as it passes the range.
-*/
-function blockRangeFor(doc, changed) {
-	let from = null;
-	let to = 0;
-	let nodeStart = 0;
-	for (let index = 0; index < doc.childCount; index += 1) {
-		if (nodeStart > changed.to) break;
-		const nodeEnd = nodeStart + doc.child(index).nodeSize;
-		if (nodeEnd >= changed.from) {
-			if (from === null) from = nodeStart;
-			to = nodeEnd;
-		}
-		nodeStart = nodeEnd;
-	}
-	return from === null ? null : {
-		from,
-		to
-	};
-}
-/**
-* Returns the top-level block ranges to recompute after a transaction,
-* or `{ type: 'full' }` when the whole document must be rebuilt.
-* @param tr The transaction to inspect.
-* @param doc The new document after the transaction.
-* @returns The block ranges to recompute, or a full-recompute signal.
-*/
-function getRebuildRanges(tr, doc) {
-	if (tr.steps.some((step) => !hasResolvableChangedRange(step))) return { type: "full" };
-	const newRanges = getChangedRanges(tr).map(({ newRange }) => newRange);
-	tr.steps.forEach((step, index) => {
-		if (!isAttrStep(step)) return;
-		const mapping = tr.mapping.slice(index);
-		newRanges.push({
-			from: mapping.map(step.pos, -1),
-			to: mapping.map(step.pos + 1)
-		});
-	});
-	const ranges = [];
-	for (const newRange of newRanges) {
-		const blockRange = blockRangeFor(doc, newRange);
-		if (blockRange) ranges.push(blockRange);
-	}
-	ranges.sort((a, b) => a.from - b.from);
-	const merged = [];
-	for (const range of ranges) {
-		const last = merged[merged.length - 1];
-		if (last && range.from <= last.to) last.to = Math.max(last.to, range.to);
-		else merged.push({ ...range });
-	}
-	return {
-		type: "ranges",
-		ranges: merged
-	};
-}
-/**
-* Maps a decoration set through a mapping and prunes the keys of any widget
-* dropped because its position was deleted.
-* @param set The decoration set to map.
-* @param mapping The mapping to use.
-* @param doc The document to map the set through.
-* @param widgetKeys The set of widget keys to prune.
-* @returns The mapped decoration set.
-*/
-function mapDecorationSet(set, mapping, doc, widgetKeys) {
-	return set.map(mapping, doc, { onRemove: (removedSpec) => {
-		const key = removedSpec === null || removedSpec === void 0 ? void 0 : removedSpec.key;
-		if (typeof key === "string") widgetKeys.delete(key);
-	} });
-}
-/**
-* Moves an extension's existing decorations to their new positions after a
-* transaction, and prunes widget keys for any widget whose position was deleted.
-* @param name The name of the decoration extension.
-* @param previous The previous decoration manager state.
-* @param tr The transaction to map through.
-* @returns The updated decoration set and widget keys.
-*/
-function mapDecorations(name, previous, tr) {
-	var _previous$decorationS, _previous$widgetKeysB;
-	const previousSet = (_previous$decorationS = previous.decorationSetsByExtension[name]) !== null && _previous$decorationS !== void 0 ? _previous$decorationS : DecorationSet.empty;
-	const widgetKeys = new Set((_previous$widgetKeysB = previous.widgetKeysByExtension[name]) !== null && _previous$widgetKeysB !== void 0 ? _previous$widgetKeysB : []);
-	return {
-		set: mapDecorationSet(previousSet, tr.mapping, tr.doc, widgetKeys),
-		widgetKeys
-	};
-}
-/**
-* Merges multiple decoration sets into a single decoration set.
-* @param doc The document to merge the decoration sets for.
-* @param decorationSetsByExtension The decoration sets to merge.
-* @returns The merged decoration set.
-*/
-function mergeDecorationSets(doc, decorationSetsByExtension) {
-	const allDecorations = Object.values(decorationSetsByExtension).flatMap((set) => set.find());
-	return DecorationSet.create(doc, allDecorations);
-}
-/**
-* Unions all widget keys from multiple extensions into a single set.
-* @param widgetKeysByExtension The widget keys to union.
-* @returns The unioned widget keys.
-*/
-function unionWidgetKeys(widgetKeysByExtension) {
-	const merged = /* @__PURE__ */ new Set();
-	for (const keys of Object.values(widgetKeysByExtension)) for (const key of keys) merged.add(key);
-	return merged;
-}
-/**
-* Validates a decoration spec to ensure it follows the correct pattern for its update strategy.
-* @param name The name of the extension.
-* @param spec The decoration spec to validate
-*/
-function validateDecorationSpec(name, spec) {
-	var _update;
-	switch ((_update = spec.update) !== null && _update !== void 0 ? _update : "document") {
-		case "document":
-			if (spec.createInRange) throw new Error(`[tiptap error]: Extension "${name}" provides createInRange() but does not use the "changedRanges" decoration update strategy.`);
-			return;
-		case "changedRanges":
-			if (!spec.createInRange) throw new Error(`[tiptap error]: Extension "${name}" uses the "changedRanges" decoration update strategy but does not provide createInRange().`);
-			return;
-		case "manual":
-			if (spec.createInRange) throw new Error(`[tiptap error]: Extension "${name}" uses the "manual" decoration update strategy, which is not compatible with createInRange(). createInRange() requires the "changedRanges" strategy.`);
-			if (spec.shouldUpdate) throw new Error(`[tiptap error]: Extension "${name}" cannot combine the "manual" decoration update strategy with shouldUpdate().`);
-			return;
-		default: throw new Error(`[tiptap error]: Extension "${name}" uses an unknown decoration update strategy. Expected "document", "changedRanges", or "manual".`);
-	}
-}
-/**
-* Decides whether a decoration spec should be recomputed for a transaction.
-* @param spec The decoration spec to check.
-* @param props Properties containing editor, transaction, and state.
-* @param forced Whether recomputation was forced.
-* @returns `true` if the decoration should be recomputed.
-*/
-function shouldRecomputeDecoration(spec, props, forced) {
-	if (forced) return true;
-	if (spec.update === "manual") return false;
-	return spec.shouldUpdate ? spec.shouldUpdate(props) : props.tr.docChanged;
-}
-var EMPTY_KEYS = /* @__PURE__ */ new Set();
-var DecorationManager = class {
-	constructor(options) {
-		this.warnedWidgetKeys = /* @__PURE__ */ new Set();
-		this.warnedOutOfRangeExtensions = /* @__PURE__ */ new Set();
-		this.handleBeforeTransaction = ({ nextState }) => {
-			const state = DECORATION_MANAGER_PLUGIN_KEY.getState(nextState);
-			if (state) this.warnDuplicateWidgetKeys(state);
-		};
-		this.editor = options.editor;
-		this.entries = this.resolveEntries(options.entries);
-		this.entries.forEach(({ name, spec }) => validateDecorationSpec(name, spec));
-		this.plugin = this.entries.length > 0 ? this.createPlugin() : null;
-		this.editor.on("beforeTransaction", this.handleBeforeTransaction);
-	}
-	destroy() {
-		this.editor.off("beforeTransaction", this.handleBeforeTransaction);
-	}
-	/**
-	* Returns the set of live widget keys from all decoration extensions.
-	* @returns A readonly set of widget keys
-	*/
-	liveWidgetKeys() {
-		var _DECORATION_MANAGER_P, _DECORATION_MANAGER_P2;
-		return (_DECORATION_MANAGER_P = (_DECORATION_MANAGER_P2 = DECORATION_MANAGER_PLUGIN_KEY.getState(this.editor.state)) === null || _DECORATION_MANAGER_P2 === void 0 ? void 0 : _DECORATION_MANAGER_P2.widgetKeys) !== null && _DECORATION_MANAGER_P !== void 0 ? _DECORATION_MANAGER_P : EMPTY_KEYS;
-	}
-	/**
-	* The mounted editor view, or `null` when destroyed. Decoration callbacks
-	* must never receive the placeholder view `editor.view` falls back to.
-	* @returns The mounted editor view, or `null`
-	*/
-	get mountedView() {
-		return this.editor.isDestroyed ? null : this.editor.view;
-	}
-	/**
-	* Resolves decoration entries by calling the addDecorations function for each extension entry.
-	* @param entries The decoration manager entries to resolve
-	* @returns An array of resolved decoration entries
-	*/
-	resolveEntries(entries) {
-		const resolved = [];
-		for (const { name, addDecorations } of entries) {
-			const spec = addDecorations();
-			if (spec) resolved.push({
-				name,
-				spec
-			});
-		}
-		return resolved;
-	}
-	/**
-	* Creates the ProseMirror plugin for managing decorations.
-	* @returns A ProseMirror plugin with state management
-	*/
-	createPlugin() {
-		const { editor, entries } = this;
-		return new Plugin({
-			key: DECORATION_MANAGER_PLUGIN_KEY,
-			state: {
-				init: (_config, state) => {
-					const decorationSetsByExtension = {};
-					const widgetKeysByExtension = {};
-					for (const { name, spec } of entries) {
-						const { set, widgetKeys } = this.buildFullSet(name, spec, state);
-						decorationSetsByExtension[name] = set;
-						widgetKeysByExtension[name] = widgetKeys;
-					}
-					const managerState = {
-						decorationSetsByExtension,
-						widgetKeysByExtension,
-						mergedDecorationSet: this.buildMergedSet(state.doc, decorationSetsByExtension),
-						widgetKeys: unionWidgetKeys(widgetKeysByExtension)
-					};
-					this.warnDuplicateWidgetKeys(managerState);
-					return managerState;
-				},
-				apply: (tr, previous, oldState, newState) => {
-					const meta = tr.getMeta(DECORATION_MANAGER_PLUGIN_KEY);
-					const forceAll = (meta === null || meta === void 0 ? void 0 : meta.type) === "force" && !meta.name;
-					const forceName = (meta === null || meta === void 0 ? void 0 : meta.type) === "force" ? meta.name : void 0;
-					const decorationSetsByExtension = {};
-					const widgetKeysByExtension = {};
-					const recomputedNames = /* @__PURE__ */ new Set();
-					runInDecorationApplyScope(editor, () => {
-						for (const { name, spec } of entries) {
-							const forced = forceAll || forceName === name;
-							if (!shouldRecomputeDecoration(spec, {
-								editor,
-								tr,
-								oldState,
-								newState
-							}, forced)) {
-								const result = mapDecorations(name, previous, tr);
-								decorationSetsByExtension[name] = result.set;
-								widgetKeysByExtension[name] = result.widgetKeys;
-							} else if (spec.update === "changedRanges" && tr.docChanged && !forced) {
-								const result = this.applyChangedRangesRecompute(name, spec, previous, tr, newState);
-								decorationSetsByExtension[name] = result.set;
-								widgetKeysByExtension[name] = result.widgetKeys;
-								recomputedNames.add(name);
-							} else {
-								const { set, widgetKeys } = this.buildFullSet(name, spec, newState);
-								decorationSetsByExtension[name] = set;
-								widgetKeysByExtension[name] = widgetKeys;
-								recomputedNames.add(name);
-							}
-						}
-					});
-					if (recomputedNames.size === 0 && !tr.docChanged) return previous;
-					return {
-						decorationSetsByExtension,
-						widgetKeysByExtension,
-						mergedDecorationSet: this.mergeAfterApply({
-							entries,
-							previous,
-							tr,
-							decorationSetsByExtension,
-							recomputedNames
-						}),
-						widgetKeys: unionWidgetKeys(widgetKeysByExtension)
-					};
-				}
-			},
-			props: { decorations(state) {
-				var _DECORATION_MANAGER_P3, _DECORATION_MANAGER_P4;
-				return (_DECORATION_MANAGER_P3 = (_DECORATION_MANAGER_P4 = DECORATION_MANAGER_PLUGIN_KEY.getState(state)) === null || _DECORATION_MANAGER_P4 === void 0 ? void 0 : _DECORATION_MANAGER_P4.mergedDecorationSet) !== null && _DECORATION_MANAGER_P3 !== void 0 ? _DECORATION_MANAGER_P3 : DecorationSet.empty;
-			} }
-		});
-	}
-	/**
-	* Applies changed ranges recomputation to a decoration set, dropping stale decorations and rebuilding only the touched blocks.
-	* @param name The name of the decoration extension
-	* @param spec The decoration spec
-	* @param previous The previous decoration manager state
-	* @param tr The transaction to apply
-	* @param newState The new editor state
-	* @returns The updated decoration set and widget keys
-	*/
-	applyChangedRangesRecompute(name, spec, previous, tr, newState) {
-		const resolution = getRebuildRanges(tr, newState.doc);
-		if (resolution.type === "full") return this.buildFullSet(name, spec, newState);
-		return this.rebuildRanges(name, spec, previous, tr, newState, resolution.ranges);
-	}
-	/**
-	* Rebuilds decorations for the changed block ranges: maps the previous set
-	* forward, then for each range removes stale decorations, calls
-	* `createInRange`, and adds the new ones while syncing widget keys.
-	* @param name The extension name.
-	* @param spec The decoration spec.
-	* @param previous The previous decoration manager state.
-	* @param tr The transaction to apply.
-	* @param newState The new editor state.
-	* @param ranges The block ranges to rebuild.
-	* @returns The updated decoration set and widget keys.
-	*/
-	rebuildRanges(name, spec, previous, tr, newState, ranges) {
-		var _previous$decorationS, _previous$widgetKeysB;
-		const previousSet = (_previous$decorationS = previous.decorationSetsByExtension[name]) !== null && _previous$decorationS !== void 0 ? _previous$decorationS : DecorationSet.empty;
-		const widgetKeys = new Set((_previous$widgetKeysB = previous.widgetKeysByExtension[name]) !== null && _previous$widgetKeysB !== void 0 ? _previous$widgetKeysB : []);
-		let set = mapDecorationSet(previousSet, tr.mapping, tr.doc, widgetKeys);
-		const docSize = newState.doc.content.size;
-		for (const { from, to } of ranges) {
-			const stale = set.find(from, to).filter((decoration) => rangeOwnsPosition({
-				position: decoration.from,
-				from,
-				to,
-				docSize
-			}));
-			for (const decoration of stale) {
-				const key = widgetKeyOf(decoration);
-				if (key) widgetKeys.delete(key);
-			}
-			set = set.remove(stale);
-			const { decorations: pmDecorations, widgetKeys: addedKeys } = decorationsToPMDecorations(filterOutOfRangeDecorations({
-				decorations: this.runCreate(name, "createInRange", () => spec.createInRange({
-					editor: this.editor,
-					state: newState,
-					view: this.mountedView,
-					from,
-					to
-				})),
-				from,
-				to,
-				docSize,
-				extensionName: name,
-				warnedExtensions: this.warnedOutOfRangeExtensions
-			}), name);
-			set = set.add(newState.doc, pmDecorations);
-			for (const key of addedKeys) widgetKeys.add(key);
-		}
-		return {
-			set,
-			widgetKeys
-		};
-	}
-	/**
-	* Builds a full decoration set for the entire document.
-	* @param name The name of the decoration extension
-	* @param spec The decoration spec
-	* @param state The editor state
-	* @returns The decoration set and widget keys
-	*/
-	buildFullSet(name, spec, state) {
-		const decorations = this.runCreate(name, "create", () => spec.create({
-			editor: this.editor,
-			state,
-			view: this.mountedView
-		}));
-		return buildDecorationSet(state.doc, decorations, name);
-	}
-	/**
-	* Runs a decoration callback and swallows anything it throws. These run inside
-	* `state.apply`, where an uncaught error would abort the whole transaction.
-	* @param name The extension name.
-	* @param method The callback name, used in the error message.
-	* @param create The callback to run.
-	* @returns The decorations, or an empty array if the callback threw.
-	*/
-	runCreate(name, method, create) {
-		try {
-			return create();
-		} catch (error) {
-			console.error(`[tiptap error]: Extension "${name}" threw in \`addDecorations().${method}()\`. Its decorations were dropped for this update.`, error);
-			return [];
-		}
-	}
-	warnDuplicateWidgetKeys(state) {
-		if (!isDev) return;
-		if (state.widgetKeys.size === 0) {
-			this.warnedWidgetKeys.clear();
-			return;
-		}
-		const duplicateKeys = findDuplicateWidgetKeys(state.mergedDecorationSet);
-		const nextWarningKeys = new Set(duplicateKeys.map(({ key }) => key));
-		for (const { key, extensions } of duplicateKeys) {
-			if (this.warnedWidgetKeys.has(key)) continue;
-			const names = Array.from(extensions).map((name) => `"${name}"`).join(", ");
-			console.warn(`[tiptap warn]: Duplicate widget decoration key "${key}" in extension${extensions.size === 1 ? "" : "s"} ${names}. Widget decoration keys must be globally unique, otherwise ProseMirror misplaces the widget DOM. Use a stable, unique key (e.g. \`comment-\${id}\`).`);
-		}
-		this.warnedWidgetKeys = nextWarningKeys;
-	}
-	/**
-	* Builds the merged DecorationSet during init. Skips the merge for a
-	* single extension since its per-extension set is already correct.
-	* @param doc The document to build the merged set for.
-	* @param decorationSetsByExtension The per-extension decoration sets.
-	* @returns The merged decoration set.
-	*/
-	buildMergedSet(doc, decorationSetsByExtension) {
-		const names = Object.keys(decorationSetsByExtension);
-		if (names.length === 1) return decorationSetsByExtension[names[0]];
-		return mergeDecorationSets(doc, decorationSetsByExtension);
-	}
-	/**
-	* Computes the merged DecorationSet after apply. Single extension skips the
-	* merge; nothing recomputed maps the previous merged set forward; otherwise
-	* the merge is rebuilt from the per-extension sets.
-	*/
-	mergeAfterApply({ entries, previous, tr, decorationSetsByExtension, recomputedNames }) {
-		if (entries.length === 1) return decorationSetsByExtension[entries[0].name];
-		if (recomputedNames.size === 0) return previous.mergedDecorationSet.map(tr.mapping, tr.doc);
-		return mergeDecorationSets(tr.doc, decorationSetsByExtension);
-	}
-};
-function createStyleTag(style, nonce, suffix) {
-	const tiptapStyleTag = document.querySelector(`style[data-tiptap-style${suffix ? `-${suffix}` : ""}]`);
-	if (tiptapStyleTag !== null) return tiptapStyleTag;
-	const styleNode = document.createElement("style");
-	if (nonce) styleNode.setAttribute("nonce", nonce);
-	styleNode.setAttribute(`data-tiptap-style${suffix ? `-${suffix}` : ""}`, "");
-	styleNode.innerHTML = style;
-	document.getElementsByTagName("head")[0].appendChild(styleNode);
-	return styleNode;
-}
-function isNumber(value) {
-	return typeof value === "number";
-}
-function getType(value) {
-	return Object.prototype.toString.call(value).slice(8, -1);
-}
-function isPlainObject(value) {
-	if (getType(value) !== "Object") return false;
-	return value.constructor === Object && Object.getPrototypeOf(value) === Object.prototype;
-}
-function mergeDeep(target, source) {
-	const output = { ...target };
-	if (isPlainObject(target) && isPlainObject(source)) Object.keys(source).forEach((key) => {
-		if (isPlainObject(source[key]) && isPlainObject(target[key])) output[key] = mergeDeep(target[key], source[key]);
-		else output[key] = source[key];
-	});
-	return output;
-}
-function updateMarkViewAttributes(checkMark, editor, attrs = {}) {
-	const { state } = editor;
-	const { doc, tr } = state;
-	const thisMark = checkMark;
-	doc.descendants((node, pos) => {
-		const from = tr.mapping.map(pos);
-		const to = tr.mapping.map(pos) + node.nodeSize;
-		let foundMark = null;
-		node.marks.forEach((mark) => {
-			if (mark !== thisMark) return false;
-			foundMark = mark;
-		});
-		if (!foundMark) return;
-		let needsUpdate = false;
-		Object.keys(attrs).forEach((k) => {
-			if (attrs[k] !== foundMark.attrs[k]) needsUpdate = true;
-		});
-		if (needsUpdate) {
-			const updatedMark = checkMark.type.create({
-				...checkMark.attrs,
-				...attrs
-			});
-			tr.removeMark(from, to, checkMark.type);
-			tr.addMark(from, to, updatedMark);
-		}
-	});
-	if (tr.docChanged) editor.view.dispatch(tr);
-}
-var inputRuleMatcherHandler = (text, find) => {
-	if (isRegExp(find)) return find.exec(text);
-	const inputRuleMatch = find(text);
-	if (!inputRuleMatch) return null;
-	const result = [inputRuleMatch.text];
-	result.index = inputRuleMatch.index;
-	result.input = text;
-	result.data = inputRuleMatch.data;
-	if (inputRuleMatch.replaceWith) {
-		if (!inputRuleMatch.text.includes(inputRuleMatch.replaceWith)) console.warn("[tiptap warn]: \"inputRuleMatch.replaceWith\" must be part of \"inputRuleMatch.text\".");
-		result.push(inputRuleMatch.replaceWith);
-	}
-	return result;
-};
-/**
-* Prepares the typed text so the rule handler can inspect the resulting document.
-*/
-function createRuleTransaction(config) {
-	const { editor, from, to, text, insertText } = config;
-	if (!insertText) return {
-		inputTransaction: null,
-		tr: editor.view.state.tr
-	};
-	const inputTransaction = editor.view.state.tr.insertText(text, from, to);
-	return {
-		inputTransaction,
-		tr: EditorState.create({
-			doc: inputTransaction.doc,
-			selection: inputTransaction.selection,
-			storedMarks: inputTransaction.storedMarks
-		}).tr
-	};
-}
-/**
-* Runs a matching rule and dispatches the typed text before its conversion.
-*/
-function applyRule(config) {
-	const { editor, from, to, text, rule, match, plugin, insertText } = config;
-	const { view } = editor;
-	const { inputTransaction, tr } = createRuleTransaction({
-		editor,
-		from,
-		to,
-		text,
-		insertText
-	});
-	const inputEnd = inputTransaction ? from + text.length : to;
-	const state = createChainableState({
-		state: view.state,
-		transaction: tr
-	});
-	const range = {
-		from: from - (match[0].length - text.length),
-		to: inputEnd
-	};
-	const { commands, chain, can } = new CommandManager({
-		editor,
-		state
-	});
-	if (rule.handler({
-		state,
-		range,
-		match,
-		commands,
-		chain,
-		can
-	}) === null || !tr.steps.length) return false;
-	if (inputTransaction) {
-		view.dispatch(inputTransaction);
-		if (!view.state.doc.eq(inputTransaction.doc)) return true;
-	}
-	closeHistory(tr);
-	tr.setMeta("inputRule", true);
-	if (rule.undoable) tr.setMeta(plugin, {
-		transform: tr,
-		from,
-		to: inputEnd,
-		text
-	});
-	view.dispatch(tr);
-	return true;
-}
-/**
-* Checks that the part of a match already in the document has matching positions.
-*/
-function matchesDocument($from, match, text) {
-	const matchedDocLength = match[0].length - text.length;
-	if (matchedDocLength <= 0) return true;
-	const matchStartOffset = $from.parentOffset - matchedDocLength;
-	return matchStartOffset >= 0 && $from.parent.textBetween(matchStartOffset, $from.parentOffset) === match[0].slice(0, matchedDocLength);
-}
-function run$1(config) {
-	var _ref;
-	const { editor, from, to, text, rules, plugin, insertText } = config;
-	const { view } = editor;
-	if (view.composing) return false;
-	const $from = view.state.doc.resolve(from);
-	if ($from.parent.type.spec.code || !!((_ref = $from.nodeBefore || $from.nodeAfter) === null || _ref === void 0 ? void 0 : _ref.marks.find((mark) => mark.type.spec.code))) return false;
-	const textBefore = getTextContentFromNodes($from) + text;
-	for (const rule of rules) {
-		const match = inputRuleMatcherHandler(textBefore, rule.find);
-		if (!match || !matchesDocument($from, match, text)) continue;
-		if (applyRule({
-			editor,
-			from,
-			to,
-			text,
-			rule,
-			match,
-			plugin,
-			insertText
-		})) return true;
-	}
-	return false;
-}
-/**
-* Create an input rules plugin. When enabled, it will cause text
-* input that matches any of the given rules to trigger the rule’s
-* action.
-*/
-function inputRulesPlugin(props) {
-	const { editor, rules } = props;
-	const plugin = new Plugin({
-		state: {
-			init() {
-				return null;
-			},
-			apply(tr, prev, state) {
-				const stored = tr.getMeta(plugin);
-				if (stored) return stored;
-				const simulatedInputMeta = tr.getMeta("applyInputRules");
-				if (!!simulatedInputMeta) setTimeout(() => {
-					let { text } = simulatedInputMeta;
-					if (typeof text === "string") text = text;
-					else text = getHTMLFromFragment(Fragment.from(text), state.schema);
-					const { from } = simulatedInputMeta;
-					const to = from + text.length;
-					run$1({
-						editor,
-						from,
-						to,
-						text,
-						rules,
-						plugin
-					});
-				});
-				return tr.selectionSet || tr.docChanged ? null : prev;
-			}
-		},
-		props: {
-			handleTextInput(view, from, to, text) {
-				return run$1({
-					editor,
-					from,
-					to,
-					text,
-					rules,
-					plugin,
-					insertText: true
-				});
-			},
-			handleDOMEvents: { compositionend: (view) => {
-				setTimeout(() => {
-					const { $cursor } = view.state.selection;
-					if ($cursor) run$1({
-						editor,
-						from: $cursor.pos,
-						to: $cursor.pos,
-						text: "",
-						rules,
-						plugin
-					});
-				});
-				return false;
-			} },
-			handleKeyDown(view, event) {
-				if (event.key !== "Enter") return false;
-				const { $cursor } = view.state.selection;
-				if ($cursor) return run$1({
-					editor,
-					from: $cursor.pos,
-					to: $cursor.pos,
-					text: "\n",
-					rules,
-					plugin
-				});
-				return false;
-			}
-		},
-		isInputRules: true
-	});
-	return plugin;
-}
-var Extendable = class {
-	constructor(config = {}) {
-		this.type = "extendable";
-		this.parent = null;
-		this.child = null;
-		this.name = "";
-		this.config = { name: this.name };
-		this.config = {
-			...this.config,
-			...config
-		};
-		this.name = this.config.name;
-	}
-	get options() {
-		return { ...callOrReturn(getExtensionField(this, "addOptions", { name: this.name })) };
-	}
-	get storage() {
-		return { ...callOrReturn(getExtensionField(this, "addStorage", {
-			name: this.name,
-			options: this.options
-		})) };
-	}
-	configure(options = {}) {
-		const extension = this.extend({
-			...this.config,
-			addOptions: () => {
-				return mergeDeep(this.options, options);
-			}
-		});
-		extension.name = this.name;
-		extension.parent = this.parent;
-		this.child = null;
-		return extension;
-	}
-	extend(extendedConfig = {}) {
-		const extension = new this.constructor({
-			...this.config,
-			...extendedConfig
-		});
-		extension.parent = this;
-		this.child = extension;
-		extension.name = "name" in extendedConfig ? extendedConfig.name : extension.parent.name;
-		return extension;
-	}
-};
-/**
-* The Mark class is used to create custom mark extensions.
-* @see https://tiptap.dev/api/extensions#create-a-new-extension
-*/
-var Mark = class Mark extends Extendable {
-	constructor(..._args) {
-		super(..._args);
-		this.type = "mark";
-	}
-	/**
-	* Create a new Mark instance
-	* @param config - Mark configuration object or a function that returns a configuration object
-	*/
-	static create(config = {}) {
-		const resolvedConfig = typeof config === "function" ? config() : config;
-		return new Mark(resolvedConfig);
-	}
-	static handleExit({ editor, mark }) {
-		const { tr } = editor.state;
-		const currentPos = editor.state.selection.$from;
-		if (currentPos.pos === currentPos.end()) {
-			const currentMarks = currentPos.marks();
-			if (!!!currentMarks.find((m) => (m === null || m === void 0 ? void 0 : m.type.name) === mark.name)) return false;
-			const removeMark = currentMarks.find((m) => (m === null || m === void 0 ? void 0 : m.type.name) === mark.name);
-			if (removeMark) tr.removeStoredMark(removeMark);
-			tr.insertText(" ", currentPos.pos);
-			editor.view.dispatch(tr);
-			return true;
-		}
-		return false;
-	}
-	configure(options) {
-		return super.configure(options);
-	}
-	extend(extendedConfig) {
-		const resolvedConfig = typeof extendedConfig === "function" ? extendedConfig() : extendedConfig;
-		return super.extend(resolvedConfig);
-	}
-};
-var pasteRuleMatcherHandler = (text, find, event) => {
-	if (isRegExp(find)) return [...text.matchAll(find)];
-	const matches = find(text, event);
-	if (!matches) return [];
-	return matches.map((pasteRuleMatch) => {
-		const result = [pasteRuleMatch.text];
-		result.index = pasteRuleMatch.index;
-		result.input = text;
-		result.data = pasteRuleMatch.data;
-		if (pasteRuleMatch.replaceWith) {
-			if (!pasteRuleMatch.text.includes(pasteRuleMatch.replaceWith)) console.warn("[tiptap warn]: \"pasteRuleMatch.replaceWith\" must be part of \"pasteRuleMatch.text\".");
-			result.push(pasteRuleMatch.replaceWith);
-		}
-		return result;
-	});
-};
-function run(config) {
-	const { editor, state, from, to, rule, pasteEvent, dropEvent } = config;
-	const { commands, chain, can } = new CommandManager({
-		editor,
-		state
-	});
-	const handlers = [];
-	state.doc.nodesBetween(from, to, (node, pos) => {
-		var _node$type, _ref, _node$content$size, _node$content;
-		if (((_node$type = node.type) === null || _node$type === void 0 || (_node$type = _node$type.spec) === null || _node$type === void 0 ? void 0 : _node$type.code) || !(node.isText || node.isTextblock || node.isInline)) return;
-		const contentSize = (_ref = (_node$content$size = (_node$content = node.content) === null || _node$content === void 0 ? void 0 : _node$content.size) !== null && _node$content$size !== void 0 ? _node$content$size : node.nodeSize) !== null && _ref !== void 0 ? _ref : 0;
-		const resolvedFrom = Math.max(from, pos);
-		const resolvedTo = Math.min(to, pos + contentSize);
-		if (resolvedFrom >= resolvedTo) return;
-		pasteRuleMatcherHandler(node.isText ? node.text || "" : node.textBetween(resolvedFrom - pos, resolvedTo - pos, void 0, "￼"), rule.find, pasteEvent).forEach((match) => {
-			if (match.index === void 0) return;
-			const start = resolvedFrom + match.index + 1;
-			const end = start + match[0].length;
-			const range = {
-				from: state.tr.mapping.map(start),
-				to: state.tr.mapping.map(end)
-			};
-			const handler = rule.handler({
-				state,
-				range,
-				match,
-				commands,
-				chain,
-				can,
-				pasteEvent,
-				dropEvent
-			});
-			handlers.push(handler);
-		});
-	});
-	return handlers.every((handler) => handler !== null);
-}
-var tiptapDragFromOtherEditor = null;
-var createClipboardPasteEvent = (text) => {
-	var _event$clipboardData;
-	const event = new ClipboardEvent("paste", { clipboardData: new DataTransfer() });
-	(_event$clipboardData = event.clipboardData) === null || _event$clipboardData === void 0 || _event$clipboardData.setData("text/html", text);
-	return event;
-};
-/**
-* Create an paste rules plugin. When enabled, it will cause pasted
-* text that matches any of the given rules to trigger the rule’s
-* action.
-*/
-function pasteRulesPlugin(props) {
-	const { editor, rules } = props;
-	let dragSourceElement = null;
-	let isPastedFromProseMirror = false;
-	let isDroppedFromProseMirror = false;
-	let pasteEvent = typeof ClipboardEvent !== "undefined" ? new ClipboardEvent("paste") : null;
-	let dropEvent;
-	try {
-		dropEvent = typeof DragEvent !== "undefined" ? new DragEvent("drop") : null;
-	} catch {
-		dropEvent = null;
-	}
-	const processEvent = ({ state, from, to, rule, pasteEvt }) => {
-		const tr = state.tr;
-		const chainableState = createChainableState({
-			state,
-			transaction: tr
-		});
-		if (!run({
-			editor,
-			state: chainableState,
-			from: Math.max(from - 1, 0),
-			to: to.b - 1,
-			rule,
-			pasteEvent: pasteEvt,
-			dropEvent
-		}) || !tr.steps.length) return;
-		try {
-			dropEvent = typeof DragEvent !== "undefined" ? new DragEvent("drop") : null;
-		} catch {
-			dropEvent = null;
-		}
-		pasteEvent = typeof ClipboardEvent !== "undefined" ? new ClipboardEvent("paste") : null;
-		return tr;
-	};
-	editor.on("destroy", () => {
-		if (tiptapDragFromOtherEditor === editor) tiptapDragFromOtherEditor = null;
-	});
-	return rules.map((rule) => {
-		return new Plugin({
-			view(view) {
-				const handleDragstart = (event) => {
-					var _view$dom$parentEleme;
-					dragSourceElement = ((_view$dom$parentEleme = view.dom.parentElement) === null || _view$dom$parentEleme === void 0 ? void 0 : _view$dom$parentEleme.contains(event.target)) ? view.dom.parentElement : null;
-					if (dragSourceElement) tiptapDragFromOtherEditor = editor;
-				};
-				const handleDragend = () => {
-					if (tiptapDragFromOtherEditor) tiptapDragFromOtherEditor = null;
-				};
-				window.addEventListener("dragstart", handleDragstart);
-				window.addEventListener("dragend", handleDragend);
-				return { destroy() {
-					window.removeEventListener("dragstart", handleDragstart);
-					window.removeEventListener("dragend", handleDragend);
-				} };
-			},
-			props: { handleDOMEvents: {
-				drop: (view, event) => {
-					isDroppedFromProseMirror = dragSourceElement === view.dom.parentElement;
-					dropEvent = event;
-					if (!isDroppedFromProseMirror) {
-						const dragFromOtherEditor = tiptapDragFromOtherEditor;
-						if (dragFromOtherEditor === null || dragFromOtherEditor === void 0 ? void 0 : dragFromOtherEditor.isEditable) setTimeout(() => {
-							if (dragFromOtherEditor.isDestroyed) return;
-							const selection = dragFromOtherEditor.state.selection;
-							if (selection) dragFromOtherEditor.commands.deleteRange({
-								from: selection.from,
-								to: selection.to
-							});
-						}, 10);
-					}
-					return false;
-				},
-				paste: (_view, event) => {
-					var _clipboardData;
-					const html = (_clipboardData = event.clipboardData) === null || _clipboardData === void 0 ? void 0 : _clipboardData.getData("text/html");
-					pasteEvent = event;
-					isPastedFromProseMirror = !!(html === null || html === void 0 ? void 0 : html.includes("data-pm-slice"));
-					return false;
-				}
-			} },
-			appendTransaction: (transactions, oldState, state) => {
-				const transaction = transactions[0];
-				const isPaste = transaction.getMeta("uiEvent") === "paste" && !isPastedFromProseMirror;
-				const isDrop = transaction.getMeta("uiEvent") === "drop" && !isDroppedFromProseMirror;
-				const simulatedPasteMeta = transaction.getMeta("applyPasteRules");
-				const isSimulatedPaste = !!simulatedPasteMeta;
-				if (!isPaste && !isDrop && !isSimulatedPaste) return;
-				if (isSimulatedPaste) {
-					let { text } = simulatedPasteMeta;
-					if (typeof text === "string") text = text;
-					else text = getHTMLFromFragment(Fragment.from(text), state.schema);
-					const { from } = simulatedPasteMeta;
-					const to = from + text.length;
-					const pasteEvt = createClipboardPasteEvent(text);
-					return processEvent({
-						rule,
-						state,
-						from,
-						to: { b: to },
-						pasteEvt
-					});
-				}
-				const from = oldState.doc.content.findDiffStart(state.doc.content);
-				const to = oldState.doc.content.findDiffEnd(state.doc.content);
-				if (!isNumber(from) || !to || from === to.b) return;
-				return processEvent({
-					rule,
-					state,
-					from,
-					to,
-					pasteEvt: pasteEvent
-				});
-			}
-		});
-	});
-}
-var ExtensionManager = class {
-	constructor(extensions, editor) {
-		this.splittableMarks = [];
-		this.nonClearableMarks = [];
-		this.decorationManager = null;
-		this.editor = editor;
-		this.baseExtensions = extensions;
-		this.extensions = resolveExtensions(extensions);
-		this.schema = getSchemaByResolvedExtensions(this.extensions, editor);
-		this.setupExtensions();
-	}
-	/**
-	* Get all commands from the extensions.
-	* @returns An object with all commands where the key is the command name and the value is the command function
-	*/
-	get commands() {
-		return this.extensions.reduce((commands, extension) => {
-			const addCommands = getExtensionField(extension, "addCommands", {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor: this.editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			});
-			if (!addCommands) return commands;
-			return {
-				...commands,
-				...addCommands()
-			};
-		}, {});
-	}
-	/**
-	* Get all registered Prosemirror plugins from the extensions.
-	* @returns An array of Prosemirror plugins
-	*/
-	get plugins() {
-		const { editor } = this;
-		const allPlugins = sortExtensions([...this.extensions].reverse()).flatMap((extension) => {
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			};
-			const plugins = [];
-			const addKeyboardShortcuts = getExtensionField(extension, "addKeyboardShortcuts", context);
-			let defaultBindings = {};
-			if (extension.type === "mark" && getExtensionField(extension, "exitable", context)) defaultBindings.ArrowRight = () => Mark.handleExit({
-				editor,
-				mark: extension
-			});
-			if (addKeyboardShortcuts) {
-				const bindings = Object.fromEntries(Object.entries(addKeyboardShortcuts()).map(([shortcut, method]) => {
-					return [shortcut, () => method({ editor })];
-				}));
-				defaultBindings = {
-					...defaultBindings,
-					...bindings
-				};
-			}
-			const keyMapPlugin = keymap(defaultBindings);
-			plugins.push(keyMapPlugin);
-			const addInputRules = getExtensionField(extension, "addInputRules", context);
-			if (isExtensionRulesEnabled(extension, editor.options.enableInputRules) && addInputRules) {
-				const rules = addInputRules();
-				if (rules && rules.length) {
-					const inputResult = inputRulesPlugin({
-						editor,
-						rules
-					});
-					const inputPlugins = Array.isArray(inputResult) ? inputResult : [inputResult];
-					plugins.push(...inputPlugins);
-				}
-			}
-			const addPasteRules = getExtensionField(extension, "addPasteRules", context);
-			if (isExtensionRulesEnabled(extension, editor.options.enablePasteRules) && addPasteRules) {
-				const rules = addPasteRules();
-				if (rules && rules.length) {
-					const pasteRules = pasteRulesPlugin({
-						editor,
-						rules
-					});
-					plugins.push(...pasteRules);
-				}
-			}
-			const addProseMirrorPlugins = getExtensionField(extension, "addProseMirrorPlugins", context);
-			if (addProseMirrorPlugins) {
-				const proseMirrorPlugins = addProseMirrorPlugins();
-				plugins.push(...proseMirrorPlugins);
-			}
-			return plugins;
-		});
-		const decorationPlugin = this.createDecorationPlugin();
-		if (decorationPlugin) allPlugins.push(decorationPlugin);
-		return allPlugins;
-	}
-	/**
-	* Aggregates decorations from extensions into a single plugin, or returns null
-	* if none exist. Destroys the previous manager to avoid orphaned listeners.
-	* @returns A ProseMirror plugin or `null`
-	* @example
-	* const plugin = editor.extensionManager.createDecorationPlugin()
-	*/
-	createDecorationPlugin() {
-		var _this$decorationManag;
-		const { editor } = this;
-		(_this$decorationManag = this.decorationManager) === null || _this$decorationManag === void 0 || _this$decorationManag.destroy();
-		const entries = [];
-		this.extensions.forEach((extension) => {
-			const addDecorations = getExtensionField(extension, "addDecorations", {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			});
-			if (!addDecorations) return;
-			entries.push({
-				name: extension.name,
-				addDecorations
-			});
-		});
-		this.decorationManager = new DecorationManager({
-			editor,
-			entries
-		});
-		return this.decorationManager.plugin;
-	}
-	/**
-	* Get all attributes from the extensions.
-	* @returns An array of attributes
-	*/
-	get attributes() {
-		return getAttributesFromExtensions(this.extensions);
-	}
-	/**
-	* Get all node views from the extensions.
-	* @returns An object with all node views where the key is the node name and the value is the node view function
-	*/
-	get nodeViews() {
-		const { editor } = this;
-		const { nodeExtensions } = splitExtensions(this.extensions);
-		return Object.fromEntries(nodeExtensions.filter((extension) => !!getExtensionField(extension, "addNodeView")).map((extension) => {
-			const extensionAttributes = this.attributes.filter((attribute) => attribute.type === extension.name);
-			const addNodeView = getExtensionField(extension, "addNodeView", {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getNodeType(extension.name, this.schema)
-			});
-			if (!addNodeView) return [];
-			const nodeViewResult = addNodeView();
-			if (!nodeViewResult) return [];
-			const nodeview = (node, view, getPos, decorations, innerDecorations) => {
-				const HTMLAttributes = getRenderedAttributes(node, extensionAttributes);
-				return nodeViewResult({
-					node,
-					view,
-					getPos,
-					decorations,
-					innerDecorations,
-					editor,
-					extension,
-					HTMLAttributes
-				});
-			};
-			return [extension.name, nodeview];
-		}));
-	}
-	/**
-	* Get the composed dispatchTransaction function from all extensions.
-	* @param baseDispatch The base dispatch function (e.g. from the editor or user props)
-	* @returns A composed dispatch function
-	*/
-	dispatchTransaction(baseDispatch) {
-		const { editor } = this;
-		return sortExtensions([...this.extensions].reverse()).reduceRight((next, extension) => {
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			};
-			const dispatchTransaction = getExtensionField(extension, "dispatchTransaction", context);
-			if (!dispatchTransaction) return next;
-			return (transaction) => {
-				dispatchTransaction.call(context, {
-					transaction,
-					next
-				});
-			};
-		}, baseDispatch);
-	}
-	/**
-	* Get the composed transformPastedHTML function from all extensions.
-	* @param baseTransform The base transform function (e.g. from the editor props)
-	* @returns A composed transform function that chains all extension transforms
-	*/
-	transformPastedHTML(baseTransform) {
-		const { editor } = this;
-		return sortExtensions([...this.extensions]).reduce((transform, extension) => {
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			};
-			const extensionTransform = getExtensionField(extension, "transformPastedHTML", context);
-			if (!extensionTransform) return transform;
-			return (html, view) => {
-				const transformedHtml = transform(html, view);
-				return extensionTransform.call(context, transformedHtml);
-			};
-		}, baseTransform || ((html) => html));
-	}
-	get markViews() {
-		const { editor } = this;
-		const { markExtensions } = splitExtensions(this.extensions);
-		return Object.fromEntries(markExtensions.filter((extension) => !!getExtensionField(extension, "addMarkView")).map((extension) => {
-			const extensionAttributes = this.attributes.filter((attribute) => attribute.type === extension.name);
-			const addMarkView = getExtensionField(extension, "addMarkView", {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor,
-				type: getMarkType(extension.name, this.schema)
-			});
-			if (!addMarkView) return [];
-			const markView = (mark, view, inline) => {
-				const HTMLAttributes = getRenderedAttributes(mark, extensionAttributes);
-				return addMarkView()({
-					mark,
-					view,
-					inline,
-					editor,
-					extension,
-					HTMLAttributes,
-					updateAttributes: (attrs) => {
-						updateMarkViewAttributes(mark, editor, attrs);
-					}
-				});
-			};
-			return [extension.name, markView];
-		}));
-	}
-	/**
-	* Destroy the extension manager and clean up all extension references
-	* to prevent memory leaks through parent/child extension chains.
-	*
-	* Walks each extension's full parent chain and nulls every forward
-	* `parent.child → current` link where the parent still points to the
-	* current node. This breaks the retention path from module-scope
-	* singleton roots through deep extend() chains.
-	*
-	* Only ancestor `.child` links matching the current chain are cleared.
-	* The `.parent` pointer on ancestors is never touched — extensions
-	* may be shared across live editors, so their own backward references
-	* and non-matching forward links must remain intact.
-	*/
-	destroy() {
-		var _this$decorationManag2;
-		(_this$decorationManag2 = this.decorationManager) === null || _this$decorationManag2 === void 0 || _this$decorationManag2.destroy();
-		this.extensions.forEach((extension) => {
-			let current = extension;
-			while (current.parent) {
-				const parent = current.parent;
-				if (parent.child === current) parent.child = null;
-				current = parent;
-			}
-		});
-		this.extensions = [];
-		this.baseExtensions = [];
-		this.decorationManager = null;
-		this.schema = null;
-		this.editor = null;
-	}
-	/**
-	* Go through all extensions, create extension storages & setup marks
-	* & bind editor event listener.
-	*/
-	setupExtensions() {
-		const extensions = this.extensions;
-		this.editor.extensionStorage = Object.fromEntries(extensions.map((extension) => [extension.name, extension.storage]));
-		extensions.forEach((extension) => {
-			const context = {
-				name: extension.name,
-				options: extension.options,
-				storage: this.editor.extensionStorage[extension.name],
-				editor: this.editor,
-				type: getSchemaTypeByName(extension.name, this.schema)
-			};
-			if (extension.type === "mark") {
-				var _callOrReturn, _callOrReturn2;
-				if ((_callOrReturn = callOrReturn(getExtensionField(extension, "keepOnSplit", context))) !== null && _callOrReturn !== void 0 ? _callOrReturn : true) this.splittableMarks.push(extension.name);
-				if (!((_callOrReturn2 = callOrReturn(getExtensionField(extension, "clearable", context))) !== null && _callOrReturn2 !== void 0 ? _callOrReturn2 : true)) this.nonClearableMarks.push(extension.name);
-			}
-			const onBeforeCreate = getExtensionField(extension, "onBeforeCreate", context);
-			const onCreate = getExtensionField(extension, "onCreate", context);
-			const onUpdate = getExtensionField(extension, "onUpdate", context);
-			const onSelectionUpdate = getExtensionField(extension, "onSelectionUpdate", context);
-			const onTransaction = getExtensionField(extension, "onTransaction", context);
-			const onFocus = getExtensionField(extension, "onFocus", context);
-			const onBlur = getExtensionField(extension, "onBlur", context);
-			const onDestroy = getExtensionField(extension, "onDestroy", context);
-			if (onBeforeCreate) this.editor.on("beforeCreate", onBeforeCreate);
-			if (onCreate) this.editor.on("create", onCreate);
-			if (onUpdate) this.editor.on("update", onUpdate);
-			if (onSelectionUpdate) this.editor.on("selectionUpdate", onSelectionUpdate);
-			if (onTransaction) this.editor.on("transaction", onTransaction);
-			if (onFocus) this.editor.on("focus", onFocus);
-			if (onBlur) this.editor.on("blur", onBlur);
-			if (onDestroy) this.editor.on("destroy", onDestroy);
-		});
-	}
-};
-ExtensionManager.resolve = resolveExtensions;
-ExtensionManager.sort = sortExtensions;
-ExtensionManager.flatten = flattenExtensions;
-/**
-* The Extension class is the base class for all extensions.
-* @see https://tiptap.dev/api/extensions#create-a-new-extension
-*/
-var Extension = class Extension extends Extendable {
-	constructor(..._args) {
-		super(..._args);
-		this.type = "extension";
-	}
-	/**
-	* Create a new Extension instance
-	* @param config - Extension configuration object or a function that returns a configuration object
-	*/
-	static create(config = {}) {
-		const resolvedConfig = typeof config === "function" ? config() : config;
-		return new Extension(resolvedConfig);
-	}
-	configure(options) {
-		return super.configure(options);
-	}
-	extend(extendedConfig) {
-		const resolvedConfig = typeof extendedConfig === "function" ? extendedConfig() : extendedConfig;
-		return super.extend(resolvedConfig);
-	}
-};
-var ClipboardTextSerializer = Extension.create({
-	name: "clipboardTextSerializer",
-	addOptions() {
-		return { blockSeparator: void 0 };
-	},
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("clipboardTextSerializer"),
-			props: { clipboardTextSerializer: () => {
-				const { editor } = this;
-				const { state, schema } = editor;
-				const { doc, selection } = state;
-				const textSerializers = getTextSerializersFromSchema(schema);
-				const { blockSeparator } = this.options;
-				const options = {
-					...blockSeparator !== void 0 ? { blockSeparator } : {},
-					textSerializers
-				};
-				return [...selection.ranges].sort((a, b) => a.$from.pos - b.$from.pos).map(({ $from, $to }) => getTextBetween(doc, {
-					from: $from.pos,
-					to: $to.pos
-				}, options)).join(blockSeparator !== null && blockSeparator !== void 0 ? blockSeparator : "\n\n");
-			} }
-		})];
-	}
-});
-var Commands = Extension.create({
-	name: "commands",
-	addCommands() {
-		return { ...commands_exports };
-	}
-});
-/**
-* This extension allows you to be notified when the user deletes content you are interested in.
-*/
-var Delete = Extension.create({
-	name: "delete",
-	onUpdate({ transaction, appendedTransactions }) {
-		var _this$editor$options$4, _this$editor$options$5;
-		const callback = () => {
-			var _this$editor$options$, _this$editor$options$2, _this$editor$options$3;
-			if ((_this$editor$options$ = (_this$editor$options$2 = this.editor.options.coreExtensionOptions) === null || _this$editor$options$2 === void 0 || (_this$editor$options$2 = _this$editor$options$2.delete) === null || _this$editor$options$2 === void 0 || (_this$editor$options$3 = _this$editor$options$2.filterTransaction) === null || _this$editor$options$3 === void 0 ? void 0 : _this$editor$options$3.call(_this$editor$options$2, transaction)) !== null && _this$editor$options$ !== void 0 ? _this$editor$options$ : transaction.getMeta("y-sync$")) return;
-			const nextTransaction = combineTransactionSteps(transaction.before, [transaction, ...appendedTransactions]);
-			getChangedRanges(nextTransaction).forEach((change) => {
-				if (nextTransaction.mapping.mapResult(change.oldRange.from).deletedAfter && nextTransaction.mapping.mapResult(change.oldRange.to).deletedBefore) nextTransaction.before.nodesBetween(change.oldRange.from, change.oldRange.to, (node, from) => {
-					const to = from + node.nodeSize - 2;
-					const isFullyWithinRange = change.oldRange.from <= from && to <= change.oldRange.to;
-					this.editor.emit("delete", {
-						type: "node",
-						node,
-						from,
-						to,
-						newFrom: nextTransaction.mapping.map(from),
-						newTo: nextTransaction.mapping.map(to),
-						deletedRange: change.oldRange,
-						newRange: change.newRange,
-						partial: !isFullyWithinRange,
-						editor: this.editor,
-						transaction,
-						combinedTransform: nextTransaction
-					});
-				});
-			});
-			const mapping = nextTransaction.mapping;
-			nextTransaction.steps.forEach((step, index) => {
-				if (step instanceof RemoveMarkStep) {
-					var _nextTransaction$doc$, _nextTransaction$doc$2;
-					const newStart = mapping.slice(index).map(step.from, -1);
-					const newEnd = mapping.slice(index).map(step.to);
-					const oldStart = mapping.invert().map(newStart, -1);
-					const oldEnd = mapping.invert().map(newEnd);
-					const foundBeforeMark = newStart > 0 ? (_nextTransaction$doc$ = nextTransaction.doc.nodeAt(newStart - 1)) === null || _nextTransaction$doc$ === void 0 ? void 0 : _nextTransaction$doc$.marks.some((mark) => mark.eq(step.mark)) : false;
-					const foundAfterMark = (_nextTransaction$doc$2 = nextTransaction.doc.nodeAt(newEnd)) === null || _nextTransaction$doc$2 === void 0 ? void 0 : _nextTransaction$doc$2.marks.some((mark) => mark.eq(step.mark));
-					this.editor.emit("delete", {
-						type: "mark",
-						mark: step.mark,
-						from: step.from,
-						to: step.to,
-						deletedRange: {
-							from: oldStart,
-							to: oldEnd
-						},
-						newRange: {
-							from: newStart,
-							to: newEnd
-						},
-						partial: Boolean(foundAfterMark || foundBeforeMark),
-						editor: this.editor,
-						transaction,
-						combinedTransform: nextTransaction
-					});
-				}
-			});
-		};
-		if ((_this$editor$options$4 = (_this$editor$options$5 = this.editor.options.coreExtensionOptions) === null || _this$editor$options$5 === void 0 || (_this$editor$options$5 = _this$editor$options$5.delete) === null || _this$editor$options$5 === void 0 ? void 0 : _this$editor$options$5.async) !== null && _this$editor$options$4 !== void 0 ? _this$editor$options$4 : true) setTimeout(callback, 0);
-		else callback();
-	}
-});
-var Drop = Extension.create({
-	name: "drop",
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("tiptapDrop"),
-			props: { handleDrop: (_, e, slice, moved) => {
-				this.editor.emit("drop", {
-					editor: this.editor,
-					event: e,
-					slice,
-					moved
-				});
-			} }
-		})];
-	}
-});
-var Editable = Extension.create({
-	name: "editable",
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("editable"),
-			props: { editable: () => this.editor.options.editable }
-		})];
-	}
-});
-var focusEventsPluginKey = new PluginKey("focusEvents");
-var FocusEvents = Extension.create({
-	name: "focusEvents",
-	addProseMirrorPlugins() {
-		const { editor } = this;
-		return [new Plugin({
-			key: focusEventsPluginKey,
-			props: { handleDOMEvents: {
-				focus: (view, event) => {
-					editor.isFocused = true;
-					const transaction = editor.state.tr.setMeta("focus", { event }).setMeta("addToHistory", false);
-					view.dispatch(transaction);
-					return false;
-				},
-				blur: (view, event) => {
-					editor.isFocused = false;
-					const transaction = editor.state.tr.setMeta("blur", { event }).setMeta("addToHistory", false);
-					view.dispatch(transaction);
-					return false;
-				}
-			} }
-		})];
-	}
-});
-var Keymap = Extension.create({
-	name: "keymap",
-	addKeyboardShortcuts() {
-		const handleBackspace = () => this.editor.commands.first(({ commands }) => [
-			() => commands.undoInputRule(),
-			() => commands.command(({ tr }) => {
-				const { selection, doc } = tr;
-				const { empty, $anchor } = selection;
-				const { pos, parent } = $anchor;
-				const $parentPos = $anchor.parent.isTextblock && pos > 0 ? tr.doc.resolve(pos - 1) : $anchor;
-				const parentIsIsolating = $parentPos.parent.type.spec.isolating;
-				const parentPos = $anchor.pos - $anchor.parentOffset;
-				const isAtStart = parentIsIsolating && $parentPos.parent.childCount === 1 ? parentPos === $anchor.pos : Selection$1.atStart(doc).from === pos;
-				if (!empty || !parent.type.isTextblock || parent.textContent.length || !isAtStart || isAtStart && $anchor.parent.type.name === "paragraph") return false;
-				return commands.clearNodes();
-			}),
-			() => commands.deleteSelection(),
-			() => commands.joinBackward(),
-			() => commands.selectNodeBackward()
-		]);
-		const handleDelete = () => this.editor.commands.first(({ commands }) => [
-			() => commands.deleteSelection(),
-			() => commands.deleteCurrentNode(),
-			() => commands.joinForward(),
-			() => commands.selectNodeForward()
-		]);
-		const handleEnter = () => this.editor.commands.first(({ commands }) => [
-			() => commands.newlineInCode(),
-			() => commands.createParagraphNear(),
-			() => commands.liftEmptyBlock(),
-			() => commands.splitBlock()
-		]);
-		const baseKeymap = {
-			Enter: handleEnter,
-			"Mod-Enter": () => this.editor.commands.exitCode(),
-			Backspace: handleBackspace,
-			"Mod-Backspace": handleBackspace,
-			"Shift-Backspace": handleBackspace,
-			Delete: handleDelete,
-			"Mod-Delete": handleDelete,
-			"Mod-a": () => this.editor.commands.selectAll()
-		};
-		const pcKeymap = { ...baseKeymap };
-		const macKeymap = {
-			...baseKeymap,
-			"Ctrl-h": handleBackspace,
-			"Alt-Backspace": handleBackspace,
-			"Ctrl-d": handleDelete,
-			"Ctrl-Alt-Backspace": handleDelete,
-			"Alt-Delete": handleDelete,
-			"Alt-d": handleDelete,
-			"Ctrl-a": () => this.editor.commands.selectTextblockStart(),
-			"Ctrl-e": () => this.editor.commands.selectTextblockEnd()
-		};
-		if (isiOS() || isMacOS()) return macKeymap;
-		return pcKeymap;
-	},
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("clearDocument"),
-			appendTransaction: (transactions, oldState, newState) => {
-				if (transactions.some((tr) => tr.getMeta("composition"))) return;
-				const docChanges = transactions.some((transaction) => transaction.docChanged) && !oldState.doc.eq(newState.doc);
-				const ignoreTr = transactions.some((transaction) => transaction.getMeta("preventClearDocument"));
-				if (!docChanges || ignoreTr) return;
-				const { empty, from, to } = oldState.selection;
-				const allFrom = Selection$1.atStart(oldState.doc).from;
-				const allEnd = Selection$1.atEnd(oldState.doc).to;
-				if (empty || !(from === allFrom && to === allEnd)) return;
-				if (!isNodeEmpty(newState.doc)) return;
-				const tr = newState.tr;
-				const state = createChainableState({
-					state: newState,
-					transaction: tr
-				});
-				const { commands } = new CommandManager({
-					editor: this.editor,
-					state
-				});
-				commands.clearNodes();
-				if (!tr.steps.length) return;
-				return tr;
-			}
-		})];
-	}
-});
-var Paste = Extension.create({
-	name: "paste",
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("tiptapPaste"),
-			props: { handlePaste: (_view, e, slice) => {
-				this.editor.emit("paste", {
-					editor: this.editor,
-					event: e,
-					slice
-				});
-			} }
-		})];
-	}
-});
-/**
-* The Tabindex extension adds a configurable tabindex attribute to the editor.
-*
-* By default, the editor gets tabindex="0" when editable. This can be customized
-* via coreExtensionOptions to support specific focus ordering requirements in forms
-* or to enable focusing on non-editable editors.
-*
-* @example
-* ```ts
-* new Editor({
-*   coreExtensionOptions: {
-*     tabindex: {
-*       value: '-1',
-*     },
-*   },
-* })
-* ```
-*/
-var Tabindex = Extension.create({
-	name: "tabindex",
-	addOptions() {
-		return { value: void 0 };
-	},
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("tabindex"),
-			props: { attributes: () => {
-				var _this$options$value;
-				if (!this.editor.isEditable && this.options.value === void 0) return {};
-				return { tabindex: (_this$options$value = this.options.value) !== null && _this$options$value !== void 0 ? _this$options$value : "0" };
-			} }
-		})];
-	}
-});
-/**
-* The TextDirection extension adds support for setting text direction (LTR/RTL/auto)
-* on all nodes in the editor.
-*
-* This extension adds a global `dir` attribute to all node types, which can be used
-* to control bidirectional text rendering. The direction can be set globally via
-* editor options or per-node using commands.
-*/
-var TextDirection = Extension.create({
-	name: "textDirection",
-	addOptions() {
-		return { direction: void 0 };
-	},
-	addGlobalAttributes() {
-		if (!this.options.direction) return [];
-		const { nodeExtensions } = splitExtensions(this.extensions);
-		return [{
-			types: nodeExtensions.filter((extension) => extension.name !== "text").map((extension) => extension.name),
-			attributes: { dir: {
-				default: this.options.direction,
-				parseHTML: (element) => {
-					const dir = element.getAttribute("dir");
-					if (dir && (dir === "ltr" || dir === "rtl" || dir === "auto")) return dir;
-					return this.options.direction;
-				},
-				renderHTML: (attributes) => {
-					if (!attributes.dir) return {};
-					return { dir: attributes.dir };
-				}
-			} }
-		}];
-	},
-	addProseMirrorPlugins() {
-		return [new Plugin({
-			key: new PluginKey("textDirection"),
-			props: { attributes: () => {
-				const direction = this.options.direction;
-				if (!direction) return {};
-				return { dir: direction };
-			} }
-		})];
-	}
-});
-var hasChecked = false;
-/**
-* Warns once when prosemirror-model is loaded twice
-* @param schema The editor schema
-* @returns void
-* @example ```js
-* warnOnDuplicatedProseMirrorModel(editor.schema)
-* ```
-*/
-function warnOnDuplicatedProseMirrorModel(schema) {
-	if (hasChecked) return;
-	hasChecked = true;
-	let content;
-	try {
-		content = ReplaceStep.fromJSON(schema, {
-			from: 0,
-			to: 0
-		}).slice.content;
-	} catch {
-		return;
-	}
-	if (content instanceof Fragment) return;
-	console.warn("[tiptap warn]: prosemirror-model is loaded more than once. Wrapping and splitting nodes will fail. Deduplicate it in your lock file, or alias it to a single copy in your bundler.");
-}
-var NodePos = class NodePos {
-	get name() {
-		return this.node.type.name;
-	}
-	constructor(pos, editor, isBlock = false, node = null) {
-		this.currentNode = null;
-		this.actualDepth = null;
-		this.isBlock = isBlock;
-		this.resolvedPos = pos;
-		this.editor = editor;
-		this.currentNode = node;
-	}
-	get node() {
-		return this.currentNode || this.resolvedPos.node();
-	}
-	get element() {
-		return this.editor.view.domAtPos(this.pos).node;
-	}
-	get depth() {
-		var _this$actualDepth;
-		return (_this$actualDepth = this.actualDepth) !== null && _this$actualDepth !== void 0 ? _this$actualDepth : this.resolvedPos.depth;
-	}
-	get pos() {
-		return this.resolvedPos.pos;
-	}
-	get content() {
-		return this.node.content;
-	}
-	set content(content) {
-		let from = this.from;
-		let to = this.to;
-		if (this.isBlock) {
-			if (this.content.size === 0) {
-				console.error(`You can’t set content on a block node. Tried to set content on ${this.name} at ${this.pos}`);
-				return;
-			}
-			from = this.from + 1;
-			to = this.to - 1;
-		}
-		this.editor.commands.insertContentAt({
-			from,
-			to
-		}, content);
-	}
-	get attributes() {
-		return this.node.attrs;
-	}
-	get textContent() {
-		return this.node.textContent;
-	}
-	get size() {
-		return this.node.nodeSize;
-	}
-	get from() {
-		if (this.isBlock) return this.pos;
-		return this.resolvedPos.start(this.resolvedPos.depth);
-	}
-	get range() {
-		return {
-			from: this.from,
-			to: this.to
-		};
-	}
-	get to() {
-		if (this.isBlock) return this.pos + this.size;
-		return this.resolvedPos.end(this.resolvedPos.depth) + (this.node.isText ? 0 : 1);
-	}
-	get parent() {
-		if (this.depth === 0) return null;
-		const parentPos = this.resolvedPos.start(this.resolvedPos.depth - 1);
-		const $pos = this.resolvedPos.doc.resolve(parentPos);
-		return new NodePos($pos, this.editor);
-	}
-	get before() {
-		let $pos = this.resolvedPos.doc.resolve(this.from - (this.isBlock ? 1 : 2));
-		if ($pos.depth !== this.depth) $pos = this.resolvedPos.doc.resolve(this.from - 3);
-		return new NodePos($pos, this.editor);
-	}
-	get after() {
-		let $pos = this.resolvedPos.doc.resolve(this.to + (this.isBlock ? 2 : 1));
-		if ($pos.depth !== this.depth) $pos = this.resolvedPos.doc.resolve(this.to + 3);
-		return new NodePos($pos, this.editor);
-	}
-	get children() {
-		const children = [];
-		this.node.content.forEach((node, offset) => {
-			const isBlock = node.isBlock && !node.isTextblock;
-			const isNonTextAtom = node.isAtom && !node.isText;
-			const isInline = node.isInline;
-			const targetPos = this.pos + offset + (isNonTextAtom ? 0 : 1);
-			if (targetPos < 0 || targetPos > this.resolvedPos.doc.nodeSize - 2) return;
-			const $pos = this.resolvedPos.doc.resolve(targetPos);
-			if (!isBlock && !isInline && $pos.depth <= this.depth) return;
-			const childNodePos = new NodePos($pos, this.editor, isBlock, isBlock || isInline ? node : null);
-			if (isBlock) childNodePos.actualDepth = this.depth + 1;
-			children.push(childNodePos);
-		});
-		return children;
-	}
-	get firstChild() {
-		return this.children[0] || null;
-	}
-	get lastChild() {
-		const children = this.children;
-		return children[children.length - 1] || null;
-	}
-	closest(selector, attributes = {}) {
-		let node = null;
-		let currentNode = this.parent;
-		while (currentNode && !node) {
-			if (currentNode.node.type.name === selector) {
-				if (Object.keys(attributes).length > 0) {
-					const nodeAttributes = currentNode.node.attrs;
-					const attrKeys = Object.keys(attributes);
-					for (let index = 0; index < attrKeys.length; index += 1) {
-						const key = attrKeys[index];
-						if (nodeAttributes[key] !== attributes[key]) break;
-					}
-				} else node = currentNode;
-			}
-			currentNode = currentNode.parent;
-		}
-		return node;
-	}
-	querySelector(selector, attributes = {}) {
-		return this.querySelectorAll(selector, attributes, true)[0] || null;
-	}
-	querySelectorAll(selector, attributes = {}, firstItemOnly = false) {
-		let nodes = [];
-		if (!this.children || this.children.length === 0) return nodes;
-		const attrKeys = Object.keys(attributes);
-		/**
-		* Finds all children recursively that match the selector and attributes
-		* If firstItemOnly is true, it will return the first item found
-		*/
-		this.children.forEach((childPos) => {
-			if (firstItemOnly && nodes.length > 0) return;
-			if (childPos.node.type.name === selector) {
-				if (attrKeys.every((key) => attributes[key] === childPos.node.attrs[key])) nodes.push(childPos);
-			}
-			if (firstItemOnly && nodes.length > 0) return;
-			nodes = nodes.concat(childPos.querySelectorAll(selector, attributes, firstItemOnly));
-		});
-		return nodes;
-	}
-	setAttribute(attributes) {
-		const { tr } = this.editor.state;
-		tr.setNodeMarkup(this.from, void 0, {
-			...this.node.attrs,
-			...attributes
-		});
-		this.editor.view.dispatch(tr);
-	}
-};
-var style = `.ProseMirror {
-  position: relative;
-}
-
-.ProseMirror {
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  white-space: break-spaces;
-  -webkit-font-variant-ligatures: none;
-  font-variant-ligatures: none;
-  font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
-}
-
-.ProseMirror [contenteditable="false"] {
-  white-space: normal;
-}
-
-.ProseMirror [contenteditable="false"] [contenteditable="true"] {
-  white-space: pre-wrap;
-}
-
-.ProseMirror pre {
-  white-space: pre-wrap;
-}
-
-img.ProseMirror-separator {
-  display: inline !important;
-  border: none !important;
-  margin: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-.ProseMirror-gapcursor {
-  display: none;
-  pointer-events: none;
-  position: absolute;
-  margin: 0;
-}
-
-.ProseMirror-gapcursor:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: -2px;
-  width: 20px;
-  border-top: 1px solid black;
-  animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
-}
-
-@keyframes ProseMirror-cursor-blink {
-  to {
-    visibility: hidden;
-  }
-}
-
-.ProseMirror-hideselection *::selection {
-  background: transparent;
-}
-
-.ProseMirror-hideselection *::-moz-selection {
-  background: transparent;
-}
-
-.ProseMirror-hideselection * {
-  caret-color: transparent;
-}
-
-.ProseMirror-focused .ProseMirror-gapcursor {
-  display: block;
-}`;
-var Editor = class extends EventEmitter {
-	constructor(options = {}) {
-		super();
-		this.css = null;
-		this.className = "tiptap";
-		this.editorView = null;
-		this.isFocused = false;
-		this.destroyed = false;
-		this.isInitialized = false;
-		this.extensionStorage = {};
-		this.instanceId = Math.random().toString(36).slice(2, 9);
-		this.hasWarnedStaleDecorationRead = false;
-		this.options = {
-			element: typeof document !== "undefined" ? document.createElement("div") : null,
-			content: "",
-			injectCSS: true,
-			injectNonce: void 0,
-			extensions: [],
-			autofocus: false,
-			editable: true,
-			textDirection: void 0,
-			editorProps: {},
-			parseOptions: {},
-			coreExtensionOptions: {},
-			enableInputRules: true,
-			enablePasteRules: true,
-			enableCoreExtensions: true,
-			enableContentCheck: false,
-			emitContentError: false,
-			onBeforeCreate: () => null,
-			onCreate: () => null,
-			onMount: () => null,
-			onUnmount: () => null,
-			onUpdate: () => null,
-			onSelectionUpdate: () => null,
-			onTransaction: () => null,
-			onFocus: () => null,
-			onBlur: () => null,
-			onDestroy: () => null,
-			onContentError: ({ error }) => {
-				throw error;
-			},
-			onPaste: () => null,
-			onDrop: () => null,
-			onDelete: () => null,
-			enableExtensionDispatchTransaction: true
-		};
-		this.isCapturingTransaction = false;
-		this.capturedTransaction = null;
-		this.utils = {
-			getUpdatedPosition,
-			createMappablePosition
-		};
-		this.setOptions(options);
-		this.createExtensionManager();
-		this.createCommandManager();
-		this.createSchema();
-		this.on("beforeCreate", this.options.onBeforeCreate);
-		this.emit("beforeCreate", { editor: this });
-		this.on("mount", this.options.onMount);
-		this.on("unmount", this.options.onUnmount);
-		this.on("contentError", this.options.onContentError);
-		this.on("create", this.options.onCreate);
-		this.on("update", this.options.onUpdate);
-		this.on("selectionUpdate", this.options.onSelectionUpdate);
-		this.on("transaction", this.options.onTransaction);
-		this.on("focus", this.options.onFocus);
-		this.on("blur", this.options.onBlur);
-		this.on("destroy", this.options.onDestroy);
-		this.on("drop", ({ event, slice, moved }) => this.options.onDrop(event, slice, moved));
-		this.on("paste", ({ event, slice }) => this.options.onPaste(event, slice));
-		this.on("delete", this.options.onDelete);
-		const initialDoc = this.createDoc();
-		if (!this.editorState) {
-			const selection = resolveFocusPosition(initialDoc, this.options.autofocus);
-			this.editorState = EditorState.create({
-				doc: initialDoc,
-				schema: this.schema,
-				selection: selection || void 0
-			});
-		}
-		warnOnDuplicatedProseMirrorModel(this.schema);
-		if (this.options.element) this.mount(this.options.element);
-	}
-	/**
-	* Attach the editor to the DOM, creating a new editor view.
-	*/
-	mount(el) {
-		if (typeof document === "undefined") throw new Error(`[tiptap error]: The editor cannot be mounted because there is no 'document' defined in this environment.`);
-		this.createView(el);
-		this.emit("mount", { editor: this });
-		if (this.css && !document.head.contains(this.css)) document.head.appendChild(this.css);
-		window.setTimeout(() => {
-			if (this.isDestroyed) return;
-			if (this.options.autofocus !== false && this.options.autofocus !== null) this.commands.focus(this.options.autofocus);
-			this.emit("create", { editor: this });
-			this.isInitialized = true;
-		}, 0);
-	}
-	/**
-	* Remove the editor from the DOM, but still allow remounting at a different point in time
-	*/
-	unmount() {
-		if (this.editorView) {
-			this.editorState = this.editorView.state;
-			const dom = this.editorView.dom;
-			if (dom === null || dom === void 0 ? void 0 : dom.editor) delete dom.editor;
-			this.editorView.destroy();
-		}
-		this.editorView = null;
-		this.isInitialized = false;
-		if (this.css && !document.querySelectorAll(`.${this.className}`).length) try {
-			if (typeof this.css.remove === "function") this.css.remove();
-			else if (this.css.parentNode) this.css.parentNode.removeChild(this.css);
-		} catch (error) {
-			console.warn("Failed to remove CSS element:", error);
-		}
-		this.css = null;
-		this.emit("unmount", { editor: this });
-	}
-	/**
-	* Returns the editor storage.
-	*/
-	get storage() {
-		return this.extensionStorage;
-	}
-	/**
-	* An object of all registered commands.
-	*/
-	get commands() {
-		return this.commandManager.commands;
-	}
-	/**
-	* Create a command chain to call multiple commands at once.
-	*/
-	chain() {
-		if (!this.commandManager) return CommandManager.createFakeChain();
-		return this.commandManager.chain();
-	}
-	/**
-	* Check if a command or a command chain can be executed. Without executing it.
-	*/
-	can() {
-		if (!this.commandManager) return CommandManager.createFallbackCan();
-		return this.commandManager.can();
-	}
-	/**
-	* Inject CSS styles.
-	*/
-	injectCSS() {
-		if (this.options.injectCSS && typeof document !== "undefined") this.css = createStyleTag(style, this.options.injectNonce);
-	}
-	/**
-	* Update editor options.
-	*
-	* @param options A list of options
-	*/
-	setOptions(options = {}) {
-		this.options = {
-			...this.options,
-			...options
-		};
-		if (!this.editorView || !this.state || this.isDestroyed) return;
-		if (this.options.editorProps) this.view.setProps({
-			...this.options.editorProps,
-			attributes: this.getEditorViewAttributes()
-		});
-		this.view.updateState(this.state);
-	}
-	/**
-	* Update editable state of the editor.
-	*/
-	setEditable(editable, emitUpdate = true) {
-		this.setOptions({ editable });
-		if (emitUpdate) this.emit("update", {
-			editor: this,
-			transaction: this.state.tr,
-			appendedTransactions: []
-		});
-	}
-	/**
-	* Returns whether the editor is editable.
-	*/
-	get isEditable() {
-		return this.options.editable && this.view && this.view.editable;
-	}
-	/**
-	* Returns the editor view.
-	*/
-	get view() {
-		if (this.editorView) return this.editorView;
-		return new Proxy({
-			state: this.editorState,
-			updateState: (state) => {
-				this.editorState = state;
-			},
-			dispatch: (tr) => {
-				this.dispatchTransaction(tr);
-			},
-			composing: false,
-			dragging: null,
-			editable: true,
-			isDestroyed: false
-		}, { get: (obj, key) => {
-			if (this.editorView) return this.editorView[key];
-			if (key === "state") return this.editorState;
-			if (key in obj) return Reflect.get(obj, key);
-			throw new Error(`[tiptap error]: The editor view is not available. Cannot access view['${key}']. The editor may not be mounted yet.`);
-		} });
-	}
-	/**
-	* Returns the editor state.
-	*/
-	get state() {
-		if (isDev && !this.hasWarnedStaleDecorationRead && isInDecorationApplyScope(this)) {
-			this.hasWarnedStaleDecorationRead = true;
-			console.warn("[tiptap warn]: `editor.state` was read while decoration `create()` was running. It returns the pre-transaction document. Use the `state` argument passed to `create()` instead. Helpers like `editor.isActive()` read `editor.state` too, so pass `state` to their standalone versions instead of calling them on the editor.");
-		}
-		if (this.editorView) this.editorState = this.view.state;
-		return this.editorState;
-	}
-	/**
-	* Register a ProseMirror plugin.
-	*
-	* @param plugin A ProseMirror plugin
-	* @param handlePlugins Control how to merge the plugin into the existing plugins.
-	* @returns The new editor state
-	*/
-	registerPlugin(plugin, handlePlugins) {
-		const plugins = isFunction(handlePlugins) ? handlePlugins(plugin, [...this.state.plugins]) : [...this.state.plugins, plugin];
-		const state = this.state.reconfigure({ plugins });
-		this.view.updateState(state);
-		return state;
-	}
-	/**
-	* Unregister a ProseMirror plugin.
-	*
-	* @param nameOrPluginKeyToRemove The plugins name
-	* @returns The new editor state or undefined if the editor is destroyed
-	*/
-	unregisterPlugin(nameOrPluginKeyToRemove) {
-		if (this.isDestroyed) return;
-		const prevPlugins = this.state.plugins;
-		let plugins = prevPlugins;
-		[].concat(nameOrPluginKeyToRemove).forEach((nameOrPluginKey) => {
-			const name = typeof nameOrPluginKey === "string" ? `${nameOrPluginKey}$` : nameOrPluginKey.key;
-			plugins = plugins.filter((plugin) => !plugin.key.startsWith(name));
-		});
-		if (prevPlugins.length === plugins.length) return;
-		const state = this.state.reconfigure({ plugins });
-		this.view.updateState(state);
-		return state;
-	}
-	/**
-	* Creates an extension manager.
-	*/
-	createExtensionManager() {
-		var _this$options$coreExt, _this$options$coreExt2;
-		const allExtensions = [...this.options.enableCoreExtensions ? [
-			Editable,
-			ClipboardTextSerializer.configure({ blockSeparator: (_this$options$coreExt = this.options.coreExtensionOptions) === null || _this$options$coreExt === void 0 || (_this$options$coreExt = _this$options$coreExt.clipboardTextSerializer) === null || _this$options$coreExt === void 0 ? void 0 : _this$options$coreExt.blockSeparator }),
-			Commands,
-			FocusEvents,
-			Keymap,
-			Tabindex.configure({ value: (_this$options$coreExt2 = this.options.coreExtensionOptions) === null || _this$options$coreExt2 === void 0 || (_this$options$coreExt2 = _this$options$coreExt2.tabindex) === null || _this$options$coreExt2 === void 0 ? void 0 : _this$options$coreExt2.value }),
-			Drop,
-			Paste,
-			Delete,
-			TextDirection.configure({ direction: this.options.textDirection })
-		].filter((ext) => {
-			if (typeof this.options.enableCoreExtensions === "object") return this.options.enableCoreExtensions[ext.name] !== false;
-			return true;
-		}) : [], ...this.options.extensions].filter((extension) => {
-			return [
-				"extension",
-				"node",
-				"mark"
-			].includes(extension === null || extension === void 0 ? void 0 : extension.type);
-		});
-		this.extensionManager = new ExtensionManager(allExtensions, this);
-	}
-	/**
-	* Creates an command manager.
-	*/
-	createCommandManager() {
-		this.commandManager = new CommandManager({ editor: this });
-	}
-	/**
-	* Creates a ProseMirror schema.
-	*/
-	createSchema() {
-		this.schema = this.extensionManager.schema;
-	}
-	/**
-	* Creates the initial document.
-	*/
-	createDoc() {
-		let doc;
-		try {
-			doc = createDocument(this.options.content, this.schema, this.options.parseOptions, { errorOnInvalidContent: this.options.enableContentCheck });
-		} catch (e) {
-			if (!(e instanceof Error) || !["[tiptap error]: Invalid JSON content", "[tiptap error]: Invalid HTML content"].includes(e.message)) throw e;
-			const fallbackDoc = createDocument(this.options.content, this.schema, this.options.parseOptions, { errorOnInvalidContent: false });
-			this.editorState = EditorState.create({
-				doc: fallbackDoc,
-				schema: this.schema,
-				selection: resolveFocusPosition(fallbackDoc, this.options.autofocus) || void 0
-			});
-			this.emit("contentError", {
-				editor: this,
-				error: e,
-				disableCollaboration: () => {
-					if ("collaboration" in this.storage && typeof this.storage.collaboration === "object" && this.storage.collaboration) this.storage.collaboration.isDisabled = true;
-					this.options.extensions = this.options.extensions.filter((extension) => extension.name !== "collaboration");
-					this.createExtensionManager();
-				}
-			});
-			return this.editorState.doc;
-		}
-		return doc;
-	}
-	/**
-	* Returns the attributes for the editor element.
-	* Merges the default `role="textbox"` with the attributes from `editorProps`,
-	* so the role is kept no matter when the props are applied.
-	*/
-	getEditorViewAttributes() {
-		var _this$options$editorP;
-		const attributes = (_this$options$editorP = this.options.editorProps) === null || _this$options$editorP === void 0 ? void 0 : _this$options$editorP.attributes;
-		if (isFunction(attributes)) return (state) => ({
-			role: "textbox",
-			...attributes(state)
-		});
-		return {
-			role: "textbox",
-			...attributes
-		};
-	}
-	/**
-	* Creates a ProseMirror view.
-	*/
-	createView(element) {
-		const { editorProps, enableExtensionDispatchTransaction } = this.options;
-		const baseDispatch = editorProps.dispatchTransaction || this.dispatchTransaction.bind(this);
-		const dispatch = enableExtensionDispatchTransaction ? this.extensionManager.dispatchTransaction(baseDispatch) : baseDispatch;
-		const baseTransformPastedHTML = editorProps.transformPastedHTML;
-		const transformPastedHTML = this.extensionManager.transformPastedHTML(baseTransformPastedHTML);
-		this.editorView = new EditorView(element, {
-			...editorProps,
-			attributes: this.getEditorViewAttributes(),
-			dispatchTransaction: dispatch,
-			transformPastedHTML,
-			state: this.editorState,
-			markViews: this.extensionManager.markViews,
-			nodeViews: this.extensionManager.nodeViews
-		});
-		const newState = this.state.reconfigure({ plugins: this.extensionManager.plugins });
-		this.view.updateState(newState);
-		this.prependClass();
-		this.injectCSS();
-		const dom = this.view.dom;
-		dom.editor = this;
-	}
-	/**
-	* Creates all node and mark views.
-	*/
-	createNodeViews() {
-		if (this.view.isDestroyed) return;
-		this.view.setProps({
-			markViews: this.extensionManager.markViews,
-			nodeViews: this.extensionManager.nodeViews
-		});
-	}
-	/**
-	* Prepend class name to element.
-	*/
-	prependClass() {
-		this.view.dom.className = `${this.className} ${this.view.dom.className}`;
-	}
-	captureTransaction(fn) {
-		this.isCapturingTransaction = true;
-		fn();
-		this.isCapturingTransaction = false;
-		const tr = this.capturedTransaction;
-		this.capturedTransaction = null;
-		return tr;
-	}
-	/**
-	* The callback over which to send transactions (state updates) produced by the view.
-	*
-	* @param transaction An editor state transaction
-	*/
-	dispatchTransaction(transaction) {
-		if (this.view.isDestroyed) return;
-		if (this.isCapturingTransaction) {
-			if (!this.capturedTransaction) {
-				this.capturedTransaction = transaction;
-				return;
-			}
-			transaction.steps.forEach((step) => {
-				var _this$capturedTransac;
-				return (_this$capturedTransac = this.capturedTransaction) === null || _this$capturedTransac === void 0 ? void 0 : _this$capturedTransac.step(step);
-			});
-			return;
-		}
-		const { state, transactions } = this.state.applyTransaction(transaction);
-		const selectionHasChanged = !this.state.selection.eq(state.selection);
-		const rootTrWasApplied = transactions.includes(transaction);
-		const prevState = this.state;
-		this.emit("beforeTransaction", {
-			editor: this,
-			transaction,
-			nextState: state
-		});
-		if (!rootTrWasApplied) return;
-		this.view.updateState(state);
-		this.emit("transaction", {
-			editor: this,
-			transaction,
-			appendedTransactions: transactions.slice(1)
-		});
-		if (selectionHasChanged) this.emit("selectionUpdate", {
-			editor: this,
-			transaction
-		});
-		const mostRecentFocusTr = transactions.findLast((tr) => tr.getMeta("focus") || tr.getMeta("blur"));
-		const focus = mostRecentFocusTr === null || mostRecentFocusTr === void 0 ? void 0 : mostRecentFocusTr.getMeta("focus");
-		const blur = mostRecentFocusTr === null || mostRecentFocusTr === void 0 ? void 0 : mostRecentFocusTr.getMeta("blur");
-		if (focus) this.emit("focus", {
-			editor: this,
-			event: focus.event,
-			transaction: mostRecentFocusTr
-		});
-		if (blur) this.emit("blur", {
-			editor: this,
-			event: blur.event,
-			transaction: mostRecentFocusTr
-		});
-		if (transaction.getMeta("preventUpdate") || !transactions.some((tr) => tr.docChanged) || prevState.doc.eq(state.doc)) return;
-		this.emit("update", {
-			editor: this,
-			transaction,
-			appendedTransactions: transactions.slice(1)
-		});
-	}
-	/**
-	* Get attributes of the currently selected node or mark.
-	*/
-	getAttributes(nameOrType) {
-		return getAttributes(this.state, nameOrType);
-	}
-	isActive(nameOrAttributes, attributesOrUndefined) {
-		const name = typeof nameOrAttributes === "string" ? nameOrAttributes : null;
-		const attributes = typeof nameOrAttributes === "string" ? attributesOrUndefined : nameOrAttributes;
-		return isActive(this.state, name, attributes);
-	}
-	/**
-	* Get the document as JSON.
-	*/
-	getJSON() {
-		return this.state.doc.toJSON();
-	}
-	/**
-	* Get the document as HTML.
-	*/
-	getHTML() {
-		return getHTMLFromFragment(this.state.doc.content, this.schema);
-	}
-	/**
-	* Get the document as text.
-	*/
-	getText(options) {
-		const { blockSeparator = "\n\n", textSerializers = {} } = options || {};
-		return getText(this.state.doc, {
-			blockSeparator,
-			textSerializers: {
-				...getTextSerializersFromSchema(this.schema),
-				...textSerializers
-			}
-		});
-	}
-	/**
-	* Check if there is no content.
-	*/
-	get isEmpty() {
-		return isNodeEmpty(this.state.doc);
-	}
-	/**
-	* Destroy the editor.
-	*/
-	destroy() {
-		if (this.destroyed) return;
-		this.destroyed = true;
-		this.emit("destroy");
-		this.unmount();
-		this.removeAllListeners();
-		this.extensionManager.destroy();
-		this.extensionManager = null;
-		this.schema = null;
-		this.commandManager = null;
-		this.extensionStorage = {};
-	}
-	/**
-	* Check if the editor is already destroyed.
-	*/
-	get isDestroyed() {
-		var _this$editorView$isDe, _this$editorView;
-		return (_this$editorView$isDe = (_this$editorView = this.editorView) === null || _this$editorView === void 0 ? void 0 : _this$editorView.isDestroyed) !== null && _this$editorView$isDe !== void 0 ? _this$editorView$isDe : true;
-	}
-	$node(selector, attributes) {
-		var _this$$doc;
-		return ((_this$$doc = this.$doc) === null || _this$$doc === void 0 ? void 0 : _this$$doc.querySelector(selector, attributes)) || null;
-	}
-	$nodes(selector, attributes) {
-		var _this$$doc2;
-		return ((_this$$doc2 = this.$doc) === null || _this$$doc2 === void 0 ? void 0 : _this$$doc2.querySelectorAll(selector, attributes)) || null;
-	}
-	$pos(pos) {
-		const $pos = this.state.doc.resolve(pos);
-		const node = pos > 0 && $pos.nodeAfter && !$pos.nodeAfter.isText && $pos.nodeAfter.isAtom ? $pos.nodeAfter : null;
-		return new NodePos($pos, this, false, node);
-	}
-	get $doc() {
-		return this.$pos(0);
-	}
-};
-//#endregion
-export { src_default$24 as A, src_default$17 as C, src_default$21 as D, src_default$20 as E, getMarkRange$1 as F, NodeSelection as I, Plugin as L, src_default$26 as M, Extension$1 as N, src_default$22 as O, Node$1 as P, PluginKey as R, TextStyleKit as S, src_default$19 as T, src_default$12 as _, src_default$1 as a, src_default$15 as b, src_default$4 as c, src_default$7 as d, Table as f, src_default$11 as g, src_default$10 as h, src_default as i, src_default$25 as j, src_default$23 as k, src_default$5 as l, src_default$9 as m, getMarkRange as n, src_default$2 as o, src_default$8 as p, posToDOMRect as r, src_default$3 as s, Editor as t, src_default$6 as u, src_default$13 as v, src_default$18 as w, src_default$16 as x, src_default$14 as y, TextSelection as z };
+export { Editor as A, src_default$20 as C, src_default$24 as D, src_default$23 as E, NodeSelection as F, Plugin as I, PluginKey as L, Node$1 as M, getMarkRange as N, src_default$25 as O, posToDOMRect as P, TextSelection as R, src_default$19 as S, src_default$22 as T, src_default$15 as _, src_default$4 as a, src_default$17 as b, src_default$7 as c, src_default$9 as d, src_default$10 as f, src_default$14 as g, src_default$13 as h, src_default$3 as i, Extension as j, src_default$26 as k, Table as l, src_default$12 as m, src_default$1 as n, src_default$5 as o, src_default$11 as p, src_default$2 as r, src_default$6 as s, src_default as t, src_default$8 as u, src_default$16 as v, src_default$21 as w, src_default$18 as x, TextStyleKit as y };

@@ -3,7 +3,7 @@ import { n as query, r as state, t as property } from "./decorators-BkErmuYK.js"
 import { t as PkFormAssociatedElement } from "./pk-form-associated-element-Doh2K3pG.js";
 import { t as MirrorValidator } from "./mirror-validator-BkZlEv1Z.js";
 import { t as formControlStyles } from "./form-control.styles-CQ93gnVf.js";
-import { i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "./tiptap.styles-Q4ED1nBw.js";
+import { i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
 import { css, html } from "lit";
 import { Editor } from "@tiptap/core";
 import { contentToValue, createTiptapInputExtensions, dedupeVariableOptions, flattenVariableOptions, inputValueToContent } from "@verbb/plugin-kit-tiptap-core";
@@ -247,4 +247,4 @@ PkTiptapInput = __decorate([customElement("pk-tiptap-input")], PkTiptapInput);
 //#endregion
 export { PkTiptapInput as t };
 
-//# sourceMappingURL=pk-tiptap-input-0Xy6rrot.js.map
+//# sourceMappingURL=pk-tiptap-input-asrD-8W6.js.map

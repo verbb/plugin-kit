@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fixed variable chip keyboard focus indicators to surround the whole chip with a soft lavender ring when configuring it and highlight the remove button separately.
+
 ## 2.0.24 - 2026-10-09
 
 ### Changed

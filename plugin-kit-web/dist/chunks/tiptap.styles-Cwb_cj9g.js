@@ -282,6 +282,25 @@ var variableTagStyles = css`
         appearance: none;
     }
 
+    /* Keep the configure action's keyboard indicator around the whole chip,
+     * while the separate remove action identifies only its own hit area. */
+    .pk-variable-tag:has(> .pk-variable-tag__label:focus-visible) {
+        /* The transparent outline remains visible in forced-colors mode. */
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(123, 140, 232, 0.5);
+    }
+
+    .pk-variable-tag__label:focus-visible {
+        outline: none;
+    }
+
+    .pk-variable-tag__remove:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: -3px;
+        border-radius: 2px;
+    }
+
     .pk-variable-tag__remove svg {
         display: block;
         width: 10px;
@@ -461,4 +480,4 @@ var tiptapContentProseMirrorStyles = css`
 //#endregion
 export { createVariableTagDomNodeView as i, tiptapInputProseMirrorStyles as n, tiptapProseMirrorStyles as r, tiptapContentProseMirrorStyles as t };
 
-//# sourceMappingURL=tiptap.styles-Q4ED1nBw.js.map
+//# sourceMappingURL=tiptap.styles-Cwb_cj9g.js.map
