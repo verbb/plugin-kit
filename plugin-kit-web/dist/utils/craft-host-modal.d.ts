@@ -15,5 +15,6 @@ export type CraftHostModalObserver = {
 export declare function observeCraftHostModal(onChange: (open: boolean) => void, options?: {
     root?: ParentNode;
     getDocument?: () => Document;
+    ignoreExisting?: boolean;
 }): CraftHostModalObserver;
 //# sourceMappingURL=craft-host-modal.d.ts.map

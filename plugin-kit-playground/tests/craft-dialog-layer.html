@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Craft dialog layer regression</title>
+    <style>
+        .modal-shade { position: fixed; inset: 0; background: #0003; z-index: 99; }
+        .modal { position: fixed; inset: 10%; background: white; z-index: 101; }
+        #preview { position: relative; z-index: 100; }
+    </style>
+</head>
+<body>
+    <div id="preview">
+        <button id="open">Open Bulk</button>
+        <pk-dialog label="Bulk">
+            <button id="choose">Choose asset</button>
+            <button data-dialog-close>Close Bulk</button>
+        </pk-dialog>
+    </div>
+    <script type="module">
+        import '@verbb/plugin-kit-web/components/dialog/pk-dialog.js';
+
+        await customElements.whenDefined('pk-dialog');
+        const dialog = document.querySelector('pk-dialog');
+        document.querySelector('#open').onclick = () => { dialog.open = true; };
+        document.querySelector('#choose').onclick = () => {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = '<button>Cancel picker</button>';
+            modal.querySelector('button').onclick = () => modal.remove();
+            document.body.append(modal);
+        };
+        document.body.dataset.ready = 'true';
+    </script>
+</body>
+</html>

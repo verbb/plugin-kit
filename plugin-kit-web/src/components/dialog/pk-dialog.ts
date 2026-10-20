@@ -16,7 +16,7 @@ import {
     type PkOverlaySource,
 } from '../../events/overlay-lifecycle.js';
 import { animateWithClass } from '../../utils/animate-with-class.js';
-import { observeCraftHostModal, isCraftHostModalOpen, type CraftHostModalObserver } from '../../utils/craft-host-modal.js';
+import { observeCraftHostModal, type CraftHostModalObserver } from '../../utils/craft-host-modal.js';
 import { pkDialogStyles } from './pk-dialog.styles.js';
 
 const CLOSE_ICON = renderIconHtml(xmark);
@@ -371,9 +371,7 @@ export class PkDialog extends PkElement {
         document.addEventListener('keydown', this.handleDocumentKeyDown);
         registerDismissible(this);
         this.hostModalObserver?.disconnect();
-        this.hostModalObserver = observeCraftHostModal(this.onHostModalPresenceChange);
-        // Craft modal may already be open when this dialog mounts (rare).
-        this.onHostModalPresenceChange(isCraftHostModalOpen());
+        this.hostModalObserver = observeCraftHostModal(this.onHostModalPresenceChange, { ignoreExisting: true });
     }
 
     private removeOpenListeners(): void {

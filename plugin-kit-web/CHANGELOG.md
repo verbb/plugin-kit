@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fixed element pickers opening behind dialogs launched from Craft live preview or another modal.
+
 ## 2.0.25 - 2026-10-15
 
 ### Fixed

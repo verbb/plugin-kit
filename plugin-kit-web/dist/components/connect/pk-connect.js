@@ -4,7 +4,7 @@ import "../../chunks/pk-button-ntSVrer_.js";
 import "../icon/pk-icon.js";
 import "../../chunks/pk-state-panel-BTo2xiug.js";
 import "../../chunks/pk-status-CdiRBRyh.js";
-import "../../chunks/pk-dialog-C7KZGpQs.js";
+import "../../chunks/pk-dialog-Dh4F92mG.js";
 import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-oKhxa_m2.js";
 import { LitElement, html, nothing } from "lit";
 import { buildConnectPayload, escapeCpHtml, resolveConnectError, sendCpConnectRequest, serializeCpForm, watchCpFormDirty } from "@verbb/plugin-kit-core";

@@ -11,7 +11,7 @@ import "../../chunks/pk-input-Cj5s8eBT.js";
 import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
 import { a as resolveTiptapTextStyleToolbarConfig, c as getRegisteredTiptapToolbarControl, i as createVariableTagDomNodeView, l as isRegisteredTiptapToolbarControl, o as createTiptapExtensions, r as tiptapProseMirrorStyles } from "../../chunks/tiptap.styles-CZUkf2K6.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
-import "../../chunks/pk-dialog-BJs5fVHS.js";
+import "../../chunks/pk-dialog-ChX96jyg.js";
 import "../../chunks/pk-dropdown-item-Bs5NZDRh.js";
 import "../../chunks/pk-dropdown-label-Cpl9-bzB.js";
 import "../../chunks/pk-dropdown-menu-CLrfuD3i.js";

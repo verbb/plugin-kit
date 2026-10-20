@@ -14,26 +14,14 @@ const isVisiblyShown = (element: HTMLElement): boolean => {
         && Number.parseFloat(style.opacity || '1') > 0;
 };
 
+const visibleHostModals = (root: ParentNode): HTMLElement[] =>
+    Array.from(root.querySelectorAll(HOST_MODAL_SELECTOR)).filter((node): node is HTMLElement =>
+        node instanceof HTMLElement && !node.closest('pk-dialog') && isVisiblyShown(node),
+    );
+
 /** True when a Craft/Garnish modal or shade is present and visible. */
 export function isCraftHostModalOpen(root: ParentNode = document): boolean {
-    const nodes = root.querySelectorAll(HOST_MODAL_SELECTOR);
-
-    for (const node of nodes) {
-        if (!(node instanceof HTMLElement)) {
-            continue;
-        }
-
-        // Ignore kit chrome that happens to reuse `.modal` inside a dialog.
-        if (node.closest('pk-dialog')) {
-            continue;
-        }
-
-        if (isVisiblyShown(node)) {
-            return true;
-        }
-    }
-
-    return false;
+    return visibleHostModals(root).length > 0;
 }
 
 export type CraftHostModalObserver = {
@@ -46,14 +34,19 @@ export type CraftHostModalObserver = {
  */
 export function observeCraftHostModal(
     onChange: (open: boolean) => void,
-    options: { root?: ParentNode; getDocument?: () => Document } = {},
+    options: { root?: ParentNode; getDocument?: () => Document; ignoreExisting?: boolean } = {},
 ): CraftHostModalObserver {
     const doc = options.getDocument?.() ?? document;
     const root = options.root ?? doc.body;
-    let lastOpen = isCraftHostModalOpen(doc);
+    // A dialog opened from Preview owns a newer layer than Preview's shade.
+    // Only later host modals should make it yield; an existing shade must not
+    // mask the opening or closing of a child element picker.
+    const existing = new Set(options.ignoreExisting ? visibleHostModals(doc) : []);
+    const hasNewModal = () => visibleHostModals(doc).some(node => !existing.has(node));
+    let lastOpen = hasNewModal();
 
     const emit = () => {
-        const next = isCraftHostModalOpen(doc);
+        const next = hasNewModal();
         if (next === lastOpen) {
             return;
         }

@@ -9,7 +9,7 @@ import "./pk-checkbox-L5uRex3b.js";
 import { t as formControlStyles } from "./form-control.styles-CQ93gnVf.js";
 import { i as uniqueId } from "./focus-DcVUPVqn.js";
 import "./pk-input-BUbXj9We.js";
-import "./pk-dialog-C7KZGpQs.js";
+import "./pk-dialog-Dh4F92mG.js";
 import "./pk-dropdown-item-Ck2N_suK.js";
 import "./pk-dropdown-menu-DBsO1uYR.js";
 import "./pk-dropdown-label-BdZLeizJ.js";
@@ -1404,4 +1404,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-DCgHtgoi.js.map
+//# sourceMappingURL=pk-tiptap-editor-DLHbQRCW.js.map

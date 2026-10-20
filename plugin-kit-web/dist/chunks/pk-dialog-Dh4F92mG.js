@@ -20,16 +20,7 @@ var isVisiblyShown = (element) => {
 	const style = getComputedStyle(element);
 	return style.display !== "none" && style.visibility !== "hidden" && Number.parseFloat(style.opacity || "1") > 0;
 };
-/** True when a Craft/Garnish modal or shade is present and visible. */
-function isCraftHostModalOpen(root = document) {
-	const nodes = root.querySelectorAll(HOST_MODAL_SELECTOR);
-	for (const node of nodes) {
-		if (!(node instanceof HTMLElement)) continue;
-		if (node.closest("pk-dialog")) continue;
-		if (isVisiblyShown(node)) return true;
-	}
-	return false;
-}
+var visibleHostModals = (root) => Array.from(root.querySelectorAll(HOST_MODAL_SELECTOR)).filter((node) => node instanceof HTMLElement && !node.closest("pk-dialog") && isVisiblyShown(node));
 /**
 * Watch the document for Craft modal mount/unmount and invoke `onChange`
 * whenever presence flips. Used by `pk-dialog` to leave/re-enter the top layer.
@@ -37,9 +28,11 @@ function isCraftHostModalOpen(root = document) {
 function observeCraftHostModal(onChange, options = {}) {
 	const doc = options.getDocument?.() ?? document;
 	const root = options.root ?? doc.body;
-	let lastOpen = isCraftHostModalOpen(doc);
+	const existing = new Set(options.ignoreExisting ? visibleHostModals(doc) : []);
+	const hasNewModal = () => visibleHostModals(doc).some((node) => !existing.has(node));
+	let lastOpen = hasNewModal();
 	const emit = () => {
-		const next = isCraftHostModalOpen(doc);
+		const next = hasNewModal();
 		if (next === lastOpen) return;
 		lastOpen = next;
 		onChange(next);
@@ -538,8 +531,7 @@ var PkDialog = class PkDialog extends PkElement {
 		document.addEventListener("keydown", this.handleDocumentKeyDown);
 		registerDismissible(this);
 		this.hostModalObserver?.disconnect();
-		this.hostModalObserver = observeCraftHostModal(this.onHostModalPresenceChange);
-		this.onHostModalPresenceChange(isCraftHostModalOpen());
+		this.hostModalObserver = observeCraftHostModal(this.onHostModalPresenceChange, { ignoreExisting: true });
 	}
 	removeOpenListeners() {
 		document.removeEventListener("keydown", this.handleDocumentKeyDown);
@@ -645,4 +637,4 @@ PkDialog = __decorate([customElement("pk-dialog")], PkDialog);
 //#endregion
 export { PkDialog as t };
 
-//# sourceMappingURL=pk-dialog-C7KZGpQs.js.map
+//# sourceMappingURL=pk-dialog-Dh4F92mG.js.map
