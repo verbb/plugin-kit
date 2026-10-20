@@ -36905,6 +36905,15 @@
               "attribute": "value"
             },
             {
+              "kind": "field",
+              "name": "variableTransformerRegistry",
+              "type": {
+                "text": "PkVariableTransformerRegistry"
+              },
+              "default": "{}",
+              "description": "Transform names displayed as badges on configured variable tags."
+            },
+            {
               "kind": "method",
               "name": "mountEditor",
               "privacy": "private",
@@ -37243,6 +37252,15 @@
               "default": "false",
               "attribute": "invalid",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variableTransformerRegistry",
+              "type": {
+                "text": "PkVariableTransformerRegistry"
+              },
+              "default": "{}",
+              "description": "Transform names displayed as badges on configured variable tags."
             },
             {
               "kind": "field",
@@ -39011,6 +39029,15 @@
               },
               "default": "{}",
               "description": "Variable options used to resolve chip labels when hydrating from `{token}` strings.\nWithout this, saved field tokens fall back to UID title-casing after reload."
+            },
+            {
+              "kind": "field",
+              "name": "variableTransformerRegistry",
+              "type": {
+                "text": "PkVariableTransformerRegistry"
+              },
+              "default": "{}",
+              "description": "Transform names displayed as badges on configured variable tags."
             },
             {
               "kind": "field",

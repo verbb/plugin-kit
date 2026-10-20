@@ -1,5 +1,6 @@
 import { PropertyValues } from 'lit';
 import { PkElement } from '../../base/pk-element.js';
+import { PkVariableTransformerRegistry } from './variable-tag-node-view.js';
 /**
  * Read-only TipTap / ProseMirror renderer.
  *
@@ -10,6 +11,8 @@ export declare class PkTiptapContent extends PkElement {
     private editorMount;
     private editor;
     value: string;
+    /** Transform names displayed as badges on configured variable tags. */
+    variableTransformerRegistry: PkVariableTransformerRegistry;
     disconnectedCallback(): void;
     updated(changed: PropertyValues): void;
     firstUpdated(): void;

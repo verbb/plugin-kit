@@ -1,6 +1,7 @@
 import { PropertyValues } from 'lit';
 import { ToolbarNode, TiptapTextStyleToolbarConfig } from '@verbb/plugin-kit-tiptap-core';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
+import { PkVariableTransformerRegistry } from './variable-tag-node-view.js';
 /**
  * TipTap document editor with a Craft-styled toolbar.
  *
@@ -40,6 +41,8 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     placeholder: string;
     readonly: boolean;
     invalid: boolean;
+    /** Transform names displayed as badges on configured variable tags. */
+    variableTransformerRegistry: PkVariableTransformerRegistry;
     /**
      * Formie / React configure bridge — called when a chip is activated for editing.
      * Prefer this over listening for `pk-variable-tag-configure` from React.

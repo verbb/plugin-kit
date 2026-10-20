@@ -165,6 +165,10 @@ Use the array form when you need custom menu labels or another element type. Eac
 
 Plugin Kit supports application-level registration of TipTap nodes, marks, behaviour extensions, and stock-toolbar-compatible controls. Registration has schema and server-rendering implications, so it is documented separately in [Extending TipTap](/web/guides/tiptap-extensibility).
 
+## Variable Tag Indicators
+
+Variable tags display the applied transform as a badge and an orange corner when a default value is set. Pass `variableTransformerRegistry`, grouped by value type, to display transform names. Unknown transforms display their saved ID.
+
 <!-- pk-api:begin -->
 
 ## API
@@ -198,6 +202,7 @@ Plugin Kit supports application-level registration of TipTap nodes, marks, behav
 | `toolbarTooltips` `toolbar-tooltips` | Show `pk-tooltip` hints on toolbar buttons (default: on).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
 | `value` | Document JSON string. Also accepts a TipTap node array (common from React) and serializes it — arrays previously bypassed JSON.parse and mounted empty.<br><small><strong>Type</strong> <code>string</code></small> |
 | `variableTagConfigure` | Formie / React configure bridge — called when a chip is activated for editing. Prefer this over listening for `pk-variable-tag-configure` from React.<br><small><strong>Type</strong> <code>((detail: import('./variable-tag-node-view.js').PkVariableTagConfigureDetail) => void) \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `variableTransformerRegistry` | Transform names displayed as badges on configured variable tags.<br><small><strong>Type</strong> <code>PkVariableTransformerRegistry</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 
 ### Methods
 

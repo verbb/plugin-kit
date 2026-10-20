@@ -3,7 +3,7 @@ import { n as query, r as state, t as property } from "./decorators-BkErmuYK.js"
 import { t as PkFormAssociatedElement } from "./pk-form-associated-element-Doh2K3pG.js";
 import { t as MirrorValidator } from "./mirror-validator-BkZlEv1Z.js";
 import { t as formControlStyles } from "./form-control.styles-CQ93gnVf.js";
-import { i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "./tiptap.styles-CUvGoddW.js";
 import { css, html } from "lit";
 import { Editor } from "@tiptap/core";
 import { contentToValue, createTiptapInputExtensions, dedupeVariableOptions, flattenVariableOptions, inputValueToContent } from "@verbb/plugin-kit-tiptap-core";
@@ -89,6 +89,7 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 		this.suppressUpdateEmission = false;
 		this._value = null;
 		this.variableCategories = {};
+		this.variableTransformerRegistry = {};
 		this.variableTagConfigure = null;
 		this.readonly = false;
 		this.invalid = false;
@@ -152,6 +153,7 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
+		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && !changed.has("defaultValue")) this.syncEditorContent();
 		if (changed.has("defaultValue") && !this.valueHasChanged) this.syncEditorContent();
 		if (changed.has("variableCategories") && this.editor) this.syncEditorContent(true);
@@ -224,6 +226,7 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 __decorate([query(".editor-mount")], PkTiptapInput.prototype, "editorMount", void 0);
 __decorate([query(".mirror-input")], PkTiptapInput.prototype, "input", void 0);
 __decorate([property({ attribute: false })], PkTiptapInput.prototype, "variableCategories", void 0);
+__decorate([property({ attribute: false })], PkTiptapInput.prototype, "variableTransformerRegistry", void 0);
 __decorate([property({ attribute: false })], PkTiptapInput.prototype, "variableTagConfigure", void 0);
 __decorate([property({
 	type: Boolean,
@@ -247,4 +250,4 @@ PkTiptapInput = __decorate([customElement("pk-tiptap-input")], PkTiptapInput);
 //#endregion
 export { PkTiptapInput as t };
 
-//# sourceMappingURL=pk-tiptap-input-asrD-8W6.js.map
+//# sourceMappingURL=pk-tiptap-input-B8faxeqa.js.map

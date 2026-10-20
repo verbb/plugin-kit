@@ -1,439 +1,5 @@
-import { n as uniqueId } from "./pk-a11y-mGj0G5AE.js";
-import { m as i } from "./lit-B6nFKgbW.js";
-import { C as src_default$11, D as src_default$7, E as src_default$8, F as NodeSelection, I as Plugin, L as PluginKey, M as Node, O as src_default$1, R as TextSelection, S as src_default$12, T as src_default$9, _ as src_default$16, a as src_default$5, b as src_default$14, c as src_default$24, d as src_default$21, f as src_default$20, g as src_default$17, h as src_default$6, i as src_default$2, j as Extension, k as src_default, l as Table, m as src_default$18, n as src_default$25, o as src_default$22, p as src_default$19, r as src_default$3, s as src_default$23, t as src_default$26, u as src_default$4, v as src_default$15, w as src_default$10, x as src_default$13, y as TextStyleKit } from "./tiptap-DYSRDaas.js";
-//#region ../plugin-kit-tiptap-core/dist/links/extension.js
-/** Shared Tiptap link mark configuration for Plugin Kit editors. */
-function createLinkExtension() {
-	return src_default.configure({
-		openOnClick: false,
-		enableClickSelection: false,
-		HTMLAttributes: {
-			target: null,
-			rel: null
-		}
-	});
-}
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/extensions/variable-tag.js
-var isCursorPlaceholder = (node) => {
-	return node && node.isText && (node.text === "​" || node.text === "⁠");
-};
-function createVariableTagExtension({ trailingCursorText = "​", addNodeView } = {}) {
-	return Node.create({
-		name: "variableTag",
-		group: "inline",
-		inline: true,
-		selectable: true,
-		draggable: true,
-		atom: true,
-		addOptions() {
-			return { trailingCursorText };
-		},
-		addAttributes() {
-			return {
-				label: { default: null },
-				value: { default: null },
-				openOnInsert: { default: false },
-				default: { default: null },
-				transformerId: { default: null },
-				transformerParams: { default: null },
-				unresolved: { default: false }
-			};
-		},
-		parseHTML() {
-			return [{
-				tag: "variable-tag",
-				getAttrs: (dom) => {
-					try {
-						return JSON.parse(dom.innerHTML);
-					} catch {
-						return {};
-					}
-				}
-			}];
-		},
-		renderHTML({ HTMLAttributes }) {
-			return ["variable-tag", JSON.stringify(HTMLAttributes)];
-		},
-		addCommands() {
-			return { setVariableTag: (options) => {
-				return ({ dispatch, state }) => {
-					if (!dispatch) return false;
-					const { selection } = state;
-					const textSelection = selection;
-					const position = textSelection.$cursor ? textSelection.$cursor.pos : textSelection.$to.pos;
-					const node = this.type.create(options);
-					const transaction = state.tr.insert(position, node);
-					const insertPos = position + node.nodeSize;
-					const cursorText = this.options.trailingCursorText;
-					if (cursorText) {
-						transaction.insert(insertPos, state.schema.text(cursorText));
-						transaction.setSelection(TextSelection.create(transaction.doc, insertPos + cursorText.length));
-					} else transaction.setSelection(TextSelection.create(transaction.doc, insertPos));
-					dispatch(transaction);
-					return true;
-				};
-			} };
-		},
-		addNodeView() {
-			return addNodeView ?? null;
-		},
-		addProseMirrorPlugins() {
-			return [new Plugin({
-				key: new PluginKey("variableTagProtection"),
-				props: {
-					handleKeyDown: (view, event) => {
-						const { state } = view;
-						const { selection, doc } = state;
-						if (event.key === "ArrowLeft" && selection.empty) {
-							const { $from } = selection;
-							const { pos } = $from;
-							if (pos > 0) {
-								const before = $from.nodeBefore;
-								if (isCursorPlaceholder(before)) {
-									const posBeforePlaceholder = pos - before.nodeSize;
-									const variableTagNode = doc.resolve(posBeforePlaceholder).nodeBefore;
-									if (variableTagNode && variableTagNode.type.name === "variableTag") {
-										const tagStart = posBeforePlaceholder - variableTagNode.nodeSize;
-										event.preventDefault();
-										view.dispatch(state.tr.setSelection(NodeSelection.create(doc, tagStart)));
-										return true;
-									}
-								}
-							}
-						}
-						if (event.key === "ArrowRight" && selection.empty) {
-							const { $from } = selection;
-							const { pos } = $from;
-							const after = $from.nodeAfter;
-							if (isCursorPlaceholder(after)) {
-								const before = $from.nodeBefore;
-								if (before && before.type.name === "variableTag") {
-									event.preventDefault();
-									view.dispatch(state.tr.setSelection(TextSelection.create(doc, pos + after.nodeSize)));
-									return true;
-								}
-							}
-						}
-						if (event.key === "Backspace" && selection.empty) {
-							const { $from } = selection;
-							const { pos } = $from;
-							if (pos > 0) {
-								const before = $from.nodeBefore;
-								if (isCursorPlaceholder(before)) {
-									const posBeforePlaceholder = pos - before.nodeSize;
-									const variableTagNode = doc.resolve(posBeforePlaceholder).nodeBefore;
-									if (variableTagNode && variableTagNode.type.name === "variableTag") {
-										const deleteFrom = posBeforePlaceholder - variableTagNode.nodeSize;
-										event.preventDefault();
-										const tr = state.tr.delete(deleteFrom, pos);
-										tr.setSelection(TextSelection.create(tr.doc, Math.max(0, deleteFrom)));
-										view.dispatch(tr);
-										return true;
-									}
-								}
-							}
-						}
-						if (selection instanceof NodeSelection && selection.node.type.name === "variableTag") {
-							if ([
-								"ArrowLeft",
-								"ArrowRight",
-								"ArrowUp",
-								"ArrowDown",
-								"Home",
-								"End"
-							].includes(event.key)) return false;
-							if (["Delete", "Backspace"].includes(event.key)) return false;
-							if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return false;
-							if (event.key.length === 1 || event.key === "Enter") return true;
-						}
-						return false;
-					},
-					handlePaste: (view) => {
-						const { selection } = view.state;
-						if (selection instanceof NodeSelection && selection.node.type.name === "variableTag") return true;
-						return false;
-					},
-					handleDrop: (view) => {
-						const { selection } = view.state;
-						if (selection instanceof NodeSelection && selection.node.type.name === "variableTag" && !view.dragging) return true;
-						return false;
-					}
-				}
-			})];
-		}
-	});
-}
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/extensions/one-liner-document.js
-var OneLinerDocument = src_default$1.extend({ content: "inline*" });
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/extensions/font-variant-caps.js
-/** A deliberately narrow TextStyle attribute; arbitrary CSS values are never persisted. */
-var FontVariantCaps = Extension.create({
-	name: "fontVariantCaps",
-	addGlobalAttributes() {
-		return [{
-			types: ["textStyle"],
-			attributes: { fontVariantCaps: {
-				default: null,
-				parseHTML: (element) => element.style.fontVariantCaps === "small-caps" ? "small-caps" : null,
-				renderHTML: (attributes) => attributes.fontVariantCaps === "small-caps" ? { style: "font-variant-caps: small-caps" } : {}
-			} }
-		}];
-	},
-	addCommands() {
-		return {
-			setSmallCaps: () => ({ chain }) => chain().setMark("textStyle", { fontVariantCaps: "small-caps" }).run(),
-			unsetSmallCaps: () => ({ chain }) => chain().setMark("textStyle", { fontVariantCaps: null }).removeEmptyTextStyle().run(),
-			toggleSmallCaps: () => ({ editor, commands }) => editor.isActive("textStyle", { fontVariantCaps: "small-caps" }) ? commands.unsetSmallCaps() : commands.setSmallCaps()
-		};
-	}
-});
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/registry.js
-var extensionRegistrations = /* @__PURE__ */ new Map();
-var toolbarControls = /* @__PURE__ */ new Map();
-function getExtensionName(extension, id) {
-	if (!extension || typeof extension !== "object" || !("name" in extension)) throw new Error(`Tiptap extension "${id}" factory must return an extension with a schema name.`);
-	const { name } = extension;
-	if (typeof name !== "string" || !name) throw new Error(`Tiptap extension "${id}" factory must return an extension with a schema name.`);
-	return name;
-}
-function getRegisteredTiptapExtensions(surface) {
-	return [...extensionRegistrations.values()].filter((registration) => registration.surfaces.has(surface)).map((registration) => {
-		const extension = registration.factory();
-		const extensionName = getExtensionName(extension, registration.id);
-		if (extensionName !== registration.extensionName) throw new Error(`Tiptap extension factory "${registration.id}" changed its schema name from "${registration.extensionName}" to "${extensionName}".`);
-		return extension;
-	});
-}
-function getRegisteredTiptapToolbarControl(id) {
-	return toolbarControls.get(id);
-}
-function isRegisteredTiptapToolbarControl(id) {
-	return toolbarControls.has(id);
-}
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/extensions/create-extensions.js
-var createTiptapExtensions = ({ trailingCursorText = "​", variableTagNodeView, includeVariableTag = true, surface = "editor" } = {}) => {
-	const extensions = [
-		src_default$1,
-		src_default$2,
-		src_default$3,
-		src_default$4,
-		src_default$5,
-		src_default$6,
-		src_default$7,
-		src_default$8,
-		src_default$9,
-		src_default$10,
-		src_default$11,
-		src_default$12,
-		src_default$13,
-		src_default$14,
-		TextStyleKit,
-		FontVariantCaps,
-		src_default$15,
-		src_default$16,
-		src_default$17,
-		src_default$18.configure({ levels: [
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		] }),
-		src_default$19,
-		src_default$20,
-		src_default$21,
-		Table.configure({ resizable: true }),
-		src_default$22,
-		src_default$23,
-		src_default$24,
-		src_default$25,
-		createLinkExtension(),
-		src_default$26.configure({
-			types: ["heading", "paragraph"],
-			defaultAlignment: "start"
-		})
-	];
-	if (includeVariableTag) extensions.push(createVariableTagExtension({
-		trailingCursorText,
-		addNodeView: variableTagNodeView
-	}));
-	extensions.push(...getRegisteredTiptapExtensions(surface));
-	return extensions;
-};
-var createTiptapInputExtensions = ({ trailingCursorText = "​", variableTagNodeView } = {}) => {
-	return [
-		OneLinerDocument,
-		src_default$5,
-		createVariableTagExtension({
-			trailingCursorText,
-			addNodeView: variableTagNodeView
-		})
-	];
-};
-//#endregion
-//#region ../plugin-kit-tiptap-core/dist/text-style-toolbar.js
-var DEFAULT_TIPTAP_TEXT_STYLE_TOOLBAR_CONFIG = {
-	fontFamilies: [
-		{
-			label: "Default font",
-			value: null
-		},
-		{
-			label: "Arial",
-			value: "Arial, sans-serif"
-		},
-		{
-			label: "Georgia",
-			value: "Georgia, serif"
-		},
-		{
-			label: "Times New Roman",
-			value: "\"Times New Roman\", serif"
-		},
-		{
-			label: "Courier New",
-			value: "\"Courier New\", monospace"
-		}
-	],
-	fontSizes: [{
-		label: "Default",
-		value: null
-	}, ...[
-		8,
-		9,
-		10,
-		11,
-		12,
-		14,
-		16,
-		18,
-		24,
-		30,
-		36,
-		48,
-		60,
-		72,
-		96
-	].map((size) => ({
-		label: String(size),
-		value: `${size}px`
-	}))],
-	textColors: [
-		{
-			label: "Default",
-			value: null
-		},
-		{
-			label: "Black",
-			value: "#1f2937"
-		},
-		{
-			label: "Gray",
-			value: "#6b7280"
-		},
-		{
-			label: "Red",
-			value: "#dc2626"
-		},
-		{
-			label: "Orange",
-			value: "#ea580c"
-		},
-		{
-			label: "Yellow",
-			value: "#ca8a04"
-		},
-		{
-			label: "Green",
-			value: "#16a34a"
-		},
-		{
-			label: "Blue",
-			value: "#2563eb"
-		},
-		{
-			label: "Purple",
-			value: "#9333ea"
-		},
-		{
-			label: "Pink",
-			value: "#db2777"
-		}
-	],
-	backgroundColors: [
-		{
-			label: "None",
-			value: null
-		},
-		{
-			label: "Gray",
-			value: "#f3f4f6"
-		},
-		{
-			label: "Red",
-			value: "#fee2e2"
-		},
-		{
-			label: "Orange",
-			value: "#ffedd5"
-		},
-		{
-			label: "Yellow",
-			value: "#fef9c3"
-		},
-		{
-			label: "Green",
-			value: "#dcfce7"
-		},
-		{
-			label: "Blue",
-			value: "#dbeafe"
-		},
-		{
-			label: "Purple",
-			value: "#f3e8ff"
-		},
-		{
-			label: "Pink",
-			value: "#fce7f3"
-		}
-	],
-	lineHeights: [
-		{
-			label: "Default",
-			value: null
-		},
-		{
-			label: "Single (1.0)",
-			value: "1"
-		},
-		{
-			label: "1.15",
-			value: "1.15"
-		},
-		{
-			label: "1.5",
-			value: "1.5"
-		},
-		{
-			label: "Double (2.0)",
-			value: "2"
-		}
-	]
-};
-function resolveTiptapTextStyleToolbarConfig(config) {
-	return {
-		...DEFAULT_TIPTAP_TEXT_STYLE_TOOLBAR_CONFIG,
-		...config
-	};
-}
-//#endregion
+import { i as uniqueId } from "./focus-DcVUPVqn.js";
+import { css } from "lit";
 //#region src/components/tiptap/variable-tag-node-view.ts
 /** Match kit v1 VariableTagView chip chrome (indigo + remove). */
 var REMOVE_ICON = `
@@ -442,6 +8,11 @@ var REMOVE_ICON = `
 </svg>
 `.trim();
 var PK_VARIABLE_TAG_CONFIGURE_EVENT = "pk-variable-tag-configure";
+var PRESENTATION_CHANGE_EVENT = "pk-variable-tag-presentation-change";
+/** Refresh labels without changing the editor document or its selection. */
+function refreshVariableTagPresentation(host) {
+	host.dispatchEvent(new Event(PRESENTATION_CHANGE_EVENT));
+}
 var findTiptapHost = (viewDom) => {
 	let node = viewDom;
 	while (node) {
@@ -510,7 +81,8 @@ function createVariableTagDomNodeView() {
 		const { editor, getPos } = props;
 		const { deleteNode, updateAttributes, resolvePos } = createNodeViewCommands(editor, getPos);
 		let currentNode = props.node;
-		const syncUnresolvedPresentation = (attrs) => {
+		const host = findTiptapHost(props.view.dom);
+		const syncPresentation = (attrs) => {
 			const unresolved = Boolean(attrs.unresolved);
 			const token = String(attrs.value ?? "");
 			const chipLabel = String(attrs.label || attrs.value || "");
@@ -525,7 +97,15 @@ function createVariableTagDomNodeView() {
 				dom.removeAttribute("aria-description");
 				label.removeAttribute("aria-invalid");
 			}
-			label.textContent = chipLabel;
+			labelText.textContent = chipLabel;
+			const transformerId = String(attrs.transformerId ?? "").trim();
+			const registry = host?.variableTransformerRegistry ?? {};
+			const transformer = Object.values(registry).flat().find((entry) => entry.id === transformerId);
+			transformBadge.textContent = transformer?.label || transformerId;
+			transformBadge.hidden = !transformerId;
+			if (transformerId) transformBadge.setAttribute("aria-label", `Transform: ${transformBadge.textContent}`);
+			else transformBadge.removeAttribute("aria-label");
+			defaultMarker.hidden = String(attrs.default ?? "").trim() === "";
 		};
 		const dom = document.createElement("span");
 		dom.className = "pk-variable-tag";
@@ -538,8 +118,19 @@ function createVariableTagDomNodeView() {
 		label.type = "button";
 		label.className = "pk-variable-tag__label";
 		label.draggable = false;
+		const labelText = document.createElement("span");
+		labelText.className = "pk-variable-tag__text";
+		const transformBadge = document.createElement("span");
+		transformBadge.className = "pk-variable-tag__transform";
+		const defaultMarker = document.createElement("span");
+		defaultMarker.className = "pk-variable-tag__default";
+		defaultMarker.setAttribute("role", "img");
+		defaultMarker.setAttribute("aria-label", "Has default value");
+		label.append(defaultMarker, labelText, transformBadge);
 		dom.append(label);
-		syncUnresolvedPresentation(currentNode.attrs);
+		syncPresentation(currentNode.attrs);
+		const refreshPresentation = () => syncPresentation(currentNode.attrs);
+		host?.addEventListener(PRESENTATION_CHANGE_EVENT, refreshPresentation);
 		let removeButton = null;
 		let openOnInsertHandled = false;
 		let openedAt = 0;
@@ -611,6 +202,7 @@ function createVariableTagDomNodeView() {
 		}
 		return {
 			dom,
+			destroy: () => host?.removeEventListener(PRESENTATION_CHANGE_EVENT, refreshPresentation),
 			stopEvent: (event) => {
 				const target = event.target;
 				if (!(target instanceof Element)) return false;
@@ -629,7 +221,7 @@ function createVariableTagDomNodeView() {
 				currentNode = updatedNode;
 				dom.dataset.label = String(updatedNode.attrs.label ?? "");
 				dom.dataset.variableValue = String(updatedNode.attrs.value ?? "");
-				syncUnresolvedPresentation(updatedNode.attrs);
+				syncPresentation(updatedNode.attrs);
 				syncRemoveButton(editor.isEditable);
 				return true;
 			}
@@ -640,9 +232,9 @@ function createVariableTagDomNodeView() {
 //#region src/components/tiptap/tiptap.styles.ts
 /**
 * Indigo chip matching kit v1 VariableTagView (`bg-[#5C6BC0] text-white rounded-[2px]`).
-* Shared by rich editor + single-line input ProseMirror hosts.
+* Shared by rich editor, single-line input, and read-only content hosts.
 */
-var variableTagStyles = i`
+var variableTagStyles = css`
     .pk-variable-tag {
         position: relative;
         display: inline-flex;
@@ -685,7 +277,8 @@ var variableTagStyles = i`
     .pk-variable-tag__label {
         display: inline-flex;
         align-items: center;
-        max-width: 220px;
+        min-width: 0;
+        max-width: 320px;
         margin: 0;
         padding: 4px 5px;
         border: 0;
@@ -699,6 +292,41 @@ var variableTagStyles = i`
         text-overflow: ellipsis;
         cursor: pointer;
         user-select: none;
+    }
+
+    .pk-variable-tag__text {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pk-variable-tag__transform {
+        flex-shrink: 0;
+        max-width: 140px;
+        margin-inline-start: 4px;
+        padding: 1px 3px;
+        border-radius: 2px;
+        background: rgb(255 255 255 / 20%);
+        font-size: 9px;
+        line-height: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pk-variable-tag__default {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-top: 8px solid var(--pk-color-orange-400, #fb923c);
+        border-right: 8px solid transparent;
+        pointer-events: none;
+    }
+
+    .pk-variable-tag__transform[hidden],
+    .pk-variable-tag__default[hidden] {
+        display: none;
     }
 
     .pk-variable-tag__remove {
@@ -742,7 +370,7 @@ var variableTagStyles = i`
         pointer-events: none;
     }
 `;
-var tiptapProseMirrorStyles = i`
+var tiptapProseMirrorStyles = css`
     @layer pk-component {
         .ProseMirror {
             outline: none;
@@ -838,7 +466,7 @@ var tiptapProseMirrorStyles = i`
 * Never `display: none` it — that freezes one-liner docs after the first character.
 * Clip to one line height instead so the break cannot inflate the control.
 */
-var tiptapInputProseMirrorStyles = i`
+var tiptapInputProseMirrorStyles = css`
     @layer pk-component {
         .ProseMirror {
             outline: none;
@@ -894,7 +522,7 @@ var tiptapInputProseMirrorStyles = i`
         ${variableTagStyles}
     }
 `;
-var tiptapContentProseMirrorStyles = i`
+var tiptapContentProseMirrorStyles = css`
     @layer pk-component {
         /* Inherit host color/size so light-DOM wrappers (warning banners, badges)
            can restyle read-only TipTap without piercing the shadow tree. */
@@ -909,7 +537,11 @@ var tiptapContentProseMirrorStyles = i`
         .ProseMirror p {
             margin: 0;
         }
+
+        ${variableTagStyles}
     }
 `;
 //#endregion
-export { resolveTiptapTextStyleToolbarConfig as a, getRegisteredTiptapToolbarControl as c, createVariableTagDomNodeView as i, isRegisteredTiptapToolbarControl as l, tiptapInputProseMirrorStyles as n, createTiptapExtensions as o, tiptapProseMirrorStyles as r, createTiptapInputExtensions as s, tiptapContentProseMirrorStyles as t };
+export { refreshVariableTagPresentation as a, createVariableTagDomNodeView as i, tiptapInputProseMirrorStyles as n, tiptapProseMirrorStyles as r, tiptapContentProseMirrorStyles as t };
+
+//# sourceMappingURL=tiptap.styles-CUvGoddW.js.map

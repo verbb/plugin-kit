@@ -2,6 +2,7 @@ import { PropertyValues } from 'lit';
 import { VariableOption } from '@verbb/plugin-kit-tiptap-core';
 import { Editor } from '@tiptap/core';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
+import { PkVariableTransformerRegistry } from './variable-tag-node-view.js';
 /** Category map keyed like Formie / kit v1 (`fieldsVariables`, `formVariables`, …). */
 export type PkTiptapVariableCategories = Record<string, VariableOption[]>;
 export declare class PkTiptapInput extends PkFormAssociatedElement {
@@ -20,6 +21,8 @@ export declare class PkTiptapInput extends PkFormAssociatedElement {
      * Without this, saved field tokens fall back to UID title-casing after reload.
      */
     variableCategories: PkTiptapVariableCategories;
+    /** Transform names displayed as badges on configured variable tags. */
+    variableTransformerRegistry: PkVariableTransformerRegistry;
     /**
      * Formie / React configure bridge — called when a chip is activated for editing.
      * Prefer this over listening for `pk-variable-tag-configure` from React.

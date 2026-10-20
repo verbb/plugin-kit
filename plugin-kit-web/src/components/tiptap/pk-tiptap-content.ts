@@ -8,7 +8,11 @@ import {
 } from '@verbb/plugin-kit-tiptap-core';
 
 import { PkElement } from '../../base/pk-element.js';
-import { createVariableTagDomNodeView } from './variable-tag-node-view.js';
+import {
+    createVariableTagDomNodeView,
+    refreshVariableTagPresentation,
+    type PkVariableTransformerRegistry,
+} from './variable-tag-node-view.js';
 import { pkTiptapContentStyles } from './pk-tiptap-content.styles.js';
 import { tiptapContentProseMirrorStyles } from './tiptap.styles.js';
 
@@ -41,6 +45,10 @@ export class PkTiptapContent extends PkElement {
     @property({ attribute: 'value' })
     value = '';
 
+    /** Transform names displayed as badges on configured variable tags. */
+    @property({ attribute: false })
+    variableTransformerRegistry: PkVariableTransformerRegistry = {};
+
     override disconnectedCallback(): void {
         this.editor?.destroy();
         this.editor = null;
@@ -48,6 +56,10 @@ export class PkTiptapContent extends PkElement {
     }
 
     override updated(changed: PropertyValues): void {
+        if (changed.has('variableTransformerRegistry')) {
+            refreshVariableTagPresentation(this);
+        }
+
         if (changed.has('value') && this.editor) {
             this.syncContent();
         }

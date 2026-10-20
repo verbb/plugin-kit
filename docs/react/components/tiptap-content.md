@@ -31,6 +31,10 @@ This matters for builder previews where field settings change before the form is
 - SchemaForm: bind TipTap via [Custom Schema Fields](../../forms/custom-schema-fields.md) (rich-text `$field`s are product-owned)
 - Shared extensions and normalization: `@verbb/plugin-kit-tiptap-core`
 
+## Variable Tag Indicators
+
+Variable tags display the applied transform as a badge and an orange corner when a default value is set. Pass `variableTransformerRegistry`, grouped by value type, to display transform names. Unknown transforms display their saved ID.
+
 <!-- pk-api:begin -->
 
 ## API
@@ -40,5 +44,6 @@ This matters for builder previews where field settings change before the form is
 | Name | Description |
 | --- | --- |
 | `value` | <small><strong>Type</strong> <code>string</code></small> |
+| `variableTransformerRegistry` | Transform names displayed as badges on configured variable tags.<br><small><strong>Type</strong> <code>PkVariableTransformerRegistry</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 
 <!-- pk-api:end -->

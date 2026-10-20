@@ -16,7 +16,7 @@ import "./pk-dropdown-label-BdZLeizJ.js";
 import "../components/dropdown-menu/pk-dropdown-separator.js";
 import "./pk-field--PCE9nOd.js";
 import "./pk-tooltip-Cvv2f7T5.js";
-import { i as createVariableTagDomNodeView, r as tiptapProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, r as tiptapProseMirrorStyles } from "./tiptap.styles-CUvGoddW.js";
 import { css, html, nothing } from "lit";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import { Editor, getMarkRange, posToDOMRect } from "@tiptap/core";
@@ -597,6 +597,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		this.placeholder = "";
 		this.readonly = false;
 		this.invalid = false;
+		this.variableTransformerRegistry = {};
 		this.variableTagConfigure = null;
 		this.invalidContentMessage = "";
 		this.toolbarTooltips = true;
@@ -730,6 +731,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
+		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && !changed.has("defaultValue")) this.syncEditorContent();
 		if (changed.has("defaultValue") && !this.valueHasChanged) this.syncEditorContent();
 		if (changed.has("disabled") || changed.has("readonly")) this.host.editor?.setEditable(!this.disabled && !this.readonly);
@@ -1382,6 +1384,7 @@ __decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkTiptapEditor.prototype, "invalid", void 0);
+__decorate([property({ attribute: false })], PkTiptapEditor.prototype, "variableTransformerRegistry", void 0);
 __decorate([property({ attribute: false })], PkTiptapEditor.prototype, "variableTagConfigure", void 0);
 __decorate([property({ attribute: "invalid-content-message" })], PkTiptapEditor.prototype, "invalidContentMessage", void 0);
 __decorate([property({
@@ -1404,4 +1407,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-DLHbQRCW.js.map
+//# sourceMappingURL=pk-tiptap-editor-C7tOOMC0.js.map

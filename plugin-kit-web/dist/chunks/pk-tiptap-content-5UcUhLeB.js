@@ -1,6 +1,6 @@
 import { i as customElement, n as PkElement, t as __decorate } from "./decorate-Br_PE9pq.js";
 import { n as query, t as property } from "./decorators-BkErmuYK.js";
-import { i as createVariableTagDomNodeView, t as tiptapContentProseMirrorStyles } from "./tiptap.styles-Cwb_cj9g.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, t as tiptapContentProseMirrorStyles } from "./tiptap.styles-CUvGoddW.js";
 import { css, html } from "lit";
 import { Editor } from "@tiptap/core";
 import { createTiptapExtensions, valueToContent } from "@verbb/plugin-kit-tiptap-core";
@@ -30,6 +30,7 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 		super(..._args);
 		this.editor = null;
 		this.value = "";
+		this.variableTransformerRegistry = {};
 	}
 	static {
 		this.styles = [pkTiptapContentStyles, tiptapContentProseMirrorStyles];
@@ -40,6 +41,7 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
+		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && this.editor) this.syncContent();
 		super.updated(changed);
 	}
@@ -72,8 +74,9 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 };
 __decorate([query(".editor-mount")], PkTiptapContent.prototype, "editorMount", void 0);
 __decorate([property({ attribute: "value" })], PkTiptapContent.prototype, "value", void 0);
+__decorate([property({ attribute: false })], PkTiptapContent.prototype, "variableTransformerRegistry", void 0);
 PkTiptapContent = __decorate([customElement("pk-tiptap-content")], PkTiptapContent);
 //#endregion
 export { PkTiptapContent as t };
 
-//# sourceMappingURL=pk-tiptap-content-DmS_2EUi.js.map
+//# sourceMappingURL=pk-tiptap-content-5UcUhLeB.js.map

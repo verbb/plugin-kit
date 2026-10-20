@@ -69,7 +69,11 @@ import {
     getToolbarButtonIcon,
     getToolbarMenuItemLabel,
 } from './tiptap-toolbar.js';
-import { createVariableTagDomNodeView } from './variable-tag-node-view.js';
+import {
+    createVariableTagDomNodeView,
+    refreshVariableTagPresentation,
+    type PkVariableTransformerRegistry,
+} from './variable-tag-node-view.js';
 import { pkTiptapEditorStyles } from './pk-tiptap-editor.styles.js';
 import { tiptapProseMirrorStyles } from './tiptap.styles.js';
 
@@ -203,6 +207,10 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
 
     @property({ type: Boolean, reflect: true })
     invalid = false;
+
+    /** Transform names displayed as badges on configured variable tags. */
+    @property({ attribute: false })
+    variableTransformerRegistry: PkVariableTransformerRegistry = {};
 
     /**
      * Formie / React configure bridge — called when a chip is activated for editing.
@@ -345,6 +353,10 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     }
 
     override updated(changed: PropertyValues): void {
+        if (changed.has('variableTransformerRegistry')) {
+            refreshVariableTagPresentation(this);
+        }
+
         if (changed.has('value') && !changed.has('defaultValue')) {
             this.syncEditorContent();
         }

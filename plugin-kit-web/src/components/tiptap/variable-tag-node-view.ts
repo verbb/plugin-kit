@@ -11,6 +11,16 @@ const REMOVE_ICON = `
 
 export const PK_VARIABLE_TAG_CONFIGURE_EVENT = 'pk-variable-tag-configure';
 
+/** Transform metadata grouped by value type, supplied by the consuming application. */
+export type PkVariableTransformerRegistry = Record<string, readonly { id: string; label?: string }[]>;
+
+const PRESENTATION_CHANGE_EVENT = 'pk-variable-tag-presentation-change';
+
+/** Refresh labels without changing the editor document or its selection. */
+export function refreshVariableTagPresentation(host: HTMLElement): void {
+    host.dispatchEvent(new Event(PRESENTATION_CHANGE_EVENT));
+}
+
 export type PkVariableTagConfigureDetail = {
     editor: Editor;
     anchor: HTMLElement;
@@ -134,7 +144,9 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
 
         let currentNode: ProseMirrorNode = props.node;
 
-        const syncUnresolvedPresentation = (attrs: Record<string, unknown>) => {
+        const host = findTiptapHost(props.view.dom);
+
+        const syncPresentation = (attrs: Record<string, unknown>) => {
             const unresolved = Boolean(attrs.unresolved);
             const token = String(attrs.value ?? '');
             const chipLabel = String(attrs.label || attrs.value || '');
@@ -154,7 +166,24 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
                 label.removeAttribute('aria-invalid');
             }
 
-            label.textContent = chipLabel;
+            labelText.textContent = chipLabel;
+
+            const transformerId = String(attrs.transformerId ?? '').trim();
+            const registry = (host as (HTMLElement & {
+                variableTransformerRegistry?: PkVariableTransformerRegistry;
+            }) | null)?.variableTransformerRegistry ?? {};
+            const transformer = Object.values(registry)
+                .flat()
+                .find((entry) => entry.id === transformerId);
+            transformBadge.textContent = transformer?.label || transformerId;
+            transformBadge.hidden = !transformerId;
+            if (transformerId) {
+                transformBadge.setAttribute('aria-label', `Transform: ${transformBadge.textContent}`);
+            } else {
+                transformBadge.removeAttribute('aria-label');
+            }
+
+            defaultMarker.hidden = String(attrs.default ?? '').trim() === '';
         };
 
         const dom = document.createElement('span');
@@ -174,8 +203,21 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
         label.type = 'button';
         label.className = 'pk-variable-tag__label';
         label.draggable = false;
+        const labelText = document.createElement('span');
+        labelText.className = 'pk-variable-tag__text';
+        const transformBadge = document.createElement('span');
+        transformBadge.className = 'pk-variable-tag__transform';
+        const defaultMarker = document.createElement('span');
+        defaultMarker.className = 'pk-variable-tag__default';
+        defaultMarker.setAttribute('role', 'img');
+        defaultMarker.setAttribute('aria-label', 'Has default value');
+        label.append(defaultMarker, labelText, transformBadge);
         dom.append(label);
-        syncUnresolvedPresentation(currentNode.attrs);
+        syncPresentation(currentNode.attrs);
+
+        // Registry labels can arrive after hydration; refresh chrome without rewriting tokens.
+        const refreshPresentation = () => syncPresentation(currentNode.attrs);
+        host?.addEventListener(PRESENTATION_CHANGE_EVENT, refreshPresentation);
 
         let removeButton: HTMLButtonElement | null = null;
         let openOnInsertHandled = false;
@@ -276,6 +318,7 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
 
         return {
             dom,
+            destroy: () => host?.removeEventListener(PRESENTATION_CHANGE_EVENT, refreshPresentation),
             // TipTap React node views stop PM from handling events inside the chip —
             // that prevents `draggable=true` arming, which otherwise kills configure.
             // Drag still works via outer NodeSelection + data-drag-handle when the
@@ -308,7 +351,7 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
                 currentNode = updatedNode;
                 dom.dataset.label = String(updatedNode.attrs.label ?? '');
                 dom.dataset.variableValue = String(updatedNode.attrs.value ?? '');
-                syncUnresolvedPresentation(updatedNode.attrs);
+                syncPresentation(updatedNode.attrs);
                 syncRemoveButton(editor.isEditable);
                 return true;
             },

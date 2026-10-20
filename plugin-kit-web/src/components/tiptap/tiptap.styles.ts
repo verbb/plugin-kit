@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 /**
  * Indigo chip matching kit v1 VariableTagView (`bg-[#5C6BC0] text-white rounded-[2px]`).
- * Shared by rich editor + single-line input ProseMirror hosts.
+ * Shared by rich editor, single-line input, and read-only content hosts.
  */
 const variableTagStyles = css`
     .pk-variable-tag {
@@ -47,7 +47,8 @@ const variableTagStyles = css`
     .pk-variable-tag__label {
         display: inline-flex;
         align-items: center;
-        max-width: 220px;
+        min-width: 0;
+        max-width: 320px;
         margin: 0;
         padding: 4px 5px;
         border: 0;
@@ -61,6 +62,41 @@ const variableTagStyles = css`
         text-overflow: ellipsis;
         cursor: pointer;
         user-select: none;
+    }
+
+    .pk-variable-tag__text {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pk-variable-tag__transform {
+        flex-shrink: 0;
+        max-width: 140px;
+        margin-inline-start: 4px;
+        padding: 1px 3px;
+        border-radius: 2px;
+        background: rgb(255 255 255 / 20%);
+        font-size: 9px;
+        line-height: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pk-variable-tag__default {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-top: 8px solid var(--pk-color-orange-400, #fb923c);
+        border-right: 8px solid transparent;
+        pointer-events: none;
+    }
+
+    .pk-variable-tag__transform[hidden],
+    .pk-variable-tag__default[hidden] {
+        display: none;
     }
 
     .pk-variable-tag__remove {
@@ -274,5 +310,7 @@ export const tiptapContentProseMirrorStyles = css`
         .ProseMirror p {
             margin: 0;
         }
+
+        ${variableTagStyles}
     }
 `;
