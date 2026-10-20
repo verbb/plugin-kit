@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.27 - 2026-10-20
+
 ### Fixed
 - Restored transform name badges and orange default-value corner markers on variable tags across inputs, editors, and read-only content.
 
