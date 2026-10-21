@@ -24,5 +24,10 @@
         "docs:dev": "npm run docs:dev -w @verbb/plugin-kit-docs",
         "docs:build": "npm run docs:build -w @verbb/plugin-kit-docs",
         "release:publish-prepared": "node ./scripts/publish-prepared.mjs"
+    },
+    "overrides": {
+        "vitepress": {
+            "vite": "6.4.4"
+        }
     }
 }

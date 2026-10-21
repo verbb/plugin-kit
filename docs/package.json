@@ -24,8 +24,13 @@
         "react-dom": "^19.2.5",
         "tailwindcss": "^4.2.4",
         "typescript": "^6.0.3",
-        "vite": "^8.3.3",
+        "vite": "^8.3.4",
         "vitepress": "^1.6.4",
         "vue": "^3.5.43"
+    },
+    "overrides": {
+        "vitepress": {
+            "vite": "6.4.4"
+        }
     }
 }
