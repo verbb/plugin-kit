@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added the outlined sliders icon for view controls.
+
 ### Changed
 - Updated the package build toolchain to Vite 8.3.4.
 

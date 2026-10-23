@@ -73,6 +73,7 @@ export declare const magnifyingGlass: PkIcon;
 export declare const share: PkIcon;
 export declare const smallCaps: PkIcon;
 export declare const sliders: PkIcon;
+export declare const slidersOutline: PkIcon;
 export declare const strikethrough: PkIcon;
 export declare const subscript: PkIcon;
 export declare const superscript: PkIcon;
@@ -156,6 +157,7 @@ export declare const icons: {
     readonly share: PkIcon;
     readonly smallCaps: PkIcon;
     readonly sliders: PkIcon;
+    readonly slidersOutline: PkIcon;
     readonly strikethrough: PkIcon;
     readonly subscript: PkIcon;
     readonly superscript: PkIcon;
