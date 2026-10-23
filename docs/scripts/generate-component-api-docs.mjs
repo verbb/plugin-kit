@@ -74,6 +74,7 @@ const PAGE_APIS = {
     'spinner.md': { tags: ['pk-spinner'] },
     'state-panel.md': { tags: ['pk-state-panel'] },
     'status.md': { tags: ['pk-status'] },
+    'status-label.md': { tags: ['pk-status-label'] },
     'tabs.md': { tags: ['pk-tabs', 'pk-tab', 'pk-tab-heading', 'pk-tab-panel'] },
     'textarea.md': { tags: ['pk-textarea'] },
     'time-picker.md': { tags: ['pk-time-picker'] },

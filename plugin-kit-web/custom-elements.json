@@ -31825,6 +31825,160 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/status-label/pk-status-label.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A Craft-style status badge with a dot and visible label.",
+          "name": "PkStatusLabel",
+          "cssProperties": [
+            {
+              "description": "Text colour override, including on selected surfaces.",
+              "name": "--pk-status-label-color"
+            },
+            {
+              "description": "Complete badge background override.",
+              "name": "--pk-status-label-background"
+            },
+            {
+              "description": "Base tint for neutral badges; use white on selected surfaces.",
+              "name": "--pk-status-label-neutral-tint"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Badge container",
+              "name": "base"
+            },
+            {
+              "description": "Status dot host",
+              "name": "indicator"
+            },
+            {
+              "description": "Visible label",
+              "name": "label"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Status text. Defaults to the status value; casing is visual only.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "status",
+              "type": {
+                "text": "PkStatusVariant"
+              },
+              "default": "'gray'",
+              "description": "Semantic status or named colour, independent of the visible label. Unknown values use neutral styling.",
+              "attribute": "status",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "status",
+              "type": {
+                "text": "PkStatusVariant"
+              },
+              "default": "'gray'",
+              "description": "Semantic status or named colour, independent of the visible label. Unknown values use neutral styling.",
+              "fieldName": "status"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "tagName": "pk-status-label",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkStatusLabel",
+          "declaration": {
+            "name": "PkStatusLabel",
+            "module": "src/components/status-label/pk-status-label.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-status-label",
+          "declaration": {
+            "name": "PkStatusLabel",
+            "module": "src/components/status-label/pk-status-label.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/status/pk-status.ts",
       "declarations": [
         {

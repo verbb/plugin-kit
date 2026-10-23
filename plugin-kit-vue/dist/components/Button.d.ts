@@ -99,9 +99,9 @@ export declare const Button: import('vue').DefineComponent<import('vue').Extract
     };
 }>> & Readonly<{}>, {
     size: PkButtonSize;
-    type: "reset" | "submit" | "button";
     disabled: boolean;
-    dataState: "focus-visible" | "active" | "hover" | undefined;
+    type: "reset" | "submit" | "button";
+    dataState: "active" | "focus-visible" | "hover" | undefined;
     variant: PkButtonVariant;
     loading: boolean;
     spinnerVariant: PkSpinnerVariant;
@@ -195,9 +195,9 @@ export declare const PkButtonElement: import('vue').DefineComponent<import('vue'
     };
 }>> & Readonly<{}>, {
     size: PkButtonSize;
-    type: "reset" | "submit" | "button";
     disabled: boolean;
-    dataState: "focus-visible" | "active" | "hover" | undefined;
+    type: "reset" | "submit" | "button";
+    dataState: "active" | "focus-visible" | "hover" | undefined;
     variant: PkButtonVariant;
     loading: boolean;
     spinnerVariant: PkSpinnerVariant;

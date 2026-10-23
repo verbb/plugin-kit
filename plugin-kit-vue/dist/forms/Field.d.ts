@@ -112,9 +112,9 @@ export declare const FieldLayout: import('vue').DefineComponent<import('vue').Ex
     label: string;
     style: undefined;
     class: undefined;
+    warning: string;
     required: boolean;
     instructions: string;
-    warning: string;
     tip: string;
     translatable: boolean;
     errors: string[];

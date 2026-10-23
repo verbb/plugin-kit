@@ -225,6 +225,11 @@ export async function registerPkStatus(): Promise<void> {
     await import('./components/status/pk-status.js');
 }
 
+/** Register `pk-status-label` only (async side-effect import). */
+export async function registerPkStatusLabel(): Promise<void> {
+    await import('./components/status-label/pk-status-label.js');
+}
+
 /** Register `pk-tab` only (async side-effect import). */
 export async function registerPkTab(): Promise<void> {
     await import('./components/tabs/pk-tab.js');

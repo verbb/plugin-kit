@@ -88,6 +88,8 @@ export declare function registerPkSpinner(): Promise<void>;
 export declare function registerPkStatePanel(): Promise<void>;
 /** Register `pk-status` only (async side-effect import). */
 export declare function registerPkStatus(): Promise<void>;
+/** Register `pk-status-label` only (async side-effect import). */
+export declare function registerPkStatusLabel(): Promise<void>;
 /** Register `pk-tab` only (async side-effect import). */
 export declare function registerPkTab(): Promise<void>;
 /** Register `pk-tab-heading` only (async side-effect import). */

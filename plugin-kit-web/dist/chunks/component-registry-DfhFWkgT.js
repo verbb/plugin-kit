@@ -27,6 +27,7 @@ var COMPONENT_MODULE_PATHS = {
 	"pk-field": "components/field/field.js",
 	"pk-separator": "components/separator/separator.js",
 	"pk-status": "components/status/status.js",
+	"pk-status-label": "components/status-label/status-label.js",
 	"pk-toggle": "components/toggle/toggle.js",
 	"pk-toggle-group": "components/toggle-group/toggle-group.js",
 	"pk-lightswitch": "components/lightswitch/lightswitch.js",
@@ -88,6 +89,7 @@ var LOADER_COMPONENT_ENTRIES = {
 	"components/field/field": "src/components/field/pk-field.ts",
 	"components/separator/separator": "src/components/separator/pk-separator.ts",
 	"components/status/status": "src/components/status/pk-status.ts",
+	"components/status-label/status-label": "src/components/status-label/pk-status-label.ts",
 	"components/toggle/toggle": "src/components/toggle/pk-toggle.ts",
 	"components/toggle-group/toggle-group": "src/components/toggle-group/pk-toggle-group.ts",
 	"components/lightswitch/lightswitch": "src/components/lightswitch/pk-lightswitch.ts",
@@ -140,4 +142,4 @@ var BUNDLER_TAG_IMPORT_PATHS = Object.fromEntries(Object.keys(BUNDLER_COMPONENT_
 //#endregion
 export { COMPONENT_MODULE_PATHS as n, BUNDLER_TAG_IMPORT_PATHS as t };
 
-//# sourceMappingURL=component-registry-B5pnAZsb.js.map
+//# sourceMappingURL=component-registry-DfhFWkgT.js.map

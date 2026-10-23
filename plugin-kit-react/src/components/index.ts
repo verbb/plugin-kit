@@ -10,6 +10,7 @@ export * from './Popup.js';
 export * from './ScrollArea.js';
 export * from './Separator.js';
 export * from './Status.js';
+export * from './StatusLabel.js';
 export * from './StatePanel.js';
 export * from './Toggle.js';
 export * from './ToggleGroup.js';

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added StatusLabel badges with semantic and named colours.
+
 ### Changed
 - Updated the package build toolchain to Vite 8.3.4.
 

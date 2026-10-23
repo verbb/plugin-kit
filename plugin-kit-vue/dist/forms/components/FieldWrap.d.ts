@@ -35,9 +35,9 @@ export declare const FieldWrap: {
     }>, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, import('vue').PublicProps, {
         name: string;
         label: string;
+        warning: string;
         required: boolean;
         instructions: string;
-        warning: string;
         schemaNode: import('@verbb/plugin-kit-forms').SchemaNode | undefined;
     }, true, {}, {}, import('vue').GlobalComponents, import('vue').GlobalDirectives, string, {}, any, import('vue').ComponentProvideOptions, {
         P: {};
@@ -76,9 +76,9 @@ export declare const FieldWrap: {
     }>, {}, {}, {}, {
         name: string;
         label: string;
+        warning: string;
         required: boolean;
         instructions: string;
-        warning: string;
         schemaNode: import('@verbb/plugin-kit-forms').SchemaNode | undefined;
     }>;
     __isFragment?: never;
@@ -114,9 +114,9 @@ export declare const FieldWrap: {
 }>, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, {
     name: string;
     label: string;
+    warning: string;
     required: boolean;
     instructions: string;
-    warning: string;
     schemaNode: import('@verbb/plugin-kit-forms').SchemaNode | undefined;
 }, {}, string, {}, import('vue').GlobalComponents, import('vue').GlobalDirectives, string, import('vue').ComponentProvideOptions> & import('vue').VNodeProps & import('vue').AllowedComponentProps & import('vue').ComponentCustomProps & {
     usesSchemaNode: true;

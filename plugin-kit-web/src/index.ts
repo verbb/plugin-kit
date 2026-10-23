@@ -11,6 +11,7 @@ export * from './components/input-group/index.js';
 export * from './components/textarea/index.js';
 export * from './components/separator/index.js';
 export * from './components/status/index.js';
+export * from './components/status-label/index.js';
 export * from './components/toggle/index.js';
 export * from './components/toggle-group/index.js';
 export * from './components/lightswitch/index.js';

@@ -1,0 +1,1 @@
+{"version":3,"file":"StatusLabel.d.ts","sourceRoot":"","sources":["../../src/components/StatusLabel.ts"],"names":[],"mappings":"AACA,OAAO,kDAAkD,CAAC;AAE1D,0FAA0F;AAC1F,eAAO,MAAM,WAAW;;2OAGtB,CAAC;AAEH,eAAO,MAAM,oBAAoB;;2OAAc,CAAC;AAEhD,MAAM,MAAM,gBAAgB,GAAG;IAC3B,MAAM,CAAC,EAAE,OAAO,sDAAsD,EAAE,eAAe,CAAC;CAC3F,GAAG,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC"}

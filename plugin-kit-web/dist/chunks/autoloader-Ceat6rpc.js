@@ -1,5 +1,5 @@
 import { t as SUPPORTS_POPOVER } from "./supports-popover-BCqyOPtO.js";
-import { n as COMPONENT_MODULE_PATHS } from "./component-registry-B5pnAZsb.js";
+import { n as COMPONENT_MODULE_PATHS } from "./component-registry-DfhFWkgT.js";
 //#endregion
 //#region src/utils/portal.ts
 var defaultPortalClassName;
@@ -155,4 +155,4 @@ var DISCOVERY_COMPLETE_EVENT = DISCOVERY_EVENT;
 //#endregion
 export { setPortalClassName as _, startLoader as a, setBasePath as c, getPortalClassName as d, getPortalContainer as f, resolvePositionMethod as g, getShadowRootSelectors as h, preventTurboFouce as i, allDefined as l, getPortalTargetForAppend as m, FOUCE_TIMEOUT_MS as n, stopLoader as o, getPortalMountElement as p, discover as r, getBasePath as s, DISCOVERY_COMPLETE_EVENT as t, configurePluginKitWeb as u, setPortalContainer as v, setShadowRootSelectors as y };
 
-//# sourceMappingURL=autoloader-DcwybeWc.js.map
+//# sourceMappingURL=autoloader-Ceat6rpc.js.map

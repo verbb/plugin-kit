@@ -47,6 +47,8 @@ import { t as PkSeparator } from "./chunks/pk-separator-ZkRowI5Y.js";
 import "./components/separator.js";
 import { t as PkStatus } from "./chunks/pk-status-CdiRBRyh.js";
 import "./components/status.js";
+import { t as PkStatusLabel } from "./chunks/pk-status-label-CopQRSZz.js";
+import "./components/status-label.js";
 import { t as PkToggle } from "./chunks/pk-toggle-Co8GsHuK.js";
 import "./components/toggle.js";
 import { t as PkToggleGroup } from "./chunks/pk-toggle-group-Ct1ljI-7.js";
@@ -100,8 +102,8 @@ import "./components/spinner.js";
 import { t as PkTiptapContent } from "./chunks/pk-tiptap-content-5UcUhLeB.js";
 import { t as PkTiptapEditor } from "./chunks/pk-tiptap-editor-CtKVxjSg.js";
 import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-B8faxeqa.js";
-import { _ as setPortalClassName, a as startLoader, c as setBasePath, d as getPortalClassName, f as getPortalContainer, g as resolvePositionMethod, h as getShadowRootSelectors, i as preventTurboFouce, l as allDefined, m as getPortalTargetForAppend, n as FOUCE_TIMEOUT_MS, o as stopLoader, p as getPortalMountElement, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer, y as setShadowRootSelectors } from "./chunks/autoloader-DcwybeWc.js";
-import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-B5pnAZsb.js";
+import { _ as setPortalClassName, a as startLoader, c as setBasePath, d as getPortalClassName, f as getPortalContainer, g as resolvePositionMethod, h as getShadowRootSelectors, i as preventTurboFouce, l as allDefined, m as getPortalTargetForAppend, n as FOUCE_TIMEOUT_MS, o as stopLoader, p as getPortalMountElement, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer, y as setShadowRootSelectors } from "./chunks/autoloader-Ceat6rpc.js";
+import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-DfhFWkgT.js";
 import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 import { registerAll } from "./register.js";
 export * from "@verbb/plugin-kit-icons";
@@ -168,6 +170,7 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkSpinner: () => PkSpinner,
 	PkStatePanel: () => PkStatePanel,
 	PkStatus: () => PkStatus,
+	PkStatusLabel: () => PkStatusLabel,
 	PkTab: () => PkTab,
 	PkTabHeading: () => PkTabHeading,
 	PkTabPanel: () => PkTabPanel,
@@ -225,6 +228,6 @@ __reExport(/* @__PURE__ */ __exportAll({
 	unregisterDismissible: () => unregisterDismissible
 }), icons_exports);
 //#endregion
-export { ALL_VALUE, BUILTIN_COLUMN_TYPES, CustomErrorValidator, DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, LiveRegion, MirrorValidator, PkAfterHideEvent, PkAfterShowEvent, PkAlert, PkButton, PkButtonGroup, PkButtonGroupSeparator, PkButtonGroupText, PkCalendar, PkCheckbox, PkCheckboxSelect, PkCodeEditor, PkColorInput, PkCombobox, PkConnect, PkConnectOauth, PkCopyButton, PkCopyErrorEvent, PkCopyEvent, PkCreateEvent, PkDatePicker, PkDialog, PkDismissEvent, PkDropdownItem, PkDropdownLabel, PkDropdownMenu, PkDropdownSeparator, PkEditableTable, PkElement, PkField, PkFormAssociatedElement, PkHideEvent, PkIcon, PkInput, PkInputGroup, PkInputGroupAddon, PkInputGroupButton, PkInputGroupInput, PkInputGroupText, PkInputGroupTextarea, PkInvalidEvent, PkLightswitch, PkOption, PkOptionGroup, PkPopover, PkPopup, PkRadio, PkRadioGroup, PkRepositionEvent, PkScrollArea, PkSelect, PkSeparator, PkShowEvent, PkSpinner, PkStatePanel, PkStatus, PkTab, PkTabHeading, PkTabPanel, PkTabs, PkTextarea, PkTimePicker, PkTiptapContent, PkTiptapEditor, PkTiptapInput, PkToggle, PkToggleGroup, PkTooltip, RequiredValidator, activeElements, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, copyToClipboard, createFocusTrap, createIconElement, createRegisterComponents, createTranslationIconElement, discover, getBasePath, getButtonSpinnerSize, getCustomCellSlotName, getDeepestActiveElement, getFocusableElements, getOffset, getPortalClassName, getPortalContainer, getPortalMountElement, getPortalTargetForAppend, getShadowRootSelectors, isCustomColumn, isTopDismissible, lockBodyScrolling, nextRowId, preventTurboFouce, registerAll, registerDismissible, renderIconHtml, resolveCopyValue, resolvePositionMethod, resolveSpinnerVariant, scrollIntoView, setBasePath, setPortalClassName, setPortalContainer, setShadowRootSelectors, startLoader, stopLoader, uniqueId, unlockBodyScrolling, unregisterDismissible };
+export { ALL_VALUE, BUILTIN_COLUMN_TYPES, CustomErrorValidator, DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, LiveRegion, MirrorValidator, PkAfterHideEvent, PkAfterShowEvent, PkAlert, PkButton, PkButtonGroup, PkButtonGroupSeparator, PkButtonGroupText, PkCalendar, PkCheckbox, PkCheckboxSelect, PkCodeEditor, PkColorInput, PkCombobox, PkConnect, PkConnectOauth, PkCopyButton, PkCopyErrorEvent, PkCopyEvent, PkCreateEvent, PkDatePicker, PkDialog, PkDismissEvent, PkDropdownItem, PkDropdownLabel, PkDropdownMenu, PkDropdownSeparator, PkEditableTable, PkElement, PkField, PkFormAssociatedElement, PkHideEvent, PkIcon, PkInput, PkInputGroup, PkInputGroupAddon, PkInputGroupButton, PkInputGroupInput, PkInputGroupText, PkInputGroupTextarea, PkInvalidEvent, PkLightswitch, PkOption, PkOptionGroup, PkPopover, PkPopup, PkRadio, PkRadioGroup, PkRepositionEvent, PkScrollArea, PkSelect, PkSeparator, PkShowEvent, PkSpinner, PkStatePanel, PkStatus, PkStatusLabel, PkTab, PkTabHeading, PkTabPanel, PkTabs, PkTextarea, PkTimePicker, PkTiptapContent, PkTiptapEditor, PkTiptapInput, PkToggle, PkToggleGroup, PkTooltip, RequiredValidator, activeElements, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, copyToClipboard, createFocusTrap, createIconElement, createRegisterComponents, createTranslationIconElement, discover, getBasePath, getButtonSpinnerSize, getCustomCellSlotName, getDeepestActiveElement, getFocusableElements, getOffset, getPortalClassName, getPortalContainer, getPortalMountElement, getPortalTargetForAppend, getShadowRootSelectors, isCustomColumn, isTopDismissible, lockBodyScrolling, nextRowId, preventTurboFouce, registerAll, registerDismissible, renderIconHtml, resolveCopyValue, resolvePositionMethod, resolveSpinnerVariant, scrollIntoView, setBasePath, setPortalClassName, setPortalContainer, setShadowRootSelectors, startLoader, stopLoader, uniqueId, unlockBodyScrolling, unregisterDismissible };
 
 //# sourceMappingURL=index.js.map

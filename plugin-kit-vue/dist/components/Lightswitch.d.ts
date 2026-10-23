@@ -96,8 +96,8 @@ export declare const Lightswitch: import('vue').DefineComponent<import('vue').Ex
     invalid: boolean;
     label: string;
     size: "default" | "sm" | "xs" | "xxs" | undefined;
-    checked: boolean;
     disabled: boolean;
+    checked: boolean;
     required: boolean;
     value: string;
     instructions: string;
@@ -187,8 +187,8 @@ export declare const PkLightswitchElement: import('vue').DefineComponent<import(
     invalid: boolean;
     label: string;
     size: "default" | "sm" | "xs" | "xxs" | undefined;
-    checked: boolean;
     disabled: boolean;
+    checked: boolean;
     required: boolean;
     value: string;
     instructions: string;

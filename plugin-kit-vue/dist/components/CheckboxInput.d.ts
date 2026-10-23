@@ -100,8 +100,8 @@ export declare const CheckboxInput: import('vue').DefineComponent<import('vue').
 }>, {
     name: string;
     invalid: boolean;
-    checked: boolean;
     disabled: boolean;
+    checked: boolean;
     required: boolean;
     value: string;
     indeterminate: boolean;
@@ -199,8 +199,8 @@ export declare const PkCheckboxInputElement: import('vue').DefineComponent<impor
 }>, {
     name: string;
     invalid: boolean;
-    checked: boolean;
     disabled: boolean;
+    checked: boolean;
     required: boolean;
     value: string;
     indeterminate: boolean;

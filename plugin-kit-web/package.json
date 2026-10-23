@@ -522,6 +522,16 @@
             "import": "./dist/components/state-panel/pk-state-panel.js",
             "default": "./dist/components/state-panel/pk-state-panel.js"
         },
+        "./components/status-label/pk-status-label.js": {
+            "types": "./dist/components/status-label/pk-status-label.d.ts",
+            "import": "./dist/components/status-label/pk-status-label.js",
+            "default": "./dist/components/status-label/pk-status-label.js"
+        },
+        "./components/status-label/pk-status-label": {
+            "types": "./dist/components/status-label/pk-status-label.d.ts",
+            "import": "./dist/components/status-label/pk-status-label.js",
+            "default": "./dist/components/status-label/pk-status-label.js"
+        },
         "./components/status/pk-status.js": {
             "types": "./dist/components/status/pk-status.d.ts",
             "import": "./dist/components/status/pk-status.js",
@@ -961,6 +971,16 @@
             "types": "./dist/components/status.d.ts",
             "import": "./dist/components/status.js",
             "default": "./dist/components/status.js"
+        },
+        "./components/status-label.js": {
+            "types": "./dist/components/status-label.d.ts",
+            "import": "./dist/components/status-label.js",
+            "default": "./dist/components/status-label.js"
+        },
+        "./components/status-label": {
+            "types": "./dist/components/status-label.d.ts",
+            "import": "./dist/components/status-label.js",
+            "default": "./dist/components/status-label.js"
         },
         "./components/tabs.js": {
             "types": "./dist/components/tabs.d.ts",
