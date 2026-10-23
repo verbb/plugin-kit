@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.28 - 2026-10-23
+
 ### Changed
 - Updated Markdown-it to 14.3.3 and the package build toolchain to Vite 8.3.4.
 

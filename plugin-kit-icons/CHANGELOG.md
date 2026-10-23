@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.28 - 2026-10-23
+
 ### Added
 - Added the outlined sliders icon for view controls.
 

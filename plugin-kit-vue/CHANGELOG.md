@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.28 - 2026-10-23
+
 ### Added
 - Added DataTable for searchable record lists with draft filters, sorting, configurable cells and columns, optional row selection, export controls, and local or remote pagination.
 - Added a DataTable index layout with a sticky toolbar and footer, synchronized horizontal scrolling, and a `toolbar-controls` slot for custom controls.
