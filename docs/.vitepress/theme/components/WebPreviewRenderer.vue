@@ -33,6 +33,7 @@ const previewShellStyles = `
 
 [data-plugin-kit-preview-root] {
     display: block;
+    padding: 2px;
 }
 
 [data-plugin-kit-preview-layout="row"] {

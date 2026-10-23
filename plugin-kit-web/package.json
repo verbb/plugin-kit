@@ -232,6 +232,16 @@
             "import": "./dist/components/copy-button/pk-copy-button.js",
             "default": "./dist/components/copy-button/pk-copy-button.js"
         },
+        "./components/data-table/pk-data-table.js": {
+            "types": "./dist/components/data-table/pk-data-table.d.ts",
+            "import": "./dist/components/data-table/pk-data-table.js",
+            "default": "./dist/components/data-table/pk-data-table.js"
+        },
+        "./components/data-table/pk-data-table": {
+            "types": "./dist/components/data-table/pk-data-table.d.ts",
+            "import": "./dist/components/data-table/pk-data-table.js",
+            "default": "./dist/components/data-table/pk-data-table.js"
+        },
         "./components/date-picker/pk-date-picker.js": {
             "types": "./dist/components/date-picker/pk-date-picker.d.ts",
             "import": "./dist/components/date-picker/pk-date-picker.js",
@@ -781,6 +791,16 @@
             "types": "./dist/components/copy-button.d.ts",
             "import": "./dist/components/copy-button.js",
             "default": "./dist/components/copy-button.js"
+        },
+        "./components/data-table.js": {
+            "types": "./dist/components/data-table.d.ts",
+            "import": "./dist/components/data-table.js",
+            "default": "./dist/components/data-table.js"
+        },
+        "./components/data-table": {
+            "types": "./dist/components/data-table.d.ts",
+            "import": "./dist/components/data-table.js",
+            "default": "./dist/components/data-table.js"
         },
         "./components/date-picker.js": {
             "types": "./dist/components/date-picker.d.ts",

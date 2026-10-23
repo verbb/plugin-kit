@@ -60,6 +60,7 @@
         pk-copy-button,
         pk-connect,
         pk-connect-oauth,
+        pk-data-table,
         pk-editable-table
     ):not(:defined) {
         animation: 2s step-end pk-fouce;

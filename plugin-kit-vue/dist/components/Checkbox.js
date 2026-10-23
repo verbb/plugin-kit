@@ -1,6 +1,6 @@
 import { readPkCheckedDetail } from "../utils/pk-change.js";
-import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import { defineComponent, h } from "vue";
+import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import "@verbb/plugin-kit-web/components/checkbox.js";
 //#region src/components/Checkbox.ts
 /** Vue facade over `<pk-checkbox>`. Behavior and styles live in the web component. */

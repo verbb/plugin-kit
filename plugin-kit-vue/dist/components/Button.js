@@ -1,5 +1,5 @@
-import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import { defineComponent, h } from "vue";
+import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import "@verbb/plugin-kit-web/components/button.js";
 //#region src/components/Button.ts
 /** Vue facade over `<pk-button>`. Behavior and styles live in the web component. */

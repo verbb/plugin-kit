@@ -111,8 +111,8 @@ export declare const FieldLayout: import('vue').DefineComponent<import('vue').Ex
 }>> & Readonly<{}>, {
     label: string;
     style: undefined;
-    class: undefined;
     warning: string;
+    class: undefined;
     required: boolean;
     instructions: string;
     tip: string;

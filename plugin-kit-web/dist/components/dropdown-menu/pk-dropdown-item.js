@@ -1,2 +1,2 @@
-import { t as PkDropdownItem } from "../../chunks/pk-dropdown-item-Ck2N_suK.js";
+import { t as PkDropdownItem } from "../../chunks/pk-dropdown-item-DPM5KJ--.js";
 export { PkDropdownItem };

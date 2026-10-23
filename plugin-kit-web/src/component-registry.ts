@@ -60,6 +60,7 @@ export const COMPONENT_MODULE_PATHS: Record<string, string> = {
     'pk-copy-button': 'components/copy-button/copy-button.js',
     'pk-connect': 'components/connect/connect.js',
     'pk-connect-oauth': 'components/connect/connect-oauth.js',
+    'pk-data-table': 'components/data-table/data-table.js',
     'pk-editable-table': 'components/editable-table/editable-table.js',
 };
 
@@ -129,6 +130,7 @@ export const LOADER_COMPONENT_ENTRIES: Record<string, string> = {
     'components/copy-button/copy-button': 'src/components/copy-button/pk-copy-button.ts',
     'components/connect/connect': 'src/components/connect/pk-connect.ts',
     'components/connect/connect-oauth': 'src/components/connect/pk-connect-oauth.ts',
+    'components/data-table/data-table': 'src/components/data-table/pk-data-table.ts',
     'components/editable-table/editable-table': 'src/components/editable-table/pk-editable-table.ts',
 };
 
@@ -182,6 +184,7 @@ export const COMPONENT_FAMILY_ENTRIES: Record<string, string> = {
     'date-picker': 'src/components/date-picker/index.ts',
     'dialog': 'src/components/dialog/index.ts',
     'dropdown-menu': 'src/components/dropdown-menu/index.ts',
+    'data-table': 'src/components/data-table/index.ts',
     'editable-table': 'src/components/editable-table/index.ts',
     'field': 'src/components/field/index.ts',
     'icon': 'src/components/icon/index.ts',

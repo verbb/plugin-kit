@@ -3,7 +3,10 @@
 ## Unreleased
 
 ### Added
-- Added StatusLabel badges with semantic and named colours.
+- Added DataTable for searchable record lists with draft filters, sorting, configurable cells and columns, optional row selection, export controls, and local or remote pagination.
+- Added a DataTable index layout with a sticky toolbar and footer, synchronized horizontal scrolling, and a `toolbar-controls` slot for custom controls.
+- Added the opt-in `persistDataTableView()` helper for remembering column visibility, column order and sorting per table and user.
+- Added StatusLabel badges with semantic and named colours, used by DataTable status columns.
 
 ### Changed
 - Updated the package build toolchain to Vite 8.3.4.
@@ -14,6 +17,7 @@
 - Fixed accessible names for Dialog and Popover panels.
 - Fixed popup resize feedback when filter menus change size inside a dialog.
 - Fixed popovers sometimes failing to focus their content when opened in Safari.
+- Fixed generic types being hidden in component API documentation.
 
 ## 2.0.27 - 2026-10-20
 

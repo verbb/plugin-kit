@@ -114,6 +114,12 @@ const renderRoute = async (route: WorkshopRoute) => {
             return;
         }
 
+        if (route.tool === 'data-table-remote') {
+            const { mountRemoteDataTableLab } = await import('./dev/data-table-remote.ts');
+            surfaceTeardown = mountRemoteDataTableLab(shell.outlet);
+            return;
+        }
+
         if (route.tool === 'slotted-host') {
             const { mountSlottedHostLab } = await import('./dev/slotted-host.ts');
             slottedHostHandle = mountSlottedHostLab(shell.outlet);

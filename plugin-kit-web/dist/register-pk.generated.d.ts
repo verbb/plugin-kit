@@ -28,6 +28,8 @@ export declare function registerPkConnect(): Promise<void>;
 export declare function registerPkConnectOauth(): Promise<void>;
 /** Register `pk-copy-button` only (async side-effect import). */
 export declare function registerPkCopyButton(): Promise<void>;
+/** Register `pk-data-table` only (async side-effect import). */
+export declare function registerPkDataTable(): Promise<void>;
 /** Register `pk-date-picker` only (async side-effect import). */
 export declare function registerPkDatePicker(): Promise<void>;
 /** Register `pk-dialog` only (async side-effect import). */

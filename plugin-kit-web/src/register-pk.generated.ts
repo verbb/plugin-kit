@@ -75,6 +75,11 @@ export async function registerPkCopyButton(): Promise<void> {
     await import('./components/copy-button/pk-copy-button.js');
 }
 
+/** Register `pk-data-table` only (async side-effect import). */
+export async function registerPkDataTable(): Promise<void> {
+    await import('./components/data-table/pk-data-table.js');
+}
+
 /** Register `pk-date-picker` only (async side-effect import). */
 export async function registerPkDatePicker(): Promise<void> {
     await import('./components/date-picker/pk-date-picker.js');

@@ -13278,6 +13278,1632 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/data-table/pk-data-table.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Record browser with a shared toolbar, semantic table and pagination footer.",
+          "name": "PkDataTable",
+          "cssProperties": [
+            {
+              "description": "Sticky header inset from the scroll container top.",
+              "name": "--pk-data-table-header-offset"
+            },
+            {
+              "description": "Background behind the sticky toolbar.",
+              "name": "--pk-data-table-toolbar-background"
+            },
+            {
+              "description": "Sticky footer inset from the scroll container bottom.",
+              "name": "--pk-data-table-footer-offset"
+            },
+            {
+              "description": "Cell spacing.",
+              "name": "--pk-data-table-cell-padding"
+            },
+            {
+              "description": "Selected row background.",
+              "name": "--pk-data-table-selected-background"
+            },
+            {
+              "description": "Selected row foreground.",
+              "name": "--pk-data-table-selected-color"
+            },
+            {
+              "description": "Inherited cell foreground, including selected state.",
+              "name": "--pk-data-table-cell-color"
+            },
+            {
+              "description": "Secondary cell text, including selected state.",
+              "name": "--pk-data-table-cell-muted-color"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Sticky toolbar in index layout.",
+              "name": "header-shell"
+            },
+            {
+              "description": "Toolbar container.",
+              "name": "toolbar"
+            },
+            {
+              "description": "Semantic table.",
+              "name": "table"
+            },
+            {
+              "description": "Contained horizontal scroll region.",
+              "name": "scroll"
+            },
+            {
+              "description": "Count, selection actions and pagination region.",
+              "name": "footer"
+            },
+            {
+              "description": "Filter condition editor.",
+              "name": "filter-builder"
+            },
+            {
+              "description": "Individual filter condition row.",
+              "name": "filter-rule"
+            },
+            {
+              "description": "Apply, cancel and clear controls.",
+              "name": "filter-footer"
+            },
+            {
+              "description": "Sticky container in index layout.",
+              "name": "footer-shell"
+            },
+            {
+              "description": "Synchronized horizontal scrollbar in index layout.",
+              "name": "scrollbar"
+            },
+            {
+              "description": "Reserved footer selection count and actions.",
+              "name": "selection"
+            },
+            {
+              "description": "Data cell.",
+              "name": "cell"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Controls before search.",
+              "name": "toolbar-start"
+            },
+            {
+              "description": "Additional controls after search/filter controls and before View.",
+              "name": "toolbar-controls"
+            },
+            {
+              "description": "Product actions after the standard controls.",
+              "name": "toolbar-end"
+            },
+            {
+              "description": "Consumer-owned criteria controls inside the filter builder; consumers own their state and application.",
+              "name": "filters"
+            },
+            {
+              "description": "Footer actions for the explicitly selected record IDs; space stays reserved when empty.",
+              "name": "selection-actions"
+            },
+            {
+              "description": "Additional footer information.",
+              "name": "footer"
+            },
+            {
+              "description": "Replacement for the empty/no-match state.",
+              "name": "empty"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "filterController",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new DataTableFilterController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Records'",
+              "description": "Accessible name for the table and its scroll region.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "rows",
+              "type": {
+                "text": "DataTableRow[]"
+              },
+              "default": "[]",
+              "description": "The complete local dataset, or one externally fetched remote page."
+            },
+            {
+              "kind": "field",
+              "name": "columns",
+              "type": {
+                "text": "DataTableColumn[]"
+              },
+              "default": "[]",
+              "description": "Ordered column definitions and rendering capabilities."
+            },
+            {
+              "kind": "field",
+              "name": "filters",
+              "type": {
+                "text": "DataTableFilter[]"
+              },
+              "default": "[]",
+              "description": "Filter controls and local matching rules."
+            },
+            {
+              "kind": "field",
+              "name": "rowKey",
+              "type": {
+                "text": "string | ((row: DataTableRow) => DataTableKey)"
+              },
+              "default": "'id'",
+              "description": "A property name or function returning a unique, stable record ID."
+            },
+            {
+              "kind": "field",
+              "name": "query",
+              "type": {
+                "text": "DataTableQuery"
+              },
+              "description": "Search, sort, criteria and pagination state."
+            },
+            {
+              "kind": "field",
+              "name": "view",
+              "type": {
+                "text": "DataTableView"
+              },
+              "default": "{ hiddenColumns: [], columnOrder: [], }",
+              "description": "Column visibility and ordering preferences."
+            },
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "'client' | 'remote'"
+              },
+              "default": "'client'",
+              "description": "Client mode processes all supplied rows. Remote mode never filters/sorts a partial page.",
+              "attribute": "mode"
+            },
+            {
+              "kind": "field",
+              "name": "pagination",
+              "type": {
+                "text": "'offset' | 'cursor'"
+              },
+              "default": "'offset'",
+              "attribute": "pagination"
+            },
+            {
+              "kind": "field",
+              "name": "dataSource",
+              "type": {
+                "text": "DataTableDataSource | undefined"
+              },
+              "description": "Optional remote loader. Omit when the consuming application owns fetching."
+            },
+            {
+              "kind": "field",
+              "name": "total",
+              "type": {
+                "text": "number | undefined"
+              },
+              "attribute": "total"
+            },
+            {
+              "kind": "field",
+              "name": "hasNext",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "has-next"
+            },
+            {
+              "kind": "field",
+              "name": "nextCursor",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "next-cursor"
+            },
+            {
+              "kind": "field",
+              "name": "previousCursor",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "previous-cursor"
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "loading"
+            },
+            {
+              "kind": "field",
+              "name": "error",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Safe user-facing error text, not a raw exception.",
+              "attribute": "error"
+            },
+            {
+              "kind": "field",
+              "name": "searchable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "searchable"
+            },
+            {
+              "kind": "field",
+              "name": "showFilters",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "show-filters"
+            },
+            {
+              "kind": "field",
+              "name": "columnControls",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "column-controls"
+            },
+            {
+              "kind": "field",
+              "name": "hideToolbar",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-toolbar"
+            },
+            {
+              "kind": "field",
+              "name": "hideFooter",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-footer"
+            },
+            {
+              "kind": "field",
+              "name": "selectable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "selectable"
+            },
+            {
+              "kind": "field",
+              "name": "selectedKeys",
+              "type": {
+                "text": "DataTableKey[]"
+              },
+              "default": "[]",
+              "description": "Explicit selected record IDs, retained across pages."
+            },
+            {
+              "kind": "field",
+              "name": "isRowSelectable",
+              "type": {
+                "text": "(\n        row: DataTableRow,\n    ) => boolean | undefined"
+              },
+              "description": "Return false to exclude a record from selection."
+            },
+            {
+              "kind": "field",
+              "name": "rowActions",
+              "type": {
+                "text": "(\n        row: DataTableRow,\n    ) => DataTableAction[] | undefined"
+              },
+              "description": "Available product actions for each record."
+            },
+            {
+              "kind": "field",
+              "name": "exportFormats",
+              "type": {
+                "text": "DataTableExportFormat[]"
+              },
+              "default": "[]",
+              "description": "Optional export choices. The consumer handles pk-export; no files are generated."
+            },
+            {
+              "kind": "field",
+              "name": "exporting",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "exporting"
+            },
+            {
+              "kind": "field",
+              "name": "defaultView",
+              "type": {
+                "text": "DataTableView"
+              },
+              "default": "{ hiddenColumns: [], columnOrder: [], }",
+              "description": "Preferences restored by Use defaults."
+            },
+            {
+              "kind": "field",
+              "name": "defaultSort",
+              "type": {
+                "text": "DataTableSort[]"
+              },
+              "default": "[]",
+              "description": "Initial/reset sort when query.sort is empty; defaults to the first sortable column ascending."
+            },
+            {
+              "kind": "field",
+              "name": "searchDelay",
+              "type": {
+                "text": "number"
+              },
+              "default": "250",
+              "attribute": "search-delay"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'default' | 'compact'"
+              },
+              "default": "'default'",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "'embedded' | 'index'"
+              },
+              "default": "'embedded'",
+              "description": "Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.",
+              "attribute": "layout",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rowLabel",
+              "type": {
+                "text": "string | ((row: DataTableRow) => string) | undefined"
+              },
+              "description": "Optional property name or formatter for accessible row-selection labels. Defaults to the row key."
+            },
+            {
+              "kind": "field",
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "timeZone",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "time-zone"
+            },
+            {
+              "kind": "field",
+              "name": "labels",
+              "type": {
+                "text": "Partial<DataTableLabels>"
+              },
+              "default": "{}",
+              "description": "Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}."
+            },
+            {
+              "kind": "field",
+              "name": "loaded",
+              "type": {
+                "text": "DataTableResult | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "searchDraft",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "dragOffsets",
+              "type": {
+                "text": "Record<string, number>"
+              },
+              "privacy": "private",
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "reorderAnnouncement",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "tableScrollWidth",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "hasHorizontalOverflow",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "sortLoading",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "resizeObserver",
+              "type": {
+                "text": "ResizeObserver | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "layoutFrame",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "pagingFocus",
+              "type": {
+                "text": "{ direction: number; button: HTMLElement } | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "selectionAnchor",
+              "type": {
+                "text": "DataTableKey | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "checkboxGesture",
+              "type": {
+                "text": "{\n        key: DataTableKey;\n        shiftKey: boolean;\n        metaKey: boolean;\n        ctrlKey: boolean;\n    } | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "viewClosePending",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "dragFrame",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "drag",
+              "type": {
+                "text": "{\n        id: string;\n        startY: number;\n        pointerY: number;\n        startScroll: number;\n        moved: boolean;\n        targetIndex: number;\n        pointerId: number;\n        handle: HTMLElement;\n        list: HTMLElement;\n        rows: { id: string; top: number; height: number }[];\n    } | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "requests",
+              "privacy": "private",
+              "default": "new DataTableRequestController()"
+            },
+            {
+              "kind": "field",
+              "name": "searchTimer",
+              "type": {
+                "text": "ReturnType<typeof setTimeout> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "observeLayout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "measureLayout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "syncHorizontalScroll",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                },
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "restorePagingFocus",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "text",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "key",
+                  "type": {
+                    "text": "keyof DataTableLabels"
+                  }
+                },
+                {
+                  "name": "values",
+                  "default": "{}",
+                  "type": {
+                    "text": "Record<string, string | number>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "emit",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "detail",
+                  "default": "{}",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "refresh",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "description": "Request a new remote page. Superseded responses are ignored, even if the loader ignores abort."
+            },
+            {
+              "kind": "field",
+              "name": "resolvedDefaultSort",
+              "type": {
+                "text": "DataTableSort[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "setQuery",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "patch",
+                  "type": {
+                    "text": "Partial<DataTableQuery>"
+                  }
+                }
+              ],
+              "description": "Update query state and reset paging for search, sorting or criteria changes."
+            },
+            {
+              "kind": "method",
+              "name": "setSelection",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "selectedKeys",
+                  "type": {
+                    "text": "DataTableKey[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "canSelectRow",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "isRowControl",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "selectRow",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                },
+                {
+                  "name": "gesture",
+                  "type": {
+                    "text": "{ shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean }"
+                  }
+                },
+                {
+                  "name": "toggle",
+                  "default": "false"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "clickRow",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                },
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "clickRowCheckbox",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                },
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "changeRowCheckbox",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "keyRow",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                },
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "accessibleRowLabel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "key",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "DataTableKey"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "result",
+              "type": {
+                "text": "DataTableResult"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "orderedColumns",
+              "type": {
+                "text": "DataTableColumn[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "setView",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "view",
+                  "type": {
+                    "text": "DataTableView"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggleColumn",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "moveColumn",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "direction",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "icon",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "icon",
+                  "type": {
+                    "text": "typeof slidersOutline"
+                  }
+                },
+                {
+                  "name": "slot",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "directionIcon",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "direction",
+                  "type": {
+                    "text": "'asc' | 'desc'"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "startColumnDrag",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                },
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "dragColumn",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "previewColumnDrag",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "cancelColumnDrag",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "endColumnDrag",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                },
+                {
+                  "name": "commit",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "finishViewChildren",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PkHideEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderView",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "renderExport",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "sortColumn",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "inputSearch",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderToolbar",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "renderCell",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                },
+                {
+                  "name": "column",
+                  "type": {
+                    "text": "DataTableColumn"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "page",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "delta",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "result",
+                  "type": {
+                    "text": "DataTableResult"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "name",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "description": "Detail: { query }. Search, sort, criteria or page changed.",
+              "name": "pk-query-change"
+            },
+            {
+              "description": "Detail: { view }. Column visibility/order changed.",
+              "name": "pk-view-change"
+            },
+            {
+              "description": "Detail: { selectedKeys }. Explicit record IDs changed.",
+              "name": "pk-selection-change"
+            },
+            {
+              "description": "Detail: { action, row, rowKey }. Product action requested.",
+              "name": "pk-row-action"
+            },
+            {
+              "description": "Detail: { result, query }. A current data-source response was accepted.",
+              "name": "pk-load"
+            },
+            {
+              "description": "Detail: { error }. The current request failed.",
+              "name": "pk-load-error"
+            },
+            {
+              "description": "Detail: { format, query, view, columnIds, selectedKeys }. Consumer handles the export.",
+              "name": "pk-export"
+            },
+            {
+              "description": "A retry was requested in externally controlled remote mode.",
+              "name": "pk-retry"
+            },
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Records'",
+              "description": "Accessible name for the table and its scroll region.",
+              "fieldName": "label"
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "'client' | 'remote'"
+              },
+              "default": "'client'",
+              "description": "Client mode processes all supplied rows. Remote mode never filters/sorts a partial page.",
+              "fieldName": "mode"
+            },
+            {
+              "name": "pagination",
+              "type": {
+                "text": "'offset' | 'cursor'"
+              },
+              "default": "'offset'",
+              "fieldName": "pagination"
+            },
+            {
+              "name": "total",
+              "type": {
+                "text": "number | undefined"
+              },
+              "fieldName": "total"
+            },
+            {
+              "name": "has-next",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hasNext"
+            },
+            {
+              "name": "next-cursor",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "nextCursor"
+            },
+            {
+              "name": "previous-cursor",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "previousCursor"
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "loading"
+            },
+            {
+              "name": "error",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Safe user-facing error text, not a raw exception.",
+              "fieldName": "error"
+            },
+            {
+              "name": "searchable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "searchable"
+            },
+            {
+              "name": "show-filters",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "showFilters"
+            },
+            {
+              "name": "column-controls",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "columnControls"
+            },
+            {
+              "name": "hide-toolbar",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideToolbar"
+            },
+            {
+              "name": "hide-footer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideFooter"
+            },
+            {
+              "name": "selectable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selectable"
+            },
+            {
+              "name": "exporting",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "exporting"
+            },
+            {
+              "name": "search-delay",
+              "type": {
+                "text": "number"
+              },
+              "default": "250",
+              "fieldName": "searchDelay"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'default' | 'compact'"
+              },
+              "default": "'default'",
+              "fieldName": "size"
+            },
+            {
+              "name": "layout",
+              "type": {
+                "text": "'embedded' | 'index'"
+              },
+              "default": "'embedded'",
+              "description": "Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "locale"
+            },
+            {
+              "name": "time-zone",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "timeZone"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "dependencies": [
+            {
+              "name": "pk-button",
+              "description": ""
+            },
+            {
+              "name": "pk-input",
+              "description": ""
+            },
+            {
+              "name": "pk-checkbox",
+              "description": ""
+            },
+            {
+              "name": "pk-popover",
+              "description": ""
+            },
+            {
+              "name": "pk-select",
+              "description": ""
+            },
+            {
+              "name": "pk-option",
+              "description": ""
+            },
+            {
+              "name": "pk-button-group",
+              "description": ""
+            },
+            {
+              "name": "pk-dropdown-menu",
+              "description": ""
+            },
+            {
+              "name": "pk-dropdown-item",
+              "description": ""
+            },
+            {
+              "name": "pk-status-label",
+              "description": ""
+            },
+            {
+              "name": "pk-dialog",
+              "description": ""
+            },
+            {
+              "name": "pk-spinner",
+              "description": ""
+            },
+            {
+              "name": "pk-state-panel",
+              "description": ""
+            }
+          ],
+          "tagName": "pk-data-table",
+          "customElement": true
+        },
+        {
+          "kind": "variable",
+          "name": "column"
+        },
+        {
+          "kind": "variable",
+          "name": "value"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "module": "src/components/data-table/model.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "module": "src/components/data-table/persistence.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PkDataTable",
+          "declaration": {
+            "name": "PkDataTable",
+            "module": "src/components/data-table/pk-data-table.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-data-table",
+          "declaration": {
+            "name": "PkDataTable",
+            "module": "src/components/data-table/pk-data-table.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/date-picker/pk-date-picker.ts",
       "declarations": [
         {

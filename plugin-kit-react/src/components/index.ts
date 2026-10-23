@@ -1,3 +1,4 @@
+export * from './DataTable.js';
 // Tier A — pass-through facades
 export * from './Alert.js';
 export * from './ButtonGroup.js';

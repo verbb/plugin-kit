@@ -39,7 +39,7 @@ Use `thin` checkbox columns or radio-style exclusivity when the table is modelin
 | `allowDelete` `allow-delete` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
 | `allowInsert` `allow-insert` | Show Insert above / Insert below in the row ellipsis menu. Insert still requires `allowAdd` (disabled at max rows when the host turns add off).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
 | `allowReorder` `allow-reorder` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
-| `cellErrors` | Errors keyed by `${rowIndex}.${columnName}` or `${fieldName}.${rowIndex}.${columnName}`.<br><small><strong>Type</strong> <code>Record<string, string[] \| string></code></small><br><small><strong>Default</strong> <code>{}</code></small> |
+| `cellErrors` | Errors keyed by `${rowIndex}.${columnName}` or `${fieldName}.${rowIndex}.${columnName}`.<br><small><strong>Type</strong> <code>Record&lt;string, string[] \| string&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 | `customError` `custom-error` | Custom validation message; also settable via `setCustomValidity()`.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `disabled` | Disables the control and excludes it from constraint validation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `fieldName` `field-name` | Optional form-field prefix for `cellErrors` keys. Looks up `${fieldName}.${rowIndex}.${columnName}` then falls back to `${rowIndex}.${columnName}`.<br><small><strong>Type</strong> <code>string</code></small> |
@@ -48,7 +48,7 @@ Use `thin` checkbox columns or radio-style exclusivity when the table is modelin
 | `modifyColumn` | Per-cell column override (e.g. swap value column to a select based on another cell). Return a partial column merged over the base definition for that render.<br><small><strong>Type</strong> <code>PkEditableTableModifyColumn \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `modifyRow` | Per-row presentation — class / accessible name / tone on the `<tr>`.<br><small><strong>Type</strong> <code>PkEditableTableModifyRow \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `name` | Name submitted with form data.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
-| `newRowDefaults` | Merged into each newly added row after column defaults.<br><small><strong>Type</strong> <code>Record<string, unknown></code></small><br><small><strong>Default</strong> <code>{}</code></small> |
+| `newRowDefaults` | Merged into each newly added row after column defaults.<br><small><strong>Type</strong> <code>Record&lt;string, unknown&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 | `required` | Marks the control as required for form submission.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 
 ### Methods

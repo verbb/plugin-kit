@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DataTable interactions</title>
+<style>body{margin:24px;font-family:system-ui}section{max-width:900px;margin-bottom:40px;min-width:0}</style></head>
+<body><section id="local-demo"><pk-data-table id="records" selectable></pk-data-table></section><section><pk-data-table id="remote"></pk-data-table></section><section id="cursor-demo"><pk-data-table id="cursor"></pk-data-table></section>
+<section id="products-demo"><pk-data-table id="products"></pk-data-table></section>
+<section><pk-data-table id="selection" selectable><button slot="selection-actions" id="bulk-review">Review selected</button><a slot="cell-number-1-controls" href="#safe-link">Open record</a><button slot="cell-number-2-controls" id="cell-action">Cell action</button></pk-data-table></section>
+<section id="index-demo"><div id="index-frame" style="height:360px;max-width:480px;overflow:auto"><pk-data-table id="index"></pk-data-table></div></section>
+<section id="overflow-demo"><div style="max-height:360px;max-width:480px;overflow:auto"><pk-data-table id="overflow"></pk-data-table></div></section>
+<section><pk-data-table id="filter-demo"></pk-data-table></section>
+<section><pk-status-label id="badge" status="pending">Awaiting review</pk-status-label></section>
+<script type="module">
+import '@verbb/plugin-kit-web/tokens.css';
+import { queryDataTable, defaultDataTableQuery, persistDataTableView } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
+window.persistDataTableView = persistDataTableView;
+import { filterRows, filterColumns, filterDefinitions } from '../../docs/web/components/examples/data-table-filters.fixtures.ts';
+import { mountOverflowExample } from '../../docs/web/components/examples/data-table-overflow.fixtures.ts';
+mountOverflowExample(document.querySelector('#overflow-demo'));
+const filterDemo = document.querySelector('#filter-demo');
+filterDemo.label = 'Filter examples'; filterDemo.rows = filterRows; filterDemo.columns = filterColumns; filterDemo.filters = filterDefinitions;
+window.filterQueries = [];
+filterDemo.addEventListener('pk-query-change', event => window.filterQueries.push(structuredClone(event.detail.query)));
+window.filterQuery = (filters, filterOperators = {}) => queryDataTable(filterRows, filterColumns, filterDefinitions, {...defaultDataTableQuery(), filters, filterOperators}).rows.map(row => row.id);
+
+import { mountDataTableExample } from '../../docs/web/components/examples/data-table.fixtures.ts';
+mountDataTableExample(document.querySelector('#local-demo'));
+mountDataTableExample(document.querySelector('#index-demo'), 'index');
+mountDataTableExample(document.querySelector('#products-demo'), 'products');
+mountDataTableExample(document.querySelector('#cursor-demo'), 'cursor');
+const selection = document.querySelector('#selection');
+selection.label = 'Selection interactions';
+selection.columns = [{id: 'name', label: 'Record', sortable: true}, {id: 'controls', label: 'Controls', type: 'custom'}];
+selection.rows = Array.from({length: 7}, (_, i) => ({id: i + 1, name: `Record ${i + 1}`}));
+selection.query = {...selection.query, pageSize: 5};
+selection.isRowSelectable = row => row.id !== 3;
+window.cellActions = 0;
+document.querySelector('#cell-action').addEventListener('click', () => window.cellActions++);
+const remote = document.querySelector('#remote');
+remote.mode = 'remote'; remote.searchDelay = 10;
+remote.columns = [{ id: 'name', label: 'Name', sortable: true }];
+remote.defaultSort = [{id: 'name', direction: 'desc'}];
+window.fail = true;
+remote.dataSource = async (query) => {
+    window.lastRemoteSort = query.sort;
+    // Intentionally ignores abort to exercise response-generation protection.
+    await new Promise((resolve) => setTimeout(resolve, query.search === 'old' ? 500 : 20));
+    if (query.search === 'old') window.oldFinished = true;
+    if (query.search === 'failure' && window.fail) throw new Error('Fixture failure');
+    return { rows: [{ id: 1, name: query.search || 'initial' }], total: 1 };
+};
+</script></body></html>

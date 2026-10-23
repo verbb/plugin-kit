@@ -1,0 +1,52 @@
+.pg-remote-table .remote-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 16px;
+    padding: 16px;
+    background: var(--pk-color-white);
+    border: 1px solid var(--pk-color-gray-200);
+    border-radius: var(--pk-radius-lg);
+}
+.pg-remote-table .remote-controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+}
+.pg-remote-table .remote-controls select {
+    padding: 6px 8px;
+    border: 1px solid var(--pk-color-gray-400);
+    border-radius: var(--pk-radius-sm);
+    background: var(--pk-color-white);
+    color: var(--pk-color-gray-700);
+    font: inherit;
+}
+.pg-remote-table .remote-controls .remote-race {
+    flex-direction: row;
+    align-items: center;
+    min-height: 34px;
+}
+.pg-remote-table .remote-hint,
+.pg-remote-table .remote-result,
+.pg-remote-table .remote-log p {
+    margin-block: 16px;
+    color: var(--pk-color-gray-600);
+}
+.pg-remote-table .remote-result { overflow-wrap: anywhere; }
+.pg-remote-table .remote-log {
+    padding: 16px;
+    background: var(--pk-color-white);
+    border: 1px solid var(--pk-color-gray-200);
+    border-radius: var(--pk-radius-lg);
+}
+.pg-remote-table .remote-log summary { cursor: pointer; font-weight: 600; }
+.pg-remote-table .remote-log ol {
+    max-height: 240px;
+    overflow: auto;
+    padding-inline-start: 24px;
+    font-family: monospace;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+.pg-remote-table .remote-log li { margin-block: 8px; }

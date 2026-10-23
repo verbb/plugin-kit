@@ -1,6 +1,6 @@
 # Status Label
 
-StatusLabel displays a status dot and a short label inside a tinted badge, matching Craft's control panel status labels. Use it for workflow states such as Approved, Awaiting review, Paid or Refunded. Use [Status](/web/components/status) when you need a standalone dot beside existing content.
+StatusLabel displays a status dot and a short label inside a tinted badge, matching Craft's control panel status labels. Use it for workflow states such as Approved, Awaiting review, Paid or Refunded. [Data Table](/web/components/data-table#status-labels) uses it automatically for `type: 'status'` columns. Use [Status](/web/components/status) when you need a standalone dot beside existing content.
 
 ## Semantic Statuses
 
@@ -18,7 +18,7 @@ Use a named colour when your workflow does not correspond to a built-in semantic
 
 ## Selected Surfaces
 
-For a badge on a dark selected surface, set `--pk-status-label-color: white`, `--pk-status-label-neutral-tint: white` and `--pk-status-ring: white` on the container. The coloured tint remains visible behind the label. `--pk-status-label-background` overrides the complete background when a custom surface needs it.
+DataTable automatically uses white label text and adjusts neutral badges on selected rows. For a badge on another dark selected surface, set `--pk-status-label-color: white`, `--pk-status-label-neutral-tint: white` and `--pk-status-ring: white` on the container. The coloured tint remains visible behind the label. `--pk-status-label-background` overrides the complete background when a custom surface needs it.
 
 The badge is descriptive text, not an interactive control or a live announcement. Its dot is hidden from assistive technology because the visible label conveys the state.
 

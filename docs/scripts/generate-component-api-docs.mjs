@@ -51,6 +51,7 @@ const PAGE_APIS = {
     'dropdown-menu.md': {
         tags: ['pk-dropdown-menu', 'pk-dropdown-item', 'pk-dropdown-label', 'pk-dropdown-separator'],
     },
+    'data-table.md': { tags: ['pk-data-table'] },
     'editable-table.md': { tags: ['pk-editable-table'] },
     'field.md': { tags: ['pk-field'] },
     'icon.md': { tags: ['pk-icon'] },
@@ -425,6 +426,7 @@ const TAG_TO_COMPONENT = {
     'pk-toggle-group': 'ToggleGroup',
     'pk-checkbox-select': 'CheckboxSelect',
     'pk-code-editor': 'CodeEditor',
+    'pk-data-table': 'DataTable',
     'pk-editable-table': 'EditableTable',
     'pk-input-group': 'InputGroup',
     'pk-input-group-addon': 'InputGroupAddon',
@@ -505,7 +507,7 @@ function formatDescriptionWithMeta(description, typeText, defaultValue) {
         lines.push(escapeCell(description));
     }
     if (typeText) {
-        lines.push(`<small><strong>Type</strong> <code>${escapeCell(typeText)}</code></small>`);
+        lines.push(`<small><strong>Type</strong> <code>${escapeCell(typeText).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></small>`);
     }
     const def = formatDefault(defaultValue);
     if (def !== '') {

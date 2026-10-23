@@ -1,8 +1,8 @@
 import { createPluginKitComponent } from "../utils/create-plugin-kit-component.js";
 import { trueBooleanProps } from "../utils/lit-react-booleans.js";
 import React, { forwardRef } from "react";
-import { PkField } from "@verbb/plugin-kit-web/components/field/pk-field.js";
 import { jsx, jsxs } from "react/jsx-runtime";
+import { PkField } from "@verbb/plugin-kit-web/components/field/pk-field.js";
 //#region src/components/Field.tsx
 var PkFieldElement = createPluginKitComponent({
 	tagName: "pk-field",

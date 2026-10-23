@@ -1,6 +1,6 @@
 import { readPkCheckedDetail } from "../utils/pk-change.js";
-import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import { defineComponent, h } from "vue";
+import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import "@verbb/plugin-kit-web/components/lightswitch.js";
 //#region src/components/Lightswitch.ts
 /** Vue facade over `<pk-lightswitch>`. Behavior and styles live in the web component. */

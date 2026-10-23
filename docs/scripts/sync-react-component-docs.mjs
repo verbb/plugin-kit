@@ -42,6 +42,7 @@ const SPECIAL = {
     'lightswitch': 'Lightswitch',
     'checkbox-select': 'CheckboxSelect',
     'code-editor': 'CodeEditor',
+    'data-table': 'DataTable',
     'editable-table': 'EditableTable',
     'input-group': 'InputGroup',
     'input-group-addon': 'InputGroupAddon',

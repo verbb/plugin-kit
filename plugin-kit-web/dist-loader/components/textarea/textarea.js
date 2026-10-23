@@ -1,2 +1,2 @@
-import { t as PkTextarea } from "../../chunks/pk-textarea-B3GIFyGm.js";
+import { t as PkTextarea } from "../../chunks/pk-textarea-3-ElQiKl.js";
 export { PkTextarea };

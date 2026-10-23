@@ -1,3 +1,4 @@
+export * from './DataTable.js';
 export * from './Alert.js';
 export * from './ButtonGroup.js';
 export * from './CopyButton.js';

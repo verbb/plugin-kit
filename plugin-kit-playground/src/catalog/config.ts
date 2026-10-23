@@ -38,7 +38,8 @@ export type WorkshopToolId =
     | 'debug'
     | 'nested-overlays'
     | 'editable-table-perf'
-    | 'slotted-host';
+    | 'slotted-host'
+    | 'data-table-remote';
 
 export type WorkshopRoute =
     | { kind: 'component'; surface: WebPlaygroundSurface; componentId: string }
@@ -94,7 +95,7 @@ export function parseWorkshopLocation(location: Pick<Location, 'pathname' | 'sea
     }
 
     const toolsMatch = normalized.match(
-        /^\/tools\/(fouce|debug|nested-overlays|editable-table-perf|slotted-host)$/,
+        /^\/tools\/(fouce|debug|nested-overlays|editable-table-perf|slotted-host|data-table-remote)$/,
     );
     if (toolsMatch) {
         return { kind: 'tools', tool: toolsMatch[1] as WorkshopToolId };

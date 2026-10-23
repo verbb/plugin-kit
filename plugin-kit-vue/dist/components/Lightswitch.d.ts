@@ -93,10 +93,10 @@ export declare const Lightswitch: import('vue').DefineComponent<import('vue').Ex
     "onUpdate:checked"?: ((value: boolean) => any) | undefined;
 }>, {
     name: string;
-    invalid: boolean;
     label: string;
-    size: "default" | "sm" | "xs" | "xxs" | undefined;
+    invalid: boolean;
     disabled: boolean;
+    size: "default" | "sm" | "xs" | "xxs" | undefined;
     checked: boolean;
     required: boolean;
     value: string;
@@ -184,10 +184,10 @@ export declare const PkLightswitchElement: import('vue').DefineComponent<import(
     "onUpdate:checked"?: ((value: boolean) => any) | undefined;
 }>, {
     name: string;
-    invalid: boolean;
     label: string;
-    size: "default" | "sm" | "xs" | "xxs" | undefined;
+    invalid: boolean;
     disabled: boolean;
+    size: "default" | "sm" | "xs" | "xxs" | undefined;
     checked: boolean;
     required: boolean;
     value: string;

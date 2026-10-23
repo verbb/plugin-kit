@@ -21,7 +21,7 @@ export type RadioGroupInputProps = {
  */
 export declare const RadioGroupInput: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
     modelValue: {
-        type: (BooleanConstructor | StringConstructor | NumberConstructor)[];
+        type: (StringConstructor | BooleanConstructor | NumberConstructor)[];
         default: string;
     };
     options: {
@@ -62,7 +62,7 @@ export declare const RadioGroupInput: import('vue').DefineComponent<import('vue'
     'update:modelValue': (value: unknown) => value is {} | null;
 }, string, import('vue').PublicProps, Readonly<import('vue').ExtractPropTypes<{
     modelValue: {
-        type: (BooleanConstructor | StringConstructor | NumberConstructor)[];
+        type: (StringConstructor | BooleanConstructor | NumberConstructor)[];
         default: string;
     };
     options: {
@@ -101,8 +101,8 @@ export declare const RadioGroupInput: import('vue').DefineComponent<import('vue'
     "onUpdate:modelValue"?: ((value: unknown) => any) | undefined;
 }>, {
     name: string;
-    invalid: boolean;
     label: string;
+    invalid: boolean;
     disabled: boolean;
     instructions: string;
     modelValue: string | number | boolean;
@@ -111,7 +111,7 @@ export declare const RadioGroupInput: import('vue').DefineComponent<import('vue'
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export declare const PkRadioGroupInputElement: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
     modelValue: {
-        type: (BooleanConstructor | StringConstructor | NumberConstructor)[];
+        type: (StringConstructor | BooleanConstructor | NumberConstructor)[];
         default: string;
     };
     options: {
@@ -152,7 +152,7 @@ export declare const PkRadioGroupInputElement: import('vue').DefineComponent<imp
     'update:modelValue': (value: unknown) => value is {} | null;
 }, string, import('vue').PublicProps, Readonly<import('vue').ExtractPropTypes<{
     modelValue: {
-        type: (BooleanConstructor | StringConstructor | NumberConstructor)[];
+        type: (StringConstructor | BooleanConstructor | NumberConstructor)[];
         default: string;
     };
     options: {
@@ -191,8 +191,8 @@ export declare const PkRadioGroupInputElement: import('vue').DefineComponent<imp
     "onUpdate:modelValue"?: ((value: unknown) => any) | undefined;
 }>, {
     name: string;
-    invalid: boolean;
     label: string;
+    invalid: boolean;
     disabled: boolean;
     instructions: string;
     modelValue: string | number | boolean;

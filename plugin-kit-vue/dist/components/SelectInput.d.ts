@@ -157,13 +157,13 @@ export declare const SelectInput: import('vue').DefineComponent<import('vue').Ex
     onBlur?: ((event: Event) => any) | undefined;
     "onUpdate:modelValue"?: ((value: unknown) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkSelectSize;
     disabled: boolean;
+    size: PkSelectSize;
     modelValue: undefined;
     placeholder: string;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;
@@ -294,13 +294,13 @@ export declare const PkSelectInputElement: import('vue').DefineComponent<import(
     onBlur?: ((event: Event) => any) | undefined;
     "onUpdate:modelValue"?: ((value: unknown) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkSelectSize;
     disabled: boolean;
+    size: PkSelectSize;
     modelValue: undefined;
     placeholder: string;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;

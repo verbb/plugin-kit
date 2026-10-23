@@ -202,10 +202,11 @@ export declare const ComboboxInput: import('vue').DefineComponent<import('vue').
     onCreate?: ((query: string) => any) | undefined;
     onOpenChange?: ((open: boolean) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkComboboxSize;
     disabled: boolean;
+    size: PkComboboxSize;
     options: ComboboxInputOption[];
     fetchOptions: ComboboxFetchOptions;
     modelValue: ComboboxInputModelValue;
@@ -216,7 +217,6 @@ export declare const ComboboxInput: import('vue').DefineComponent<import('vue').
     startTypingMessage: string;
     showClear: boolean;
     allowCreate: boolean;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;
@@ -387,10 +387,11 @@ export declare const PkComboboxInputElement: import('vue').DefineComponent<impor
     onCreate?: ((query: string) => any) | undefined;
     onOpenChange?: ((open: boolean) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkComboboxSize;
     disabled: boolean;
+    size: PkComboboxSize;
     options: ComboboxInputOption[];
     fetchOptions: ComboboxFetchOptions;
     modelValue: ComboboxInputModelValue;
@@ -401,7 +402,6 @@ export declare const PkComboboxInputElement: import('vue').DefineComponent<impor
     startTypingMessage: string;
     showClear: boolean;
     allowCreate: boolean;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;

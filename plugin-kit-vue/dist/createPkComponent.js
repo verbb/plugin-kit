@@ -1,5 +1,5 @@
-import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 import { defineComponent, h } from "vue";
+import { assignSlotNodes } from "@lit-labs/vue-utils/wrapper-utils.js";
 //#region src/createPkComponent.ts
 /**
 * Minimal Vue facade over a registered `<pk-*>` custom element.

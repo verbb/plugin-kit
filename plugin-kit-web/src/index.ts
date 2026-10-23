@@ -1,3 +1,4 @@
+export * from './components/data-table/index.js';
 export * from './components/alert/index.js';
 export * from './components/state-panel/index.js';
 export * from './components/button/index.js';

@@ -62,6 +62,7 @@ var COMPONENT_MODULE_PATHS = {
 	"pk-copy-button": "components/copy-button/copy-button.js",
 	"pk-connect": "components/connect/connect.js",
 	"pk-connect-oauth": "components/connect/connect-oauth.js",
+	"pk-data-table": "components/data-table/data-table.js",
 	"pk-editable-table": "components/editable-table/editable-table.js"
 };
 Object.keys(COMPONENT_MODULE_PATHS);
@@ -124,6 +125,7 @@ var LOADER_COMPONENT_ENTRIES = {
 	"components/copy-button/copy-button": "src/components/copy-button/pk-copy-button.ts",
 	"components/connect/connect": "src/components/connect/pk-connect.ts",
 	"components/connect/connect-oauth": "src/components/connect/pk-connect-oauth.ts",
+	"components/data-table/data-table": "src/components/data-table/pk-data-table.ts",
 	"components/editable-table/editable-table": "src/components/editable-table/pk-editable-table.ts"
 };
 /** Loader-only shims → real element modules for the bundler dist graph. */

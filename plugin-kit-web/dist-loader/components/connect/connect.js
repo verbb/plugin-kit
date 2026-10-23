@@ -1,11 +1,11 @@
-import { c as customElement, d as i, f as A, o as r, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
-import { c as __decorate } from "../../chunks/pk-base-BHoh2Dsd.js";
-import "../../chunks/pk-button-CUXbRf0n.js";
-import "../../chunks/pk-icon-B3Kfm8k2.js";
-import "../../chunks/pk-state-panel-BIs10-1T.js";
-import "../../chunks/pk-dialog-CLLfUejP.js";
-import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-Btmm5ZZN.js";
-import "../../chunks/pk-status-DgzyCD_G.js";
+import { c as n, f as i, l as customElement, m as b, p as A, s as r } from "../../chunks/lit-6rz1jOzS.js";
+import { c as __decorate } from "../../chunks/pk-base-BZKcPYjM.js";
+import "../../chunks/pk-button-C_4EHtBx.js";
+import "../../chunks/pk-icon-D3FLB5FB.js";
+import "../../chunks/pk-state-panel-TILi3V8R.js";
+import "../../chunks/pk-dialog-HlHbhRBL.js";
+import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-KBWI4xAB.js";
+import "../../chunks/pk-status-D-HEWQS1.js";
 //#region src/components/connect/pk-connect.ts
 var pkStatusForState = (status) => {
 	if (status === "connected") return "on";

@@ -10,7 +10,9 @@
         "test:nested-overlays:chrome": "HEADLESS=0 CHROME_CHANNEL=chrome node scripts/repro-nested-overlays.mjs",
         "test:editable-table-menu": "node scripts/test-editable-table-menu.mjs",
         "test:form-associated-toggles": "node scripts/test-form-associated-toggles.mjs",
-        "test:popover-focus": "node scripts/test-popover-focus.mjs"
+        "test:popover-focus": "node scripts/test-popover-focus.mjs",
+        "test:data-table-remote": "node scripts/test-data-table-remote.mjs",
+        "test:data-table": "node scripts/test-data-table.mjs"
     },
     "dependencies": {
         "@verbb/plugin-kit-react": "*",

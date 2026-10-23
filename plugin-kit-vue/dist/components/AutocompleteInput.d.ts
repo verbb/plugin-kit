@@ -188,10 +188,11 @@ export declare const AutocompleteInput: import('vue').DefineComponent<import('vu
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
     onOpenChange?: ((open: boolean) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkAutocompleteSize;
     disabled: boolean;
+    size: PkAutocompleteSize;
     options: AutocompleteInputOption[];
     fetchOptions: AutocompleteFetchOptions;
     modelValue: string | null;
@@ -200,7 +201,6 @@ export declare const AutocompleteInput: import('vue').DefineComponent<import('vu
     loadingMessage: string;
     startTypingMessage: string;
     showClear: boolean;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;
@@ -362,10 +362,11 @@ export declare const PkAutocompleteInputElement: import('vue').DefineComponent<i
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
     onOpenChange?: ((open: boolean) => any) | undefined;
 }>, {
+    id: string;
     name: string;
     invalid: boolean;
-    size: PkAutocompleteSize;
     disabled: boolean;
+    size: PkAutocompleteSize;
     options: AutocompleteInputOption[];
     fetchOptions: AutocompleteFetchOptions;
     modelValue: string | null;
@@ -374,7 +375,6 @@ export declare const PkAutocompleteInputElement: import('vue').DefineComponent<i
     loadingMessage: string;
     startTypingMessage: string;
     showClear: boolean;
-    id: string;
     ariaLabel: string;
     ariaDescribedby: string;
     ariaErrormessage: string;

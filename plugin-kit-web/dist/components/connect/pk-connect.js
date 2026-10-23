@@ -1,10 +1,10 @@
 import { i as customElement, t as __decorate } from "../../chunks/decorate-Br_PE9pq.js";
 import { r as state, t as property } from "../../chunks/decorators-BkErmuYK.js";
 import "../../chunks/pk-button-Dzt2a5Nc.js";
-import "../icon/pk-icon.js";
-import "../../chunks/pk-state-panel-Bj-xCcdv.js";
 import "../../chunks/pk-status-CdiRBRyh.js";
-import "../../chunks/pk-dialog-DdwO-4Tk.js";
+import "../icon/pk-icon.js";
+import "../../chunks/pk-state-panel-D9aZunDN.js";
+import "../../chunks/pk-dialog-DxLi90RH.js";
 import { t as pkConnectStyles } from "../../chunks/pk-connect.styles-oKhxa_m2.js";
 import { LitElement, html, nothing } from "lit";
 import { buildConnectPayload, escapeCpHtml, resolveConnectError, sendCpConnectRequest, serializeCpForm, watchCpFormDirty } from "@verbb/plugin-kit-core";
