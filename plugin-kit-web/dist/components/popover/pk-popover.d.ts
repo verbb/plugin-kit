@@ -15,6 +15,8 @@ import { PkPopupPlacement } from '../popup/pk-popup.js';
 export declare class PkPopover extends PkElement {
     static styles: import('lit').CSSResult[];
     open: boolean;
+    /** Accessible panel name; defaults to the trigger's label. */
+    label: string;
     placement: PkPopupPlacement;
     sideOffset: number;
     /**

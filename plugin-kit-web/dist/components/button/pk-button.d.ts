@@ -87,6 +87,12 @@ export declare class PkButton extends PkElement {
     title: string;
     /** Accessible name — wins over {@link title} when both are set. */
     ariaLabel: string | null;
+    /** Toggle state forwarded to the focusable native control. */
+    ariaPressed: string | null;
+    /** Disclosure state forwarded to the focusable native control. */
+    ariaExpanded: string | null;
+    /** Type of popup opened by the native control. */
+    ariaHasPopup: string | null;
     /** Native button type — ignored when `href` is set. */
     type: 'button' | 'submit' | 'reset';
     /**

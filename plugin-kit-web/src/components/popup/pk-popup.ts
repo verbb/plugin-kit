@@ -160,6 +160,7 @@ export class PkPopup extends PkElement {
 
     private anchorElement: Element | PkPopupVirtualElement | null = null;
     private cleanup?: () => void;
+    private trackingFrame?: number;
     /** True while waiting for layout-stable coords before first paint. */
     private settlingInitialPosition = false;
     private settleGeneration = 0;
@@ -493,6 +494,8 @@ export class PkPopup extends PkElement {
     stop(): Promise<void> {
         return new Promise((resolve) => {
             const popup = this.popupElement;
+            if (this.trackingFrame !== undefined) cancelAnimationFrame(this.trackingFrame);
+            this.trackingFrame = undefined;
             this.settleGeneration += 1;
             this.settlingInitialPosition = false;
             popup?.classList.remove('positioned');
@@ -549,7 +552,13 @@ export class PkPopup extends PkElement {
                     return;
                 }
 
-                this.reposition();
+                // Positioning can resize a constrained popup. Leave the observer's
+                // delivery cycle before measuring again to avoid resize feedback.
+                if (this.trackingFrame !== undefined) cancelAnimationFrame(this.trackingFrame);
+                this.trackingFrame = requestAnimationFrame(() => {
+                    this.trackingFrame = undefined;
+                    this.reposition();
+                });
             });
         }
 

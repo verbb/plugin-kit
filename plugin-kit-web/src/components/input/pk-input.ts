@@ -95,6 +95,10 @@ export class PkInput extends PkFormAssociatedElement {
     @property({ attribute: 'with-clear', type: Boolean })
     withClear = false;
 
+    /** Accessible name for the optional clear button. */
+    @property({ attribute: 'clear-label' })
+    clearLabel = 'Clear';
+
     @property()
     placeholder = '';
 
@@ -319,6 +323,7 @@ export class PkInput extends PkFormAssociatedElement {
                     <input
                         part="input"
                         class="input"
+                        ?data-custom-clear=${this.withClear}
                         id=${hasLabel ? `${this.inputId}-control` : nothing}
                         type=${this.type}
                         .value=${live(this.value)}
@@ -347,8 +352,7 @@ export class PkInput extends PkFormAssociatedElement {
                                 part="clear-button"
                                 class="icon-button clear-button"
                                 type="button"
-                                tabindex="-1"
-                                aria-label="Clear"
+                                aria-label=${this.clearLabel}
                                 @click=${this.handleClearClick}
                             >
                                 <slot name="clear-icon">×</slot>

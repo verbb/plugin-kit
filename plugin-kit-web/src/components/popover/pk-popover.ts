@@ -41,6 +41,10 @@ export class PkPopover extends PkElement {
     @property({ type: Boolean, reflect: true })
     open = false;
 
+    /** Accessible panel name; defaults to the trigger's label. */
+    @property()
+    label = '';
+
     @property({ reflect: true })
     placement: PkPopupPlacement = 'bottom';
 
@@ -234,7 +238,9 @@ export class PkPopover extends PkElement {
         this.registerDismissHandlers();
 
         await this.updateComplete;
-        const placement = await waitForPopupReposition(this.popupElement, this.placement);
+        // Placement attributes are written before the popup is revealed. Focus
+        // requests from pk-after-show must wait for the post-reveal event.
+        const placement = await waitForPopupReposition(this.popupElement, this.placement, 300, { requireEvent: true });
 
         if (this.panelElement) {
             syncPopupPlacementAnimation(this.panelElement, placement);
@@ -449,6 +455,8 @@ export class PkPopover extends PkElement {
             >
                 <div
                     part="panel"
+                    role="dialog"
+                    aria-label=${this.label || this.triggerElement?.getAttribute('aria-label') || this.triggerElement?.textContent?.trim() || nothing}
                     class=${classMap({
                         panel: true,
                         'pk-popup-content': true,

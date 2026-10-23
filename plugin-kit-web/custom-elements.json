@@ -4269,6 +4269,36 @@
             },
             {
               "kind": "field",
+              "name": "ariaPressed",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Toggle state forwarded to the focusable native control.",
+              "attribute": "aria-pressed"
+            },
+            {
+              "kind": "field",
+              "name": "ariaExpanded",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Disclosure state forwarded to the focusable native control.",
+              "attribute": "aria-expanded"
+            },
+            {
+              "kind": "field",
+              "name": "ariaHasPopup",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Type of popup opened by the native control.",
+              "attribute": "aria-haspopup"
+            },
+            {
+              "kind": "field",
               "name": "type",
               "type": {
                 "text": "'button' | 'submit' | 'reset'"
@@ -4589,6 +4619,33 @@
               "default": "null",
               "description": "Accessible name — wins over title when both are set.",
               "fieldName": "ariaLabel"
+            },
+            {
+              "name": "aria-pressed",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Toggle state forwarded to the focusable native control.",
+              "fieldName": "ariaPressed"
+            },
+            {
+              "name": "aria-expanded",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Disclosure state forwarded to the focusable native control.",
+              "fieldName": "ariaExpanded"
+            },
+            {
+              "name": "aria-haspopup",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Type of popup opened by the native control.",
+              "fieldName": "ariaHasPopup"
             },
             {
               "name": "type",
@@ -22920,6 +22977,16 @@
             },
             {
               "kind": "field",
+              "name": "clearLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Clear'",
+              "description": "Accessible name for the optional clear button.",
+              "attribute": "clear-label"
+            },
+            {
+              "kind": "field",
               "name": "placeholder",
               "type": {
                 "text": "string"
@@ -23909,6 +23976,15 @@
               },
               "default": "false",
               "fieldName": "withClear"
+            },
+            {
+              "name": "clear-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Clear'",
+              "description": "Accessible name for the optional clear button.",
+              "fieldName": "clearLabel"
             },
             {
               "name": "placeholder",
@@ -25342,6 +25418,16 @@
             },
             {
               "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible panel name; defaults to the trigger's label.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
               "name": "placement",
               "type": {
                 "text": "PkPopupPlacement"
@@ -25754,6 +25840,15 @@
               "fieldName": "open"
             },
             {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible panel name; defaults to the trigger's label.",
+              "fieldName": "label"
+            },
+            {
               "name": "placement",
               "type": {
                 "text": "PkPopupPlacement"
@@ -26074,6 +26169,14 @@
               "name": "cleanup",
               "type": {
                 "text": "() => void | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "trackingFrame",
+              "type": {
+                "text": "number | undefined"
               },
               "privacy": "private"
             },

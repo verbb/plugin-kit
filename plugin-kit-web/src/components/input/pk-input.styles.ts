@@ -177,6 +177,12 @@ export const pkInputStyles = css`
             min-width: 0;
         }
 
+        /* Keep the browser from adding a second clear control. */
+        .input[data-custom-clear]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            display: none;
+        }
+
         .input::placeholder {
             color: var(--pk-input-placeholder-color, var(--pk-color-gray-400));
         }

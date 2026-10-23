@@ -65,6 +65,7 @@ Use `slot="start"` / `slot="end"` for icons or short units **inside** the field 
 | --- | --- |
 | `autocomplete` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `autofocus` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `clearLabel` `clear-label` | Accessible name for the optional clear button.<br><small><strong>Type</strong> <code>string</code></small><br><small><strong>Default</strong> <code>Clear</code></small> |
 | `customError` `custom-error` | Custom validation message; also settable via `setCustomValidity()`.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `defaultValue` `value` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `disabled` | Disables the control and excludes it from constraint validation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |

@@ -54,7 +54,10 @@ Use disabled buttons for unavailable actions, and the link variant when the acti
 
 | Name | Description |
 | --- | --- |
+| `ariaExpanded` | Disclosure state forwarded to the focusable native control.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `ariaHasPopup` | Type of popup opened by the native control.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `ariaLabel` | Accessible name — wins over title when both are set.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `ariaPressed` | Toggle state forwarded to the focusable native control.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `disabled` | Disables the control and blocks activation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `form` | HTML form owner id — same as native `<button form="…">`. Needed when the submit control lives outside the `<form>` (e.g. dialog footer).<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `groupTrigger` | Compact chevron-only trigger for grouped split actions — Craft `.menubtn`. Not a variant or size: set this boolean on the disclosure end-cap in a split group. Hides label/icons and draws a CSS `::after` chevron (0.4375rem, 2px borders). Inherits `variant`/`size` from sibling buttons; inline padding narrows to 8px. Do not pass a chevron icon — use `icon` + a start-slot icon for a padless square control.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |

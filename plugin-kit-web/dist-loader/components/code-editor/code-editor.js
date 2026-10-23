@@ -1,7 +1,7 @@
-import { a as e, c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BGegy7-X.js";
+import { a as e, c as customElement, m as i, o as r, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BHoh2Dsd.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
-import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-C_TTKlG1.js";
+import { T as EditorState, _ as highlightActiveLine, a as html, b as keymap, c as closeBracketsKeymap, d as defaultHighlightStyle, f as indentOnInput, g as drawSelection, h as EditorView, i as json, l as css, m as syntaxHighlighting, n as history, o as javascript, p as indentUnit, r as historyKeymap, s as closeBrackets, t as defaultKeymap, u as bracketMatching, v as highlightActiveLineGutter, w as Compartment, x as lineNumbers, y as highlightSpecialChars } from "../../chunks/codemirror-8iD4DKHs.js";
 //#region @verbb/plugin-kit-codemirror-core/dist/constants.js
 function computeCodeEditorMinHeight(rows = 12) {
 	return `${Math.max(Number(rows) || 12, 4) * 18 + 12}px`;

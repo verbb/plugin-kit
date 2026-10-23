@@ -465,6 +465,7 @@ export class PkDialog extends PkElement {
             <slot name="trigger" @slotchange=${this.onTriggerSlotChange}></slot>
             <dialog
                 part="panel"
+                aria-label=${this.label || nothing}
                 class=${classMap({
                     dialog: true,
                     open: this.open,

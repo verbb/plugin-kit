@@ -37,6 +37,8 @@ export declare class PkInput extends PkFormAssociatedElement {
     label: string;
     instructions: string;
     withClear: boolean;
+    /** Accessible name for the optional clear button. */
+    clearLabel: string;
     placeholder: string;
     readonly: boolean;
     invalid: boolean;

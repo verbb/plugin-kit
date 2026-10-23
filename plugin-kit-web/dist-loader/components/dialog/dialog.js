@@ -1,2 +1,2 @@
-import { t as PkDialog } from "../../chunks/pk-dialog-ChX96jyg.js";
+import { t as PkDialog } from "../../chunks/pk-dialog-CLLfUejP.js";
 export { PkDialog };

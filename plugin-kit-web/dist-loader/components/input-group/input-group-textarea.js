@@ -1,5 +1,5 @@
-import { a as e, c as customElement, f as A, m as i, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
+import { a as e, c as customElement, f as A, m as i, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BHoh2Dsd.js";
 //#region src/components/input-group/pk-input-group-textarea.styles.ts
 var pkInputGroupTextareaStyles = i`
     @layer pk-component {

@@ -150,6 +150,18 @@ export class PkButton extends PkElement {
     @property({ attribute: 'aria-label' })
     ariaLabel: string | null = null;
 
+    /** Toggle state forwarded to the focusable native control. */
+    @property({ attribute: 'aria-pressed' })
+    ariaPressed: string | null = null;
+
+    /** Disclosure state forwarded to the focusable native control. */
+    @property({ attribute: 'aria-expanded' })
+    ariaExpanded: string | null = null;
+
+    /** Type of popup opened by the native control. */
+    @property({ attribute: 'aria-haspopup' })
+    ariaHasPopup: string | null = null;
+
     /** Native button type — ignored when `href` is set. */
     @property()
     type: 'button' | 'submit' | 'reset' = 'button';
@@ -307,6 +319,9 @@ export class PkButton extends PkElement {
                         target=${this.target ?? nothing}
                         rel=${this.rel ?? nothing}
                         aria-label=${accessibleName || nothing}
+                        aria-pressed=${this.ariaPressed ?? nothing}
+                        aria-expanded=${this.ariaExpanded ?? nothing}
+                        aria-haspopup=${this.ariaHasPopup ?? nothing}
                     >
                         ${this.renderInner(spinnerSize, spinnerVariant)}
                     </a>
@@ -320,6 +335,9 @@ export class PkButton extends PkElement {
                         aria-disabled=${this.disabled ? 'true' : nothing}
                         aria-busy=${this.loading ? 'true' : nothing}
                         aria-label=${accessibleName || nothing}
+                        aria-pressed=${this.ariaPressed ?? nothing}
+                        aria-expanded=${this.ariaExpanded ?? nothing}
+                        aria-haspopup=${this.ariaHasPopup ?? nothing}
                         name=${this.name ?? nothing}
                         value=${this.value ?? nothing}
                     >

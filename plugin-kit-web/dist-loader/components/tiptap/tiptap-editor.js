@@ -1,22 +1,22 @@
-import "../../chunks/pk-field-Bf-sCc_K.js";
+import "../../chunks/pk-field-D96DqgV_.js";
 import { n as uniqueId } from "../../chunks/pk-a11y-mGj0G5AE.js";
-import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BGegy7-X.js";
-import { $ as triangleExclamation, A as h2, B as link, E as fileDashedLine, F as heading, H as listUl, I as highlighter, J as strikethrough, K as quoteRight, M as h4, N as h5, P as h6, Q as textSlash, R as italic, S as code, U as minus, V as listOl, W as paragraph, X as superscript, Y as subscript, Z as table, a as alignRight, c as arrowRotateRight, d as bold, et as underline, f as bracketsCurly, h as chevronDown, i as alignLeft, j as h3, k as h1, n as alignCenter, q as smallCaps, r as alignJustify, s as arrowRotateLeft } from "../../chunks/svg-BRgqS9vA.js";
-import { n as renderIconHtml } from "../../chunks/render-D9G_a_c2.js";
-import "../../chunks/pk-button-DV9Tk5Pd.js";
+import { a as e, c as customElement, f as A, l as o, m as i, o as r, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BHoh2Dsd.js";
+import { $ as triangleExclamation, A as h2, B as link, E as fileDashedLine, F as heading, H as listUl, I as highlighter, J as strikethrough, K as quoteRight, M as h4, N as h5, P as h6, Q as textSlash, R as italic, S as code, U as minus, V as listOl, W as paragraph, X as superscript, Y as subscript, Z as table, a as alignRight, c as arrowRotateRight, d as bold, et as underline, f as bracketsCurly, h as chevronDown, i as alignLeft, j as h3, k as h1, n as alignCenter, q as smallCaps, r as alignJustify, s as arrowRotateLeft } from "../../chunks/svg-nMPo8zNI.js";
+import { n as renderIconHtml } from "../../chunks/render-DGMSttKo.js";
+import "../../chunks/pk-button-CUXbRf0n.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
-import "../../chunks/pk-checkbox-DhP0iMoP.js";
-import "../../chunks/pk-input-Cj5s8eBT.js";
-import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-CJqK0Wft.js";
+import "../../chunks/pk-checkbox-BT3OVo16.js";
+import "../../chunks/pk-input-BJ-ZQOUF.js";
+import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-Bk4HUnje.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-Bn68eGl7.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
-import "../../chunks/pk-dialog-ChX96jyg.js";
-import "../../chunks/pk-dropdown-item-Bs5NZDRh.js";
-import "../../chunks/pk-dropdown-label-Cpl9-bzB.js";
-import "../../chunks/pk-dropdown-menu-CLrfuD3i.js";
+import "../../chunks/pk-dialog-CLLfUejP.js";
+import "../../chunks/pk-dropdown-item-2bOV3Plv.js";
+import "../../chunks/pk-dropdown-label-CRGGCE-q.js";
+import "../../chunks/pk-dropdown-menu-CRw8woWR.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-DStkplzy.js";
+import "../../chunks/pk-tooltip-Cl5Sihxa.js";
 //#region ../plugin-kit-tiptap-core/dist/links/craft-element.js
 function isLinkOptionsArray(value) {
 	return Array.isArray(value) && value.length > 0;

@@ -1,11 +1,11 @@
-import { n as resolveElementById } from "../../chunks/pk-popup-CeyruJFh.js";
+import { n as resolveElementById } from "../../chunks/pk-popup-pbCGzxZc.js";
 import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, u as isTopDismissible } from "../../chunks/pk-a11y-mGj0G5AE.js";
-import { a as e$1, c as customElement, f as A, i as e, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
-import { r as buttonGroupCornerRoleStyles } from "../../chunks/button-group-item.styles-BQbvE3sC.js";
+import { a as e$1, c as customElement, f as A, i as e, m as i, o as r, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BHoh2Dsd.js";
+import { r as buttonGroupCornerRoleStyles } from "../../chunks/button-group-item.styles-BuXfPHT-.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C582MGBJ.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-ClUYI79z.js";
-import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-BtUVJg82.js";
+import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-BO-4LYo5.js";
 import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Bh_d205v.js";
 //#region src/components/popover/pk-popover.styles.ts
 var pkPopoverStyles = [
@@ -92,6 +92,7 @@ var PkPopover = class PkPopover extends PkElement {
 	constructor(..._args) {
 		super(..._args);
 		this.open = false;
+		this.label = "";
 		this.placement = "bottom";
 		this.sideOffset = 4;
 		this.flush = false;
@@ -198,7 +199,7 @@ var PkPopover = class PkPopover extends PkElement {
 		this.syncExpanded();
 		this.registerDismissHandlers();
 		await this.updateComplete;
-		const placement = await waitForPopupReposition(this.popupElement, this.placement);
+		const placement = await waitForPopupReposition(this.popupElement, this.placement, 300, { requireEvent: true });
 		if (this.panelElement) syncPopupPlacementAnimation(this.panelElement, placement);
 		this.panelAnimated = true;
 		this.dispatchEvent(new PkAfterShowEvent());
@@ -328,6 +329,8 @@ var PkPopover = class PkPopover extends PkElement {
             >
                 <div
                     part="panel"
+                    role="dialog"
+                    aria-label=${this.label || this.triggerElement?.getAttribute("aria-label") || this.triggerElement?.textContent?.trim() || A}
                     class=${e({
 			panel: true,
 			"pk-popup-content": true,
@@ -347,6 +350,7 @@ __decorate([n({
 	type: Boolean,
 	reflect: true
 })], PkPopover.prototype, "open", void 0);
+__decorate([n()], PkPopover.prototype, "label", void 0);
 __decorate([n({ reflect: true })], PkPopover.prototype, "placement", void 0);
 __decorate([n({
 	attribute: "side-offset",

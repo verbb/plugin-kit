@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Popover focus regression</title></head>
+<body>
+    <div id="host"></div>
+    <script type="module">
+        import '@verbb/plugin-kit-web/components/dialog/pk-dialog.js';
+        import '@verbb/plugin-kit-web/components/popover/pk-popover.js';
+
+        const root = document.querySelector('#host').attachShadow({ mode: 'open' });
+        root.innerHTML = `
+            <pk-dialog label="Notification">
+                <button type="button">Configure variable</button>
+                <pk-popover>
+                    <input aria-label="Default if empty">
+                    <button type="button">Save</button>
+                </pk-popover>
+            </pk-dialog>
+        `;
+        const dialog = root.querySelector('pk-dialog');
+        const popover = root.querySelector('pk-popover');
+        const trigger = root.querySelector('button');
+        const input = root.querySelector('input');
+        await Promise.all([dialog.updateComplete, popover.updateComplete]);
+        popover.anchor = trigger;
+
+        // Hold the final positioning frame so an early placement attribute cannot
+        // masquerade as readiness. This reproduces slow WebKit layout reliably.
+        const popup = popover.shadowRoot.querySelector('pk-popup');
+        const originalFrames = popup.frames.bind(popup);
+        const release = new Promise((resolve) => {
+            window.releasePositioning = resolve;
+        });
+        popup.frames = async (count) => {
+            await originalFrames(count);
+            if (count === 1) {
+                document.body.dataset.positioningHeld = 'true';
+                await release;
+            }
+        };
+
+        popover.addEventListener('pk-after-show', () => {
+            document.body.dataset.visibilityAtShow = getComputedStyle(input).visibility;
+            input.focus({ preventScroll: true });
+            document.body.dataset.afterShow = 'true';
+        });
+        trigger.addEventListener('click', () => {
+            popover.open = true;
+        });
+        dialog.open = true;
+        await dialog.updateComplete;
+        document.body.dataset.ready = 'true';
+    </script>
+</body>
+</html>

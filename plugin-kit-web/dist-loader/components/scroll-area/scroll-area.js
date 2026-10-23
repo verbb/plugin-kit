@@ -1,5 +1,5 @@
-import { a as e$1, c as customElement, f as A, i as e, m as i, o as r, p as b, s as n } from "../../chunks/lit-B6nFKgbW.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BGegy7-X.js";
+import { a as e$1, c as customElement, f as A, i as e, m as i, o as r, p as b, s as n } from "../../chunks/lit-CDGZfMid.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BHoh2Dsd.js";
 //#region src/components/scroll-area/pk-scroll-area.styles.ts
 var pkScrollAreaStyles = i`
     @layer pk-component {

@@ -5,6 +5,13 @@
 ### Changed
 - Updated the package build toolchain to Vite 8.3.4.
 
+### Fixed
+- Fixed Button pressed, expanded and popup states not reaching the native control.
+- Fixed Input clear controls being inaccessible from the keyboard, added configurable labels, and prevented duplicate browser clear controls in search inputs.
+- Fixed accessible names for Dialog and Popover panels.
+- Fixed popup resize feedback when filter menus change size inside a dialog.
+- Fixed popovers sometimes failing to focus their content when opened in Safari.
+
 ## 2.0.27 - 2026-10-20
 
 ### Fixed

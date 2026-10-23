@@ -57,6 +57,7 @@ export declare class PkPopup extends PkElement {
     private arrowElement?;
     private anchorElement;
     private cleanup?;
+    private trackingFrame?;
     /** True while waiting for layout-stable coords before first paint. */
     private settlingInitialPosition;
     private settleGeneration;
