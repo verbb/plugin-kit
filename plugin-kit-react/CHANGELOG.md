@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.29 - 2026-10-24
+
 ### Added
 - Added manual DataTable row ordering with drag handles, keyboard controls, disabled column sorting, and a consumer-owned save event.
 - Added copyable handle columns and inline edit, move and delete action presets to DataTable, with custom labels and optional menu placement.
