@@ -1,6 +1,6 @@
 import { c as n, f as i, l as customElement, m as b, s as r } from "../../chunks/lit-6rz1jOzS.js";
 import { c as __decorate } from "../../chunks/pk-base-BZKcPYjM.js";
-import "../../chunks/pk-button-C_4EHtBx.js";
+import "../../chunks/pk-button-DQXfpLFZ.js";
 import { c as watchCpFormDirty, s as submitCpFormAction, t as pkConnectStyles } from "../../chunks/pk-connect.styles-KBWI4xAB.js";
 import "../../chunks/pk-status-D-HEWQS1.js";
 //#region src/components/connect/pk-connect-oauth.ts

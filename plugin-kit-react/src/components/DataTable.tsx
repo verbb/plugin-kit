@@ -19,6 +19,7 @@ export const PkDataTableElement = createPluginKitComponent({
         onPkViewChange: 'pk-view-change',
         onPkSelectionChange: 'pk-selection-change',
         onPkRowAction: 'pk-row-action',
+        onPkRowReorder: 'pk-row-reorder',
         onPkLoad: 'pk-load',
         onPkLoadError: 'pk-load-error',
         onPkRetry: 'pk-retry',
@@ -100,6 +101,9 @@ export const DataTable = forwardRef<PkDataTable, DataTableProps>(
     },
 );
 export type {
+    DataTableRowReorderDetail,
+    DataTableAction,
+    DataTableActionPreset,
     DataTablePersistence,
     DataTablePersistenceOptions,
     DataTablePreferenceStorage,

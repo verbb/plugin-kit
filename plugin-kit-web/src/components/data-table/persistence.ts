@@ -104,6 +104,7 @@ export function persistDataTableView(
         /* Storage can be blocked by browser policy. */
     }
     const defaultSort = () => {
+        if (table.manualOrder) return [];
         const sort = cleanSort(table.defaultSort, table.columns);
         const first = table.columns.find((column) => column.sortable);
         return sort.length
@@ -113,6 +114,7 @@ export function persistDataTableView(
               : [];
     };
     const currentSort = () => {
+        if (table.manualOrder) return [];
         const sort = cleanSort(table.query.sort, table.columns);
         return sort.length ? sort : defaultSort();
     };
@@ -121,7 +123,7 @@ export function persistDataTableView(
         const saved: unknown = raw ? JSON.parse(raw) : undefined;
         if (record(saved)) {
             table.view = cleanView(saved.view, table.columns, table.view);
-            if (options.restoreSort !== false) {
+            if (options.restoreSort !== false && !table.manualOrder) {
                 const sort = cleanSort(saved.sort, table.columns);
                 if (sort.length) table.query = { ...table.query, sort };
             }

@@ -6,11 +6,59 @@
 <section id="index-demo"><div id="index-frame" style="height:360px;max-width:480px;overflow:auto"><pk-data-table id="index"></pk-data-table></div></section>
 <section id="overflow-demo"><div style="max-height:360px;max-width:480px;overflow:auto"><pk-data-table id="overflow"></pk-data-table></div></section>
 <section><pk-data-table id="filter-demo"></pk-data-table></section>
+<section><pk-data-table id="handle-actions" selectable></pk-data-table></section>
+<section id="row-order-demo"><pk-data-table id="row-order" manual-order selectable></pk-data-table></section>
 <section><pk-status-label id="badge" status="pending">Awaiting review</pk-status-label></section>
 <script type="module">
 import '@verbb/plugin-kit-web/tokens.css';
 import { queryDataTable, defaultDataTableQuery, persistDataTableView } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 window.persistDataTableView = persistDataTableView;
+const rowOrder = document.querySelector('#row-order');
+rowOrder.label = 'Manual order';
+rowOrder.rowLabel = 'name';
+rowOrder.columns = [{ id: 'name', label: 'Name', sortable: true }, { id: 'handle', label: 'Handle', type: 'handle', sortable: true }];
+window.orderRows = [
+    { id: 3, name: 'Charlie', handle: 'charlie' },
+    { id: 'a', name: 'Alpha', handle: 'alpha' },
+    { id: 1, name: 'Bravo', handle: 'bravo' },
+    { id: '1', name: 'Delta', handle: 'delta' },
+    { id: 5, name: 'Echo', handle: 'echo' },
+    { id: 6, name: 'Foxtrot', handle: 'foxtrot' },
+];
+rowOrder.rows = [...window.orderRows];
+rowOrder.query = { ...rowOrder.query, pageSize: 4, sort: [{ id: 'name', direction: 'asc' }] };
+rowOrder.defaultSort = [{ id: 'name', direction: 'desc' }];
+window.rowOrders = [];
+rowOrder.addEventListener('pk-row-reorder', event => window.rowOrders.push(event.detail));
+
+const handles = document.querySelector('#handle-actions');
+handles.label = 'Filesystems';
+handles.rowLabel = 'name';
+handles.columns = [
+    { id: 'name', label: 'Name' },
+    { id: 'handle', label: 'Handle', type: 'handle' },
+    { id: 'type', label: 'Type' },
+];
+handles.rows = [
+    { id: 1, name: 'Image Resizer Testing', handle: 'imageResizerTesting', type: 'Local Folder' },
+    { id: 2, name: 'General', handle: 'general', type: 'Local Folder' },
+    { id: 3, name: 'Missing', handle: null, type: 'Local Folder' },
+];
+handles.rowActions = row => row.id === 3 ? [] : [
+    { id: 'edit', preset: 'edit' },
+    { id: 'move-group', preset: 'move', label: 'Move to group' },
+    { id: 'delete', preset: 'delete', disabled: row.id === 2 },
+    { id: 'duplicate', label: 'Duplicate' },
+    { id: 'archive', label: 'Archive', display: 'inline' },
+    { id: 'rename', preset: 'edit', label: 'Rename', display: 'menu' },
+];
+window.rowActions = [];
+handles.addEventListener('pk-row-action', event => window.rowActions.push(event.detail));
+window.copiedHandles = [];
+window.copyErrors = 0;
+handles.addEventListener('pk-copy', event => window.copiedHandles.push(event.detail));
+handles.addEventListener('pk-copy-error', () => window.copyErrors++);
+
 import { filterRows, filterColumns, filterDefinitions } from '../../docs/web/components/examples/data-table-filters.fixtures.ts';
 import { mountOverflowExample } from '../../docs/web/components/examples/data-table-overflow.fixtures.ts';
 mountOverflowExample(document.querySelector('#overflow-demo'));

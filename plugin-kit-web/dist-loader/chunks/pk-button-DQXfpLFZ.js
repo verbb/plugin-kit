@@ -1,6 +1,6 @@
 import { a as e, c as n, h as i, l as customElement, m as b, p as A, s as r, u as o } from "./lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement, s as iconStyles, u as hostDisplayInlineBlock } from "./pk-base-BZKcPYjM.js";
-import { h as chevronDown, t as iconToSvg } from "./svg-D8YEDMfu.js";
+import { h as chevronDown, t as iconToSvg } from "./svg-C4lXkZYF.js";
 import "./pk-spinner-C0iiN8B0.js";
 import { i as buttonGroupIndentStyles, n as buttonGroupCornerRadiusStyles, r as buttonGroupCornerRoleStyles, t as buttonGroupBorderJoinStyles } from "./button-group-item.styles-CHbt8Bfp.js";
 //#region src/components/spinner/spinner-utils.ts

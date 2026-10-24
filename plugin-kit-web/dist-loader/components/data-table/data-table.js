@@ -1,20 +1,21 @@
 import { c as n, h as i, l as customElement, m as b, n as c, p as A, s as r, t as o$1, u as o } from "../../chunks/lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZKcPYjM.js";
-import { W as magnifyingGlass, Y as slidersOutline, _ as chevronRight, g as chevronLeft, h as chevronDown, it as xmark, k as gripMove, v as chevronUp } from "../../chunks/svg-D8YEDMfu.js";
-import { n as renderIconHtml } from "../../chunks/render-DGT9Y3WS.js";
-import "../../chunks/pk-button-C_4EHtBx.js";
+import "../../chunks/pk-copy-button-N1FGwbxR.js";
+import { A as gripMove, E as ellipsis, G as magnifyingGlass, J as pen, S as clipboard, Z as slidersOutline, _ as chevronRight, g as chevronLeft, h as chevronDown, ot as xmark, v as chevronUp } from "../../chunks/svg-C4lXkZYF.js";
+import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
+import "../../chunks/pk-button-DQXfpLFZ.js";
 import "../../chunks/pk-spinner-C0iiN8B0.js";
-import "../../chunks/pk-state-panel-TILi3V8R.js";
+import "../../chunks/pk-state-panel-BqZfwPjT.js";
 import "../../chunks/pk-checkbox-DOtHW2Vb.js";
 import "../../chunks/pk-input-DGvN5YDz.js";
-import "../../chunks/pk-dialog-HlHbhRBL.js";
-import "../../chunks/pk-dropdown-item-KZmo7q7g.js";
-import "../../chunks/pk-dropdown-menu-CIQvXWJQ.js";
+import "../../chunks/pk-dialog-Cz_2lomE.js";
+import "../../chunks/pk-dropdown-item-BCFdB7JM.js";
+import "../../chunks/pk-dropdown-menu-Csa4ci93.js";
 import "../../chunks/pk-status-label-Dw4_Ezv3.js";
 import "../../chunks/pk-button-group-ChaajqnN.js";
 import "../../chunks/pk-popover-7e3umaMq.js";
-import "../../chunks/pk-option-D0daR2Ei.js";
-import "../../chunks/pk-select-DWtVzf66.js";
+import "../../chunks/pk-option-BSUWD0wo.js";
+import "../../chunks/pk-select-BGU0atxn.js";
 //#region src/components/data-table/styles.ts
 var dataTableStyles = i`
     :host {
@@ -148,6 +149,82 @@ var dataTableStyles = i`
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    .cell-handle {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        padding-inline-start: 6px;
+        border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+        border-radius: var(--pk-radius-md, 4px);
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+    }
+    .cell-handle code {
+        font-family: var(--pk-font-family-mono, ui-monospace, monospace);
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+    .cell-handle pk-copy-button {
+        flex: none;
+        --pk-btn-height-default: 24px;
+        --pk-btn-icon-size-default: 12px;
+        --pk-copy-button-color: currentColor;
+        --pk-copy-button-hover-color: currentColor;
+        --pk-copy-button-background: transparent;
+        --pk-copy-button-hover-background: transparent;
+        --pk-copy-button-border-color: transparent;
+    }
+    .cell-handle .icon {
+        width: var(--pk-btn-icon-size-default, 12px);
+        height: var(--pk-btn-icon-size-default, 12px);
+    }
+    .row-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4px;
+    }
+    .row-handle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--pk-btn-height-xs, 26px);
+        height: var(--pk-btn-height-xs, 26px);
+        padding: 0;
+        border: 0;
+        border-radius: var(--pk-radius-md, 4px);
+        background: transparent;
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+        cursor: move;
+        touch-action: none;
+        user-select: none;
+        font: inherit;
+    }
+    .row-handle:focus-visible {
+        outline: 2px solid var(--pk-color-blue-500, #247db1);
+        outline-offset: 2px;
+    }
+    .row-handle[aria-disabled='true'] {
+        cursor: default;
+        opacity: 0.4;
+    }
+    tbody[data-row-dragging] tr {
+        position: relative;
+        background: var(--pk-color-white, #fff);
+    }
+    tbody tr[data-dragging] {
+        z-index: 2;
+        box-shadow: var(--pk-shadow-popup, 0 4px 12px rgb(0 0 0 / 0.15));
+    }
+    .row-order-hint {
+        margin: 0 0 8px;
+        color: var(--pk-color-gray-550, #596673);
+    }
+    .row-action::part(base) {
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+    }
+    .row-action[data-preset='move']::part(base):not(:disabled) {
+        cursor: move;
     }
     tbody tr[data-selected] td {
         background: var(
@@ -887,6 +964,18 @@ var dataTableLabels = {
 	range: "{start}–{end} of {total}",
 	unknownRange: "{start}–{end}",
 	actions: "Actions for {id}",
+	editAction: "Edit",
+	moveAction: "Move",
+	deleteAction: "Delete",
+	rowAction: "{label}: {id}",
+	copyHandle: "Copy {label}",
+	copiedHandle: "Copied {label}",
+	rowOrder: "Row order",
+	reorderRow: "Reorder {label}",
+	reorderRowHelp: "Drag to reorder, or use Up and Down. Home moves to the start of this page; End moves to the end. Escape cancels a drag.",
+	reorderRowsFiltered: "Clear search and filters to reorder rows.",
+	rowReordered: "{label} moved to position {position} of {count} on this page.",
+	rowReorderCancelled: "Row move cancelled.",
 	moveUp: "Move {label} earlier",
 	moveDown: "Move {label} later",
 	sort: "Sort by {label}"
@@ -1369,6 +1458,169 @@ var DataTableFilterController = class {
 	}
 };
 //#endregion
+//#region src/components/data-table/row-order-controller.ts
+/** Preview with transforms so Lit retains ownership of row order and custom cell instances. */
+var DataTableRowOrderController = class {
+	constructor(enabled, commit, cancelled) {
+		this.enabled = enabled;
+		this.commit = commit;
+		this.cancelled = cancelled;
+	}
+	get active() {
+		return Boolean(this.session);
+	}
+	start(event) {
+		if (!this.enabled() || this.session || event.button !== 0 || !event.isPrimary) return;
+		const handle = event.currentTarget;
+		const source = handle.closest("tr");
+		const body = source?.parentElement;
+		if (!source || !(body instanceof HTMLTableSectionElement)) return;
+		const bounds = body.getBoundingClientRect();
+		const rows = [...body.rows].map((element) => {
+			const rect = element.getBoundingClientRect();
+			return {
+				element,
+				top: rect.top - bounds.top,
+				height: rect.height
+			};
+		});
+		const fromIndex = rows.findIndex((row) => row.element === source);
+		if (fromIndex < 0 || rows.length < 2) return;
+		event.preventDefault();
+		handle.focus({ preventScroll: true });
+		const move = (event) => {
+			const session = this.session;
+			if (!session || event.pointerId !== session.pointerId) return;
+			event.preventDefault();
+			session.pointerY = event.clientY;
+			if (!session.moved && Math.abs(event.clientY - session.startY) < 4) return;
+			session.moved = true;
+			body.setAttribute("data-row-dragging", "");
+			source.setAttribute("data-dragging", "");
+			this.preview();
+		};
+		const finish = (event) => {
+			const session = this.session;
+			if (!session || event.pointerId !== session.pointerId) return;
+			const commit = event.type === "pointerup" && session.moved && this.enabled();
+			this.cancel(false);
+			if (commit) this.commit(session.fromIndex, session.toIndex);
+		};
+		const keydown = (event) => {
+			if (event.key !== "Escape") return;
+			event.preventDefault();
+			event.stopPropagation();
+			this.cancel();
+		};
+		const cancel = () => this.cancel();
+		const doc = handle.ownerDocument;
+		const win = doc.defaultView;
+		handle.addEventListener("pointermove", move);
+		handle.addEventListener("pointerup", finish);
+		handle.addEventListener("pointercancel", cancel);
+		handle.addEventListener("lostpointercapture", cancel);
+		doc.addEventListener("keydown", keydown, true);
+		win.addEventListener("blur", cancel);
+		win.addEventListener("resize", cancel);
+		this.session = {
+			handle,
+			body,
+			width: bounds.width,
+			rows,
+			fromIndex,
+			toIndex: fromIndex,
+			pointerId: event.pointerId,
+			startY: event.clientY,
+			pointerY: event.clientY,
+			grabOffset: event.clientY - source.getBoundingClientRect().top,
+			moved: false,
+			scrollParents: this.scrollParents(body),
+			cleanup: () => {
+				handle.removeEventListener("pointermove", move);
+				handle.removeEventListener("pointerup", finish);
+				handle.removeEventListener("pointercancel", cancel);
+				handle.removeEventListener("lostpointercapture", cancel);
+				doc.removeEventListener("keydown", keydown, true);
+				win.removeEventListener("blur", cancel);
+				win.removeEventListener("resize", cancel);
+			}
+		};
+		handle.setPointerCapture(event.pointerId);
+	}
+	cancel(announce = true) {
+		const session = this.session;
+		this.session = void 0;
+		if (this.frame !== void 0) cancelAnimationFrame(this.frame);
+		this.frame = void 0;
+		if (!session) return;
+		session.cleanup();
+		session.body.removeAttribute("data-row-dragging");
+		for (const row of session.rows) {
+			row.element.style.removeProperty("transform");
+			row.element.removeAttribute("data-dragging");
+		}
+		if (session.handle.hasPointerCapture(session.pointerId)) session.handle.releasePointerCapture(session.pointerId);
+		if (announce && session.moved) this.cancelled();
+	}
+	checkGeometry() {
+		const session = this.session;
+		if (!session) return;
+		if (Math.abs(session.body.getBoundingClientRect().width - session.width) > .5 || session.rows.some((row) => Math.abs(row.element.getBoundingClientRect().height - row.height) > .5)) this.cancel();
+	}
+	preview() {
+		const session = this.session;
+		if (!session?.moved) return;
+		if (!this.enabled()) {
+			this.cancel();
+			return;
+		}
+		const { rows, fromIndex, body } = session;
+		const source = rows[fromIndex];
+		const last = rows.at(-1);
+		const desiredTop = session.pointerY - session.grabOffset - body.getBoundingClientRect().top;
+		const top = Math.max(0, Math.min(desiredTop, last.top + last.height - source.height));
+		const center = desiredTop + source.height / 2;
+		session.toIndex = rows.filter((row, index) => index !== fromIndex && center > row.top + row.height / 2).length;
+		for (const [index, row] of rows.entries()) {
+			const offset = index === fromIndex ? top - row.top : index > fromIndex && index <= session.toIndex ? -source.height : index < fromIndex && index >= session.toIndex ? source.height : 0;
+			row.element.style.transform = `translateY(${offset}px)`;
+		}
+		if (this.frame !== void 0) cancelAnimationFrame(this.frame);
+		this.frame = requestAnimationFrame(() => {
+			this.frame = void 0;
+			if (this.session !== session) return;
+			this.autoScroll(session);
+			this.preview();
+		});
+	}
+	scrollParents(element) {
+		const parents = [];
+		const doc = element.ownerDocument;
+		let parent = element;
+		while (parent) {
+			if (parent instanceof HTMLElement && /(auto|scroll)/.test(getComputedStyle(parent).overflowY) && parent.scrollHeight > parent.clientHeight) parents.push(parent);
+			const root = parent.getRootNode();
+			parent = parent.parentElement ?? (root instanceof ShadowRoot ? root.host : null);
+		}
+		if (doc.scrollingElement instanceof HTMLElement && !parents.includes(doc.scrollingElement)) parents.push(doc.scrollingElement);
+		return parents;
+	}
+	autoScroll(session) {
+		const win = session.handle.ownerDocument.defaultView;
+		for (const parent of session.scrollParents) {
+			const viewport = parent === parent.ownerDocument.scrollingElement;
+			const bounds = parent.getBoundingClientRect();
+			const top = viewport ? 0 : Math.max(0, bounds.top);
+			const bottom = viewport ? win.innerHeight : Math.min(win.innerHeight, bounds.bottom);
+			const delta = session.pointerY < top + 32 ? -10 : session.pointerY > bottom - 32 ? 10 : 0;
+			if (delta && (delta < 0 ? parent.scrollTop > 0 : parent.scrollTop + parent.clientHeight < parent.scrollHeight)) {
+				parent.scrollTop += delta;
+				break;
+			}
+		}
+	}
+};
+//#endregion
 //#region src/components/data-table/persistence.ts
 var bindings = /* @__PURE__ */ new WeakMap();
 var record = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -1408,6 +1660,7 @@ function persistDataTableView(table, options) {
 		storage = options.storage ?? table.ownerDocument.defaultView?.localStorage;
 	} catch {}
 	const defaultSort = () => {
+		if (table.manualOrder) return [];
 		const sort = cleanSort(table.defaultSort, table.columns);
 		const first = table.columns.find((column) => column.sortable);
 		return sort.length ? sort : first ? [{
@@ -1416,6 +1669,7 @@ function persistDataTableView(table, options) {
 		}] : [];
 	};
 	const currentSort = () => {
+		if (table.manualOrder) return [];
 		const sort = cleanSort(table.query.sort, table.columns);
 		return sort.length ? sort : defaultSort();
 	};
@@ -1424,7 +1678,7 @@ function persistDataTableView(table, options) {
 		const saved = raw ? JSON.parse(raw) : void 0;
 		if (record(saved)) {
 			table.view = cleanView(saved.view, table.columns, table.view);
-			if (options.restoreSort !== false) {
+			if (options.restoreSort !== false && !table.manualOrder) {
 				const sort = cleanSort(saved.sort, table.columns);
 				if (sort.length) table.query = {
 					...table.query,
@@ -1516,6 +1770,8 @@ var PkDataTable = class PkDataTable extends PkElement {
 		this.hideToolbar = false;
 		this.hideFooter = false;
 		this.selectable = false;
+		this.manualOrder = false;
+		this.reorderDisabled = false;
 		this.selectedKeys = [];
 		this.exportFormats = [];
 		this.exporting = false;
@@ -1532,6 +1788,10 @@ var PkDataTable = class PkDataTable extends PkElement {
 		this.labels = {};
 		this.dragOffsets = {};
 		this.reorderAnnouncement = "";
+		this.rowOrderAnnouncement = "";
+		this.rowOrder = new DataTableRowOrderController(() => this.canReorderRows, (from, to) => this.reorderRows(from, to), () => {
+			this.rowOrderAnnouncement = this.text("rowReorderCancelled");
+		});
 		this.tableScrollWidth = 0;
 		this.hasHorizontalOverflow = false;
 		this.sortLoading = false;
@@ -1547,6 +1807,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 		if (this.hasUpdated && this.mode === "remote" && this.dataSource) this.refresh();
 	}
 	disconnectedCallback() {
+		this.rowOrder.cancel(false);
 		this.cancelColumnDrag();
 		this.resizeObserver?.disconnect();
 		if (this.layoutFrame !== void 0) cancelAnimationFrame(this.layoutFrame);
@@ -1558,12 +1819,13 @@ var PkDataTable = class PkDataTable extends PkElement {
 		super.disconnectedCallback();
 	}
 	willUpdate(changed) {
+		if (this.rowOrder.active) this.rowOrder.cancel();
 		if (this.drag && (changed.has("columns") || changed.has("view"))) this.cancelColumnDrag();
 		if (changed.has("query") || changed.has("rows") || changed.has("selectable")) {
 			this.selectionAnchor = void 0;
 			this.checkboxGesture = void 0;
 		}
-		if (!this.query.sort.length && this.resolvedDefaultSort.length) {
+		if (this.manualOrder && this.query.sort.length || !this.query.sort.length && this.resolvedDefaultSort.length) {
 			this.query = {
 				...this.query,
 				sort: this.resolvedDefaultSort
@@ -1583,7 +1845,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 			clearTimeout(this.searchTimer);
 			this.searchDraft = void 0;
 			const previous = changed.get("query");
-			this.sortLoading = Boolean(previous?.sort.length && JSON.stringify(previous.sort) !== JSON.stringify(this.query.sort));
+			this.sortLoading = !this.manualOrder && Boolean(previous?.sort.length && JSON.stringify(previous.sort) !== JSON.stringify(this.query.sort));
 			if (previous && JSON.stringify([
 				previous.criteria,
 				previous.search,
@@ -1628,6 +1890,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 	observeLayout() {
 		this.resizeObserver?.disconnect();
 		this.resizeObserver = new ResizeObserver(() => {
+			this.rowOrder.checkGeometry();
 			if (this.layoutFrame !== void 0) cancelAnimationFrame(this.layoutFrame);
 			this.layoutFrame = requestAnimationFrame(() => {
 				this.layoutFrame = void 0;
@@ -1682,15 +1945,19 @@ var PkDataTable = class PkDataTable extends PkElement {
 		}
 		this.loading = true;
 		this.error = "";
+		const query = this.manualOrder ? {
+			...this.query,
+			sort: []
+		} : this.query;
 		try {
-			const result = await this.requests.load(this.dataSource, this.query);
+			const result = await this.requests.load(this.dataSource, query);
 			if (!result) return;
 			if (!Array.isArray(result.rows)) throw new TypeError("DataTable dataSource must return rows.");
 			this.loaded = result;
 			this.loading = false;
 			this.emit("pk-load", {
 				result,
-				query: this.query
+				query
 			});
 		} catch (error) {
 			this.error = this.text("error");
@@ -1699,6 +1966,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 		}
 	}
 	get resolvedDefaultSort() {
+		if (this.manualOrder) return [];
 		if (this.defaultSort.length) return this.defaultSort.map((sort) => ({ ...sort }));
 		const column = this.columns.find((column) => column.sortable);
 		return column ? [{
@@ -1708,6 +1976,11 @@ var PkDataTable = class PkDataTable extends PkElement {
 	}
 	/** Update query state and reset paging for search, sorting or criteria changes. */
 	setQuery(patch) {
+		if (this.manualOrder && "sort" in patch) {
+			const { sort: _sort, ...rest } = patch;
+			patch = rest;
+			if (!Object.keys(patch).length) return;
+		}
 		this.requests.cancel();
 		if ("sort" in patch && !patch.sort?.length) patch = {
 			...patch,
@@ -1847,7 +2120,10 @@ var PkDataTable = class PkDataTable extends PkElement {
 		return key;
 	}
 	get result() {
-		if (this.mode === "client") return queryDataTable(this.rows, this.columns, this.filters, this.query, this.locale || void 0);
+		if (this.mode === "client") return queryDataTable(this.rows, this.columns, this.filters, this.manualOrder ? {
+			...this.query,
+			sort: []
+		} : this.query, this.locale || void 0);
 		return this.dataSource ? this.loaded ?? { rows: [] } : {
 			rows: this.rows,
 			total: this.total,
@@ -1855,6 +2131,88 @@ var PkDataTable = class PkDataTable extends PkElement {
 			nextCursor: this.nextCursor,
 			previousCursor: this.previousCursor
 		};
+	}
+	get rowOrderFiltered() {
+		return Boolean(this.query.search.trim() || this.searchDraft?.trim() || Object.keys(this.query.filters).length || Object.keys(this.query.criteria ?? {}).length);
+	}
+	get canReorderRows() {
+		const count = this.mode === "client" ? Math.min(this.query.pageSize, this.rows.length - this.query.pageIndex * this.query.pageSize) : this.dataSource ? this.loaded?.rows.length ?? 0 : this.rows.length;
+		return this.manualOrder && !this.reorderDisabled && !this.loading && !this.error && !this.rowOrderFiltered && count > 1;
+	}
+	reorderRows(fromIndex, toIndex) {
+		if (!this.canReorderRows || fromIndex === toIndex) return;
+		const page = [...this.result.rows];
+		if (fromIndex < 0 || toIndex < 0 || fromIndex >= page.length || toIndex >= page.length) return;
+		const previousKeys = page.map((row) => this.key(row));
+		const [row] = page.splice(fromIndex, 1);
+		page.splice(toIndex, 0, row);
+		const previousRows = [...this.mode === "remote" && this.dataSource ? this.loaded.rows : this.rows];
+		let rows;
+		if (this.mode === "client") {
+			const pageKeys = new Set(previousKeys);
+			let index = 0;
+			rows = this.rows.map((item) => pageKeys.has(this.key(item)) ? page[index++] : item);
+			this.rows = rows;
+		} else if (this.dataSource) {
+			rows = page;
+			this.loaded = {
+				...this.loaded,
+				rows
+			};
+		} else {
+			rows = page;
+			this.rows = rows;
+		}
+		this.selectionAnchor = void 0;
+		this.rowOrderAnnouncement = this.text("rowReordered", {
+			label: this.accessibleRowLabel(row),
+			position: toIndex + 1,
+			count: page.length
+		});
+		const detail = {
+			rowKey: this.key(row),
+			fromIndex,
+			toIndex,
+			orderedKeys: page.map((item) => this.key(item)),
+			previousKeys,
+			rows: [...rows],
+			previousRows,
+			query: structuredClone(this.query)
+		};
+		const handle = this.renderRoot.querySelectorAll(".row-handle")[fromIndex];
+		const hadFocus = this.renderRoot instanceof ShadowRoot && this.renderRoot.activeElement === handle;
+		const focusAfterMove = async () => {
+			await this.updateComplete;
+			if (!hadFocus || !this.isConnected || !handle?.isConnected || this.loading || this.error || !this.manualOrder) return;
+			const active = this.ownerDocument.activeElement;
+			if (active !== this && active !== this.ownerDocument.body) return;
+			const shadowActive = this.renderRoot.activeElement;
+			if (shadowActive && shadowActive !== handle) return;
+			handle.focus({ preventScroll: true });
+			handle.scrollIntoView({
+				block: "nearest",
+				inline: "nearest"
+			});
+		};
+		this.emit("pk-row-reorder", detail);
+		focusAfterMove();
+	}
+	keyRowOrder(event, row) {
+		if (event.altKey || event.ctrlKey || event.metaKey) return;
+		if (![
+			"Home",
+			"End",
+			"ArrowUp",
+			"ArrowDown"
+		].includes(event.key)) return;
+		event.preventDefault();
+		event.stopPropagation();
+		if (this.rowOrder.active || !this.canReorderRows) return;
+		const rows = this.result.rows;
+		const from = rows.findIndex((item) => this.key(item) === this.key(row));
+		const to = event.key === "Home" ? 0 : event.key === "End" ? rows.length - 1 : event.key === "ArrowUp" ? Math.max(0, from - 1) : event.key === "ArrowDown" ? Math.min(rows.length - 1, from + 1) : void 0;
+		if (to === void 0) return;
+		this.reorderRows(from, to);
 	}
 	get orderedColumns() {
 		const ordered = this.view.columnOrder.map((id) => this.columns.find((column) => column.id === id)).filter((column) => Boolean(column));
@@ -2008,7 +2366,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 	}
 	renderView() {
 		const sort = this.query.sort[0];
-		const sortable = this.columns.filter((column) => column.sortable);
+		const sortable = this.manualOrder ? [] : this.columns.filter((column) => column.sortable);
 		const visibleCount = this.columns.filter((column) => column.hideable === false || !this.view.hiddenColumns.includes(column.id)).length;
 		return b`<pk-popover
             class="view-popover"
@@ -2147,6 +2505,7 @@ var PkDataTable = class PkDataTable extends PkElement {
         >`;
 	}
 	sortColumn(id) {
+		if (this.manualOrder) return;
 		const current = this.query.sort[0];
 		this.setQuery({ sort: [{
 			id,
@@ -2188,6 +2547,16 @@ var PkDataTable = class PkDataTable extends PkElement {
                 >${dataTableText(value)}</slot
             >`;
 		if (value == null || value === "") return "—";
+		if (column.type === "handle") {
+			const handle = dataTableText(value);
+			return b`<span class="cell-handle" part="handle">
+                <code>${handle}</code><pk-copy-button
+                    .value=${handle}
+                    .ariaLabel=${this.text("copyHandle", { label: handle })}
+                    .copiedLabel=${this.text("copiedHandle", { label: handle })}
+                    >${this.icon(clipboard, "icon")}</pk-copy-button>
+            </span>`;
+		}
 		if (column.type === "number" && Number.isFinite(Number(value))) return new Intl.NumberFormat(this.locale || void 0, column.numberOptions).format(Number(value));
 		if (column.type === "date") {
 			const date = value instanceof Date ? value : new Date(dataTableText(value));
@@ -2224,6 +2593,55 @@ var PkDataTable = class PkDataTable extends PkElement {
 		}
 		return dataTableText(value);
 	}
+	actionLabel(action) {
+		return action.label ?? (action.preset ? this.text(`${action.preset}Action`) : action.id);
+	}
+	activateAction(event, action, row) {
+		if (action.disabled || this.loading || this.error) return;
+		event.currentTarget.closest("pk-popover")?.removeAttribute("open");
+		this.emit("pk-row-action", {
+			action: action.id,
+			row,
+			rowKey: this.key(row)
+		});
+	}
+	renderRowActions(row, actions) {
+		if (!actions.length) return A;
+		const isInline = (action) => (action.display ?? (action.preset ? "inline" : "menu")) === "inline";
+		const menu = actions.filter((action) => !isInline(action));
+		return b`<div class="row-actions" part="row-actions">
+            ${actions.filter(isInline).map((action) => {
+			const label = this.text("rowAction", {
+				label: this.actionLabel(action),
+				id: this.accessibleRowLabel(row)
+			});
+			return b`<pk-button
+                    class="row-action"
+                    data-preset=${action.preset ?? A}
+                    size=${action.preset ? "xs" : "sm"}
+                    variant="none"
+                    aria-label=${label}
+                    .disabled=${Boolean(action.disabled)}
+                    @click=${(event) => this.activateAction(event, action, row)}
+                    >${action.preset ? this.icon({
+				edit: pen,
+				move: gripMove,
+				delete: xmark
+			}[action.preset], "start") : this.actionLabel(action)}</pk-button>`;
+		})}
+            ${menu.length ? b`<pk-popover placement="bottom-end">
+                <pk-button slot="trigger" size="xs" variant="none"
+                    aria-label=${this.text("actions", { id: this.accessibleRowLabel(row) })}
+                    >${this.icon(ellipsis, "start")}</pk-button>
+                <div class="panel">
+                    ${menu.map((action) => b`<pk-button
+                        .disabled=${Boolean(action.disabled)}
+                        @click=${(event) => this.activateAction(event, action, row)}
+                        >${this.actionLabel(action)}</pk-button>`)}
+                </div>
+            </pk-popover>` : A}
+        </div>`;
+	}
 	page(delta, result) {
 		const button = this.renderRoot.querySelectorAll(".pager pk-button")[delta > 0 ? 1 : 0];
 		if (button) this.pagingFocus = {
@@ -2259,6 +2677,11 @@ var PkDataTable = class PkDataTable extends PkElement {
                 ${this.renderToolbar()}
             </div>
             ${this.filterController.renderDialog()}
+            ${this.manualOrder ? b`
+                <span id="row-order-help" class="sr-only">${this.text("reorderRowHelp")}</span>
+                ${this.rowOrderFiltered ? b`<p class="row-order-hint">${this.text("reorderRowsFiltered")}</p>` : A}
+                <span role="status" class="sr-only">${this.rowOrderAnnouncement}</span>
+            ` : A}
             <div role="status" aria-live="polite" class="sr-only">
                 ${this.loading ? this.text(result.rows.length ? "updating" : "loading") : selected.size ? `${count}. ${this.text("selected", { count: selected.size })}` : count}
             </div>
@@ -2280,80 +2703,71 @@ var PkDataTable = class PkDataTable extends PkElement {
                         </caption>
                         <thead>
                             <tr>
+                                ${this.manualOrder ? b`<th class="small" scope="col"><span class="sr-only">${this.text("rowOrder")}</span></th>` : A}
                                 ${this.selectable ? b`<th class="small"><pk-checkbox aria-label=${this.text("selectPage")} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.setSelection(checked ? this.selectedKeys.filter((key) => !eligible.includes(key)) : [.../* @__PURE__ */ new Set([...this.selectedKeys, ...eligible])])}></pk-checkbox></th>` : A}
                                 ${columns.map((column) => {
-			const sort = this.query.sort.find((item) => item.id === column.id);
+			const sort = !this.manualOrder && this.query.sort.find((item) => item.id === column.id);
 			return b`<th
                                         scope="col"
                                         style=${o$1({ width: column.width })}
                                         class=${column.align ?? (column.type === "number" ? "end" : "")}
                                         ?data-sorted=${Boolean(sort)}
-                                        ?data-sortable=${Boolean(column.sortable)}
+                                        ?data-sortable=${Boolean(column.sortable && !this.manualOrder)}
                                         aria-sort=${sort ? sort.direction === "asc" ? "ascending" : "descending" : A}
                                     >
-                                        ${column.sortable ? b`<button class="sort" aria-label=${this.text("sort", { label: column.label })} @click=${() => this.sortColumn(column.id)}>${column.label}${sort ? sorting ? b`<pk-spinner class="sort-spinner" size="xs" aria-hidden="true"></pk-spinner>` : this.icon(sort.direction === "asc" ? chevronUp : chevronDown) : A}</button>` : column.label}
+                                        ${column.sortable && !this.manualOrder ? b`<button class="sort" aria-label=${this.text("sort", { label: column.label })} @click=${() => this.sortColumn(column.id)}>${column.label}${sort ? sorting ? b`<pk-spinner class="sort-spinner" size="xs" aria-hidden="true"></pk-spinner>` : this.icon(sort.direction === "asc" ? chevronUp : chevronDown) : A}</button>` : column.label}
                                     </th>`;
 		})}
                                 ${this.rowActions ? b`<th class="small"><span class="sr-only">${this.text("actions", { id: "" })}</span></th>` : A}
                             </tr>
                         </thead>
                         <tbody class=${busy && !sorting ? "busy" : ""} ?inert=${busy} ?data-loading=${bodyLoading}>
-                            ${c(result.rows, (row) => this.key(row), (row) => b`<tr
+                            ${c(result.rows, (row) => this.key(row), (row) => {
+			const actions = this.rowActions?.(row) ?? [];
+			return b`<tr
                                         ?data-selected=${this.selectable && selected.has(this.key(row))}
                                         ?data-selectable=${this.canSelectRow(row)}
                                         @click=${(event) => this.clickRow(event, row)}
                                         @keydown=${(event) => this.keyRow(event, row)}
                                         @mousedown=${(event) => {
-			if (event.button === 0 && this.canSelectRow(row) && (event.shiftKey || event.metaKey || event.ctrlKey) && !this.isRowControl(event)) event.preventDefault();
-		}}
+				if (event.button === 0 && this.canSelectRow(row) && (event.shiftKey || event.metaKey || event.ctrlKey) && !this.isRowControl(event)) event.preventDefault();
+			}}
                                     >
+                                        ${this.manualOrder ? b`<td class="small">
+                                            <button class="row-handle" part="row-handle" type="button"
+                                                aria-label=${this.text("reorderRow", { label: this.accessibleRowLabel(row) })}
+                                                aria-describedby="row-order-help"
+                                                aria-disabled=${this.canReorderRows ? "false" : "true"}
+                                                @pointerdown=${(event) => this.rowOrder.start(event)}
+                                                @keydown=${(event) => this.keyRowOrder(event, row)}
+                                                >${this.icon(gripMove)}</button>
+                                        </td>` : A}
                                         ${this.selectable ? b`<td class="small">
                                                       <pk-checkbox
                                                           aria-label=${this.text("selectRow", { id: this.accessibleRowLabel(row) })}
                                                           .checked=${selected.has(this.key(row))}
                                                           .disabled=${busy || this.isRowSelectable?.(row) === false}
                                                           @mousedown=${(event) => {
-			if (event.shiftKey) {
-				event.preventDefault();
-				event.currentTarget.focus({ preventScroll: true });
-			}
-		}}
+				if (event.shiftKey) {
+					event.preventDefault();
+					event.currentTarget.focus({ preventScroll: true });
+				}
+			}}
                                                           @click=${(event) => this.clickRowCheckbox(event, row)}
                                                           @change=${() => this.changeRowCheckbox(row)}
                                                       ></pk-checkbox>
                                                   </td>` : A}
                                         ${columns.map((column) => b`<td part="cell" class=${`${column.align ?? (column.type === "number" ? "end" : "")} ${column.wrap ?? ![
-			"number",
-			"date",
-			"status"
-		].includes(column.type ?? "text") ? "" : "nowrap"}`}>${this.renderCell(row, column)}</td>`)}
+				"number",
+				"date",
+				"status",
+				"handle"
+			].includes(column.type ?? "text") ? "" : "nowrap"}`}>${this.renderCell(row, column)}</td>`)}
                                         ${this.rowActions ? b`<td class="small">
-                                                      <pk-popover
-                                                          placement="bottom-end"
-                                                          ><pk-button
-                                                              slot="trigger"
-                                                              size="sm"
-                                                              variant="transparent"
-                                                              aria-label=${this.text("actions", { id: this.key(row) })}
-                                                              >⋯</pk-button
-                                                          >
-                                                          <div class="panel">
-                                                              ${this.rowActions(row).map((action) => b`<pk-button
-                                                                          .disabled=${Boolean(action.disabled)}
-                                                                          @click=${(event) => {
-			event.currentTarget.closest("pk-popover")?.removeAttribute("open");
-			this.emit("pk-row-action", {
-				action: action.id,
-				row,
-				rowKey: this.key(row)
-			});
-		}}
-                                                                          >${action.label}</pk-button
-                                                                      >`)}
-                                                          </div></pk-popover
-                                                      >
+                                                      ${this.renderRowActions(row, actions)}
                                                   </td>` : A}
-                                    </tr>`)}
+                                    </tr>`;
+		})}
                         </tbody>
                     </table>
                     ${bodyLoading ? b`
@@ -2448,6 +2862,14 @@ __decorate([n({
 	attribute: "hide-footer"
 })], PkDataTable.prototype, "hideFooter", void 0);
 __decorate([n({ type: Boolean })], PkDataTable.prototype, "selectable", void 0);
+__decorate([n({
+	type: Boolean,
+	attribute: "manual-order"
+})], PkDataTable.prototype, "manualOrder", void 0);
+__decorate([n({
+	type: Boolean,
+	attribute: "reorder-disabled"
+})], PkDataTable.prototype, "reorderDisabled", void 0);
 __decorate([n({ attribute: false })], PkDataTable.prototype, "selectedKeys", void 0);
 __decorate([n({ attribute: false })], PkDataTable.prototype, "isRowSelectable", void 0);
 __decorate([n({ attribute: false })], PkDataTable.prototype, "rowActions", void 0);
@@ -2469,6 +2891,7 @@ __decorate([r()], PkDataTable.prototype, "loaded", void 0);
 __decorate([r()], PkDataTable.prototype, "searchDraft", void 0);
 __decorate([r()], PkDataTable.prototype, "dragOffsets", void 0);
 __decorate([r()], PkDataTable.prototype, "reorderAnnouncement", void 0);
+__decorate([r()], PkDataTable.prototype, "rowOrderAnnouncement", void 0);
 __decorate([r()], PkDataTable.prototype, "tableScrollWidth", void 0);
 __decorate([r()], PkDataTable.prototype, "hasHorizontalOverflow", void 0);
 PkDataTable = __decorate([customElement("pk-data-table")], PkDataTable);

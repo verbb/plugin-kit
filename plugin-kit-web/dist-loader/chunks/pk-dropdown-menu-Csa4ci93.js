@@ -6,7 +6,7 @@ import { r as buttonGroupCornerRoleStyles } from "./button-group-item.styles-CHb
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-C582MGBJ.js";
 import { t as animateWithClass } from "./animate-with-class-CjTZI0NU.js";
 import { i as waitForPopupReposition } from "./popup-placement-animation-ClUYI79z.js";
-import { n as dropdownMenuHostSizeStyles, r as dropdownMenuPanelSizeStyles, t as PkDropdownItem } from "./pk-dropdown-item-KZmo7q7g.js";
+import { n as dropdownMenuHostSizeStyles, r as dropdownMenuPanelSizeStyles, t as PkDropdownItem } from "./pk-dropdown-item-BCFdB7JM.js";
 //#region src/components/dropdown-menu/pk-dropdown-menu.styles.ts
 /**
 * Dropdown panel motion —  `pk-dropdown` scale+fade, with transform

@@ -133,6 +133,82 @@ export const dataTableStyles = css`
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    .cell-handle {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        padding-inline-start: 6px;
+        border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+        border-radius: var(--pk-radius-md, 4px);
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+    }
+    .cell-handle code {
+        font-family: var(--pk-font-family-mono, ui-monospace, monospace);
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+    .cell-handle pk-copy-button {
+        flex: none;
+        --pk-btn-height-default: 24px;
+        --pk-btn-icon-size-default: 12px;
+        --pk-copy-button-color: currentColor;
+        --pk-copy-button-hover-color: currentColor;
+        --pk-copy-button-background: transparent;
+        --pk-copy-button-hover-background: transparent;
+        --pk-copy-button-border-color: transparent;
+    }
+    .cell-handle .icon {
+        width: var(--pk-btn-icon-size-default, 12px);
+        height: var(--pk-btn-icon-size-default, 12px);
+    }
+    .row-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4px;
+    }
+    .row-handle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--pk-btn-height-xs, 26px);
+        height: var(--pk-btn-height-xs, 26px);
+        padding: 0;
+        border: 0;
+        border-radius: var(--pk-radius-md, 4px);
+        background: transparent;
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+        cursor: move;
+        touch-action: none;
+        user-select: none;
+        font: inherit;
+    }
+    .row-handle:focus-visible {
+        outline: 2px solid var(--pk-color-blue-500, #247db1);
+        outline-offset: 2px;
+    }
+    .row-handle[aria-disabled='true'] {
+        cursor: default;
+        opacity: 0.4;
+    }
+    tbody[data-row-dragging] tr {
+        position: relative;
+        background: var(--pk-color-white, #fff);
+    }
+    tbody tr[data-dragging] {
+        z-index: 2;
+        box-shadow: var(--pk-shadow-popup, 0 4px 12px rgb(0 0 0 / 0.15));
+    }
+    .row-order-hint {
+        margin: 0 0 8px;
+        color: var(--pk-color-gray-550, #596673);
+    }
+    .row-action::part(base) {
+        color: var(--pk-data-table-cell-muted-color, var(--pk-color-gray-550, #596673));
+    }
+    .row-action[data-preset='move']::part(base):not(:disabled) {
+        cursor: move;
+    }
     tbody tr[data-selected] td {
         background: var(
             --pk-data-table-selected-background,

@@ -35,7 +35,7 @@ export type DataTableCellContext = {
 export type DataTableColumn = {
     id: string;
     label: string;
-    type?: 'text' | 'number' | 'date' | 'status' | 'link' | 'custom';
+    type?: 'text' | 'number' | 'date' | 'status' | 'link' | 'handle' | 'custom';
     value?: (row: DataTableRow) => unknown;
     sortable?: boolean;
     searchable?: boolean;
@@ -43,7 +43,7 @@ export type DataTableColumn = {
     align?: 'start' | 'center' | 'end';
     /** Preferred column width; content and the table's automatic layout can make it wider. */
     width?: string;
-    /** Text/custom cells wrap by default; links truncate, and dates/numbers/statuses stay on one line. */
+    /** Text/custom cells wrap by default; links truncate, and dates/numbers/statuses/handles stay on one line. */
     wrap?: boolean;
     numberOptions?: Intl.NumberFormatOptions;
     dateOptions?: Intl.DateTimeFormatOptions;
@@ -81,7 +81,29 @@ export type DataTableDataSource = (
     query: DataTableQuery,
     options: { signal: AbortSignal },
 ) => Promise<DataTableResult>;
-export type DataTableAction = { id: string; label: string; disabled?: boolean };
+export type DataTableActionPreset = 'edit' | 'move' | 'delete';
+export type DataTableRowReorderDetail = {
+    rowKey: DataTableKey;
+    /** Zero-based positions within the displayed page. */
+    fromIndex: number;
+    toIndex: number;
+    /** Only the displayed page, never an implied order for all remote records. */
+    orderedKeys: DataTableKey[];
+    previousKeys: DataTableKey[];
+    /** Complete local rows in client mode; current-page rows in remote mode. */
+    rows: DataTableRow[];
+    previousRows: DataTableRow[];
+    query: DataTableQuery;
+};
+export type DataTableAction = {
+    id: string;
+    disabled?: boolean;
+    /** Presets appear as inline icon buttons by default. Custom actions stay in the menu. */
+    display?: 'inline' | 'menu';
+} & (
+    | { preset: DataTableActionPreset; label?: string }
+    | { preset?: never; label: string }
+);
 export type DataTableExportFormat = {
     value: string;
     label: string;
@@ -165,6 +187,18 @@ export const dataTableLabels = {
     range: '{start}–{end} of {total}',
     unknownRange: '{start}–{end}',
     actions: 'Actions for {id}',
+    editAction: 'Edit',
+    moveAction: 'Move',
+    deleteAction: 'Delete',
+    rowAction: '{label}: {id}',
+    copyHandle: 'Copy {label}',
+    copiedHandle: 'Copied {label}',
+    rowOrder: 'Row order',
+    reorderRow: 'Reorder {label}',
+    reorderRowHelp: 'Drag to reorder, or use Up and Down. Home moves to the start of this page; End moves to the end. Escape cancels a drag.',
+    reorderRowsFiltered: 'Clear search and filters to reorder rows.',
+    rowReordered: '{label} moved to position {position} of {count} on this page.',
+    rowReorderCancelled: 'Row move cancelled.',
     moveUp: 'Move {label} earlier',
     moveDown: 'Move {label} later',
     sort: 'Sort by {label}',

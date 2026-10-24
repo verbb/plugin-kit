@@ -65,7 +65,7 @@ Use `size="compact"` for denser settings lists. Selection remains optional in ei
 
 Ordinary text and custom cells wrap by default, with Craft's `33vw` maximum cell width. Long unbroken values can break within the cell. Built-in link columns stay on one line and show an ellipsis when their labels exceed the available width; the full label remains in the link's accessible name and native tooltip. Set `wrap: true` on a link column to show its complete label over multiple lines.
 
-Dates, numbers and status columns stay on one line by default. Set `wrap: false` on a text column when a code or other value must stay intact. The `width` option is a preferred width, not a fixed limit: automatic table layout can widen a column to accommodate headings and non-wrapping content.
+Dates, numbers, statuses and handles stay on one line by default. Set `wrap: false` on a text column when a code or other value must stay intact. The `width` option is a preferred width, not a fixed limit: automatic table layout can widen a column to accommodate headings and non-wrapping content.
 
 When the columns are wider than the available space, the table scrolls horizontally inside its own region. Search, View and the footer stay in place. Embedded tables use their native scrollbar; `layout="index"` adds a synchronized scrollbar above the sticky footer so it remains within reach on tall lists. Trackpad scrolling and keyboard scrolling work in both left-to-right and right-to-left layouts.
 
@@ -92,16 +92,27 @@ The event contains a snapshot of query/view state, ordered visible `columnIds` a
 
 ## Columns and Custom Cells
 
-The examples below cover all six column types. `text` is the default when `type` is omitted. Empty built-in values display an em dash.
+The examples below cover the built-in column types. `text` is the default when `type` is omitted. Empty built-in values display an em dash.
 
 | Type | Example | Configuration |
 | --- | --- | --- |
 | `text` | Team in the member directory | Plain text that wraps by default; use `wrap: false` to keep it on one line. |
 | `link` | Member names and email addresses | `href(row)` provides the destination while the cell value supplies the label. |
+| `handle` | Field handles and machine names | Monospaced pill with a copy button for the complete value. |
 | `status` | Approved, Awaiting review and Inactive | `status(row)` maps the visible label to a badge colour and indicator. |
 | `number` | Orders, revenue and conversion | `numberOptions` controls integer, currency and percentage formatting. |
 | `date` | Campaign update dates | `dateOptions`, `locale` and `timeZone` control the displayed date. |
 | `custom` | Participant name with a secondary email line | `renderCell` or a named cell slot supplies the content. |
+
+### Handles
+
+Set `type: 'handle'` for machine-readable identifiers such as field or filesystem handles. The value appears in a bordered monospace pill with a clipboard button; copying keeps row selection unchanged and briefly shows a checkmark. Empty values show an em dash. Handles stay on one line by default; set `wrap: true` to allow long values to wrap. Override `labels.copyHandle` and `labels.copiedHandle` to translate the copy control. The [actions example](#selection-and-actions) includes a handle column.
+
+```js
+table.columns = [
+    { id: 'handle', label: 'Handle', type: 'handle', sortable: true },
+];
+```
 
 ### Links, Text and Status
 
@@ -208,7 +219,47 @@ The header checkbox selects only eligible records on the current page. Explicit 
 
 <ComponentPreview src="./examples/data-table-actions.preview.web.ts" />
 
-Provide `rowActions(row)` returning `{ id, label, disabled? }` objects. `pk-row-action` supplies the action ID, row and row key; the plugin performs confirmation, permission checks and mutations. Put bulk controls in `selection-actions`, and consume `pk-selection-change.detail.selectedKeys`. There is no implicit “all matching records” selection. Exports and bulk operations belong to the consuming plugin, which knows their scope and backend guarantees.
+Provide `rowActions(row)` to populate the trailing actions column. Use `preset: 'edit'`, `'move'` or `'delete'` for Kit's inline pencil, move and × icon buttons. Each action has an `id`; presets supply a translated default label, and `label` can override it. `disabled: true` keeps an unavailable action visible but inactive. Omit an action from the returned array to hide it; an empty array renders no controls for that row.
+
+```js
+table.rowActions = (row) => [
+    { id: 'edit', preset: 'edit' },
+    { id: 'delete', preset: 'delete', disabled: row.protected === true },
+    { id: 'duplicate', label: 'Duplicate' },
+];
+```
+
+Custom actions appear in the overflow menu by default. Set `display: 'menu'` to put a preset in that menu, or `display: 'inline'` to show a custom action as a text button. Inline controls use the action label and `rowLabel` for their accessible names. Translate preset defaults with `labels.editAction`, `labels.moveAction` and `labels.deleteAction`, and their accessible-name pattern with `labels.rowAction`.
+
+`pk-row-action` supplies `{ action, row, rowKey }`, where `action` is the configured ID. The consuming application handles navigation, confirmations, permissions, endpoints and mutations. The move preset is a button for a consumer-defined operation such as opening a destination picker; it does not enable drag reordering, persist an order or disable sorting. Use [manual row ordering](#manual-row-ordering) for drag handles and keyboard reordering.
+
+Only provide a move action when your application implements it. The sortable example above omits it; the manual-order example below provides working drag and keyboard controls.
+
+Put bulk controls in `selection-actions`, and consume `pk-selection-change.detail.selectedKeys`. There is no implicit “all matching records” selection. Exports and bulk operations belong to the consuming plugin, which knows their scope and backend guarantees.
+
+## Manual Row Ordering
+
+Enable `manualOrder` (`manual-order` in HTML) when the supplied row sequence is the record order. The table adds a leading drag handle and removes column-sorting controls from the headers and View menu. Existing `query.sort` is cleared; `defaultSort`, saved sort preferences and calls to `setQuery({ sort: … })` cannot override manual order. Column visibility and column reordering remain available. Turning manual order off resumes the usual default sorting.
+
+Drag a handle to move a row within the current page. Focus a handle and press **Up** or **Down** to move one position, or **Home**/**End** to move to the beginning/end of that page. The moved handle keeps focus and its new position is announced. **Escape**, cancelled pointer capture, or a data/view change cancels a drag without emitting a move. Dragging near a scroll-container edge scrolls it automatically.
+
+<ComponentPreview src="./examples/data-table-order.preview.web.ts" />
+
+The example simulates a consumer save and can restore the previous order after a failure. The table updates its row array immediately and emits `pk-row-reorder`; it does not call an endpoint or persist anything. Set `reorderDisabled` while your save is pending to prevent overlapping moves. In React or Vue, mirror `event.detail.rows` into your state so later renders retain the new order. `DataTableRowReorderDetail` is exported by all three packages.
+
+| Detail | Meaning |
+| --- | --- |
+| `rowKey` | Stable key of the moved row. |
+| `fromIndex`, `toIndex` | Zero-based positions within the displayed page. |
+| `orderedKeys`, `previousKeys` | New and previous key sequences for this page only. Numeric and string keys retain their types. |
+| `rows`, `previousRows` | New and previous complete arrays in client mode, or current-page arrays in remote mode. The arrays are detached; row objects retain their identity. |
+| `query` | Detached query snapshot identifying the page/cursor and its scope. |
+
+Local pagination preserves the positions of rows on other pages. In remote mode, send the page's ordered keys, previous keys and query to your own endpoint; never treat these keys as the entire remote dataset. Your application must define how that page maps to stored positions, validate permissions and detect concurrent changes. Cross-page dragging is not supported.
+
+On a failed local or externally fetched save, restore `previousRows` to the table or framework state. With `dataSource`, call `refresh()` to reload the current page from the authoritative backend. Keep save errors in your application's feedback UI; the table's `error` property represents load failures. If the user can navigate during saving, use the captured query to apply the result to the appropriate page.
+
+Reordering is disabled while loading, after a load error, when fewer than two rows are displayed, or while search, built-in filters or consumer-owned `query.criteria` are active. Search and filter controls still work; clear them to resume ordering. This avoids changing the order around records hidden by the current query. Use `reorderDisabled` for any additional product-specific restrictions.
 
 ## Remote Data
 
@@ -341,12 +392,14 @@ Pagination bounds the rendered page. Virtualisation, cell editing, spreadsheet n
 | `layout` | Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.<br><small><strong>Type</strong> <code>'embedded' \| 'index'</code></small><br><small><strong>Default</strong> <code>embedded</code></small> |
 | `loading` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `locale` | <small><strong>Type</strong> <code>string</code></small> |
+| `manualOrder` `manual-order` | Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `mode` | Client mode processes all supplied rows. Remote mode never filters/sorts a partial page.<br><small><strong>Type</strong> <code>'client' \| 'remote'</code></small><br><small><strong>Default</strong> <code>client</code></small> |
 | `nextCursor` `next-cursor` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `pagination` | <small><strong>Type</strong> <code>'offset' \| 'cursor'</code></small><br><small><strong>Default</strong> <code>offset</code></small> |
 | `previousCursor` `previous-cursor` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `query` | Search, sort, criteria and pagination state.<br><small><strong>Type</strong> <code>DataTableQuery</code></small> |
-| `rowActions` | Available product actions for each record.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; DataTableAction[] \| undefined</code></small> |
+| `reorderDisabled` `reorder-disabled` | Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `rowActions` | Available product actions for each record; presets default to inline icon buttons.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; DataTableAction[] \| undefined</code></small> |
 | `rowKey` | A property name or function returning a unique, stable record ID.<br><small><strong>Type</strong> <code>string \| ((row: DataTableRow) =&gt; DataTableKey)</code></small><br><small><strong>Default</strong> <code>id</code></small> |
 | `rowLabel` | Optional property name or formatter for accessible row-selection labels. Defaults to the row key.<br><small><strong>Type</strong> <code>string \| ((row: DataTableRow) =&gt; string) \| undefined</code></small> |
 | `rows` | The complete local dataset, or one externally fetched remote page.<br><small><strong>Type</strong> <code>DataTableRow[]</code></small><br><small><strong>Default</strong> <code>[]</code></small> |
@@ -371,6 +424,7 @@ Pagination bounds the rendered page. Virtualisation, cell editing, spreadsheet n
 | `pk-query-change` | Detail: { query }. Search, sort, criteria or page changed. |
 | `pk-retry` | A retry was requested in externally controlled remote mode. |
 | `pk-row-action` | Detail: { action, row, rowKey }. Product action requested. |
+| `pk-row-reorder` | Detail: DataTableRowReorderDetail. Current-page order changed; the consumer saves it. |
 | `pk-selection-change` | Detail: { selectedKeys }. Explicit record IDs changed. |
 | `pk-view-change` | Detail: { view }. Column visibility/order changed. |
 
@@ -397,7 +451,10 @@ Pagination bounds the rendered page. Virtualisation, cell editing, spreadsheet n
 | `filter-rule` | Individual filter condition row. | `::part(filter-rule)` |
 | `footer` | Count, selection actions and pagination region. | `::part(footer)` |
 | `footer-shell` | Sticky container in index layout. | `::part(footer-shell)` |
+| `handle` | Copyable monospaced handle pill. | `::part(handle)` |
 | `header-shell` | Sticky toolbar in index layout. | `::part(header-shell)` |
+| `row-actions` | Inline row actions and optional overflow menu. | `::part(row-actions)` |
+| `row-handle` | Pointer and keyboard row-reorder button in manual-order mode. | `::part(row-handle)` |
 | `scroll` | Contained horizontal scroll region. | `::part(scroll)` |
 | `scrollbar` | Synchronized horizontal scrollbar in index layout. | `::part(scrollbar)` |
 | `selection` | Reserved footer selection count and actions. | `::part(selection)` |
@@ -413,6 +470,7 @@ This component registers the following elements when it loads.
 | `pk-button` | — |
 | `pk-button-group` | — |
 | `pk-checkbox` | — |
+| `pk-copy-button` | — |
 | `pk-dialog` | — |
 | `pk-dropdown-item` | — |
 | `pk-dropdown-menu` | — |

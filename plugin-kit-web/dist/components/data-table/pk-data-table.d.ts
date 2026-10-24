@@ -14,6 +14,7 @@ export * from './persistence.js';
  * @slot footer - Additional footer information.
  * @slot empty - Replacement for the empty/no-match state.
  * @event pk-query-change - Detail: { query }. Search, sort, criteria or page changed.
+ * @event pk-row-reorder - Detail: DataTableRowReorderDetail. Current-page order changed; the consumer saves it.
  * @event pk-view-change - Detail: { view }. Column visibility/order changed.
  * @event pk-selection-change - Detail: { selectedKeys }. Explicit record IDs changed.
  * @event pk-row-action - Detail: { action, row, rowKey }. Product action requested.
@@ -34,6 +35,9 @@ export * from './persistence.js';
  * @cssproperty --pk-data-table-header-offset - Sticky header inset from the scroll container top.
  * @cssproperty --pk-data-table-toolbar-background - Background behind the sticky toolbar.
  * @cssproperty --pk-data-table-footer-offset - Sticky footer inset from the scroll container bottom.
+ * @csspart handle - Copyable monospaced handle pill.
+ * @csspart row-actions - Inline row actions and optional overflow menu.
+ * @csspart row-handle - Pointer and keyboard row-reorder button in manual-order mode.
  * @csspart selection - Reserved footer selection count and actions.
  * @csspart cell - Data cell.
  * @cssproperty --pk-data-table-cell-padding - Cell spacing.
@@ -90,11 +94,15 @@ export declare class PkDataTable extends PkElement {
     hideToolbar: boolean;
     hideFooter: boolean;
     selectable: boolean;
+    /** Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting. */
+    manualOrder: boolean;
+    /** Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus. */
+    reorderDisabled: boolean;
     /** Explicit selected record IDs, retained across pages. */
     selectedKeys: DataTableKey[];
     /** Return false to exclude a record from selection. */
     isRowSelectable?: (row: DataTableRow) => boolean;
-    /** Available product actions for each record. */
+    /** Available product actions for each record; presets default to inline icon buttons. */
     rowActions?: (row: DataTableRow) => DataTableAction[];
     /** Optional export choices. The consumer handles pk-export; no files are generated. */
     exportFormats: DataTableExportFormat[];
@@ -117,6 +125,8 @@ export declare class PkDataTable extends PkElement {
     private searchDraft?;
     private dragOffsets;
     private reorderAnnouncement;
+    private rowOrderAnnouncement;
+    private rowOrder;
     private tableScrollWidth;
     private hasHorizontalOverflow;
     private sortLoading;
@@ -156,6 +166,10 @@ export declare class PkDataTable extends PkElement {
     private accessibleRowLabel;
     private key;
     private get result();
+    private get rowOrderFiltered();
+    private get canReorderRows();
+    private reorderRows;
+    private keyRowOrder;
     private get orderedColumns();
     private setView;
     private toggleColumn;
@@ -174,6 +188,9 @@ export declare class PkDataTable extends PkElement {
     private inputSearch;
     private renderToolbar;
     private renderCell;
+    private actionLabel;
+    private activateAction;
+    private renderRowActions;
     private page;
     render(): import('lit-html').TemplateResult<1>;
 }

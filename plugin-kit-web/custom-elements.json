@@ -13360,6 +13360,18 @@
               "name": "scrollbar"
             },
             {
+              "description": "Copyable monospaced handle pill.",
+              "name": "handle"
+            },
+            {
+              "description": "Inline row actions and optional overflow menu.",
+              "name": "row-actions"
+            },
+            {
+              "description": "Pointer and keyboard row-reorder button in manual-order mode.",
+              "name": "row-handle"
+            },
+            {
               "description": "Reserved footer selection count and actions.",
               "name": "selection"
             },
@@ -13604,6 +13616,26 @@
             },
             {
               "kind": "field",
+              "name": "manualOrder",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting.",
+              "attribute": "manual-order"
+            },
+            {
+              "kind": "field",
+              "name": "reorderDisabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus.",
+              "attribute": "reorder-disabled"
+            },
+            {
+              "kind": "field",
               "name": "selectedKeys",
               "type": {
                 "text": "DataTableKey[]"
@@ -13625,7 +13657,7 @@
               "type": {
                 "text": "(\n        row: DataTableRow,\n    ) => DataTableAction[] | undefined"
               },
-              "description": "Available product actions for each record."
+              "description": "Available product actions for each record; presets default to inline icon buttons."
             },
             {
               "kind": "field",
@@ -13761,6 +13793,21 @@
               },
               "privacy": "private",
               "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "rowOrderAnnouncement",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "rowOrder",
+              "privacy": "private",
+              "default": "new DataTableRowOrderController( () => this.canReorderRows, (from, to) => this.reorderRows(from, to), () => { this.rowOrderAnnouncement = this.text('rowReorderCancelled'); }, )"
             },
             {
               "kind": "field",
@@ -14228,6 +14275,72 @@
             },
             {
               "kind": "field",
+              "name": "rowOrderFiltered",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "canReorderRows",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "reorderRows",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "fromIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "toIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "keyRowOrder",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                },
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
               "name": "orderedColumns",
               "type": {
                 "text": "DataTableColumn[]"
@@ -14504,6 +14617,73 @@
             },
             {
               "kind": "method",
+              "name": "actionLabel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "action",
+                  "type": {
+                    "text": "DataTableAction"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "activateAction",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                },
+                {
+                  "name": "action",
+                  "type": {
+                    "text": "DataTableAction"
+                  }
+                },
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderRowActions",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "row",
+                  "type": {
+                    "text": "DataTableRow"
+                  }
+                },
+                {
+                  "name": "actions",
+                  "type": {
+                    "text": "DataTableAction[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "page",
               "privacy": "private",
               "return": {
@@ -14586,6 +14766,10 @@
             {
               "description": "Detail: { query }. Search, sort, criteria or page changed.",
               "name": "pk-query-change"
+            },
+            {
+              "description": "Detail: DataTableRowReorderDetail. Current-page order changed; the consumer saves it.",
+              "name": "pk-row-reorder"
             },
             {
               "description": "Detail: { view }. Column visibility/order changed.",
@@ -14748,6 +14932,24 @@
               "fieldName": "selectable"
             },
             {
+              "name": "manual-order",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting.",
+              "fieldName": "manualOrder"
+            },
+            {
+              "name": "reorder-disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus.",
+              "fieldName": "reorderDisabled"
+            },
+            {
               "name": "exporting",
               "type": {
                 "text": "boolean"
@@ -14861,6 +15063,18 @@
         {
           "kind": "variable",
           "name": "column"
+        },
+        {
+          "kind": "variable",
+          "name": "previousKeys"
+        },
+        {
+          "kind": "variable",
+          "name": "previousRows",
+          "type": {
+            "text": "array"
+          },
+          "default": "[...(this.mode === 'remote' && this.dataSource ? this.loaded!.rows : this.rows)]"
         },
         {
           "kind": "variable",

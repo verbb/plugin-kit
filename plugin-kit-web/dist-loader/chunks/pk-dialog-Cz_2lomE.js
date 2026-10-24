@@ -1,8 +1,8 @@
 import { c as unlockBodyScrolling, d as registerDismissible, f as unregisterDismissible, o as lockBodyScrolling, u as isTopDismissible } from "./pk-a11y-mGj0G5AE.js";
 import { a as e, c as n, h as i, l as customElement, m as b, o as e$1, p as A, s as r, u as o } from "./lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement } from "./pk-base-BZKcPYjM.js";
-import { it as xmark } from "./svg-D8YEDMfu.js";
-import { n as renderIconHtml } from "./render-DGT9Y3WS.js";
+import { ot as xmark } from "./svg-C4lXkZYF.js";
+import { n as renderIconHtml } from "./render-Cdi93GN8.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-C582MGBJ.js";
 import { t as animateWithClass } from "./animate-with-class-CjTZI0NU.js";
 //#region src/utils/craft-host-modal.ts

@@ -26,6 +26,18 @@ var DataTable = defineComponent({
 			type: [String, Function],
 			default: void 0
 		},
+		rowActions: {
+			type: Function,
+			default: void 0
+		},
+		manualOrder: {
+			type: Boolean,
+			default: false
+		},
+		reorderDisabled: {
+			type: Boolean,
+			default: false
+		},
 		rowKey: {
 			type: [String, Function],
 			default: "id"
@@ -50,6 +62,9 @@ var DataTable = defineComponent({
 				columns,
 				rowKey: props.rowKey,
 				rowLabel: props.rowLabel,
+				rowActions: props.rowActions,
+				manualOrder: props.manualOrder,
+				reorderDisabled: props.reorderDisabled,
 				"onPk-load": (event) => {
 					loadedRows.value = event.detail.result.rows;
 					const listener = attrs["onPk-load"];

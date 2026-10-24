@@ -2,6 +2,7 @@ import { defineComponent, h, shallowRef, type PropType } from 'vue';
 import {
     dataTableCellSlot,
     dataTableValue,
+    type DataTableAction,
     type DataTableDataSource,
     type DataTableColumn,
     type DataTableKey,
@@ -33,6 +34,12 @@ export const DataTable = defineComponent({
             >,
             default: undefined,
         },
+        rowActions: {
+            type: Function as PropType<(row: DataTableRow) => DataTableAction[]>,
+            default: undefined,
+        },
+        manualOrder: { type: Boolean, default: false },
+        reorderDisabled: { type: Boolean, default: false },
         rowKey: {
             type: [String, Function] as PropType<
                 string | ((row: DataTableRow) => DataTableKey)
@@ -63,6 +70,9 @@ export const DataTable = defineComponent({
                     columns,
                     rowKey: props.rowKey,
                     rowLabel: props.rowLabel,
+                    rowActions: props.rowActions,
+                    manualOrder: props.manualOrder,
+                    reorderDisabled: props.reorderDisabled,
                     'onPk-load': (
                         event: CustomEvent<{ result: DataTableResult }>,
                     ) => {
@@ -109,6 +119,9 @@ export const DataTable = defineComponent({
 });
 export const PkDataTableElement = DataTable;
 export type {
+    DataTableRowReorderDetail,
+    DataTableAction,
+    DataTableActionPreset,
     DataTablePersistence,
     DataTablePersistenceOptions,
     DataTablePreferenceStorage,

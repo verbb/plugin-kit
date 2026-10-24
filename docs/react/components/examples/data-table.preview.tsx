@@ -1,6 +1,9 @@
 // #region example
+import { useState } from 'react';
 import {
     DataTable,
+    type DataTableAction,
+    type DataTableRow,
     type DataTableReactColumn,
 } from '@verbb/plugin-kit-react/components';
 
@@ -9,12 +12,14 @@ const rows = [
         id: 1,
         name: 'Alex Morgan',
         email: 'alex@example.com',
+        handle: 'alexMorgan',
         status: 'pending',
     },
     {
         id: 2,
         name: 'Jamie Ellis',
         email: 'jamie@example.com',
+        handle: 'jamieEllis',
         status: 'active',
     },
 ];
@@ -39,11 +44,28 @@ const columns: DataTableReactColumn[] = [
         type: 'link',
         href: (row) => `mailto:${row.email}`,
     },
+    { id: 'handle', label: 'Handle', type: 'handle' },
     { id: 'status', label: 'Status', type: 'status' },
 ];
 export function DataTableExample() {
+    const [message, setMessage] = useState('Choose a row action to see its event.');
+    function rowActions(): DataTableAction[] {
+        return [
+            { id: 'edit', preset: 'edit' },
+            { id: 'delete', preset: 'delete' },
+            { id: 'review', label: 'Review request' },
+        ];
+    }
+    function onRowAction(event: Event) {
+        const { action, row } = (event as CustomEvent<{ action: string; row: DataTableRow }>).detail;
+        setMessage(`Action “${action}” requested for ${row.name}.`);
+    }
     return (
-        <DataTable label="Membership requests" rows={rows} columns={columns} />
+        <>
+            <DataTable label="Membership requests" rows={rows} columns={columns} rowLabel="name"
+                rowActions={rowActions} onPkRowAction={onRowAction} />
+            <output aria-live="polite">{message}</output>
+        </>
     );
 }
 // #endregion example

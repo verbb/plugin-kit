@@ -211,13 +211,23 @@ export function mountDataTableExample(
         });
         table.append(review);
 
-        table.rowActions = () => [{ id: 'review', label: 'Review request' }];
+        table.rowActions = () => variant === 'actions' ? [
+            { id: 'edit', preset: 'edit' },
+            { id: 'delete', preset: 'delete' },
+            { id: 'review', label: 'Review request' },
+        ] : [{ id: 'review', label: 'Review request' }];
+        if (variant === 'actions') {
+            table.columns = [columns[0], {
+                id: 'handle', label: 'Handle', type: 'handle',
+                value: (row) => `member${row.id}`,
+            }, ...columns.slice(1)];
+        }
         table.addEventListener('pk-row-action', (event) => {
-            const { row } = (event as CustomEvent<{ row: DataTableRow }>)
+            const { action, row } = (event as CustomEvent<{ action: string; row: DataTableRow }>)
                 .detail;
             const output = root.querySelector('output');
             if (output)
-                output.textContent = `Review requested for ${row.name}.`;
+                output.textContent = `Action “${action}” requested for ${row.name}.`;
         });
     }
     if (variant === 'index') {

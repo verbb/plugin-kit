@@ -1,7 +1,7 @@
 import { c as n, h as i, l as customElement, m as b, o as e, p as A, s as r, u as o } from "./lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement } from "./pk-base-BZKcPYjM.js";
-import { _ as chevronRight, m as check } from "./svg-D8YEDMfu.js";
-import { n as renderIconHtml } from "./render-DGT9Y3WS.js";
+import { _ as chevronRight, m as check } from "./svg-C4lXkZYF.js";
+import { n as renderIconHtml } from "./render-Cdi93GN8.js";
 import { t as HasSlotController } from "./has-slot-DJv86HKx.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "./popup-placement-animation-ClUYI79z.js";
 import { t as popupContentAnimationStyles } from "./popup-content-animation.styles-C33dPyE-.js";

@@ -5,6 +5,7 @@ export declare const PkDataTableElement: import('@lit/react').ReactWebComponent<
     onPkViewChange: string;
     onPkSelectionChange: string;
     onPkRowAction: string;
+    onPkRowReorder: string;
     onPkLoad: string;
     onPkLoadError: string;
     onPkRetry: string;
@@ -18,6 +19,6 @@ export type DataTableProps = Omit<React.ComponentProps<typeof PkDataTableElement
 };
 /** Only projects React cells; all table state and behaviour remain canonical. */
 export declare const DataTable: React.ForwardRefExoticComponent<Omit<DataTableProps, "ref"> & React.RefAttributes<PkDataTable>>;
-export type { DataTablePersistence, DataTablePersistenceOptions, DataTablePreferenceStorage, DataTableExportFormat, DataTableExportDetail, DataTableColumn, DataTableCellContext, DataTableDataSource, DataTableFilter, DataTableFilterOperator, DataTableKey, DataTableLabels, DataTableQuery, DataTableResult, DataTableRow, DataTableView, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
+export type { DataTableRowReorderDetail, DataTableAction, DataTableActionPreset, DataTablePersistence, DataTablePersistenceOptions, DataTablePreferenceStorage, DataTableExportFormat, DataTableExportDetail, DataTableColumn, DataTableCellContext, DataTableDataSource, DataTableFilter, DataTableFilterOperator, DataTableKey, DataTableLabels, DataTableQuery, DataTableResult, DataTableRow, DataTableView, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 export { persistDataTableView, defaultDataTableQuery, queryDataTable, DataTableRequestController, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 //# sourceMappingURL=DataTable.d.ts.map

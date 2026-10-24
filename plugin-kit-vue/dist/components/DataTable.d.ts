@@ -1,5 +1,5 @@
 import { PropType } from 'vue';
-import { DataTableDataSource, DataTableColumn, DataTableKey, DataTableRow } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
+import { DataTableAction, DataTableDataSource, DataTableColumn, DataTableKey, DataTableRow } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 /** Named cell slots project Vue content; the web component owns the table. */
 export declare const DataTable: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
     mode: {
@@ -21,6 +21,18 @@ export declare const DataTable: import('vue').DefineComponent<import('vue').Extr
     rowLabel: {
         type: PropType<string | ((row: DataTableRow) => string)>;
         default: undefined;
+    };
+    rowActions: {
+        type: PropType<(row: DataTableRow) => DataTableAction[]>;
+        default: undefined;
+    };
+    manualOrder: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    reorderDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
     };
     rowKey: {
         type: PropType<string | ((row: DataTableRow) => DataTableKey)>;
@@ -49,6 +61,18 @@ export declare const DataTable: import('vue').DefineComponent<import('vue').Extr
         type: PropType<string | ((row: DataTableRow) => string)>;
         default: undefined;
     };
+    rowActions: {
+        type: PropType<(row: DataTableRow) => DataTableAction[]>;
+        default: undefined;
+    };
+    manualOrder: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    reorderDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     rowKey: {
         type: PropType<string | ((row: DataTableRow) => DataTableKey)>;
         default: string;
@@ -59,6 +83,9 @@ export declare const DataTable: import('vue').DefineComponent<import('vue').Extr
     rows: DataTableRow[];
     columns: DataTableColumn[];
     rowLabel: string | ((row: DataTableRow) => string);
+    rowActions: (row: DataTableRow) => DataTableAction[];
+    manualOrder: boolean;
+    reorderDisabled: boolean;
     rowKey: string | ((row: DataTableRow) => DataTableKey);
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
 export declare const PkDataTableElement: import('vue').DefineComponent<import('vue').ExtractPropTypes<{
@@ -82,6 +109,18 @@ export declare const PkDataTableElement: import('vue').DefineComponent<import('v
         type: PropType<string | ((row: DataTableRow) => string)>;
         default: undefined;
     };
+    rowActions: {
+        type: PropType<(row: DataTableRow) => DataTableAction[]>;
+        default: undefined;
+    };
+    manualOrder: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    reorderDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     rowKey: {
         type: PropType<string | ((row: DataTableRow) => DataTableKey)>;
         default: string;
@@ -109,6 +148,18 @@ export declare const PkDataTableElement: import('vue').DefineComponent<import('v
         type: PropType<string | ((row: DataTableRow) => string)>;
         default: undefined;
     };
+    rowActions: {
+        type: PropType<(row: DataTableRow) => DataTableAction[]>;
+        default: undefined;
+    };
+    manualOrder: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    reorderDisabled: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     rowKey: {
         type: PropType<string | ((row: DataTableRow) => DataTableKey)>;
         default: string;
@@ -119,8 +170,11 @@ export declare const PkDataTableElement: import('vue').DefineComponent<import('v
     rows: DataTableRow[];
     columns: DataTableColumn[];
     rowLabel: string | ((row: DataTableRow) => string);
+    rowActions: (row: DataTableRow) => DataTableAction[];
+    manualOrder: boolean;
+    reorderDisabled: boolean;
     rowKey: string | ((row: DataTableRow) => DataTableKey);
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, true, {}, any>;
-export type { DataTablePersistence, DataTablePersistenceOptions, DataTablePreferenceStorage, DataTableExportFormat, DataTableExportDetail, DataTableColumn, DataTableCellContext, DataTableDataSource, DataTableFilter, DataTableFilterOperator, DataTableKey, DataTableLabels, DataTableQuery, DataTableResult, DataTableRow, DataTableView, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
+export type { DataTableRowReorderDetail, DataTableAction, DataTableActionPreset, DataTablePersistence, DataTablePersistenceOptions, DataTablePreferenceStorage, DataTableExportFormat, DataTableExportDetail, DataTableColumn, DataTableCellContext, DataTableDataSource, DataTableFilter, DataTableFilterOperator, DataTableKey, DataTableLabels, DataTableQuery, DataTableResult, DataTableRow, DataTableView, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 export { persistDataTableView, defaultDataTableQuery, queryDataTable, DataTableRequestController, } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
 //# sourceMappingURL=DataTable.d.ts.map

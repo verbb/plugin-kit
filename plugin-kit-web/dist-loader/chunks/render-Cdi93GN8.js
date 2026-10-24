@@ -1,4 +1,4 @@
-import { t as iconToSvg } from "./svg-D8YEDMfu.js";
+import { t as iconToSvg } from "./svg-C4lXkZYF.js";
 //#region src/icons/render.ts
 var renderIconHtml = (icon, options = {}) => {
 	return iconToSvg(icon, { title: options.title });

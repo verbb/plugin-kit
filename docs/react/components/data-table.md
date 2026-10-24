@@ -10,6 +10,22 @@ Define `renderCell(context)` on a column to return React content. The facade pro
 
 The email column uses the built-in `link` type with a `mailto:` destination. See [all column types](/web/components/data-table#columns-and-custom-cells) for live examples of text, web/email links, status indicators, numbers, currencies, percentages, dates and custom content. The built-in column definitions work the same way in every framework.
 
+## Handles and Row Actions
+
+Use `type: 'handle'` for a copyable monospace identifier. Pass `rowActions` returning `DataTableAction[]`; `{ id: 'edit', preset: 'edit' }`, `{ id: 'move', preset: 'move' }` and `{ id: 'delete', preset: 'delete' }` render the shared inline icon buttons. Override `label` or `disabled` per record and set `rowLabel` for readable accessible names. Custom actions with `id` and `label` use the overflow menu; `display: 'menu'` moves a preset there, and `display: 'inline'` renders a custom text button.
+
+Listen to `onPkRowAction` for `{ action, row, rowKey }` in `event.detail`. Consumers own navigation, confirmation and mutations. Move emits an action; it does not enable drag reordering or change sorting. See [row actions](/web/components/data-table#selection-and-actions) for the full configuration. `DataTableAction` and `DataTableActionPreset` are exported by the adapter.
+
+The example reports edit, delete and review requests below the table. It uses compact plain icon buttons and an SVG overflow control, with accessible names and no native title tooltips. It omits move because column sorting is enabled; use the working manual-order example below for drag and keyboard reordering.
+
+## Manual Row Ordering
+
+Enable `manualOrder` to add drag handles and disable column sorting. Focus a handle and use Up/Down or Home/End to move it within the current page. The canonical component keeps selection and custom cells intact and announces the new position. Search, filters and consumer criteria disable moves until cleared.
+
+<ComponentPreview src="./examples/data-table-order.preview.tsx" />
+
+Listen to `onPkRowReorder` and mirror `event.detail.rows` into your state. Set `reorderDisabled` while saving; restore `event.detail.previousRows` if a local save fails. The event also includes the moved `rowKey`, page-relative indexes, new and previous page key sequences, and a query snapshot. In remote mode the rows and keys cover only the displayed page. Consumers own endpoints, concurrency checks and rollback; tables with a `dataSource` can call `refresh()` to reload the current page after a failed save. See [manual ordering](/web/components/data-table#manual-row-ordering) for the full scope and event contract. `DataTableRowReorderDetail` is an exported type.
+
 ## View, Selection and Export
 
 Selection is off by default, as shown above. Enable `selectable` when rows need bulk actions. Plain row clicks select one record, Cmd/Ctrl-click toggles records, and Shift-click selects a range on the current page. Links and cell controls retain their own actions. The count and `selection-actions` slot occupy a reserved footer region, keeping the table stationary as selection changes. The shared **View** popup provides sorting, toggleable columns and pointer/keyboard reordering. `defaultView` and `defaultSort` control **Use defaults**. A sortable table starts with `query.sort`, then falls back to `defaultSort` or its first sortable column ascending. Clicking the active header toggles direction; clicking another selects that column ascending. Set `query.pageSize` for page length; the footer has compact paging controls and a result count.
@@ -88,12 +104,14 @@ See the [canonical Data Table guide](/web/components/data-table) for complete li
 | `layout` | Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.<br><small><strong>Type</strong> <code>'embedded' \| 'index'</code></small><br><small><strong>Default</strong> <code>embedded</code></small> |
 | `loading` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `locale` | <small><strong>Type</strong> <code>string</code></small> |
+| `manualOrder` | Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `mode` | Client mode processes all supplied rows. Remote mode never filters/sorts a partial page.<br><small><strong>Type</strong> <code>'client' \| 'remote'</code></small><br><small><strong>Default</strong> <code>client</code></small> |
 | `nextCursor` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `pagination` | <small><strong>Type</strong> <code>'offset' \| 'cursor'</code></small><br><small><strong>Default</strong> <code>offset</code></small> |
 | `previousCursor` | <small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `query` | Search, sort, criteria and pagination state.<br><small><strong>Type</strong> <code>DataTableQuery</code></small> |
-| `rowActions` | Available product actions for each record.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; DataTableAction[] \| undefined</code></small> |
+| `reorderDisabled` | Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
+| `rowActions` | Available product actions for each record; presets default to inline icon buttons.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; DataTableAction[] \| undefined</code></small> |
 | `rowKey` | A property name or function returning a unique, stable record ID.<br><small><strong>Type</strong> <code>string \| ((row: DataTableRow) =&gt; DataTableKey)</code></small><br><small><strong>Default</strong> <code>id</code></small> |
 | `rowLabel` | Optional property name or formatter for accessible row-selection labels. Defaults to the row key.<br><small><strong>Type</strong> <code>string \| ((row: DataTableRow) =&gt; string) \| undefined</code></small> |
 | `rows` | The complete local dataset, or one externally fetched remote page.<br><small><strong>Type</strong> <code>DataTableRow[]</code></small><br><small><strong>Default</strong> <code>[]</code></small> |
@@ -118,6 +136,7 @@ See the [canonical Data Table guide](/web/components/data-table) for complete li
 | `onPkQueryChange` | Detail: { query }. Search, sort, criteria or page changed. |
 | `onPkRetry` | A retry was requested in externally controlled remote mode. |
 | `onPkRowAction` | Detail: { action, row, rowKey }. Product action requested. |
+| `onPkRowReorder` | Detail: DataTableRowReorderDetail. Current-page order changed; the consumer saves it. |
 | `onPkSelectionChange` | Detail: { selectedKeys }. Explicit record IDs changed. |
 | `onPkViewChange` | Detail: { view }. Column visibility/order changed. |
 
@@ -144,7 +163,10 @@ See the [canonical Data Table guide](/web/components/data-table) for complete li
 | `filter-rule` | Individual filter condition row. | `::part(filter-rule)` |
 | `footer` | Count, selection actions and pagination region. | `::part(footer)` |
 | `footer-shell` | Sticky container in index layout. | `::part(footer-shell)` |
+| `handle` | Copyable monospaced handle pill. | `::part(handle)` |
 | `header-shell` | Sticky toolbar in index layout. | `::part(header-shell)` |
+| `row-actions` | Inline row actions and optional overflow menu. | `::part(row-actions)` |
+| `row-handle` | Pointer and keyboard row-reorder button in manual-order mode. | `::part(row-handle)` |
 | `scroll` | Contained horizontal scroll region. | `::part(scroll)` |
 | `scrollbar` | Synchronized horizontal scrollbar in index layout. | `::part(scrollbar)` |
 | `selection` | Reserved footer selection count and actions. | `::part(selection)` |
@@ -160,6 +182,7 @@ This component registers the following elements when it loads.
 | `pk-button` | — |
 | `pk-button-group` | — |
 | `pk-checkbox` | — |
+| `pk-copy-button` | — |
 | `pk-dialog` | — |
 | `pk-dropdown-item` | — |
 | `pk-dropdown-menu` | — |

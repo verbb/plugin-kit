@@ -1,9 +1,9 @@
 import { c as n, d as o, h as i, l as customElement, m as b, s as r } from "./lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement } from "./pk-base-BZKcPYjM.js";
-import { m as check, w as copy } from "./svg-D8YEDMfu.js";
-import { n as renderIconHtml } from "./render-DGT9Y3WS.js";
+import { T as copy, m as check } from "./svg-C4lXkZYF.js";
+import { n as renderIconHtml } from "./render-Cdi93GN8.js";
 import { t as HasSlotController } from "./has-slot-DJv86HKx.js";
-import "./pk-button-C_4EHtBx.js";
+import "./pk-button-DQXfpLFZ.js";
 //#region src/events/pk-copy.ts
 /** Emitted when copy-button successfully copies text. */
 var PkCopyEvent = class extends Event {

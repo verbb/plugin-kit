@@ -3,6 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium, firefox, webkit } from 'playwright';
 import { createServer } from 'vite';
+import { testDataTableRowOrder } from './test-data-table-row-order.mjs';
+import { testDataTableHandlesActions } from './test-data-table-handles-actions.mjs';
 import { testDataTableFilters } from './test-data-table-filters.mjs';
 import { testDataTablePersistence } from './test-data-table-persistence.mjs';
 
@@ -1026,6 +1028,8 @@ try {
                     .evaluate((el) => getComputedStyle(el).whiteSpace),
                 'normal',
             );
+            await testDataTableRowOrder(page);
+            await testDataTableHandlesActions(page);
             await testDataTableFilters(page);
             await testDataTablePersistence(page);
             assert.deepEqual(errors, []);

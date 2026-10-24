@@ -1,8 +1,8 @@
 import { n as uniqueId } from "./pk-a11y-mGj0G5AE.js";
 import { a as e, c as n, d as o, h as i, l as customElement, m as b, o as e$1, p as A } from "./lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement, n as formControlStyles, t as inlineMarkdownStyles } from "./pk-base-BZKcPYjM.js";
-import { B as lightbulb, nt as triangleExclamation, u as asterisk } from "./svg-D8YEDMfu.js";
-import { t as createIconElement } from "./render-DGT9Y3WS.js";
+import { V as lightbulb, it as triangleExclamation, u as asterisk } from "./svg-C4lXkZYF.js";
+import { t as createIconElement } from "./render-Cdi93GN8.js";
 import { t as HasSlotController } from "./has-slot-DJv86HKx.js";
 //#region \0rolldown/runtime.js
 var __defProp = Object.defineProperty;

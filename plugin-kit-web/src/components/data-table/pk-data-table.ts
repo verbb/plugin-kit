@@ -8,6 +8,10 @@ import {
     chevronRight,
     magnifyingGlass,
     gripMove,
+    pen,
+    xmark,
+    clipboard,
+    ellipsis,
     renderIconHtml,
 } from '../../icons/index.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -28,8 +32,10 @@ import '../dropdown-menu/pk-dropdown-item.js';
 import '../status-label/pk-status-label.js';
 import '../state-panel/pk-state-panel.js';
 import '../spinner/pk-spinner.js';
+import '../copy-button/pk-copy-button.js';
 import { dataTableStyles } from './styles.js';
 import { DataTableFilterController } from './filter-controller.js';
+import { DataTableRowOrderController } from './row-order-controller.js';
 import {
     dataTableCellSlot,
     dataTableLabels,
@@ -50,6 +56,7 @@ import {
     type DataTableQuery,
     type DataTableResult,
     type DataTableRow,
+    type DataTableRowReorderDetail,
     type DataTableView,
 } from './model.js';
 export * from './model.js';
@@ -66,6 +73,7 @@ export * from './persistence.js';
  * @slot footer - Additional footer information.
  * @slot empty - Replacement for the empty/no-match state.
  * @event pk-query-change - Detail: { query }. Search, sort, criteria or page changed.
+ * @event pk-row-reorder - Detail: DataTableRowReorderDetail. Current-page order changed; the consumer saves it.
  * @event pk-view-change - Detail: { view }. Column visibility/order changed.
  * @event pk-selection-change - Detail: { selectedKeys }. Explicit record IDs changed.
  * @event pk-row-action - Detail: { action, row, rowKey }. Product action requested.
@@ -86,6 +94,9 @@ export * from './persistence.js';
  * @cssproperty --pk-data-table-header-offset - Sticky header inset from the scroll container top.
  * @cssproperty --pk-data-table-toolbar-background - Background behind the sticky toolbar.
  * @cssproperty --pk-data-table-footer-offset - Sticky footer inset from the scroll container bottom.
+ * @csspart handle - Copyable monospaced handle pill.
+ * @csspart row-actions - Inline row actions and optional overflow menu.
+ * @csspart row-handle - Pointer and keyboard row-reorder button in manual-order mode.
  * @csspart selection - Reserved footer selection count and actions.
  * @csspart cell - Data cell.
  * @cssproperty --pk-data-table-cell-padding - Cell spacing.
@@ -150,13 +161,17 @@ export class PkDataTable extends PkElement {
     @property({ type: Boolean, attribute: 'hide-toolbar' }) hideToolbar = false;
     @property({ type: Boolean, attribute: 'hide-footer' }) hideFooter = false;
     @property({ type: Boolean }) selectable = false;
+    /** Display rows in supplied order, with page-scoped pointer/keyboard reordering and no column sorting. */
+    @property({ type: Boolean, attribute: 'manual-order' }) manualOrder = false;
+    /** Disable row moves while saving or unavailable. Handles stay focusable so pending saves retain keyboard focus. */
+    @property({ type: Boolean, attribute: 'reorder-disabled' }) reorderDisabled = false;
     /** Explicit selected record IDs, retained across pages. */
     @property({ attribute: false }) selectedKeys: DataTableKey[] = [];
     /** Return false to exclude a record from selection. */
     @property({ attribute: false }) isRowSelectable?: (
         row: DataTableRow,
     ) => boolean;
-    /** Available product actions for each record. */
+    /** Available product actions for each record; presets default to inline icon buttons. */
     @property({ attribute: false }) rowActions?: (
         row: DataTableRow,
     ) => DataTableAction[];
@@ -186,6 +201,12 @@ export class PkDataTable extends PkElement {
     @state() private searchDraft?: string;
     @state() private dragOffsets: Record<string, number> = {};
     @state() private reorderAnnouncement = '';
+    @state() private rowOrderAnnouncement = '';
+    private rowOrder = new DataTableRowOrderController(
+        () => this.canReorderRows,
+        (from, to) => this.reorderRows(from, to),
+        () => { this.rowOrderAnnouncement = this.text('rowReorderCancelled'); },
+    );
     @state() private tableScrollWidth = 0;
     @state() private hasHorizontalOverflow = false;
     private sortLoading = false;
@@ -224,6 +245,7 @@ export class PkDataTable extends PkElement {
     }
 
     override disconnectedCallback(): void {
+        this.rowOrder.cancel(false);
         this.cancelColumnDrag();
         this.resizeObserver?.disconnect();
         if (this.layoutFrame !== undefined)
@@ -237,6 +259,8 @@ export class PkDataTable extends PkElement {
     }
 
     protected override willUpdate(changed: PropertyValues<this>): void {
+        // An external update must not commit a drag against a stale page or geometry.
+        if (this.rowOrder.active) this.rowOrder.cancel();
         if (this.drag && (changed.has('columns') || changed.has('view')))
             this.cancelColumnDrag();
         if (
@@ -248,7 +272,8 @@ export class PkDataTable extends PkElement {
             this.checkboxGesture = undefined;
         }
         // Resolve before rendering or loading so the indicator and endpoint receive the same sort.
-        if (!this.query.sort.length && this.resolvedDefaultSort.length) {
+        if ((this.manualOrder && this.query.sort.length) ||
+            (!this.query.sort.length && this.resolvedDefaultSort.length)) {
             this.query = { ...this.query, sort: this.resolvedDefaultSort };
             if (this.mode === 'remote') this.loading = true;
             this.emit('pk-query-change', { query: this.query });
@@ -270,7 +295,7 @@ export class PkDataTable extends PkElement {
             this.searchDraft = undefined;
             // Also reset selection for externally supplied criteria, including browser history.
             const previous = changed.get('query') as DataTableQuery | undefined;
-            this.sortLoading = Boolean(previous?.sort.length &&
+            this.sortLoading = !this.manualOrder && Boolean(previous?.sort.length &&
                 JSON.stringify(previous.sort) !== JSON.stringify(this.query.sort));
             if (
                 previous &&
@@ -339,6 +364,7 @@ export class PkDataTable extends PkElement {
     private observeLayout(): void {
         this.resizeObserver?.disconnect();
         this.resizeObserver = new ResizeObserver(() => {
+            this.rowOrder.checkGeometry();
             // Rendering a scrollbar changes geometry; leave the observer delivery before updating Lit state.
             if (this.layoutFrame !== undefined)
                 cancelAnimationFrame(this.layoutFrame);
@@ -429,17 +455,18 @@ export class PkDataTable extends PkElement {
         }
         this.loading = true;
         this.error = '';
+        const query = this.manualOrder ? { ...this.query, sort: [] } : this.query;
         try {
             const result = await this.requests.load(
                 this.dataSource,
-                this.query,
+                query,
             );
             if (!result) return;
             if (!Array.isArray(result.rows))
                 throw new TypeError('DataTable dataSource must return rows.');
             this.loaded = result;
             this.loading = false;
-            this.emit('pk-load', { result, query: this.query });
+            this.emit('pk-load', { result, query });
         } catch (error) {
             this.error = this.text('error');
             this.loading = false;
@@ -448,6 +475,7 @@ export class PkDataTable extends PkElement {
     }
 
     private get resolvedDefaultSort(): DataTableSort[] {
+        if (this.manualOrder) return [];
         if (this.defaultSort.length)
             return this.defaultSort.map((sort) => ({ ...sort }));
         const column = this.columns.find((column) => column.sortable);
@@ -456,6 +484,11 @@ export class PkDataTable extends PkElement {
 
     /** Update query state and reset paging for search, sorting or criteria changes. */
     setQuery(patch: Partial<DataTableQuery>): void {
+        if (this.manualOrder && 'sort' in patch) {
+            const { sort: _sort, ...rest } = patch;
+            patch = rest;
+            if (!Object.keys(patch).length) return;
+        }
         this.requests.cancel();
         if ('sort' in patch && !patch.sort?.length)
             patch = { ...patch, sort: this.resolvedDefaultSort };
@@ -706,7 +739,7 @@ export class PkDataTable extends PkElement {
                 this.rows,
                 this.columns,
                 this.filters,
-                this.query,
+                this.manualOrder ? { ...this.query, sort: [] } : this.query,
                 this.locale || undefined,
             );
         return this.dataSource
@@ -718,6 +751,86 @@ export class PkDataTable extends PkElement {
                   nextCursor: this.nextCursor,
                   previousCursor: this.previousCursor,
               };
+    }
+
+    private get rowOrderFiltered(): boolean {
+        return Boolean(this.query.search.trim() || this.searchDraft?.trim() ||
+            Object.keys(this.query.filters).length ||
+            Object.keys(this.query.criteria ?? {}).length);
+    }
+
+    private get canReorderRows(): boolean {
+        const count = this.mode === 'client'
+            ? Math.min(this.query.pageSize, this.rows.length - this.query.pageIndex * this.query.pageSize)
+            : this.dataSource ? this.loaded?.rows.length ?? 0 : this.rows.length;
+        return this.manualOrder && !this.reorderDisabled && !this.loading &&
+            !this.error && !this.rowOrderFiltered && count > 1;
+    }
+
+    private reorderRows(fromIndex: number, toIndex: number): void {
+        if (!this.canReorderRows || fromIndex === toIndex) return;
+        const page = [...this.result.rows];
+        if (fromIndex < 0 || toIndex < 0 || fromIndex >= page.length || toIndex >= page.length)
+            return;
+        const previousKeys = page.map((row) => this.key(row));
+        const [row] = page.splice(fromIndex, 1);
+        page.splice(toIndex, 0, row);
+        const previousRows = [...(this.mode === 'remote' && this.dataSource
+            ? this.loaded!.rows : this.rows)];
+        let rows: DataTableRow[];
+        if (this.mode === 'client') {
+            // Only replace this page's slots; off-page records retain their positions.
+            const pageKeys = new Set(previousKeys);
+            let index = 0;
+            rows = this.rows.map((item) => pageKeys.has(this.key(item)) ? page[index++] : item);
+            this.rows = rows;
+        } else if (this.dataSource) {
+            rows = page;
+            this.loaded = { ...this.loaded!, rows };
+        } else {
+            rows = page;
+            this.rows = rows;
+        }
+        this.selectionAnchor = undefined;
+        this.rowOrderAnnouncement = this.text('rowReordered', {
+            label: this.accessibleRowLabel(row), position: toIndex + 1, count: page.length,
+        });
+        const detail: DataTableRowReorderDetail = {
+            rowKey: this.key(row), fromIndex, toIndex,
+            orderedKeys: page.map((item) => this.key(item)), previousKeys,
+            rows: [...rows], previousRows, query: structuredClone(this.query),
+        };
+        // Repeat moves the existing nodes, but browsers can drop focus when a row is reinserted.
+        const handle = this.renderRoot.querySelectorAll<HTMLButtonElement>('.row-handle')[fromIndex];
+        const hadFocus = this.renderRoot instanceof ShadowRoot && this.renderRoot.activeElement === handle;
+        const focusAfterMove = async () => {
+            await this.updateComplete;
+            if (!hadFocus || !this.isConnected || !handle?.isConnected || this.loading || this.error || !this.manualOrder) return;
+            const active = this.ownerDocument.activeElement;
+            if (active !== this && active !== this.ownerDocument.body) return;
+            const shadowActive = (this.renderRoot as ShadowRoot).activeElement;
+            if (shadowActive && shadowActive !== handle) return;
+            handle.focus({ preventScroll: true });
+            handle.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        };
+        this.emit('pk-row-reorder', detail);
+        void focusAfterMove();
+    }
+
+    private keyRowOrder(event: KeyboardEvent, row: DataTableRow): void {
+        if (event.altKey || event.ctrlKey || event.metaKey)
+            return;
+        if (!['Home', 'End', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.rowOrder.active || !this.canReorderRows) return;
+        const rows = this.result.rows;
+        const from = rows.findIndex((item) => this.key(item) === this.key(row));
+        const to = event.key === 'Home' ? 0 : event.key === 'End' ? rows.length - 1
+            : event.key === 'ArrowUp' ? Math.max(0, from - 1)
+              : event.key === 'ArrowDown' ? Math.min(rows.length - 1, from + 1) : undefined;
+        if (to === undefined) return;
+        this.reorderRows(from, to);
     }
 
     private get orderedColumns(): DataTableColumn[] {
@@ -945,7 +1058,7 @@ export class PkDataTable extends PkElement {
 
     private renderView() {
         const sort = this.query.sort[0];
-        const sortable = this.columns.filter((column) => column.sortable);
+        const sortable = this.manualOrder ? [] : this.columns.filter((column) => column.sortable);
         const visibleCount = this.columns.filter(
             (column) =>
                 column.hideable === false ||
@@ -1133,6 +1246,7 @@ export class PkDataTable extends PkElement {
     }
 
     private sortColumn(id: string): void {
+        if (this.manualOrder) return;
         const current = this.query.sort[0];
         this.setQuery({
             sort: [
@@ -1187,6 +1301,16 @@ export class PkDataTable extends PkElement {
                 >${dataTableText(value)}</slot
             >`;
         if (value == null || value === '') return '—';
+        if (column.type === 'handle') {
+            const handle = dataTableText(value);
+            return html`<span class="cell-handle" part="handle">
+                <code>${handle}</code><pk-copy-button
+                    .value=${handle}
+                    .ariaLabel=${this.text('copyHandle', { label: handle })}
+                    .copiedLabel=${this.text('copiedHandle', { label: handle })}
+                    >${this.icon(clipboard, 'icon')}</pk-copy-button>
+            </span>`;
+        }
         if (column.type === 'number' && Number.isFinite(Number(value)))
             return new Intl.NumberFormat(
                 this.locale || undefined,
@@ -1226,6 +1350,52 @@ export class PkDataTable extends PkElement {
             >`;
         }
         return dataTableText(value);
+    }
+
+    private actionLabel(action: DataTableAction): string {
+        return action.label ?? (action.preset ? this.text(`${action.preset}Action`) : action.id);
+    }
+
+    private activateAction(event: Event, action: DataTableAction, row: DataTableRow): void {
+        if (action.disabled || this.loading || this.error) return;
+        (event.currentTarget as HTMLElement).closest('pk-popover')?.removeAttribute('open');
+        this.emit('pk-row-action', { action: action.id, row, rowKey: this.key(row) });
+    }
+
+    private renderRowActions(row: DataTableRow, actions: DataTableAction[]) {
+        if (!actions.length) return nothing;
+        const isInline = (action: DataTableAction) =>
+            (action.display ?? (action.preset ? 'inline' : 'menu')) === 'inline';
+        const menu = actions.filter((action) => !isInline(action));
+        return html`<div class="row-actions" part="row-actions">
+            ${actions.filter(isInline).map((action) => {
+                const label = this.text('rowAction', {
+                    label: this.actionLabel(action), id: this.accessibleRowLabel(row),
+                });
+                return html`<pk-button
+                    class="row-action"
+                    data-preset=${action.preset ?? nothing}
+                    size=${action.preset ? 'xs' : 'sm'}
+                    variant="none"
+                    aria-label=${label}
+                    .disabled=${Boolean(action.disabled)}
+                    @click=${(event: Event) => this.activateAction(event, action, row)}
+                    >${action.preset
+                        ? this.icon({ edit: pen, move: gripMove, delete: xmark }[action.preset], 'start')
+                        : this.actionLabel(action)}</pk-button>`;
+            })}
+            ${menu.length ? html`<pk-popover placement="bottom-end">
+                <pk-button slot="trigger" size="xs" variant="none"
+                    aria-label=${this.text('actions', { id: this.accessibleRowLabel(row) })}
+                    >${this.icon(ellipsis, 'start')}</pk-button>
+                <div class="panel">
+                    ${menu.map((action) => html`<pk-button
+                        .disabled=${Boolean(action.disabled)}
+                        @click=${(event: Event) => this.activateAction(event, action, row)}
+                        >${this.actionLabel(action)}</pk-button>`)}
+                </div>
+            </pk-popover>` : nothing}
+        </div>`;
     }
 
     private page(delta: number, result: DataTableResult): void {
@@ -1289,6 +1459,11 @@ export class PkDataTable extends PkElement {
                 ${this.renderToolbar()}
             </div>
             ${this.filterController.renderDialog()}
+            ${this.manualOrder ? html`
+                <span id="row-order-help" class="sr-only">${this.text('reorderRowHelp')}</span>
+                ${this.rowOrderFiltered ? html`<p class="row-order-hint">${this.text('reorderRowsFiltered')}</p>` : nothing}
+                <span role="status" class="sr-only">${this.rowOrderAnnouncement}</span>
+            ` : nothing}
             <div role="status" aria-live="polite" class="sr-only">
                 ${this.loading ? this.text(result.rows.length ? 'updating' : 'loading') : selected.size ? `${count}. ${this.text('selected', { count: selected.size })}` : count}
             </div>
@@ -1310,9 +1485,10 @@ export class PkDataTable extends PkElement {
                         </caption>
                         <thead>
                             <tr>
+                                ${this.manualOrder ? html`<th class="small" scope="col"><span class="sr-only">${this.text('rowOrder')}</span></th>` : nothing}
                                 ${this.selectable ? html`<th class="small"><pk-checkbox aria-label=${this.text('selectPage')} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.setSelection(checked ? this.selectedKeys.filter((key) => !eligible.includes(key)) : [...new Set([...this.selectedKeys, ...eligible])])}></pk-checkbox></th>` : nothing}
                                 ${columns.map((column) => {
-                                    const sort = this.query.sort.find(
+                                    const sort = !this.manualOrder && this.query.sort.find(
                                         (item) => item.id === column.id,
                                     );
                                     return html`<th
@@ -1320,10 +1496,10 @@ export class PkDataTable extends PkElement {
                                         style=${styleMap({ width: column.width })}
                                         class=${column.align ?? (column.type === 'number' ? 'end' : '')}
                                         ?data-sorted=${Boolean(sort)}
-                                        ?data-sortable=${Boolean(column.sortable)}
+                                        ?data-sortable=${Boolean(column.sortable && !this.manualOrder)}
                                         aria-sort=${sort ? (sort.direction === 'asc' ? 'ascending' : 'descending') : nothing}
                                     >
-                                        ${column.sortable ? html`<button class="sort" aria-label=${this.text('sort', { label: column.label })} @click=${() => this.sortColumn(column.id)}>${column.label}${sort ? sorting ? html`<pk-spinner class="sort-spinner" size="xs" aria-hidden="true"></pk-spinner>` : this.icon(sort.direction === 'asc' ? chevronUp : chevronDown) : nothing}</button>` : column.label}
+                                        ${column.sortable && !this.manualOrder ? html`<button class="sort" aria-label=${this.text('sort', { label: column.label })} @click=${() => this.sortColumn(column.id)}>${column.label}${sort ? sorting ? html`<pk-spinner class="sort-spinner" size="xs" aria-hidden="true"></pk-spinner>` : this.icon(sort.direction === 'asc' ? chevronUp : chevronDown) : nothing}</button>` : column.label}
                                     </th>`;
                                 })}
                                 ${this.rowActions ? html`<th class="small"><span class="sr-only">${this.text('actions', { id: '' })}</span></th>` : nothing}
@@ -1333,8 +1509,9 @@ export class PkDataTable extends PkElement {
                             ${repeat(
                                 result.rows,
                                 (row) => this.key(row),
-                                (row) =>
-                                    html`<tr
+                                (row) => {
+                                    const actions = this.rowActions?.(row) ?? [];
+                                    return html`<tr
                                         ?data-selected=${this.selectable && selected.has(this.key(row))}
                                         ?data-selectable=${this.canSelectRow(row)}
                                         @click=${(event: MouseEvent) => this.clickRow(event, row)}
@@ -1351,6 +1528,15 @@ export class PkDataTable extends PkElement {
                                                 event.preventDefault();
                                         }}
                                     >
+                                        ${this.manualOrder ? html`<td class="small">
+                                            <button class="row-handle" part="row-handle" type="button"
+                                                aria-label=${this.text('reorderRow', { label: this.accessibleRowLabel(row) })}
+                                                aria-describedby="row-order-help"
+                                                aria-disabled=${this.canReorderRows ? 'false' : 'true'}
+                                                @pointerdown=${(event: PointerEvent) => this.rowOrder.start(event)}
+                                                @keydown=${(event: KeyboardEvent) => this.keyRowOrder(event, row)}
+                                                >${this.icon(gripMove)}</button>
+                                        </td>` : nothing}
                                         ${
                                             this.selectable
                                                 ? html`<td class="small">
@@ -1378,58 +1564,16 @@ export class PkDataTable extends PkElement {
                                                   </td>`
                                                 : nothing
                                         }
-                                        ${columns.map((column) => html`<td part="cell" class=${`${column.align ?? (column.type === 'number' ? 'end' : '')} ${(column.wrap ?? !['number', 'date', 'status'].includes(column.type ?? 'text')) ? '' : 'nowrap'}`}>${this.renderCell(row, column)}</td>`)}
+                                        ${columns.map((column) => html`<td part="cell" class=${`${column.align ?? (column.type === 'number' ? 'end' : '')} ${(column.wrap ?? !['number', 'date', 'status', 'handle'].includes(column.type ?? 'text')) ? '' : 'nowrap'}`}>${this.renderCell(row, column)}</td>`)}
                                         ${
                                             this.rowActions
                                                 ? html`<td class="small">
-                                                      <pk-popover
-                                                          placement="bottom-end"
-                                                          ><pk-button
-                                                              slot="trigger"
-                                                              size="sm"
-                                                              variant="transparent"
-                                                              aria-label=${this.text('actions', { id: this.key(row) })}
-                                                              >⋯</pk-button
-                                                          >
-                                                          <div class="panel">
-                                                              ${this.rowActions(
-                                                                  row,
-                                                              ).map(
-                                                                  (action) =>
-                                                                      html`<pk-button
-                                                                          .disabled=${Boolean(action.disabled)}
-                                                                          @click=${(
-                                                                              event: Event,
-                                                                          ) => {
-                                                                              (
-                                                                                  event.currentTarget as HTMLElement
-                                                                              )
-                                                                                  .closest(
-                                                                                      'pk-popover',
-                                                                                  )
-                                                                                  ?.removeAttribute(
-                                                                                      'open',
-                                                                                  );
-                                                                              this.emit(
-                                                                                  'pk-row-action',
-                                                                                  {
-                                                                                      action: action.id,
-                                                                                      row,
-                                                                                      rowKey: this.key(
-                                                                                          row,
-                                                                                      ),
-                                                                                  },
-                                                                              );
-                                                                          }}
-                                                                          >${action.label}</pk-button
-                                                                      >`,
-                                                              )}
-                                                          </div></pk-popover
-                                                      >
+                                                      ${this.renderRowActions(row, actions)}
                                                   </td>`
                                                 : nothing
                                         }
-                                    </tr>`,
+                                    </tr>`;
+                                },
                             )}
                         </tbody>
                     </table>
