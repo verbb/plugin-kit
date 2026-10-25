@@ -1,7 +1,7 @@
 // #region example
 import { Option, Select } from '@verbb/plugin-kit-react/components';
 
-function FruitSelect({ size }: { size?: 'xs' | 'sm' | 'lg' }) {
+function FruitSelect({ size }: { size?: 'xxs' | 'xs' | 'sm' | 'lg' | 'xl' }) {
     return (
         <Select {...(size ? { size } : {})} placeholder="Select a fruit" value="apple">
             <Option value="apple">Apple</Option>
@@ -16,10 +16,12 @@ function FruitSelect({ size }: { size?: 'xs' | 'sm' | 'lg' }) {
 export function SelectSizesExample() {
     return (
         <>
+            <FruitSelect size="xxs" />
             <FruitSelect size="xs" />
             <FruitSelect size="sm" />
             <FruitSelect />
             <FruitSelect size="lg" />
+            <FruitSelect size="xl" />
         </>
     );
 }

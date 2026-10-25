@@ -7,8 +7,8 @@ import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.j
 import { MirrorValidator, RequiredValidator } from '../../validators/index.js';
 import { pkColorInputStyles } from './pk-color-input.styles.js';
 
-/** Public scale is xs / sm / default / lg (`xl` aliases `lg` for compatibility). */
-export type PkColorInputSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+/** Shared single-line control size scale. */
+export type PkColorInputSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 const DEFAULT_COLOR = '#000000';
 

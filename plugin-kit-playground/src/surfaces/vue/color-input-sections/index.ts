@@ -61,7 +61,7 @@ export const colorInputVueSectionComponents: Record<string, Component> = {
             class: 'pg-demo-narrow',
             style: { display: 'flex', flexDirection: 'column', gap: '0.75rem' },
         },
-            (['xs', 'sm', 'default', 'lg'] as const).map((size) => h(
+            (['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const).map((size) => h(
                 'div',
                 { key: size, style: { display: 'flex', alignItems: 'center', gap: '1rem' } },
                 [

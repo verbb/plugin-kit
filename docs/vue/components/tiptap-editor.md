@@ -89,7 +89,7 @@ Variable tags display the applied transform as a badge and an orange corner when
 
 | Name | Description |
 | --- | --- |
-| `buttons` | Flat toolbar button list. HTML uses a comma-separated attribute; React may pass a `string[]`. Named `buttons` (not `buttonsAttr`) so React can set the property — a getter-only `buttons` previously threw on assign.<br><small><strong>Type</strong> <code>string \| string[]</code></small><br><small><strong>Default</strong> <code>bold,italic</code></small> |
+| `buttons` | Flat toolbar button list. HTML uses a comma-separated attribute; the property also accepts a `string[]`.<br><small><strong>Type</strong> <code>string \| string[]</code></small><br><small><strong>Default</strong> <code>bold,italic</code></small> |
 | `customError` | Custom validation message; also settable via `setCustomValidity()`.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `defaultValue` | <small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>[]</code></small> |
 | `disabled` | Disables the control and excludes it from constraint validation.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
@@ -107,7 +107,7 @@ Variable tags display the applied transform as a badge and an orange corner when
 | `textStyleOptions` | Values shown by the optional TextStyle toolbar controls.<br><small><strong>Type</strong> <code>TiptapTextStyleToolbarConfig \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `toolbar` | Structured toolbar config — JSON string attribute, or a node array from React.<br><small><strong>Type</strong> <code>string \| ToolbarNode[] \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `toolbarTooltips` | Show `pk-tooltip` hints on toolbar buttons (default: on).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
-| `value` | Document JSON string. Also accepts a TipTap node array (common from React) and serializes it — arrays previously bypassed JSON.parse and mounted empty.<br><small><strong>Type</strong> <code>string</code></small> |
+| `value` | Document JSON string. Also accepts a TipTap node array and serialises it.<br><small><strong>Type</strong> <code>string</code></small> |
 | `variableTagConfigure` | Formie / React configure bridge — called when a chip is activated for editing. Prefer this over listening for `pk-variable-tag-configure` from React.<br><small><strong>Type</strong> <code>((detail: import('./variable-tag-node-view.js').PkVariableTagConfigureDetail) =&gt; void) \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `variableTransformerRegistry` | Transform names displayed as badges on configured variable tags.<br><small><strong>Type</strong> <code>PkVariableTransformerRegistry</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 

@@ -3,7 +3,7 @@ import { ButtonGroup } from '@verbb/plugin-kit-vue/components';
 
 import GroupButton from './GroupButton.vue';
 
-const groupSizes = ['xs', 'sm', 'default', 'lg'] as const;
+const groupSizes = ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const;
 </script>
 
 <template>

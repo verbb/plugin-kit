@@ -5,7 +5,7 @@ export type PkDropdownItemType = 'normal' | 'checkbox' | 'radio';
  *
  * @slot - Item label
  * @slot start - Leading icon (preferred; matches pk-button)
- * @slot prefix - Alias for `start` (legacy)
+ * @slot prefix - Alias for `start`
  * @slot details - Trailing shortcut text
  * @slot submenu - Nested menu items (`pk-dropdown-item`, separators, labels)
  *

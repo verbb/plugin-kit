@@ -27,6 +27,25 @@ export async function testDataTableRowOrder(page) {
     assert.deepEqual(await table.evaluate((el) => el.query.sort), []);
     assert.equal(await table.locator('th .sort, th[aria-sort]').count(), 0);
     assert.equal(await handle('Charlie').getAttribute('aria-describedby'), 'row-order-help');
+    assert.equal(await table.locator('tbody tr').first().locator('td').first().getByRole('checkbox').count(), 1);
+    assert.equal(await table.locator('tbody tr').first().locator('td').last().getByRole('button', { name: 'Reorder Charlie', exact: true }).count(), 1);
+    const headerOrder = await table.locator('thead th').allTextContents();
+    assert.equal(headerOrder.at(-1).trim(), 'Row order');
+    // Reordering stays last even when the consumer also supplies edit/delete actions.
+    await table.evaluate((el) => { el.rowActions = () => [{ id: 'edit', preset: 'edit' }]; });
+    await settle();
+    const cells = table.locator('tbody tr').first().locator('td');
+    assert.equal(await cells.nth(await cells.count() - 2).getByRole('button', { name: 'Edit: Charlie', exact: true }).count(), 1);
+    assert.equal(await cells.last().getByRole('button', { name: 'Reorder Charlie', exact: true }).count(), 1);
+    const editBounds = await table.getByRole('button', { name: 'Edit: Charlie', exact: true }).boundingBox();
+    const handleBounds = await handle('Charlie').boundingBox();
+    assert.ok(handleBounds.x > editBounds.x, 'The drag handle follows row actions visually');
+    await table.evaluate((el) => { el.rowActions = undefined; el.selectable = false; });
+    await settle();
+    assert.equal(await table.locator('tbody tr').first().locator('td').first().innerText(), 'Charlie');
+    assert.equal(await table.locator('tbody tr').first().locator('td').last().getByRole('button', { name: 'Reorder Charlie', exact: true }).count(), 1);
+    await table.evaluate((el) => { el.selectable = true; });
+    await settle();
     await table.getByRole('button', { name: 'View', exact: true }).click();
     assert.equal(await table.getByRole('group', { name: 'Sort by', exact: true }).count(), 0);
     await table.getByRole('button', { name: 'Use defaults', exact: true }).click();

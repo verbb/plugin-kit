@@ -6,14 +6,14 @@ export const pkInputStyles = css`
             display: block;
             width: 100%;
             font-family: var(--pk-font-family);
-            font-size: var(--pk-font-size-base);
+            font-size: var(--pk-control-font-default);
             line-height: var(--pk-line-height);
             /*
              * Control chrome tokens — inherit into light-DOM in-control actions
              * (e.g. pk-copy-button[slot=end]) the same way combobox/image-browser
              * size their trailing clear/expand hit targets.
              */
-            --pk-input-padding-block: 6px;
+            --pk-input-padding-block: calc((var(--pk-control-height-default) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-input-padding-inline: 8px;
             --pk-input-control-gap: 6px;
             --pk-input-decoration-size: 0.75rem;
@@ -218,76 +218,86 @@ export const pkInputStyles = css`
             box-shadow: var(--pk-input-invalid-focus-shadow);
         }
 
-        :host([size='xs']) {
-            --pk-input-padding-block: 4px;
+        :host([size='xxs']) {
+            --pk-input-padding-block: calc((var(--pk-control-height-xxs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-input-padding-inline: 6px;
             --pk-input-control-gap: 4px;
             --pk-input-decoration-size: 0.625rem;
         }
 
+        :host([size='xs']) {
+            --pk-input-padding-block: calc((var(--pk-control-height-xs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-input-padding-inline: 6px;
+            --pk-input-control-gap: 4px;
+            --pk-input-decoration-size: 0.625rem;
+        }
+
+        :host([size='xxs']) .input {
+            font-size: var(--pk-control-font-xxs);
+        }
+
         :host([size='xs']) .input {
-            font-size: 11px;
+            font-size: var(--pk-control-font-xs);
         }
 
         :host([size='sm']) {
-            --pk-input-padding-block: 4px;
+            --pk-input-padding-block: calc((var(--pk-control-height-sm) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-input-padding-inline: 8px;
             --pk-input-control-gap: 4px;
             --pk-input-decoration-size: 0.6875rem;
         }
 
         :host([size='sm']) .input {
-            font-size: 12px;
+            font-size: var(--pk-control-font-sm);
         }
 
         :host([size='lg']) {
-            --pk-input-padding-block: 8px;
+            --pk-input-padding-block: calc((var(--pk-control-height-lg) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-input-padding-inline: 12px;
             --pk-input-control-gap: 8px;
             --pk-input-decoration-size: 0.875rem;
         }
 
         :host([size='lg']) .input {
-            font-size: var(--pk-font-size-base);
+            font-size: var(--pk-control-font-lg);
         }
 
         :host([size='xl']) {
-            --pk-input-padding-block: 10px;
+            --pk-input-padding-block: calc((var(--pk-control-height-xl) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-input-padding-inline: 16px;
             --pk-input-control-gap: 8px;
             --pk-input-decoration-size: 1rem;
         }
 
         :host([size='xl']) .input {
-            font-size: 16px;
+            font-size: var(--pk-control-font-xl);
         }
 
-        /*
-         * Mono face + 0.9× optical size + line-height 1.5. The taller line-height
-         * offsets the smaller face so padding + content height stays aligned with
-         * stock inputs (1.25rem ≈ 1.5 × 12.6px). Scale the size's face, not
-         * the parent em, so xs/sm/xl mono stay proportional.
-         */
+        /* Optical font sizing must not change the control height. */
         :host([mono]) .input {
             font-family: var(--pk-input-mono-font-family);
-            font-size: calc(var(--pk-font-size-base) * 0.9);
-            line-height: var(--pk-input-mono-line-height, 1.5);
+            font-size: calc(var(--pk-control-font-default) * 0.9);
+            line-height: var(--pk-input-control-line-height, 1.25rem);
+        }
+
+        :host([mono][size='xxs']) .input {
+            font-size: calc(var(--pk-control-font-xxs) * 0.9);
         }
 
         :host([mono][size='xs']) .input {
-            font-size: calc(11px * 0.9);
+            font-size: calc(var(--pk-control-font-xs) * 0.9);
         }
 
         :host([mono][size='sm']) .input {
-            font-size: calc(12px * 0.9);
+            font-size: calc(var(--pk-control-font-sm) * 0.9);
         }
 
         :host([mono][size='lg']) .input {
-            font-size: calc(var(--pk-font-size-base) * 0.9);
+            font-size: calc(var(--pk-control-font-lg) * 0.9);
         }
 
         :host([mono][size='xl']) .input {
-            font-size: calc(16px * 0.9);
+            font-size: calc(var(--pk-control-font-xl) * 0.9);
         }
 
         /* Editable-table cells (v1): flush into the row — no chrome border/radius.

@@ -48,7 +48,7 @@ handles.rowActions = row => row.id === 3 ? [] : [
     { id: 'edit', preset: 'edit' },
     { id: 'move-group', preset: 'move', label: 'Move to group' },
     { id: 'delete', preset: 'delete', disabled: row.id === 2 },
-    { id: 'duplicate', label: 'Duplicate' },
+    { id: 'duplicate', label: 'Duplicate', disabled: row.id === 2 },
     { id: 'archive', label: 'Archive', display: 'inline' },
     { id: 'rename', preset: 'edit', label: 'Rename', display: 'menu' },
 ];

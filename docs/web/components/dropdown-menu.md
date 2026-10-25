@@ -105,7 +105,7 @@ This component registers the following elements when it loads.
 | --- | --- |
 | `(default)` | Item label |
 | `start` | Leading icon (preferred; matches pk-button) |
-| `prefix` | Alias for `start` (legacy) |
+| `prefix` | Alias for `start` |
 | `details` | Trailing shortcut text |
 | `submenu` | Nested menu items (`pk-dropdown-item`, separators, labels) |
 

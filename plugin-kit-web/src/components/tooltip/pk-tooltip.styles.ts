@@ -137,6 +137,8 @@ export const pkTooltipStyles = [
             overflow: visible;
             width: fit-content;
             max-width: 20rem;
+            /* Tooltips must wrap even when their trigger is inside a no-wrap table cell. */
+            white-space: normal;
             padding: 4px 8px;
             border-radius: var(--pk-radius-sm);
             background: #1c2e36;

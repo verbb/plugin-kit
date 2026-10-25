@@ -10,6 +10,8 @@ Use `primary` for the main action and `secondary` for supporting actions. `defau
 
 ## Sizes
 
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
 The size scale is shared across text buttons, icon buttons, and icon-plus-label buttons so controls can stay visually aligned in dense CP interfaces.
 
 <ComponentPreview src="./examples/button-sizes.preview.web.ts" />
@@ -67,7 +69,7 @@ Use disabled buttons for unavailable actions, and the link variant when the acti
 | `name` | Native `name` when used as a submit/reset control.<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `rel` | Anchor `rel` when `href` is set.<br><small><strong>Type</strong> <code>string \| undefined</code></small> |
 | `size` | Shared CP size scale (`xxs` … `xl`); `none` skips presets for host token overrides.<br><small><strong>Type</strong> <code>PkButtonSize</code></small><br><small><strong>Default</strong> <code>default</code></small> |
-| `spinnerSize` `spinner-size` | Override loading spinner size. When unset, derived from `size` via `getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs). Formie New Form passes `xs` on `size="lg"` so the ring stays size-4 (1rem), not sm (1.5rem).<br><small><strong>Type</strong> <code>PkSpinnerSize \| undefined</code></small> |
+| `spinnerSize` `spinner-size` | Override loading spinner size. Defaults to `xxs` for xxs/xs buttons, `sm` for lg/xl buttons, and `xs` for other sizes.<br><small><strong>Type</strong> <code>PkSpinnerSize \| undefined</code></small> |
 | `spinnerTone` `spinner-tone` | Loading spinner tone. Defaults from the button variant when unset.<br><small><strong>Type</strong> <code>PkSpinnerTone \| undefined</code></small> |
 | `spinnerVariant` `spinner-variant` | Loading spinner visual style. Defaults from the button variant when unset.<br><small><strong>Type</strong> <code>PkSpinnerVariant \| undefined</code></small> |
 | `target` | Anchor `target` when `href` is set.<br><small><strong>Type</strong> <code>string \| undefined</code></small> |

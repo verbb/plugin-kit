@@ -24,9 +24,8 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     private readonly host;
     private _value;
     /**
-     * Flat toolbar button list. HTML uses a comma-separated attribute; React may
-     * pass a `string[]`. Named `buttons` (not `buttonsAttr`) so React can set the
-     * property — a getter-only `buttons` previously threw on assign.
+     * Flat toolbar button list. HTML uses a comma-separated attribute;
+     * the property also accepts a `string[]`.
      */
     buttons: string | string[];
     /** Structured toolbar config — JSON string attribute, or a node array from React. */
@@ -67,8 +66,7 @@ export declare class PkTiptapEditor extends PkFormAssociatedElement {
     private selectionListenerAttached;
     get value(): string;
     /**
-     * Document JSON string. Also accepts a TipTap node array (common from React)
-     * and serializes it — arrays previously bypassed JSON.parse and mounted empty.
+     * Document JSON string. Also accepts a TipTap node array and serialises it.
      */
     set value(val: string | unknown[] | null);
     defaultValue: string | null;

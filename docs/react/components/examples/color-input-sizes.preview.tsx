@@ -2,7 +2,7 @@
 import { useState, type CSSProperties } from 'react';
 import { ColorInput } from '@verbb/plugin-kit-react/components';
 
-const sizes = ['xs', 'sm', 'default', 'lg', 'xl'] as const;
+const sizes = ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const;
 
 function StatefulColorInput({ size }: { size: (typeof sizes)[number] }) {
     const [value, setValue] = useState('#35e533');

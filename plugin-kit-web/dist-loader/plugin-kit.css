@@ -347,22 +347,38 @@
     --pk-btn-caret-size-lg: 13px;
     --pk-btn-caret-size-xl: 14px;
 
-    /* Button scale — +4px height steps; default matches Craft CP (2.125rem / 34px).
+    /* Shared single-line control heights; default matches Craft CP (34px). */
+    --pk-control-height-xxs: 24px;
+    --pk-control-height-xs: 26px;
+    --pk-control-height-sm: 30px;
+    --pk-control-height-default: 34px;
+    --pk-control-height-lg: 38px;
+    --pk-control-height-xl: 42px;
+
+    /* Button scale follows the shared control heights.
      * Block size is fixed; vertical centering uses padding-block: 0 + padding-inline.
      */
-    --pk-btn-height-xxs: 1.375rem;
-    --pk-btn-height-xs: 1.625rem;
-    --pk-btn-height-sm: 1.875rem;
-    --pk-btn-height-default: 2.125rem;
-    --pk-btn-height-lg: 2.375rem;
-    --pk-btn-height-xl: 2.625rem;
+    --pk-btn-height-xxs: var(--pk-control-height-xxs);
+    --pk-btn-height-xs: var(--pk-control-height-xs);
+    --pk-btn-height-sm: var(--pk-control-height-sm);
+    --pk-btn-height-default: var(--pk-control-height-default);
+    --pk-btn-height-lg: var(--pk-control-height-lg);
+    --pk-btn-height-xl: var(--pk-control-height-xl);
 
-    --pk-btn-font-xxs: 11px;
-    --pk-btn-font-xs: 12px;
-    --pk-btn-font-sm: 13px;
-    --pk-btn-font-default: var(--pk-font-size-base);
-    --pk-btn-font-lg: var(--pk-font-size-base);
-    --pk-btn-font-xl: 1rem;
+    /* Shared label typography for buttons and single-line controls. */
+    --pk-control-font-xxs: 11px;
+    --pk-control-font-xs: 12px;
+    --pk-control-font-sm: 13px;
+    --pk-control-font-default: var(--pk-font-size-base);
+    --pk-control-font-lg: var(--pk-font-size-base);
+    --pk-control-font-xl: 1rem;
+
+    --pk-btn-font-xxs: var(--pk-control-font-xxs);
+    --pk-btn-font-xs: var(--pk-control-font-xs);
+    --pk-btn-font-sm: var(--pk-control-font-sm);
+    --pk-btn-font-default: var(--pk-control-font-default);
+    --pk-btn-font-lg: var(--pk-control-font-lg);
+    --pk-btn-font-xl: var(--pk-control-font-xl);
 
     --pk-btn-padding-inline-xxs: 5px;
     --pk-btn-padding-inline-xs: 7px;

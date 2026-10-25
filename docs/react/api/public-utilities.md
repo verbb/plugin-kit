@@ -32,16 +32,16 @@ Re-exported from `@verbb/plugin-kit-core`:
 | `hostRequest`, `hostOpenElementSelector`, `hostFormatDate`, `hostGetTimepickerOptions`, `hostGetLocale` | Call through the configured bridge. |
 | `HostRequestMethod`, `HostRequestConfig`, `HostElementSelectorOptions`, `HostSelectedElement`, `PluginKitHostBridge` | Types. |
 
-## Portals (legacy compatibility)
+## Portals {#portals-legacy-compatibility}
 
 Overlays (dialogs, popovers, selects) render through the native **Popover API top layer** — they are not reparented into a portal node, and `portalClassName` is deprecated and ignored.
 
-Two portal-adjacent settings still matter, and both are handled by `PluginKitProvider` / `configurePluginKitReact`:
+Configure overlay scroll-lock through `PluginKitProvider` / `configurePluginKitReact`:
 
 - **`portalContainer`** — pass the ShadowRoot from `mountShadowApp` so overlay scroll-lock keeps the document gutter stable in embedded hosts (Craft CP).
 - **`shadowRootSelectors`** — selectors used to scope overlay scroll-lock inside shadow roots.
 
-The low-level getters/setters (`setPortalClassName`, `getPortalClassName`, `setPortalContainer`, `getPortalContainer`, `getPortalMountNode`, `getPortalTargetForAppend`, `PortalContainer`) remain exported from `@verbb/plugin-kit-core` for compatibility, but new code should not need them.
+The low-level getters/setters (`setPortalClassName`, `getPortalClassName`, `setPortalContainer`, `getPortalContainer`, `getPortalMountNode`, `getPortalTargetForAppend`, `PortalContainer`) are exported from `@verbb/plugin-kit-core` and re-exported from `@verbb/plugin-kit-react/utils`. Prefer the provider or app configuration for overlay scroll-lock settings.
 
 ## Translation
 
@@ -54,11 +54,9 @@ Re-exported from `@verbb/plugin-kit-forms`:
 
 Prefer configuring these through `PluginKitProvider` (`translationCategory` / `translate` props).
 
-## Where did the schema helpers go?
+## Schema and Validation
 
-Earlier versions re-exported schema/validation helpers (`evaluateCondition`, `traverseSchema`, `createSchemaFieldIndex`, `validateFormValues`, …) from this barrel. They now live inside the framework-agnostic form engine package and are consumed internally by SchemaForm — they are no longer part of the public React surface. Use the SchemaForm engine ([Forms API reference](/forms/api/form-apis)) for validation, or hand-roll checks in bespoke forms.
-
-Rich-text, time-option, handle, and store helpers from v1 are no longer part of the public React surface.
+Schema and validation helpers belong to the framework-neutral `@verbb/plugin-kit-forms` engine. Use the [SchemaForm engine APIs](/forms/api/form-apis) for form validation.
 
 ## Example
 

@@ -10,6 +10,8 @@ Use a trigger plus content list for the common closed-select pattern.
 
 ## Sizes
 
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
 The select trigger follows the same sizing rhythm as other form controls so it can sit cleanly beside inputs, buttons, and other CP fields.
 
 <ComponentPreview src="./examples/select-sizes.preview.web.ts" />
@@ -160,7 +162,7 @@ This component registers the following elements when it loads.
 | `focusIndex` `focus-index` | <small><strong>Type</strong> <code>number</code></small><br><small><strong>Default</strong> <code>-1</code></small> |
 | `hidden` | Hides the option from the list (e.g. filtered combobox results).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `highlighted` | Keyboard / pointer highlight within the listbox.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
-| `label` | Optional short label for the closed trigger / filter identity (v1 itemToStringLabel). When set, preferred over concatenating rich default-slot text (title + subtitle).<br><small><strong>Type</strong> <code>string</code></small> |
+| `label` | Optional short label for the closed trigger / filter identity. When set, preferred over concatenating rich default-slot text (title + subtitle).<br><small><strong>Type</strong> <code>string</code></small> |
 | `matchQuery` | When set, the label renders with matching query text highlighted (combobox filter).<br><small><strong>Type</strong> <code>string</code></small> |
 | `optionId` | <small><strong>Type</strong> <code>string</code></small> |
 | `selected` | Whether this option is currently selected.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |

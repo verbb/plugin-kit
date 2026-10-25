@@ -46,7 +46,7 @@ import type { PkOption } from '../select/pk-option.js';
 import type { PkOptionGroup } from '../select/pk-option-group.js';
 import { pkComboboxStyles } from './pk-combobox.styles.js';
 
-export type PkComboboxSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkComboboxSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 /** Alias of `PkOptionFilter` — public Combobox filter API. */
 export type PkComboboxFilter = PkOptionFilter;

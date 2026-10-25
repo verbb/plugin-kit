@@ -7,10 +7,12 @@ import { Input } from '@verbb/plugin-kit-react/components';
 export function InputSizesExample() {
     return (
         <>
+            <Input size="xxs" placeholder="Extra extra small" />
             <Input size="xs" placeholder="Extra small" />
             <Input size="sm" placeholder="Small" />
             <Input placeholder="Default" />
             <Input size="lg" placeholder="Large" />
+            <Input size="xl" placeholder="Extra large" />
         </>
     );
 }

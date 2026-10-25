@@ -1,7 +1,7 @@
 import { PropertyValues } from 'lit';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
-/** Public scale is xs / sm / default / lg (`xl` aliases `lg` for compatibility). */
-export type PkColorInputSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+/** Shared single-line control size scale. */
+export type PkColorInputSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 /**
  * Color input — swatch picker + hex text field (Craft ColorInput parity).
  * Form-associated; submits `#rrggbb` or empty string.

@@ -6,9 +6,11 @@ export default defineWebPreview({
     title: 'Sizes example',
     layout: 'row',
     html: `
-<pk-button size="xs">Small</pk-button>
-<pk-button size="sm">Default</pk-button>
-<pk-button>Base</pk-button>
+<pk-button size="xxs">Extra extra small</pk-button>
+<pk-button size="xs">Extra small</pk-button>
+<pk-button size="sm">Small</pk-button>
+<pk-button>Default</pk-button>
 <pk-button size="lg">Large</pk-button>
+<pk-button size="xl">Extra large</pk-button>
 `.trim(),
 });

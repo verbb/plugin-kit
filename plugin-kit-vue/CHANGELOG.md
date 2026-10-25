@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+### Added
+- Added Vue DataTable examples for consumer-owned email preview dialogs and delivery summary popovers.
+- Added `xxs` sizing to Select, Combobox, Input, Image Browser and Color Input.
+- Added compact size examples to Vue documentation and playgrounds, including Image Browser previews.
+
+### Changed
+- Moved DataTable drag handles to the last column, after any row actions.
+- Changed DataTable overflow row actions to dropdown menus with keyboard navigation and focus restoration, and aligned row action buttons to the `sm` size.
+- Standardised Button, Select, Combobox, Input, Image Browser and Color Input heights and typography across the shared size scale.
+- Changed Select `xs` to 26px height and 12px text. Use `xxs` for the compact appearance of Select `xs` in 2.0.29. Editable Table uses `xxs` for its compact Select cells.
+- Gave Color Input `xl` its own size instead of sharing the `lg` size.
+
+### Fixed
+- Aligned DataTable selection with Craft’s checkbox mode: plain clicks toggle records, Cmd/Ctrl-click selects exclusively, Shift-click replaces a range, and keyboard navigation and Escape preserve selection.
+- Fixed Select option resizing causing ResizeObserver errors in WebKit.
+- Fixed option decorations appearing twice in selected labels before rendering or after search highlighting.
+- Fixed Select menus jumping when hovering partially visible options, and fitted their height to complete option rows within the available space.
+- Fixed wrapped Select option icons sitting above centre in the trigger and menu.
+- Aligned Image Browser trigger spacing, corner radii and icons with its size, including chevron alignment with Select and popup Combobox.
+- Fixed monospace Input typography changing the control height.
+- Fixed popovers losing keyboard focus when closing a panel from within its content, including DataTable View controls.
+- Fixed tooltip text being cut off when inheriting no-wrap styles from tables or other containers.
+
 ## 2.0.29 - 2026-10-24
 
 ### Added

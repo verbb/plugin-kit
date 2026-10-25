@@ -10,6 +10,8 @@ Use a placeholder for empty guidance and `value` when the control should open wi
 
 ## Sizes
 
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
 The input size scale matches adjacent buttons, selects, and other field controls so dense CP layouts still line up cleanly.
 
 <ComponentPreview src="./examples/input-sizes.preview.web.ts" />

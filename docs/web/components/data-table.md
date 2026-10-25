@@ -211,7 +211,21 @@ Use the `filters` slot with `showFilters` for consumer-owned criteria such as a 
 
 ## Selection and Actions
 
-Enable `selectable` for row selection and checkboxes. Click a row’s non-interactive content to select just that record; Cmd-click (macOS) or Ctrl-click toggles an individual record. Shift-click selects an inclusive range from the last anchor on the current page, skipping ineligible records; Cmd/Ctrl+Shift adds a range. A range replaces this page’s selection while retaining explicit IDs on other pages. Checkboxes toggle records independently and also support Shift-click; keyboard Space toggles a focused checkbox. From a row checkbox, Up/Down moves between eligible records, Home/End moves to the first/last eligible record, and Shift extends a selection range. Cmd/Ctrl+A selects the eligible records on the current page, and Escape clears selection. Set `rowLabel` to a property name or formatter to give selection checkboxes readable names instead of record IDs. Links, buttons, inputs and other interactive cell content keep their own behavior. Add `data-table-interactive` to a custom interactive cell wrapper if it has no native control semantics. These gestures do nothing when `selectable` is false.
+Enable `selectable` for row selection and checkboxes. Row and checkbox clicks follow Craft’s element index checkbox mode. The command modifier is **Cmd on macOS** and **Ctrl on Windows/Linux**.
+
+| Gesture | Selection behaviour |
+| --- | --- |
+| Click a row’s non-interactive content or its checkbox | Toggle that record, preserving other selected records. Clicking a selected record deselects it. |
+| Cmd/Ctrl-click a row or its checkbox | Select only that record, clearing every other selected ID. Clicking it again keeps it selected. |
+| Shift-click, including Cmd/Ctrl+Shift-click | Select the inclusive range from the anchor to the clicked record, skipping ineligible records. Replace the current page’s selection; retain selected IDs on other pages. |
+| Space or Enter on a row checkbox | Toggle that record. Adding Shift or the command modifier does not change selection. |
+| Up/Down on a row checkbox | Move focus between eligible records without changing selection, including with Shift held. Cmd/Ctrl+Up/Down moves to the first/last eligible record. Home/End also moves to the first/last eligible record. |
+| Cmd/Ctrl+A on a row checkbox | Select all eligible records on the current page, preserving selected IDs on other pages. |
+| Header checkbox | Select or deselect all eligible records on the current page, preserving selected IDs on other pages. |
+
+Selecting an individual record establishes the range anchor. Deselecting the anchor clears it; deselecting another record leaves it in place. Range selection keeps the same anchor, while selecting the whole page anchors at the first eligible record. Deselecting through the header checkbox keeps the anchor. Paging resets the anchor. Without an anchor on the current page, Shift-click follows the normal click behaviour (or selects exclusively when Cmd/Ctrl is also held). Escape does not clear selection.
+
+Set `rowLabel` to a property name or formatter to give selection checkboxes readable names instead of record IDs. Links, buttons, inputs and other interactive cell content keep their own behaviour. Add `data-table-interactive` to a custom interactive cell wrapper if it has no native control semantics. These gestures do nothing when `selectable` is false.
 
 Selected rows use a dark slate background with white text. The selection count and `selection-actions` slot sit in a reserved footer region, so selecting records never inserts content above the table or shifts its rows. Keep the footer enabled when providing selection actions. `--pk-data-table-selected-background` and `--pk-data-table-selected-color` customize the selected colors; custom cells can use `--pk-data-table-cell-color` and `--pk-data-table-cell-muted-color` to follow the row’s state.
 
@@ -237,9 +251,19 @@ Only provide a move action when your application implements it. The sortable exa
 
 Put bulk controls in `selection-actions`, and consume `pk-selection-change.detail.selectedKeys`. There is no implicit “all matching records” selection. Exports and bulk operations belong to the consuming plugin, which knows their scope and backend guarantees.
 
+## Dialogs and Popovers from Cells
+
+An email plugin can let editors preview a message without leaving the list, or inspect delivery counts beside a row. **Preview email** opens a [Dialog](./dialog.md) with that record's sample message; **Delivery summary** opens a [Popover](./popover.md) anchored to its button. Try different rows to see the content change, and use **Done**, Escape or the popover's outside-dismiss behaviour to return to the table.
+
+<ComponentPreview src="./examples/data-table-overlays.preview.web.ts" />
+
+The `renderCell` functions return ordinary buttons and a Popover. The preview button fills one shared Dialog outside the table and opens it; the example remembers the clicked control and restores focus after the dialog closes.
+
+These are composition examples implemented by the consuming plugin. DataTable supplies the custom-cell extension point; your application owns overlay content, open state, data loading and any save actions. The demo uses local sample data and sends no email. The same pattern works for inspecting a job payload in a dialog or showing a short activity summary in a popover.
+
 ## Manual Row Ordering
 
-Enable `manualOrder` (`manual-order` in HTML) when the supplied row sequence is the record order. The table adds a leading drag handle and removes column-sorting controls from the headers and View menu. Existing `query.sort` is cleared; `defaultSort`, saved sort preferences and calls to `setQuery({ sort: … })` cannot override manual order. Column visibility and column reordering remain available. Turning manual order off resumes the usual default sorting.
+Enable `manualOrder` (`manual-order` in HTML) when the supplied row sequence is the record order. The table adds a drag-handle column at the end, after any row actions, and removes column-sorting controls from the headers and View menu. Existing `query.sort` is cleared; `defaultSort`, saved sort preferences and calls to `setQuery({ sort: … })` cannot override manual order. Column visibility and column reordering remain available. Turning manual order off resumes the usual default sorting.
 
 Drag a handle to move a row within the current page. Focus a handle and press **Up** or **Down** to move one position, or **Home**/**End** to move to the beginning/end of that page. The moved handle keeps focus and its new position is announced. **Escape**, cancelled pointer capture, or a data/view change cancels a drag without emitting a move. Dragging near a scroll-container edge scrolls it automatically.
 

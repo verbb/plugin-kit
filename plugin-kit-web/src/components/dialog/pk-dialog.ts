@@ -49,7 +49,7 @@ export class PkDialog extends PkElement {
     @property()
     label = '';
 
-    /** Optional subtitle under the title in the built-in header (v1 DialogDescription). */
+    /** Optional subtitle under the title in the built-in header. */
     @property()
     description = '';
 

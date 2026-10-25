@@ -23,7 +23,7 @@ export declare class PkDialog extends PkElement {
     static styles: import('lit').CSSResult;
     open: boolean;
     label: string;
-    /** Optional subtitle under the title in the built-in header (v1 DialogDescription). */
+    /** Optional subtitle under the title in the built-in header. */
     description: string;
     /** Maps to  `light-dismiss` (inverted). */
     disablePointerDismissal: boolean;

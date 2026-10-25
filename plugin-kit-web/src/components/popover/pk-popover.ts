@@ -5,6 +5,7 @@ import type { PropertyValues } from 'lit';
 
 import { isTopDismissible, registerDismissible, unregisterDismissible } from '../../a11y/dismissible-stack.js';
 import { uniqueId } from '../../a11y/focus.js';
+import { activeElements } from '../../a11y/active-elements.js';
 import { PkElement } from '../../base/pk-element.js';
 import { resolveElementById } from '../../internal/resolve-element-by-id.js';
 import {
@@ -297,6 +298,13 @@ export class PkPopover extends PkElement {
                 await this.waitForExitAnimation();
             }
 
+            // Restore only focus that this panel is about to hide. A light-dismiss or
+            // focus moved elsewhere during the exit animation belongs to that target.
+            const returnFocus = !immediate && source !== 'light-dismiss' && this.isConnected
+                && ([...activeElements()].some(element => this.contains(element) || this.panelElement?.contains(element))
+                    // Safari does not focus buttons on pointer activation.
+                    || ((source === 'close-button' || source === 'escape') && document.activeElement === document.body));
+
             this.closing = false;
             this.panelAnimated = false;
 
@@ -306,6 +314,7 @@ export class PkPopover extends PkElement {
             }
 
             this.syncExpanded();
+            if (returnFocus) this.getAnchorElement()?.focus({ preventScroll: true });
 
             this.dispatchEvent(new PkAfterHideEvent());
             this.dispatchEvent(new CustomEvent('pk-open-change', {

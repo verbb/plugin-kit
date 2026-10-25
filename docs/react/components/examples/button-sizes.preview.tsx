@@ -7,10 +7,12 @@ import { Button } from '@verbb/plugin-kit-react/components';
 export function ButtonSizesExample() {
     return (
         <>
-            <Button size="xs">Small</Button>
-            <Button size="sm">Default</Button>
-            <Button>Base</Button>
+            <Button size="xxs">Extra extra small</Button>
+            <Button size="xs">Extra small</Button>
+            <Button size="sm">Small</Button>
+            <Button>Default</Button>
             <Button size="lg">Large</Button>
+            <Button size="xl">Extra large</Button>
         </>
     );
 }

@@ -4145,7 +4145,7 @@
               "type": {
                 "text": "PkSpinnerSize | undefined"
               },
-              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
+              "description": "Override loading spinner size. Defaults to `xxs` for xxs/xs buttons,\n`sm` for lg/xl buttons, and `xs` for other sizes.",
               "attribute": "spinner-size",
               "reflects": true
             },
@@ -4516,7 +4516,7 @@
               "type": {
                 "text": "PkSpinnerSize | undefined"
               },
-              "description": "Override loading spinner size. When unset, derived from `size` via\n`getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).\nFormie New Form passes `xs` on `size=\"lg\"` so the ring stays size-4 (1rem), not sm (1.5rem).",
+              "description": "Override loading spinner size. Defaults to `xxs` for xxs/xs buttons,\n`sm` for lg/xl buttons, and `xs` for other sizes.",
               "fieldName": "spinnerSize"
             },
             {
@@ -14112,6 +14112,60 @@
             },
             {
               "kind": "method",
+              "name": "isSelectionCommand",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "gesture",
+                  "type": {
+                    "text": "{\n        metaKey?: boolean;\n        ctrlKey?: boolean;\n    }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "isSelectionClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "selectPage",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "checked",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "selectRow",
               "privacy": "private",
               "return": {
@@ -14131,10 +14185,6 @@
                   "type": {
                     "text": "{ shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean }"
                   }
-                },
-                {
-                  "name": "toggle",
-                  "default": "false"
                 }
               ]
             },
@@ -14643,12 +14693,6 @@
                 }
               },
               "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                },
                 {
                   "name": "action",
                   "type": {
@@ -16935,7 +16979,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Optional subtitle under the title in the built-in header (v1 DialogDescription).",
+              "description": "Optional subtitle under the title in the built-in header.",
               "attribute": "description"
             },
             {
@@ -17383,7 +17427,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Optional subtitle under the title in the built-in header (v1 DialogDescription).",
+              "description": "Optional subtitle under the title in the built-in header.",
               "fieldName": "description"
             },
             {
@@ -17493,7 +17537,7 @@
               "name": "start"
             },
             {
-              "description": "Alias for `start` (legacy)",
+              "description": "Alias for `start`",
               "name": "prefix"
             },
             {
@@ -30502,7 +30546,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Optional short label for the closed trigger / filter identity (v1 itemToStringLabel).\nWhen set, preferred over concatenating rich default-slot text (title + subtitle).",
+              "description": "Optional short label for the closed trigger / filter identity.\nWhen set, preferred over concatenating rich default-slot text (title + subtitle).",
               "attribute": "label"
             },
             {
@@ -30611,6 +30655,16 @@
                 }
               },
               "description": "Full default-slot text for typeahead matching (includes subtitle lines)."
+            },
+            {
+              "kind": "method",
+              "name": "getDefaultSlotText",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
             },
             {
               "kind": "method",
@@ -30778,7 +30832,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Optional short label for the closed trigger / filter identity (v1 itemToStringLabel).\nWhen set, preferred over concatenating rich default-slot text (title + subtitle).",
+              "description": "Optional short label for the closed trigger / filter identity.\nWhen set, preferred over concatenating rich default-slot text (title + subtitle).",
               "fieldName": "label"
             },
             {
@@ -31245,6 +31299,22 @@
             },
             {
               "kind": "field",
+              "name": "optionResizeObserver",
+              "type": {
+                "text": "ResizeObserver | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "optionResizeFrame",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
               "name": "closing",
               "type": {
                 "text": "boolean"
@@ -31521,13 +31591,51 @@
             },
             {
               "kind": "method",
-              "name": "syncHighlight",
+              "name": "observeOptionSizes",
               "privacy": "private",
               "return": {
                 "type": {
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "field",
+              "name": "handlePopupReposition",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "fitPanelToOptions",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "revealSelection",
+                  "default": "false"
+                }
+              ],
+              "description": "Fit measured rows inside both the authored height cap and the popup boundary."
+            },
+            {
+              "kind": "method",
+              "name": "syncHighlight",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "reveal",
+                  "default": "true"
+                }
+              ]
             },
             {
               "kind": "method",
@@ -37124,6 +37232,30 @@
             },
             {
               "kind": "field",
+              "name": "optionResizeObserver",
+              "type": {
+                "text": "ResizeObserver | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkSelect",
+                "module": "src/components/select/pk-select.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "optionResizeFrame",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkSelect",
+                "module": "src/components/select/pk-select.ts"
+              }
+            },
+            {
+              "kind": "field",
               "name": "closing",
               "type": {
                 "text": "boolean"
@@ -37476,6 +37608,50 @@
             },
             {
               "kind": "method",
+              "name": "observeOptionSizes",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PkSelect",
+                "module": "src/components/select/pk-select.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handlePopupReposition",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PkSelect",
+                "module": "src/components/select/pk-select.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "fitPanelToOptions",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "revealSelection",
+                  "default": "false"
+                }
+              ],
+              "description": "Fit measured rows inside both the authored height cap and the popup boundary.",
+              "inheritedFrom": {
+                "name": "PkSelect",
+                "module": "src/components/select/pk-select.ts"
+              }
+            },
+            {
+              "kind": "method",
               "name": "syncHighlight",
               "privacy": "private",
               "return": {
@@ -37483,6 +37659,12 @@
                   "text": "void"
                 }
               },
+              "parameters": [
+                {
+                  "name": "reveal",
+                  "default": "true"
+                }
+              ],
               "inheritedFrom": {
                 "name": "PkSelect",
                 "module": "src/components/select/pk-select.ts"
@@ -39270,7 +39452,7 @@
                 "text": "string | string[]"
               },
               "default": "'bold,italic'",
-              "description": "Flat toolbar button list. HTML uses a comma-separated attribute; React may\npass a `string[]`. Named `buttons` (not `buttonsAttr`) so React can set the\nproperty — a getter-only `buttons` previously threw on assign.",
+              "description": "Flat toolbar button list. HTML uses a comma-separated attribute;\nthe property also accepts a `string[]`.",
               "attribute": "buttons"
             },
             {
@@ -39512,7 +39694,7 @@
               "type": {
                 "text": "string"
               },
-              "description": "Document JSON string. Also accepts a TipTap node array (common from React)\nand serializes it — arrays previously bypassed JSON.parse and mounted empty."
+              "description": "Document JSON string. Also accepts a TipTap node array and serialises it."
             },
             {
               "kind": "field",
@@ -40792,7 +40974,7 @@
                 "text": "string | string[]"
               },
               "default": "'bold,italic'",
-              "description": "Flat toolbar button list. HTML uses a comma-separated attribute; React may\npass a `string[]`. Named `buttons` (not `buttonsAttr`) so React can set the\nproperty — a getter-only `buttons` previously threw on assign.",
+              "description": "Flat toolbar button list. HTML uses a comma-separated attribute;\nthe property also accepts a `string[]`.",
               "fieldName": "buttons"
             },
             {

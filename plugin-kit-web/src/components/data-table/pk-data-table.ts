@@ -1,4 +1,5 @@
 import { html, nothing, type PropertyValues } from 'lit';
+import { live } from 'lit/directives/live.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import {
     slidersOutline,
@@ -544,10 +545,39 @@ export class PkDataTable extends PkElement {
         return false;
     }
 
+    private isSelectionCommand(gesture: {
+        metaKey?: boolean;
+        ctrlKey?: boolean;
+    }): boolean {
+        return Boolean(
+            /Mac/.test(navigator.platform) ? gesture.metaKey : gesture.ctrlKey,
+        );
+    }
+
+    private isSelectionClick(event: MouseEvent): boolean {
+        return (
+            event.button === 0 &&
+            (!(event.metaKey || event.ctrlKey) || this.isSelectionCommand(event))
+        );
+    }
+
+    private selectPage(checked: boolean): void {
+        const keys = this.result.rows
+            .filter((row) => this.canSelectRow(row))
+            .map((row) => this.key(row));
+        const anchor = checked ? keys[0] : this.selectionAnchor;
+        this.setSelection(
+            checked
+                ? [...new Set([...this.selectedKeys, ...keys])]
+                : this.selectedKeys.filter((key) => !keys.includes(key)),
+        );
+        // Craft keeps the range anchor when the header checkbox clears the selection.
+        this.selectionAnchor = anchor;
+    }
+
     private selectRow(
         row: DataTableRow,
         gesture: { shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean },
-        toggle = false,
     ): void {
         if (!this.canSelectRow(row)) return;
         const key = this.key(row);
@@ -563,28 +593,28 @@ export class PkDataTable extends PkElement {
                 .filter((item) => this.canSelectRow(item))
                 .map((item) => this.key(item));
             // A range replaces this page's selection; explicit IDs on other pages stay selected.
-            const retained =
-                gesture.metaKey || gesture.ctrlKey
-                    ? this.selectedKeys
-                    : this.selectedKeys.filter((id) => !pageKeys.includes(id));
+            const retained = this.selectedKeys.filter(
+                (id) => !pageKeys.includes(id),
+            );
             this.setSelection([...new Set([...retained, ...range])]);
             return;
         }
-        this.selectionAnchor = key;
-        if (toggle || gesture.metaKey || gesture.ctrlKey) {
-            this.setSelection(
-                this.selectedKeys.includes(key)
-                    ? this.selectedKeys.filter((id) => id !== key)
-                    : [...this.selectedKeys, key],
-            );
-        } else {
+        // Craft's checkbox mode inverts the usual modifier gesture: command-click is exclusive.
+        if (this.isSelectionCommand(gesture)) {
+            this.selectionAnchor = key;
             this.setSelection([key]);
+        } else if (this.selectedKeys.includes(key)) {
+            if (this.selectionAnchor === key) this.selectionAnchor = undefined;
+            this.setSelection(this.selectedKeys.filter((id) => id !== key));
+        } else {
+            this.selectionAnchor = key;
+            this.setSelection([...this.selectedKeys, key]);
         }
     }
 
     private clickRow(event: MouseEvent, row: DataTableRow): void {
         if (
-            event.button !== 0 ||
+            !this.isSelectionClick(event) ||
             !this.canSelectRow(row) ||
             this.isRowControl(event)
         )
@@ -596,15 +626,21 @@ export class PkDataTable extends PkElement {
     }
 
     private clickRowCheckbox(event: MouseEvent, row: DataTableRow): void {
-        // Browsers differ on forwarding Shift-click from a label to its input.
+        if (!this.isSelectionClick(event)) {
+            event.preventDefault();
+            this.checkboxGesture = undefined;
+            return;
+        }
+        // Browsers differ on forwarding modified clicks from a label to its input.
         // Handle that label gesture directly; native input/keyboard changes keep their normal path.
         if (
-            event.shiftKey &&
+            (event.shiftKey || this.isSelectionCommand(event)) &&
             !(event.composedPath()[0] instanceof HTMLInputElement)
         ) {
             event.preventDefault();
             this.checkboxGesture = undefined;
-            this.selectRow(row, event, true);
+            this.selectRow(row, event);
+            (event.currentTarget as HTMLElement).focus({ preventScroll: true });
             return;
         }
         this.checkboxGesture = {
@@ -621,7 +657,7 @@ export class PkDataTable extends PkElement {
                 ? this.checkboxGesture
                 : {};
         this.checkboxGesture = undefined;
-        this.selectRow(row, gesture, true);
+        this.selectRow(row, gesture);
     }
 
     private keyRow(event: KeyboardEvent, row: DataTableRow): void {
@@ -634,26 +670,17 @@ export class PkDataTable extends PkElement {
             event.target !== tr
         )
             return;
-        const command = event.metaKey || event.ctrlKey;
+        const command = this.isSelectionCommand(event);
         const rows = this.result.rows.filter((item) => this.canSelectRow(item));
         if (command && event.key.toLowerCase() === 'a') {
             event.preventDefault();
-            this.setSelection([
-                ...new Set([
-                    ...this.selectedKeys,
-                    ...rows.map((item) => this.key(item)),
-                ]),
-            ]);
+            this.selectPage(true);
             return;
         }
-        if (event.key === 'Escape') {
+        if (event.key === 'Enter' || event.key === ' ') {
+            // Native checkbox activation must not turn modified Space into a selection gesture.
             event.preventDefault();
-            this.setSelection([]);
-            return;
-        }
-        if (event.key === 'Enter' || (event.key === ' ' && event.shiftKey)) {
-            event.preventDefault();
-            this.selectRow(row, event, true);
+            if (!command && !event.shiftKey) this.selectRow(row, {});
             return;
         }
         if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key))
@@ -679,10 +706,6 @@ export class PkDataTable extends PkElement {
                 );
         const target = rows[index];
         if (!target) return;
-        if (event.shiftKey) {
-            this.selectionAnchor ??= this.key(row);
-            this.selectRow(target, event);
-        }
         const pageIndex = this.result.rows.findIndex(
             (item) => this.key(item) === this.key(target),
         );
@@ -1193,7 +1216,7 @@ export class PkDataTable extends PkElement {
                     }}
                     >${this.text('defaults')}</pk-button
                 ><pk-button
-                    @click=${(event: Event) => (event.currentTarget as HTMLElement).closest('pk-popover')?.closePopover()}
+                    @click=${(event: Event) => (event.currentTarget as HTMLElement).closest('pk-popover')?.closePopover('close-button')}
                     >${this.text('close')}</pk-button
                 >
             </div>
@@ -1356,9 +1379,8 @@ export class PkDataTable extends PkElement {
         return action.label ?? (action.preset ? this.text(`${action.preset}Action`) : action.id);
     }
 
-    private activateAction(event: Event, action: DataTableAction, row: DataTableRow): void {
+    private activateAction(action: DataTableAction, row: DataTableRow): void {
         if (action.disabled || this.loading || this.error) return;
-        (event.currentTarget as HTMLElement).closest('pk-popover')?.removeAttribute('open');
         this.emit('pk-row-action', { action: action.id, row, rowKey: this.key(row) });
     }
 
@@ -1375,26 +1397,30 @@ export class PkDataTable extends PkElement {
                 return html`<pk-button
                     class="row-action"
                     data-preset=${action.preset ?? nothing}
-                    size=${action.preset ? 'xs' : 'sm'}
+                    size="sm"
                     variant="none"
                     aria-label=${label}
                     .disabled=${Boolean(action.disabled)}
-                    @click=${(event: Event) => this.activateAction(event, action, row)}
+                    @click=${() => this.activateAction(action, row)}
                     >${action.preset
                         ? this.icon({ edit: pen, move: gripMove, delete: xmark }[action.preset], 'start')
                         : this.actionLabel(action)}</pk-button>`;
             })}
-            ${menu.length ? html`<pk-popover placement="bottom-end">
-                <pk-button slot="trigger" size="xs" variant="none"
+            ${menu.length ? html`<pk-dropdown-menu placement="bottom-end"
+                @pk-select=${(event: CustomEvent<{ value: string }>) => {
+                    // Expose row actions through the table event; the menu owns dismissal and focus.
+                    event.stopPropagation();
+                    const action = menu.find((item) => item.id === event.detail.value);
+                    if (action) this.activateAction(action, row);
+                }}>
+                <pk-button slot="trigger" size="sm" variant="none"
                     aria-label=${this.text('actions', { id: this.accessibleRowLabel(row) })}
                     >${this.icon(ellipsis, 'start')}</pk-button>
-                <div class="panel">
-                    ${menu.map((action) => html`<pk-button
-                        .disabled=${Boolean(action.disabled)}
-                        @click=${(event: Event) => this.activateAction(event, action, row)}
-                        >${this.actionLabel(action)}</pk-button>`)}
-                </div>
-            </pk-popover>` : nothing}
+                ${menu.map((action) => html`<pk-dropdown-item
+                    value=${action.id}
+                    .disabled=${Boolean(action.disabled)}
+                    >${this.actionLabel(action)}</pk-dropdown-item>`)}
+            </pk-dropdown-menu>` : nothing}
         </div>`;
     }
 
@@ -1485,8 +1511,7 @@ export class PkDataTable extends PkElement {
                         </caption>
                         <thead>
                             <tr>
-                                ${this.manualOrder ? html`<th class="small" scope="col"><span class="sr-only">${this.text('rowOrder')}</span></th>` : nothing}
-                                ${this.selectable ? html`<th class="small"><pk-checkbox aria-label=${this.text('selectPage')} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.setSelection(checked ? this.selectedKeys.filter((key) => !eligible.includes(key)) : [...new Set([...this.selectedKeys, ...eligible])])}></pk-checkbox></th>` : nothing}
+                                ${this.selectable ? html`<th class="small"><pk-checkbox aria-label=${this.text('selectPage')} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.selectPage(!checked)}></pk-checkbox></th>` : nothing}
                                 ${columns.map((column) => {
                                     const sort = !this.manualOrder && this.query.sort.find(
                                         (item) => item.id === column.id,
@@ -1503,6 +1528,7 @@ export class PkDataTable extends PkElement {
                                     </th>`;
                                 })}
                                 ${this.rowActions ? html`<th class="small"><span class="sr-only">${this.text('actions', { id: '' })}</span></th>` : nothing}
+                                ${this.manualOrder ? html`<th class="small" scope="col"><span class="sr-only">${this.text('rowOrder')}</span></th>` : nothing}
                             </tr>
                         </thead>
                         <tbody class=${busy && !sorting ? 'busy' : ''} ?inert=${busy} ?data-loading=${bodyLoading}>
@@ -1528,21 +1554,12 @@ export class PkDataTable extends PkElement {
                                                 event.preventDefault();
                                         }}
                                     >
-                                        ${this.manualOrder ? html`<td class="small">
-                                            <button class="row-handle" part="row-handle" type="button"
-                                                aria-label=${this.text('reorderRow', { label: this.accessibleRowLabel(row) })}
-                                                aria-describedby="row-order-help"
-                                                aria-disabled=${this.canReorderRows ? 'false' : 'true'}
-                                                @pointerdown=${(event: PointerEvent) => this.rowOrder.start(event)}
-                                                @keydown=${(event: KeyboardEvent) => this.keyRowOrder(event, row)}
-                                                >${this.icon(gripMove)}</button>
-                                        </td>` : nothing}
                                         ${
                                             this.selectable
                                                 ? html`<td class="small">
                                                       <pk-checkbox
                                                           aria-label=${this.text('selectRow', { id: this.accessibleRowLabel(row) })}
-                                                          .checked=${selected.has(this.key(row))}
+                                                          .checked=${live(selected.has(this.key(row)))}
                                                           .disabled=${busy || this.isRowSelectable?.(row) === false}
                                                           @mousedown=${(
                                                               event: MouseEvent,
@@ -1572,6 +1589,15 @@ export class PkDataTable extends PkElement {
                                                   </td>`
                                                 : nothing
                                         }
+                                        ${this.manualOrder ? html`<td class="small">
+                                            <button class="row-handle" part="row-handle" type="button"
+                                                aria-label=${this.text('reorderRow', { label: this.accessibleRowLabel(row) })}
+                                                aria-describedby="row-order-help"
+                                                aria-disabled=${this.canReorderRows ? 'false' : 'true'}
+                                                @pointerdown=${(event: PointerEvent) => this.rowOrder.start(event)}
+                                                @keydown=${(event: KeyboardEvent) => this.keyRowOrder(event, row)}
+                                                >${this.icon(gripMove)}</button>
+                                        </td>` : nothing}
                                     </tr>`;
                                 },
                             )}

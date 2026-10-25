@@ -60,6 +60,12 @@ Host-driven catalog warm. Set `loading` until `items` / `groups` arrive — the 
 
 <ComponentPreview src="./examples/image-browser-loading.preview.web.ts" />
 
+## Sizes
+
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
+<ComponentPreview src="./examples/image-browser-sizes.preview.web.ts" />
+
 <!-- pk-api:begin -->
 
 ## API

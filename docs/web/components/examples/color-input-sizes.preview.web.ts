@@ -1,7 +1,7 @@
 import '@verbb/plugin-kit-web/components/color-input/pk-color-input.js';
 import { defineWebPreview } from '../../../.vitepress/theme/components/defineWebPreview';
 
-const sizes = ['xs', 'sm', 'default', 'lg', 'xl'] as const;
+const sizes = ['xxs', 'sm', 'default', 'lg', 'xl'] as const;
 
 const sizeRow = (size: (typeof sizes)[number]) => {
     const sizeAttr = size === 'default' ? '' : ` size="${size}"`;
@@ -17,6 +17,7 @@ const sizeRow = (size: (typeof sizes)[number]) => {
 };
 
 const source = `
+<pk-color-input size="xxs" value="#35e533"></pk-color-input>
 <pk-color-input size="xs" value="#35e533"></pk-color-input>
 <pk-color-input size="sm" value="#35e533"></pk-color-input>
 <pk-color-input value="#35e533"></pk-color-input>

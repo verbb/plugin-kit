@@ -44,7 +44,7 @@ Put `autofocus` on the control that should receive focus when the dialog opens (
 
 | Name | Description |
 | --- | --- |
-| `description` | Optional subtitle under the title in the built-in header (v1 DialogDescription).<br><small><strong>Type</strong> <code>string</code></small> |
+| `description` | Optional subtitle under the title in the built-in header.<br><small><strong>Type</strong> <code>string</code></small> |
 | `disablePointerDismissal` | Maps to  `light-dismiss` (inverted).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `disableScrollLock` | Skip document scroll lock while open. Useful for labs / rare cases where the page should keep scrolling under the modal (native dialog still traps focus).<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `label` | <small><strong>Type</strong> <code>string</code></small> |

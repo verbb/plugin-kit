@@ -23,7 +23,7 @@ export const comboboxPlaygroundSections = {
     },
     sizes: {
         title: 'Sizes',
-        description: 'xs, sm, default, lg, xl.',
+        description: 'xxs, xs, sm, default, lg, xl.',
     },
     allowCreate: {
         title: 'Allow create',
@@ -78,10 +78,12 @@ export const comboboxPlaygroundProduceGroups = [
 ] as const;
 
 export const comboboxPlaygroundSizes = [
+    { label: 'Extra extra small', size: 'xxs' },
     { label: 'Extra small', size: 'xs' },
     { label: 'Small', size: 'sm' },
     { label: 'Default', size: 'default' },
     { label: 'Large', size: 'lg' },
+    { label: 'Extra large', size: 'xl' },
 ] as const;
 
 export const comboboxPlaygroundColorOptions = [

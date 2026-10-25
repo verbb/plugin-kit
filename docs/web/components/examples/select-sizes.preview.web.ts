@@ -10,6 +10,11 @@ export default defineWebPreview({
     title: 'Sizes example',
     layout: 'stack',
     html: `
+<pk-select size="xxs" placeholder="Select a fruit" value="apple"><pk-option value="apple">Apple</pk-option>
+<pk-option value="banana">Banana</pk-option>
+<pk-option value="blueberry">Blueberry</pk-option>
+<pk-option value="grapes">Grapes</pk-option>
+<pk-option value="pineapple">Pineapple</pk-option></pk-select>
 <pk-select size="xs" placeholder="Select a fruit" value="apple"><pk-option value="apple">Apple</pk-option>
 <pk-option value="banana">Banana</pk-option>
 <pk-option value="blueberry">Blueberry</pk-option>
@@ -26,6 +31,11 @@ export default defineWebPreview({
 <pk-option value="grapes">Grapes</pk-option>
 <pk-option value="pineapple">Pineapple</pk-option></pk-select>
 <pk-select size="lg" placeholder="Select a fruit" value="apple"><pk-option value="apple">Apple</pk-option>
+<pk-option value="banana">Banana</pk-option>
+<pk-option value="blueberry">Blueberry</pk-option>
+<pk-option value="grapes">Grapes</pk-option>
+<pk-option value="pineapple">Pineapple</pk-option></pk-select>
+<pk-select size="xl" placeholder="Select a fruit" value="apple"><pk-option value="apple">Apple</pk-option>
 <pk-option value="banana">Banana</pk-option>
 <pk-option value="blueberry">Blueberry</pk-option>
 <pk-option value="grapes">Grapes</pk-option>

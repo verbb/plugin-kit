@@ -12,7 +12,7 @@ export const inputPlaygroundSections = {
     },
     sizes: {
         title: 'Sizes',
-        description: 'xs through lg.',
+        description: 'xxs through xl.',
     },
     widths: {
         title: 'Widths',

@@ -960,12 +960,11 @@ export class PkEditableTable extends PkFormAssociatedElement {
             </pk-combobox>`;
         }
 
-        // size=xs matches v1 EditableTable SelectInput — sm (~34px) fills the row and
-        // looks flush against the gridlines. Adjacent toolbar selects outside the table
-        // (conditions Show/All, Field picker) stay size=sm on their own.
+        // xxs preserves the compact Select treatment used before the shared size scale.
+        // Toolbar selects keep their own size independently of the table cell.
         return html`<pk-select
             class="cell-pk-control"
-            size="xs"
+            size="xxs"
             width="full"
             .value=${current}
             placeholder=${column.placeholder ?? ''}

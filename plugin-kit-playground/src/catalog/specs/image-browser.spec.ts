@@ -7,6 +7,7 @@ export type ImageBrowserSectionId = keyof typeof imageBrowserPlaygroundSections;
 export const imageBrowserPlaygroundSpec: PlaygroundSpec = {
     meta: imageBrowserPlaygroundMeta,
     sections: [
+        { id: 'sizes', ...imageBrowserPlaygroundSections.sizes },
         { id: 'icons', ...imageBrowserPlaygroundSections.icons },
         { id: 'images', ...imageBrowserPlaygroundSections.images },
         { id: 'groups', ...imageBrowserPlaygroundSections.groups },

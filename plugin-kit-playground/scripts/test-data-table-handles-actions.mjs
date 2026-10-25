@@ -46,12 +46,36 @@ export async function testDataTableHandlesActions(page) {
     await first.getByRole('button', { name: 'Archive: Image Resizer Testing', exact: true }).click();
     const menu = first.getByRole('button', { name: 'Actions for Image Resizer Testing', exact: true });
     await menu.click();
-    await first.getByRole('button', { name: 'Duplicate', exact: true }).click();
-    await first.locator('pk-popover').evaluate((el) => el.updateComplete);
-    assert.equal(await first.locator('pk-popover').evaluate((el) => el.open), false);
-    await first.getByRole('button', { name: 'Duplicate', exact: true }).waitFor({ state: 'hidden' });
-    await menu.click();
-    await first.getByRole('button', { name: 'Rename', exact: true }).click();
+    await first.getByRole('menuitem', { name: 'Duplicate', exact: true }).click();
+    await first.locator('pk-dropdown-menu').evaluate((el) => el.updateComplete);
+    assert.equal(await first.locator('pk-dropdown-menu').evaluate((el) => el.open), false);
+    await first.getByRole('menuitem', { name: 'Duplicate', exact: true }).waitFor({ state: 'hidden' });
+    assert.equal(await menu.evaluate((el) => el === el.getRootNode().activeElement), true);
+
+    await menu.press('ArrowDown');
+    await page.waitForFunction((el) => el.active,
+        await first.getByRole('menuitem', { name: 'Duplicate', exact: true }).elementHandle());
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await first.locator('pk-dropdown-menu').evaluate((el) => el.updateComplete);
+    assert.equal(await first.locator('pk-dropdown-menu').evaluate((el) => el.open), false);
+    assert.equal(await menu.evaluate((el) => el === el.getRootNode().activeElement), true);
+
+    // Disabled menu actions cannot activate and are skipped by keyboard navigation.
+    const secondMenu = second.getByRole('button', { name: 'Actions for General', exact: true });
+    await secondMenu.click();
+    await page.waitForFunction((el) => el === el.getRootNode().activeElement,
+        await second.getByRole('menu').elementHandle());
+    const disabled = second.getByRole('menuitem', { name: 'Duplicate', exact: true });
+    assert.equal(await disabled.getByRole('button').isDisabled(), true);
+    await disabled.dispatchEvent('click');
+    assert.equal(await second.locator('pk-dropdown-menu').evaluate((el) => el.open), true);
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await second.getByRole('menuitem', { name: 'Rename', exact: true }).evaluate((el) => el.active), true);
+    await page.keyboard.press('Escape');
+    await second.locator('pk-dropdown-menu').evaluate((el) => el.updateComplete);
+    assert.equal(await second.locator('pk-dropdown-menu').evaluate((el) => el.open), false);
+    assert.equal(await secondMenu.evaluate((el) => el === el.getRootNode().activeElement), true);
     assert.deepEqual(await page.evaluate(() => window.rowActions.map(({ action, rowKey, row }) => [action, rowKey, row.handle])), [
         ['edit', 1, 'imageResizerTesting'],
         ['move-group', 1, 'imageResizerTesting'],
@@ -75,6 +99,6 @@ export async function testDataTableHandlesActions(page) {
         el.rowActions = () => [{ id: 'edit', preset: 'edit' }];
     });
     await first.getByRole('button', { name: 'Modifier / Image Resizer Testing', exact: true }).waitFor();
-    assert.equal(await table.locator('tbody pk-popover').count(), 0);
+    assert.equal(await table.locator('tbody pk-dropdown-menu').count(), 0);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true);
 }

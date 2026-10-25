@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Select sizing regression</title></head>
+<body style="margin: 40px">
+    <div id="fixture"></div>
+    <script type="module">
+        import '../../plugin-kit-web/src/tokens/tokens.css';
+        import '@verbb/plugin-kit-web/components/select/pk-select.js';
+        import '@verbb/plugin-kit-web/components/select/pk-option.js';
+        import '@verbb/plugin-kit-web/components/select/pk-option-group.js';
+
+        window.mountSelect = async (size = 'xs', grouped = false) => {
+            document.querySelector('#fixture').innerHTML = `<pk-select size="${size}" value="9" aria-label="Test choice">
+                ${Array.from({ length: 16 }, (_, index) => `<pk-option value="${index}">Option ${index}</pk-option>`).join('')}
+            </pk-select>`;
+            const select = document.querySelector('pk-select');
+            if (grouped) {
+                const group = document.createElement('pk-option-group');
+                group.label = 'Group heading';
+                group.append(...[...select.children].slice(4, 10));
+                select.insertBefore(group, select.children[4]);
+                select.querySelector('[value="7"]').innerHTML = '<div style="height: 48px">Option 7<br>Additional detail</div>';
+            }
+            await select.updateComplete;
+            return select;
+        };
+        await window.mountSelect();
+        document.body.dataset.ready = 'true';
+    </script>
+</body>
+</html>

@@ -2,7 +2,7 @@ import { PropertyValues } from 'lit';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
 import { PkOverlaySource } from '../../events/overlay-lifecycle.js';
 import { PkPopupPlacement } from '../popup/pk-popup.js';
-export type PkImageBrowserSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkImageBrowserSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 /** Grid preview kind — compact glyphs vs larger photo tiles. */
 export type PkImageBrowserMode = 'icon' | 'image';
 /**

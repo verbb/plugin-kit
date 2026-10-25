@@ -1,6 +1,6 @@
 import { PropertyValues } from 'lit';
 import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.js';
-export type PkInputSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkInputSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 /**
  * Text input —  API, Plugin Kit field visuals.
  *

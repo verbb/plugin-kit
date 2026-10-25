@@ -7,7 +7,7 @@ import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
 import "../../chunks/pk-button-DQXfpLFZ.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
 import "../../chunks/pk-checkbox-DOtHW2Vb.js";
-import "../../chunks/pk-input-DGvN5YDz.js";
+import "../../chunks/pk-input-BzmYGD42.js";
 import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
 import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-DZ6kNZnU.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
@@ -16,7 +16,7 @@ import "../../chunks/pk-dropdown-item-BCFdB7JM.js";
 import "../../chunks/pk-dropdown-label-BTqKZJCH.js";
 import "../../chunks/pk-dropdown-menu-Csa4ci93.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-EFwun-O2.js";
+import "../../chunks/pk-tooltip-B6Begcgh.js";
 //#region ../plugin-kit-tiptap-core/dist/links/craft-element.js
 function isLinkOptionsArray(value) {
 	return Array.isArray(value) && value.length > 0;
@@ -1246,8 +1246,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		return this._value ?? this.defaultValue ?? "[]";
 	}
 	/**
-	* Document JSON string. Also accepts a TipTap node array (common from React)
-	* and serializes it — arrays previously bypassed JSON.parse and mounted empty.
+	* Document JSON string. Also accepts a TipTap node array and serialises it.
 	*/
 	set value(val) {
 		const next = serializeTiptapDocumentValue(val);

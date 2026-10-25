@@ -5,7 +5,7 @@ import { PkValidator } from '../../validators/types.js';
 import { PkPopupPlacement } from '../popup/pk-popup.js';
 import { PkAsyncOptionFetchHandler, PkAsyncOptionItem } from '../../utils/async-option-fetch.js';
 import { PkOptionFilter } from '../../utils/option-filter.js';
-export type PkComboboxSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkComboboxSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 /** Alias of `PkOptionFilter` — public Combobox filter API. */
 export type PkComboboxFilter = PkOptionFilter;
 export type PkComboboxAsyncOption = PkAsyncOptionItem;

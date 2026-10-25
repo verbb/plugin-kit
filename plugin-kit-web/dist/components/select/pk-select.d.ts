@@ -3,7 +3,7 @@ import { PkFormAssociatedElement } from '../../base/pk-form-associated-element.j
 import { PkOverlaySource } from '../../events/overlay-lifecycle.js';
 import { PkValidator } from '../../validators/types.js';
 import { PkPopupPlacement } from '../popup/pk-popup.js';
-export type PkSelectSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkSelectSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 /**
  * Select — slotted `pk-option` children, form-associated, clearable, multiselect tags.
  *
@@ -97,6 +97,8 @@ export declare class PkSelect extends PkFormAssociatedElement {
     private panelEventTarget;
     private typeToSelect;
     private optionsObserver?;
+    private optionResizeObserver?;
+    private optionResizeFrame?;
     /** True while the shared popup-content exit animation is running. */
     private closing;
     /** Gates `data-open` so enter motion starts after Floating UI places the panel. */
@@ -131,6 +133,10 @@ export declare class PkSelect extends PkFormAssociatedElement {
     private syncTriggerDecorations;
     private hasSelection;
     private syncHighlightedIndexToSelection;
+    private observeOptionSizes;
+    private handlePopupReposition;
+    /** Fit measured rows inside both the authored height cap and the popup boundary. */
+    private fitPanelToOptions;
     private syncHighlight;
     private updateTypeToSelect;
     private togglePanel;

@@ -16,7 +16,7 @@ import { MirrorValidator, RequiredValidator } from '../../validators/index.js';
 import { requestAssociatedFormSubmitOnEnter } from '../../internal/implicit-form-submit.js';
 import { pkInputStyles } from './pk-input.styles.js';
 
-export type PkInputSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkInputSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 /**
  * Text input —  API, Plugin Kit field visuals.

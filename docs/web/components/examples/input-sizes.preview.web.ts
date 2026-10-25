@@ -11,9 +11,11 @@ export default defineWebPreview({
     title: 'Sizes example',
     layout: 'stack',
     html: `
+<pk-input size="xxs" placeholder="Extra extra small"></pk-input>
 <pk-input size="xs" placeholder="Extra small"></pk-input>
 <pk-input size="sm" placeholder="Small"></pk-input>
 <pk-input placeholder="Default"></pk-input>
 <pk-input size="lg" placeholder="Large"></pk-input>
+<pk-input size="xl" placeholder="Extra large"></pk-input>
 `.trim(),
 });

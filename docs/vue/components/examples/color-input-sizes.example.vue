@@ -2,7 +2,7 @@
 import { reactive } from 'vue';
 import { ColorInput } from '@verbb/plugin-kit-vue/components';
 
-const sizes = ['xs', 'sm', 'default', 'lg', 'xl'] as const;
+const sizes = ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const;
 type ColorSize = (typeof sizes)[number];
 
 const values = reactive(

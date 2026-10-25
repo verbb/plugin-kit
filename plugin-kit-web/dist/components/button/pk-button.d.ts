@@ -39,9 +39,8 @@ export declare class PkButton extends PkElement {
     /** Shows an inline spinner and prevents activation while busy. */
     loading: boolean;
     /**
-     * Override loading spinner size. When unset, derived from `size` via
-     * `getButtonSpinnerSize` — same defaults as v1 Button (xxs/xs → xxs, lg/xl → sm, else xs).
-     * Formie New Form passes `xs` on `size="lg"` so the ring stays size-4 (1rem), not sm (1.5rem).
+     * Override loading spinner size. Defaults to `xxs` for xxs/xs buttons,
+     * `sm` for lg/xl buttons, and `xs` for other sizes.
      */
     spinnerSize?: PkSpinnerSize;
     /** Loading spinner visual style. Defaults from the button variant when unset. */

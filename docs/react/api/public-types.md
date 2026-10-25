@@ -30,7 +30,7 @@ Node/index shapes (**`SchemaNode`**, **`SchemaRenderable`**, **`FieldEntry`**, *
 - **`PluginKitReactConfig`**, **`PluginKitProviderProps`**, **`TranslateFunction`** — app configuration.
 - **`MountShadowAppOptions`**, **`ShadowAppMount`** — `mountShadowApp`.
 - **`PluginKitHostBridge`**, **`HostRequestMethod`**, **`HostRequestConfig`**, **`HostElementSelectorOptions`**, **`HostSelectedElement`** — host bridge.
-- **`PortalContainer`** — legacy portal container type (see [Public Utilities](./public-utilities.md#portals-legacy-compatibility)).
+- **`PortalContainer`** — container type for portal and overlay scroll-lock configuration (see [Public Utilities](./public-utilities.md#portals-legacy-compatibility)).
 - **`TranslateParams`** — translation params map.
 
 ## App error UI (`@verbb/plugin-kit-react/utils`)

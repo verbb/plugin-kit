@@ -28,6 +28,8 @@ Split-button patterns keep the primary action obvious while still exposing close
 
 ## Sizes
 
+Set each button’s `size` to `xxs`, `xs`, `sm`, `default`, `lg` or `xl`. Use the same size for every button in a group. Use `xxs` for the most compact groups.
+
 Button groups should scale cleanly with the shared button size system so they can fit toolbars and denser control areas.
 
 <ComponentPreview src="./examples/button-group-sizes.preview.vue.ts" />

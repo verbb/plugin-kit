@@ -11,12 +11,14 @@ export const selectPlaygroundSections = {
     },
     sizes: {
         title: 'Sizes',
-        description: 'xs through lg.',
+        description: 'xxs through xl.',
         items: [
+            { label: 'Extra extra small', size: 'xxs' },
             { label: 'Extra small', size: 'xs' },
             { label: 'Small', size: 'sm' },
             { label: 'Default', size: 'default' },
             { label: 'Large', size: 'lg' },
+            { label: 'Extra large', size: 'xl' },
         ] as const,
     },
     widths: {
@@ -35,6 +37,7 @@ export const selectPlaygroundSections = {
         title: 'Start & end decorations',
         description: '`start` and `end` slots on the trigger.',
         items: [
+            { label: 'Extra extra small', size: 'xxs' },
             { label: 'Extra small', size: 'xs' },
             { label: 'Small', size: 'sm' },
             { label: 'Medium', size: 'default' },

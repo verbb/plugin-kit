@@ -40,7 +40,7 @@ import type { PkOption } from './pk-option.js';
 import type { PkOptionGroup } from './pk-option-group.js';
 import { pkSelectStyles } from './pk-select.styles.js';
 
-export type PkSelectSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkSelectSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 const CHEVRON_ICON = renderIconHtml(chevronDown);
 
@@ -221,6 +221,8 @@ export class PkSelect extends PkFormAssociatedElement {
     private panelEventTarget: HTMLElement | null = null;
     private typeToSelect = createTypeToSelectHandler([], () => {});
     private optionsObserver?: MutationObserver;
+    private optionResizeObserver?: ResizeObserver;
+    private optionResizeFrame?: number;
 
     /** True while the shared popup-content exit animation is running. */
     @state()
@@ -246,6 +248,9 @@ export class PkSelect extends PkFormAssociatedElement {
         this.removeEventListener('pk-listbox-keydown', this.handleListboxKeyDownEvent as EventListener);
         this.removeEventListener('keydown', this.onKeyDown);
         this.optionsObserver?.disconnect();
+        this.optionResizeObserver?.disconnect();
+        cancelAnimationFrame(this.optionResizeFrame ?? 0);
+        this.optionResizeFrame = undefined;
         void this.closePanel('api');
         super.disconnectedCallback();
     }
@@ -278,6 +283,11 @@ export class PkSelect extends PkFormAssociatedElement {
             || next.some((option, index) => option !== this.options[index]);
 
         this.options = next;
+
+        if (changed && this.open) {
+            this.observeOptionSizes();
+        }
+
         this.applySelection();
         this.updateTypeToSelect();
 
@@ -501,7 +511,108 @@ export class PkSelect extends PkFormAssociatedElement {
         }
     }
 
-    private syncHighlight(): void {
+    private observeOptionSizes(): void {
+        this.optionResizeObserver?.disconnect();
+        cancelAnimationFrame(this.optionResizeFrame ?? 0);
+        this.optionResizeFrame = undefined;
+        this.optionResizeObserver ??= new ResizeObserver(() => {
+            // Fitting changes the observed options' layout. Defer writes until the
+            // next frame to avoid feeding back into ResizeObserver delivery.
+            cancelAnimationFrame(this.optionResizeFrame ?? 0);
+            this.optionResizeFrame = requestAnimationFrame(() => {
+                this.optionResizeFrame = undefined;
+                this.fitPanelToOptions();
+            });
+        });
+
+        for (const option of this.options) {
+            this.optionResizeObserver.observe(option);
+        }
+    }
+
+    private handlePopupReposition = (): void => {
+        this.fitPanelToOptions(!this.panelAnimated);
+    };
+
+    /** Fit measured rows inside both the authored height cap and the popup boundary. */
+    private fitPanelToOptions(revealSelection = false): void {
+        const panel = this.panelElement;
+
+        if (!this.open || this.closing || !panel || !panel.offsetHeight) {
+            return;
+        }
+
+        const styles = getComputedStyle(panel);
+        const maxHeight = Number.parseFloat(styles.maxHeight);
+        const availableHeight = Number.parseFloat(styles.getPropertyValue('--pk-popup-available-height'));
+        const limit = Math.min(
+            Number.isFinite(maxHeight) ? maxHeight : Infinity,
+            Number.isFinite(availableHeight) ? availableHeight : Infinity,
+        );
+        const borderTop = Number.parseFloat(styles.borderTopWidth) || 0;
+        const borderBottom = Number.parseFloat(styles.borderBottomWidth) || 0;
+        const paddingTop = Number.parseFloat(styles.paddingTop) || 0;
+        const paddingBottom = Number.parseFloat(styles.paddingBottom) || 0;
+        const panelRect = panel.getBoundingClientRect();
+        // Enter animations scale the panel; measure in its untransformed scroll coordinates.
+        const scale = panelRect.height / panel.offsetHeight;
+        const rows = this.options.filter((option) => option.getClientRects().length > 0).map((option) => {
+            const rect = option.getBoundingClientRect();
+            return {
+                option,
+                top: (rect.top - panelRect.top) / scale + panel.scrollTop - borderTop,
+                bottom: (rect.bottom - panelRect.top) / scale + panel.scrollTop - borderTop,
+            };
+        });
+
+        if (!rows.length) {
+            panel.style.removeProperty('height');
+            return;
+        }
+
+        const innerLimit = Math.max(0, limit - borderTop - borderBottom);
+        let start = 0;
+
+        if (revealSelection) {
+            const highlighted = this.getEnabledVisibleOptions()[this.highlightedIndex];
+            const selected = rows.findIndex((row) => row.option === highlighted);
+
+            while (start < selected && rows[selected].bottom - (start ? rows[start].top - paddingTop : 0) + paddingBottom > innerLimit) {
+                start++;
+            }
+        } else {
+            // Keep wheel/touch scrolling free; only opening aligns the scroll position to a row.
+            const firstVisible = rows.findIndex((row) => row.bottom > panel.scrollTop + paddingTop + 0.5);
+            start = Math.max(0, firstVisible);
+        }
+
+        const top = start ? rows[start].top - paddingTop : 0;
+        let height = 0;
+
+        for (let index = start; index < rows.length; index++) {
+            const candidate = rows[index].bottom - top + paddingBottom;
+
+            if (candidate > innerLimit + 0.5) {
+                break;
+            }
+
+            height = candidate;
+        }
+
+        // An oversized custom option must remain scrollable even when no complete row fits.
+        height = Math.min(limit, (height || innerLimit) + borderTop + borderBottom);
+        const cssHeight = `${Math.max(0, Math.round(height * 100) / 100)}px`;
+
+        if (panel.style.height !== cssHeight) {
+            panel.style.height = cssHeight;
+        }
+
+        if (revealSelection) {
+            panel.scrollTop = top;
+        }
+    }
+
+    private syncHighlight(reveal = true): void {
         const enabled = this.getEnabledVisibleOptions();
 
         for (const option of this.options) {
@@ -523,7 +634,9 @@ export class PkSelect extends PkFormAssociatedElement {
         if (highlighted && this.panelElement) {
             highlighted.highlighted = true;
             highlighted.focusIndex = 0;
-            scrollIntoView(highlighted, this.panelElement, 'vertical', 'auto');
+            if (reveal) {
+                scrollIntoView(highlighted, this.panelElement, 'vertical', 'auto');
+            }
         }
     }
 
@@ -597,6 +710,7 @@ export class PkSelect extends PkFormAssociatedElement {
         this.syncHighlightedIndexToSelection();
 
         if (this.panelElement) {
+            this.panelElement.style.removeProperty('height');
             this.panelElement.hidden = false;
             // Seed side before first paint so enter keyframes pick a direction.
             syncPopupPlacementAnimation(this.panelElement, this.placement);
@@ -616,6 +730,9 @@ export class PkSelect extends PkFormAssociatedElement {
             if (this.panelElement) {
                 syncPopupPlacementAnimation(this.panelElement, placement);
             }
+
+            this.fitPanelToOptions(true);
+            this.observeOptionSizes();
 
             // Flip data-open after placement so the shared enter animation can run.
             this.panelAnimated = true;
@@ -644,6 +761,9 @@ export class PkSelect extends PkFormAssociatedElement {
         }
 
         this.typeToSelect.reset();
+        this.optionResizeObserver?.disconnect();
+        cancelAnimationFrame(this.optionResizeFrame ?? 0);
+        this.optionResizeFrame = undefined;
         this.unbindPanelEvents();
         this.unregisterDismissHandlers();
 
@@ -810,7 +930,8 @@ export class PkSelect extends PkFormAssociatedElement {
         }
 
         this.highlightedIndex = index;
-        this.syncHighlight();
+        // Hover must not move a partially visible target underneath the pointer.
+        this.syncHighlight(false);
     };
 
     private removeTag(value: string, event: Event): void {
@@ -1049,6 +1170,8 @@ export class PkSelect extends PkFormAssociatedElement {
                 .placement=${this.placement}
                 .distance=${this.sideOffset}
                 .sync=${'width'}
+                auto-size="vertical"
+                @pk-reposition=${this.handlePopupReposition}
                 flip
                 shift
             >

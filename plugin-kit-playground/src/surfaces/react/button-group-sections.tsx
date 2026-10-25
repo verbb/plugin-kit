@@ -16,7 +16,7 @@ import {
     InputGroupText,
 } from '@verbb/plugin-kit-react/components';
 import { Popover } from '@verbb/plugin-kit-react/components';
-import type { PlaygroundSectionReactRendererMap } from '../../shared/PlaygroundFromSpec.js';
+import type { PlaygroundSectionReactRendererMap } from './shared/PlaygroundFromSpec.js';
 
 const buttonGroupVariantCoverage = ['primary', 'secondary', 'default', 'outline', 'dashed'] as const;
 
@@ -228,7 +228,7 @@ export const buttonGroupReactSectionRenderers: PlaygroundSectionReactRendererMap
 
     sizes: () => (
         <div className="pg-card__inner--row">
-            {(['xs', 'sm', 'default', 'lg'] as const).map((size) => (
+            {(['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const).map((size) => (
                 <ButtonGroup key={size}>
                     <GroupButton label="Edit" variant="outline" size={size} />
                     <GroupButton label="Preview" variant="outline" size={size} />

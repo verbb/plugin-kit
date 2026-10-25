@@ -32,7 +32,7 @@ createRoot(el).render(
 | `portalContainer` | — | ShadowRoot from `mountShadowApp`; enables document scroll-gutter stability for overlay scroll lock in embedded hosts |
 | `shadowRootSelectors` | `['[data-plugin-kit-shadow-root]']` | Selectors used for overlay scroll-lock scoping inside shadow roots |
 
-Overlays (dialogs, popovers, selects) render through the native **Popover API top layer** — no DOM reparenting, so no portal target is needed for positioning. `portalClassName` from v1 is deprecated and ignored.
+Overlays (dialogs, popovers, selects) render through the native **Popover API top layer** — no DOM reparenting, so no portal target is needed for positioning. `portalClassName` is deprecated and ignored.
 
 Importing components registers their custom elements — no registration prop.
 

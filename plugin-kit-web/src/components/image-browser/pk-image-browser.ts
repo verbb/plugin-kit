@@ -31,7 +31,7 @@ import '../tooltip/pk-tooltip.js';
 import type { PkTooltip } from '../tooltip/pk-tooltip.js';
 import { pkImageBrowserStyles } from './pk-image-browser.styles.js';
 
-export type PkImageBrowserSize = 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+export type PkImageBrowserSize = 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
 
 /** Grid preview kind — compact glyphs vs larger photo tiles. */
 export type PkImageBrowserMode = 'icon' | 'image';

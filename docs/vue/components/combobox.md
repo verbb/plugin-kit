@@ -10,6 +10,8 @@ Input mode works well when the control should feel like a searchable text field 
 
 ## Sizes
 
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
 The combobox input and option list follow the same sizing rhythm as select so searchable controls can align with adjacent fields.
 
 <ComponentPreview src="./examples/combobox-sizes.preview.vue.ts" />

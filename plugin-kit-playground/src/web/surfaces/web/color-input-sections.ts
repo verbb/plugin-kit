@@ -4,7 +4,7 @@ type ColorInputElement = HTMLElement & { value: string };
 
 function createPkColorInput(options: {
     value?: string;
-    size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+    size?: 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
     invalid?: boolean;
     readonly?: boolean;
     disabled?: boolean;
@@ -99,7 +99,7 @@ export const colorInputWebSectionRenderers: PlaygroundSectionRendererMap = {
         preview.classList.add('pg-demo-narrow');
         preview.style.gap = '0.75rem';
 
-        for (const size of ['xs', 'sm', 'default', 'lg'] as const) {
+        for (const size of ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const) {
             const row = document.createElement('div');
             row.style.display = 'flex';
             row.style.alignItems = 'center';

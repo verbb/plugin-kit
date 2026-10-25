@@ -5,6 +5,10 @@ export const imageBrowserPlaygroundMeta = {
 } as const;
 
 export const imageBrowserPlaygroundSections = {
+    sizes: {
+        title: 'Sizes',
+        description: 'xxs through xl, with proportional trigger icons and controls.',
+    },
     icons: {
         title: 'Icon mode',
         description: 'Defaults, then each label-mode.',

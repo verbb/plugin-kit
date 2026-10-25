@@ -16,6 +16,8 @@ Different input shapes are useful to show because users will often paste shortha
 
 ## Sizes
 
+Choose from `xxs`, `xs`, `sm`, `default`, `lg` and `xl`. Use smaller sizes for compact layouts and larger sizes where controls need more space. Use the same size for adjacent controls to keep them visually aligned.
+
 The color input should scale cleanly across the shared size system.
 
 <ComponentPreview src="./examples/color-input-sizes.preview.vue.ts" />

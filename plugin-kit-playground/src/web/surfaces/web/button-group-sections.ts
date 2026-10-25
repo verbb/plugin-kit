@@ -1,4 +1,4 @@
-import type { PkDropdownMenu } from '../../../../plugin-kit-web/src/components/dropdown-menu/pk-dropdown-menu.js';
+import type { PkDropdownMenu } from '@verbb/plugin-kit-web/components/dropdown-menu/pk-dropdown-menu.js';
 import {
     playgroundIconAdd,
     playgroundIconChevronDown,
@@ -425,7 +425,7 @@ export const buttonGroupWebSectionRenderers: PlaygroundSectionRendererMap = {
 
     sizes(preview) {
         const row = createRowStack();
-        for (const size of ['xs', 'sm', 'default', 'lg'] as const) {
+        for (const size of ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const) {
             const group = createButtonGroup();
             group.append(
                 createGroupButton({ label: 'Edit', variant: 'outline', size }),

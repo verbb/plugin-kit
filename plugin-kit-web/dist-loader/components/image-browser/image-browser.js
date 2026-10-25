@@ -11,7 +11,7 @@ import { t as PkClearEvent } from "../../chunks/pk-clear-DHxP_2cm.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C582MGBJ.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-ClUYI79z.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-C33dPyE-.js";
-import "../../chunks/pk-tooltip-EFwun-O2.js";
+import "../../chunks/pk-tooltip-B6Begcgh.js";
 import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Bh_d205v.js";
 //#region src/components/image-browser/pk-image-browser.styles.ts
 /**
@@ -31,12 +31,18 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             font-family: var(--pk-font-family);
             font-size: var(--pk-font-size-base);
             line-height: var(--pk-line-height);
-            --pk-image-browser-trigger-min-height: var(--pk-btn-height-default);
-            --pk-image-browser-padding-block: 6px;
+            /* The trigger shares the same line box and height scale as Select. */
+            --pk-image-browser-trigger-min-height: calc(var(--pk-image-browser-line-height) + var(--pk-image-browser-padding-block) * 2 + 2px);
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-default) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-image-browser-padding-inline: 10px;
-            --pk-image-browser-font-size: var(--pk-font-size-base);
+            --pk-image-browser-padding-inline-end: var(--pk-image-browser-padding-inline);
+            --pk-image-browser-font-size: var(--pk-control-font-default);
             --pk-image-browser-line-height: var(--pk-input-control-line-height, 1.25rem);
-            --pk-image-browser-glyph-size: 1rem;
+            --pk-image-browser-glyph-size: 0.875rem;
+            --pk-image-browser-caret-size: 0.75rem;
+            --pk-image-browser-control-gap: 6px;
+            --pk-image-browser-action-padding: 4px;
+            --pk-image-browser-radius: var(--pk-radius-lg);
             --pk-image-browser-panel-width: 26.25rem;
             /* Hit target larger than the glyph so the select ring has breathing room. */
             --pk-image-browser-cell-min: 2.25rem;
@@ -50,29 +56,60 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             --pk-image-browser-cell-min: 3.75rem;
         }
 
-        :host([size='xs']) {
-            --pk-image-browser-trigger-min-height: var(--pk-btn-height-xs);
-            --pk-image-browser-padding-block: 2px;
+        :host([size='xxs']) {
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-xxs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-image-browser-padding-inline: 6px;
-            --pk-image-browser-font-size: var(--pk-font-size-xs, 0.75rem);
-            --pk-image-browser-glyph-size: 0.875rem;
+            --pk-image-browser-padding-inline-end: 8px;
+            --pk-image-browser-font-size: var(--pk-control-font-xxs);
+            --pk-image-browser-line-height: var(--pk-input-control-line-height, 1.25rem);
+            --pk-image-browser-glyph-size: 10px;
+            --pk-image-browser-caret-size: 9px;
+            --pk-image-browser-radius: var(--pk-radius-sm);
+            --pk-image-browser-control-gap: 3px;
+            --pk-image-browser-action-padding: 3px;
+        }
+
+        :host([size='xs']) {
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-xs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-image-browser-padding-inline: 8px;
+            --pk-image-browser-font-size: var(--pk-control-font-xs);
+            --pk-image-browser-line-height: var(--pk-input-control-line-height, 1.25rem);
+            --pk-image-browser-glyph-size: 11px;
+            --pk-image-browser-caret-size: 10px;
+            --pk-image-browser-radius: var(--pk-radius-sm);
+            --pk-image-browser-control-gap: 4px;
+            --pk-image-browser-action-padding: 4px;
         }
 
         :host([size='sm']) {
-            --pk-image-browser-trigger-min-height: var(--pk-btn-height-sm);
-            --pk-image-browser-padding-block: 4px;
-            --pk-image-browser-padding-inline: 8px;
-            --pk-image-browser-font-size: var(--pk-font-size-sm, 0.8125rem);
-            --pk-image-browser-glyph-size: 0.875rem;
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-sm) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-image-browser-padding-inline: 10px;
+            --pk-image-browser-font-size: var(--pk-control-font-sm);
+            --pk-image-browser-glyph-size: 13px;
+            --pk-image-browser-caret-size: 11px;
+            --pk-image-browser-radius: var(--pk-radius-md);
+            --pk-image-browser-control-gap: 5px;
+            --pk-image-browser-action-padding: 4px;
         }
 
-        :host([size='lg']),
-        :host([size='xl']) {
-            --pk-image-browser-trigger-min-height: var(--pk-btn-height-lg);
-            --pk-image-browser-padding-block: 8px;
+        :host([size='lg']) {
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-lg) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-image-browser-padding-inline: 12px;
-            --pk-image-browser-font-size: var(--pk-font-size-lg, 1rem);
-            --pk-image-browser-glyph-size: 1.125rem;
+            --pk-image-browser-font-size: var(--pk-control-font-lg);
+            --pk-image-browser-glyph-size: 16px;
+            --pk-image-browser-caret-size: 13px;
+            --pk-image-browser-control-gap: 7px;
+            --pk-image-browser-action-padding: 5px;
+        }
+
+        :host([size='xl']) {
+            --pk-image-browser-padding-block: calc((var(--pk-control-height-xl) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-image-browser-padding-inline: 14px;
+            --pk-image-browser-font-size: var(--pk-control-font-xl);
+            --pk-image-browser-glyph-size: 18px;
+            --pk-image-browser-caret-size: 14px;
+            --pk-image-browser-control-gap: 8px;
+            --pk-image-browser-action-padding: 6px;
         }
 
         /* Image mode — roomier photo tiles; captions still opt-in via label-mode="inline". */
@@ -109,12 +146,12 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             pointer-events: none;
         }
 
-        /* Combobox-style chrome: label + clear + chevron share one filled control.
-         * 0.5rem gap keeps ellipsized filenames from kissing the clear glyph. */
+        /* Label, clear and expand spacing follows the trigger size without changing
+         * the gallery's separate tile and search controls. */
         .control {
             display: inline-flex;
             align-items: stretch;
-            gap: 0.5rem;
+            gap: var(--pk-image-browser-control-gap);
             min-width: 12.5rem;
             max-width: 100%;
             height: var(--pk-image-browser-trigger-min-height);
@@ -122,7 +159,7 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             margin: 0;
             padding: 0 0 0 var(--pk-image-browser-padding-inline);
             border: 1px solid transparent;
-            border-radius: var(--pk-input-border-radius, var(--pk-radius-lg));
+            border-radius: var(--pk-image-browser-radius);
             background: var(--pk-image-browser-fill);
             color: inherit;
             box-sizing: border-box;
@@ -183,7 +220,7 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
         .trigger-main {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--pk-image-browser-control-gap);
             flex: 1 1 auto;
             min-width: 0;
             overflow: hidden;
@@ -230,7 +267,7 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
             justify-content: center;
             align-self: stretch;
             box-sizing: border-box;
-            width: calc(0.75rem + 0.5rem);
+            width: calc(var(--pk-image-browser-caret-size) + var(--pk-image-browser-action-padding) * 2);
             margin: 0;
             padding: 0;
             border: 0;
@@ -242,8 +279,9 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
         }
 
         .expand-button {
-            width: calc(0.75rem + 0.5rem + var(--pk-image-browser-padding-inline));
-            padding-inline-end: var(--pk-image-browser-padding-inline);
+            /* Match Select's trailing glyph inset; reserve action padding only before it. */
+            width: calc(var(--pk-image-browser-caret-size) + var(--pk-image-browser-action-padding) + var(--pk-image-browser-padding-inline-end));
+            padding-inline: var(--pk-image-browser-action-padding) var(--pk-image-browser-padding-inline-end);
         }
 
         .clear-button:hover:not(:disabled),
@@ -268,8 +306,8 @@ var pkImageBrowserStyles = [popupContentAnimationStyles, i`
         .clear-button-icon svg,
         .expand-button-icon svg {
             display: block;
-            width: 0.75rem;
-            height: 0.75rem;
+            width: var(--pk-image-browser-caret-size);
+            height: var(--pk-image-browser-caret-size);
         }
 
         .panel {

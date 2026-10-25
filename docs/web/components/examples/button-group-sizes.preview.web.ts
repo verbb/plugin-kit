@@ -19,13 +19,29 @@ export default defineWebPreview({
     title: 'Sizes example',
     layout: 'stack',
     html: `
-<pk-button-group size="sm">
-  <pk-button variant="primary">Small</pk-button>
-  <pk-button variant="primary">Group</pk-button>
+<pk-button-group>
+  <pk-button size="xxs" variant="primary">Extra extra small</pk-button>
+  <pk-button size="xxs" variant="primary">Group</pk-button>
 </pk-button-group>
 <pk-button-group>
-  <pk-button variant="primary">Default</pk-button>
-  <pk-button variant="primary">Group</pk-button>
+  <pk-button size="xs" variant="primary">Extra small</pk-button>
+  <pk-button size="xs" variant="primary">Group</pk-button>
+</pk-button-group>
+<pk-button-group>
+  <pk-button size="sm" variant="primary">Small</pk-button>
+  <pk-button size="sm" variant="primary">Group</pk-button>
+</pk-button-group>
+<pk-button-group>
+  <pk-button size="default" variant="primary">Default</pk-button>
+  <pk-button size="default" variant="primary">Group</pk-button>
+</pk-button-group>
+<pk-button-group>
+  <pk-button size="lg" variant="primary">Large</pk-button>
+  <pk-button size="lg" variant="primary">Group</pk-button>
+</pk-button-group>
+<pk-button-group>
+  <pk-button size="xl" variant="primary">Extra large</pk-button>
+  <pk-button size="xl" variant="primary">Group</pk-button>
 </pk-button-group>
 `.trim(),
 });

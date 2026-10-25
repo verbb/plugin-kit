@@ -6,17 +6,17 @@ import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
 import "../../chunks/pk-button-DQXfpLFZ.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-I58oJGZ3.js";
 import "../../chunks/pk-checkbox-DOtHW2Vb.js";
-import "../../chunks/pk-color-input-C6ECjj5Z.js";
-import "../../chunks/pk-input-DGvN5YDz.js";
+import "../../chunks/pk-color-input-CWJ8HFXK.js";
+import "../../chunks/pk-input-BzmYGD42.js";
 import "../../chunks/pk-textarea-3-ElQiKl.js";
 import "../../chunks/pk-dropdown-item-BCFdB7JM.js";
 import "../../chunks/pk-dropdown-menu-Csa4ci93.js";
 import "../../chunks/pk-lightswitch-CerJUPTo.js";
-import "../../chunks/pk-option-BSUWD0wo.js";
-import "../../chunks/pk-select-BGU0atxn.js";
+import "../../chunks/pk-option-ZRdEzOn4.js";
+import "../../chunks/pk-select-mSjedzLk.js";
 import "../../chunks/pk-date-picker-CXFNHM-w.js";
-import "../../chunks/pk-combobox-UXEJqzxX.js";
-import "../../chunks/pk-time-picker-Bo0bhk7U.js";
+import "../../chunks/pk-combobox-C2XlA8v_.js";
+import "../../chunks/pk-time-picker-9vMAuZJo.js";
 //#region src/components/editable-table/editable-table-dnd.ts
 /**
 * Table-native pointer drag for `<pk-editable-table>` rows.
@@ -1355,7 +1355,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
             </pk-combobox>`;
 		return b`<pk-select
             class="cell-pk-control"
-            size="xs"
+            size="xxs"
             width="full"
             .value=${current}
             placeholder=${column.placeholder ?? ""}

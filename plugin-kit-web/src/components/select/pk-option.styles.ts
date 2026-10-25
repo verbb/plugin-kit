@@ -45,6 +45,8 @@ export const pkOptionStyles = css`
             display: none;
             flex: 0 0 auto;
             align-items: center;
+            /* Decorations must not reserve inline text descender space. */
+            line-height: 0;
         }
 
         :host([data-has-start]) .start {

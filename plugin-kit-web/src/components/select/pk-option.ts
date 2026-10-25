@@ -32,7 +32,7 @@ export class PkOption extends PkElement {
     value = '';
 
     /**
-     * Optional short label for the closed trigger / filter identity (v1 itemToStringLabel).
+     * Optional short label for the closed trigger / filter identity.
      * When set, preferred over concatenating rich default-slot text (title + subtitle).
      */
     @property()
@@ -79,36 +79,22 @@ export class PkOption extends PkElement {
             return this.label.trim();
         }
 
-        const labelSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-
-        if (!labelSlot) {
-            return this.textContent?.trim() ?? this.value;
-        }
-
-        // Join with spaces so multi-line custom labels ("Link" + "Craft CMS") do not
-        // concatenate into "LinkCraft CMS" when no explicit `label` is set.
-        return labelSlot.assignedNodes()
-            .map((node) => (node.textContent ?? '').trim())
-            .filter(Boolean)
-            .join(' ')
-            .trim();
+        return this.getDefaultSlotText();
     }
 
     /** Full default-slot text for typeahead matching (includes subtitle lines). */
     getSearchText(): string {
-        const labelSlot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+        return this.getDefaultSlotText() || this.getLabel();
+    }
 
-        if (!labelSlot) {
-            return this.getLabel();
-        }
-
-        const fromSlot = labelSlot.assignedNodes()
+    private getDefaultSlotText(): string {
+        // Owners read labels before the first render, and highlighting removes
+        // the default slot. Read light DOM so decorations never enter the label.
+        return [...this.childNodes]
+            .filter((node) => node.nodeType === Node.TEXT_NODE || (node instanceof Element && !node.getAttribute('slot')))
             .map((node) => (node.textContent ?? '').trim())
             .filter(Boolean)
-            .join(' ')
-            .trim();
-
-        return fromSlot || this.getLabel();
+            .join(' ');
     }
 
     /** True when the default slot has element children (custom multi-line / rich layouts). */

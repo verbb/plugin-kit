@@ -21,10 +21,12 @@ const sizeRow = (label: string, sizeAttr: string) => `
 
 const markup = `
 <div style="display:flex;flex-direction:column;gap:12px">
+  ${sizeRow('Extra extra small', ' size="xxs"')}
   ${sizeRow('Extra small', ' size="xs"')}
   ${sizeRow('Small', ' size="sm"')}
   ${sizeRow('Default', '')}
   ${sizeRow('Large', ' size="lg"')}
+  ${sizeRow('Extra large', ' size="xl"')}
 </div>
 `.trim();
 
@@ -32,12 +34,14 @@ export default defineWebPreview({
     label: 'Sizes',
     title: 'Sizes example',
     layout: 'stack',
-    // Copyable snippet stays the four controls without demo row labels.
+    // Copyable snippet stays the controls without demo row labels.
     code: `
+<pk-combobox size="xxs" placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
 <pk-combobox size="xs" placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
 <pk-combobox size="sm" placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
 <pk-combobox placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
 <pk-combobox size="lg" placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
+<pk-combobox size="xl" placeholder="Select a fruit" value="apple">${fruitOptions}</pk-combobox>
 `.trim(),
     html: markup,
 });

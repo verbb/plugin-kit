@@ -18,7 +18,7 @@ export declare class PkOption extends PkElement {
     /** Option value submitted / emitted when selected. */
     value: string;
     /**
-     * Optional short label for the closed trigger / filter identity (v1 itemToStringLabel).
+     * Optional short label for the closed trigger / filter identity.
      * When set, preferred over concatenating rich default-slot text (title + subtitle).
      */
     label: string;
@@ -44,6 +44,7 @@ export declare class PkOption extends PkElement {
     getLabel(): string;
     /** Full default-slot text for typeahead matching (includes subtitle lines). */
     getSearchText(): string;
+    private getDefaultSlotText;
     /** True when the default slot has element children (custom multi-line / rich layouts). */
     private hasRichLabelContent;
     /** Light-DOM elements assigned to the start decoration slot. */

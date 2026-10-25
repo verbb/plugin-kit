@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { ImageBrowser } from '@verbb/plugin-kit-react/components';
 import type {
     PkImageBrowserMode,
+    PkImageBrowserSize,
     PkImageBrowserGroup,
     PkImageBrowserItem,
     PkImageBrowserLabelMode,
@@ -18,6 +19,7 @@ import { DemoValueReadout } from './shared/sectionHelpers.js';
 
 function ImageBrowserDemo({
     initialValue = '',
+    size,
     mode,
     items,
     groups,
@@ -32,6 +34,7 @@ function ImageBrowserDemo({
     caption,
 }: {
     initialValue?: string;
+    size?: PkImageBrowserSize;
     mode?: PkImageBrowserMode;
     items?: PkImageBrowserItem[];
     groups?: PkImageBrowserGroup[];
@@ -55,6 +58,7 @@ function ImageBrowserDemo({
                 </div>
             ) : null}
             <ImageBrowser
+                size={size}
                 value={value}
                 mode={mode}
                 items={items}
@@ -84,6 +88,13 @@ function ComparisonRow({ children }: { children: ReactNode }) {
 
 /** React previews — one function per section id from imageBrowserPlaygroundSpec. */
 export const imageBrowserReactSectionRenderers: PlaygroundSectionReactRendererMap = {
+    sizes: () => (
+        <ComparisonRow>
+            {(['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const).map((size) => (
+                <ImageBrowserDemo key={size} size={size} caption={size} initialValue="star" items={demoIconItems} />
+            ))}
+        </ComparisonRow>
+    ),
     icons: () => (
         <ComparisonRow>
             <ImageBrowserDemo

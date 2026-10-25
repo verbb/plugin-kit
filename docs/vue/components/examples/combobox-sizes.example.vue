@@ -10,10 +10,12 @@ const fruits = [
 ];
 
 const comboboxSizes = [
+    { label: 'Extra extra small', size: 'xxs' as const },
     { label: 'Extra small', size: 'xs' as const },
     { label: 'Small', size: 'sm' as const },
     { label: 'Default', size: 'default' as const },
     { label: 'Large', size: 'lg' as const },
+    { label: 'Extra large', size: 'xl' as const },
 ];
 </script>
 

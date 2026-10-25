@@ -21,9 +21,9 @@ export const pkComboboxStyles = [
             line-height: var(--pk-line-height);
             --pk-combobox-min-height: 0;
             --pk-combobox-trigger-min-height: var(--pk-btn-height-default);
-            --pk-combobox-padding-block: 6px;
+            --pk-combobox-padding-block: calc((var(--pk-control-height-default) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-combobox-padding-inline: 10px;
-            --pk-combobox-font-size: var(--pk-font-size-base);
+            --pk-combobox-font-size: var(--pk-control-font-default);
             --pk-combobox-line-height: var(--pk-input-control-line-height, 1.25rem);
             --pk-combobox-decoration-size: 0.875rem;
             --pk-select-item-min-height: 0;
@@ -552,18 +552,28 @@ export const pkComboboxStyles = [
             background: var(--pk-color-white);
         }
 
+        :host([popup-mode][size='xxs']) .popup-trigger-icon svg {
+            width: 0.625rem;
+            height: 0.625rem;
+        }
+
         :host([popup-mode][size='xs']) .popup-trigger-icon svg {
             width: 0.625rem;
             height: 0.625rem;
         }
 
+        :host([popup-mode][size='xxs']) .panel-input {
+            padding: 4px 8px;
+            font-size: var(--pk-control-font-xxs);
+        }
+
         :host([popup-mode][size='xs']) .panel-input {
             padding: 4px 8px;
-            font-size: 11px;
+            font-size: var(--pk-control-font-xs);
         }
 
         :host([popup-mode][size='sm']) .panel-input {
-            font-size: 12px;
+            font-size: var(--pk-control-font-sm);
         }
 
         :host([popup-mode][size='lg']) .panel-input {
@@ -599,7 +609,7 @@ export const pkComboboxStyles = [
             border: var(--pk-select-trigger-border-width, 1px) solid transparent;
             box-sizing: border-box;
             color: var(--pk-color-gray-500);
-            font-size: var(--pk-select-item-font-size);
+            font-size: var(--pk-control-font-lg);
             line-height: var(--pk-select-item-line-height);
         }
 
@@ -635,26 +645,54 @@ export const pkComboboxStyles = [
             box-shadow: var(--pk-input-invalid-focus-shadow);
         }
 
-        :host([size='xs']) {
+        :host([size='xxs']) {
             --pk-combobox-min-height: 0;
-            --pk-combobox-trigger-min-height: var(--pk-btn-height-xs);
-            --pk-combobox-padding-block: 4px;
+            --pk-combobox-trigger-min-height: var(--pk-control-height-xxs);
+            --pk-combobox-padding-block: calc((var(--pk-control-height-xxs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-combobox-padding-inline: 8px;
-            --pk-combobox-font-size: 11px;
+            --pk-combobox-font-size: var(--pk-control-font-xxs);
             --pk-combobox-decoration-size: 0.625rem;
             --pk-select-item-min-height: 0;
             --pk-select-item-padding-block: 4px;
             --pk-select-item-padding-inline: 8px;
             --pk-select-item-padding-inline-end: 1.75rem;
-            --pk-select-item-font-size: 11px;
+            --pk-select-item-font-size: var(--pk-control-font-xxs);
             --pk-select-item-indicator-size: 0.75rem;
             --pk-select-item-indicator-inset: 0.5rem;
             /* v1 ComboboxLabel xs: text-[11px] */
             --pk-select-group-label-font-size: 11px;
         }
 
+        :host([size='xs']) {
+            --pk-combobox-min-height: 0;
+            --pk-combobox-trigger-min-height: var(--pk-btn-height-xs);
+            --pk-combobox-padding-block: calc((var(--pk-control-height-xs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-combobox-padding-inline: 8px;
+            --pk-combobox-font-size: var(--pk-control-font-xs);
+            --pk-combobox-decoration-size: 0.625rem;
+            --pk-select-item-min-height: 0;
+            --pk-select-item-padding-block: 4px;
+            --pk-select-item-padding-inline: 8px;
+            --pk-select-item-padding-inline-end: 1.75rem;
+            --pk-select-item-font-size: var(--pk-control-font-xs);
+            --pk-select-item-indicator-size: 0.75rem;
+            --pk-select-item-indicator-inset: 0.5rem;
+            /* v1 ComboboxLabel xs: text-[11px] */
+            --pk-select-group-label-font-size: 11px;
+        }
+
+        :host([size='xxs']) .control {
+            border-radius: var(--pk-radius-sm);
+        }
+
         :host([size='xs']) .control {
             border-radius: var(--pk-radius-sm);
+        }
+
+        :host([size='xxs']) .icon svg,
+        :host([size='xxs']) .clear-button-icon svg {
+            width: 0.625rem;
+            height: 0.625rem;
         }
 
         :host([size='xs']) .icon svg,
@@ -666,15 +704,15 @@ export const pkComboboxStyles = [
         :host([size='sm']) {
             --pk-combobox-min-height: 0;
             --pk-combobox-trigger-min-height: var(--pk-btn-height-sm);
-            --pk-combobox-padding-block: 6px;
+            --pk-combobox-padding-block: calc((var(--pk-control-height-sm) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-combobox-padding-inline: 10px;
-            --pk-combobox-font-size: 12px;
+            --pk-combobox-font-size: var(--pk-control-font-sm);
             --pk-combobox-decoration-size: 0.6875rem;
             --pk-select-item-min-height: 0;
             --pk-select-item-padding-block: 6px;
             --pk-select-item-padding-inline: 10px;
             --pk-select-item-padding-inline-end: 1.75rem;
-            --pk-select-item-font-size: 12px;
+            --pk-select-item-font-size: var(--pk-control-font-sm);
             --pk-select-item-indicator-inset: 0.625rem;
             /* v1 ComboboxLabel sm: text-[12px] — empty dropzone field picker uses sm. */
             --pk-select-group-label-font-size: 12px;
@@ -696,13 +734,13 @@ export const pkComboboxStyles = [
 
         :host([size='lg']) {
             --pk-combobox-trigger-min-height: var(--pk-btn-height-lg);
-            --pk-combobox-padding-block: 8px;
+            --pk-combobox-padding-block: calc((var(--pk-control-height-lg) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-combobox-padding-inline: 12px;
-            --pk-combobox-font-size: var(--pk-font-size-base);
+            --pk-combobox-font-size: var(--pk-control-font-lg);
             --pk-combobox-decoration-size: 1rem;
             --pk-select-item-padding-block: 8px;
             --pk-select-item-padding-inline: 12px;
-            --pk-select-item-font-size: 14px;
+            --pk-select-item-font-size: var(--pk-control-font-lg);
             --pk-select-item-indicator-inset: 0.75rem;
             /* v1 ComboboxLabel lg: text-sm → 14px */
             --pk-select-group-label-font-size: 14px;
@@ -710,14 +748,14 @@ export const pkComboboxStyles = [
 
         :host([size='xl']) {
             --pk-combobox-trigger-min-height: var(--pk-btn-height-xl);
-            --pk-combobox-padding-block: 10px;
+            --pk-combobox-padding-block: calc((var(--pk-control-height-xl) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-combobox-padding-inline: 14px;
-            --pk-combobox-font-size: var(--pk-font-size-base);
+            --pk-combobox-font-size: var(--pk-control-font-xl);
             --pk-combobox-decoration-size: 1.125rem;
             --pk-select-item-padding-block: 10px;
             --pk-select-item-padding-inline: 14px;
             --pk-select-item-padding-inline-end: 2.25rem;
-            --pk-select-item-font-size: 14px;
+            --pk-select-item-font-size: var(--pk-control-font-xl);
             --pk-select-item-indicator-inset: 0.875rem;
             /* v1 ComboboxLabel xl: text-base → 16px */
             --pk-select-group-label-font-size: 16px;

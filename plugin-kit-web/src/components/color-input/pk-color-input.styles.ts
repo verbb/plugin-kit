@@ -1,13 +1,10 @@
 import { css } from 'lit';
 
-/**
- * Size scale matches pk-input (xs / sm / default / lg). Metrics are shifted so
- * former `lg` (2.125rem / ~34px) is default — aligned with base input chrome.
- * `xl` is kept as a deprecated alias of `lg`.
- */
+/** Color input uses the shared single-line control scale. */
 export const pkColorInputStyles = css`
     @layer pk-component {
         :host {
+            --pk-color-input-font-size: var(--pk-control-font-default);
             display: inline-block;
             position: relative;
             /* Former lg min-width — default now matches input default chrome. */
@@ -16,17 +13,29 @@ export const pkColorInputStyles = css`
             vertical-align: middle;
         }
 
+        :host([size='xxs']) {
+            --pk-color-input-font-size: var(--pk-control-font-xxs);
+            min-width: 5.5rem;
+        }
+
         :host([size='xs']) {
+            --pk-color-input-font-size: var(--pk-control-font-xs);
             min-width: 5.5rem;
         }
 
         :host([size='sm']) {
+            --pk-color-input-font-size: var(--pk-control-font-sm);
             min-width: 6.125rem;
         }
 
         :host([size='lg']),
         :host([size='xl']) {
+            --pk-color-input-font-size: var(--pk-control-font-xl);
             min-width: 7.375rem;
+        }
+
+        :host([size='lg']) {
+            --pk-color-input-font-size: var(--pk-control-font-lg);
         }
 
         :host([fit-cell]) {
@@ -58,6 +67,12 @@ export const pkColorInputStyles = css`
             height: 1.25rem;
             transform: translateY(-50%);
             border-radius: var(--pk-radius-sm);
+        }
+
+        :host([size='xxs']) .swatch {
+            left: 0.375rem;
+            width: 1rem;
+            height: 1rem;
         }
 
         :host([size='xs']) .swatch {
@@ -128,10 +143,14 @@ export const pkColorInputStyles = css`
             transform: translateY(-50%);
             color: var(--pk-color-gray-300);
             font-family: var(--pk-font-family-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
-            font-size: var(--pk-font-size-mono, 0.9em);
+            font-size: var(--pk-color-input-font-size);
             line-height: var(--pk-line-height-mono, 1.5);
             pointer-events: none;
             user-select: none;
+        }
+
+        :host([size='xxs']) .hash {
+            left: 1.625rem;
         }
 
         :host([size='xs']) .hash {
@@ -155,7 +174,7 @@ export const pkColorInputStyles = css`
             display: block;
             width: 100%;
             /* Former lg — matches pk-input default chrome (~34px). */
-            height: 2.125rem;
+            height: var(--pk-control-height-default);
             margin: 0;
             padding-inline: 3rem 0.75rem;
             border: var(--pk-input-border);
@@ -163,26 +182,35 @@ export const pkColorInputStyles = css`
             background: var(--pk-input-bg);
             color: var(--pk-color-gray-700);
             font-family: var(--pk-font-family-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
-            font-size: var(--pk-font-size-mono, 0.9em);
+            font-size: var(--pk-color-input-font-size);
             line-height: var(--pk-line-height-mono, 1.5);
             outline: none;
             box-sizing: border-box;
             transition: border-color 0.12s ease, box-shadow 0.12s ease;
         }
 
+        :host([size='xxs']) .hex-input {
+            height: var(--pk-control-height-xxs);
+            padding-inline: 2.25rem 0.625rem;
+        }
+
         :host([size='xs']) .hex-input {
-            height: 1.625rem;
+            height: var(--pk-control-height-xs);
             padding-inline: 2.25rem 0.625rem;
         }
 
         :host([size='sm']) .hex-input {
-            height: 1.875rem;
+            height: var(--pk-control-height-sm);
             padding-inline: 2.75rem 0.75rem;
         }
 
-        :host([size='lg']) .hex-input,
+        :host([size='lg']) .hex-input {
+            height: var(--pk-control-height-lg);
+            padding-inline: 3.25rem 0.875rem;
+        }
+
         :host([size='xl']) .hex-input {
-            height: 2.375rem;
+            height: var(--pk-control-height-xl);
             padding-inline: 3.25rem 0.875rem;
         }
 

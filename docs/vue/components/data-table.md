@@ -18,9 +18,19 @@ Listen to `@pk-row-action` for `{ action, row, rowKey }` in `event.detail`. Cons
 
 The example reports edit, delete and review requests below the table. It uses compact plain icon buttons and an SVG overflow control, with accessible names and no native title tooltips. It omits move because column sorting is enabled; use the working manual-order example below for drag and keyboard reordering.
 
+## Dialogs and Popovers from Cells
+
+An email plugin can let editors preview a message without leaving the list, or inspect delivery counts beside a row. **Preview email** opens a [Dialog](./dialog.md) with that record's sample message; **Delivery summary** opens a [Popover](./popover.md) anchored to its button. Try different rows to see the content change, and use **Done**, Escape or the popover's outside-dismiss behaviour to return to the table.
+
+<ComponentPreview src="./examples/data-table-overlays.preview.vue.ts" />
+
+The `cell-preview` and `cell-delivery` slots contain ordinary buttons and a Popover. The preview button sets consumer-owned state for one shared Dialog outside the table. `@pk-open-change` keeps that state aligned with dismissal, and `@pk-after-hide` returns focus to the clicked cell control.
+
+These are composition examples implemented by the consuming plugin. DataTable supplies the custom-cell extension point; your application owns overlay content, open state, data loading and any save actions. The demo uses local sample data and sends no email. The same pattern works for inspecting a job payload in a dialog or showing a short activity summary in a popover.
+
 ## Manual Row Ordering
 
-Enable `manual-order` to add drag handles and disable column sorting. Focus a handle and use Up/Down or Home/End to move it within the current page. The canonical component keeps selection and custom cells intact and announces the new position. Search, filters and consumer criteria disable moves until cleared.
+Enable `manual-order` to add drag handles in the last column, after any row actions, and disable column sorting. Focus a handle and use Up/Down or Home/End to move it within the current page. The canonical component keeps selection and custom cells intact and announces the new position. Search, filters and consumer criteria disable moves until cleared.
 
 <ComponentPreview src="./examples/data-table-order.preview.vue.ts" />
 
@@ -28,7 +38,7 @@ Listen to `@pk-row-reorder` and mirror `event.detail.rows` into your state. Set 
 
 ## View, Selection and Export
 
-Selection is off by default, as shown above. Enable `selectable` when rows need bulk actions. Plain row clicks select one record, Cmd/Ctrl-click toggles records, and Shift-click selects a range on the current page. Links and cell controls retain their own actions. The count and `selection-actions` slot occupy a reserved footer region, keeping the table stationary as selection changes. The shared **View** popup provides sorting, toggleable columns and pointer/keyboard reordering. `defaultView` and `defaultSort` control **Use defaults**. A sortable table starts with `query.sort`, then falls back to `defaultSort` or its first sortable column ascending. Clicking the active header toggles direction; clicking another selects that column ascending. Set `query.pageSize` for page length; the footer has compact paging controls and a result count.
+Selection is off by default, as shown above. Enable `selectable` when rows need bulk actions. Plain row or checkbox clicks toggle individual records without clearing other selections. Cmd-click on macOS or Ctrl-click on Windows/Linux selects only that record. Shift-click replaces the current page’s selection with an anchored range, even with Cmd/Ctrl held, and retains selected IDs on other pages. See the [selection gesture reference](/web/components/data-table#selection-and-actions) for the complete behaviour and range-anchor rules. Links and cell controls retain their own actions. The count and `selection-actions` slot occupy a reserved footer region, keeping the table stationary as selection changes. The shared **View** popup provides sorting, toggleable columns and pointer/keyboard reordering. `defaultView` and `defaultSort` control **Use defaults**. A sortable table starts with `query.sort`, then falls back to `defaultSort` or its first sortable column ascending. Clicking the active header toggles direction; clicking another selects that column ascending. Set `query.pageSize` for page length; the footer has compact paging controls and a result count.
 
 Supply `exportFormats` with `{ value, label, disabled? }` options to show the footer’s **Export** menu. Listen to `@pk-export` for `{ format, query, view, columnIds, selectedKeys }` in `event.detail`. The plugin handles the export; Kit supplies a detached state snapshot. Set `exporting` while the request runs. `DataTableExportDetail` and `DataTableExportFormat` are exported types.
 
@@ -40,7 +50,7 @@ Attach the helper after assigning columns, defaults and the initial query, befor
 
 ## Index Layout and Keyboard Selection
 
-Use `layout="index"` inside a scrolling container to keep the toolbar, pagination footer and horizontal scrollbar in reach. The default embedded layout stays in normal document flow. Give the scrolling container 2px of padding so the table frame’s outer border stays visible. Set `--pk-data-table-header-offset` or `--pk-data-table-footer-offset` when surrounding controls occupy the scrollport edges; `--pk-data-table-toolbar-background` sets the sticky toolbar background. Set `rowLabel` to a property name or formatter for readable selection-checkbox labels. From a row checkbox, Up/Down and Home/End move focus, Shift extends a range, Cmd/Ctrl+A selects the eligible records on the current page, and Escape clears selection. Cell links and controls retain their own keyboard behavior.
+Use `layout="index"` inside a scrolling container to keep the toolbar, pagination footer and horizontal scrollbar in reach. The default embedded layout stays in normal document flow. Give the scrolling container 2px of padding so the table frame’s outer border stays visible. Set `--pk-data-table-header-offset` or `--pk-data-table-footer-offset` when surrounding controls occupy the scrollport edges; `--pk-data-table-toolbar-background` sets the sticky toolbar background. Set `rowLabel` to a property name or formatter for readable selection-checkbox labels. From a row checkbox, Up/Down and Home/End move focus without changing selection, including with Shift held. Cmd/Ctrl+Up/Down moves to the first/last eligible record. Unmodified Space or Enter toggles a record; Cmd/Ctrl+A selects eligible records on the current page. Escape leaves selection unchanged. Cell links and controls retain their own keyboard behavior.
 
 <ComponentPreview src="./examples/data-table-index.preview.vue.ts" />
 

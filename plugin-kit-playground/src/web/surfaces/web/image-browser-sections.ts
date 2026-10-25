@@ -16,6 +16,7 @@ import type {
 import '@verbb/plugin-kit-web/components/image-browser.js';
 
 function createBrowser(options: {
+    size?: PkImageBrowser['size'];
     value?: string;
     mode?: PkImageBrowserMode;
     items?: PkImageBrowserItem[];
@@ -30,6 +31,10 @@ function createBrowser(options: {
     searchPlaceholder?: string;
 } = {}): PkImageBrowser {
     const el = document.createElement('pk-image-browser') as PkImageBrowser;
+
+    if (options.size) {
+        el.size = options.size;
+    }
 
     if (options.value) {
         el.value = options.value;
@@ -136,6 +141,12 @@ function createComparisonRow(...demos: HTMLElement[]): HTMLElement {
 
 /** Web component previews — one function per section id from imageBrowserPlaygroundSpec. */
 export const imageBrowserWebSectionRenderers: PlaygroundSectionRendererMap = {
+    sizes(preview) {
+        preview.append(createComparisonRow(
+            ...(['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const).map((size) =>
+                createStatefulDemo({ size, items: demoIconItems, value: 'star' }, { caption: size })),
+        ));
+    },
     icons(preview) {
         preview.append(createComparisonRow(
             createStatefulDemo({

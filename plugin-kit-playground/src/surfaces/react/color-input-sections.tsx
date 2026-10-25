@@ -11,7 +11,7 @@ function ColorInputDemo({
 }: {
     initialValue?: string;
     showValue?: boolean;
-    size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl';
+    size?: 'xxs' | 'xs' | 'sm' | 'default' | 'lg' | 'xl';
     invalid?: boolean;
     readOnly?: boolean;
     disabled?: boolean;
@@ -23,7 +23,7 @@ function ColorInputDemo({
             <ColorInput
                 value={value}
                 {...props}
-                onPkChange={(event) => { setValue(event.detail.value); }}
+                onChange={setValue}
             />
             {showValue ? <DemoValueReadout value={value} /> : null}
         </div>
@@ -51,7 +51,7 @@ export const colorInputReactSectionRenderers: PlaygroundSectionReactRendererMap 
 
     sizes: () => (
         <div className="pg-demo-narrow" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {(['xs', 'sm', 'default', 'lg'] as const).map((size) => (
+            {(['xxs', 'xs', 'sm', 'default', 'lg', 'xl'] as const).map((size) => (
                 <div key={size} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <span
                         style={{

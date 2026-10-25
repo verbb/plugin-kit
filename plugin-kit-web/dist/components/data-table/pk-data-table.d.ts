@@ -158,6 +158,9 @@ export declare class PkDataTable extends PkElement {
     private setSelection;
     private canSelectRow;
     private isRowControl;
+    private isSelectionCommand;
+    private isSelectionClick;
+    private selectPage;
     private selectRow;
     private clickRow;
     private clickRowCheckbox;

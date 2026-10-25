@@ -131,9 +131,8 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     private _value: string | null = null;
 
     /**
-     * Flat toolbar button list. HTML uses a comma-separated attribute; React may
-     * pass a `string[]`. Named `buttons` (not `buttonsAttr`) so React can set the
-     * property — a getter-only `buttons` previously threw on assign.
+     * Flat toolbar button list. HTML uses a comma-separated attribute;
+     * the property also accepts a `string[]`.
      */
     @property({
         attribute: 'buttons',
@@ -270,8 +269,7 @@ export class PkTiptapEditor extends PkFormAssociatedElement {
     }
 
     /**
-     * Document JSON string. Also accepts a TipTap node array (common from React)
-     * and serializes it — arrays previously bypassed JSON.parse and mounted empty.
+     * Document JSON string. Also accepts a TipTap node array and serialises it.
      */
     @state()
     set value(val: string | unknown[] | null) {

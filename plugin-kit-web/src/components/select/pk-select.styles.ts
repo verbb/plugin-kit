@@ -20,11 +20,12 @@ export const pkSelectStyles = [
             font-size: var(--pk-font-size-base);
             line-height: var(--pk-line-height);
             --pk-select-trigger-border-width: 1px;
+            --pk-select-trigger-min-height: var(--pk-control-height-default);
             --pk-select-item-min-height: var(--pk-input-height);
-            --pk-select-item-padding-block: 6px;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-default) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 10px;
             --pk-select-item-padding-inline-end: 2rem;
-            --pk-select-item-font-size: var(--pk-font-size-base);
+            --pk-select-item-font-size: var(--pk-control-font-default);
             --pk-select-item-line-height: var(--pk-input-control-line-height, 1.25rem);
             --pk-select-item-indicator-size: 0.75rem;
             --pk-select-item-indicator-inset: 0.5rem;
@@ -54,6 +55,7 @@ export const pkSelectStyles = [
             width: 100%;
             max-width: 100%;
             min-width: 0;
+            min-height: var(--pk-select-trigger-min-height);
             margin: 0;
             padding: var(--pk-select-item-padding-block) var(--pk-select-item-padding-inline);
             border: var(--pk-select-trigger-border-width) solid transparent;
@@ -128,6 +130,8 @@ export const pkSelectStyles = [
             display: none;
             flex: 0 0 auto;
             align-items: center;
+            /* Decorations must not reserve inline text descender space. */
+            line-height: 0;
         }
 
         .trigger-start.has-decoration {
@@ -292,22 +296,47 @@ export const pkSelectStyles = [
             box-shadow: var(--pk-input-invalid-focus-shadow);
         }
 
-        :host([size='xs']) {
+        :host([size='xxs']) {
+            --pk-select-trigger-min-height: var(--pk-control-height-xxs);
             --pk-select-item-min-height: 0;
-            --pk-select-item-padding-block: 4px;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-xxs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 8px;
             --pk-select-item-padding-inline-end: 1.75rem;
-            --pk-select-item-font-size: 11px;
-            --pk-select-item-line-height: 1.25;
+            --pk-select-item-font-size: var(--pk-control-font-xxs);
+            --pk-select-item-line-height: var(--pk-input-control-line-height, 1.25rem);
             /* v1 SelectLabel xs: text-[11px] */
             --pk-select-group-label-font-size: 11px;
             --pk-select-decoration-size: 0.625rem;
         }
 
+        :host([size='xs']) {
+            --pk-select-trigger-min-height: var(--pk-control-height-xs);
+            --pk-select-item-min-height: 0;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-xs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-select-item-padding-inline: 8px;
+            --pk-select-item-padding-inline-end: 1.75rem;
+            --pk-select-item-font-size: var(--pk-control-font-xs);
+            --pk-select-item-line-height: var(--pk-input-control-line-height, 1.25rem);
+            /* v1 SelectLabel xs: text-[11px] */
+            --pk-select-group-label-font-size: 11px;
+            --pk-select-decoration-size: 0.625rem;
+        }
+
+        :host([size='xxs']) .control {
+            border-radius: var(--pk-radius-sm);
+            /* Keep the trigger line box consistent with the shared control scale. */
+            line-height: var(--pk-select-item-line-height, 1.25);
+        }
+
         :host([size='xs']) .control {
             border-radius: var(--pk-radius-sm);
-            /* Match trigger line-height to the compact item token (default is 1.25rem). */
+            /* Keep the trigger line box consistent with the shared control scale. */
             line-height: var(--pk-select-item-line-height, 1.25);
+        }
+
+        :host([size='xxs']) .icon svg {
+            width: 0.625rem;
+            height: 0.625rem;
         }
 
         :host([size='xs']) .icon svg {
@@ -318,14 +347,28 @@ export const pkSelectStyles = [
         /* Options live in light DOM; ::slotted pushes size tokens onto each pk-option
          * host so the open listbox matches the trigger (inheritance alone is flaky when
          * the panel is promoted to the popover top layer). */
-        :host([size='xs']) ::slotted(pk-option) {
+        :host([size='xxs']) ::slotted(pk-option) {
             --pk-select-item-min-height: 0;
-            --pk-select-item-padding-block: 4px;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-xxs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 8px;
             --pk-select-item-padding-inline-end: 1.75rem;
-            --pk-select-item-font-size: 11px;
-            --pk-select-item-line-height: 1.25;
+            --pk-select-item-font-size: var(--pk-control-font-xxs);
+            --pk-select-item-line-height: var(--pk-input-control-line-height, 1.25rem);
             --pk-select-item-indicator-size: 0.625rem;
+        }
+
+        :host([size='xs']) ::slotted(pk-option) {
+            --pk-select-item-min-height: 0;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-xs) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
+            --pk-select-item-padding-inline: 8px;
+            --pk-select-item-padding-inline-end: 1.75rem;
+            --pk-select-item-font-size: var(--pk-control-font-xs);
+            --pk-select-item-line-height: var(--pk-input-control-line-height, 1.25rem);
+            --pk-select-item-indicator-size: 0.625rem;
+        }
+
+        :host([size='xxs']) .panel {
+            max-height: 12rem;
         }
 
         :host([size='xs']) .panel {
@@ -334,13 +377,14 @@ export const pkSelectStyles = [
 
         /* Editable-table cells only (class set by pk-editable-table) — compact chip + menu. */
         :host(.cell-pk-control) {
+            --pk-select-trigger-min-height: 0;
             --pk-select-item-min-height: 0;
             --pk-select-item-padding-block: 5px;
             --pk-select-item-padding-inline: 8px;
             --pk-select-item-padding-inline-end: 1.5rem;
             --pk-select-item-font-size: 11px;
             --pk-select-item-line-height: 1.2;
-            /* Compact table chip — match xs label size. */
+            /* Compact table chip — match xxs label size. */
             --pk-select-group-label-font-size: 11px;
             --pk-select-decoration-size: 0.625rem;
             --pk-select-item-indicator-size: 0.625rem;
@@ -366,11 +410,12 @@ export const pkSelectStyles = [
         }
 
         :host([size='sm']) {
+            --pk-select-trigger-min-height: var(--pk-control-height-sm);
             --pk-select-item-min-height: 0;
-            --pk-select-item-padding-block: 6px;
+            --pk-select-item-padding-block: calc((var(--pk-control-height-sm) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 10px;
             --pk-select-item-padding-inline-end: 1.75rem;
-            --pk-select-item-font-size: 12px;
+            --pk-select-item-font-size: var(--pk-control-font-sm);
             --pk-select-item-indicator-inset: 0.625rem;
             /* v1 SelectLabel sm: text-[12px] */
             --pk-select-group-label-font-size: 12px;
@@ -387,9 +432,10 @@ export const pkSelectStyles = [
         }
 
         :host([size='lg']) {
-            --pk-select-item-padding-block: 8px;
+            --pk-select-trigger-min-height: var(--pk-control-height-lg);
+            --pk-select-item-padding-block: calc((var(--pk-control-height-lg) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 12px;
-            --pk-select-item-font-size: var(--pk-font-size-base);
+            --pk-select-item-font-size: var(--pk-control-font-lg);
             --pk-select-item-indicator-inset: 0.75rem;
             /* v1 SelectLabel lg: text-sm → 14px */
             --pk-select-group-label-font-size: 14px;
@@ -397,10 +443,11 @@ export const pkSelectStyles = [
         }
 
         :host([size='xl']) {
-            --pk-select-item-padding-block: 10px;
+            --pk-select-trigger-min-height: var(--pk-control-height-xl);
+            --pk-select-item-padding-block: calc((var(--pk-control-height-xl) - var(--pk-input-control-line-height, 1.25rem) - 2px) / 2);
             --pk-select-item-padding-inline: 14px;
             --pk-select-item-padding-inline-end: 2.25rem;
-            --pk-select-item-font-size: var(--pk-font-size-base);
+            --pk-select-item-font-size: var(--pk-control-font-xl);
             --pk-select-item-indicator-inset: 0.875rem;
             /* v1 SelectLabel xl: text-base → 16px */
             --pk-select-group-label-font-size: 16px;

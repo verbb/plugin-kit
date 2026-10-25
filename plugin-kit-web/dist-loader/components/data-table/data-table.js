@@ -1,4 +1,4 @@
-import { c as n, h as i, l as customElement, m as b, n as c, p as A, s as r, t as o$1, u as o } from "../../chunks/lit-6rz1jOzS.js";
+import { c as n, h as i, l as customElement, m as b, n as c, p as A, r as l, s as r, t as o$1, u as o } from "../../chunks/lit-6rz1jOzS.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZKcPYjM.js";
 import "../../chunks/pk-copy-button-N1FGwbxR.js";
 import { A as gripMove, E as ellipsis, G as magnifyingGlass, J as pen, S as clipboard, Z as slidersOutline, _ as chevronRight, g as chevronLeft, h as chevronDown, ot as xmark, v as chevronUp } from "../../chunks/svg-C4lXkZYF.js";
@@ -7,15 +7,15 @@ import "../../chunks/pk-button-DQXfpLFZ.js";
 import "../../chunks/pk-spinner-C0iiN8B0.js";
 import "../../chunks/pk-state-panel-BqZfwPjT.js";
 import "../../chunks/pk-checkbox-DOtHW2Vb.js";
-import "../../chunks/pk-input-DGvN5YDz.js";
+import "../../chunks/pk-input-BzmYGD42.js";
 import "../../chunks/pk-dialog-Cz_2lomE.js";
 import "../../chunks/pk-dropdown-item-BCFdB7JM.js";
 import "../../chunks/pk-dropdown-menu-Csa4ci93.js";
 import "../../chunks/pk-status-label-Dw4_Ezv3.js";
 import "../../chunks/pk-button-group-ChaajqnN.js";
-import "../../chunks/pk-popover-7e3umaMq.js";
-import "../../chunks/pk-option-BSUWD0wo.js";
-import "../../chunks/pk-select-BGU0atxn.js";
+import "../../chunks/pk-popover-BN9-fHZh.js";
+import "../../chunks/pk-option-ZRdEzOn4.js";
+import "../../chunks/pk-select-mSjedzLk.js";
 //#region src/components/data-table/styles.ts
 var dataTableStyles = i`
     :host {
@@ -2019,7 +2019,19 @@ var PkDataTable = class PkDataTable extends PkElement {
 		}
 		return false;
 	}
-	selectRow(row, gesture, toggle = false) {
+	isSelectionCommand(gesture) {
+		return Boolean(/Mac/.test(navigator.platform) ? gesture.metaKey : gesture.ctrlKey);
+	}
+	isSelectionClick(event) {
+		return event.button === 0 && (!(event.metaKey || event.ctrlKey) || this.isSelectionCommand(event));
+	}
+	selectPage(checked) {
+		const keys = this.result.rows.filter((row) => this.canSelectRow(row)).map((row) => this.key(row));
+		const anchor = checked ? keys[0] : this.selectionAnchor;
+		this.setSelection(checked ? [.../* @__PURE__ */ new Set([...this.selectedKeys, ...keys])] : this.selectedKeys.filter((key) => !keys.includes(key)));
+		this.selectionAnchor = anchor;
+	}
+	selectRow(row, gesture) {
 		if (!this.canSelectRow(row)) return;
 		const key = this.key(row);
 		const pageKeys = this.result.rows.map((item) => this.key(item));
@@ -2027,24 +2039,37 @@ var PkDataTable = class PkDataTable extends PkElement {
 		const index = pageKeys.indexOf(key);
 		if (gesture.shiftKey && anchor !== -1 && index !== -1) {
 			const range = this.result.rows.slice(Math.min(anchor, index), Math.max(anchor, index) + 1).filter((item) => this.canSelectRow(item)).map((item) => this.key(item));
-			const retained = gesture.metaKey || gesture.ctrlKey ? this.selectedKeys : this.selectedKeys.filter((id) => !pageKeys.includes(id));
+			const retained = this.selectedKeys.filter((id) => !pageKeys.includes(id));
 			this.setSelection([.../* @__PURE__ */ new Set([...retained, ...range])]);
 			return;
 		}
-		this.selectionAnchor = key;
-		if (toggle || gesture.metaKey || gesture.ctrlKey) this.setSelection(this.selectedKeys.includes(key) ? this.selectedKeys.filter((id) => id !== key) : [...this.selectedKeys, key]);
-		else this.setSelection([key]);
+		if (this.isSelectionCommand(gesture)) {
+			this.selectionAnchor = key;
+			this.setSelection([key]);
+		} else if (this.selectedKeys.includes(key)) {
+			if (this.selectionAnchor === key) this.selectionAnchor = void 0;
+			this.setSelection(this.selectedKeys.filter((id) => id !== key));
+		} else {
+			this.selectionAnchor = key;
+			this.setSelection([...this.selectedKeys, key]);
+		}
 	}
 	clickRow(event, row) {
-		if (event.button !== 0 || !this.canSelectRow(row) || this.isRowControl(event)) return;
+		if (!this.isSelectionClick(event) || !this.canSelectRow(row) || this.isRowControl(event)) return;
 		this.selectRow(row, event);
 		event.currentTarget.querySelector("pk-checkbox")?.focus({ preventScroll: true });
 	}
 	clickRowCheckbox(event, row) {
-		if (event.shiftKey && !(event.composedPath()[0] instanceof HTMLInputElement)) {
+		if (!this.isSelectionClick(event)) {
 			event.preventDefault();
 			this.checkboxGesture = void 0;
-			this.selectRow(row, event, true);
+			return;
+		}
+		if ((event.shiftKey || this.isSelectionCommand(event)) && !(event.composedPath()[0] instanceof HTMLInputElement)) {
+			event.preventDefault();
+			this.checkboxGesture = void 0;
+			this.selectRow(row, event);
+			event.currentTarget.focus({ preventScroll: true });
 			return;
 		}
 		this.checkboxGesture = {
@@ -2057,28 +2082,23 @@ var PkDataTable = class PkDataTable extends PkElement {
 	changeRowCheckbox(row) {
 		const gesture = this.checkboxGesture?.key === this.key(row) ? this.checkboxGesture : {};
 		this.checkboxGesture = void 0;
-		this.selectRow(row, gesture, true);
+		this.selectRow(row, gesture);
 	}
 	keyRow(event, row) {
 		if (!this.canSelectRow(row) || event.defaultPrevented) return;
 		const tr = event.currentTarget;
 		const checkbox = tr.querySelector("pk-checkbox");
 		if (!event.composedPath().includes(checkbox) && event.target !== tr) return;
-		const command = event.metaKey || event.ctrlKey;
+		const command = this.isSelectionCommand(event);
 		const rows = this.result.rows.filter((item) => this.canSelectRow(item));
 		if (command && event.key.toLowerCase() === "a") {
 			event.preventDefault();
-			this.setSelection([.../* @__PURE__ */ new Set([...this.selectedKeys, ...rows.map((item) => this.key(item))])]);
+			this.selectPage(true);
 			return;
 		}
-		if (event.key === "Escape") {
+		if (event.key === "Enter" || event.key === " ") {
 			event.preventDefault();
-			this.setSelection([]);
-			return;
-		}
-		if (event.key === "Enter" || event.key === " " && event.shiftKey) {
-			event.preventDefault();
-			this.selectRow(row, event, true);
+			if (!command && !event.shiftKey) this.selectRow(row, {});
 			return;
 		}
 		if (![
@@ -2093,10 +2113,6 @@ var PkDataTable = class PkDataTable extends PkElement {
 		const last = event.key === "End" || command && event.key === "ArrowDown";
 		const target = rows[first ? 0 : last ? rows.length - 1 : Math.max(0, Math.min(rows.length - 1, current + (event.key === "ArrowUp" ? -1 : 1)))];
 		if (!target) return;
-		if (event.shiftKey) {
-			this.selectionAnchor ??= this.key(row);
-			this.selectRow(target, event);
-		}
 		const pageIndex = this.result.rows.findIndex((item) => this.key(item) === this.key(target));
 		const targetRow = this.renderRoot.querySelectorAll("tbody tr")[pageIndex];
 		if (targetRow) {
@@ -2469,7 +2485,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 		}}
                     >${this.text("defaults")}</pk-button
                 ><pk-button
-                    @click=${(event) => event.currentTarget.closest("pk-popover")?.closePopover()}
+                    @click=${(event) => event.currentTarget.closest("pk-popover")?.closePopover("close-button")}
                     >${this.text("close")}</pk-button
                 >
             </div>
@@ -2596,9 +2612,8 @@ var PkDataTable = class PkDataTable extends PkElement {
 	actionLabel(action) {
 		return action.label ?? (action.preset ? this.text(`${action.preset}Action`) : action.id);
 	}
-	activateAction(event, action, row) {
+	activateAction(action, row) {
 		if (action.disabled || this.loading || this.error) return;
-		event.currentTarget.closest("pk-popover")?.removeAttribute("open");
 		this.emit("pk-row-action", {
 			action: action.id,
 			row,
@@ -2618,28 +2633,31 @@ var PkDataTable = class PkDataTable extends PkElement {
 			return b`<pk-button
                     class="row-action"
                     data-preset=${action.preset ?? A}
-                    size=${action.preset ? "xs" : "sm"}
+                    size="sm"
                     variant="none"
                     aria-label=${label}
                     .disabled=${Boolean(action.disabled)}
-                    @click=${(event) => this.activateAction(event, action, row)}
+                    @click=${() => this.activateAction(action, row)}
                     >${action.preset ? this.icon({
 				edit: pen,
 				move: gripMove,
 				delete: xmark
 			}[action.preset], "start") : this.actionLabel(action)}</pk-button>`;
 		})}
-            ${menu.length ? b`<pk-popover placement="bottom-end">
-                <pk-button slot="trigger" size="xs" variant="none"
+            ${menu.length ? b`<pk-dropdown-menu placement="bottom-end"
+                @pk-select=${(event) => {
+			event.stopPropagation();
+			const action = menu.find((item) => item.id === event.detail.value);
+			if (action) this.activateAction(action, row);
+		}}>
+                <pk-button slot="trigger" size="sm" variant="none"
                     aria-label=${this.text("actions", { id: this.accessibleRowLabel(row) })}
                     >${this.icon(ellipsis, "start")}</pk-button>
-                <div class="panel">
-                    ${menu.map((action) => b`<pk-button
-                        .disabled=${Boolean(action.disabled)}
-                        @click=${(event) => this.activateAction(event, action, row)}
-                        >${this.actionLabel(action)}</pk-button>`)}
-                </div>
-            </pk-popover>` : A}
+                ${menu.map((action) => b`<pk-dropdown-item
+                    value=${action.id}
+                    .disabled=${Boolean(action.disabled)}
+                    >${this.actionLabel(action)}</pk-dropdown-item>`)}
+            </pk-dropdown-menu>` : A}
         </div>`;
 	}
 	page(delta, result) {
@@ -2703,8 +2721,7 @@ var PkDataTable = class PkDataTable extends PkElement {
                         </caption>
                         <thead>
                             <tr>
-                                ${this.manualOrder ? b`<th class="small" scope="col"><span class="sr-only">${this.text("rowOrder")}</span></th>` : A}
-                                ${this.selectable ? b`<th class="small"><pk-checkbox aria-label=${this.text("selectPage")} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.setSelection(checked ? this.selectedKeys.filter((key) => !eligible.includes(key)) : [.../* @__PURE__ */ new Set([...this.selectedKeys, ...eligible])])}></pk-checkbox></th>` : A}
+                                ${this.selectable ? b`<th class="small"><pk-checkbox aria-label=${this.text("selectPage")} .checked=${checked} .indeterminate=${!checked && eligible.some((key) => selected.has(key))} .disabled=${busy || eligible.length === 0} @change=${() => this.selectPage(!checked)}></pk-checkbox></th>` : A}
                                 ${columns.map((column) => {
 			const sort = !this.manualOrder && this.query.sort.find((item) => item.id === column.id);
 			return b`<th
@@ -2719,6 +2736,7 @@ var PkDataTable = class PkDataTable extends PkElement {
                                     </th>`;
 		})}
                                 ${this.rowActions ? b`<th class="small"><span class="sr-only">${this.text("actions", { id: "" })}</span></th>` : A}
+                                ${this.manualOrder ? b`<th class="small" scope="col"><span class="sr-only">${this.text("rowOrder")}</span></th>` : A}
                             </tr>
                         </thead>
                         <tbody class=${busy && !sorting ? "busy" : ""} ?inert=${busy} ?data-loading=${bodyLoading}>
@@ -2733,19 +2751,10 @@ var PkDataTable = class PkDataTable extends PkElement {
 				if (event.button === 0 && this.canSelectRow(row) && (event.shiftKey || event.metaKey || event.ctrlKey) && !this.isRowControl(event)) event.preventDefault();
 			}}
                                     >
-                                        ${this.manualOrder ? b`<td class="small">
-                                            <button class="row-handle" part="row-handle" type="button"
-                                                aria-label=${this.text("reorderRow", { label: this.accessibleRowLabel(row) })}
-                                                aria-describedby="row-order-help"
-                                                aria-disabled=${this.canReorderRows ? "false" : "true"}
-                                                @pointerdown=${(event) => this.rowOrder.start(event)}
-                                                @keydown=${(event) => this.keyRowOrder(event, row)}
-                                                >${this.icon(gripMove)}</button>
-                                        </td>` : A}
                                         ${this.selectable ? b`<td class="small">
                                                       <pk-checkbox
                                                           aria-label=${this.text("selectRow", { id: this.accessibleRowLabel(row) })}
-                                                          .checked=${selected.has(this.key(row))}
+                                                          .checked=${l(selected.has(this.key(row)))}
                                                           .disabled=${busy || this.isRowSelectable?.(row) === false}
                                                           @mousedown=${(event) => {
 				if (event.shiftKey) {
@@ -2766,6 +2775,15 @@ var PkDataTable = class PkDataTable extends PkElement {
                                         ${this.rowActions ? b`<td class="small">
                                                       ${this.renderRowActions(row, actions)}
                                                   </td>` : A}
+                                        ${this.manualOrder ? b`<td class="small">
+                                            <button class="row-handle" part="row-handle" type="button"
+                                                aria-label=${this.text("reorderRow", { label: this.accessibleRowLabel(row) })}
+                                                aria-describedby="row-order-help"
+                                                aria-disabled=${this.canReorderRows ? "false" : "true"}
+                                                @pointerdown=${(event) => this.rowOrder.start(event)}
+                                                @keydown=${(event) => this.keyRowOrder(event, row)}
+                                                >${this.icon(gripMove)}</button>
+                                        </td>` : A}
                                     </tr>`;
 		})}
                         </tbody>
