@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.1.0 - 2026-10-25
+
 ### Added
 - Added Vue DataTable examples for consumer-owned email preview dialogs and delivery summary popovers.
 - Added `xxs` sizing to Select, Combobox, Input, Image Browser and Color Input.
