@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Variable input selection</title></head>
+<body>
+<form><pk-tiptap-input name="destination"></pk-tiptap-input><button type="reset">Reset</button></form>
+<script type="module">
+    import '@verbb/plugin-kit-web/components/tiptap/pk-tiptap-input.js';
+    let input;
+    const settle = async () => {
+        await input.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    };
+    window.refreshCategories = async (label = 'Form Name') => {
+        input.variableCategories = { form: [{ label, value: '{form:name}' }] };
+        await settle();
+    };
+    window.mountInput = async (value = 'wwwwww{form:name}wwwwww', categories = true) => {
+        document.querySelector('pk-tiptap-input')?.remove();
+        input = document.createElement('pk-tiptap-input');
+        input.name = 'destination';
+        input.defaultValue = value;
+        input.variableCategories = categories ? { form: [{ label: 'Form Name', value: '{form:name}' }] } : {};
+        document.querySelector('form').prepend(input);
+        await settle();
+        window.changes = [];
+        input.addEventListener('pk-change', (event) => {
+            window.changes.push(event.detail.value);
+            // Controlled consumers recreate category objects after a value update.
+            input.variableCategories = structuredClone(input.variableCategories);
+        });
+    };
+    await window.mountInput();
+    document.body.dataset.ready = 'true';
+</script>
+</body>
+</html>

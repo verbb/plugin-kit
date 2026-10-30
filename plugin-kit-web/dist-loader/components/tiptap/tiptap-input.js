@@ -449,16 +449,21 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 	syncEditorContent(force = false) {
 		if (!this.editor) return;
 		if (!force && !this.readonly && this.editor.isFocused) return;
-		const nextContent = this.resolveEditorContent();
+		const nextContent = this.resolveEditorContent() ?? {
+			type: "doc",
+			content: []
+		};
 		const currentContent = this.editor.getJSON();
-		if (JSON.stringify(nextContent) === JSON.stringify(currentContent)) return;
+		const nextDocument = this.editor.schema.nodeFromJSON(nextContent);
+		if (nextDocument.eq(this.editor.state.doc)) return;
 		if (!force && this.lastEmitted === this.value) return;
+		const selection = this.editor.state.doc.content.size === nextDocument.content.size && contentToValue(currentContent.content) === contentToValue(nextContent.content) ? this.editor.state.selection.getBookmark() : null;
 		this.suppressUpdateEmission = true;
 		try {
-			this.editor.commands.setContent(nextContent ?? {
-				type: "doc",
-				content: []
-			});
+			this.editor.chain().setContent(nextContent).command(({ tr }) => {
+				if (selection) tr.setSelection(selection.resolve(tr.doc));
+				return true;
+			}).run();
 		} finally {
 			this.suppressUpdateEmission = false;
 		}

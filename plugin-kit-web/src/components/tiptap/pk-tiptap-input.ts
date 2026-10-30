@@ -224,22 +224,39 @@ export class PkTiptapInput extends PkFormAssociatedElement {
             return;
         }
 
-        const nextContent = this.resolveEditorContent();
+        const nextContent = this.resolveEditorContent() ?? { type: 'doc', content: [] };
         const currentContent = this.editor.getJSON();
+        // The schema supplies default chip attributes omitted by the serializer.
+        // Compare normalized documents so controlled updates do not replace identical content.
+        const nextDocument = this.editor.schema.nodeFromJSON(nextContent);
 
-        if (JSON.stringify(nextContent) === JSON.stringify(currentContent)) {
+        if (nextDocument.eq(this.editor.state.doc)) {
             return;
         }
 
-        // Same token string with newly available categories still needs a force remount
-        // so chip labels upgrade from UID fallback → option labels.
+        // Newly available categories can update chip labels without changing the token string.
         if (!force && this.lastEmitted === this.value) {
             return;
         }
 
+        // Converting literal reference text into chips changes document positions.
+        const presentationOnly = this.editor.state.doc.content.size === nextDocument.content.size
+            && contentToValue(currentContent.content) === contentToValue(nextContent.content);
+        const selection = presentationOnly ? this.editor.state.selection.getBookmark() : null;
+
         this.suppressUpdateEmission = true;
         try {
-            this.editor.commands.setContent(nextContent ?? { type: 'doc', content: [] });
+            this.editor.chain()
+                .setContent(nextContent)
+                .command(({ tr }) => {
+                    if (selection) {
+                        // Label hydration must not move the caret or clear a selection.
+                        tr.setSelection(selection.resolve(tr.doc));
+                    }
+
+                    return true;
+                })
+                .run();
         } finally {
             this.suppressUpdateEmission = false;
         }

@@ -85,7 +85,7 @@ import "./components/time-picker.js";
 import "./components/spinner.js";
 import { t as PkTiptapContent } from "./chunks/pk-tiptap-content-5UcUhLeB.js";
 import { t as PkTiptapEditor } from "./chunks/pk-tiptap-editor-SX0nyYfy.js";
-import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-BBy9JIOc.js";
+import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-BOfSutyK.js";
 import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-Bo2PGEqd.js";
 import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 import "@verbb/plugin-kit-icons/all.js";
