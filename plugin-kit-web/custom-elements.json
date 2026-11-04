@@ -17183,6 +17183,24 @@
               "default": "false"
             },
             {
+              "kind": "field",
+              "name": "isClosing",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "transitionId",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
               "kind": "method",
               "name": "show",
               "return": {

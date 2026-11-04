@@ -1,10 +1,14 @@
-import { c as unlockBodyScrolling, d as registerDismissible, f as unregisterDismissible, o as lockBodyScrolling, u as isTopDismissible } from "./pk-a11y-mGj0G5AE.js";
-import { a as e, c as n, h as i, l as customElement, m as b, o as e$1, p as A, s as r, u as o } from "./lit-6rz1jOzS.js";
-import { c as __decorate, l as PkElement } from "./pk-base-BZKcPYjM.js";
-import { ot as xmark } from "./svg-C4lXkZYF.js";
-import { n as renderIconHtml } from "./render-Cdi93GN8.js";
+import { t as icons_exports } from "./icons-k1pvx6yX.js";
+import { n as renderIconHtml } from "./render-DQZp_Rak.js";
+import { i as customElement, n as PkElement, t as __decorate } from "./decorate-Br_PE9pq.js";
+import { n as query, r as state, t as property } from "./decorators-BkErmuYK.js";
+import { i as unregisterDismissible, n as isTopDismissible, r as registerDismissible } from "./dismissible-stack-CwhtwAyo.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "./overlay-lifecycle-C582MGBJ.js";
+import { a as unlockBodyScrolling, r as lockBodyScrolling } from "./scroll-lock-DE1pElMQ.js";
 import { t as animateWithClass } from "./animate-with-class-CjTZI0NU.js";
+import { css, html, nothing } from "lit";
+import { unsafeSVG } from "lit/directives/unsafe-svg.js";
+import { classMap } from "lit/directives/class-map.js";
 //#region src/utils/craft-host-modal.ts
 /**
 * Craft CP Garnish modals (element selector, asset picker, …) live in normal
@@ -54,7 +58,7 @@ function observeCraftHostModal(onChange, options = {}) {
 }
 //#endregion
 //#region src/components/dialog/pk-dialog.styles.ts
-var pkDialogStyles = i`
+var pkDialogStyles = css`
     @layer pk-component {
         :host {
             /* Not display:contents — that flattens the trigger slot into flex parents
@@ -303,7 +307,7 @@ var pkDialogStyles = i`
 `;
 //#endregion
 //#region src/components/dialog/pk-dialog.ts
-var CLOSE_ICON = renderIconHtml(xmark);
+var CLOSE_ICON = renderIconHtml(icons_exports.xmark);
 var PkDialog = class PkDialog extends PkElement {
 	constructor(..._args) {
 		super(..._args);
@@ -333,6 +337,8 @@ var PkDialog = class PkDialog extends PkElement {
 			else this.restoreFromHostModal();
 		};
 		this.showing = false;
+		this.isClosing = false;
+		this.transitionId = 0;
 		this.handleDialogCancel = (event) => {
 			event.preventDefault();
 			if (!this.dialogElement.classList.contains("hide") && isTopDismissible(this)) this.requestClose("escape");
@@ -429,6 +435,9 @@ var PkDialog = class PkDialog extends PkElement {
 		if (this.open) this.show();
 	}
 	disconnectedCallback() {
+		this.transitionId++;
+		this.showing = false;
+		this.isClosing = false;
 		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		this.removeOpenListeners();
 		super.disconnectedCallback();
@@ -440,16 +449,16 @@ var PkDialog = class PkDialog extends PkElement {
 	}
 	/** `handleOpenChange` — declarative `open` drives show/close. */
 	handleOpenChange() {
-		if (this.open && !this.dialogElement.open) this.show();
-		else if (!this.open && this.dialogElement.open) {
-			this.open = true;
-			this.requestClose("api");
-		}
+		if (this.open && (!this.dialogElement.open || this.isClosing)) this.show();
+		else if (!this.open && this.dialogElement.open && !this.isClosing) this.requestClose("api");
 	}
 	/** Shows the dialog —  `show()`. */
 	async show(_source = "api") {
-		if (this.showing || this.dialogElement?.open) return;
+		if (this.showing || this.dialogElement?.open && !this.isClosing) return;
+		const transitionId = ++this.transitionId;
+		this.isClosing = false;
 		this.showing = true;
+		this.dialogElement.classList.remove("hide");
 		try {
 			const showEvent = new PkShowEvent();
 			if (!this.dispatchEvent(showEvent)) {
@@ -457,11 +466,12 @@ var PkDialog = class PkDialog extends PkElement {
 				return;
 			}
 			this.addOpenListeners();
-			this.previouslyFocused = document.activeElement;
+			if (!this.dialogElement.open) this.previouslyFocused = document.activeElement;
 			this.open = true;
-			this.dialogElement.showModal();
+			if (!this.dialogElement.open) this.dialogElement.showModal();
 			if (!this.disableScrollLock) lockBodyScrolling(this);
 			requestAnimationFrame(() => {
+				if (transitionId !== this.transitionId || !this.isConnected) return;
 				const elementToFocus = this.querySelector("[autofocus]");
 				if (elementToFocus) {
 					(elementToFocus.shadowRoot?.querySelector("input, textarea, select, button") ?? elementToFocus).focus({ preventScroll: true });
@@ -470,6 +480,7 @@ var PkDialog = class PkDialog extends PkElement {
 				this.dialogElement.focus({ preventScroll: true });
 			});
 			await animateWithClass(this.dialogElement, "show");
+			if (transitionId !== this.transitionId || !this.isConnected) return;
 			this.dispatchEvent(new CustomEvent("pk-open-change", {
 				detail: { open: true },
 				bubbles: true,
@@ -477,7 +488,7 @@ var PkDialog = class PkDialog extends PkElement {
 			}));
 			this.dispatchEvent(new PkAfterShowEvent());
 		} finally {
-			this.showing = false;
+			if (transitionId === this.transitionId) this.showing = false;
 		}
 	}
 	async hide(source = "unknown") {
@@ -488,21 +499,28 @@ var PkDialog = class PkDialog extends PkElement {
 	}
 	/** `requestClose()`. */
 	async requestClose(source = "unknown") {
+		if (this.isClosing || !this.dialogElement?.open) return;
 		const hideEvent = new PkHideEvent(typeof source === "string" ? source : "close-button");
 		if (!this.dispatchEvent(hideEvent)) {
 			this.open = true;
 			await animateWithClass(this.dialogElement, "pulse");
 			return;
 		}
+		const transitionId = ++this.transitionId;
+		this.isClosing = true;
+		this.showing = false;
+		this.open = false;
+		this.dialogElement.classList.remove("show");
 		this.removeOpenListeners();
 		await animateWithClass(this.dialogElement, "hide");
-		this.open = false;
+		if (transitionId !== this.transitionId || !this.isConnected) return;
+		this.isClosing = false;
 		this.dialogElement.close();
 		if (!this.disableScrollLock) unlockBodyScrolling(this);
 		const restoreFocus = this.previouslyFocused;
 		this.previouslyFocused = null;
 		if (restoreFocus?.isConnected) window.setTimeout(() => {
-			restoreFocus.focus({ preventScroll: true });
+			if (transitionId === this.transitionId && !this.open) restoreFocus.focus({ preventScroll: true });
 		}, 0);
 		this.dispatchEvent(new PkAfterHideEvent());
 		this.dispatchEvent(new CustomEvent("pk-open-change", {
@@ -513,6 +531,9 @@ var PkDialog = class PkDialog extends PkElement {
 	}
 	/** Recovery hook — clears hung modal state from overlay races. */
 	forceOverlayReset() {
+		this.transitionId++;
+		this.showing = false;
+		this.isClosing = false;
 		this.open = false;
 		this.yieldingToHostModal = false;
 		this.clearYieldPosition();
@@ -551,12 +572,12 @@ var PkDialog = class PkDialog extends PkElement {
 		const showBuiltInHeader = !this.hasCustomHeaderSlot() && !this.withoutHeader && Boolean(this.label);
 		const padBody = showBuiltInHeader && !this.withoutBodyPadding;
 		const hasFooter = this.querySelector(":scope > [slot=\"footer\"]") !== null;
-		return b`
+		return html`
             <slot name="trigger" @slotchange=${this.onTriggerSlotChange}></slot>
             <dialog
                 part="panel"
-                aria-label=${this.label || A}
-                class=${e({
+                aria-label=${this.label || nothing}
+                class=${classMap({
 			dialog: true,
 			open: this.open,
 			"dialog--wide": this.size === "wide"
@@ -567,69 +588,71 @@ var PkDialog = class PkDialog extends PkElement {
                 @pointerdown=${this.handleDialogPointerDown}
             >
                 <slot name="header">
-                    ${showBuiltInHeader ? b`
+                    ${showBuiltInHeader ? html`
                             <header part="header" class="header">
                                 <h2 part="title" class="title">
                                     <slot name="label">${this.label}</slot>
                                 </h2>
-                                ${this.description ? b`
+                                ${this.description ? html`
                                         <p part="description" class="description">
                                             <slot name="description">${this.description}</slot>
                                         </p>
-                                    ` : b`<slot name="description" hidden></slot>`}
+                                    ` : html`<slot name="description" hidden></slot>`}
                                 <button type="button" class="close" data-dialog="close" aria-label="Close">
-                                    <span class="close-icon" aria-hidden="true">${o(CLOSE_ICON)}</span>
+                                    <span class="close-icon" aria-hidden="true">${unsafeSVG(CLOSE_ICON)}</span>
                                 </button>
                             </header>
-                        ` : A}
+                        ` : nothing}
                 </slot>
                 <div
                     part="body"
-                    class=${e({
+                    class=${classMap({
 			body: true,
 			"body--padded": padBody
 		})}
                 >
                     <slot></slot>
                 </div>
-                ${hasFooter ? b`
+                ${hasFooter ? html`
                         <footer part="footer" class="footer">
                             <slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>
                         </footer>
-                    ` : b`<slot name="footer" @slotchange=${this.onFooterSlotChange} hidden></slot>`}
+                    ` : html`<slot name="footer" @slotchange=${this.onFooterSlotChange} hidden></slot>`}
             </dialog>
         `;
 	}
 };
-__decorate([n({
+__decorate([property({
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "open", void 0);
-__decorate([n()], PkDialog.prototype, "label", void 0);
-__decorate([n()], PkDialog.prototype, "description", void 0);
-__decorate([n({
+__decorate([property()], PkDialog.prototype, "label", void 0);
+__decorate([property()], PkDialog.prototype, "description", void 0);
+__decorate([property({
 	attribute: "disable-pointer-dismissal",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "disablePointerDismissal", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "without-header",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutHeader", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "without-body-padding",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "withoutBodyPadding", void 0);
-__decorate([n({
+__decorate([property({
 	attribute: "disable-scroll-lock",
 	type: Boolean,
 	reflect: true
 })], PkDialog.prototype, "disableScrollLock", void 0);
-__decorate([n({ reflect: true })], PkDialog.prototype, "size", void 0);
-__decorate([e$1("dialog")], PkDialog.prototype, "dialogElement", void 0);
-__decorate([r()], PkDialog.prototype, "triggerElement", void 0);
+__decorate([property({ reflect: true })], PkDialog.prototype, "size", void 0);
+__decorate([query("dialog")], PkDialog.prototype, "dialogElement", void 0);
+__decorate([state()], PkDialog.prototype, "triggerElement", void 0);
 PkDialog = __decorate([customElement("pk-dialog")], PkDialog);
 //#endregion
 export { PkDialog as t };
+
+//# sourceMappingURL=pk-dialog-CosE5pFj.js.map

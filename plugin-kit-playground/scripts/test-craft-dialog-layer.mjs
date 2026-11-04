@@ -11,7 +11,7 @@ const server = await createServer({
     configFile: false,
     root,
     logLevel: 'error',
-    server: { host: '127.0.0.1', port: 0, fs: { allow: [repo] } },
+    server: { host: '127.0.0.1', port: Number(process.env.TEST_PORT || 0), fs: { allow: [repo] } },
     optimizeDeps: { entries: ['tests/craft-dialog-layer.html'] },
     resolve: {
         alias: [{
@@ -25,7 +25,10 @@ let browser;
 
 try {
     await server.listen();
-    browser = await ({ chromium, firefox, webkit }[process.env.TEST_BROWSER || 'chromium']).launch({ headless: true });
+    browser = await ({ chromium, firefox, webkit }[process.env.TEST_BROWSER || 'chromium']).launch({
+        headless: true,
+        channel: process.env.CHROME_CHANNEL || undefined,
+    });
     const page = await browser.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -55,8 +58,42 @@ try {
         }
     }
 
+    await page.evaluate(async () => {
+        const dialog = document.querySelector('pk-dialog');
+        await dialog.show();
+        const firstClose = dialog.hide();
+        await dialog.hide();
+        await dialog.show();
+        await firstClose;
+    });
+    assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
+        'an older close must not hide a reopened dialog');
+
+    for (let cycle = 0; cycle < 5; cycle++) {
+        await page.evaluate(async () => {
+            const dialog = document.querySelector('pk-dialog');
+            dialog.open = false;
+            await dialog.updateComplete;
+            dialog.open = true;
+            await dialog.updateComplete;
+        });
+        await page.waitForTimeout(550);
+        assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
+            'declarative reopening must supersede the close animation');
+    }
+
+    await page.evaluate(async () => {
+        const dialog = document.querySelector('pk-dialog');
+        await dialog.hide();
+        const opening = dialog.show();
+        const closing = dialog.hide();
+        await Promise.all([opening, closing]);
+    });
+    assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open || dialog.shadowRoot.querySelector('dialog').open), false,
+        'closing during entry must not emit a late open state');
+
     assert.deepEqual(errors, []);
-    console.log('PASS: repeated Craft picker open/cancel with and without an existing Preview shade');
+    console.log('PASS: Craft picker layering, repeated dismissal, and interrupted dialog transitions');
 } finally {
     await browser?.close();
     await server.close();

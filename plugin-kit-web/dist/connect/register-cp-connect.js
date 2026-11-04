@@ -2,7 +2,7 @@ import { t as PkButton } from "../chunks/pk-button-Dzt2a5Nc.js";
 import { t as PkStatus } from "../chunks/pk-status-CdiRBRyh.js";
 import { PkIcon } from "../components/icon/pk-icon.js";
 import { t as PkStatePanel } from "../chunks/pk-state-panel-D9aZunDN.js";
-import { t as PkDialog } from "../chunks/pk-dialog-DxLi90RH.js";
+import { t as PkDialog } from "../chunks/pk-dialog-CosE5pFj.js";
 import { PkConnect } from "../components/connect/pk-connect.js";
 import { PkConnectOauth } from "../components/connect/pk-connect-oauth.js";
 import { registerIcons, xmark } from "@verbb/plugin-kit-icons";

@@ -3,7 +3,7 @@ import { c as __decorate } from "../../chunks/pk-base-BZKcPYjM.js";
 import "../../chunks/pk-button-DQXfpLFZ.js";
 import "../../chunks/pk-icon-C58SJcWC.js";
 import "../../chunks/pk-state-panel-BqZfwPjT.js";
-import "../../chunks/pk-dialog-Cz_2lomE.js";
+import "../../chunks/pk-dialog-Dz06ERxR.js";
 import { a as sendCpConnectRequest, c as watchCpFormDirty, i as resolveConnectError, n as buildConnectPayload, o as serializeCpForm, r as escapeCpHtml, t as pkConnectStyles } from "../../chunks/pk-connect.styles-KBWI4xAB.js";
 import "../../chunks/pk-status-D-HEWQS1.js";
 //#region src/components/connect/pk-connect.ts

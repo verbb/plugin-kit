@@ -15,7 +15,7 @@ import "./pk-dropdown-menu-yZrSKVIW.js";
 import "./pk-status-label-CopQRSZz.js";
 import "./pk-copy-button-Dfji6-PV.js";
 import "./pk-state-panel-D9aZunDN.js";
-import "./pk-dialog-DxLi90RH.js";
+import "./pk-dialog-CosE5pFj.js";
 import { css, html, nothing } from "lit";
 import { live } from "lit/directives/live.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
@@ -2921,4 +2921,4 @@ PkDataTable = __decorate([customElement("pk-data-table")], PkDataTable);
 //#endregion
 export { dataTableLabels as a, defaultDataTableQuery as c, dataTableCellSlot as i, queryDataTable as l, persistDataTableView as n, dataTableText as o, DataTableRequestController as r, dataTableValue as s, PkDataTable as t, dataTableFilterOperators as u };
 
-//# sourceMappingURL=pk-data-table-DS8qiYJ0.js.map
+//# sourceMappingURL=pk-data-table-D4mvWCMm.js.map

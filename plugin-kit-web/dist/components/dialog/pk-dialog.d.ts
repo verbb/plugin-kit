@@ -64,6 +64,8 @@ export declare class PkDialog extends PkElement {
     /** `handleOpenChange` — declarative `open` drives show/close. */
     private handleOpenChange;
     private showing;
+    private isClosing;
+    private transitionId;
     /** Shows the dialog —  `show()`. */
     show(_source?: PkOverlaySource): Promise<void>;
     hide(source?: PkOverlaySource): Promise<void>;

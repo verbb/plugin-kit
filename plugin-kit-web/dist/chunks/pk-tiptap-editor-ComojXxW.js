@@ -11,7 +11,7 @@ import "./pk-input-CTw4ktd-.js";
 import "./pk-checkbox-bfqcQikR.js";
 import "./pk-dropdown-item-DPM5KJ--.js";
 import "./pk-dropdown-menu-yZrSKVIW.js";
-import "./pk-dialog-DxLi90RH.js";
+import "./pk-dialog-CosE5pFj.js";
 import "./pk-dropdown-label-BdZLeizJ.js";
 import "../components/dropdown-menu/pk-dropdown-separator.js";
 import "./pk-field-6OVCzjr7.js";
@@ -1406,4 +1406,4 @@ PkTiptapEditor = __decorate([customElement("pk-tiptap-editor")], PkTiptapEditor)
 //#endregion
 export { PkTiptapEditor as t };
 
-//# sourceMappingURL=pk-tiptap-editor-SX0nyYfy.js.map
+//# sourceMappingURL=pk-tiptap-editor-ComojXxW.js.map

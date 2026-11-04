@@ -214,6 +214,10 @@ export class PkDialog extends PkElement {
     }
 
     override disconnectedCallback(): void {
+        this.transitionId++;
+        this.showing = false;
+        this.isClosing = false;
+
         if (!this.disableScrollLock) {
             unlockBodyScrolling(this);
         }
@@ -234,23 +238,28 @@ export class PkDialog extends PkElement {
 
     /** `handleOpenChange` — declarative `open` drives show/close. */
     private handleOpenChange(): void {
-        if (this.open && !this.dialogElement.open) {
+        if (this.open && (!this.dialogElement.open || this.isClosing)) {
             void this.show();
-        } else if (!this.open && this.dialogElement.open) {
-            this.open = true;
+        } else if (!this.open && this.dialogElement.open && !this.isClosing) {
             void this.requestClose('api');
         }
     }
 
     private showing = false;
+    private isClosing = false;
+    private transitionId = 0;
 
     /** Shows the dialog —  `show()`. */
     async show(_source: PkOverlaySource = 'api'): Promise<void> {
-        if (this.showing || this.dialogElement?.open) {
+        if (this.showing || (this.dialogElement?.open && !this.isClosing)) {
             return;
         }
 
+        // A reopened dialog supersedes the pending close, including its events and focus restore.
+        const transitionId = ++this.transitionId;
+        this.isClosing = false;
         this.showing = true;
+        this.dialogElement.classList.remove('hide');
 
         try {
             const showEvent = new PkShowEvent();
@@ -261,15 +270,23 @@ export class PkDialog extends PkElement {
             }
 
             this.addOpenListeners();
-            this.previouslyFocused = document.activeElement as HTMLElement | null;
+            if (!this.dialogElement.open) {
+                this.previouslyFocused = document.activeElement as HTMLElement | null;
+            }
             this.open = true;
-            this.dialogElement.showModal();
+            if (!this.dialogElement.open) {
+                this.dialogElement.showModal();
+            }
 
             if (!this.disableScrollLock) {
                 lockBodyScrolling(this);
             }
 
             requestAnimationFrame(() => {
+                if (transitionId !== this.transitionId || !this.isConnected) {
+                    return;
+                }
+
                 const elementToFocus = this.querySelector<HTMLElement>('[autofocus]');
 
                 if (elementToFocus) {
@@ -286,6 +303,10 @@ export class PkDialog extends PkElement {
 
             await animateWithClass(this.dialogElement, 'show');
 
+            if (transitionId !== this.transitionId || !this.isConnected) {
+                return;
+            }
+
             this.dispatchEvent(new CustomEvent('pk-open-change', {
                 detail: { open: true },
                 bubbles: true,
@@ -293,7 +314,9 @@ export class PkDialog extends PkElement {
             }));
             this.dispatchEvent(new PkAfterShowEvent());
         } finally {
-            this.showing = false;
+            if (transitionId === this.transitionId) {
+                this.showing = false;
+            }
         }
     }
 
@@ -307,6 +330,10 @@ export class PkDialog extends PkElement {
 
     /** `requestClose()`. */
     async requestClose(source: PkOverlaySource | EventTarget = 'unknown'): Promise<void> {
+        if (this.isClosing || !this.dialogElement?.open) {
+            return;
+        }
+
         const overlaySource: PkOverlaySource = typeof source === 'string'
             ? source
             : 'close-button';
@@ -319,9 +346,19 @@ export class PkDialog extends PkElement {
             return;
         }
 
+        const transitionId = ++this.transitionId;
+        this.isClosing = true;
+        this.showing = false;
+        this.open = false;
+        this.dialogElement.classList.remove('show');
         this.removeOpenListeners();
         await animateWithClass(this.dialogElement, 'hide');
-        this.open = false;
+
+        if (transitionId !== this.transitionId || !this.isConnected) {
+            return;
+        }
+
+        this.isClosing = false;
         this.dialogElement.close();
 
         if (!this.disableScrollLock) {
@@ -333,7 +370,9 @@ export class PkDialog extends PkElement {
 
         if (restoreFocus?.isConnected) {
             window.setTimeout(() => {
-                restoreFocus.focus({ preventScroll: true });
+                if (transitionId === this.transitionId && !this.open) {
+                    restoreFocus.focus({ preventScroll: true });
+                }
             }, 0);
         }
 
@@ -347,6 +386,9 @@ export class PkDialog extends PkElement {
 
     /** Recovery hook — clears hung modal state from overlay races. */
     forceOverlayReset(): void {
+        this.transitionId++;
+        this.showing = false;
+        this.isClosing = false;
         this.open = false;
         this.yieldingToHostModal = false;
         this.clearYieldPosition();
