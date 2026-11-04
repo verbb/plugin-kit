@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Fixed
+- Fixed multi-select Combobox end decorations sitting beside the input instead of at the field edge, including when selected items wrap.
 - Fixed the cursor jumping to the end of variable inputs while typing or refreshing variable labels.
 
 ## 2.1.0 - 2026-10-25

@@ -242,7 +242,8 @@ var pkComboboxStyles = [popupContentAnimationStyles, i`
 
         .control--multiple {
             --pk-combobox-control-gap: 0.25rem;
-            flex-wrap: wrap;
+            /* Chips wrap inside their own row; trailing decorations keep their reserved space. */
+            flex-wrap: nowrap;
             align-items: center;
             align-content: center;
             width: 100%;
@@ -275,7 +276,7 @@ var pkComboboxStyles = [popupContentAnimationStyles, i`
 
         .chips {
             display: flex;
-            flex: 0 1 auto;
+            flex: 1 1 auto;
             flex-wrap: wrap;
             gap: 0.25rem;
             align-items: center;

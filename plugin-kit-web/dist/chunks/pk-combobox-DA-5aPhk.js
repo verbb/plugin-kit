@@ -249,7 +249,8 @@ var pkComboboxStyles = [popupContentAnimationStyles, css`
 
         .control--multiple {
             --pk-combobox-control-gap: 0.25rem;
-            flex-wrap: wrap;
+            /* Chips wrap inside their own row; trailing decorations keep their reserved space. */
+            flex-wrap: nowrap;
             align-items: center;
             align-content: center;
             width: 100%;
@@ -282,7 +283,7 @@ var pkComboboxStyles = [popupContentAnimationStyles, css`
 
         .chips {
             display: flex;
-            flex: 0 1 auto;
+            flex: 1 1 auto;
             flex-wrap: wrap;
             gap: 0.25rem;
             align-items: center;
@@ -2010,4 +2011,4 @@ PkCombobox = __decorate([customElement("pk-combobox")], PkCombobox);
 //#endregion
 export { PkCreateEvent as n, PkCombobox as t };
 
-//# sourceMappingURL=pk-combobox-DQFhfowk.js.map
+//# sourceMappingURL=pk-combobox-DA-5aPhk.js.map
