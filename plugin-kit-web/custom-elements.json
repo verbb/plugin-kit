@@ -22110,11 +22110,168 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/data-table/pk-data-table-toolbar.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Renders a `pk-data-table`'s toolbar somewhere else on the page, such as a sticky page header,\nlike the toolbar above a Craft element index. Set `for` to the table's `id`. The table keeps\nits search, filters, View menu and labels; this element only gives them a place to render.\n\nPut toolbar slot content in this element rather than the table.",
+          "name": "PkDataTableToolbar",
+          "cssParts": [
+            {
+              "description": "Toolbar container.",
+              "name": "toolbar"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Controls before search.",
+              "name": "toolbar-start"
+            },
+            {
+              "description": "Additional controls after search/filter controls and before View.",
+              "name": "toolbar-controls"
+            },
+            {
+              "description": "Product actions after the standard controls.",
+              "name": "toolbar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "htmlFor",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The `id` of the `pk-data-table` whose toolbar this renders.",
+              "attribute": "for"
+            },
+            {
+              "kind": "field",
+              "name": "table",
+              "type": {
+                "text": "PkDataTable | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "findTable",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PkDataTable | null"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: 'open', delegatesFocus: true, }",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pkRenderFailed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "description": "When set, subclasses should skip normal render — base shows a minimal error shell.",
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleRenderFailure",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "unknown"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The `id` of the `pk-data-table` whose toolbar this renders.",
+              "fieldName": "htmlFor"
+            }
+          ],
+          "superclass": {
+            "name": "PkElement",
+            "module": "/src/base/pk-element.js"
+          },
+          "tagName": "pk-data-table-toolbar",
+          "customElement": true,
+          "events": [
+            {
+              "name": "pk-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "PkElement",
+                "module": "src/base/pk-element.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PkDataTableToolbar",
+          "declaration": {
+            "name": "PkDataTableToolbar",
+            "module": "src/components/data-table/pk-data-table-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pk-data-table-toolbar",
+          "declaration": {
+            "name": "PkDataTableToolbar",
+            "module": "src/components/data-table/pk-data-table-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/data-table/pk-data-table.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "Record browser with a shared toolbar, semantic table and pagination footer.",
+          "description": "Record browser with a shared toolbar, semantic table and pagination footer.\n\nGive the table an `id` and add `<pk-data-table-toolbar for=\"that-id\">` elsewhere on the page to\nrender the toolbar there instead, such as in a sticky page header. Toolbar slot content then\ngoes in the `pk-data-table-toolbar`.",
           "name": "PkDataTable",
           "cssProperties": [
             {
@@ -22744,6 +22901,14 @@
               "name": "searchTimer",
               "type": {
                 "text": "ReturnType<typeof setTimeout> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "toolbarHost",
+              "type": {
+                "text": "PkDataTableToolbar | undefined"
               },
               "privacy": "private"
             },

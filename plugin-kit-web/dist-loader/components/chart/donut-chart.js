@@ -1,8 +1,8 @@
-import { c as n, h as i, l as customElement, m as b, p as A } from "../../chunks/lit-6rz1jOzS.js";
-import { c as __decorate } from "../../chunks/pk-base-BZKcPYjM.js";
+import { c as n, g as i, h as b, l as customElement, p as A } from "../../chunks/lit-DDs3j8Nc.js";
+import { c as __decorate } from "../../chunks/pk-base-Dlxhq-0r.js";
 import { t as createFormatter } from "../../chunks/format-gF_xvdEf.js";
 import { d as ArcElement, g as DoughnutController, h as Chart, u as withAlpha } from "../../chunks/shared-B5LmQVDq.js";
-import { r as pkChartStyles, t as PkChartElement } from "../../chunks/pk-chart-element-CdC-eINz.js";
+import { r as pkChartStyles, t as PkChartElement } from "../../chunks/pk-chart-element-B3hoZMa8.js";
 //#region src/components/chart/pk-donut-chart.ts
 Chart.register(DoughnutController, ArcElement);
 var toNumber = (value) => typeof value === "number" && Number.isFinite(value) ? Math.max(0, value) : 0;

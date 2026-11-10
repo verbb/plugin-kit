@@ -8,6 +8,7 @@
 - Added `--pk-chart-*` tokens for series colours (validated for colour-vision deficiency), ordered stages, chart text, grid, tooltips and change colours.
 - Added `pk-point-select` and `pk-legend-toggle` events.
 - Added `appearance="raised"` to `pk-alert`, a white card with a light shadow and a 5% tint for alerts on tinted page backgrounds.
+- Added `pk-data-table-toolbar`, which renders a `pk-data-table`'s toolbar elsewhere on the page, such as a sticky page header, with React and Vue wrappers.
 
 ### Fixed
 - Fixed multi-select Combobox end decorations sitting beside the input instead of at the field edge, including when selected items wrap.

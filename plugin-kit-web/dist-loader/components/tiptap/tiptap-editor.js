@@ -1,22 +1,22 @@
-import "../../chunks/pk-field-COlVI2LK.js";
+import "../../chunks/pk-field-DK4QEFjM.js";
 import { n as uniqueId } from "../../chunks/pk-a11y-mGj0G5AE.js";
-import { c as n, h as i, l as customElement, m as b, o as e, p as A, s as r, u as o } from "../../chunks/lit-6rz1jOzS.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BZKcPYjM.js";
+import { c as n, g as i, h as b, l as customElement, o as e, p as A, s as r, u as o } from "../../chunks/lit-DDs3j8Nc.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-Dlxhq-0r.js";
 import { $ as strikethrough, B as italic, F as h5, H as link, I as h6, K as minus, L as heading, M as h2, N as h3, O as fileDashedLine, P as h4, Q as smallCaps, R as highlighter, U as listOl, W as listUl, X as quoteRight, a as alignRight, at as underline, c as arrowRotateRight, d as bold, et as subscript, f as bracketsCurly, h as chevronDown, i as alignLeft, it as triangleExclamation, j as h1, n as alignCenter, nt as table, q as paragraph, r as alignJustify, rt as textSlash, s as arrowRotateLeft, tt as superscript, w as code } from "../../chunks/svg-C4lXkZYF.js";
 import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
-import "../../chunks/pk-button-DQXfpLFZ.js";
+import "../../chunks/pk-button-BdQPLDZ6.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
-import "../../chunks/pk-checkbox-DOtHW2Vb.js";
-import "../../chunks/pk-input-BzmYGD42.js";
+import "../../chunks/pk-checkbox-CNj97a9K.js";
+import "../../chunks/pk-input-BydhQD-c.js";
 import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-DZ6kNZnU.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles--Ofa6CGA.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
-import "../../chunks/pk-dialog-Dz06ERxR.js";
-import "../../chunks/pk-dropdown-item-BCFdB7JM.js";
-import "../../chunks/pk-dropdown-label-BTqKZJCH.js";
-import "../../chunks/pk-dropdown-menu-Csa4ci93.js";
+import "../../chunks/pk-dialog-CrNzS6PM.js";
+import "../../chunks/pk-dropdown-item-D8ZJOYkK.js";
+import "../../chunks/pk-dropdown-label-CCsUeKkE.js";
+import "../../chunks/pk-dropdown-menu-CCpLuMBO.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-B6Begcgh.js";
+import "../../chunks/pk-tooltip-TLSj9w_0.js";
 //#region ../plugin-kit-tiptap-core/dist/links/craft-element.js
 function isLinkOptionsArray(value) {
 	return Array.isArray(value) && value.length > 0;

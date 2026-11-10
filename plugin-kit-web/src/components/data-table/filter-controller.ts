@@ -73,7 +73,7 @@ export class DataTableFilterController implements ReactiveController {
         return this.host.renderRoot.querySelector<PkDialog>('.filter-dialog');
     }
     private get trigger(): HTMLElement | null {
-        return this.host.renderRoot.querySelector<HTMLElement>(
+        return this.host.toolbarRoot.querySelector<HTMLElement>(
             '.filter-trigger',
         );
     }
@@ -126,8 +126,8 @@ export class DataTableFilterController implements ReactiveController {
     }
     private position = (): void => {
         const anchor =
-            this.host.renderRoot.querySelector<HTMLElement>('.search') ??
-            this.host.renderRoot.querySelector<HTMLElement>('.toolbar');
+            this.host.toolbarRoot.querySelector<HTMLElement>('.search') ??
+            this.host.toolbarRoot.querySelector<HTMLElement>('.toolbar');
         const dialog = this.dialog;
         if (!anchor || !dialog) return;
         const box = anchor.getBoundingClientRect();
@@ -177,8 +177,8 @@ export class DataTableFilterController implements ReactiveController {
             });
         });
         const anchor =
-            this.host.renderRoot.querySelector('.search') ??
-            this.host.renderRoot.querySelector('.toolbar');
+            this.host.toolbarRoot.querySelector('.search') ??
+            this.host.toolbarRoot.querySelector('.toolbar');
         if (anchor) this.resizeObserver.observe(anchor);
         this.host.ownerDocument.defaultView?.addEventListener(
             'resize',

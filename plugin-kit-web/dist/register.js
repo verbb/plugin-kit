@@ -86,7 +86,7 @@ import "./components/spinner.js";
 import { t as PkTiptapContent } from "./chunks/pk-tiptap-content-5UcUhLeB.js";
 import { t as PkTiptapEditor } from "./chunks/pk-tiptap-editor-ComojXxW.js";
 import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-BOfSutyK.js";
-import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-BdgMEOCd.js";
+import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-2AzJzAys.js";
 import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 import "@verbb/plugin-kit-icons/all.js";
 //#region src/register.ts

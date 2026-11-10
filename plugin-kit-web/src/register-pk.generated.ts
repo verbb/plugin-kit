@@ -85,6 +85,11 @@ export async function registerPkDataTable(): Promise<void> {
     await import('./components/data-table/pk-data-table.js');
 }
 
+/** Register `pk-data-table-toolbar` only (async side-effect import). */
+export async function registerPkDataTableToolbar(): Promise<void> {
+    await import('./components/data-table/pk-data-table-toolbar.js');
+}
+
 /** Register `pk-date-picker` only (async side-effect import). */
 export async function registerPkDatePicker(): Promise<void> {
     await import('./components/date-picker/pk-date-picker.js');

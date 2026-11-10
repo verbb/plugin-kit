@@ -302,6 +302,16 @@
             "import": "./dist/components/data-table/pk-data-table.js",
             "default": "./dist/components/data-table/pk-data-table.js"
         },
+        "./components/data-table/pk-data-table-toolbar.js": {
+            "types": "./dist/components/data-table/pk-data-table-toolbar.d.ts",
+            "import": "./dist/components/data-table/pk-data-table-toolbar.js",
+            "default": "./dist/components/data-table/pk-data-table-toolbar.js"
+        },
+        "./components/data-table/pk-data-table-toolbar": {
+            "types": "./dist/components/data-table/pk-data-table-toolbar.d.ts",
+            "import": "./dist/components/data-table/pk-data-table-toolbar.js",
+            "default": "./dist/components/data-table/pk-data-table-toolbar.js"
+        },
         "./components/date-picker/pk-date-picker.js": {
             "types": "./dist/components/date-picker/pk-date-picker.d.ts",
             "import": "./dist/components/date-picker/pk-date-picker.js",

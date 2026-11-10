@@ -61,6 +61,22 @@ Use `size="compact"` for denser settings lists. Selection remains optional in ei
 
 <ComponentPreview src="./examples/data-table-compact.preview.web.ts" />
 
+### Detached Toolbar
+
+To put the toolbar somewhere else, such as a sticky page header beside the page title, give the table an `id` and add `<pk-data-table-toolbar for="that-id">` where the toolbar should go. This is how a Craft element index lays out its toolbar. The table renders its search field, filter trigger and **View** menu into that element and keeps their state, so nothing else changes. Put `toolbar-start`, `toolbar-controls` and `toolbar-end` content in the `pk-data-table-toolbar` instead of the table. The table no longer has a sticky toolbar of its own, so its sticky header offset only needs to clear the page header.
+
+```html
+<header class="page-header">
+    <h1>Members</h1>
+    <pk-data-table-toolbar for="members-table"></pk-data-table-toolbar>
+</header>
+<pk-data-table id="members-table" layout="index"></pk-data-table>
+```
+
+The two can connect in either order. Removing the `pk-data-table-toolbar` gives the table its own toolbar back.
+
+<ComponentPreview src="./examples/data-table-detached-toolbar.preview.web.ts" />
+
 ## Long Content and Overflow
 
 Ordinary text and custom cells wrap by default, with Craft's `33vw` maximum cell width. Long unbroken values can break within the cell. Built-in link columns stay on one line and show an ellipsis when their labels exceed the available width; the full label remains in the link's accessible name and native tooltip. Set `wrap: true` on a link column to show its complete label over multiple lines.

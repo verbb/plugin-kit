@@ -1,10 +1,15 @@
 import { PropertyValues } from 'lit';
 import { PkElement } from '../../base/pk-element.js';
+import { PkDataTableToolbar } from './pk-data-table-toolbar.js';
 import { DataTableAction, DataTableColumn, DataTableDataSource, DataTableExportFormat, DataTableSort, DataTableFilter, DataTableKey, DataTableLabels, DataTableQuery, DataTableRow, DataTableView } from './model.js';
 export * from './model.js';
 export * from './persistence.js';
 /**
  * Record browser with a shared toolbar, semantic table and pagination footer.
+ *
+ * Give the table an `id` and add `<pk-data-table-toolbar for="that-id">` elsewhere on the page to
+ * render the toolbar there instead, such as in a sticky page header. Toolbar slot content then
+ * goes in the `pk-data-table-toolbar`.
  *
  * @slot toolbar-start - Controls before search.
  * @slot toolbar-controls - Additional controls after search/filter controls and before View.
@@ -140,9 +145,16 @@ export declare class PkDataTable extends PkElement {
     private drag?;
     private requests;
     private searchTimer?;
+    private toolbarHost?;
     connectedCallback(): void;
     disconnectedCallback(): void;
     protected willUpdate(changed: PropertyValues<this>): void;
+    /** @internal Called by `pk-data-table-toolbar` when it takes over this table's toolbar. */
+    attachToolbar(toolbar: PkDataTableToolbar): void;
+    /** @internal Called by `pk-data-table-toolbar` when it lets go of this table's toolbar. */
+    detachToolbar(toolbar: PkDataTableToolbar): void;
+    /** @internal The root the toolbar renders in: a detached toolbar's, or the table's own. */
+    get toolbarRoot(): ParentNode;
     protected updated(changed: PropertyValues<this>): void;
     private observeLayout;
     private measureLayout;

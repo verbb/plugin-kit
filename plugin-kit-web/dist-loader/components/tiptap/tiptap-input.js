@@ -1,8 +1,8 @@
-import { c as n, h as i, l as customElement, m as b, o as e, s as r } from "../../chunks/lit-6rz1jOzS.js";
-import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BZKcPYjM.js";
+import { c as n, g as i, h as b, l as customElement, o as e, s as r } from "../../chunks/lit-DDs3j8Nc.js";
+import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-Dlxhq-0r.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
 import { A as Editor } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, c as createTiptapInputExtensions, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "../../chunks/tiptap.styles-DZ6kNZnU.js";
+import { a as refreshVariableTagPresentation, c as createTiptapInputExtensions, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "../../chunks/tiptap.styles--Ofa6CGA.js";
 //#region ../plugin-kit-tiptap-core/dist/serialization/input.js
 var TRANSFORMER_ID_PREFIX = "transform=";
 function parseTokenMetadata(tokenValue) {

@@ -1,2 +1,2 @@
-import { t as PkColorInput } from "../../chunks/pk-color-input-CWJ8HFXK.js";
+import { t as PkColorInput } from "../../chunks/pk-color-input-CgAGKYZu.js";
 export { PkColorInput };

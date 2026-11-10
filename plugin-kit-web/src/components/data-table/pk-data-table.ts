@@ -1,4 +1,4 @@
-import { html, nothing, type PropertyValues } from 'lit';
+import { html, nothing, render, type PropertyValues } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import {
@@ -37,6 +37,7 @@ import '../copy-button/pk-copy-button.js';
 import { dataTableStyles } from './styles.js';
 import { DataTableFilterController } from './filter-controller.js';
 import { DataTableRowOrderController } from './row-order-controller.js';
+import type { PkDataTableToolbar } from './pk-data-table-toolbar.js';
 import {
     dataTableCellSlot,
     dataTableLabels,
@@ -65,6 +66,10 @@ export * from './persistence.js';
 
 /**
  * Record browser with a shared toolbar, semantic table and pagination footer.
+ *
+ * Give the table an `id` and add `<pk-data-table-toolbar for="that-id">` elsewhere on the page to
+ * render the toolbar there instead, such as in a sticky page header. Toolbar slot content then
+ * goes in the `pk-data-table-toolbar`.
  *
  * @slot toolbar-start - Controls before search.
  * @slot toolbar-controls - Additional controls after search/filter controls and before View.
@@ -237,9 +242,17 @@ export class PkDataTable extends PkElement {
     };
     private requests = new DataTableRequestController();
     private searchTimer?: ReturnType<typeof setTimeout>;
+    private toolbarHost?: PkDataTableToolbar;
 
     override connectedCallback(): void {
         super.connectedCallback();
+        // A detached toolbar placed before the table can only find it once the table connects.
+        if (this.id) {
+            const selector = `pk-data-table-toolbar[for="${CSS.escape(this.id)}"]`;
+            const root = this.getRootNode() as ParentNode;
+            const toolbar = (root.querySelector?.(selector) ?? this.ownerDocument.querySelector(selector)) as PkDataTableToolbar | null;
+            toolbar?.connectTable?.(this);
+        }
         if (this.hasUpdated) this.observeLayout();
         if (this.hasUpdated && this.mode === 'remote' && this.dataSource)
             void this.refresh();
@@ -348,7 +361,29 @@ export class PkDataTable extends PkElement {
         }
     }
 
+    /** @internal Called by `pk-data-table-toolbar` when it takes over this table's toolbar. */
+    attachToolbar(toolbar: PkDataTableToolbar): void {
+        this.toolbarHost = toolbar;
+        this.requestUpdate();
+    }
+
+    /** @internal Called by `pk-data-table-toolbar` when it lets go of this table's toolbar. */
+    detachToolbar(toolbar: PkDataTableToolbar): void {
+        if (this.toolbarHost !== toolbar) return;
+        if (toolbar.mount) render(nothing, toolbar.mount, { host: this });
+        this.toolbarHost = undefined;
+        this.requestUpdate();
+    }
+
+    /** @internal The root the toolbar renders in: a detached toolbar's, or the table's own. */
+    get toolbarRoot(): ParentNode {
+        return this.toolbarHost?.renderRoot ?? this.renderRoot;
+    }
+
     protected override updated(changed: PropertyValues<this>): void {
+        // A detached toolbar is rendered from the table's state, so it updates with the table.
+        if (this.toolbarHost?.mount)
+            render(this.renderToolbar(), this.toolbarHost.mount, { host: this });
         if (!this.resizeObserver) this.observeLayout();
         this.measureLayout();
         void this.restorePagingFocus();
@@ -721,9 +756,12 @@ export class PkDataTable extends PkElement {
                           '.footer-shell',
                       )?.offsetHeight ?? 0)
                     : 0;
+            const shell = this.renderRoot.querySelector<HTMLElement>('.header-shell');
+            // With a detached toolbar there is no sticky shell; the page header offset still applies.
             const headerHeight = this.layout === 'index'
-                ? (this.renderRoot.querySelector<HTMLElement>('.header-shell')?.offsetHeight ?? 0) +
-                  (Number.parseFloat(getComputedStyle(this.renderRoot.querySelector<HTMLElement>('.header-shell')!).top) || 0) + 2
+                ? shell
+                    ? shell.offsetHeight + (Number.parseFloat(getComputedStyle(shell).top) || 0) + 2
+                    : (Number.parseFloat(getComputedStyle(this).getPropertyValue('--pk-data-table-header-offset')) || 0) + 2
                 : 0;
             targetRow.style.scrollMarginBlockStart = `${headerHeight}px`;
             targetRow.style.scrollMarginBlockEnd = `${footerHeight}px`;
@@ -925,7 +963,7 @@ export class PkDataTable extends PkElement {
 
     private startColumnDrag(event: PointerEvent, id: string): void {
         if (event.button !== 0) return;
-        const list = this.renderRoot.querySelector<HTMLElement>('.column-list');
+        const list = this.toolbarRoot.querySelector<HTMLElement>('.column-list');
         if (!list) return;
         event.preventDefault();
         const handle = event.currentTarget as HTMLElement;
@@ -1481,9 +1519,9 @@ export class PkDataTable extends PkElement {
             { start, end, total: result.total ?? 0 },
         );
         return html`
-            <div class="header-shell" part="header-shell">
+            ${this.toolbarHost ? nothing : html`<div class="header-shell" part="header-shell">
                 ${this.renderToolbar()}
-            </div>
+            </div>`}
             ${this.filterController.renderDialog()}
             ${this.manualOrder ? html`
                 <span id="row-order-help" class="sr-only">${this.text('reorderRowHelp')}</span>

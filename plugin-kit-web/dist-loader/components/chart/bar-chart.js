@@ -1,8 +1,8 @@
-import { c as n, l as customElement } from "../../chunks/lit-6rz1jOzS.js";
-import { c as __decorate } from "../../chunks/pk-base-BZKcPYjM.js";
+import { c as n, l as customElement } from "../../chunks/lit-DDs3j8Nc.js";
+import { c as __decorate } from "../../chunks/pk-base-Dlxhq-0r.js";
 import { t as createFormatter } from "../../chunks/format-gF_xvdEf.js";
 import { c as seriesColor, f as BarController, h as Chart, m as CategoryScale, n as buildScales, p as BarElement, u as withAlpha, y as LinearScale } from "../../chunks/shared-B5LmQVDq.js";
-import { n as datasetMeta, t as PkChartElement } from "../../chunks/pk-chart-element-CdC-eINz.js";
+import { n as datasetMeta, t as PkChartElement } from "../../chunks/pk-chart-element-B3hoZMa8.js";
 //#region src/components/chart/pk-bar-chart.ts
 Chart.register(BarController, BarElement, CategoryScale, LinearScale);
 var toNumber = (value) => typeof value === "number" && Number.isFinite(value) ? value : 0;
