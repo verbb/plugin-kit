@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.0 - 2026-11-10
+
 ### Added
 - Added a chart family built on Chart.js: `pk-line-chart` (line and area, with a dashed previous period), `pk-bar-chart` (vertical, horizontal, grouped, stacked and 100% stacked), `pk-donut-chart` and `pk-funnel-chart` (steps, centred and tracks shapes, with per-stage `notes`), sharing one `{ cols, rows, comparisonRows }` data shape, an HTML tooltip listing every series, a clickable legend, a chart/table toggle, a screen-reader data table and `description`, arrow-key point navigation, axis titles and fixed value ranges for line and bar charts, and loading, empty and error states.
 - Added `pk-sparkline` for compact trends in tiles and table cells, and `pk-meter`, a CSS-only inline bar for table cells.

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.0 - 2026-11-10
+
 ### Added
 - Added `LineChart`, `BarChart`, `DonutChart`, `FunnelChart`, `Sparkline` and `Meter` facades over the new chart elements, and re-exported the `ChartData`, `ChartColumn`, `ChartRow`, `PkPointSelectDetail` and `PkLegendToggleDetail` types, with `onPkPointSelect`, `onPkLegendToggle` and `onPkViewChange` events.
 
