@@ -42,6 +42,7 @@ export default defineConfig({
         // https://github.com/qmhc/vite-plugin-dts
         DtsPlugin({
             insertTypesEntry: true,
+            exclude: ['**/*.test.ts'],
         }),
 
         copyPluginKitPublishAssets(),

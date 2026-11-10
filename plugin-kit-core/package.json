@@ -43,6 +43,10 @@
             "types": "./dist/utils/handle.d.ts",
             "import": "./dist/utils/handle.js"
         },
+        "./utils/format": {
+            "types": "./dist/utils/format.d.ts",
+            "import": "./dist/utils/format.js"
+        },
         "./utils/markdown": {
             "types": "./dist/utils/markdown.d.ts",
             "import": "./dist/utils/markdown.js"
@@ -58,7 +62,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite build --watch",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "test": "vitest run"
     },
     "license": "MIT",
     "dependencies": {
@@ -72,6 +77,7 @@
     "devDependencies": {
         "eslint": "^10.2.1",
         "typescript": "^6.0.3",
+        "vitest": "^5.0.3",
         "vite": "^8.3.4",
         "vite-plugin-dts": "^4.5.4"
     }

@@ -1,5 +1,6 @@
 export * from './collections';
 export * from './connect';
+export * from './format';
 export * from './forms';
 export * from './handle';
 export * from './markdown';

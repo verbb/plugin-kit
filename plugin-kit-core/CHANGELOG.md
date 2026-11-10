@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added `@verbb/plugin-kit-core/utils/format` with locale-aware `Intl` formatters for numbers, money, percentages, durations and date buckets, plus `formatChange` for period-over-period changes.
+
 ## 2.1.0 - 2026-10-25
 
 ### Changed
