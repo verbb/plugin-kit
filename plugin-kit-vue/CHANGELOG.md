@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added `LineChart`, `BarChart`, `DonutChart`, `FunnelChart`, `Sparkline` and `Meter` facades over the new chart elements, and re-exported the `ChartData`, `ChartColumn`, `ChartRow`, `PkPointSelectDetail` and `PkLegendToggleDetail` types.
+
 ## 2.1.0 - 2026-10-25
 
 ### Added

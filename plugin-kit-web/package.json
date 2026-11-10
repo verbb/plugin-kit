@@ -152,6 +152,66 @@
             "import": "./dist/components/calendar/pk-calendar.js",
             "default": "./dist/components/calendar/pk-calendar.js"
         },
+        "./components/chart/pk-bar-chart.js": {
+            "types": "./dist/components/chart/pk-bar-chart.d.ts",
+            "import": "./dist/components/chart/pk-bar-chart.js",
+            "default": "./dist/components/chart/pk-bar-chart.js"
+        },
+        "./components/chart/pk-bar-chart": {
+            "types": "./dist/components/chart/pk-bar-chart.d.ts",
+            "import": "./dist/components/chart/pk-bar-chart.js",
+            "default": "./dist/components/chart/pk-bar-chart.js"
+        },
+        "./components/chart/pk-donut-chart.js": {
+            "types": "./dist/components/chart/pk-donut-chart.d.ts",
+            "import": "./dist/components/chart/pk-donut-chart.js",
+            "default": "./dist/components/chart/pk-donut-chart.js"
+        },
+        "./components/chart/pk-donut-chart": {
+            "types": "./dist/components/chart/pk-donut-chart.d.ts",
+            "import": "./dist/components/chart/pk-donut-chart.js",
+            "default": "./dist/components/chart/pk-donut-chart.js"
+        },
+        "./components/chart/pk-funnel-chart.js": {
+            "types": "./dist/components/chart/pk-funnel-chart.d.ts",
+            "import": "./dist/components/chart/pk-funnel-chart.js",
+            "default": "./dist/components/chart/pk-funnel-chart.js"
+        },
+        "./components/chart/pk-funnel-chart": {
+            "types": "./dist/components/chart/pk-funnel-chart.d.ts",
+            "import": "./dist/components/chart/pk-funnel-chart.js",
+            "default": "./dist/components/chart/pk-funnel-chart.js"
+        },
+        "./components/chart/pk-line-chart.js": {
+            "types": "./dist/components/chart/pk-line-chart.d.ts",
+            "import": "./dist/components/chart/pk-line-chart.js",
+            "default": "./dist/components/chart/pk-line-chart.js"
+        },
+        "./components/chart/pk-line-chart": {
+            "types": "./dist/components/chart/pk-line-chart.d.ts",
+            "import": "./dist/components/chart/pk-line-chart.js",
+            "default": "./dist/components/chart/pk-line-chart.js"
+        },
+        "./components/chart/pk-meter.js": {
+            "types": "./dist/components/chart/pk-meter.d.ts",
+            "import": "./dist/components/chart/pk-meter.js",
+            "default": "./dist/components/chart/pk-meter.js"
+        },
+        "./components/chart/pk-meter": {
+            "types": "./dist/components/chart/pk-meter.d.ts",
+            "import": "./dist/components/chart/pk-meter.js",
+            "default": "./dist/components/chart/pk-meter.js"
+        },
+        "./components/chart/pk-sparkline.js": {
+            "types": "./dist/components/chart/pk-sparkline.d.ts",
+            "import": "./dist/components/chart/pk-sparkline.js",
+            "default": "./dist/components/chart/pk-sparkline.js"
+        },
+        "./components/chart/pk-sparkline": {
+            "types": "./dist/components/chart/pk-sparkline.d.ts",
+            "import": "./dist/components/chart/pk-sparkline.js",
+            "default": "./dist/components/chart/pk-sparkline.js"
+        },
         "./components/checkbox-select/pk-checkbox-select.js": {
             "types": "./dist/components/checkbox-select/pk-checkbox-select.d.ts",
             "import": "./dist/components/checkbox-select/pk-checkbox-select.js",
@@ -722,6 +782,16 @@
             "import": "./dist/components/calendar.js",
             "default": "./dist/components/calendar.js"
         },
+        "./components/chart.js": {
+            "types": "./dist/components/chart.d.ts",
+            "import": "./dist/components/chart.js",
+            "default": "./dist/components/chart.js"
+        },
+        "./components/chart": {
+            "types": "./dist/components/chart.d.ts",
+            "import": "./dist/components/chart.js",
+            "default": "./dist/components/chart.js"
+        },
         "./components/checkbox.js": {
             "types": "./dist/components/checkbox.d.ts",
             "import": "./dist/components/checkbox.js",
@@ -1119,6 +1189,7 @@
         "@verbb/plugin-kit-core": "^2.1.0",
         "@verbb/plugin-kit-icons": "^2.1.0",
         "@verbb/plugin-kit-tiptap-core": "^2.1.0",
+        "chart.js": "^4.6.1",
         "composed-offset-position": "^0.0.6",
         "lit": "^3.3.0"
     },

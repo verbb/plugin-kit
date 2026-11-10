@@ -54,6 +54,10 @@ const SPECIAL = {
     'input-group-input': 'InputGroupInput',
     'input-group-text': 'InputGroupText',
     'input-group-textarea': 'InputGroupTextarea',
+    'line-chart': 'LineChart',
+    'bar-chart': 'BarChart',
+    'donut-chart': 'DonutChart',
+    'funnel-chart': 'FunnelChart',
     'image-browser': 'ImageBrowser',
     'autocomplete': 'Autocomplete',
 };
@@ -155,7 +159,7 @@ function rewriteProse(text, tagToVue, vueSlugs) {
         .replaceAll(' attribute when', ' prop when')
         .replaceAll('JSON `options` attribute', '`options` prop');
 
-    next = next.replace(/\bpk-([a-z0-9-]+)\b/g, (match, slug) => tagToVue[`pk-${slug}`] ?? match);
+    next = next.replace(/(?<!-)\bpk-([a-z0-9-]+)\b/g, (match, slug) => tagToVue[`pk-${slug}`] ?? match);
 
     next = next.replace(
         /::: warning Web component pending[\s\S]*?:::\n*/g,

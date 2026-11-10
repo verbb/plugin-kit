@@ -17,6 +17,15 @@ export * from './Toggle.js';
 export * from './ToggleGroup.js';
 export * from './Tooltip.js';
 
+// Charts — one module per element so a Meter-only import never loads Chart.js
+export * from './ChartTypes.js';
+export * from './LineChart.js';
+export * from './BarChart.js';
+export * from './DonutChart.js';
+export * from './FunnelChart.js';
+export * from './Sparkline.js';
+export * from './Meter.js';
+
 // Tier B — form-associated facades
 export * from './Calendar.js';
 export * from './CodeEditor.js';

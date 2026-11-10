@@ -62,6 +62,12 @@ export const COMPONENT_MODULE_PATHS: Record<string, string> = {
     'pk-connect-oauth': 'components/connect/connect-oauth.js',
     'pk-data-table': 'components/data-table/data-table.js',
     'pk-editable-table': 'components/editable-table/editable-table.js',
+    'pk-line-chart': 'components/chart/line-chart.js',
+    'pk-bar-chart': 'components/chart/bar-chart.js',
+    'pk-donut-chart': 'components/chart/donut-chart.js',
+    'pk-funnel-chart': 'components/chart/funnel-chart.js',
+    'pk-sparkline': 'components/chart/sparkline.js',
+    'pk-meter': 'components/chart/meter.js',
 };
 
 /**
@@ -132,6 +138,12 @@ export const LOADER_COMPONENT_ENTRIES: Record<string, string> = {
     'components/connect/connect-oauth': 'src/components/connect/pk-connect-oauth.ts',
     'components/data-table/data-table': 'src/components/data-table/pk-data-table.ts',
     'components/editable-table/editable-table': 'src/components/editable-table/pk-editable-table.ts',
+    'components/chart/line-chart': 'src/components/chart/pk-line-chart.ts',
+    'components/chart/bar-chart': 'src/components/chart/pk-bar-chart.ts',
+    'components/chart/donut-chart': 'src/components/chart/pk-donut-chart.ts',
+    'components/chart/funnel-chart': 'src/components/chart/pk-funnel-chart.ts',
+    'components/chart/sparkline': 'src/components/chart/pk-sparkline.ts',
+    'components/chart/meter': 'src/components/chart/pk-meter.ts',
 };
 
 /** Loader-only shims → real element modules for the bundler dist graph. */
@@ -174,6 +186,8 @@ export const COMPONENT_FAMILY_ENTRIES: Record<string, string> = {
     'button-group': 'src/components/button-group/index.ts',
     'calendar': 'src/components/calendar/index.ts',
     'checkbox': 'src/components/checkbox/index.ts',
+    // Registers all six chart elements and loads Chart.js. Import `chart/pk-meter.js` alone for a meter without it.
+    'chart': 'src/components/chart/index.ts',
     'checkbox-select': 'src/components/checkbox-select/index.ts',
     'code-editor': 'src/components/code-editor/index.ts',
     'color-input': 'src/components/color-input/index.ts',

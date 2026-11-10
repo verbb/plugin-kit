@@ -114,6 +114,12 @@ const renderRoute = async (route: WorkshopRoute) => {
             return;
         }
 
+        if (route.tool === 'charts') {
+            const { mountChartsLab } = await import('./dev/charts.ts');
+            surfaceTeardown = mountChartsLab(shell.outlet);
+            return;
+        }
+
         if (route.tool === 'data-table-remote') {
             const { mountRemoteDataTableLab } = await import('./dev/data-table-remote.ts');
             surfaceTeardown = mountRemoteDataTableLab(shell.outlet);

@@ -63,7 +63,13 @@ var COMPONENT_MODULE_PATHS = {
 	"pk-connect": "components/connect/connect.js",
 	"pk-connect-oauth": "components/connect/connect-oauth.js",
 	"pk-data-table": "components/data-table/data-table.js",
-	"pk-editable-table": "components/editable-table/editable-table.js"
+	"pk-editable-table": "components/editable-table/editable-table.js",
+	"pk-line-chart": "components/chart/line-chart.js",
+	"pk-bar-chart": "components/chart/bar-chart.js",
+	"pk-donut-chart": "components/chart/donut-chart.js",
+	"pk-funnel-chart": "components/chart/funnel-chart.js",
+	"pk-sparkline": "components/chart/sparkline.js",
+	"pk-meter": "components/chart/meter.js"
 };
 Object.keys(COMPONENT_MODULE_PATHS);
 /** Vite loader-build entries: output key → source module. */
@@ -126,7 +132,13 @@ var LOADER_COMPONENT_ENTRIES = {
 	"components/connect/connect": "src/components/connect/pk-connect.ts",
 	"components/connect/connect-oauth": "src/components/connect/pk-connect-oauth.ts",
 	"components/data-table/data-table": "src/components/data-table/pk-data-table.ts",
-	"components/editable-table/editable-table": "src/components/editable-table/pk-editable-table.ts"
+	"components/editable-table/editable-table": "src/components/editable-table/pk-editable-table.ts",
+	"components/chart/line-chart": "src/components/chart/pk-line-chart.ts",
+	"components/chart/bar-chart": "src/components/chart/pk-bar-chart.ts",
+	"components/chart/donut-chart": "src/components/chart/pk-donut-chart.ts",
+	"components/chart/funnel-chart": "src/components/chart/pk-funnel-chart.ts",
+	"components/chart/sparkline": "src/components/chart/pk-sparkline.ts",
+	"components/chart/meter": "src/components/chart/pk-meter.ts"
 };
 /** Loader-only shims → real element modules for the bundler dist graph. */
 var BUNDLER_SRC_OVERRIDES = { "src/components/icon/pk-icon-loader.ts": "src/components/icon/pk-icon.ts" };

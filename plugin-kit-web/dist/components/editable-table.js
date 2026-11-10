@@ -1,2 +1,2 @@
-import { a as nextRowId, i as isCustomColumn, n as BUILTIN_COLUMN_TYPES, r as getCustomCellSlotName, t as PkEditableTable } from "../chunks/pk-editable-table-B1Z0ZpvD.js";
+import { a as nextRowId, i as isCustomColumn, n as BUILTIN_COLUMN_TYPES, r as getCustomCellSlotName, t as PkEditableTable } from "../chunks/pk-editable-table-BYGrP0ry.js";
 export { BUILTIN_COLUMN_TYPES, PkEditableTable, getCustomCellSlotName, isCustomColumn, nextRowId };

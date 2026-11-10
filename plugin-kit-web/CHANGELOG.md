@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+- Added a chart family built on Chart.js: `pk-line-chart` (line and area, with a dashed previous period), `pk-bar-chart` (vertical, horizontal, grouped, stacked and 100% stacked), `pk-donut-chart` and `pk-funnel-chart` (steps, centred and tracks shapes, with per-stage `notes`), sharing one `{ cols, rows, comparisonRows }` data shape, an HTML tooltip listing every series, a clickable legend, a chart/table toggle, a screen-reader data table and `description`, arrow-key point navigation, axis titles and fixed value ranges for line and bar charts, and loading, empty and error states.
+- Added `pk-sparkline` for compact trends in tiles and table cells, and `pk-meter`, a CSS-only inline bar for table cells.
+- Added `--pk-chart-*` tokens for series colours (validated for colour-vision deficiency), ordered stages, chart text, grid, tooltips and change colours.
+- Added `pk-point-select` and `pk-legend-toggle` events.
+
 ### Fixed
 - Fixed multi-select Combobox end decorations sitting beside the input instead of at the field edge, including when selected items wrap.
 - Fixed interrupted dialog animations and repeated dismissal hiding a newly reopened dialog.

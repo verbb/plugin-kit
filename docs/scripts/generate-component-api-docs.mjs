@@ -39,6 +39,7 @@ const PAGE_APIS = {
     'button.md': { tags: ['pk-button'] },
     'button-group.md': { tags: ['pk-button-group'] },
     'calendar.md': { tags: ['pk-calendar'] },
+    'chart.md': { tags: ['pk-line-chart', 'pk-bar-chart', 'pk-donut-chart', 'pk-funnel-chart'] },
     'checkbox.md': { tags: ['pk-checkbox'] },
     'checkbox-select.md': { tags: ['pk-checkbox-select'] },
     'code-editor.md': { tags: ['pk-code-editor'] },
@@ -67,11 +68,13 @@ const PAGE_APIS = {
         ],
     },
     'lightswitch.md': { tags: ['pk-lightswitch'] },
+    'meter.md': { tags: ['pk-meter'] },
     'popover.md': { tags: ['pk-popover'] },
     'radio-group.md': { tags: ['pk-radio-group', 'pk-radio'] },
     'scroll-area.md': { tags: ['pk-scroll-area'] },
     'select.md': { tags: ['pk-select', 'pk-option', 'pk-option-group'] },
     'separator.md': { tags: ['pk-separator'] },
+    'sparkline.md': { tags: ['pk-sparkline'] },
     'spinner.md': { tags: ['pk-spinner'] },
     'state-panel.md': { tags: ['pk-state-panel'] },
     'status.md': { tags: ['pk-status'] },
@@ -300,11 +303,14 @@ function flattenApi(decl, byClass) {
         for (const state of cls.cssStates ?? []) {
             cssStates.push({ ...state, _from: cls.name });
         }
-        // Slots / parts / css props / deps are declared on the concrete CE.
+        // Slots / parts / css props are declared on the concrete CE.
         if (cls === decl) {
             slots.push(...(cls.slots ?? []));
             cssParts.push(...(cls.cssParts ?? []));
             cssProperties.push(...(cls.cssProperties ?? []));
+        }
+        // Abstract bases (e.g. PkChartElement) register peers on behalf of every subclass.
+        if (cls === decl || !cls.customElement) {
             dependencies.push(...(cls.dependencies ?? []));
         }
     }
@@ -436,6 +442,10 @@ const TAG_TO_COMPONENT = {
     'pk-input-group-textarea': 'InputGroupTextarea',
     'pk-image-browser': 'ImageBrowser',
     'pk-autocomplete': 'Autocomplete',
+    'pk-line-chart': 'LineChart',
+    'pk-bar-chart': 'BarChart',
+    'pk-donut-chart': 'DonutChart',
+    'pk-funnel-chart': 'FunnelChart',
 };
 
 function componentDisplayName(tagName, voice) {
@@ -657,6 +667,11 @@ function renderEvents(events, heading = '###', voice = 'web') {
                 return false;
             }
             if (EVENT_DENY.has(e.name)) {
+                return false;
+            }
+            // The analyzer reads `dispatchEvent(new PkFooEvent(detail))` as an event named after
+            // the constructor argument; real events are named and described via `@event`.
+            if (!e.name.includes('-') && !e.description && /^Pk\w*Event$/.test(e.type?.text ?? '')) {
                 return false;
             }
             return true;

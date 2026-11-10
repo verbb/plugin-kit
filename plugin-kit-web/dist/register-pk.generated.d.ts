@@ -2,6 +2,8 @@
 export declare function registerPkAlert(): Promise<void>;
 /** Register `pk-autocomplete` only (async side-effect import). */
 export declare function registerPkAutocomplete(): Promise<void>;
+/** Register `pk-bar-chart` only (async side-effect import). */
+export declare function registerPkBarChart(): Promise<void>;
 /** Register `pk-button` only (async side-effect import). */
 export declare function registerPkButton(): Promise<void>;
 /** Register `pk-button-group` only (async side-effect import). */
@@ -34,6 +36,8 @@ export declare function registerPkDataTable(): Promise<void>;
 export declare function registerPkDatePicker(): Promise<void>;
 /** Register `pk-dialog` only (async side-effect import). */
 export declare function registerPkDialog(): Promise<void>;
+/** Register `pk-donut-chart` only (async side-effect import). */
+export declare function registerPkDonutChart(): Promise<void>;
 /** Register `pk-dropdown-item` only (async side-effect import). */
 export declare function registerPkDropdownItem(): Promise<void>;
 /** Register `pk-dropdown-label` only (async side-effect import). */
@@ -46,6 +50,8 @@ export declare function registerPkDropdownSeparator(): Promise<void>;
 export declare function registerPkEditableTable(): Promise<void>;
 /** Register `pk-field` only (async side-effect import). */
 export declare function registerPkField(): Promise<void>;
+/** Register `pk-funnel-chart` only (async side-effect import). */
+export declare function registerPkFunnelChart(): Promise<void>;
 /** Register `pk-icon` only (async side-effect import). */
 export declare function registerPkIcon(): Promise<void>;
 /** Register `pk-image-browser` only (async side-effect import). */
@@ -66,6 +72,10 @@ export declare function registerPkInputGroupText(): Promise<void>;
 export declare function registerPkInputGroupTextarea(): Promise<void>;
 /** Register `pk-lightswitch` only (async side-effect import). */
 export declare function registerPkLightswitch(): Promise<void>;
+/** Register `pk-line-chart` only (async side-effect import). */
+export declare function registerPkLineChart(): Promise<void>;
+/** Register `pk-meter` only (async side-effect import). */
+export declare function registerPkMeter(): Promise<void>;
 /** Register `pk-option` only (async side-effect import). */
 export declare function registerPkOption(): Promise<void>;
 /** Register `pk-option-group` only (async side-effect import). */
@@ -84,6 +94,8 @@ export declare function registerPkScrollArea(): Promise<void>;
 export declare function registerPkSelect(): Promise<void>;
 /** Register `pk-separator` only (async side-effect import). */
 export declare function registerPkSeparator(): Promise<void>;
+/** Register `pk-sparkline` only (async side-effect import). */
+export declare function registerPkSparkline(): Promise<void>;
 /** Register `pk-spinner` only (async side-effect import). */
 export declare function registerPkSpinner(): Promise<void>;
 /** Register `pk-state-panel` only (async side-effect import). */

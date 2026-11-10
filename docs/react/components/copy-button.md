@@ -45,7 +45,6 @@ the usual button variants for toolbars and other controls outside a field.
 | --- | --- |
 | `onPkCopy` | Emitted when text is copied successfully |
 | `onPkCopyError` | Emitted when copying fails |
-| `onValueToCopy` | <small><strong>Type</strong> <code>PkCopyEvent</code></small> |
 
 ### CSS Custom Properties
 

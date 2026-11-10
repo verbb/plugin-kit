@@ -57,9 +57,9 @@ import { PkDropdownSeparator } from "./components/dropdown-menu/pk-dropdown-sepa
 import "./components/dropdown-menu.js";
 import { t as PkColorInput } from "./chunks/pk-color-input-nkhf6bmG.js";
 import { t as PkCalendar } from "./chunks/pk-calendar-BiKdGyWw.js";
-import { t as PkDatePicker } from "./chunks/pk-date-picker-DFEt4-Qi.js";
+import { t as PkDatePicker } from "./chunks/pk-date-picker-CjNQhyAu.js";
 import { t as PkTimePicker } from "./chunks/pk-time-picker-D82lHgdN.js";
-import { t as PkEditableTable } from "./chunks/pk-editable-table-B1Z0ZpvD.js";
+import { t as PkEditableTable } from "./chunks/pk-editable-table-BYGrP0ry.js";
 import { t as PkField } from "./chunks/pk-field-6OVCzjr7.js";
 import "./components/field.js";
 import "./components/popover.js";
@@ -86,7 +86,7 @@ import "./components/spinner.js";
 import { t as PkTiptapContent } from "./chunks/pk-tiptap-content-5UcUhLeB.js";
 import { t as PkTiptapEditor } from "./chunks/pk-tiptap-editor-ComojXxW.js";
 import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-BOfSutyK.js";
-import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-Bo2PGEqd.js";
+import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-BdgMEOCd.js";
 import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 import "@verbb/plugin-kit-icons/all.js";
 //#region src/register.ts

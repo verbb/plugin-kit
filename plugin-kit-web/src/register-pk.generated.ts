@@ -10,6 +10,11 @@ export async function registerPkAutocomplete(): Promise<void> {
     await import('./components/autocomplete/pk-autocomplete.js');
 }
 
+/** Register `pk-bar-chart` only (async side-effect import). */
+export async function registerPkBarChart(): Promise<void> {
+    await import('./components/chart/pk-bar-chart.js');
+}
+
 /** Register `pk-button` only (async side-effect import). */
 export async function registerPkButton(): Promise<void> {
     await import('./components/button/pk-button.js');
@@ -90,6 +95,11 @@ export async function registerPkDialog(): Promise<void> {
     await import('./components/dialog/pk-dialog.js');
 }
 
+/** Register `pk-donut-chart` only (async side-effect import). */
+export async function registerPkDonutChart(): Promise<void> {
+    await import('./components/chart/pk-donut-chart.js');
+}
+
 /** Register `pk-dropdown-item` only (async side-effect import). */
 export async function registerPkDropdownItem(): Promise<void> {
     await import('./components/dropdown-menu/pk-dropdown-item.js');
@@ -118,6 +128,11 @@ export async function registerPkEditableTable(): Promise<void> {
 /** Register `pk-field` only (async side-effect import). */
 export async function registerPkField(): Promise<void> {
     await import('./components/field/pk-field.js');
+}
+
+/** Register `pk-funnel-chart` only (async side-effect import). */
+export async function registerPkFunnelChart(): Promise<void> {
+    await import('./components/chart/pk-funnel-chart.js');
 }
 
 /** Register `pk-icon` only (async side-effect import). */
@@ -170,6 +185,16 @@ export async function registerPkLightswitch(): Promise<void> {
     await import('./components/lightswitch/pk-lightswitch.js');
 }
 
+/** Register `pk-line-chart` only (async side-effect import). */
+export async function registerPkLineChart(): Promise<void> {
+    await import('./components/chart/pk-line-chart.js');
+}
+
+/** Register `pk-meter` only (async side-effect import). */
+export async function registerPkMeter(): Promise<void> {
+    await import('./components/chart/pk-meter.js');
+}
+
 /** Register `pk-option` only (async side-effect import). */
 export async function registerPkOption(): Promise<void> {
     await import('./components/select/pk-option.js');
@@ -213,6 +238,11 @@ export async function registerPkSelect(): Promise<void> {
 /** Register `pk-separator` only (async side-effect import). */
 export async function registerPkSeparator(): Promise<void> {
     await import('./components/separator/pk-separator.js');
+}
+
+/** Register `pk-sparkline` only (async side-effect import). */
+export async function registerPkSparkline(): Promise<void> {
+    await import('./components/chart/pk-sparkline.js');
 }
 
 /** Register `pk-spinner` only (async side-effect import). */

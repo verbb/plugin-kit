@@ -36,6 +36,14 @@ import "./components/button.js";
 import { t as PkButtonGroupSeparator } from "./chunks/pk-button-group-separator-B1a8dP9A.js";
 import { t as PkButtonGroupText } from "./chunks/pk-button-group-text-CWNlZkyV.js";
 import "./components/button-group.js";
+import { a as PkPointSelectEvent, i as PkLegendToggleEvent, t as PkChartElement } from "./chunks/pk-chart-element-C6SgC5pf.js";
+import { PkLineChart } from "./components/chart/pk-line-chart.js";
+import { PkBarChart } from "./components/chart/pk-bar-chart.js";
+import { PkDonutChart } from "./components/chart/pk-donut-chart.js";
+import { PkFunnelChart } from "./components/chart/pk-funnel-chart.js";
+import { PkSparkline } from "./components/chart/pk-sparkline.js";
+import { PkMeter } from "./components/chart/pk-meter.js";
+import "./components/chart.js";
 import "./components/checkbox.js";
 import { n as PkCheckboxSelect, t as ALL_VALUE } from "./chunks/pk-checkbox-select-B6msxcsJ.js";
 import "./components/checkbox-select.js";
@@ -73,9 +81,9 @@ import { PkDropdownSeparator } from "./components/dropdown-menu/pk-dropdown-sepa
 import "./components/dropdown-menu.js";
 import { t as PkColorInput } from "./chunks/pk-color-input-nkhf6bmG.js";
 import { t as PkCalendar } from "./chunks/pk-calendar-BiKdGyWw.js";
-import { t as PkDatePicker } from "./chunks/pk-date-picker-DFEt4-Qi.js";
+import { t as PkDatePicker } from "./chunks/pk-date-picker-CjNQhyAu.js";
 import { t as PkTimePicker } from "./chunks/pk-time-picker-D82lHgdN.js";
-import { a as nextRowId, i as isCustomColumn, n as BUILTIN_COLUMN_TYPES, r as getCustomCellSlotName, t as PkEditableTable } from "./chunks/pk-editable-table-B1Z0ZpvD.js";
+import { a as nextRowId, i as isCustomColumn, n as BUILTIN_COLUMN_TYPES, r as getCustomCellSlotName, t as PkEditableTable } from "./chunks/pk-editable-table-BYGrP0ry.js";
 import "./components/editable-table.js";
 import { t as PkField } from "./chunks/pk-field-6OVCzjr7.js";
 import "./components/field.js";
@@ -104,8 +112,8 @@ import "./components/spinner.js";
 import { t as PkTiptapContent } from "./chunks/pk-tiptap-content-5UcUhLeB.js";
 import { t as PkTiptapEditor } from "./chunks/pk-tiptap-editor-ComojXxW.js";
 import { t as PkTiptapInput } from "./chunks/pk-tiptap-input-BOfSutyK.js";
-import { _ as setPortalClassName, a as startLoader, c as setBasePath, d as getPortalClassName, f as getPortalContainer, g as resolvePositionMethod, h as getShadowRootSelectors, i as preventTurboFouce, l as allDefined, m as getPortalTargetForAppend, n as FOUCE_TIMEOUT_MS, o as stopLoader, p as getPortalMountElement, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer, y as setShadowRootSelectors } from "./chunks/autoloader-DYiJ3Evw.js";
-import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-Bo2PGEqd.js";
+import { _ as setPortalClassName, a as startLoader, c as setBasePath, d as getPortalClassName, f as getPortalContainer, g as resolvePositionMethod, h as getShadowRootSelectors, i as preventTurboFouce, l as allDefined, m as getPortalTargetForAppend, n as FOUCE_TIMEOUT_MS, o as stopLoader, p as getPortalMountElement, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer, y as setShadowRootSelectors } from "./chunks/autoloader-B6-vsh2n.js";
+import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-BdgMEOCd.js";
 import { t as createRegisterComponents } from "./chunks/register-components-CZtpgZe3.js";
 import { registerAll } from "./register.js";
 export * from "@verbb/plugin-kit-icons";
@@ -121,11 +129,13 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkAfterHideEvent: () => PkAfterHideEvent,
 	PkAfterShowEvent: () => PkAfterShowEvent,
 	PkAlert: () => PkAlert,
+	PkBarChart: () => PkBarChart,
 	PkButton: () => PkButton,
 	PkButtonGroup: () => PkButtonGroup,
 	PkButtonGroupSeparator: () => PkButtonGroupSeparator,
 	PkButtonGroupText: () => PkButtonGroupText,
 	PkCalendar: () => PkCalendar,
+	PkChartElement: () => PkChartElement,
 	PkCheckbox: () => PkCheckbox,
 	PkCheckboxSelect: () => PkCheckboxSelect,
 	PkCodeEditor: () => PkCodeEditor,
@@ -141,6 +151,7 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkDatePicker: () => PkDatePicker,
 	PkDialog: () => PkDialog,
 	PkDismissEvent: () => PkDismissEvent,
+	PkDonutChart: () => PkDonutChart,
 	PkDropdownItem: () => PkDropdownItem,
 	PkDropdownLabel: () => PkDropdownLabel,
 	PkDropdownMenu: () => PkDropdownMenu,
@@ -149,6 +160,7 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkElement: () => PkElement,
 	PkField: () => PkField,
 	PkFormAssociatedElement: () => PkFormAssociatedElement,
+	PkFunnelChart: () => PkFunnelChart,
 	PkHideEvent: () => PkHideEvent,
 	PkIcon: () => PkIcon,
 	PkInput: () => PkInput,
@@ -159,9 +171,13 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkInputGroupText: () => PkInputGroupText,
 	PkInputGroupTextarea: () => PkInputGroupTextarea,
 	PkInvalidEvent: () => PkInvalidEvent,
+	PkLegendToggleEvent: () => PkLegendToggleEvent,
 	PkLightswitch: () => PkLightswitch,
+	PkLineChart: () => PkLineChart,
+	PkMeter: () => PkMeter,
 	PkOption: () => PkOption,
 	PkOptionGroup: () => PkOptionGroup,
+	PkPointSelectEvent: () => PkPointSelectEvent,
 	PkPopover: () => PkPopover,
 	PkPopup: () => PkPopup,
 	PkRadio: () => PkRadio,
@@ -171,6 +187,7 @@ __reExport(/* @__PURE__ */ __exportAll({
 	PkSelect: () => PkSelect,
 	PkSeparator: () => PkSeparator,
 	PkShowEvent: () => PkShowEvent,
+	PkSparkline: () => PkSparkline,
 	PkSpinner: () => PkSpinner,
 	PkStatePanel: () => PkStatePanel,
 	PkStatus: () => PkStatus,
@@ -240,6 +257,6 @@ __reExport(/* @__PURE__ */ __exportAll({
 	unregisterDismissible: () => unregisterDismissible
 }), icons_exports);
 //#endregion
-export { ALL_VALUE, BUILTIN_COLUMN_TYPES, CustomErrorValidator, DISCOVERY_COMPLETE_EVENT, DataTableRequestController, FOUCE_TIMEOUT_MS, LiveRegion, MirrorValidator, PkAfterHideEvent, PkAfterShowEvent, PkAlert, PkButton, PkButtonGroup, PkButtonGroupSeparator, PkButtonGroupText, PkCalendar, PkCheckbox, PkCheckboxSelect, PkCodeEditor, PkColorInput, PkCombobox, PkConnect, PkConnectOauth, PkCopyButton, PkCopyErrorEvent, PkCopyEvent, PkCreateEvent, PkDataTable, PkDatePicker, PkDialog, PkDismissEvent, PkDropdownItem, PkDropdownLabel, PkDropdownMenu, PkDropdownSeparator, PkEditableTable, PkElement, PkField, PkFormAssociatedElement, PkHideEvent, PkIcon, PkInput, PkInputGroup, PkInputGroupAddon, PkInputGroupButton, PkInputGroupInput, PkInputGroupText, PkInputGroupTextarea, PkInvalidEvent, PkLightswitch, PkOption, PkOptionGroup, PkPopover, PkPopup, PkRadio, PkRadioGroup, PkRepositionEvent, PkScrollArea, PkSelect, PkSeparator, PkShowEvent, PkSpinner, PkStatePanel, PkStatus, PkStatusLabel, PkTab, PkTabHeading, PkTabPanel, PkTabs, PkTextarea, PkTimePicker, PkTiptapContent, PkTiptapEditor, PkTiptapInput, PkToggle, PkToggleGroup, PkTooltip, RequiredValidator, activeElements, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, copyToClipboard, createFocusTrap, createIconElement, createRegisterComponents, createTranslationIconElement, dataTableCellSlot, dataTableFilterOperators, dataTableLabels, dataTableText, dataTableValue, defaultDataTableQuery, discover, getBasePath, getButtonSpinnerSize, getCustomCellSlotName, getDeepestActiveElement, getFocusableElements, getOffset, getPortalClassName, getPortalContainer, getPortalMountElement, getPortalTargetForAppend, getShadowRootSelectors, isCustomColumn, isTopDismissible, lockBodyScrolling, nextRowId, persistDataTableView, preventTurboFouce, queryDataTable, registerAll, registerDismissible, renderIconHtml, resolveCopyValue, resolvePositionMethod, resolveSpinnerVariant, scrollIntoView, setBasePath, setPortalClassName, setPortalContainer, setShadowRootSelectors, startLoader, stopLoader, uniqueId, unlockBodyScrolling, unregisterDismissible };
+export { ALL_VALUE, BUILTIN_COLUMN_TYPES, CustomErrorValidator, DISCOVERY_COMPLETE_EVENT, DataTableRequestController, FOUCE_TIMEOUT_MS, LiveRegion, MirrorValidator, PkAfterHideEvent, PkAfterShowEvent, PkAlert, PkBarChart, PkButton, PkButtonGroup, PkButtonGroupSeparator, PkButtonGroupText, PkCalendar, PkChartElement, PkCheckbox, PkCheckboxSelect, PkCodeEditor, PkColorInput, PkCombobox, PkConnect, PkConnectOauth, PkCopyButton, PkCopyErrorEvent, PkCopyEvent, PkCreateEvent, PkDataTable, PkDatePicker, PkDialog, PkDismissEvent, PkDonutChart, PkDropdownItem, PkDropdownLabel, PkDropdownMenu, PkDropdownSeparator, PkEditableTable, PkElement, PkField, PkFormAssociatedElement, PkFunnelChart, PkHideEvent, PkIcon, PkInput, PkInputGroup, PkInputGroupAddon, PkInputGroupButton, PkInputGroupInput, PkInputGroupText, PkInputGroupTextarea, PkInvalidEvent, PkLegendToggleEvent, PkLightswitch, PkLineChart, PkMeter, PkOption, PkOptionGroup, PkPointSelectEvent, PkPopover, PkPopup, PkRadio, PkRadioGroup, PkRepositionEvent, PkScrollArea, PkSelect, PkSeparator, PkShowEvent, PkSparkline, PkSpinner, PkStatePanel, PkStatus, PkStatusLabel, PkTab, PkTabHeading, PkTabPanel, PkTabs, PkTextarea, PkTimePicker, PkTiptapContent, PkTiptapEditor, PkTiptapInput, PkToggle, PkToggleGroup, PkTooltip, RequiredValidator, activeElements, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, copyToClipboard, createFocusTrap, createIconElement, createRegisterComponents, createTranslationIconElement, dataTableCellSlot, dataTableFilterOperators, dataTableLabels, dataTableText, dataTableValue, defaultDataTableQuery, discover, getBasePath, getButtonSpinnerSize, getCustomCellSlotName, getDeepestActiveElement, getFocusableElements, getOffset, getPortalClassName, getPortalContainer, getPortalMountElement, getPortalTargetForAppend, getShadowRootSelectors, isCustomColumn, isTopDismissible, lockBodyScrolling, nextRowId, persistDataTableView, preventTurboFouce, queryDataTable, registerAll, registerDismissible, renderIconHtml, resolveCopyValue, resolvePositionMethod, resolveSpinnerVariant, scrollIntoView, setBasePath, setPortalClassName, setPortalContainer, setShadowRootSelectors, startLoader, stopLoader, uniqueId, unlockBodyScrolling, unregisterDismissible };
 
 //# sourceMappingURL=index.js.map

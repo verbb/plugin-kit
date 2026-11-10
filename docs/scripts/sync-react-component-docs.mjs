@@ -50,6 +50,10 @@ const SPECIAL = {
     'input-group-input': 'InputGroupInput',
     'input-group-text': 'InputGroupText',
     'input-group-textarea': 'InputGroupTextarea',
+    'line-chart': 'LineChart',
+    'bar-chart': 'BarChart',
+    'donut-chart': 'DonutChart',
+    'funnel-chart': 'FunnelChart',
 };
 
 const ATTR_TO_PROP = {
@@ -62,6 +66,32 @@ const ATTR_TO_PROP = {
     'disable-future': 'disableFuture',
     'allow-create': 'allowCreate',
     'allow-custom-value': 'allowCustomValue',
+    'table-toggle': 'tableToggle',
+    'value-labels': 'valueLabels',
+    'max-segments': 'maxSegments',
+    'other-label': 'otherLabel',
+    'share-label': 'shareLabel',
+    'of-previous-label': 'ofPreviousLabel',
+    'of-first-label': 'ofFirstLabel',
+    'empty-heading': 'emptyHeading',
+    'empty-message': 'emptyMessage',
+    'error-heading': 'errorHeading',
+    'error-message': 'errorMessage',
+    'loading-label': 'loadingLabel',
+    'chart-label': 'chartLabel',
+    'table-label': 'tableLabel',
+    'view-label': 'viewLabel',
+    'series-label': 'seriesLabel',
+    'table-available-label': 'tableAvailableLabel',
+    'total-label': 'totalLabel',
+    'to-label': 'toLabel',
+    'high-label': 'highLabel',
+    'low-label': 'lowLabel',
+    'show-value': 'showValue',
+    'warning-label': 'warningLabel',
+    'danger-label': 'dangerLabel',
+    'x-label': 'xLabel',
+    'y-label': 'yLabel',
 };
 
 /** CEM-generated WC API tables stay Web-only until React/Vue variants exist. */
@@ -140,7 +170,7 @@ function rewriteProse(text, tagToReact, reactSlugs) {
         .replaceAll(' attribute when', ' prop when')
         .replaceAll('JSON `options` attribute', '`options` prop');
 
-    next = next.replace(/\bpk-([a-z0-9-]+)\b/g, (match, slug) => tagToReact[`pk-${slug}`] ?? match);
+    next = next.replace(/(?<!-)\bpk-([a-z0-9-]+)\b/g, (match, slug) => tagToReact[`pk-${slug}`] ?? match);
 
     // Drop web-only pending callouts on React pages.
     next = next.replace(

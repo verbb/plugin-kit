@@ -410,6 +410,46 @@
     --pk-action-primary-fill-hover: var(--pk-color-red-700);
     --pk-action-primary-fill-active: var(--pk-color-red-800);
     --pk-action-primary-on: var(--pk-color-white);
+
+    /* ── Charts ───────────────────────────────────────────────────────────── */
+    /* Chart elements read only these semantic tokens, so a theme redefines this block.
+     * Series order is fixed and validated for colour-vision deficiency on a white surface
+     * (worst adjacent pair ΔE 8.4 OKLab; every slot ≥ 3:1). Re-validate before changing it. */
+    --pk-chart-series-1: var(--pk-color-blue-600);
+    --pk-chart-series-2: var(--pk-color-orange-600);
+    --pk-chart-series-3: var(--pk-color-teal-600);
+    --pk-chart-series-4: var(--pk-color-amber-600);
+    --pk-chart-series-5: var(--pk-color-pink-600);
+    --pk-chart-series-6: var(--pk-color-green-700);
+    --pk-chart-series-7: var(--pk-color-violet-600);
+    --pk-chart-series-8: var(--pk-color-red-600);
+    /* Folded "Other" segment and single-series previous-period line. */
+    --pk-chart-other: var(--pk-color-gray-300);
+    --pk-chart-comparison: var(--pk-color-gray-350);
+    /* Ordered stages (funnels), lightest first; the outcome is darkest. */
+    --pk-chart-ordinal-1: var(--pk-color-blue-400);
+    --pk-chart-ordinal-2: var(--pk-color-blue-500);
+    --pk-chart-ordinal-3: var(--pk-color-blue-600);
+    --pk-chart-ordinal-4: var(--pk-color-blue-800);
+    --pk-chart-surface: var(--pk-color-white);
+    --pk-chart-text: var(--pk-color-gray-900);
+    --pk-chart-text-secondary: var(--pk-color-gray-600);
+    --pk-chart-text-muted: var(--pk-color-gray-500);
+    --pk-chart-grid: var(--pk-color-gray-100);
+    --pk-chart-axis: var(--pk-color-gray-200);
+    --pk-chart-crosshair: var(--pk-color-gray-300);
+    --pk-chart-border: var(--pk-color-slate-200);
+    --pk-chart-tooltip-background: var(--pk-color-white);
+    --pk-chart-tooltip-shadow: var(--pk-shadow-popup);
+    --pk-chart-toggle-background: var(--pk-color-slate-100);
+    --pk-chart-table-head-background: var(--pk-color-gray-50);
+    --pk-chart-positive: var(--pk-color-teal-700);
+    --pk-chart-positive-background: color-mix(in srgb, var(--pk-color-teal-500) 12%, transparent);
+    --pk-chart-negative: var(--pk-color-red-700);
+    --pk-chart-negative-background: color-mix(in srgb, var(--pk-color-red-500) 12%, transparent);
+    --pk-chart-meter-ok: var(--pk-color-blue-600);
+    --pk-chart-meter-warning: var(--pk-color-amber-600);
+    --pk-chart-meter-danger: var(--pk-color-red-600);
 }
 
 /* Scroll lock — class is a state marker; locking logic lives in a11y/scroll-lock.ts.

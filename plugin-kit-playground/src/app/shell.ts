@@ -49,6 +49,7 @@ export function createWorkshopShell(mount: HTMLElement): WorkshopShell {
             <a class="pg-crosslink__link" data-tool="editable-table-perf" href="${getWorkshopToolPath('editable-table-perf')}">Editable table perf</a>
             <a class="pg-crosslink__link" data-tool="slotted-host" href="${getWorkshopToolPath('slotted-host')}">Slotted host metrics</a>
             <a class="pg-crosslink__link" data-tool="data-table-remote" href="${getWorkshopToolPath('data-table-remote')}">Remote data table</a>
+            <a class="pg-crosslink__link" data-tool="charts" href="${getWorkshopToolPath('charts')}">Charts</a>
             <button type="button" class="pg-tools__toggle" data-debug-toggle>Debug dock</button>
         </div>
     `;
@@ -133,9 +134,11 @@ export function createWorkshopShell(mount: HTMLElement): WorkshopShell {
         slottedHostLink.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'slotted-host');
 
         sidebar.querySelector('[data-tool="data-table-remote"]')!.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'data-table-remote');
+        sidebar.querySelector('[data-tool="charts"]')!.classList.toggle('is-active', route.kind === 'tools' && route.tool === 'charts');
 
         const toolTitles: Record<WorkshopToolId, string> = {
             'data-table-remote': 'Remote data table',
+            charts: 'Charts',
             fouce: 'FOUCE lab',
             debug: 'Debug',
             'nested-overlays': 'Nested overlays',

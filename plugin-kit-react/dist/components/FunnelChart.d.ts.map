@@ -1,0 +1,1 @@
+{"version":3,"file":"FunnelChart.d.ts","sourceRoot":"","sources":["../../src/components/FunnelChart.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAC1B,OAAO,EAAE,aAAa,EAAE,MAAM,2DAA2D,CAAC;AAI1F,6FAA6F;AAC7F,eAAO,MAAM,oBAAoB;;;;EAS/B,CAAC;AAEH,eAAO,MAAM,WAAW;;;;EAAuB,CAAC;AAChD,MAAM,MAAM,gBAAgB,GAAG,KAAK,CAAC,cAAc,CAAC,OAAO,oBAAoB,CAAC,CAAC"}

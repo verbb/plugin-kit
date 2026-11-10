@@ -61,7 +61,13 @@
         pk-connect,
         pk-connect-oauth,
         pk-data-table,
-        pk-editable-table
+        pk-editable-table,
+        pk-line-chart,
+        pk-bar-chart,
+        pk-donut-chart,
+        pk-funnel-chart,
+        pk-sparkline,
+        pk-meter
     ):not(:defined) {
         animation: 2s step-end pk-fouce;
     }
