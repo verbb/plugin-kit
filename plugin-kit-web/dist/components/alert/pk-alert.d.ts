@@ -1,6 +1,6 @@
 import { PkElement } from '../../base/pk-element.js';
 export type PkAlertVariant = 'neutral' | 'info' | 'success' | 'warning' | 'error';
-export type PkAlertAppearance = 'accent' | 'filled-outlined' | 'filled' | 'outlined' | 'plain';
+export type PkAlertAppearance = 'accent' | 'filled-outlined' | 'filled' | 'outlined' | 'plain' | 'raised';
 export type PkAlertAnnouncement = 'off' | 'polite' | 'assertive';
 export type PkAlertSize = 'sm' | 'default' | 'lg';
 /**
@@ -39,6 +39,7 @@ export type PkAlertSize = 'sm' | 'default' | 'lg';
  * @cssproperty --pk-alert-title-size - Heading font size.
  * @cssproperty --pk-alert-padding - Alert inner padding.
  * @cssproperty --pk-alert-radius - Alert corner radius.
+ * @cssproperty --pk-alert-raised-shadow - Shadow for `appearance="raised"`.
  * @cssproperty --pk-alert-details-max-height - Maximum height of diagnostic details.
  *
  * @dependency pk-copy-button - Compact copy-details action.

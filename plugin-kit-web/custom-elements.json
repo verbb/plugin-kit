@@ -965,6 +965,10 @@
               "name": "--pk-alert-radius"
             },
             {
+              "description": "Shadow for `appearance=\"raised\"`.",
+              "name": "--pk-alert-raised-shadow"
+            },
+            {
               "description": "Maximum height of diagnostic details.",
               "name": "--pk-alert-details-max-height"
             }

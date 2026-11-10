@@ -7,6 +7,7 @@
 - Added `pk-sparkline` for compact trends in tiles and table cells, and `pk-meter`, a CSS-only inline bar for table cells.
 - Added `--pk-chart-*` tokens for series colours (validated for colour-vision deficiency), ordered stages, chart text, grid, tooltips and change colours.
 - Added `pk-point-select` and `pk-legend-toggle` events.
+- Added `appearance="raised"` to `pk-alert`, a white card with a light shadow and a 5% tint for alerts on tinted page backgrounds.
 
 ### Fixed
 - Fixed multi-select Combobox end decorations sitting beside the input instead of at the field edge, including when selected items wrap.

@@ -107,6 +107,7 @@ Set `dismissible` only when hiding the alert won't conceal a condition that stil
 | `--pk-alert-details-max-height` | Maximum height of diagnostic details. |
 | `--pk-alert-padding` | Alert inner padding. |
 | `--pk-alert-radius` | Alert corner radius. |
+| `--pk-alert-raised-shadow` | Shadow for `appearance="raised"`. |
 | `--pk-alert-title-color` | Heading colour. |
 | `--pk-alert-title-size` | Heading font size. |
 

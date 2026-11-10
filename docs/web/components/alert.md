@@ -14,6 +14,12 @@ Use `appearance` to change visual emphasis without changing the alert's meaning.
 
 <ComponentPreview src="./examples/alert-appearances.preview.web.ts" />
 
+### Raised
+
+The other appearances are designed for white surfaces. On a tinted page background, such as a Craft control panel page, a pale fill sits too close to the page colour and loses its edge. Use `appearance="raised"` there: the alert becomes a white card with a light shadow and a 5% wash of the variant colour. Only the leading edge, icon and heading carry colour, and the message uses the normal text colour. Inside a white pane, keep `accent`. `--pk-alert-raised-shadow` changes the shadow.
+
+<ComponentPreview src="./examples/alert-raised.preview.web.ts" />
+
 ## Sizes
 
 Use the default size for ordinary control-panel feedback. `sm` fits compact settings rows and secondary feedback, while `lg` gives an important alert more visual weight. The size scales the icon, type, padding, dismissal, details, copy controls, and default-sized action buttons together.
@@ -107,6 +113,7 @@ Set `dismissible` only when hiding the alert won't conceal a condition that stil
 | `--pk-alert-details-max-height` | Maximum height of diagnostic details. |
 | `--pk-alert-padding` | Alert inner padding. |
 | `--pk-alert-radius` | Alert corner radius. |
+| `--pk-alert-raised-shadow` | Shadow for `appearance="raised"`. |
 | `--pk-alert-title-color` | Heading colour. |
 | `--pk-alert-title-size` | Heading font size. |
 

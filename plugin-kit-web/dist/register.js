@@ -15,7 +15,7 @@ import { t as PkCopyButton } from "./chunks/pk-copy-button-Dfji6-PV.js";
 import { PkIcon } from "./components/icon/pk-icon.js";
 import { t as PkStatePanel } from "./chunks/pk-state-panel-D9aZunDN.js";
 import { t as PkDialog } from "./chunks/pk-dialog-CosE5pFj.js";
-import { t as PkAlert } from "./chunks/pk-alert-CmUSdpAO.js";
+import { t as PkAlert } from "./chunks/pk-alert-CgKRyPJu.js";
 import "./components/alert.js";
 import "./components/state-panel.js";
 import "./components/button.js";

@@ -25,7 +25,8 @@ export type PkAlertAppearance =
     | 'filled-outlined'
     | 'filled'
     | 'outlined'
-    | 'plain';
+    | 'plain'
+    | 'raised';
 export type PkAlertAnnouncement = 'off' | 'polite' | 'assertive';
 export type PkAlertSize = 'sm' | 'default' | 'lg';
 
@@ -75,6 +76,7 @@ const defaultIcons = {
  * @cssproperty --pk-alert-title-size - Heading font size.
  * @cssproperty --pk-alert-padding - Alert inner padding.
  * @cssproperty --pk-alert-radius - Alert corner radius.
+ * @cssproperty --pk-alert-raised-shadow - Shadow for `appearance="raised"`.
  * @cssproperty --pk-alert-details-max-height - Maximum height of diagnostic details.
  *
  * @dependency pk-copy-button - Compact copy-details action.
