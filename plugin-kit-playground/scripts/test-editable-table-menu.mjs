@@ -46,7 +46,8 @@ try {
         await page.evaluate((options) => window.resetFixture(options), options);
     };
     const menuAt = (rowIndex) => table.locator('pk-dropdown-menu').nth(rowIndex);
-    const triggerAt = (rowIndex) => menuAt(rowIndex).getByRole('button', { name: 'Row actions' });
+    // Each row's menu is named after its row, such as "Actions for Alpha".
+    const triggerAt = (rowIndex) => menuAt(rowIndex).getByRole('button', { name: /^Actions for / });
 
     const waitForMenuFocus = () => page.waitForFunction(() => {
         let active = document.activeElement;

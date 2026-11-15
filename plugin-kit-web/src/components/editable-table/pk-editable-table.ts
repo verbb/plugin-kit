@@ -41,6 +41,7 @@ import {
     normalizeOptions,
     parseTsvClipboard,
     trimClipboardText,
+    getRowAccessibleName,
     type GeneratedCellMode,
     type PkEditableTableColumn,
     type PkEditableTableColumnType,
@@ -190,6 +191,8 @@ export class PkEditableTable extends PkFormAssociatedElement {
 
     /** Per-cell mode for generated handle/value columns (`rowId:columnName` → mode). */
     private generatedCellModes = new Map<string, GeneratedCellMode>();
+    /** Each row's accessible name, from its last render, for the labels of the controls in its cells. */
+    private rowNames = new Map<number, string>();
 
     private dndController = new EditableTableDndController({
         onReorderTo: (orderedIds) => {
@@ -319,6 +322,14 @@ export class PkEditableTable extends PkFormAssociatedElement {
         }
 
         return { ...column, ...patch, name: column.name };
+    }
+
+    /** A cell control's accessible name: its column, then its row, such as "Status, Phone". */
+    private cellLabel(column: PkEditableTableColumn, rowIndex: number): string {
+        const columnLabel = column.label ?? column.name;
+        const rowName = this.rowNames.get(rowIndex);
+
+        return rowName ? `${columnLabel}, ${rowName}` : columnLabel;
     }
 
     private resolveRowModifier(row: PkEditableTableRow, rowIndex: number): PkEditableTableRowModifier {
@@ -951,7 +962,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ''}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event: Event) => {
                     this.updateCell(rowIndex, column, this.readValueFromEvent(event));
                 }}
@@ -970,7 +981,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
             placeholder=${column.placeholder ?? ''}
             ?disabled=${this.disabled}
             ?invalid=${invalid}
-            aria-label=${column.label ?? column.name}
+            aria-label=${this.cellLabel(column, rowIndex)}
             @pk-change=${(event: Event) => {
                 this.updateCell(rowIndex, column, this.readValueFromEvent(event));
             }}
@@ -1020,7 +1031,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? nothing}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @input=${onInput}
             ></pk-textarea>`;
         }
@@ -1034,7 +1045,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ''}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event: Event) => {
                     this.updateCell(rowIndex, column, this.readValueFromEvent(event));
                 }}
@@ -1050,7 +1061,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ''}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event: Event) => {
                     this.updateCell(rowIndex, column, this.readValueFromEvent(event));
                 }}
@@ -1067,7 +1078,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? nothing}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @input=${onInput}
             ></pk-input>`;
         }
@@ -1083,7 +1094,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
         if (type === 'checkbox') {
             return html`<div class="cell-check">
                 <pk-checkbox
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1097,7 +1108,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
         if (type === 'radio') {
             return html`<div class="cell-check">
                 <pk-checkbox
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1114,7 +1125,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
             return html`<div class="cell-check cell-check--switch">
                 <pk-lightswitch
                     size="sm"
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1133,7 +1144,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                 .value=${String(value ?? '')}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event: Event) => {
                     this.updateCell(rowIndex, column, this.readValueFromEvent(event));
                 }}
@@ -1151,7 +1162,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
             placeholder=${column.placeholder ?? nothing}
             ?disabled=${this.disabled}
             ?invalid=${invalid}
-            aria-label=${column.label ?? column.name}
+            aria-label=${this.cellLabel(column, rowIndex)}
             @input=${onInput}
         ></pk-input>`;
     }
@@ -1205,6 +1216,9 @@ export class PkEditableTable extends PkFormAssociatedElement {
         const rowCount = this.internalRows.length;
         const rowId = String(row._id);
         const rowMod = this.resolveRowModifier(row, rowIndex);
+        // Every row has the same controls, so each one's accessible name says which row it belongs to.
+        const rowName = getRowAccessibleName(row, columns, rowIndex, rowMod.title);
+        this.rowNames.set(rowIndex, rowName);
         const extraMenuItems = this.resolveRowMenuItems(row, rowIndex);
         const showRowMenu = this.allowReorder || this.allowInsert || extraMenuItems.length > 0;
         // Insert shares the add budget — disabled when the host turned `allowAdd` off.
@@ -1253,7 +1267,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         size="xs"
                                         aria-label=${!this.dndReady && !this.disabled
                                             ? 'Preparing drag…'
-                                            : 'Reorder row'}
+                                            : `Reorder ${rowName}`}
                                         ?disabled=${this.disabled || !this.dndReady}
                                     >${unsafeHTML(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>`
@@ -1266,7 +1280,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                         class="action-btn"
                                         variant="none"
                                         size="xs"
-                                        aria-label="Row actions"
+                                        aria-label=${`Actions for ${rowName}`}
                                         ?disabled=${this.disabled}
                                     >${unsafeHTML(START_ELLIPSIS_ICON)}</pk-button>
                                     ${this.renderExtraMenuItems(row, rowIndex)}
@@ -1312,7 +1326,7 @@ export class PkEditableTable extends PkFormAssociatedElement {
                                 class="action-btn action-delete"
                                 variant="none"
                                 size="xs"
-                                aria-label="Delete row"
+                                aria-label=${`Delete ${rowName}`}
                                 ?disabled=${this.disabled}
                                 @click=${() => { this.removeRow(rowIndex); }}
                             >${unsafeHTML(START_XMARK_ICON)}</pk-button>`

@@ -56,6 +56,37 @@ export interface PkEditableTableColumn {
 
 export type PkEditableTableRow = Record<string, unknown> & { _id?: string };
 
+/** Column types whose value is readable text that can name its row. */
+const ROW_NAMING_TYPES = new Set<PkEditableTableColumnType>(['text', 'textarea', 'email', 'url', 'heading', 'label', 'handle', 'value']);
+
+/**
+ * A short name for a row, so each row's controls can be told apart by assistive technology ("Delete Phone" rather
+ * than "Delete row" on every row). The row modifier's title wins, then the first text-like cell with a value, then
+ * the row's position.
+ */
+export function getRowAccessibleName(row: PkEditableTableRow, columns: PkEditableTableColumn[], rowIndex: number, title?: string): string {
+    const explicit = title?.trim();
+
+    if (explicit) {
+        return explicit;
+    }
+
+    for (const column of columns) {
+        if (!ROW_NAMING_TYPES.has(column.type ?? 'text')) {
+            continue;
+        }
+
+        const value = row[column.name];
+        const text = typeof value === 'string' || typeof value === 'number' ? String(value).trim() : '';
+
+        if (text) {
+            return text.length > 60 ? `${text.slice(0, 59)}…` : text;
+        }
+    }
+
+    return `Row ${rowIndex + 1}`;
+}
+
 /**
  * Descriptor for an extra row-menu item (rendered inside the ellipsis menu).
  * Nested host→menu slots cannot feed `pk-dropdown-menu` light DOM, so extras

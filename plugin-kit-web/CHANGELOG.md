@@ -7,6 +7,7 @@
 
 ### Fixed
 - Fixed `pk-toggle-group` having no accessible name, because `aria-label` and `aria-labelledby` on the element never reached its inner group. Both now name the group that assistive technology reads.
+- Fixed every row of `pk-editable-table` giving its delete button, row menu, reorder handle and cell controls the same accessible name. Each is now named after its row, such as “Delete Phone”.
 
 ## 2.2.0 - 2026-11-10
 

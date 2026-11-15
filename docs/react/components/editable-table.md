@@ -26,6 +26,10 @@ Use `thin` checkbox columns or radio-style exclusivity when the table is modelin
 
 <ComponentPreview src="./examples/editable-table-compact-selection.preview.tsx" />
 
+## Row Names
+
+Each row's controls are named after the row, so a screen reader can tell rows apart. A row's name is the `title` from `modifyRow` when one is set, otherwise the first text, heading, label, handle or value cell that has a value, otherwise its position. The delete button reads "Delete Phone", the row menu "Actions for Phone" and a cell's control "Status, Phone".
+
 <!-- pk-api:begin -->
 
 ## API
