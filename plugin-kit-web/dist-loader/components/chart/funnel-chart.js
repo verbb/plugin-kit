@@ -1,8 +1,8 @@
-import { c as n, g as i, h as b, l as customElement, p as A, t as o } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, g as b, l as n, m as A, t as o, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { t as createFormatter } from "../../chunks/format-gF_xvdEf.js";
 import { f as BarController, h as Chart, m as CategoryScale, p as BarElement, u as withAlpha, y as LinearScale } from "../../chunks/shared-B5LmQVDq.js";
-import { r as pkChartStyles, t as PkChartElement } from "../../chunks/pk-chart-element-B3hoZMa8.js";
+import { r as pkChartStyles, t as PkChartElement } from "../../chunks/pk-chart-element-PLmHqxZx.js";
 //#region src/components/chart/pk-funnel-chart.ts
 Chart.register(BarController, BarElement, CategoryScale, LinearScale);
 var toNumber = (value) => typeof value === "number" && Number.isFinite(value) ? Math.max(0, value) : 0;

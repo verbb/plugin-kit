@@ -7,6 +7,9 @@ export type PkToggleGroupOrientation = 'horizontal' | 'vertical';
  *
  * @slot - `pk-toggle` or `button[data-value]` items
  *
+ * Name the group with `aria-label`, or with `aria-labelledby` pointing at visible text in the same document. The
+ * name is applied to the inner `role="group"` element, which is the one assistive technology reads.
+ *
  * @csspart base - Group container
  */
 export declare class PkToggleGroup extends PkElement {
@@ -20,6 +23,10 @@ export declare class PkToggleGroup extends PkElement {
     joined: boolean;
     multiple: boolean;
     value: string[];
+    /** Accessible name for the group. */
+    ariaLabel: string | null;
+    /** IDs of elements whose text names the group, resolved in the host's document or shadow root. */
+    labelledBy: string | null;
     private items;
     connectedCallback(): void;
     disconnectedCallback(): void;
@@ -33,6 +40,11 @@ export declare class PkToggleGroup extends PkElement {
     private isItemDisabled;
     private applySelection;
     private handleClick;
+    /**
+     * An ID reference can't cross into the shadow root, so `aria-labelledby` is resolved to its text here and given
+     * to the inner group as its label.
+     */
+    private resolvedLabel;
     render(): import('lit-html').TemplateResult<1>;
 }
 declare global {

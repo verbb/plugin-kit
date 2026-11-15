@@ -1,3 +1,4 @@
+import { n as translatePluginKit, t as pluginKitTranslationCategory } from "./chunks/translate-DrB3jtbL.js";
 import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-mGj0G5AE.js";
 //#region src/component-registry.ts
 /**
@@ -535,4 +536,4 @@ Promise.race([new Promise((resolve) => document.addEventListener(DISCOVERY_COMPL
 	document.querySelectorAll(".pk-cloak").forEach((el) => el.classList.remove("pk-cloak"));
 });
 //#endregion
-export { DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, diagnoseOverlayBlockers, discover, getBasePath, mountShadowApp, preventTurboFouce, recoverOverlays, setBasePath, setPortalClassName, setPortalContainer, startLoader, stopLoader };
+export { DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, diagnoseOverlayBlockers, discover, getBasePath, mountShadowApp, pluginKitTranslationCategory, preventTurboFouce, recoverOverlays, setBasePath, setPortalClassName, setPortalContainer, startLoader, stopLoader, translatePluginKit };

@@ -1,5 +1,5 @@
-import { c as n, g as i, h as b, l as customElement, p as A } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, g as b, l as n, m as A, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
 //#region src/components/tabs/pk-tab-panel-base.ts
 /** Shared tab panel behaviour for all tab variants. */
 var PkTabPanelBase = class extends PkElement {

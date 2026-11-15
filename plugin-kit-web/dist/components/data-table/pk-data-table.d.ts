@@ -124,7 +124,7 @@ export declare class PkDataTable extends PkElement {
     rowLabel?: string | ((row: DataTableRow) => string);
     locale: string;
     timeZone: string;
-    /** Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. */
+    /** Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. Strings left out use Craft's shared `plugin-kit` translation, or English. */
     labels: Partial<DataTableLabels>;
     private loaded?;
     private searchDraft?;

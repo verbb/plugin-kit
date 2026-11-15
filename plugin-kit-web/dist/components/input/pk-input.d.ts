@@ -76,6 +76,8 @@ export declare class PkInput extends PkFormAssociatedElement {
      */
     private handleKeyDown;
     private handleClearClick;
+    private endHasAction;
+    private handleEndSlotChange;
     render(): import('lit-html').TemplateResult<1>;
 }
 declare global {

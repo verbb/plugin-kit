@@ -59,6 +59,8 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
     private dndReady;
     /** Per-cell mode for generated handle/value columns (`rowId:columnName` → mode). */
     private generatedCellModes;
+    /** Each row's accessible name, from its last render, for the labels of the controls in its cells. */
+    private rowNames;
     private dndController;
     private dndIdleId;
     private dndTimeoutId;
@@ -81,6 +83,8 @@ export declare class PkEditableTable extends PkFormAssociatedElement {
      */
     setCellValue(rowIndex: number, columnName: string, value: unknown): void;
     private resolveColumn;
+    /** A cell control's accessible name: its column, then its row, such as "Status, Phone". */
+    private cellLabel;
     private resolveRowModifier;
     private resolveRowMenuItems;
     private syncGeneratedModesFromRows;

@@ -1,5 +1,5 @@
-import { c as n, g as i, h as b, l as customElement, s as r } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, c as r, g as b, l as n, m as A, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
 //#region src/components/toggle-group/pk-toggle-group.styles.ts
 var pkToggleGroupStyles = i`
     @layer pk-component {
@@ -46,6 +46,8 @@ var PkToggleGroup = class PkToggleGroup extends PkElement {
 		this.joined = true;
 		this.multiple = false;
 		this.value = [];
+		this.ariaLabel = null;
+		this.labelledBy = null;
 		this.items = [];
 		this.syncItems = () => {
 			const slot = this.shadowRoot?.querySelector("slot");
@@ -77,6 +79,7 @@ var PkToggleGroup = class PkToggleGroup extends PkElement {
 	connectedCallback() {
 		super.connectedCallback();
 		this.syncJoinedFromSpacing();
+		if (this.labelledBy) queueMicrotask(() => this.requestUpdate());
 		this.addEventListener("click", this.handleClick);
 		this.addEventListener("slotchange", this.syncItems);
 	}
@@ -138,12 +141,23 @@ var PkToggleGroup = class PkToggleGroup extends PkElement {
 			}
 		}
 	}
+	/**
+	* An ID reference can't cross into the shadow root, so `aria-labelledby` is resolved to its text here and given
+	* to the inner group as its label.
+	*/
+	resolvedLabel() {
+		if (this.ariaLabel) return this.ariaLabel;
+		if (!this.labelledBy) return null;
+		const root = this.getRootNode();
+		return this.labelledBy.split(/\s+/).map((id) => root.getElementById?.(id)?.textContent?.trim() ?? "").filter(Boolean).join(" ") || null;
+	}
 	render() {
 		return b`
             <div
                 part="base"
                 class="group"
                 role="group"
+                aria-label=${this.resolvedLabel() ?? A}
                 style=${`--pk-toggle-group-spacing: ${this.spacing}`}
                 @slotchange=${this.syncItems}
             >
@@ -168,6 +182,8 @@ __decorate([n({
 	type: Array,
 	attribute: false
 })], PkToggleGroup.prototype, "value", void 0);
+__decorate([n({ attribute: "aria-label" })], PkToggleGroup.prototype, "ariaLabel", void 0);
+__decorate([n({ attribute: "aria-labelledby" })], PkToggleGroup.prototype, "labelledBy", void 0);
 __decorate([r()], PkToggleGroup.prototype, "items", void 0);
 PkToggleGroup = __decorate([customElement("pk-toggle-group")], PkToggleGroup);
 //#endregion

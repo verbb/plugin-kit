@@ -1,2 +1,2 @@
-import { a as nextRowId, i as isCustomColumn, r as getCustomCellSlotName, t as PkEditableTable } from "../../chunks/pk-editable-table-BYGrP0ry.js";
+import { a as nextRowId, i as isCustomColumn, r as getCustomCellSlotName, t as PkEditableTable } from "../../chunks/pk-editable-table-Dqql93gq.js";
 export { PkEditableTable, getCustomCellSlotName, isCustomColumn, nextRowId };

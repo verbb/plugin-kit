@@ -6,6 +6,7 @@ export declare class PkTabBase extends PkElement {
     selected: boolean;
     focusIndex: number;
     panelId?: string;
+    private readonly laneSlots;
     focusControl(): void;
     protected handleClick(): void;
     protected handleKeyDown(event: KeyboardEvent): void;

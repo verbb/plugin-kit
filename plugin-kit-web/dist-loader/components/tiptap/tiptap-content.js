@@ -1,7 +1,7 @@
-import { c as n, g as i, h as b, l as customElement, o as e } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, g as b, l as n, s as e, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { A as Editor } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, s as createTiptapExtensions, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles--Ofa6CGA.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, s as createTiptapExtensions, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-BshDWxgr.js";
 import { r as valueToContent } from "../../chunks/editor-CS16rBkM.js";
 //#region src/components/tiptap/pk-tiptap-content.styles.ts
 var pkTiptapContentStyles = i`

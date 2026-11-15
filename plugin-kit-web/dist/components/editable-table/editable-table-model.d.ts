@@ -37,6 +37,12 @@ export type PkEditableTableRow = Record<string, unknown> & {
     _id?: string;
 };
 /**
+ * A short name for a row, so each row's controls can be told apart by assistive technology ("Delete Phone" rather
+ * than "Delete row" on every row). The row modifier's title wins, then the first text-like cell with a value, then
+ * the row's position.
+ */
+export declare function getRowAccessibleName(row: PkEditableTableRow, columns: PkEditableTableColumn[], rowIndex: number, title?: string): string;
+/**
  * Descriptor for an extra row-menu item (rendered inside the ellipsis menu).
  * Nested host→menu slots cannot feed `pk-dropdown-menu` light DOM, so extras
  * stay data-driven; frameworks handle product logic via `pk-row-menu-select`.

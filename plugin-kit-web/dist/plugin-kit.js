@@ -1,5 +1,6 @@
 import { t as getDismissibleStackSnapshot } from "./chunks/dismissible-stack-CwhtwAyo.js";
 import { n as getScrollLockDepth, t as forceClearScrollLock } from "./chunks/scroll-lock-DE1pElMQ.js";
+import { n as translatePluginKit, t as pluginKitTranslationCategory } from "./chunks/translate-DrB3jtbL.js";
 import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-LsoSCCPx.js";
 import { t as BUNDLER_TAG_IMPORT_PATHS } from "./chunks/component-registry-2AzJzAys.js";
 //#region src/utils/overlay-recovery.ts
@@ -262,6 +263,6 @@ var mountShadowApp = ({ element, styles = [], styleAttr = "data-pk-shadow-style"
 	};
 };
 //#endregion
-export { DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, diagnoseOverlayBlockers, discover, getBasePath, mountShadowApp, preventTurboFouce, recoverOverlays, setBasePath, setPortalClassName, setPortalContainer, startLoader, stopLoader };
+export { DISCOVERY_COMPLETE_EVENT, FOUCE_TIMEOUT_MS, allDefined, BUNDLER_TAG_IMPORT_PATHS as componentImportPaths, configurePluginKitWeb, diagnoseOverlayBlockers, discover, getBasePath, mountShadowApp, pluginKitTranslationCategory, preventTurboFouce, recoverOverlays, setBasePath, setPortalClassName, setPortalContainer, startLoader, stopLoader, translatePluginKit };
 
 //# sourceMappingURL=plugin-kit.js.map

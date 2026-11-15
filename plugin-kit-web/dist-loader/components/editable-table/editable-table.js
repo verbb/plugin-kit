@@ -1,22 +1,22 @@
-import { a as e, c as n, d as o, g as i, h as b, l as customElement, n as c, p as A, s as r } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, c as r, f as o, g as b, l as n, m as A, n as c, o as e, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, i as PkFormAssociatedElement } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { A as gripMove, E as ellipsis, Y as plus, k as gear, l as arrowUp, o as arrowDown, ot as xmark } from "../../chunks/svg-C4lXkZYF.js";
 import { t as getIcon } from "../../chunks/registry-CJc164pT.js";
 import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
-import "../../chunks/pk-button-BdQPLDZ6.js";
+import "../../chunks/pk-button-Bf21dtz_.js";
 import { t as RequiredValidator } from "../../chunks/required-validator-I58oJGZ3.js";
-import "../../chunks/pk-checkbox-CNj97a9K.js";
-import "../../chunks/pk-color-input-CgAGKYZu.js";
-import "../../chunks/pk-input-BydhQD-c.js";
-import "../../chunks/pk-textarea-BrWKK6ep.js";
-import "../../chunks/pk-dropdown-item-D8ZJOYkK.js";
-import "../../chunks/pk-dropdown-menu-CCpLuMBO.js";
-import "../../chunks/pk-lightswitch-DGgzt0bR.js";
-import "../../chunks/pk-option-Ntx0h3xV.js";
-import "../../chunks/pk-select-VkGHA3Q_.js";
-import "../../chunks/pk-date-picker-BdUgt4sx.js";
-import "../../chunks/pk-combobox-DrFb9WnA.js";
-import "../../chunks/pk-time-picker-CLaAkMS6.js";
+import "../../chunks/pk-checkbox-Fh9M_K2o.js";
+import "../../chunks/pk-color-input-C051Uj4q.js";
+import "../../chunks/pk-input-CJThWovk.js";
+import "../../chunks/pk-textarea-BdFf4chA.js";
+import "../../chunks/pk-dropdown-item-C5GWez_I.js";
+import "../../chunks/pk-dropdown-menu-C6xTbRDi.js";
+import "../../chunks/pk-lightswitch-Cp0FXgWZ.js";
+import "../../chunks/pk-option-C2xezUFR.js";
+import "../../chunks/pk-select-DyQ67nj7.js";
+import "../../chunks/pk-date-picker-g9eJCREq.js";
+import "../../chunks/pk-combobox-CRufaQwy.js";
+import "../../chunks/pk-time-picker-DEEHH96V.js";
 //#region src/components/editable-table/editable-table-dnd.ts
 /**
 * Table-native pointer drag for `<pk-editable-table>` rows.
@@ -696,6 +696,33 @@ var pkEditableTableStyles = i`
 `;
 //#endregion
 //#region src/components/editable-table/editable-table-model.ts
+/** Column types whose value is readable text that can name its row. */
+var ROW_NAMING_TYPES = /* @__PURE__ */ new Set([
+	"text",
+	"textarea",
+	"email",
+	"url",
+	"heading",
+	"label",
+	"handle",
+	"value"
+]);
+/**
+* A short name for a row, so each row's controls can be told apart by assistive technology ("Delete Phone" rather
+* than "Delete row" on every row). The row modifier's title wins, then the first text-like cell with a value, then
+* the row's position.
+*/
+function getRowAccessibleName(row, columns, rowIndex, title) {
+	const explicit = title?.trim();
+	if (explicit) return explicit;
+	for (const column of columns) {
+		if (!ROW_NAMING_TYPES.has(column.type ?? "text")) continue;
+		const value = row[column.name];
+		const text = typeof value === "string" || typeof value === "number" ? String(value).trim() : "";
+		if (text) return text.length > 60 ? `${text.slice(0, 59)}…` : text;
+	}
+	return `Row ${rowIndex + 1}`;
+}
 var GENERATED_CELL_MODE = {
 	EMPTY: "empty",
 	AUTO: "auto",
@@ -867,6 +894,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		this.internalRows = [];
 		this.dndReady = false;
 		this.generatedCellModes = /* @__PURE__ */ new Map();
+		this.rowNames = /* @__PURE__ */ new Map();
 		this.dndController = new EditableTableDndController({ onReorderTo: (orderedIds) => {
 			this.commitReorderByIds(orderedIds);
 		} });
@@ -960,6 +988,12 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 			...patch,
 			name: column.name
 		};
+	}
+	/** A cell control's accessible name: its column, then its row, such as "Status, Phone". */
+	cellLabel(column, rowIndex) {
+		const columnLabel = column.label ?? column.name;
+		const rowName = this.rowNames.get(rowIndex);
+		return rowName ? `${columnLabel}, ${rowName}` : columnLabel;
 	}
 	resolveRowModifier(row, rowIndex) {
 		const patch = this.modifyRow?.(row, rowIndex);
@@ -1346,7 +1380,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ""}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event) => {
 			this.updateCell(rowIndex, column, this.readValueFromEvent(event));
 		}}
@@ -1361,7 +1395,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
             placeholder=${column.placeholder ?? ""}
             ?disabled=${this.disabled}
             ?invalid=${invalid}
-            aria-label=${column.label ?? column.name}
+            aria-label=${this.cellLabel(column, rowIndex)}
             @pk-change=${(event) => {
 			this.updateCell(rowIndex, column, this.readValueFromEvent(event));
 		}}
@@ -1389,7 +1423,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? A}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @input=${onInput}
             ></pk-textarea>`;
 		if (type === "date") return b`<pk-date-picker
@@ -1400,7 +1434,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ""}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event) => {
 			this.updateCell(rowIndex, column, this.readValueFromEvent(event));
 		}}
@@ -1413,7 +1447,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? ""}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event) => {
 			this.updateCell(rowIndex, column, this.readValueFromEvent(event));
 		}}
@@ -1427,14 +1461,14 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 placeholder=${column.placeholder ?? A}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @input=${onInput}
             ></pk-input>`;
 		if (type === "select") return this.renderSelectLike(column, value, rowIndex, invalid);
 		if (type === "combobox") return this.renderSelectLike(column, value, rowIndex, invalid, { combobox: true });
 		if (type === "checkbox") return b`<div class="cell-check">
                 <pk-checkbox
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1445,7 +1479,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
             </div>`;
 		if (type === "radio") return b`<div class="cell-check">
                 <pk-checkbox
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1457,7 +1491,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		if (type === "lightswitch") return b`<div class="cell-check cell-check--switch">
                 <pk-lightswitch
                     size="sm"
-                    aria-label=${column.label ?? column.name}
+                    aria-label=${this.cellLabel(column, rowIndex)}
                     .checked=${Boolean(value)}
                     ?disabled=${this.disabled}
                     ?invalid=${invalid}
@@ -1473,7 +1507,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                 .value=${String(value ?? "")}
                 ?disabled=${this.disabled}
                 ?invalid=${invalid}
-                aria-label=${column.label ?? column.name}
+                aria-label=${this.cellLabel(column, rowIndex)}
                 @pk-change=${(event) => {
 			this.updateCell(rowIndex, column, this.readValueFromEvent(event));
 		}}
@@ -1488,7 +1522,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
             placeholder=${column.placeholder ?? A}
             ?disabled=${this.disabled}
             ?invalid=${invalid}
-            aria-label=${column.label ?? column.name}
+            aria-label=${this.cellLabel(column, rowIndex)}
             @input=${onInput}
         ></pk-input>`;
 	}
@@ -1528,6 +1562,8 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
 		const rowCount = this.internalRows.length;
 		const rowId = String(row._id);
 		const rowMod = this.resolveRowModifier(row, rowIndex);
+		const rowName = getRowAccessibleName(row, columns, rowIndex, rowMod.title);
+		this.rowNames.set(rowIndex, rowName);
 		const extraMenuItems = this.resolveRowMenuItems(row, rowIndex);
 		const showRowMenu = this.allowReorder || this.allowInsert || extraMenuItems.length > 0;
 		const insertDisabled = this.disabled || !this.canAddRow();
@@ -1566,7 +1602,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         class="action-btn"
                                         variant="none"
                                         size="xs"
-                                        aria-label=${!this.dndReady && !this.disabled ? "Preparing drag…" : "Reorder row"}
+                                        aria-label=${!this.dndReady && !this.disabled ? "Preparing drag…" : `Reorder ${rowName}`}
                                         ?disabled=${this.disabled || !this.dndReady}
                                     >${o(START_GRIP_MOVE_ICON)}</pk-button>
                                 </span>` : A}
@@ -1577,7 +1613,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                         class="action-btn"
                                         variant="none"
                                         size="xs"
-                                        aria-label="Row actions"
+                                        aria-label=${`Actions for ${rowName}`}
                                         ?disabled=${this.disabled}
                                     >${o(START_ELLIPSIS_ICON)}</pk-button>
                                     ${this.renderExtraMenuItems(row, rowIndex)}
@@ -1625,7 +1661,7 @@ var PkEditableTable = class PkEditableTable extends PkFormAssociatedElement {
                                 class="action-btn action-delete"
                                 variant="none"
                                 size="xs"
-                                aria-label="Delete row"
+                                aria-label=${`Delete ${rowName}`}
                                 ?disabled=${this.disabled}
                                 @click=${() => {
 			this.removeRow(rowIndex);

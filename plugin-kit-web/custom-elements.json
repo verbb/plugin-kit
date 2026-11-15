@@ -22747,7 +22747,7 @@
                 "text": "Partial<DataTableLabels>"
               },
               "default": "{}",
-              "description": "Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}."
+              "description": "Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. Strings left out use Craft's shared `plugin-kit` translation, or English."
             },
             {
               "kind": "field",
@@ -28088,6 +28088,13 @@
             },
             {
               "kind": "field",
+              "name": "rowNames",
+              "privacy": "private",
+              "default": "new Map<number, string>()",
+              "description": "Each row's accessible name, from its last render, for the labels of the controls in its cells."
+            },
+            {
+              "kind": "field",
               "name": "dndController",
               "privacy": "private",
               "default": "new EditableTableDndController({ onReorderTo: (orderedIds) => { this.commitReorderByIds(orderedIds); }, })"
@@ -28225,6 +28232,31 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "cellLabel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "column",
+                  "type": {
+                    "text": "PkEditableTableColumn"
+                  }
+                },
+                {
+                  "name": "rowIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "A cell control's accessible name: its column, then its row, such as \"Status, Phone\"."
             },
             {
               "kind": "method",
@@ -34217,6 +34249,26 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "endHasAction",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleEndSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -43137,6 +43189,13 @@
               "attribute": "panelId"
             },
             {
+              "kind": "field",
+              "name": "laneSlots",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController(this, 'icon', 'status')"
+            },
+            {
               "kind": "method",
               "name": "focusControl",
               "return": {
@@ -43886,6 +43945,17 @@
                 "text": "string | undefined"
               },
               "attribute": "panelId",
+              "inheritedFrom": {
+                "name": "PkTabBase",
+                "module": "src/components/tabs/pk-tab-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "laneSlots",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new HasSlotController(this, 'icon', 'status')",
               "inheritedFrom": {
                 "name": "PkTabBase",
                 "module": "src/components/tabs/pk-tab-base.ts"
@@ -51318,7 +51388,7 @@
           ],
           "slots": [
             {
-              "description": "`pk-toggle` or `button[data-value]` items",
+              "description": "`pk-toggle` or `button[data-value]` items Name the group with `aria-label`, or with `aria-labelledby` pointing at visible text in the same document. The name is applied to the inner `role=\"group\"` element, which is the one assistive technology reads.",
               "name": ""
             }
           ],
@@ -51391,6 +51461,26 @@
                 "text": "string[]"
               },
               "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabel",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Accessible name for the group.",
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "labelledBy",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "IDs of elements whose text names the group, resolved in the host's document or shadow root.",
+              "attribute": "aria-labelledby"
             },
             {
               "kind": "field",
@@ -51506,6 +51596,17 @@
               "privacy": "private"
             },
             {
+              "kind": "method",
+              "name": "resolvedLabel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string | null"
+                }
+              },
+              "description": "An ID reference can't cross into the shadow root, so `aria-labelledby` is resolved to its text here and given\nto the inner group as its label."
+            },
+            {
               "kind": "field",
               "name": "shadowRootOptions",
               "type": {
@@ -51605,6 +51706,24 @@
               },
               "default": "false",
               "fieldName": "multiple"
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "Accessible name for the group.",
+              "fieldName": "ariaLabel"
+            },
+            {
+              "name": "aria-labelledby",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "IDs of elements whose text names the group, resolved in the host's document or shadow root.",
+              "fieldName": "labelledBy"
             }
           ],
           "superclass": {

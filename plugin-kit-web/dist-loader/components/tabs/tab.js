@@ -1,5 +1,6 @@
-import { c as n, g as i, h as b, l as customElement, p as A } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { _ as i, g as b, l as n, m as A, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
+import { t as HasSlotController } from "../../chunks/has-slot-DJv86HKx.js";
 //#region src/components/tabs/pk-tab-base.ts
 /** Shared tab trigger behaviour for all tab variants. */
 var PkTabBase = class extends PkElement {
@@ -9,6 +10,7 @@ var PkTabBase = class extends PkElement {
 		this.disabled = false;
 		this.selected = false;
 		this.focusIndex = -1;
+		this.laneSlots = new HasSlotController(this, "icon", "status");
 	}
 	focusControl() {
 		this.shadowRoot?.querySelector(".trigger")?.focus();
@@ -46,13 +48,13 @@ var PkTabBase = class extends PkElement {
                 @click=${this.handleClick}
                 @keydown=${this.handleKeyDown}
             >
-                <span part="icon" class="icon">
+                <span part="icon" class=${this.laneSlots.test("icon") ? "icon is-filled" : "icon"}>
                     <slot name="icon"></slot>
                 </span>
                 <span part="label" class="label">
                     <slot></slot>
                 </span>
-                <span part="status" class="status">
+                <span part="status" class=${this.laneSlots.test("status") ? "status is-filled" : "status"}>
                     <slot name="status"></slot>
                 </span>
             </button>
@@ -132,11 +134,15 @@ var pkTabStyles = i`
             flex: none;
             align-items: center;
             justify-content: center;
+        }
+
+        /* An icon sits on the flex midline, so it needs no line box. */
+        .icon {
             line-height: 0;
         }
 
-        .icon:has(::slotted(*)),
-        .status:has(::slotted(*)) {
+        .icon.is-filled,
+        .status.is-filled {
             display: inline-flex;
         }
 
@@ -163,9 +169,12 @@ var pkTabStyles = i`
             line-height: inherit;
         }
 
+        /* A status can be a text badge such as a count, so it keeps the label's line box. With none, a
+         * badge without its own line-height collapses to zero height. */
         .status {
             margin-inline-start: var(--pk-tabs-trigger-status-margin, 0);
             color: var(--pk-tabs-trigger-status-color, inherit);
+            line-height: var(--pk-tabs-trigger-line-height, 1.4);
         }
 
         .trigger:hover:not(:disabled):not([aria-disabled='true']):not([aria-selected='true']) {
@@ -175,10 +184,10 @@ var pkTabStyles = i`
         }
 
         /*
-         * Focus ring is only for :focus-visible on a non-selected tab (manual
-         * activation). Selected + focus-visible must NOT draw a ring — active
-         * chrome is the underline (mouse) or is replaced by the modal focus box
-         * via --pk-tabs-trigger-focus-selected-shadow when set.
+         * Keyboard focus always shows. A non-selected tab gets the plain ring; a
+         * selected tab gets --pk-tabs-trigger-focus-selected-shadow, which by
+         * default adds the same ring over the selected chrome (variants such as
+         * modal replace it with their own focus box).
          */
         .trigger:focus-visible:not([aria-selected='true']) {
             box-shadow: inset 0 0 0 2px var(--pk-color-sky-600);
@@ -210,6 +219,7 @@ var pkTabStyles = i`
         :host([selected]) .trigger:focus-visible {
             box-shadow: var(
                 --pk-tabs-trigger-focus-selected-shadow,
+                inset 0 0 0 2px var(--pk-color-sky-600),
                 var(--pk-tabs-trigger-selected-shadow, 0 0 #0000)
             );
         }

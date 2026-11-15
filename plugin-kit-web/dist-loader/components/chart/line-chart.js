@@ -1,8 +1,8 @@
-import { c as n, l as customElement } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate } from "../../chunks/pk-base-Dlxhq-0r.js";
+import { l as n, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { n as formatChange, t as createFormatter } from "../../chunks/format-gF_xvdEf.js";
 import { _ as LineController, b as PointElement, c as seriesColor, h as Chart, i as durationStep, m as CategoryScale, n as buildScales, t as areaGradient, u as withAlpha, v as LineElement, x as index, y as LinearScale } from "../../chunks/shared-B5LmQVDq.js";
-import { n as datasetMeta, t as PkChartElement } from "../../chunks/pk-chart-element-B3hoZMa8.js";
+import { n as datasetMeta, t as PkChartElement } from "../../chunks/pk-chart-element-PLmHqxZx.js";
 //#region src/components/chart/pk-line-chart.ts
 Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale);
 var COMPARISON_KEY = "__comparison";

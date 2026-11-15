@@ -1,22 +1,23 @@
-import { c as n, h as b, l as customElement, m as D, n as c, p as A, r as l, s as r, t as o$1, u as o } from "../../chunks/lit-DDs3j8Nc.js";
-import { c as __decorate, l as PkElement } from "../../chunks/pk-base-Dlxhq-0r.js";
-import "../../chunks/pk-copy-button-D08bgucM.js";
+import { n as translatePluginKit } from "../../chunks/translate-DrB3jtbL.js";
+import { c as r, d as o, g as b, h as D, i as l, l as n, m as A, n as c, t as o$1, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
+import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
+import "../../chunks/pk-copy-button-C7H5w59r.js";
 import { A as gripMove, E as ellipsis, G as magnifyingGlass, J as pen, S as clipboard, Z as slidersOutline, _ as chevronRight, g as chevronLeft, h as chevronDown, ot as xmark, v as chevronUp } from "../../chunks/svg-C4lXkZYF.js";
 import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
-import "../../chunks/pk-button-BdQPLDZ6.js";
-import "../../chunks/pk-spinner-DY7BqdmH.js";
-import "../../chunks/pk-state-panel-C6LQPYNf.js";
-import "../../chunks/pk-checkbox-CNj97a9K.js";
-import "../../chunks/pk-input-BydhQD-c.js";
-import "../../chunks/pk-dialog-CrNzS6PM.js";
-import "../../chunks/pk-dropdown-item-D8ZJOYkK.js";
-import "../../chunks/pk-dropdown-menu-CCpLuMBO.js";
-import "../../chunks/pk-status-label-C1Nx-WYa.js";
-import "../../chunks/pk-button-group-73VMub7G.js";
-import "../../chunks/pk-popover-DCcRr3_W.js";
-import "../../chunks/pk-option-Ntx0h3xV.js";
-import "../../chunks/pk-select-VkGHA3Q_.js";
-import { t as dataTableStyles } from "../../chunks/styles-DPyzUoC3.js";
+import "../../chunks/pk-button-Bf21dtz_.js";
+import "../../chunks/pk-spinner-CAy9QhxF.js";
+import "../../chunks/pk-state-panel-4O8l-2t8.js";
+import "../../chunks/pk-checkbox-Fh9M_K2o.js";
+import "../../chunks/pk-input-CJThWovk.js";
+import "../../chunks/pk-dialog-BK5fz7X9.js";
+import "../../chunks/pk-dropdown-item-C5GWez_I.js";
+import "../../chunks/pk-dropdown-menu-C6xTbRDi.js";
+import "../../chunks/pk-status-label-C3qjZAql.js";
+import "../../chunks/pk-button-group-DTbmVxiB.js";
+import "../../chunks/pk-popover-B_vFFbxc.js";
+import "../../chunks/pk-option-C2xezUFR.js";
+import "../../chunks/pk-select-DyQ67nj7.js";
+import { t as dataTableStyles } from "../../chunks/styles-CsDFFZVn.js";
 //#region src/components/data-table/filter-model.ts
 /** The first operator preserves the original value-only filter semantics. */
 function dataTableFilterOperators(filter) {
@@ -122,7 +123,12 @@ function matchesDataTableFilter(filter, value, expected, requested, locale) {
 	}
 }
 //#endregion
-//#region src/components/data-table/model.ts
+//#region src/components/data-table/labels.ts
+/**
+* English defaults for every data table string, keyed by the `labels` property that overrides them. Each value is
+* also the string's key in the shared `plugin-kit` Craft translation category, so changing the wording changes
+* the key that sites translate. This module has no imports so the translation generator can read it directly.
+*/
 var dataTableLabels = {
 	search: "Search",
 	clearSearch: "Clear search",
@@ -204,11 +210,13 @@ var dataTableLabels = {
 	reorderRowHelp: "Drag to reorder, or use Up and Down. Home moves to the start of this page; End moves to the end. Escape cancels a drag.",
 	reorderRowsFiltered: "Clear search and filters to reorder rows.",
 	rowReordered: "{label} moved to position {position} of {count} on this page.",
-	rowReorderCancelled: "Row move cancelled.",
+	rowReorderCancelled: "Row move canceled.",
 	moveUp: "Move {label} earlier",
 	moveDown: "Move {label} later",
 	sort: "Sort by {label}"
 };
+//#endregion
+//#region src/components/data-table/model.ts
 var defaultDataTableQuery = () => ({
 	search: "",
 	sort: [],
@@ -320,7 +328,7 @@ var DataTableFilterController = class {
 		host.addController(this);
 	}
 	text(key, values = {}) {
-		return (this.host.labels[key] ?? dataTableLabels[key]).replace(/\{(\w+)\}/g, (match, key) => String(values[key] ?? match));
+		return (this.host.labels[key] ?? translatePluginKit(dataTableLabels[key])).replace(/\{(\w+)\}/g, (match, key) => String(values[key] ?? match));
 	}
 	get dialog() {
 		return this.host.renderRoot.querySelector(".filter-dialog");
@@ -1178,7 +1186,7 @@ var PkDataTable = class PkDataTable extends PkElement {
 		((preferred && !preferred.disabled ? preferred : buttons.find((item) => !item.disabled)) ?? this.renderRoot.querySelector(".scroll"))?.focus({ preventScroll: true });
 	}
 	text(key, values = {}) {
-		return (this.labels[key] ?? dataTableLabels[key]).replace(/\{(\w+)\}/g, (match, name) => String(values[name] ?? match));
+		return (this.labels[key] ?? translatePluginKit(dataTableLabels[key])).replace(/\{(\w+)\}/g, (match, name) => String(values[name] ?? match));
 	}
 	emit(name, detail = {}) {
 		this.dispatchEvent(new CustomEvent(name, {
