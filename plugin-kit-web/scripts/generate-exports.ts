@@ -27,6 +27,8 @@ const STATIC_EXPORTS = {
         types: './dist/register-components.d.ts',
         import: './dist/register-components.js',
     },
+    // English source strings for hosts that vendor the `plugin-kit` translation category, such as Verbb Base.
+    './translations/plugin-kit.json': './translations/plugin-kit.json',
     './plugin-kit.loader.js': {
         types: './dist-loader/plugin-kit.loader.d.ts',
         default: './dist-loader/plugin-kit.loader.js',

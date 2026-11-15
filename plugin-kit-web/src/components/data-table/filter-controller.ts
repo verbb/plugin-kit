@@ -6,6 +6,7 @@ import type { PkDataTable } from './pk-data-table.js';
 import type { PkDialog } from '../dialog/pk-dialog.js';
 import type { PkSelect } from '../select/pk-select.js';
 import type { PkInput } from '../input/pk-input.js';
+import { translatePluginKit } from '../../utils/translate.js';
 import {
     dataTableLabels,
     type DataTableFilter,
@@ -64,7 +65,7 @@ export class DataTableFilterController implements ReactiveController {
         key: keyof DataTableLabels,
         values: Record<string, string | number> = {},
     ): string {
-        return (this.host.labels[key] ?? dataTableLabels[key]).replace(
+        return (this.host.labels[key] ?? translatePluginKit(dataTableLabels[key])).replace(
             /\{(\w+)\}/g,
             (match, key: string) => String(values[key] ?? match),
         );

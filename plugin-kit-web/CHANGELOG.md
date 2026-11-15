@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+### Added
+- Added a shared `plugin-kit` translation category for Kit's built-in strings. `pk-data-table` now translates its default labels through `Craft.t()` in that category and falls back to English, so a site translates strings such as “Clear search” once for every plugin. The `labels` property still overrides any of them.
+- Added `@verbb/plugin-kit-web/translations/plugin-kit.json`, which lists the English source strings for hosts that register the `plugin-kit` category, and exported `translatePluginKit()` and `pluginKitTranslationCategory` from `@verbb/plugin-kit-web/plugin-kit`.
+
 ### Changed
+- Changed the `pk-data-table` `rowReorderCancelled` label from “Row move cancelled.” to US English “Row move canceled.”, to match Craft's interface copy.
 - `pk-field` now loads its Markdown renderer on first use, so markdown-it is no longer bundled with every labelled control. Field text appears as written until the renderer loads, then formatted.
 
 ### Fixed

@@ -13,6 +13,7 @@
         "test:popover-focus": "node scripts/test-popover-focus.mjs",
         "test:data-table-remote": "node scripts/test-data-table-remote.mjs",
         "test:data-table": "node scripts/test-data-table.mjs",
+        "test:data-table-translations": "node scripts/test-data-table-translations.mjs",
         "test:charts": "node scripts/test-charts.mjs"
     },
     "dependencies": {

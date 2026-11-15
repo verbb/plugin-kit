@@ -76,6 +76,10 @@ For externally managed fetching, omit `dataSource`, handle the query event, and 
 
 See the [canonical Data Table guide](/web/components/data-table) for complete live examples, column types, filter definitions, cursor pagination, state ownership, localisation and accessibility. `toolbar-start`, `toolbar-controls`, `toolbar-end`, `filters`, `selection-actions`, `empty` and `footer` slots provide the same extension points in every adapter.
 
+## Translation
+
+Built-in strings translate through Craft's shared `plugin-kit` category and fall back to English, so a site translates them once for every plugin. The `labels` prop replaces any of them for one table. See [translation](/web/components/data-table#translation) for the details.
+
 <!-- pk-api:begin -->
 
 ## API
@@ -110,7 +114,7 @@ See the [canonical Data Table guide](/web/components/data-table) for complete li
 | `hideToolbar` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `isRowSelectable` | Return false to exclude a record from selection.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; boolean \| undefined</code></small> |
 | `label` | Accessible name for the table and its scroll region.<br><small><strong>Type</strong> <code>string</code></small><br><small><strong>Default</strong> <code>Records</code></small> |
-| `labels` | Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}.<br><small><strong>Type</strong> <code>Partial&lt;DataTableLabels&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
+| `labels` | Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. Strings left out use Craft's shared `plugin-kit` translation, or English.<br><small><strong>Type</strong> <code>Partial&lt;DataTableLabels&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 | `layout` | Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.<br><small><strong>Type</strong> <code>'embedded' \| 'index'</code></small><br><small><strong>Default</strong> <code>embedded</code></small> |
 | `loading` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `locale` | <small><strong>Type</strong> <code>string</code></small> |

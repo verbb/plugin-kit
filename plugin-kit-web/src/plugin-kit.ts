@@ -9,6 +9,7 @@ export {
 } from './utilities/autoloader.js';
 export { getBasePath, setBasePath } from './utilities/base-path.js';
 export { configurePluginKitWeb, type PluginKitWebConfig } from './utils/config.js';
+export { pluginKitTranslationCategory, translatePluginKit } from './utils/translate.js';
 export {
     setPortalClassName,
     setPortalContainer,

@@ -34,6 +34,7 @@ import '../status-label/pk-status-label.js';
 import '../state-panel/pk-state-panel.js';
 import '../spinner/pk-spinner.js';
 import '../copy-button/pk-copy-button.js';
+import { translatePluginKit } from '../../utils/translate.js';
 import { dataTableStyles } from './styles.js';
 import { DataTableFilterController } from './filter-controller.js';
 import { DataTableRowOrderController } from './row-order-controller.js';
@@ -200,7 +201,7 @@ export class PkDataTable extends PkElement {
         string | ((row: DataTableRow) => string);
     @property() locale = '';
     @property({ attribute: 'time-zone' }) timeZone = '';
-    /** Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. */
+    /** Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. Strings left out use Craft's shared `plugin-kit` translation, or English. */
     @property({ attribute: false }) labels: Partial<DataTableLabels> = {};
 
     @state() private loaded?: DataTableResult;
@@ -471,7 +472,7 @@ export class PkDataTable extends PkElement {
         key: keyof DataTableLabels,
         values: Record<string, string | number> = {},
     ): string {
-        return (this.labels[key] ?? dataTableLabels[key]).replace(
+        return (this.labels[key] ?? translatePluginKit(dataTableLabels[key])).replace(
             /\{(\w+)\}/g,
             (match, name: string) => String(values[name] ?? match),
         );

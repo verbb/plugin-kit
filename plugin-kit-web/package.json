@@ -21,6 +21,7 @@
         "dist",
         "dist-loader",
         "custom-elements.json",
+        "translations",
         "LICENSE.md",
         "CHANGELOG.md"
     ],
@@ -44,6 +45,7 @@
             "types": "./dist/register-components.d.ts",
             "import": "./dist/register-components.js"
         },
+        "./translations/plugin-kit.json": "./translations/plugin-kit.json",
         "./plugin-kit.loader.js": {
             "types": "./dist-loader/plugin-kit.loader.d.ts",
             "default": "./dist-loader/plugin-kit.loader.js"
@@ -1174,11 +1176,12 @@
         }
     },
     "scripts": {
-        "build": "npm run gen:exports && npm run gen:register-components && npm run gen:fouce && npm run gen:cem && vite build && vite build --config vite.loader.config.ts",
+        "build": "npm run gen:exports && npm run gen:register-components && npm run gen:fouce && npm run gen:translations && npm run gen:cem && vite build && vite build --config vite.loader.config.ts",
         "build:loader": "vite build --config vite.loader.config.ts",
         "gen:exports": "node --experimental-strip-types scripts/generate-exports.ts",
         "gen:register-components": "node --experimental-strip-types scripts/generate-register-components.ts",
         "gen:fouce": "node --experimental-strip-types scripts/generate-fouce-css.ts",
+        "gen:translations": "node --experimental-strip-types scripts/generate-translations.ts",
         "gen:cem": "cem analyze",
         "predev": "npm run gen:register-components && npm run gen:fouce",
         "prepare": "npm run gen:register-components && npm run gen:fouce",

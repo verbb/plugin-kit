@@ -334,7 +334,7 @@ Set `pagination="cursor"` for endpoints that return opaque cursors rather than p
 
 ## Empty and Error States
 
-An empty dataset and a filtered query with no matches have distinct messages. Loading and updating feedback are announced. Failed loads show retry while preventing actions against stale rows. Override `labels` to translate UI text; interpolation keys are retained in translated strings. Use the `empty` slot for a product-specific next step.
+An empty dataset and a filtered query with no matches have distinct messages. Loading and updating feedback are announced. Failed loads show retry while preventing actions against stale rows. These messages follow the [translation](#translation) rules like every other built-in string. Use the `empty` slot for a product-specific next step.
 
 <ComponentPreview src="./examples/data-table-empty.preview.web.ts" />
 
@@ -388,6 +388,14 @@ Change the columns or sort below, then choose **Recreate table** or reload the p
 
 <ComponentPreview src="./examples/data-table-persistence.preview.web.ts" />
 
+## Translation
+
+Built-in strings such as “Clear search”, the filter comparisons and the pagination text translate through Craft's `plugin-kit` category, which every plugin on the page shares. Kit asks `Craft.t()` for each string as it renders and shows the English source when no translation is registered or the page isn't in Craft. In Verbb plugins, Verbb Base registers the category, so a site translates these strings once in `translations/<language>/plugin-kit.php` and every plugin picks them up. Keep placeholders such as `{label}` and `{count}` in translated strings, because Kit fills them after translating.
+
+The English source strings are published at `@verbb/plugin-kit-web/translations/plugin-kit.json` for hosts that register the category themselves.
+
+Set `labels` to replace any string for one table. Kit uses a provided label as written, so translate it in your own category first.
+
 ## Layout and Accessibility
 
 The component uses a native table with a caption and sortable heading buttons. Controls have accessible labels and normal keyboard navigation; the columns menu provides keyboard-operable reorder buttons. Wide tables scroll inside their region. Text wraps by default; use `wrap: false` to keep a value on one line, `align` for alignment, `width` for a preferred width and `size="compact"` for denser rows. Custom renderers remain responsible for meaningful link/button names and their own interactive content.
@@ -428,7 +436,7 @@ Pagination bounds the rendered page. Virtualisation, cell editing, spreadsheet n
 | `hideToolbar` `hide-toolbar` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `isRowSelectable` | Return false to exclude a record from selection.<br><small><strong>Type</strong> <code>(         row: DataTableRow,     ) =&gt; boolean \| undefined</code></small> |
 | `label` | Accessible name for the table and its scroll region.<br><small><strong>Type</strong> <code>string</code></small><br><small><strong>Default</strong> <code>Records</code></small> |
-| `labels` | Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}.<br><small><strong>Type</strong> <code>Partial&lt;DataTableLabels&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
+| `labels` | Override any UI string; interpolation uses {id}, {label}, {count}, {start}, {end}, {total}. Strings left out use Craft's shared `plugin-kit` translation, or English.<br><small><strong>Type</strong> <code>Partial&lt;DataTableLabels&gt;</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 | `layout` | Embedded tables flow with their content; index tables keep footer controls and horizontal scrolling in reach.<br><small><strong>Type</strong> <code>'embedded' \| 'index'</code></small><br><small><strong>Default</strong> <code>embedded</code></small> |
 | `loading` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `locale` | <small><strong>Type</strong> <code>string</code></small> |

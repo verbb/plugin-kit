@@ -1,0 +1,38 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DataTable translations</title></head>
+<body><section><pk-data-table id="translated"></pk-data-table></section><section><pk-data-table id="overridden"></pk-data-table></section>
+<script>
+// A stand-in for Craft's translator: registered strings by category, falling back to the message itself.
+window.Craft = {
+    translations: {
+        'plugin-kit': {
+            'Search': 'Suchen',
+            '{label} pagination': 'Seitennavigation für {label}',
+            'Filters': 'Filter',
+        },
+        // A plugin's own category must not leak into Plugin Kit's strings.
+        'friends': { 'Clear search': 'Friends clear search' },
+    },
+    calls: [],
+    t(category, message, params) {
+        this.calls.push(category);
+        return this.translations[category]?.[message] ?? message;
+    },
+};
+</script>
+<script type="module">
+import '@verbb/plugin-kit-web/tokens.css';
+import { dataTableLabels } from '@verbb/plugin-kit-web/components/data-table/pk-data-table.js';
+window.dataTableLabels = dataTableLabels;
+const rows = [{ id: 1, name: 'Alex Morgan' }, { id: 2, name: 'Blair Chen' }];
+const columns = [{ id: 'name', label: 'Name' }];
+const filters = [{ id: 'name', label: 'Name', type: 'text' }];
+for (const id of ['translated', 'overridden']) {
+    const table = document.getElementById(id);
+    table.label = 'Contacts';
+    table.rows = rows;
+    table.columns = columns;
+    table.filters = filters;
+}
+document.getElementById('overridden').labels = { search: 'Find contacts' };
+</script>
+</body></html>

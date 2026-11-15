@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- `DataTable` now translates its built-in strings through Craft's shared `plugin-kit` category and falls back to English, so a site translates them once for every plugin. The `labels` prop still overrides any of them.
+
 ### Changed
 - `configure()`, `PluginKitProvider` and the translation utilities now import the forms package's translate entry, so an app that never renders a schema form no longer bundles the form engine.
 
