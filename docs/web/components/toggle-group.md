@@ -38,6 +38,10 @@ Use single selection for mutually exclusive choices, and multiple selection for 
 
 <ComponentPreview src="./examples/toggle-group-selection.preview.web.ts" />
 
+## Accessibility
+
+The group is announced with `role="group"`. Name it with `aria-label`, or with `aria-labelledby` pointing at visible text in the same document, such as a field label. The group passes that name to its inner group element, which is the one assistive technology reads, so a label on the element works as it would on a native group.
+
 <!-- pk-api:begin -->
 
 ## API
@@ -46,13 +50,15 @@ Use single selection for mutually exclusive choices, and multiple selection for 
 
 | Name | Description |
 | --- | --- |
-| `(default)` | `pk-toggle` or `button[data-value]` items |
+| `(default)` | `pk-toggle` or `button[data-value]` items Name the group with `aria-label`, or with `aria-labelledby` pointing at visible text in the same document. The name is applied to the inner `role="group"` element, which is the one assistive technology reads. |
 
 ### Attributes & Properties
 
 | Name | Description |
 | --- | --- |
+| `ariaLabel` `aria-label` | Accessible name for the group.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `joined` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>true</code></small> |
+| `labelledBy` `aria-labelledby` | IDs of elements whose text names the group, resolved in the host's document or shadow root.<br><small><strong>Type</strong> <code>string \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `multiple` | <small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `orientation` | <small><strong>Type</strong> <code>PkToggleGroupOrientation</code></small><br><small><strong>Default</strong> <code>horizontal</code></small> |
 | `size` | <small><strong>Type</strong> <code>PkToggleSize</code></small><br><small><strong>Default</strong> <code>default</code></small> |

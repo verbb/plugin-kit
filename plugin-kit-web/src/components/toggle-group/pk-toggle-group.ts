@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property, state } from '../../decorators.js';
 import type { PropertyValues } from 'lit';
 
@@ -18,6 +18,9 @@ const TOGGLE_ORIENTATION_ATTR = 'data-tg-orientation';
  * Group of toggle buttons with shared selection.
  *
  * @slot - `pk-toggle` or `button[data-value]` items
+ *
+ * Name the group with `aria-label`, or with `aria-labelledby` pointing at visible text in the same document. The
+ * name is applied to the inner `role="group"` element, which is the one assistive technology reads.
  *
  * @csspart base - Group container
  */
@@ -48,12 +51,26 @@ export class PkToggleGroup extends PkElement {
     @property({ type: Array, attribute: false })
     value: string[] = [];
 
+    /** Accessible name for the group. */
+    @property({ attribute: 'aria-label' })
+    override ariaLabel: string | null = null;
+
+    /** IDs of elements whose text names the group, resolved in the host's document or shadow root. */
+    @property({ attribute: 'aria-labelledby' })
+    labelledBy: string | null = null;
+
     @state()
     private items: HTMLElement[] = [];
 
     override connectedCallback(): void {
         super.connectedCallback();
         this.syncJoinedFromSpacing();
+
+        // The text `aria-labelledby` points at may come later in the document than the group.
+        if (this.labelledBy) {
+            queueMicrotask(() => this.requestUpdate());
+        }
+
         this.addEventListener('click', this.handleClick);
         this.addEventListener('slotchange', this.syncItems);
     }
@@ -211,12 +228,36 @@ export class PkToggleGroup extends PkElement {
         }));
     };
 
+    /**
+     * An ID reference can't cross into the shadow root, so `aria-labelledby` is resolved to its text here and given
+     * to the inner group as its label.
+     */
+    private resolvedLabel(): string | null {
+        if (this.ariaLabel) {
+            return this.ariaLabel;
+        }
+
+        if (!this.labelledBy) {
+            return null;
+        }
+
+        const root = this.getRootNode() as Document | ShadowRoot;
+        const text = this.labelledBy
+            .split(/\s+/)
+            .map((id) => root.getElementById?.(id)?.textContent?.trim() ?? '')
+            .filter(Boolean)
+            .join(' ');
+
+        return text || null;
+    }
+
     override render() {
         return html`
             <div
                 part="base"
                 class="group"
                 role="group"
+                aria-label=${this.resolvedLabel() ?? nothing}
                 style=${`--pk-toggle-group-spacing: ${this.spacing}`}
                 @slotchange=${this.syncItems}
             >

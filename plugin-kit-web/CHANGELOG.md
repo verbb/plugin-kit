@@ -5,6 +5,9 @@
 ### Changed
 - `pk-field` now loads its Markdown renderer on first use, so markdown-it is no longer bundled with every labelled control. Field text appears as written until the renderer loads, then formatted.
 
+### Fixed
+- Fixed `pk-toggle-group` having no accessible name, because `aria-label` and `aria-labelledby` on the element never reached its inner group. Both now name the group that assistive technology reads.
+
 ## 2.2.0 - 2026-11-10
 
 ### Added
