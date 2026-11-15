@@ -135,7 +135,7 @@ export const pkInputStyles = css`
         }
 
         /* Copy (and similar) inside the field: flex-reserved space, not absolute overlay. */
-        .form-control__end:has(::slotted(pk-copy-button)) {
+        .form-control__end.has-action {
             align-items: stretch;
         }
 

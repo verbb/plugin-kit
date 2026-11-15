@@ -182,6 +182,9 @@ export class PkButtonGroup extends PkElement {
         const items = this.defaultSlot?.assignedElements({ flatten: true }) ?? [];
         const segments = splitSegments(items);
 
+        // CSS can't ask whether a separator is slotted (`:has(::slotted(...))` isn't supported), so the host says so.
+        this.toggleAttribute('data-has-separator', items.some((element) => element.localName === 'pk-button-group-separator'));
+
         for (const element of items) {
             clearLayoutAttrs(element);
         }

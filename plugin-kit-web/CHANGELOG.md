@@ -11,6 +11,7 @@
 - Fixed `pk-tab` never showing its `icon` and `status` slots, because the selector that revealed them isn't supported by browsers.
 - Fixed a selected `pk-tab` showing no focus indicator under keyboard focus. Every variant now draws a focus ring, and `--pk-tabs-trigger-focus-selected-shadow` still replaces it.
 - Fixed a text badge in a `pk-tab` status slot collapsing to zero height.
+- Fixed a `pk-copy-button` in a `pk-input`'s `end` slot never stretching to the control's height, and `pk-button-group` never hiding its join dividers around an explicit `pk-button-group-separator`. Both relied on a selector browsers don't support.
 
 ## 2.2.0 - 2026-11-10
 

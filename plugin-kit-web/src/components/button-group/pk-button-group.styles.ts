@@ -122,7 +122,7 @@ export const pkButtonGroupStyles = css`
             --pk-btn-on: var(--pk-color-white);
         }
 
-        :host:has(::slotted(pk-button-group-separator)) {
+        :host([data-has-separator]) {
             --pk-btn-group-separator-color: transparent;
         }
 

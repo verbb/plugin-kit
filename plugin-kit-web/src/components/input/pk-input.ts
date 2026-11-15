@@ -270,6 +270,18 @@ export class PkInput extends PkFormAssociatedElement {
         this.input.focus();
     }
 
+    /*
+     * A copy button in the end slot fills the control's height instead of sitting as a small glyph. CSS can't ask
+     * what's slotted (`:has(::slotted(...))` isn't supported), so the end lane is marked from its slotted elements.
+     */
+    private endHasAction(): boolean {
+        return [...this.children].some((child) => child.getAttribute('slot') === 'end' && child.localName === 'pk-copy-button');
+    }
+
+    private handleEndSlotChange(): void {
+        this.requestUpdate();
+    }
+
     override render() {
         const hasLabel = this.hasLabelContent();
         const hasInstructions = this.hasInstructionsContent();
@@ -362,8 +374,8 @@ export class PkInput extends PkFormAssociatedElement {
 
                     ${hasEnd
                         ? html`
-                            <span part="end" class="form-control__end">
-                                <slot name="end"></slot>
+                            <span part="end" class=${this.endHasAction() ? 'form-control__end has-action' : 'form-control__end'}>
+                                <slot name="end" @slotchange=${this.handleEndSlotChange}></slot>
                             </span>
                         `
                         : html`<slot name="end" hidden></slot>`}
