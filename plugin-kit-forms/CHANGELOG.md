@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.1 - 2026-11-15
+
 ### Added
 - Added a `@verbb/plugin-kit-forms/translate` entry with `translate`, `setTranslateFunction` and `setTranslationCategory` on their own.
 

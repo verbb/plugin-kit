@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.1 - 2026-11-15
+
 ### Added
 - `DataTable` now translates its built-in strings through Craft's shared `plugin-kit` category and falls back to English, so a site translates them once for every plugin. The `labels` prop still overrides any of them.
 
