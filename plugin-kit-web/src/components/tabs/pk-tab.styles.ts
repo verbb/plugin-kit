@@ -57,11 +57,15 @@ export const pkTabStyles = css`
             flex: none;
             align-items: center;
             justify-content: center;
+        }
+
+        /* An icon sits on the flex midline, so it needs no line box. */
+        .icon {
             line-height: 0;
         }
 
-        .icon:has(::slotted(*)),
-        .status:has(::slotted(*)) {
+        .icon.is-filled,
+        .status.is-filled {
             display: inline-flex;
         }
 
@@ -88,9 +92,12 @@ export const pkTabStyles = css`
             line-height: inherit;
         }
 
+        /* A status can be a text badge such as a count, so it keeps the label's line box. With none, a
+         * badge without its own line-height collapses to zero height. */
         .status {
             margin-inline-start: var(--pk-tabs-trigger-status-margin, 0);
             color: var(--pk-tabs-trigger-status-color, inherit);
+            line-height: var(--pk-tabs-trigger-line-height, 1.4);
         }
 
         .trigger:hover:not(:disabled):not([aria-disabled='true']):not([aria-selected='true']) {
@@ -100,10 +107,10 @@ export const pkTabStyles = css`
         }
 
         /*
-         * Focus ring is only for :focus-visible on a non-selected tab (manual
-         * activation). Selected + focus-visible must NOT draw a ring — active
-         * chrome is the underline (mouse) or is replaced by the modal focus box
-         * via --pk-tabs-trigger-focus-selected-shadow when set.
+         * Keyboard focus always shows. A non-selected tab gets the plain ring; a
+         * selected tab gets --pk-tabs-trigger-focus-selected-shadow, which by
+         * default adds the same ring over the selected chrome (variants such as
+         * modal replace it with their own focus box).
          */
         .trigger:focus-visible:not([aria-selected='true']) {
             box-shadow: inset 0 0 0 2px var(--pk-color-sky-600);
@@ -135,6 +142,7 @@ export const pkTabStyles = css`
         :host([selected]) .trigger:focus-visible {
             box-shadow: var(
                 --pk-tabs-trigger-focus-selected-shadow,
+                inset 0 0 0 2px var(--pk-color-sky-600),
                 var(--pk-tabs-trigger-selected-shadow, 0 0 #0000)
             );
         }

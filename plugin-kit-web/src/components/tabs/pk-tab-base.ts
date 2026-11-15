@@ -2,6 +2,7 @@ import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { PkElement } from '../../base/pk-element.js';
+import { HasSlotController } from '../../internal/has-slot.js';
 
 /** Shared tab trigger behaviour for all tab variants. */
 export class PkTabBase extends PkElement {
@@ -19,6 +20,12 @@ export class PkTabBase extends PkElement {
 
     @property()
     panelId?: string;
+
+    /*
+     * The icon and status lanes collapse when empty. CSS can't tell (`:has(::slotted(*))` isn't supported, which
+     * drops the whole rule), so the lanes are marked filled from their slots instead.
+     */
+    private readonly laneSlots = new HasSlotController(this, 'icon', 'status');
 
     focusControl(): void {
         this.shadowRoot?.querySelector<HTMLButtonElement>('.trigger')?.focus();
@@ -59,13 +66,13 @@ export class PkTabBase extends PkElement {
                 @click=${this.handleClick}
                 @keydown=${this.handleKeyDown}
             >
-                <span part="icon" class="icon">
+                <span part="icon" class=${this.laneSlots.test('icon') ? 'icon is-filled' : 'icon'}>
                     <slot name="icon"></slot>
                 </span>
                 <span part="label" class="label">
                     <slot></slot>
                 </span>
-                <span part="status" class="status">
+                <span part="status" class=${this.laneSlots.test('status') ? 'status is-filled' : 'status'}>
                     <slot name="status"></slot>
                 </span>
             </button>

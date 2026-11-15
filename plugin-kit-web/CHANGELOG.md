@@ -8,6 +8,9 @@
 ### Fixed
 - Fixed `pk-toggle-group` having no accessible name, because `aria-label` and `aria-labelledby` on the element never reached its inner group. Both now name the group that assistive technology reads.
 - Fixed every row of `pk-editable-table` giving its delete button, row menu, reorder handle and cell controls the same accessible name. Each is now named after its row, such as “Delete Phone”.
+- Fixed `pk-tab` never showing its `icon` and `status` slots, because the selector that revealed them isn't supported by browsers.
+- Fixed a selected `pk-tab` showing no focus indicator under keyboard focus. Every variant now draws a focus ring, and `--pk-tabs-trigger-focus-selected-shadow` still replaces it.
+- Fixed a text badge in a `pk-tab` status slot collapsing to zero height.
 
 ## 2.2.0 - 2026-11-10
 
