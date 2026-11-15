@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- `pk-field` now loads its Markdown renderer on first use, so markdown-it is no longer bundled with every labelled control. Field text appears as written until the renderer loads, then formatted.
+
 ## 2.2.0 - 2026-11-10
 
 ### Added
