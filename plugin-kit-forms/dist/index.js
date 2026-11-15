@@ -1,3 +1,4 @@
+import { setTranslateFunction, setTranslationCategory, translate } from "./translate.js";
 import { get, set } from "lodash-es";
 //#region \0rolldown/runtime.js
 var __create = Object.create;
@@ -1729,24 +1730,6 @@ var buildGroupedMessage = (message, parentLabel, childLabel) => {
 		return `${buildGroupLabel(parentLabel, (childLabel && attribute !== childLabel ? attribute : childLabel) || attribute)} ${suffix}`;
 	}
 	return `${groupLabel} ${message}`;
-};
-//#endregion
-//#region src/translate.ts
-var translationCategory = "plugin-handle";
-var translateFn;
-var setTranslationCategory = (category) => {
-	translationCategory = category.trim() || "plugin-handle";
-};
-var setTranslateFunction = (fn) => {
-	translateFn = fn;
-};
-var translate = (message, params) => {
-	if (translateFn) return translateFn(translationCategory, message, params);
-	if (typeof window !== "undefined") {
-		const craft = window.Craft;
-		if (craft?.t) return craft.t(translationCategory, message, params);
-	}
-	return message;
 };
 //#endregion
 //#region src/rules/email.ts

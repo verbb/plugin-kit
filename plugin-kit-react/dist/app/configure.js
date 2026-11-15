@@ -1,6 +1,6 @@
 import { setHostBridge } from "@verbb/plugin-kit-core";
 import { configurePluginKitWeb, setPortalClassName, setPortalContainer } from "@verbb/plugin-kit-web/plugin-kit";
-import { setTranslateFunction, setTranslationCategory } from "@verbb/plugin-kit-forms";
+import { setTranslateFunction, setTranslationCategory } from "@verbb/plugin-kit-forms/translate";
 //#region src/app/configure.ts
 var resolveCraftTranslate = () => {
 	const craft = globalThis.Craft;

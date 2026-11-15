@@ -6,5 +6,5 @@ import { cn } from "./cn.js";
 import { ErrorState } from "./ErrorState.js";
 import { AppErrorBoundary } from "./AppErrorBoundary.js";
 import { getHostBridge, getPortalClassName, getPortalContainer, getPortalMountNode, getPortalTargetForAppend, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, setHostBridge, setPortalClassName, setPortalContainer } from "@verbb/plugin-kit-core";
-import { setTranslateFunction, setTranslationCategory, translate } from "@verbb/plugin-kit-forms";
+import { setTranslateFunction, setTranslationCategory, translate } from "@verbb/plugin-kit-forms/translate";
 export { AppErrorBoundary, ErrorState, PluginKitProvider, cn, configure, configurePluginKitReact, createCraftHostBridge, getHostBridge, getPortalClassName, getPortalContainer, getPortalMountNode, getPortalTargetForAppend, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, mountShadowApp, setHostBridge, setPortalClassName, setPortalContainer, setTranslateFunction, setTranslationCategory, translate, usePluginKitConfig };

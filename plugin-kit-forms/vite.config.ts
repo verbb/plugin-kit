@@ -5,8 +5,12 @@ import DtsPlugin from 'vite-plugin-dts';
 export default defineConfig({
     build: {
         lib: {
+            // `translate` is its own entry so the React and Vue `configure()` can set translation without
+            // pulling the whole form engine into apps that never render a schema form. Rollup shares the
+            // module between the two entries, so there's still one translation state.
             entry: {
                 index: path.resolve(__dirname, 'src/index.ts'),
+                translate: path.resolve(__dirname, 'src/translate.ts'),
             },
             formats: ['es'],
         },

@@ -5,7 +5,7 @@ export { createCraftHostBridge } from './craftHostBridge.js';
 export { cn } from './cn.js';
 export { getPortalClassName, getPortalContainer, getPortalMountNode, getPortalTargetForAppend, setPortalClassName, setPortalContainer, type PortalContainer, } from '@verbb/plugin-kit-core';
 export { getHostBridge, hostFormatDate, hostGetLocale, hostGetTimepickerOptions, hostOpenElementSelector, hostRequest, setHostBridge, type HostElementSelectorOptions, type HostRequestConfig, type HostRequestMethod, type HostSelectedElement, type PluginKitHostBridge, } from '@verbb/plugin-kit-core';
-export { setTranslateFunction, setTranslationCategory, translate, type TranslateParams, } from '@verbb/plugin-kit-forms';
+export { setTranslateFunction, setTranslationCategory, translate, type TranslateParams, } from '@verbb/plugin-kit-forms/translate';
 export { AppErrorBoundary, type AppErrorBoundaryProps } from './AppErrorBoundary.js';
 export { ErrorState, type ErrorStateProps } from './ErrorState.js';
 //# sourceMappingURL=index.d.ts.map

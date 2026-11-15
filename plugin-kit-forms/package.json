@@ -20,6 +20,10 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/index.js"
         },
+        "./translate": {
+            "types": "./dist/translate.d.ts",
+            "import": "./dist/translate.js"
+        },
         "./package.json": "./package.json"
     },
     "scripts": {

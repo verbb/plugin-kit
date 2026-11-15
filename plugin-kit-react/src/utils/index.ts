@@ -50,7 +50,7 @@ export {
     setTranslationCategory,
     translate,
     type TranslateParams,
-} from '@verbb/plugin-kit-forms';
+} from '@verbb/plugin-kit-forms/translate';
 
 export { AppErrorBoundary, type AppErrorBoundaryProps } from './AppErrorBoundary.js';
 export { ErrorState, type ErrorStateProps } from './ErrorState.js';

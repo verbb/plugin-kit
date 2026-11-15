@@ -50,4 +50,4 @@ export {
     setTranslationCategory,
     translate,
     type TranslateParams,
-} from '@verbb/plugin-kit-forms';
+} from '@verbb/plugin-kit-forms/translate';

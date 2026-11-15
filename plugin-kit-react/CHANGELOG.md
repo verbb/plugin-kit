@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- `configure()`, `PluginKitProvider` and the translation utilities now import the forms package's translate entry, so an app that never renders a schema form no longer bundles the form engine.
+
 ## 2.2.0 - 2026-11-10
 
 ### Added

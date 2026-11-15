@@ -5,7 +5,8 @@ import {
     setPortalContainer,
     type PluginKitWebConfig,
 } from '@verbb/plugin-kit-web/plugin-kit';
-import { setTranslateFunction, setTranslationCategory, type TranslateParams } from '@verbb/plugin-kit-forms';
+// The translate entry only, so an app that never renders a schema form doesn't bundle the form engine.
+import { setTranslateFunction, setTranslationCategory, type TranslateParams } from '@verbb/plugin-kit-forms/translate';
 
 export type TranslateFunction = (category: string, message: string, params?: TranslateParams) => string;
 

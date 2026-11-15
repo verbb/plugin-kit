@@ -1,6 +1,6 @@
 import { PluginKitHostBridge } from '@verbb/plugin-kit-core';
 import { PluginKitWebConfig } from '@verbb/plugin-kit-web/plugin-kit';
-import { TranslateParams } from '@verbb/plugin-kit-forms';
+import { TranslateParams } from '@verbb/plugin-kit-forms/translate';
 export type TranslateFunction = (category: string, message: string, params?: TranslateParams) => string;
 export type PluginKitVueConfig = PluginKitWebConfig & {
     /** Category passed to the translate function for engine/validation messages. */
