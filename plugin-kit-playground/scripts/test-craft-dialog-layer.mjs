@@ -58,6 +58,29 @@ try {
         }
     }
 
+    // A dialog opened from the picker's selection must stay above the dialog that restores after the picker fades.
+    await page.evaluate(() => document.querySelector('.modal-shade')?.remove());
+    await page.getByRole('button', { name: 'Open Bulk', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('pk-dialog').shadowRoot.querySelector('dialog').matches(':modal'));
+    await page.getByRole('button', { name: 'Choose asset', exact: true }).click();
+    await page.waitForFunction(() => !document.querySelector('pk-dialog').shadowRoot.querySelector('dialog').matches(':modal'), null, { timeout: 3000 });
+    await page.getByRole('button', { name: 'Select element', exact: true }).click();
+    await page.waitForFunction(() => !document.querySelector('.modal'));
+    await page.waitForFunction(() => document.querySelector('pk-dialog').shadowRoot.querySelector('dialog').matches(':modal'), null, { timeout: 3000 });
+    await page.waitForTimeout(300);
+    assert.equal(await page.evaluate(() => {
+        const link = document.querySelector('#insert-link');
+        const box = link.shadowRoot.querySelector('dialog').getBoundingClientRect();
+        return document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2)?.closest('pk-dialog') === link;
+    }), true, 'a dialog opened from a Craft picker must stay above the dialog restored after it');
+    await page.getByRole('textbox', { name: 'URL' }).fill('https://example.com');
+    assert.equal(await page.getByRole('textbox', { name: 'URL' }).inputValue(), 'https://example.com',
+        'the dialog opened from a Craft picker must stay interactive');
+    await page.getByRole('button', { name: 'Close link', exact: true }).click();
+    await page.waitForFunction(() => !document.querySelector('#insert-link').open);
+    await page.getByRole('button', { name: 'Close Bulk', exact: true }).click();
+    await page.waitForFunction(() => !document.querySelector('pk-dialog').open);
+
     await page.evaluate(async () => {
         const dialog = document.querySelector('pk-dialog');
         await dialog.show();
@@ -66,7 +89,7 @@ try {
         await dialog.show();
         await firstClose;
     });
-    assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
+    assert.equal(await page.locator('pk-dialog').first().evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
         'an older close must not hide a reopened dialog');
 
     for (let cycle = 0; cycle < 5; cycle++) {
@@ -78,7 +101,7 @@ try {
             await dialog.updateComplete;
         });
         await page.waitForTimeout(550);
-        assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
+        assert.equal(await page.locator('pk-dialog').first().evaluate(dialog => dialog.open && dialog.shadowRoot.querySelector('dialog').matches(':modal')), true,
             'declarative reopening must supersede the close animation');
     }
 
@@ -89,7 +112,7 @@ try {
         const closing = dialog.hide();
         await Promise.all([opening, closing]);
     });
-    assert.equal(await page.locator('pk-dialog').evaluate(dialog => dialog.open || dialog.shadowRoot.querySelector('dialog').open), false,
+    assert.equal(await page.locator('pk-dialog').first().evaluate(dialog => dialog.open || dialog.shadowRoot.querySelector('dialog').open), false,
         'closing during entry must not emit a late open state');
 
     assert.deepEqual(errors, []);

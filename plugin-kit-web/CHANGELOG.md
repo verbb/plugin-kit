@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fixed a `pk-dialog` opened from a Craft element selector's selection, such as the rich text editor's link dialog after picking an entry, ending up hidden behind the dialog the selector was opened from. ([verbb/formie#3141](https://github.com/verbb/formie/issues/3141))
+
 ## 2.2.1 - 2026-11-15
 
 ### Added

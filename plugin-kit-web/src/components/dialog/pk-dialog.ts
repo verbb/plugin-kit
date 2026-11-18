@@ -4,7 +4,12 @@ import { customElement, property, query, state } from '../../decorators.js';
 import type { PropertyValues } from 'lit';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
-import { isTopDismissible, registerDismissible, unregisterDismissible } from '../../a11y/dismissible-stack.js';
+import {
+    getDismissiblesAbove,
+    isTopDismissible,
+    registerDismissible,
+    unregisterDismissible,
+} from '../../a11y/dismissible-stack.js';
 import { lockBodyScrolling, unlockBodyScrolling } from '../../a11y/scroll-lock.js';
 import { PkElement } from '../../base/pk-element.js';
 import { xmark, renderIconHtml } from '../../icons/index.js';
@@ -20,6 +25,31 @@ import { observeCraftHostModal, type CraftHostModalObserver } from '../../utils/
 import { pkDialogStyles } from './pk-dialog.styles.js';
 
 const CLOSE_ICON = renderIconHtml(xmark);
+
+const deepActiveElement = (): HTMLElement | null => {
+    let active = document.activeElement;
+
+    while (active?.shadowRoot?.activeElement) {
+        active = active.shadowRoot.activeElement;
+    }
+
+    return active instanceof HTMLElement ? active : null;
+};
+
+/** `contains()` that also crosses shadow roots between `node` and `container`. */
+const composedContains = (container: Node, node: Node): boolean => {
+    let current: Node | null = node;
+
+    while (current) {
+        if (current === container) {
+            return true;
+        }
+
+        current = current.parentNode ?? (current instanceof ShadowRoot ? current.host : null);
+    }
+
+    return false;
+};
 
 /**
  * Modal dialog — literal  `pk-dialog` lifecycle with Plugin Kit styling.
@@ -184,10 +214,37 @@ export class PkDialog extends PkElement {
             return;
         }
 
+        // Craft runs a picker's selection callback before its modal fades out, so a dialog opened
+        // from that callback is already modal when this one returns. The top layer follows the latest
+        // `showModal()`, so those dialogs re-enter after this one to stay above it.
+        const dialogsAbove = getDismissiblesAbove(this).filter((overlay): overlay is PkDialog => overlay instanceof PkDialog);
+        const focused = dialogsAbove.length ? deepActiveElement() : null;
+
         try {
             if (this.dialogElement.open) {
                 this.dialogElement.close();
             }
+            this.dialogElement.showModal();
+        } catch {
+            /* noop — next open cycle will recover */
+        }
+
+        dialogsAbove.forEach((dialog) => dialog.reenterTopLayer());
+
+        // `showModal()` moves focus, so return it to the dialog the user was working in.
+        if (focused?.isConnected && dialogsAbove.some((dialog) => composedContains(dialog, focused))) {
+            focused.focus({ preventScroll: true });
+        }
+    }
+
+    /** Re-enter the top layer above dialogs that returned to it after this one opened. */
+    private reenterTopLayer(): void {
+        if (!this.open || this.isClosing || this.yieldingToHostModal || !this.dialogElement?.matches(':modal')) {
+            return;
+        }
+
+        try {
+            this.dialogElement.close();
             this.dialogElement.showModal();
         } catch {
             /* noop — next open cycle will recover */

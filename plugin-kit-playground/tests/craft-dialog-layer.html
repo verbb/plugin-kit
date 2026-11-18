@@ -17,6 +17,10 @@
             <button data-dialog-close>Close Bulk</button>
         </pk-dialog>
     </div>
+    <pk-dialog label="Insert Link" id="insert-link">
+        <input aria-label="URL">
+        <button data-dialog-close>Close link</button>
+    </pk-dialog>
     <script type="module">
         import '@verbb/plugin-kit-web/components/dialog/pk-dialog.js';
 
@@ -26,8 +30,13 @@
         document.querySelector('#choose').onclick = () => {
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = '<button>Cancel picker</button>';
+            modal.innerHTML = '<button>Cancel picker</button><button>Select element</button>';
             modal.querySelector('button').onclick = () => modal.remove();
+            // Craft calls onSelect before its modal fades out, so the next dialog opens while the picker is still visible.
+            modal.querySelectorAll('button')[1].onclick = () => {
+                document.querySelector('#insert-link').show();
+                setTimeout(() => modal.remove(), 300);
+            };
             document.body.append(modal);
         };
         document.body.dataset.ready = 'true';

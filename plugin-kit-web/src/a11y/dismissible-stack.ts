@@ -21,6 +21,13 @@ export function isTopDismissible(key: object): boolean {
     return dismissibleStack.length > 0 && dismissibleStack[dismissibleStack.length - 1] === key;
 }
 
+/** Overlays registered after `key`, bottom → top. Empty when `key` is not on the stack. */
+export function getDismissiblesAbove(key: object): object[] {
+    const index = dismissibleStack.lastIndexOf(key);
+
+    return index === -1 ? [] : dismissibleStack.slice(index + 1);
+}
+
 /** Dev/diagnostic — ordered stack of dismissible overlay hosts (bottom → top). */
 export function getDismissibleStackSnapshot(): string[] {
     return dismissibleStack.map((key) => {
