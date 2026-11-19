@@ -1,5 +1,5 @@
 import "../../chunks/pk-popup-CkWZlW0u.js";
-import { d as registerDismissible, f as unregisterDismissible, n as uniqueId, s as scrollIntoView, t as LiveRegion, u as isTopDismissible } from "../../chunks/pk-a11y-mGj0G5AE.js";
+import { d as isTopDismissible, f as registerDismissible, n as uniqueId, p as unregisterDismissible, s as scrollIntoView, t as LiveRegion } from "../../chunks/pk-a11y-BvsOWgJb.js";
 import { _ as i, c as r, d as o, g as b, l as n, m as A, o as e, s as e$1, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
 import { c as __decorate, i as PkFormAssociatedElement, s as iconStyles } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { h as chevronDown, ot as xmark } from "../../chunks/svg-C4lXkZYF.js";
@@ -11,7 +11,7 @@ import { t as PkClearEvent } from "../../chunks/pk-clear-DHxP_2cm.js";
 import { i as PkShowEvent, n as PkAfterShowEvent, r as PkHideEvent, t as PkAfterHideEvent } from "../../chunks/overlay-lifecycle-C582MGBJ.js";
 import { i as waitForPopupReposition, r as syncPopupPlacementAnimation } from "../../chunks/popup-placement-animation-ClUYI79z.js";
 import { t as popupContentAnimationStyles } from "../../chunks/popup-content-animation.styles-BymjjhqY.js";
-import "../../chunks/pk-tooltip-DQsfK7fA.js";
+import "../../chunks/pk-tooltip-C9D3ytRK.js";
 import { n as isPointerInsideOverlay } from "../../chunks/popup-pointer-Bh_d205v.js";
 //#region src/components/image-browser/pk-image-browser.styles.ts
 /**

@@ -26155,6 +26155,17 @@
               "description": "Restore top-layer modal after Craft Garnish closes."
             },
             {
+              "kind": "method",
+              "name": "reenterTopLayer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Re-enter the top layer above dialogs that returned to it after this one opened."
+            },
+            {
               "kind": "field",
               "name": "onHostModalPresenceChange",
               "privacy": "private"

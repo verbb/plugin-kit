@@ -1,6 +1,6 @@
 import { PropertyValues } from 'lit';
 import { PkElement } from '../../base/pk-element.js';
-import { PkVariableTransformerRegistry } from './variable-tag-node-view.js';
+import { PkVariableTransformerLabelResolver, PkVariableTransformerRegistry } from './variable-tag-node-view.js';
 /**
  * Read-only TipTap / ProseMirror renderer.
  *
@@ -13,6 +13,11 @@ export declare class PkTiptapContent extends PkElement {
     value: string;
     /** Transform names displayed as badges on configured variable tags. */
     variableTransformerRegistry: PkVariableTransformerRegistry;
+    /**
+     * Names the transform badge on one variable tag, for transform IDs shared across value types.
+     * Falls back to `variableTransformerRegistry` when it returns nothing.
+     */
+    variableTransformerLabel: PkVariableTransformerLabelResolver | null;
     disconnectedCallback(): void;
     updated(changed: PropertyValues): void;
     firstUpdated(): void;

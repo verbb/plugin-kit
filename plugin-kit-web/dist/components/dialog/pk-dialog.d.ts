@@ -57,6 +57,8 @@ export declare class PkDialog extends PkElement {
     private yieldToHostModal;
     /** Restore top-layer modal after Craft Garnish closes. */
     private restoreFromHostModal;
+    /** Re-enter the top layer above dialogs that returned to it after this one opened. */
+    private reenterTopLayer;
     private onHostModalPresenceChange;
     firstUpdated(): void;
     disconnectedCallback(): void;

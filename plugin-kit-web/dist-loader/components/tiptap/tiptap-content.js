@@ -1,7 +1,7 @@
 import { _ as i, g as b, l as n, s as e, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
 import { c as __decorate, l as PkElement } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { A as Editor } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, s as createTiptapExtensions, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-BshDWxgr.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, s as createTiptapExtensions, t as tiptapContentProseMirrorStyles } from "../../chunks/tiptap.styles-CgFh9EJK.js";
 import { r as valueToContent } from "../../chunks/editor-CS16rBkM.js";
 //#region src/components/tiptap/pk-tiptap-content.styles.ts
 var pkTiptapContentStyles = i`
@@ -30,6 +30,7 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 		this.editor = null;
 		this.value = "";
 		this.variableTransformerRegistry = {};
+		this.variableTransformerLabel = null;
 	}
 	static {
 		this.styles = [pkTiptapContentStyles, tiptapContentProseMirrorStyles];
@@ -40,7 +41,7 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
-		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
+		if (changed.has("variableTransformerRegistry") || changed.has("variableTransformerLabel")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && this.editor) this.syncContent();
 		super.updated(changed);
 	}
@@ -74,6 +75,7 @@ var PkTiptapContent = class PkTiptapContent extends PkElement {
 __decorate([e(".editor-mount")], PkTiptapContent.prototype, "editorMount", void 0);
 __decorate([n({ attribute: "value" })], PkTiptapContent.prototype, "value", void 0);
 __decorate([n({ attribute: false })], PkTiptapContent.prototype, "variableTransformerRegistry", void 0);
+__decorate([n({ attribute: false })], PkTiptapContent.prototype, "variableTransformerLabel", void 0);
 PkTiptapContent = __decorate([customElement("pk-tiptap-content")], PkTiptapContent);
 //#endregion
 export { PkTiptapContent };

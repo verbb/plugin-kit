@@ -1,4 +1,4 @@
-import { t as getDismissibleStackSnapshot } from "./chunks/dismissible-stack-CwhtwAyo.js";
+import { t as getDismissibleStackSnapshot } from "./chunks/dismissible-stack-D_0W3Azi.js";
 import { n as getScrollLockDepth, t as forceClearScrollLock } from "./chunks/scroll-lock-DE1pElMQ.js";
 import { n as translatePluginKit, t as pluginKitTranslationCategory } from "./chunks/translate-DrB3jtbL.js";
 import { _ as setPortalClassName, a as startLoader, c as setBasePath, i as preventTurboFouce, l as allDefined, n as FOUCE_TIMEOUT_MS, o as stopLoader, r as discover, s as getBasePath, t as DISCOVERY_COMPLETE_EVENT, u as configurePluginKitWeb, v as setPortalContainer } from "./chunks/autoloader-LsoSCCPx.js";

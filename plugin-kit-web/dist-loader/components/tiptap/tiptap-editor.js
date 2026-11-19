@@ -1,22 +1,22 @@
-import { n as uniqueId } from "../../chunks/pk-a11y-mGj0G5AE.js";
+import { n as uniqueId } from "../../chunks/pk-a11y-BvsOWgJb.js";
 import { _ as i, c as r, d as o, g as b, l as n, m as A, s as e, u as customElement } from "../../chunks/lit-VNWk8W1D.js";
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { $ as strikethrough, B as italic, F as h5, H as link, I as h6, K as minus, L as heading, M as h2, N as h3, O as fileDashedLine, P as h4, Q as smallCaps, R as highlighter, U as listOl, W as listUl, X as quoteRight, a as alignRight, at as underline, c as arrowRotateRight, d as bold, et as subscript, f as bracketsCurly, h as chevronDown, i as alignLeft, it as triangleExclamation, j as h1, n as alignCenter, nt as table, q as paragraph, r as alignJustify, rt as textSlash, s as arrowRotateLeft, tt as superscript, w as code } from "../../chunks/svg-C4lXkZYF.js";
 import { n as renderIconHtml } from "../../chunks/render-Cdi93GN8.js";
-import "../../chunks/pk-field-BuPuECOU.js";
+import "../../chunks/pk-field-C5oW_Qmx.js";
 import "../../chunks/pk-button-Bf21dtz_.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
 import "../../chunks/pk-checkbox-Fh9M_K2o.js";
-import "../../chunks/pk-input-CJThWovk.js";
+import "../../chunks/pk-input-D76Ig21d.js";
 import { A as Editor, N as getMarkRange, P as posToDOMRect } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-BshDWxgr.js";
+import { a as refreshVariableTagPresentation, i as createVariableTagDomNodeView, l as getRegisteredTiptapToolbarControl, o as resolveTiptapTextStyleToolbarConfig, r as tiptapProseMirrorStyles, s as createTiptapExtensions, u as isRegisteredTiptapToolbarControl } from "../../chunks/tiptap.styles-CgFh9EJK.js";
 import { n as normalizeContentArray, r as valueToContent, t as getFatalTiptapContentError } from "../../chunks/editor-CS16rBkM.js";
-import "../../chunks/pk-dialog-BK5fz7X9.js";
+import "../../chunks/pk-dialog-CJogwahV.js";
 import "../../chunks/pk-dropdown-item-C5GWez_I.js";
 import "../../chunks/pk-dropdown-label-B2LR35Wh.js";
-import "../../chunks/pk-dropdown-menu-C6xTbRDi.js";
+import "../../chunks/pk-dropdown-menu-CW5krQwg.js";
 import "../dropdown-menu/dropdown-separator.js";
-import "../../chunks/pk-tooltip-DQsfK7fA.js";
+import "../../chunks/pk-tooltip-C9D3ytRK.js";
 //#region ../plugin-kit-tiptap-core/dist/links/craft-element.js
 function isLinkOptionsArray(value) {
 	return Array.isArray(value) && value.length > 0;
@@ -1169,6 +1169,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		this.readonly = false;
 		this.invalid = false;
 		this.variableTransformerRegistry = {};
+		this.variableTransformerLabel = null;
 		this.variableTagConfigure = null;
 		this.invalidContentMessage = "";
 		this.toolbarTooltips = true;
@@ -1301,7 +1302,7 @@ var PkTiptapEditor = class PkTiptapEditor extends PkFormAssociatedElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
-		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
+		if (changed.has("variableTransformerRegistry") || changed.has("variableTransformerLabel")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && !changed.has("defaultValue")) this.syncEditorContent();
 		if (changed.has("defaultValue") && !this.valueHasChanged) this.syncEditorContent();
 		if (changed.has("disabled") || changed.has("readonly")) this.host.editor?.setEditable(!this.disabled && !this.readonly);
@@ -1955,6 +1956,7 @@ __decorate([n({
 	reflect: true
 })], PkTiptapEditor.prototype, "invalid", void 0);
 __decorate([n({ attribute: false })], PkTiptapEditor.prototype, "variableTransformerRegistry", void 0);
+__decorate([n({ attribute: false })], PkTiptapEditor.prototype, "variableTransformerLabel", void 0);
 __decorate([n({ attribute: false })], PkTiptapEditor.prototype, "variableTagConfigure", void 0);
 __decorate([n({ attribute: "invalid-content-message" })], PkTiptapEditor.prototype, "invalidContentMessage", void 0);
 __decorate([n({

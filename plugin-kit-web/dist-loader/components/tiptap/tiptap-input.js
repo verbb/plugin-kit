@@ -2,7 +2,7 @@ import { _ as i, c as r, g as b, l as n, s as e, u as customElement } from "../.
 import { c as __decorate, i as PkFormAssociatedElement, n as formControlStyles } from "../../chunks/pk-base-BZ-cbOC_.js";
 import { t as MirrorValidator } from "../../chunks/mirror-validator-BkZlEv1Z.js";
 import { A as Editor } from "../../chunks/tiptap-DYSRDaas.js";
-import { a as refreshVariableTagPresentation, c as createTiptapInputExtensions, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "../../chunks/tiptap.styles-BshDWxgr.js";
+import { a as refreshVariableTagPresentation, c as createTiptapInputExtensions, i as createVariableTagDomNodeView, n as tiptapInputProseMirrorStyles } from "../../chunks/tiptap.styles-CgFh9EJK.js";
 //#region ../plugin-kit-tiptap-core/dist/serialization/input.js
 var TRANSFORMER_ID_PREFIX = "transform=";
 function parseTokenMetadata(tokenValue) {
@@ -354,6 +354,7 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 		this._value = null;
 		this.variableCategories = {};
 		this.variableTransformerRegistry = {};
+		this.variableTransformerLabel = null;
 		this.variableTagConfigure = null;
 		this.readonly = false;
 		this.invalid = false;
@@ -417,7 +418,7 @@ var PkTiptapInput = class PkTiptapInput extends PkFormAssociatedElement {
 		super.disconnectedCallback();
 	}
 	updated(changed) {
-		if (changed.has("variableTransformerRegistry")) refreshVariableTagPresentation(this);
+		if (changed.has("variableTransformerRegistry") || changed.has("variableTransformerLabel")) refreshVariableTagPresentation(this);
 		if (changed.has("value") && !changed.has("defaultValue")) this.syncEditorContent();
 		if (changed.has("defaultValue") && !this.valueHasChanged) this.syncEditorContent();
 		if (changed.has("variableCategories") && this.editor) this.syncEditorContent(true);
@@ -496,6 +497,7 @@ __decorate([e(".editor-mount")], PkTiptapInput.prototype, "editorMount", void 0)
 __decorate([e(".mirror-input")], PkTiptapInput.prototype, "input", void 0);
 __decorate([n({ attribute: false })], PkTiptapInput.prototype, "variableCategories", void 0);
 __decorate([n({ attribute: false })], PkTiptapInput.prototype, "variableTransformerRegistry", void 0);
+__decorate([n({ attribute: false })], PkTiptapInput.prototype, "variableTransformerLabel", void 0);
 __decorate([n({ attribute: false })], PkTiptapInput.prototype, "variableTagConfigure", void 0);
 __decorate([n({
 	type: Boolean,

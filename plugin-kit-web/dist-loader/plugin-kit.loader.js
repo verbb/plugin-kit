@@ -1,5 +1,5 @@
 import { n as translatePluginKit, t as pluginKitTranslationCategory } from "./chunks/translate-DrB3jtbL.js";
-import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-mGj0G5AE.js";
+import { a as getScrollLockDepth, i as forceClearScrollLock, l as getDismissibleStackSnapshot } from "./chunks/pk-a11y-BvsOWgJb.js";
 //#region src/component-registry.ts
 /**
 * Canonical tag → loader module path mapping for the autoloader.
