@@ -16,7 +16,7 @@ Use invalid, disabled, and read-only states when the input participates in form 
 
 ## Variable Tag Indicators
 
-Variable tags display the applied transform as a badge and an orange corner when a default value is set. Pass `variableTransformerRegistry`, grouped by value type, to display transform names. Unknown transforms display their saved ID.
+Variable tags display the applied transform as a badge and an orange corner when a default value is set. Pass `variableTransformerRegistry`, grouped by value type, to display transform names. When value types share a transform ID, the registry gives the first matching name, so pass `variableTransformerLabel` to name each tag's transform from its variable. It receives the tag's attributes and falls back to the registry when it returns nothing. Unknown transforms display their saved ID.
 
 ```tsx
 <TiptapInput
@@ -46,6 +46,7 @@ Variable tags display the applied transform as a badge and an orange corner when
 | `required` | Marks the control as required for form submission.<br><small><strong>Type</strong> <code>boolean</code></small><br><small><strong>Default</strong> <code>false</code></small> |
 | `variableCategories` | Variable options used to resolve chip labels when hydrating from `{token}` strings. Without this, saved field tokens fall back to UID title-casing after reload.<br><small><strong>Type</strong> <code>PkTiptapVariableCategories</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 | `variableTagConfigure` | Formie / React configure bridge — called when a chip is activated for editing. Prefer this over listening for `pk-variable-tag-configure` from React.<br><small><strong>Type</strong> <code>((detail: import('./variable-tag-node-view.js').PkVariableTagConfigureDetail) =&gt; void) \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
+| `variableTransformerLabel` | Names the transform badge on one variable tag, for transform IDs shared across value types. Falls back to `variableTransformerRegistry` when it returns nothing.<br><small><strong>Type</strong> <code>PkVariableTransformerLabelResolver \| null</code></small><br><small><strong>Default</strong> <code>null</code></small> |
 | `variableTransformerRegistry` | Transform names displayed as badges on configured variable tags.<br><small><strong>Type</strong> <code>PkVariableTransformerRegistry</code></small><br><small><strong>Default</strong> <code>{}</code></small> |
 
 ### Methods

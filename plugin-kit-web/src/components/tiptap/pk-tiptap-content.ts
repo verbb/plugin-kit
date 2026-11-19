@@ -11,6 +11,7 @@ import { PkElement } from '../../base/pk-element.js';
 import {
     createVariableTagDomNodeView,
     refreshVariableTagPresentation,
+    type PkVariableTransformerLabelResolver,
     type PkVariableTransformerRegistry,
 } from './variable-tag-node-view.js';
 import { pkTiptapContentStyles } from './pk-tiptap-content.styles.js';
@@ -49,6 +50,13 @@ export class PkTiptapContent extends PkElement {
     @property({ attribute: false })
     variableTransformerRegistry: PkVariableTransformerRegistry = {};
 
+    /**
+     * Names the transform badge on one variable tag, for transform IDs shared across value types.
+     * Falls back to `variableTransformerRegistry` when it returns nothing.
+     */
+    @property({ attribute: false })
+    variableTransformerLabel: PkVariableTransformerLabelResolver | null = null;
+
     override disconnectedCallback(): void {
         this.editor?.destroy();
         this.editor = null;
@@ -56,7 +64,7 @@ export class PkTiptapContent extends PkElement {
     }
 
     override updated(changed: PropertyValues): void {
-        if (changed.has('variableTransformerRegistry')) {
+        if (changed.has('variableTransformerRegistry') || changed.has('variableTransformerLabel')) {
             refreshVariableTagPresentation(this);
         }
 

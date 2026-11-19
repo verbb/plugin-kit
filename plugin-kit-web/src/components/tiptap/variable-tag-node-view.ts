@@ -14,6 +14,12 @@ export const PK_VARIABLE_TAG_CONFIGURE_EVENT = 'pk-variable-tag-configure';
 /** Transform metadata grouped by value type, supplied by the consuming application. */
 export type PkVariableTransformerRegistry = Record<string, readonly { id: string; label?: string }[]>;
 
+/**
+ * Names the transform on one variable tag. Value types can share a transform ID, which the registry alone
+ * can't tell apart, so the application resolves it from the tag's variable. Return nothing to use the registry.
+ */
+export type PkVariableTransformerLabelResolver = (attrs: Record<string, unknown>) => string | null | undefined;
+
 const PRESENTATION_CHANGE_EVENT = 'pk-variable-tag-presentation-change';
 
 /** Refresh labels without changing the editor document or its selection. */
@@ -169,13 +175,19 @@ export function createVariableTagDomNodeView(): NodeViewRenderer {
             labelText.textContent = chipLabel;
 
             const transformerId = String(attrs.transformerId ?? '').trim();
-            const registry = (host as (HTMLElement & {
+            const transformHost = host as (HTMLElement & {
                 variableTransformerRegistry?: PkVariableTransformerRegistry;
-            }) | null)?.variableTransformerRegistry ?? {};
-            const transformer = Object.values(registry)
-                .flat()
-                .find((entry) => entry.id === transformerId);
-            transformBadge.textContent = transformer?.label || transformerId;
+                variableTransformerLabel?: PkVariableTransformerLabelResolver | null;
+            }) | null;
+            const resolvedLabel = transformerId
+                ? String(transformHost?.variableTransformerLabel?.(attrs) ?? '').trim()
+                : '';
+            const transformer = resolvedLabel
+                ? null
+                : Object.values(transformHost?.variableTransformerRegistry ?? {})
+                    .flat()
+                    .find((entry) => entry.id === transformerId);
+            transformBadge.textContent = resolvedLabel || transformer?.label || transformerId;
             transformBadge.hidden = !transformerId;
             if (transformerId) {
                 transformBadge.setAttribute('aria-label', `Transform: ${transformBadge.textContent}`);

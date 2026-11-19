@@ -48278,6 +48278,15 @@
               "description": "Transform names displayed as badges on configured variable tags."
             },
             {
+              "kind": "field",
+              "name": "variableTransformerLabel",
+              "type": {
+                "text": "PkVariableTransformerLabelResolver | null"
+              },
+              "default": "null",
+              "description": "Names the transform badge on one variable tag, for transform IDs shared across value types.\nFalls back to `variableTransformerRegistry` when it returns nothing."
+            },
+            {
               "kind": "method",
               "name": "mountEditor",
               "privacy": "private",
@@ -48625,6 +48634,15 @@
               },
               "default": "{}",
               "description": "Transform names displayed as badges on configured variable tags."
+            },
+            {
+              "kind": "field",
+              "name": "variableTransformerLabel",
+              "type": {
+                "text": "PkVariableTransformerLabelResolver | null"
+              },
+              "default": "null",
+              "description": "Names the transform badge on one variable tag, for transform IDs shared across value types.\nFalls back to `variableTransformerRegistry` when it returns nothing."
             },
             {
               "kind": "field",
@@ -50402,6 +50420,15 @@
               },
               "default": "{}",
               "description": "Transform names displayed as badges on configured variable tags."
+            },
+            {
+              "kind": "field",
+              "name": "variableTransformerLabel",
+              "type": {
+                "text": "PkVariableTransformerLabelResolver | null"
+              },
+              "default": "null",
+              "description": "Names the transform badge on one variable tag, for transform IDs shared across value types.\nFalls back to `variableTransformerRegistry` when it returns nothing."
             },
             {
               "kind": "field",

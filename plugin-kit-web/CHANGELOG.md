@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added a `variableTransformerLabel` property to `pk-tiptap-input`, `pk-tiptap-editor` and `pk-tiptap-content`, which names the transform badge on each variable tag from the tag's attributes. Use it when value types share a transform ID, because `variableTransformerRegistry` alone shows the first matching name, such as a number format's name on a date.
+
 ### Fixed
 - Fixed a `pk-dialog` opened from a Craft element selector's selection, such as the rich text editor's link dialog after picking an entry, ending up hidden behind the dialog the selector was opened from. ([verbb/formie#3141](https://github.com/verbb/formie/issues/3141))
 

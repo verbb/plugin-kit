@@ -17,6 +17,7 @@ import { MirrorValidator } from '../../validators/index.js';
 import {
     createVariableTagDomNodeView,
     refreshVariableTagPresentation,
+    type PkVariableTransformerLabelResolver,
     type PkVariableTransformerRegistry,
 } from './variable-tag-node-view.js';
 import { pkTiptapInputStyles } from './pk-tiptap-input.styles.js';
@@ -62,6 +63,13 @@ export class PkTiptapInput extends PkFormAssociatedElement {
     /** Transform names displayed as badges on configured variable tags. */
     @property({ attribute: false })
     variableTransformerRegistry: PkVariableTransformerRegistry = {};
+
+    /**
+     * Names the transform badge on one variable tag, for transform IDs shared across value types.
+     * Falls back to `variableTransformerRegistry` when it returns nothing.
+     */
+    @property({ attribute: false })
+    variableTransformerLabel: PkVariableTransformerLabelResolver | null = null;
 
     /**
      * Formie / React configure bridge — called when a chip is activated for editing.
@@ -156,7 +164,7 @@ export class PkTiptapInput extends PkFormAssociatedElement {
     }
 
     override updated(changed: PropertyValues): void {
-        if (changed.has('variableTransformerRegistry')) {
+        if (changed.has('variableTransformerRegistry') || changed.has('variableTransformerLabel')) {
             refreshVariableTagPresentation(this);
         }
 

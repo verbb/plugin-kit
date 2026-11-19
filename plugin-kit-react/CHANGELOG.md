@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added a `variableTransformerLabel` prop to `TiptapInput`, `TiptapEditor` and `TiptapContent`, which names the transform badge on each variable tag when value types share a transform ID.
+
 ## 2.2.1 - 2026-11-15
 
 ### Added
