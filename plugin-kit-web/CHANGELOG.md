@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.2 - 2026-11-19
+
 ### Added
 - Added a `variableTransformerLabel` property to `pk-tiptap-input`, `pk-tiptap-editor` and `pk-tiptap-content`, which names the transform badge on each variable tag from the tag's attributes. Use it when value types share a transform ID, because `variableTransformerRegistry` alone shows the first matching name, such as a number format's name on a date.
 
